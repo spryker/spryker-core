@@ -16,6 +16,8 @@
         <property name="filters" type="TableFilter[]" singular="filter"/>
         <property name="defaultSortColumn" type="string"/>
         <property name="rowActions" type="TableRowAction[]" singular="rowAction"/>
+        <property name="allowedFilters" type="string[]" singular="allowedFilter"/>
+        <property name="search" type="string"/>
     </transfer>
 
     <transfer name="TableRowAction">
@@ -30,7 +32,6 @@
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="width" type="string"/>
-        <property name="searchable" type="bool"/>
         <property name="sortable" type="bool"/>
         <property name="hideable" type="bool"/>
         <property name="type" type="string"/>

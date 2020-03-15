@@ -12,6 +12,8 @@ use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
+use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\User\UserMapper;
@@ -71,6 +73,17 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getUserFacade(),
             $this->createUserMapper(),
             $this->getAuthFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
+     */
+    public function createMerchantUserReader(): MerchantUserReaderInterface
+    {
+        return new MerchantUserReader(
+            $this->getUserFacade(),
+            $this->getRepository()
         );
     }
 

@@ -68,7 +68,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     protected function buildBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $merchantUserTransfer = $productTableCriteriaTransfer->getMerchantUser();
+        $merchantUserTransfer = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser();
         $localeId = $productTableCriteriaTransfer->requireLocale()
             ->getLocale()
             ->requireIdLocale()
@@ -86,10 +86,8 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                 ->useSpyProductAbstractStoreQuery()
                     ->joinSpyStore()
                 ->endUse()
-            ->endUse();
-
-        if ($merchantUserTransfer) {
-            $productConcreteQuery->addJoin(
+            ->endUse()
+            ->addJoin(
                 [
                     SpyProductTableMap::COL_SKU,
                     SpyProductOfferTableMap::COL_FK_MERCHANT,
@@ -100,17 +98,15 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                 ],
                 Criteria::LEFT_JOIN
             )
-                ->withColumn(
-                    sprintf('COUNT(%s)', SpyProductOfferTableMap::COL_CONCRETE_SKU),
-                    ProductConcreteTransfer::HAS_OFFERS
-                );
-        }
-
-        $productConcreteQuery->leftJoinSpyProductValidity()
+            ->leftJoinSpyProductValidity()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConcreteTransfer::NAME)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductConcreteTransfer::VALID_FROM)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductConcreteTransfer::VALID_TO)
             ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
+            ->withColumn(
+                sprintf('COUNT(%s)', SpyProductOfferTableMap::COL_CONCRETE_SKU),
+                ProductConcreteTransfer::HAS_OFFERS
+            )
             ->groupByIdProduct();
 
         return $productConcreteQuery;

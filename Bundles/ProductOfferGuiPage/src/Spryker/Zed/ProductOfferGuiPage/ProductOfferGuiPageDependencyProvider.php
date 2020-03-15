@@ -58,7 +58,6 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addUtilEncodingService($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addUserFacade($container);
         $container = $this->addMerchantUserFacade($container);
 
         return $container;

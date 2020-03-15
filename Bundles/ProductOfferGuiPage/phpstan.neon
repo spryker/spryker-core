@@ -4,8 +4,5 @@ parameters:
             message: '#Call to an undefined method .+ModelCriteria::.+\(\).#'
             path: 'vendor/spryker/spryker/Bundles/ProductOfferGuiPage/src/Spryker/Zed/ProductOfferGuiPage/Persistence/ProductOfferGuiPageRepository.php'
         -
-            message: '#Call to an undefined method .+Criteria::.+\(\).#'
-            path: 'vendor/spryker/spryker/Bundles/ProductOfferGuiPage/src/Spryker/Zed/ProductOfferGuiPage/Persistence/ProductOfferGuiPageRepository.php'
-        -
             message: '#Method .+ should return .+Query but returns .+Criteria#'
             path: 'vendor/spryker/spryker/Bundles/ProductOfferGuiPage/src/Spryker/Zed/ProductOfferGuiPage/Persistence/ProductOfferGuiPageRepository.php'

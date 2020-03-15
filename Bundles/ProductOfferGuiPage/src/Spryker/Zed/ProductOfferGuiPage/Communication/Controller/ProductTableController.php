@@ -19,16 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductTableController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function configAction(): JsonResponse
-    {
-        $tableConfig = $this->getFactory()->createProductTable()->getConfiguration();
-
-        return new JsonResponse($tableConfig);
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse

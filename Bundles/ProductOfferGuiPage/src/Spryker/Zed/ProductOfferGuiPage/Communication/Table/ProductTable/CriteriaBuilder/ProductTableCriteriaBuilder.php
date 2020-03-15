@@ -7,22 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder;
 
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface
-     */
-    protected $userFacade;
-
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface
      */
@@ -59,16 +51,13 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     protected $filters;
 
     /**
-     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductOfferGuiPageToUserFacadeInterface $userFacade,
         ProductOfferGuiPageToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferGuiPageToLocaleFacadeInterface $localeFacade
     ) {
-        $this->userFacade = $userFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->localeFacade = $localeFacade;
     }
@@ -153,22 +142,10 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
     {
         $productTableCriteriaTransfer = new ProductTableCriteriaTransfer();
-        $productTableCriteriaTransfer->setMerchantUser($this->getCurrentMerchantUser());
+        $productTableCriteriaTransfer->setMerchantUser($this->merchantUserFacade->getCurrentMerchantUser());
         $productTableCriteriaTransfer->setLocale($this->localeFacade->getCurrentLocale());
 
         return $productTableCriteriaTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
-     */
-    protected function getCurrentMerchantUser(): ?MerchantUserTransfer
-    {
-        $currentUserTransfer = $this->userFacade->getCurrentUser();
-        $merchantUserCriteriaFilterTransfer = new MerchantUserCriteriaFilterTransfer();
-        $merchantUserCriteriaFilterTransfer->setIdUser($currentUserTransfer->getIdUser());
-
-        return $this->merchantUserFacade->findOne($merchantUserCriteriaFilterTransfer);
     }
 
     /**

@@ -20,7 +20,6 @@ use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCateg
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
-use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
@@ -50,7 +49,6 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function createProductTableCriteriaBuilder(): ProductTableCriteriaBuilderInterface
     {
         return new ProductTableCriteriaBuilder(
-            $this->getUserFacade(),
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade()
         );
@@ -134,14 +132,6 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function getStoreFacade(): ProductOfferGuiPageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeInterface
-     */
-    public function getUserFacade(): ProductOfferGuiPageToUserFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_USER);
     }
 
     /**

@@ -5,13 +5,15 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Dependency\Facade;
+namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
-interface ProductOfferGuiPageToMerchantUserFacadeInterface
+interface MerchantUserReaderInterface
 {
     /**
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
     public function getCurrentMerchantUser(): MerchantUserTransfer;

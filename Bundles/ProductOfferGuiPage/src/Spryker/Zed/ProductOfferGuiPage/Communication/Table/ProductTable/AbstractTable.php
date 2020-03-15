@@ -56,6 +56,11 @@ abstract class AbstractTable
     protected $filters = [];
 
     /**
+     * @var \Generated\Shared\Transfer\TableConfigurationTransfer
+     */
+    protected $tableConfigurationTransfer;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -73,7 +78,7 @@ abstract class AbstractTable
      */
     public function getConfiguration(): array
     {
-        $tableConfigurationTransfer = $this->provideTableConfiguration();
+        $tableConfigurationTransfer = $this->buildTableConfiguration();
 
         return [
             static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($tableConfigurationTransfer),
@@ -167,7 +172,7 @@ abstract class AbstractTable
     protected function setSorting(Request $request): void
     {
         $sortingData = $request->query->has(static::PARAM_ORDER_BY) ? json_decode($request->query->get(static::PARAM_ORDER_BY), true) : null;
-        $defaultSortColumn = $this->provideTableConfiguration()->getDefaultSortColumn();
+        $defaultSortColumn = $this->buildTableConfiguration()->getDefaultSortColumn();
 
         if (!$sortingData && $defaultSortColumn) {
             $sortingData = [$defaultSortColumn => static::DEFAULT_ORDER_DIRECTION];
@@ -195,15 +200,27 @@ abstract class AbstractTable
             return;
         }
 
-        $filterNameWhitelist = $this->getWhitelistedFilterNames();
+        $allowedFilterNames = $this->getTableConfiguration()->getAllowedFilters();
 
         foreach ($filtersData as $filterName => $filterData) {
-            if (!in_array($filterName, $filterNameWhitelist, true)) {
+            if (!in_array($filterName, $allowedFilterNames, true)) {
                 continue;
             }
 
             $this->filters[$filterName] = $filterData;
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     */
+    protected function getTableConfiguration(): TableConfigurationTransfer
+    {
+        if ($this->tableConfigurationTransfer === null) {
+            $this->tableConfigurationTransfer = $this->buildTableConfiguration();
+        }
+
+        return $this->tableConfigurationTransfer;
     }
 
     /**
@@ -214,10 +231,5 @@ abstract class AbstractTable
     /**
      * @return \Generated\Shared\Transfer\TableConfigurationTransfer
      */
-    abstract protected function provideTableConfiguration(): TableConfigurationTransfer;
-
-    /**
-     * @return string[]
-     */
-    abstract protected function getWhitelistedFilterNames(): array;
+    abstract protected function buildTableConfiguration(): TableConfigurationTransfer;
 }

@@ -84,13 +84,14 @@ class ProductTable extends AbstractTable
     /**
      * @return \Generated\Shared\Transfer\TableConfigurationTransfer
      */
-    protected function provideTableConfiguration(): TableConfigurationTransfer
+    protected function buildTableConfiguration(): TableConfigurationTransfer
     {
         $tableConfigurationTransfer = new TableConfigurationTransfer();
         $tableConfigurationTransfer = $this->addColumnsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer = $this->addFiltersToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer = $this->addRowActionsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
+        $tableConfigurationTransfer->setAllowedFilters($this->productOfferGuiPageConfig->getFilterNameWhitelist());
 
         return $tableConfigurationTransfer;
     }
@@ -107,7 +108,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_SKU)
                 ->setTitle('Sku')
                 ->setType('text')
-                ->setSearchable(true)
                 ->setSortable(true)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -117,7 +117,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_IMAGE)
                 ->setTitle('Image')
                 ->setType('image')
-                ->setSearchable(false)
                 ->setSortable(false)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -127,7 +126,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_NAME)
                 ->setTitle('Name')
                 ->setType('text')
-                ->setSearchable(true)
                 ->setSortable(true)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -137,7 +135,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_STORES)
                 ->setTitle('Stores')
                 ->setType('text')
-                ->setSearchable(false)
                 ->setSortable(false)
                 ->setHideable(false)
                 ->setMultiple(true)
@@ -147,7 +144,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_STATUS)
                 ->setTitle('Status')
                 ->setType('text')
-                ->setSearchable(false)
                 ->setSortable(true)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -157,7 +153,6 @@ class ProductTable extends AbstractTable
                 ->setId(static::COLUMN_KEY_OFFERS)
                 ->setTitle('Offers')
                 ->setType('text')
-                ->setSearchable(false)
                 ->setSortable(true)
                 ->setMultiple(false)
         );
@@ -167,7 +162,6 @@ class ProductTable extends AbstractTable
                 ->setTitle('Valid From')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSearchable(false)
                 ->setSortable(false)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -178,7 +172,6 @@ class ProductTable extends AbstractTable
                 ->setTitle('Valid To')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSearchable(false)
                 ->setSortable(false)
                 ->setHideable(false)
                 ->setMultiple(false)
@@ -242,7 +235,9 @@ class ProductTable extends AbstractTable
                 static::COLUMN_KEY_NAME => $productConcreteTransfer->getName(),
                 static::COLUMN_KEY_SKU => $productConcreteTransfer->getSku(),
                 static::COLUMN_KEY_IMAGE => $this->getImage($productConcreteTransfer),
-                static::COLUMN_KEY_STORES => $productConcreteTransfer->getStoreNames(),
+                static::COLUMN_KEY_STORES => $productConcreteTransfer->getStoreNames()
+                    ? explode(',', $productConcreteTransfer->getStoreNames())
+                    : [],
                 static::COLUMN_KEY_OFFERS => $productConcreteTransfer->getHasOffers() ?? 0,
                 static::COLUMN_KEY_VALID_FROM => $productConcreteTransfer->getValidFrom(),
                 static::COLUMN_KEY_VALID_TO => $productConcreteTransfer->getValidTo(),
@@ -294,13 +289,5 @@ class ProductTable extends AbstractTable
         $tableConfigurationTransfer->addRowAction($tableRowActionTransfer);
 
         return $tableConfigurationTransfer;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getWhitelistedFilterNames(): array
-    {
-        return $this->productOfferGuiPageConfig->getFilterNameWhitelist();
     }
 }

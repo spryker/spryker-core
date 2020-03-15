@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
 class ProductOfferGuiPageToMerchantUserFacadeBridge implements ProductOfferGuiPageToMerchantUserFacadeInterface
@@ -26,12 +25,10 @@ class ProductOfferGuiPageToMerchantUserFacadeBridge implements ProductOfferGuiPa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    public function getCurrentMerchantUser(): MerchantUserTransfer
     {
-        return $this->merchantUserFacade->findOne($merchantUserCriteriaFilterTransfer);
+        return $this->merchantUserFacade->getCurrentMerchantUser();
     }
 }
