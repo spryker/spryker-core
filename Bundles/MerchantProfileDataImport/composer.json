@@ -10,8 +10,7 @@
     "spryker/glossary": "^3.3.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^2.0.0",
-    "spryker/merchant-profile": "^0.1.0",
-    "spryker/url": "^3.0.0"
+    "spryker/merchant-profile": "^0.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
