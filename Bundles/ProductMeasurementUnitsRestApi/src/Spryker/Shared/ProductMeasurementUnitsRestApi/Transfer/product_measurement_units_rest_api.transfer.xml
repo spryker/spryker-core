@@ -63,6 +63,7 @@
         <property name="quantity" type="int"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="decimal"/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
