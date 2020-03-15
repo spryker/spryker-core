@@ -107,8 +107,10 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
-    {
+    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(
+        string $name,
+        ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations
+    ): void {
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
             ->build()
             ->setName($name);
@@ -135,8 +137,10 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
-    {
+    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(
+        string $name,
+        ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations
+    ): void {
         // Arrange
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
             ->build()
@@ -528,8 +532,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, int $quantity, float $conversion, int $precision, int $expectedResult): void
-    {
+    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(
+        int $amount,
+        int $quantity,
+        float $conversion,
+        int $precision,
+        int $expectedResult
+    ): void {
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $quantity, $conversion, $precision);
 

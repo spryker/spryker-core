@@ -166,7 +166,12 @@ interface ProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null);
+    public function mapProductStorageData(
+        array $data,
+        $localeName,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    );
 
     /**
      * Specification:
@@ -259,7 +264,11 @@ interface ProductStorageClientInterface
      *
      * @return array
      */
-    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(array $productAbstractIds, string $localeName, string $storeName): array;
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 
     /**
      * Specification:

@@ -150,8 +150,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
-    protected function mapToProductConcreteMeasurementUnitStorage(array $productConcreteMeasurementUnitStorageData): ProductConcreteMeasurementUnitStorageTransfer
-    {
+    protected function mapToProductConcreteMeasurementUnitStorage(
+        array $productConcreteMeasurementUnitStorageData
+    ): ProductConcreteMeasurementUnitStorageTransfer {
         return (new ProductConcreteMeasurementUnitStorageTransfer())
             ->fromArray($productConcreteMeasurementUnitStorageData, true);
     }
