@@ -12,6 +12,7 @@
         <property name="status" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="merchantReference" type="string"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
