@@ -99,7 +99,7 @@ interface SchemaComponentBuilderInterface
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
 
     /**
-     * @param array $resourceRelationships
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */

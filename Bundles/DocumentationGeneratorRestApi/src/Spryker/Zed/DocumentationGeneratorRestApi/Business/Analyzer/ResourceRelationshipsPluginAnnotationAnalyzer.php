@@ -94,12 +94,16 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
      */
     protected function getDocCommentParameters(string $comment): ?array
     {
-        if (!preg_match_all(static::PATTERN_REGEX_GLUE_ANNOTATION, $comment, $matches)) {
+        if (!preg_match_all(static::PATTERN_REGEX_GLUE_ANNOTATION, $comment, $pregMatches)) {
             return null;
         }
 
-        $matches = array_map('trim', $matches[0]);
-        $matchesFiltered = array_filter($matches, 'strlen');
+        $matchesTrimmed = [];
+        foreach ($pregMatches[0] as $item) {
+            $matchesTrimmed[] = trim($item);
+        }
+
+        $matchesFiltered = array_filter($matchesTrimmed, 'strlen');
         if (!$matchesFiltered) {
             return null;
         }
@@ -119,7 +123,7 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
         $annotationsTransformed = [];
         foreach ($annotations as $annotation) {
             $annotation = trim(str_replace('*', '', $annotation));
-            $annotationDecoded = json_decode($annotation, true);
+            $annotationDecoded = $this->utilEncodingService->decodeJson($annotation, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new InvalidAnnotationFormatException(
                     sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation)

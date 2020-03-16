@@ -65,9 +65,10 @@ class ResourceRelationshipPluginFinder implements ResourceRelationshipPluginFind
      */
     protected function getPluginSourceDirectories(string $moduleName): array
     {
-        $directories = array_map(function ($directory) use ($moduleName) {
-            return sprintf($directory, $moduleName);
-        }, $this->sourceDirectories);
+        $directories = [];
+        foreach ($this->sourceDirectories as $directory) {
+            $directories[] = sprintf($directory, $moduleName);
+        }
 
         return $this->getExistingSourceDirectories($directories);
     }

@@ -204,17 +204,16 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
 
     /**
      * @param string $schemaName
-     * @param array $resourceRelationships
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
     public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer
     {
-        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
-        $schemaData->setType(static::VALUE_TYPE_ARRAY);
-        $schemaData->setItems($this->schemaComponentBuilder->createItemsTransfer($resourceRelationships));
-
-        return $schemaData;
+        return $this->schemaComponentBuilder
+            ->createSchemaDataTransfer($schemaName)
+            ->setType(static::VALUE_TYPE_ARRAY)
+            ->setItems($this->schemaComponentBuilder->createItemsTransfer($resourceRelationships));
     }
 
     /**

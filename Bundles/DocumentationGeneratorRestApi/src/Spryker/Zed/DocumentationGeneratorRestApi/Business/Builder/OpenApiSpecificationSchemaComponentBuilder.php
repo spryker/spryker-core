@@ -206,7 +206,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     }
 
     /**
-     * @param array $resourceRelationships
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */
@@ -215,10 +215,13 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         $schema = new SchemaItemsTransfer();
 
         foreach ($resourceRelationships as $resourceRelationship) {
+            $schemaName = $this
+                ->pluginResourceTypeStorage
+                ->getResponseAttributesSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
             $schema->addOneOf(
                 sprintf(
                     static::PATTERN_SCHEMA_REFERENCE,
-                    $this->pluginResourceTypeStorage->getResponseAttributesSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType())
+                    $schemaName
                 )
             );
         }

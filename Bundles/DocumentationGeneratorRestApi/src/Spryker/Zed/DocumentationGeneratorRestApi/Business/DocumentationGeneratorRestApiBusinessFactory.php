@@ -40,6 +40,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshi
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -161,9 +163,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->getResourceRoutesPluginProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
             $this->getTextInflector(),
-            $this->createPluginResourceTypeStorage(),
-            $this->createResourceTransferAnalyzer(),
-            $this->createResourceRelationshipsPluginAnalyzer()
+            $this->createPluginResourceTypeStorageProcessor()
         );
     }
 
@@ -354,6 +354,19 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new OpenApiSpecificationSchemaComponentBuilder(
             $this->createResourceTransferAnalyzer(),
             $this->createPluginResourceTypeStorage()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface
+     */
+    public function createPluginResourceTypeStorageProcessor(): PluginResourceTypeStorageProcessorInterface
+    {
+        return new PluginResourceTypeStorageProcessor(
+            $this->createPluginResourceTypeStorage(),
+            $this->createResourceTransferAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer(),
+            $this->createGlueAnnotationAnalyzer()
         );
     }
 

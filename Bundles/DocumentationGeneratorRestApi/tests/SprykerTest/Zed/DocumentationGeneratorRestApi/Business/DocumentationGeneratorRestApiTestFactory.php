@@ -44,6 +44,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshi
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -225,9 +227,20 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             [$this->createResourceRoutePluginsProviderPluginMock()],
             $this->createGlueAnnotationAnalyzer(),
             $this->createInflector(),
+            $this->createPluginResourceTypeStorageProcessor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface
+     */
+    protected function createPluginResourceTypeStorageProcessor(): PluginResourceTypeStorageProcessorInterface
+    {
+        return new PluginResourceTypeStorageProcessor(
             $this->createPluginResourceTypeStorage(),
             $this->createResourceTransferAnalyzer(),
-            $this->createResourceRelationshipsPluginAnalyzer()
+            $this->createResourceRelationshipsPluginAnalyzer(),
+            $this->createGlueAnnotationAnalyzer()
         );
     }
 
