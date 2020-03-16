@@ -42,8 +42,10 @@ class NavigationComponentConfigFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (array $navigationItems = []) {
-            return $this->utilEncodingService->encodeJson($this->getMenuTree($navigationItems));
+        return function (array $navigationItems = []): ?string {
+            $menuTree = $this->getMenuTree($navigationItems);
+
+            return $this->utilEncodingService->encodeJson($menuTree);
         };
     }
 
