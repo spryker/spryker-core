@@ -97,6 +97,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
         $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
 
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isQuoteShipmentExpenseSourcePriceSet($quoteTransfer)) {
+            return true;
+        }
+
         if (
             !$this->isCurrencyChanged($quoteTransfer)
             && (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getSourcePrice())
@@ -105,6 +109,44 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteShipmentExpenseSourcePriceSet(QuoteTransfer $quoteTransfer): bool
+    {
+        $expenseTransfer = $this->findExpenseByShipment($quoteTransfer);
+
+        if (!$expenseTransfer) {
+            return false;
+        }
+
+        $expenseShipmentMethod = $expenseTransfer->getShipment()->getMethod();
+
+        return $expenseShipmentMethod->getSourcePrice() !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findExpenseByShipment(QuoteTransfer $quoteTransfer): ?ExpenseTransfer
+    {
+        $shipmentTransfer = $quoteTransfer->getShipment();
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+
+            if ($expenseShipmentTransfer && $expenseShipmentTransfer->getShipmentSelection() === $shipmentTransfer->getShipmentSelection()) {
+                return $expenseTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
