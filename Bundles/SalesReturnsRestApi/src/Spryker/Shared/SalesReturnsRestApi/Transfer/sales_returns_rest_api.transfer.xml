@@ -65,6 +65,7 @@
     <transfer name="ReturnableItemFilter">
         <property name="customerReference" type="string"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
     </transfer>
 
     <transfer name="RestReturnableItemsAttributes">

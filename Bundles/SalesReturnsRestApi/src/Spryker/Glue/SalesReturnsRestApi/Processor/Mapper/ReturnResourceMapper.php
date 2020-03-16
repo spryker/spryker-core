@@ -9,6 +9,7 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
@@ -122,13 +123,29 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
         $restReturnItemsAttributesTransfer = [];
 
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $restReturnItemsAttributesTransfer[] = $this->ordersRestApiResource->mapItemTransferToRestOrderItemsAttributesTransfer(
+            $restReturnItemsAttributesTransfer[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
                 new RestOrderItemsAttributesTransfer()
             );
         }
 
         return $restReturnItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
+        return $this->ordersRestApiResource->mapItemTransferToRestOrderItemsAttributesTransfer(
+            $itemTransfer,
+            $restOrderItemsAttributesTransfer
+        );
     }
 
     /**
