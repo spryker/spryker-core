@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserConfig;
@@ -50,8 +51,14 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $userFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
+     */
+    protected $aclGroupAdder;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
+     * @param \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface $aclGroupAdder
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
@@ -59,6 +66,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     public function __construct(
         MerchantUserToUtilTextServiceInterface $utilTextService,
         MerchantUserToUserFacadeInterface $userFacade,
+        AclGroupAdderInterface $aclGroupAdder,
         MerchantUserEntityManagerInterface $merchantUserEntityManager,
         MerchantUserRepositoryInterface $merchantUserRepository,
         MerchantUserConfig $merchantUserConfig
@@ -68,6 +76,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserConfig = $merchantUserConfig;
         $this->userFacade = $userFacade;
+        $this->aclGroupAdder = $aclGroupAdder;
     }
 
     /**
@@ -91,6 +100,11 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         }
 
         $merchantUserTransfer = $this->merchantUserEntityManager->create($merchantUserTransfer);
+
+        $this->aclGroupAdder->addMerchantAdminToGroup(
+            $merchantUserTransfer,
+            $this->merchantUserConfig->getMerchantAdminGroupReference()
+        );
 
         return $merchantUserResponseTransfer->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
     }

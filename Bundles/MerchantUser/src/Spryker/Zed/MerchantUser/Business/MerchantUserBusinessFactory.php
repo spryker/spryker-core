@@ -8,12 +8,17 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
+use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
+use Spryker\Zed\MerchantUser\Business\User\UserMapper;
+use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
@@ -34,10 +39,19 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserCreator(
             $this->getUtilTextService(),
             $this->getUserFacade(),
+            $this->createAclGroupAdder(),
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
+     */
+    public function createAclGroupAdder(): AclGroupAdderInterface
+    {
+        return new AclGroupAdder($this->getAclFacade());
     }
 
     /**
@@ -77,6 +91,14 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): MerchantUserToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface
+     */
+    public function getAclFacade(): MerchantUserToAclFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_ACL);
     }
 
     /**

@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -35,6 +37,7 @@ class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorP
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -47,9 +50,11 @@ class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithAttributesPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -35,6 +37,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -47,11 +50,12 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
     }
 
     /**
+     * {@inheritDoc}
      * Data types used by this field. (string, integer, list)
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {
@@ -63,6 +67,8 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string[]

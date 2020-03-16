@@ -252,13 +252,13 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Gets stocks for store.
+     *  - Gets stock types for store.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
@@ -273,7 +273,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping();
 
@@ -288,7 +288,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping();
 

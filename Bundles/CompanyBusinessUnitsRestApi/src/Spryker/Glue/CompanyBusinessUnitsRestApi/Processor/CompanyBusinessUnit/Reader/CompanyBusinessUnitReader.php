@@ -131,8 +131,9 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCompanyBusinessUnitCollectionResponse(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): RestResponseInterface
-    {
+    protected function createCompanyBusinessUnitCollectionResponse(
+        CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
+    ): RestResponseInterface {
         $companyBusinessUnitRestResources = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {

@@ -39,7 +39,10 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
      *
      * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage|null
      */
-    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(string $offerReference, string $storeName): ?SpyProductOfferAvailabilityStorage;
+    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
+        string $offerReference,
+        string $storeName
+    ): ?SpyProductOfferAvailabilityStorage;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

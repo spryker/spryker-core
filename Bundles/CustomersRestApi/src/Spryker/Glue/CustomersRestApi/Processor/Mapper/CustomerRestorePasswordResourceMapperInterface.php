@@ -17,5 +17,7 @@ interface CustomerRestorePasswordResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerRestorePasswordAttributesToCustomerTransfer(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): CustomerTransfer;
+    public function mapCustomerRestorePasswordAttributesToCustomerTransfer(
+        RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
+    ): CustomerTransfer;
 }

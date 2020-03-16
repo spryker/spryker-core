@@ -29,8 +29,10 @@ class CustomerAccess implements CustomerAccessInterface
      * @param \Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface $customerAccessStorageReader
      * @param \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig $customerAccessConfig
      */
-    public function __construct(CustomerAccessPermissionToCustomerAccessStorageClientInterface $customerAccessStorageReader, CustomerAccessPermissionConfig $customerAccessConfig)
-    {
+    public function __construct(
+        CustomerAccessPermissionToCustomerAccessStorageClientInterface $customerAccessStorageReader,
+        CustomerAccessPermissionConfig $customerAccessConfig
+    ) {
         $this->customerAccessStorageReader = $customerAccessStorageReader;
         $this->customerAccessConfig = $customerAccessConfig;
     }
