@@ -52,23 +52,35 @@ class NavigationComponentConfigFunction extends TwigFunction
     /**
      * @param array $navigationItems
      *
-     * @return array
+     * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationItem[]
      */
     protected function getMenuTree(array $navigationItems = []): array
     {
         $items = [];
 
         foreach ($navigationItems as $navigationItem) {
-            $items[] = [
-                'title' => $navigationItem['label'],
-                'url' => $navigationItem['uri'],
-                'icon' => $this->getNavigationItemIcon($navigationItem),
-                'isActive' => $this->isNavigationItemActive($navigationItem),
-                'subItems' => $this->getNavigationItemSubItems($navigationItem),
-            ];
+            $items[] = $this->createNavigationItem($navigationItem);
         }
 
         return $items;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationItem
+     */
+    protected function createNavigationItem(array $item): NavigationItem
+    {
+        $navigationItem = new NavigationItem();
+
+        $navigationItem->setTitle($item['label']);
+        $navigationItem->setUrl($item['uri']);
+        $navigationItem->setIcon($this->getNavigationItemIcon($item));
+        $navigationItem->setIsActive($this->isNavigationItemActive($item));
+        $navigationItem->setSubItems($this->getNavigationItemSubItems($item));
+
+        return $navigationItem;
     }
 
     /**
