@@ -33,4 +33,14 @@ class PriceProductStorageConfig extends AbstractSharedConfig
         'NET_MODE',
         'GROSS_MODE',
     ];
+
+    /**
+     * Defines queue name for publish.
+     */
+    public const PUBLISH_PRICE_PRODUCT_ABSTRACT = 'publish.price_product_abstract';
+
+    /**
+     * Defines queue name for publish.
+     */
+    public const PUBLISH_PRICE_PRODUCT_CONCRETE = 'publish.price_product_concrete';
 }

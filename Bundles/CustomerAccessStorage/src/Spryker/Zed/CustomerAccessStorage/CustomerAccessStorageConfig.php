@@ -34,6 +34,8 @@ class CustomerAccessStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getCustomerAccessEventQueueName(): ?string

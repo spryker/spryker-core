@@ -11,4 +11,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class AvailabilityStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * Defines queue name that as used for asynchronous event handling.
+     */
+    public const PUBLISH_AVAILABILITY = 'publish.availability';
 }

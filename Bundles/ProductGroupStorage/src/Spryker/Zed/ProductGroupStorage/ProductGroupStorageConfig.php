@@ -34,6 +34,8 @@ class ProductGroupStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductGroupEventQueueName(): ?string

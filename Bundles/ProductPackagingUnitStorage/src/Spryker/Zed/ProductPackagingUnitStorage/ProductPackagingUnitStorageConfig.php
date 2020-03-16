@@ -34,6 +34,8 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductPackagingUnitEventQueueName(): ?string
