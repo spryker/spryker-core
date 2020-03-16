@@ -56,11 +56,13 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     {
         $eventCollection = [];
 
-        foreach ($this->publisherPlugins as $queueName => $publisherPlugin) {
-            if (!is_array($publisherPlugin)) {
-                $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherPlugin->getSubscribedEvents(), get_class($publisherPlugin));
-            } else {
-                $eventCollection = $this->registerSubscribedEventsByQueueName($eventCollection, $publisherPlugin, $queueName);
+        foreach ($this->publisherPlugins as $queueName => $publisherData) {
+            if (is_object($publisherData)) {
+                $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherData->getSubscribedEvents(), get_class($publisherData));
+            }
+
+            if (is_array($publisherData)) {
+                $eventCollection = $this->registerSubscribedEventsByQueueName($eventCollection, $publisherData, $queueName);
             }
         }
 
