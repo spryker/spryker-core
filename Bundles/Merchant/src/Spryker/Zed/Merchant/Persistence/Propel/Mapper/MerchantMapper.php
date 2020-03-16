@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 
 class MerchantMapper implements MerchantMapperInterface
@@ -46,6 +47,16 @@ class MerchantMapper implements MerchantMapperInterface
             $spyMerchant->toArray(),
             true
         );
+
+        $urlTransfers = new ArrayObject();
+        foreach ($spyMerchant->getSpyUrls() as $urlEntity) {
+            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            $urlTransfer->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
+
+            $urlTransfers->append($urlTransfer);
+        }
+
+        $merchantTransfer->setUrlCollection($urlTransfers);
 
         return $merchantTransfer;
     }

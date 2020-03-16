@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
+use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -39,21 +40,29 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantPostSavePlugins;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface
+     */
+    protected $merchantUrlSaver;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[] $merchantPostCreatePlugins
+     * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantConfig $merchantConfig,
         array $merchantPostSavePlugins,
-        array $merchantPostCreatePlugins
+        array $merchantPostCreatePlugins,
+        MerchantUrlSaverInterface $merchantUrlSaver
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostCreatePlugins = $merchantPostCreatePlugins;
         $this->merchantPostSavePlugins = $merchantPostSavePlugins;
+        $this->merchantUrlSaver = $merchantUrlSaver;
     }
 
     /**
@@ -94,6 +103,7 @@ class MerchantCreator implements MerchantCreatorInterface
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 
         return $merchantTransfer;

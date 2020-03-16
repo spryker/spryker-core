@@ -16,4 +16,5 @@ interface MerchantDataSetInterface
     public const EMAIL = 'email';
     public const MERCHANT_REFERENCE = 'merchant_reference';
     public const IS_ACTIVE = 'is_active';
+    public const URL = 'url';
 }

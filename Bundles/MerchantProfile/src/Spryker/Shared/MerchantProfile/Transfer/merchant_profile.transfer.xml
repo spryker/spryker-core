@@ -6,7 +6,6 @@
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="merchantProfile" type="MerchantProfile"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantProfile">
@@ -72,13 +71,6 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
-    </transfer>
-
-    <transfer name="Url">
-        <property name="idUrl" type="int"/>
-        <property name="fkResourceMerchant" type="int"/>
-        <property name="urlPrefix" type="string"/>
-        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">
