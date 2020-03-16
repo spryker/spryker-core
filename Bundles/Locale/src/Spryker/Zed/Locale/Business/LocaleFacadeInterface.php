@@ -85,7 +85,7 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales();
 
