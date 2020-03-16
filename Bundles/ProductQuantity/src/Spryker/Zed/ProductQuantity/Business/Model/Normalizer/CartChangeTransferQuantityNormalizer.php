@@ -101,8 +101,11 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function normalizeItemTransfer(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
-    {
+    protected function normalizeItemTransfer(
+        ItemTransfer $itemTransfer,
+        ProductQuantityTransfer $productQuantityTransfer,
+        int $totalQuantityByGroupKey
+    ): ItemTransfer {
         $nearestQuantity = $this->productQuantityService->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
         $totalQuantityByGroupKeyAfterAdjustment = $totalQuantityByGroupKey - $itemTransfer->getQuantity() + $nearestQuantity;
 

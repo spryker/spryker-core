@@ -69,8 +69,10 @@ class PermissionSynchronizer implements PermissionSynchronizerInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function addPermissionCollection(PermissionCollectionTransfer $permissionCollectionTransferA, PermissionCollectionTransfer $permissionCollectionTransferB)
-    {
+    protected function addPermissionCollection(
+        PermissionCollectionTransfer $permissionCollectionTransferA,
+        PermissionCollectionTransfer $permissionCollectionTransferB
+    ) {
         foreach ($permissionCollectionTransferB->getPermissions() as $permissionTransfer) {
             $permissionCollectionTransferA->addPermission($permissionTransfer);
         }

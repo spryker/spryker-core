@@ -18,8 +18,9 @@ class ProductReplacementStorageMapper
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $productReplacementForStorageEntityCollection): array
-    {
+    public function mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers(
+        ObjectCollection $productReplacementForStorageEntityCollection
+    ): array {
         $synchronizationDataTransfers = [];
 
         foreach ($productReplacementForStorageEntityCollection as $productReplacementForStorageEntity) {

@@ -237,8 +237,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         $shoppingListItemIds = [];
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
@@ -530,8 +531,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $shoppingListCollectionTransfer, int $idCompanyUser): ShoppingListCollectionTransfer
-    {
+    protected function filterBlacklistedShoppingLists(
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
+        int $idCompanyUser
+    ): ShoppingListCollectionTransfer {
         $filteredShoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
         $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($idCompanyUser);
         foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingListTransfer) {

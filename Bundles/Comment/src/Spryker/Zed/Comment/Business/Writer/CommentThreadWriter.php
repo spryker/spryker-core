@@ -77,8 +77,10 @@ class CommentThreadWriter implements CommentThreadWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
-    {
+    public function duplicateCommentThread(
+        CommentFilterTransfer $commentFilterTransfer,
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentThreadResponseTransfer {
         $commentFilterTransfer
             ->requireOwnerId()
             ->requireOwnerType();

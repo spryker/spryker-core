@@ -23,6 +23,8 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryDataFeedTransfer $categoryDataFeedTransfer

@@ -37,8 +37,12 @@ class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPage
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         if (!isset($productData[static::KEY_PRODUCT_LIST_MAP])) {
             return $pageMapTransfer;
         }

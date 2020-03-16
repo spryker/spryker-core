@@ -157,7 +157,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer;
 
     /**
      * Specification:
@@ -195,7 +197,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer;
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer;
 
     /**
      * Specification:
@@ -223,7 +227,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

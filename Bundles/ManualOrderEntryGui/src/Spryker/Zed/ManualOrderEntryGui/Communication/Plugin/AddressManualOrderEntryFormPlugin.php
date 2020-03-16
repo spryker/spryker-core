@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -30,6 +32,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,6 +47,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -61,6 +67,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -73,6 +81,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

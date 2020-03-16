@@ -162,8 +162,10 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      *
      * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage
      */
-    protected function getProductConcreteProductListStorageEntity(int $idProduct, array $indexedProductConcreteProductListStorageEntities): SpyProductConcreteProductListStorage
-    {
+    protected function getProductConcreteProductListStorageEntity(
+        int $idProduct,
+        array $indexedProductConcreteProductListStorageEntities
+    ): SpyProductConcreteProductListStorage {
         if (isset($indexedProductConcreteProductListStorageEntities[$idProduct])) {
             return $indexedProductConcreteProductListStorageEntities[$idProduct];
         }
