@@ -23,7 +23,7 @@ class DummyMarketplacePaymentConfig extends AbstractBundleConfig
     public function getDummyMarketplacePaymentMethods(): array
     {
         return $this->get(
-            DummyMarketplacePaymentConstants::DUMMY_MARKETPLACE_PAYMENT_METHODS,
+            DummyMarketplacePaymentConstants::PAYMENT_METHODS,
             $this->getDummyMarketplaceDefaultPaymentMethods()
         );
     }

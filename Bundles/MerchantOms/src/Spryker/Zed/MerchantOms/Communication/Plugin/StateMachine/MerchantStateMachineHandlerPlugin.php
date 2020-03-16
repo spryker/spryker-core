@@ -110,7 +110,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      *
      * @api
      *
-     * @param array $stateIds
+     * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */

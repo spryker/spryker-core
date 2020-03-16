@@ -42,7 +42,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $merchantSalesOrderQuery = $this->addMerchantSalesOrderTotalsDataToMerchantSalesOrderQuery(
             $merchantSalesOrderQuery
         );
-        $merchantSalesOrderQuery = $this->applyFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
+        $merchantSalesOrderQuery = $this->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery */
         $merchantSalesOrderQuery = $this->buildQueryFromCriteria(
             $merchantSalesOrderQuery,
@@ -50,7 +50,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         );
         $merchantSalesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         $merchantSalesOrderEntityCollection = $this
-            ->applyPagination($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer->getPagination())
+            ->applyMerchantOrderPagination($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer->getPagination())
             ->find();
 
         if ($merchantSalesOrderEntityCollection->count() === 0) {
@@ -132,7 +132,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderQuery
         );
         $merchantSalesOrderEntity = $this
-            ->applyFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer)
+            ->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer)
             ->findOne();
 
         if (!$merchantSalesOrderEntity) {
@@ -175,7 +175,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    protected function applyFilters(
+    protected function applyMerchantOrderFilters(
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): SpyMerchantSalesOrderQuery {
@@ -224,7 +224,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    protected function applyPagination(
+    protected function applyMerchantOrderPagination(
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         ?PaginationTransfer $paginationTransfer = null
     ): SpyMerchantSalesOrderQuery {
@@ -256,10 +256,14 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
      */
-    public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer
-    {
+    public function findMerchantOrderItem(
+        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+    ): ?MerchantOrderItemTransfer {
         $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
-        $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters($merchantOrderItemCriteriaTransfer, $merchantSalesOrderItemQuery);
+        $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters(
+            $merchantOrderItemCriteriaTransfer,
+            $merchantSalesOrderItemQuery
+        );
 
         $merchantSalesOrderEntity = $merchantSalesOrderItemQuery->findOne();
 
@@ -267,12 +271,12 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return null;
         }
 
-        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
-
-        return $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
-            $merchantSalesOrderEntity,
-            new MerchantOrderItemTransfer()
-        );
+        return $this->getFactory()
+            ->createMerchantSalesOrderMapper()
+            ->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+                $merchantSalesOrderEntity,
+                new MerchantOrderItemTransfer()
+            );
     }
 
     /**

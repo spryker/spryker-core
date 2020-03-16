@@ -68,7 +68,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
     {
         $resolver->setDefaults([
             'data_class' => DummyMarketplacePaymentTransfer::class,
-        ])->setRequired(self::OPTIONS_FIELD_NAME);
+        ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
     /**

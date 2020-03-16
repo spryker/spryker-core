@@ -34,13 +34,13 @@ class StateMachineItemReader implements StateMachineItemReaderInterface
     {
         $stateMachineItemTransfers = [];
 
-        foreach (array_unique($stateIds) as $stateId) {
-            $merchantOrderItemIds = $this->merchantOmsRepository->getMerchantOrderItemIdsByStateId($stateId);
+        foreach (array_unique($stateIds) as $idState) {
+            $merchantOrderItemIds = $this->merchantOmsRepository->getMerchantOrderItemIdsByIdState($idState);
 
-            foreach ($merchantOrderItemIds as $merchantOrderItemId) {
+            foreach ($merchantOrderItemIds as $idMerchantOrderItem) {
                 $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
-                    ->setIdentifier($merchantOrderItemId)
-                    ->setIdItemState($stateId);
+                    ->setIdentifier($idMerchantOrderItem)
+                    ->setIdItemState($idState);
             }
         }
 

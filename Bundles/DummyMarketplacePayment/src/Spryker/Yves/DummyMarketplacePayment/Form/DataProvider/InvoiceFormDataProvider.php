@@ -8,7 +8,6 @@
 namespace Spryker\Yves\DummyMarketplacePayment\Form\DataProvider;
 
 use Generated\Shared\Transfer\DummyMarketplacePaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
@@ -21,15 +20,13 @@ class InvoiceFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getPayment() === null) {
-            $quoteTransfer->setPayment(new PaymentTransfer());
-        }
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            if ($paymentTransfer->getDummyMarketplacePaymentInvoice()) {
+                continue;
+            }
 
-        if ($quoteTransfer->getPayment()->getDummyMarketplacePaymentInvoice() !== null) {
-            return $quoteTransfer;
+            $paymentTransfer->setDummyMarketplacePaymentInvoice(new DummyMarketplacePaymentTransfer());
         }
-
-        $quoteTransfer->getPayment()->setDummyMarketplacePaymentInvoice(new DummyMarketplacePaymentTransfer());
 
         return $quoteTransfer;
     }

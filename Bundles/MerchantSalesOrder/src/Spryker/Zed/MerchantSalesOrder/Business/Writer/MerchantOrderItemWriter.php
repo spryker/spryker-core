@@ -49,7 +49,8 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
     {
         $merchantOrderItemTransfer->requireIdMerchantOrderItem();
         $merchantOrderItemResponseTransfer = (new MerchantOrderItemResponseTransfer())->setIsSuccessful(true);
-        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
         $existingMerchantOrderItemTransfer = $this->merchantSalesOrderRepository->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
 
@@ -71,8 +72,10 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
      */
-    protected function addErrorMessage(MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer, string $message): MerchantOrderItemResponseTransfer
-    {
+    protected function addErrorMessage(
+        MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer,
+        string $message
+    ): MerchantOrderItemResponseTransfer {
         return $merchantOrderItemResponseTransfer
             ->setIsSuccessful(false)
             ->addMessage((new MessageTransfer())->setMessage($message));

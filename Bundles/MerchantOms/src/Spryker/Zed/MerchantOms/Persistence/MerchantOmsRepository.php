@@ -16,14 +16,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRepositoryInterface
 {
     /**
-     * @param int $stateId
+     * @param int $idState
      *
      * @return int[]
      */
-    public function getMerchantOrderItemIdsByStateId(int $stateId): array
+    public function getMerchantOrderItemIdsByIdState(int $idState): array
     {
         return $this->getFactory()->getMerchantSalesOrderItemPropelQuery()
-            ->filterByFkStateMachineItemState($stateId)
+            ->filterByFkStateMachineItemState($idState)
             ->select(SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM)
             ->find()
             ->toArray();

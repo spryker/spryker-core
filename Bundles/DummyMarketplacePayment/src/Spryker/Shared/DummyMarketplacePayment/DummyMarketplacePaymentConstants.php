@@ -12,5 +12,5 @@ namespace Spryker\Shared\DummyMarketplacePayment;
  */
 interface DummyMarketplacePaymentConstants
 {
-    public const DUMMY_MARKETPLACE_PAYMENT_METHODS = 'DUMMY_MARKETPLACE_PAYMENT_METHODS';
+    public const PAYMENT_METHODS = 'DUMMY_MARKETPLACE_PAYMENT:PAYMENT_METHODS';
 }
