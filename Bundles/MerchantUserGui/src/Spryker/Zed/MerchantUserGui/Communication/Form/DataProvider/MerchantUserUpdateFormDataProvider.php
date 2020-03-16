@@ -32,7 +32,7 @@ class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvi
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getStatusSelectChoices(): array
     {

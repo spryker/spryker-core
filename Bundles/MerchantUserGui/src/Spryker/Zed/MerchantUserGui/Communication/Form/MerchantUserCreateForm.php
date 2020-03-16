@@ -74,8 +74,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this
-            ->addEmailField($builder)
+        $this->addEmailField($builder)
             ->addFirstNameField($builder)
             ->addLastNameField($builder);
     }
@@ -87,8 +86,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_USERNAME, TextType::class, [
+        $builder->add(static::FIELD_USERNAME, TextType::class, [
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
@@ -107,9 +105,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     protected function addMerchantId(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_MERCHANT_ID, HiddenType::class, [
-                'label' => 'id_merchant',
+        $builder->add(static::FIELD_MERCHANT_ID, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -125,10 +121,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     protected function addMerchantUserId(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_MERCHANT_USER_ID, HiddenType::class, [
-                'label' => 'id_merchant_user',
-            ]);
+        $builder->add(static::FIELD_MERCHANT_USER_ID, HiddenType::class);
 
         return $this;
     }
@@ -140,8 +133,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -157,8 +149,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],

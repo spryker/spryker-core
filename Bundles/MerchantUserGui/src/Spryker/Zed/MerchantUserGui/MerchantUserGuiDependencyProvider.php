@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeBri
  */
 class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_MERCHANT_USER_QUERY = 'PROPEL_MERCHANT_USER_QUERY';
+    public const PROPEL_QUERY_MERCHANT_USER = 'PROPEL_MERCHANT_USER_QUERY';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_USER = 'FACADE_USER';
 
@@ -45,7 +45,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantUserPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_MERCHANT_USER_QUERY, function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_USER, function () {
             return SpyMerchantUserQuery::create();
         });
 

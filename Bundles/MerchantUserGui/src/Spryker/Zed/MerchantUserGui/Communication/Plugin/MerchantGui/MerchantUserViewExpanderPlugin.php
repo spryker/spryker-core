@@ -19,6 +19,7 @@ class MerchantUserViewExpanderPlugin extends AbstractPlugin implements MerchantU
 {
     /**
      * {@inheritDoc}
+     * - Expands FormView with data needed for the merchant user tab.
      *
      * @api
      *

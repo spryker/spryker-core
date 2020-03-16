@@ -42,7 +42,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Disable MerchantUsers that related to given criteria.
+     * - Disables MerchantUsers that related to given criteria.
      *
      * @api
      *

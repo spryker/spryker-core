@@ -32,14 +32,14 @@ class MerchantUserStatusController extends AbstractController
         $redirectUrl = sprintf('%s#%s', $request->headers->get('referer'), 'tab-content-merchant-user');
 
         if (!$idMerchantUser || !$newMerchantUserStatus) {
-            return $this->returnWrongParametersErrorRedirect($redirectUrl);
+            return $this->wrongParametersErrorRedirect($redirectUrl);
         }
 
         $merchantUserCriteriaTransfer = new MerchantUserCriteriaTransfer();
         $merchantUserCriteriaTransfer->setIdMerchantUser($idMerchantUser)->setWithUser(true);
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->findOne($merchantUserCriteriaTransfer);
         if (!$merchantUserTransfer || !$merchantUserTransfer->getUser()) {
-            return $this->returnWrongParametersErrorRedirect($redirectUrl);
+            return $this->wrongParametersErrorRedirect($redirectUrl);
         }
 
         $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);
@@ -47,7 +47,7 @@ class MerchantUserStatusController extends AbstractController
         $merchantResponseTransfer = $this->getFactory()->getMerchantUserFacade()->update($merchantUserTransfer);
 
         if (!$merchantResponseTransfer->getIsSuccessful()) {
-            return $this->returnWrongParametersErrorRedirect($redirectUrl);
+            return $this->wrongParametersErrorRedirect($redirectUrl);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
@@ -60,7 +60,7 @@ class MerchantUserStatusController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function returnWrongParametersErrorRedirect(string $redirectUrl): RedirectResponse
+    protected function wrongParametersErrorRedirect(string $redirectUrl): RedirectResponse
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 

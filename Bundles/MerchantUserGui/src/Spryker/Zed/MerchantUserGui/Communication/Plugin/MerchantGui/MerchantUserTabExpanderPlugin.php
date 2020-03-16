@@ -20,6 +20,7 @@ class MerchantUserTabExpanderPlugin extends AbstractPlugin implements MerchantFo
 {
     /**
      * {@inheritDoc}
+     * - Expands Form with new merchant user list tab.
      *
      * @api
      *

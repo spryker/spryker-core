@@ -36,7 +36,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getMerchantUserPropelQuery(): SpyMerchantUserQuery
     {
-        return $this->getProvidedDependency(MerchantUserGuiDependencyProvider::PROPEL_MERCHANT_USER_QUERY);
+        return $this->getProvidedDependency(MerchantUserGuiDependencyProvider::PROPEL_QUERY_MERCHANT_USER);
     }
 
     /**
