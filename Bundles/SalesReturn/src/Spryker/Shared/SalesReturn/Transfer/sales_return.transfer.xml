@@ -39,7 +39,6 @@
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
-        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnItemFilter">

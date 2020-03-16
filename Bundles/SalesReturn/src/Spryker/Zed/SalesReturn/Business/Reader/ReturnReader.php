@@ -26,6 +26,8 @@ class ReturnReader implements ReturnReaderInterface
 
     protected const ID_SALES_RETURN_SORT_FIELD = 'id_sales_return';
     protected const DEFAULT_SORT_DIRECTION = 'DESC';
+    protected const DEFAULT_OFFSET = 1;
+    protected const DEFAULT_LIMIT = 10;
 
     /**
      * @var \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface
@@ -246,6 +248,8 @@ class ReturnReader implements ReturnReaderInterface
         $filterTransfer = $returnFilterTransfer->getFilter() ?? new FilterTransfer();
 
         $defaultFilterTransfer = (new FilterTransfer())
+            ->setOffset(static::DEFAULT_OFFSET)
+            ->setLimit(static::DEFAULT_LIMIT)
             ->setOrderBy(static::ID_SALES_RETURN_SORT_FIELD)
             ->setOrderDirection(static::DEFAULT_SORT_DIRECTION);
 

@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 
 /**
@@ -264,7 +263,7 @@ class GetReturnsTest extends Unit
     /**
      * @return void
      */
-    public function testGetReturnsRetrievesReturnsByPagination(): void
+    public function testGetReturnsEnsurePagination(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -275,7 +274,7 @@ class GetReturnsTest extends Unit
 
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setPagination((new PaginationTransfer())->setPage(1)->setMaxPerPage(2));
+            ->setFilter((new FilterTransfer())->setOffset(1)->setLimit(2));
 
         // Act
         $returnCollectionTransfer = $this->tester
@@ -285,6 +284,8 @@ class GetReturnsTest extends Unit
         // Assert
         $this->assertCount(2, $returnCollectionTransfer->getReturns());
         $this->assertEquals($lastReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
+        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getNextPage());
+        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getLastPage());
     }
 
     /**
@@ -300,8 +301,7 @@ class GetReturnsTest extends Unit
         $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
 
         $returnFilterTransfer = (new ReturnFilterTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setFilter((new FilterTransfer())->setLimit(1));
+            ->setCustomerReference($customerTransfer->getCustomerReference());
 
         // Act
         $returnCollectionTransfer = $this->tester

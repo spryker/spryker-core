@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -86,14 +87,30 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
      */
     public function getReturnCollectionByFilter(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
     {
-        $salesReturnQuery = $this->getFactory()->getSalesReturnPropelQuery();
+        $filterTransfer = $returnFilterTransfer->getFilter();
+
+        $salesReturnQuery = $this->getFactory()
+            ->getSalesReturnPropelQuery()
+            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
 
         $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
 
+        if ($filterTransfer->getOffset() === null && $filterTransfer->getLimit() == null) {
+            $paginationTransfer = (new PaginationTransfer())->setNbResults($salesReturnQuery->count());
+
+            return $this->getFactory()
+                ->createReturnMapper()
+                ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
+                ->setPagination($paginationTransfer);
+        }
+
+        $propelModelPager = $salesReturnQuery->paginate($filterTransfer->getOffset(), $filterTransfer->getLimit());
+        $paginationTransfer = $this->getPagination($propelModelPager);
+
         return $this->getFactory()
             ->createReturnMapper()
-            ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
-            ->setPagination($returnFilterTransfer->getPagination());
+            ->mapReturnEntityCollectionToReturnCollection($propelModelPager->getQuery()->find())
+            ->setPagination($paginationTransfer);
     }
 
     /**
@@ -132,51 +149,23 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             $salesReturnQuery->filterByCustomerReference($returnFilterTransfer->getCustomerReference());
         }
 
-        if ($returnFilterTransfer->getPagination()) {
-            $salesReturnQuery = $this->preparePagination($salesReturnQuery, $returnFilterTransfer->getPagination());
-        }
-
-        if (!$returnFilterTransfer->getPagination()) {
-            $returnFilterTransfer->setPagination((new PaginationTransfer())->setNbResults($salesReturnQuery->count()));
-        }
-
-        // TODO: should we handle case with Pagination:: and Filter::?
-        $salesReturnQuery = $this->buildQueryFromCriteria(
-            $salesReturnQuery,
-            $returnFilterTransfer->getFilter()
-        );
-
-        $salesReturnQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
-
         return $salesReturnQuery;
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Propel\Runtime\Util\PropelModelPager $propelModelPager
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): ModelCriteria
+    protected function getPagination(PropelModelPager $propelModelPager): PaginationTransfer
     {
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPage();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPage();
-
-        $propelModelPager = $query->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+        return (new PaginationTransfer())
+            ->setNbResults($propelModelPager->getNbResults())
             ->setFirstIndex($propelModelPager->getFirstIndex())
             ->setLastIndex($propelModelPager->getLastIndex())
             ->setFirstPage($propelModelPager->getFirstPage())
             ->setLastPage($propelModelPager->getLastPage())
             ->setNextPage($propelModelPager->getNextPage())
             ->setPreviousPage($propelModelPager->getPreviousPage());
-
-        return $propelModelPager->getQuery();
     }
 }
