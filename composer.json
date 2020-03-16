@@ -337,6 +337,7 @@
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
+    "spryker/merchant-storage": "*",
     "spryker/merchant-switcher": "*",
     "spryker/merchant-user": "*",
     "spryker/merchant-user-auth-gui-page": "*",
