@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { LayoutCenteredComponent } from './layout-centered.component';
 import { AuthFooterModule } from '../auth-footer/auth-footer.module';
 
-describe('ZedLayoutCentralComponent', () => {
+describe('LayoutCentralComponent', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
 

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthFooterComponent } from './auth-footer.component';
 import { By } from '@angular/platform-browser';
 
-describe('ZedAuthFooterComponent', () => {
+describe('AuthFooterComponent', () => {
     let component: AuthFooterComponent;
     let fixture: ComponentFixture<AuthFooterComponent>;
 
