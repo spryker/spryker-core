@@ -59,7 +59,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
@@ -75,9 +75,9 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, function (): SpyMerchantSalesOrderItemQuery {
+        $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, $container->factory(function () {
             return SpyMerchantSalesOrderItemQuery::create();
-        });
+        }));
 
         return $container;
     }

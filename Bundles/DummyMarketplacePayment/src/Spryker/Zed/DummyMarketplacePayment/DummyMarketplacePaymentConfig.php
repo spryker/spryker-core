@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DummyMarketplacePayment;
 
-use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -15,26 +14,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class DummyMarketplacePaymentConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDummyMarketplacePaymentMethods(): array
-    {
-        return $this->get(
-            DummyMarketplacePaymentConstants::PAYMENT_METHODS,
-            $this->getDummyMarketplaceDefaultPaymentMethods()
-        );
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDummyMarketplaceDefaultPaymentMethods(): array
-    {
-        return [$this->getSharedConfig()::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE];
-    }
 }

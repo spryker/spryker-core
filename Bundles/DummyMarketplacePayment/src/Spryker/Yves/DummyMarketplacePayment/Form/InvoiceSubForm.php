@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
-    public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    public const FIELD_DATE_OF_BIRTH = 'dateOfBirth';
     public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
     protected const PAYMENT_METHOD = 'invoice';
@@ -40,7 +40,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
      */
     protected function getTemplatePath()
     {
-        return DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
+        return DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME . DIRECTORY_SEPARATOR . static::PAYMENT_METHOD;
     }
 
     /**

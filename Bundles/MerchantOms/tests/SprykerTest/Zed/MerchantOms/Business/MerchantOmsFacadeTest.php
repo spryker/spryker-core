@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantOms\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -56,10 +57,12 @@ class MerchantOmsFacadeTest extends Unit
             MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
         ]);
+        $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
+        $merchantOrderItemCriteriaTransfer->addStateMachineItemStateId($stateEntity->getIdStateMachineItemState());
 
         // Act
 
-        $stateMachineItemTransfers = $this->tester->getFacade()->getStateMachineItemsByStateIds([$stateEntity->getIdStateMachineItemState()]);
+        $stateMachineItemTransfers = $this->tester->getFacade()->getStateMachineItemsByCriteria($merchantOrderItemCriteriaTransfer);
         $stateMachineItemTransfer = $stateMachineItemTransfers[0] ?? null;
 
         // Assert

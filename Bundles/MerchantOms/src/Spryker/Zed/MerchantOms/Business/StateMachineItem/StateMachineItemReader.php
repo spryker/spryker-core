@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Business\StateMachineItem;
 
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface;
 
@@ -26,15 +27,17 @@ class StateMachineItemReader implements StateMachineItemReaderInterface
     }
 
     /**
-     * @param int[] $stateIds
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds(array $stateIds): array
+    public function getStateMachineItemsByCriteria(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
     {
+        $merchantOrderItemCriteriaTransfer->requireStateMachineItemStateIds();
+
         $stateMachineItemTransfers = [];
 
-        foreach (array_unique($stateIds) as $idState) {
+        foreach ($merchantOrderItemCriteriaTransfer->getStateMachineItemStateIds() as $idState) {
             $merchantOrderItemIds = $this->merchantOmsRepository->getMerchantOrderItemIdsByIdState($idState);
 
             foreach ($merchantOrderItemIds as $idMerchantOrderItem) {

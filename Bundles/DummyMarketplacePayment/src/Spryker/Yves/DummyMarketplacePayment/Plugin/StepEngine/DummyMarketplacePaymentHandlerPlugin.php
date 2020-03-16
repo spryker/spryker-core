@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentFactory getFactory()
  */
-class DummyMarketplacePaymentExpanderPlugin extends AbstractPlugin implements StepHandlerPluginInterface
+class DummyMarketplacePaymentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
 {
     /**
      * {@inheritDoc}

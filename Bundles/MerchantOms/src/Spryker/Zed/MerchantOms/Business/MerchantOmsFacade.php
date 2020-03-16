@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -49,12 +50,14 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @api
      *
-     * @param int[] $stateIds
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds(array $stateIds): array
+    public function getStateMachineItemsByCriteria(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
     {
-        return $this->getFactory()->createStateMachineItemReader()->getStateMachineItemsByStateIds($stateIds);
+        return $this->getFactory()
+            ->createStateMachineItemReader()
+            ->getStateMachineItemsByCriteria($merchantOrderItemCriteriaTransfer);
     }
 }

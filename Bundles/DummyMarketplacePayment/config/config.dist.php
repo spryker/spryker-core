@@ -10,20 +10,6 @@ use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Oms\OmsConfig;
 
-$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
-    'Checkout' => [
-        'dummyMarketplacePayment',
-    ],
-];
-$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
-    'Payment' => [
-        'dummyMarketplacePayment',
-    ],
-    'Oms' => [
-        'dummyMarketplacePayment',
-    ],
-];
-
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     $config[KernelConstants::SPRYKER_ROOT] . '/DummyMarketplacePayment/config/Zed/Oms',

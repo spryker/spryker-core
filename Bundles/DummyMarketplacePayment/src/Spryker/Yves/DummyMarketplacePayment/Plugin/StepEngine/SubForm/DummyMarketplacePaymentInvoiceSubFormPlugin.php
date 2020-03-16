@@ -30,7 +30,7 @@ class DummyMarketplacePaymentInvoiceSubFormPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritDoc}
-     * - Creates data provider for Invoice payment method.
+     * - Creates data provider for Invoice payment method form.
      *
      * @api
      *

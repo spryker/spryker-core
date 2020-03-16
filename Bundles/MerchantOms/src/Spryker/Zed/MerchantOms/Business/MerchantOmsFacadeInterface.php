@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 
 interface MerchantOmsFacadeInterface
 {
@@ -42,14 +43,15 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Finds merchant order items with provided state ids.
+     * - Finds merchant order items with provided criteria.
+     * - Requires MerchantOrderItemCriteria.stateMachineItemStateIds transfer field to be set.
      * - Returns array of StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
      *
      * @api
      *
-     * @param int[] $stateIds
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds(array $stateIds): array;
+    public function getStateMachineItemsByCriteria(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
 }

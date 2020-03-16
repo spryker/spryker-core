@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\MerchantOms\Business\StateMachineItem;
 
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+
 interface StateMachineItemReaderInterface
 {
     /**
-     * @param int[] $stateIds
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds(array $stateIds): array;
+    public function getStateMachineItemsByCriteria(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
 }
