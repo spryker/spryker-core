@@ -79,7 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentTransfer)) {
+            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentGroupTransfer)) {
                 continue;
             }
 
@@ -114,16 +114,21 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return bool
      */
-    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
         if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
             return false;
+        }
+
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->existsQuoteShipmentExpenseSourcePrice($quoteTransfer, $shipmentGroupTransfer)) {
+            return true;
         }
 
         if (!$this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) && !$shipmentMethodTransfer->getSourcePrice()) {
@@ -131,6 +136,25 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return bool
+     */
+    protected function existsQuoteShipmentExpenseSourcePrice(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    {
+        $expenseTransfer = $this->findExpenseByShipmentGroup($quoteTransfer, $shipmentGroupTransfer);
+
+        if (!$expenseTransfer || !$expenseTransfer->getShipment()) {
+            return false;
+        }
+
+        $expenseShipmentMethod = $expenseTransfer->getShipment()->getMethod();
+
+        return $expenseShipmentMethod->getSourcePrice() !== null;
     }
 
     /**
