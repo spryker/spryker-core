@@ -79,7 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            if (!$shipmentTransfer->getMethod() || !$shipmentTransfer->getMethod()->getIdShipmentMethod()) {
+            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentTransfer)) {
                 continue;
             }
 
@@ -110,6 +110,47 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return $cartChangeTransfer->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return bool
+     */
+    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    {
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+
+        if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
+            return false;
+        }
+
+        if (!$this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) && !$shipmentMethodTransfer->getSourcePrice()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrencyChanged(ShipmentTransfer $shipmentTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        if ($shipmentTransfer->getMethod() === null) {
+            return false;
+        }
+
+        $shipmentCurrencyIsoCode = $shipmentTransfer->getMethod()->getCurrencyIsoCode();
+        if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
