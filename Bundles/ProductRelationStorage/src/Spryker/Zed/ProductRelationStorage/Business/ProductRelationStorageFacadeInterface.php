@@ -62,18 +62,6 @@ interface ProductRelationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Publishes product relation data publish and unpublish events from spy_product_relation_store table.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByProductRelationStorePublishingEvents(array $eventTransfers): void;
-
-    /**
-     * Specification:
      * - Publishes product relation data by publish and unpublish events from spy_product_relation table.
      *
      * @api

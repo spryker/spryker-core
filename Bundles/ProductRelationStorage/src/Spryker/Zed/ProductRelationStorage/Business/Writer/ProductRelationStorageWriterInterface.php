@@ -32,15 +32,6 @@ interface ProductRelationStorageWriterInterface
      *
      * @return void
      */
-    public function writeProductRelationStorageCollectionByProductRelationStorePublishingEvents(
-        array $eventTransfers
-    ): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
     public function writeProductRelationStorageCollectionByProductRelationEvents(array $eventTransfers): void;
 
     /**

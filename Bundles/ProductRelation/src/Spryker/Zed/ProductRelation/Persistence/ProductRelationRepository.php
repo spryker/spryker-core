@@ -209,6 +209,8 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         $productRelationEntities = $this->getFactory()
             ->createProductRelationQuery()
             ->filterByFkProductAbstract_In($idProductAbstracts)
+            ->leftJoinWithProductRelationStore()
+            ->leftJoinWithSpyProductRelationProductAbstract()
             ->find();
 
         if ($productRelationEntities->getData() === []) {

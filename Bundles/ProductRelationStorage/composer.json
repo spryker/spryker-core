@@ -22,6 +22,7 @@
     "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
+    "spryker/queue": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
   },

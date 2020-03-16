@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageBusinessFactory;
@@ -73,6 +75,13 @@ class ProductRelationStorageListenerTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+        $this->tester->ensureProductRelationTableIsEmpty();
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
 
         $storeDe = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_DE,
@@ -109,7 +118,8 @@ class ProductRelationStorageListenerTest extends Unit
         $this->tester->haveProductRelation(
             $this->productAbstractTransfer->getSku(),
             $this->productAbstractTransferRelated->getIdProductAbstract(),
-            null,
+            'test',
+            'up-selling',
             $storeRelationDeTransfer
         );
     }

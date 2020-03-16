@@ -89,22 +89,6 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @return void
      */
-    public function writeCollectionByProductRelationStorePublishingEvents(array $eventTransfers): void
-    {
-        $this->getFactory()
-            ->createProductRelationStorageWriter()
-            ->writeProductRelationStorageCollectionByProductRelationStorePublishingEvents($eventTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
     public function writeCollectionByProductRelationPublishingEvents(array $eventTransfers): void
     {
         $this->getFactory()

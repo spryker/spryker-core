@@ -89,21 +89,6 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      *
      * @return void
      */
-    public function writeProductRelationStorageCollectionByProductRelationStorePublishingEvents(
-        array $eventTransfers
-    ): void {
-        $productRelationIds = $this->eventBehaviorFacade
-            ->getEventTransferIds($eventTransfers);
-        $productAbstractIds = $this->productRelationFacade->getProductAbstractIdsByProductRelationIds($productRelationIds);
-
-        $this->writeCollection($productAbstractIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
     public function writeProductRelationStorageCollectionByProductRelationPublishingEvents(
         array $eventTransfers
     ): void {
