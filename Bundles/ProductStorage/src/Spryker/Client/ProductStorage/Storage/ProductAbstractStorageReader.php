@@ -411,6 +411,31 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
+        $cachedProductAbstractStorageData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName, $storeName);
+
+        $productAbstractIds = array_diff($productAbstractIds, array_keys($cachedProductAbstractStorageData));
+        $productAbstractIds = $this->filterRestrictedProductAbstractIds($productAbstractIds);
+        if (!$productAbstractIds) {
+            return $cachedProductAbstractStorageData;
+        }
+
+        $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName);
+
+        return $cachedProductAbstractStorageData + $productAbstractStorageData;
+    }
+
+    /**
      * @param array $productAbstractIds
      * @param string $localeName
      *
