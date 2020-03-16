@@ -22,7 +22,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use emptyCache() instead
      *
-     * @return array
+     * @return string[]
      */
     public function deleteAllFiles()
     {
@@ -48,7 +48,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use emptyAutoLoaderCache() instead
      *
-     * @return array
+     * @return string[]
      */
     public function deleteAllAutoloaderFiles()
     {

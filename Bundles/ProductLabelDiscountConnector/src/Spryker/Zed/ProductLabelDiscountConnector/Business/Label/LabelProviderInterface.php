@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductLabelDiscountConnector\Business\Label;
 interface LabelProviderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function findAllLabels();
 }
