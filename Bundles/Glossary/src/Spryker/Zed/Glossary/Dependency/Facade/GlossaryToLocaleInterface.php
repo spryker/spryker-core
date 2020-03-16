@@ -24,7 +24,7 @@ interface GlossaryToLocaleInterface
     public function getCurrentLocale();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales();
 
