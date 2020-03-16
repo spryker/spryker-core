@@ -39,8 +39,11 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfigMock, array $requestParameters, SortSearchResultTransfer $expectedResult): void
-    {
+    public function testFormatResultShouldReturnCorrectFormat(
+        SearchConfigInterface $searchConfigMock,
+        array $requestParameters,
+        SortSearchResultTransfer $expectedResult
+    ): void {
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)

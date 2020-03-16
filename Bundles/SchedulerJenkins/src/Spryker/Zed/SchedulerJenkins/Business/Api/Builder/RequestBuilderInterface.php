@@ -20,5 +20,10 @@ interface RequestBuilderInterface
      *
      * @return \Psr\Http\Message\RequestInterface
      */
-    public function buildPsrRequest(string $requestMethod, ConfigurationProviderInterface $configurationProvider, string $urlPath, string $body = ''): RequestInterface;
+    public function buildPsrRequest(
+        string $requestMethod,
+        ConfigurationProviderInterface $configurationProvider,
+        string $urlPath,
+        string $body = ''
+    ): RequestInterface;
 }

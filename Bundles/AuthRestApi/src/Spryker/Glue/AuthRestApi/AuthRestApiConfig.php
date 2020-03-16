@@ -34,6 +34,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const HEADER_AUTHORIZATION = 'authorization';
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return string
@@ -44,6 +46,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return string

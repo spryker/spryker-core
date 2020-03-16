@@ -113,8 +113,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewAction(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function getShoppingListOverviewAction(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         return $this->getFacade()->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
@@ -143,8 +144,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransferAction(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransferAction(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->getFacade()->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
@@ -181,8 +183,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingListWithCompanyBusinessUnitAction(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
+    public function shareShoppingListWithCompanyBusinessUnitAction(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer {
         return $this->getFacade()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 
@@ -191,8 +194,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingListWithCompanyUserAction(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
+    public function shareShoppingListWithCompanyUserAction(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer {
         return $this->getFacade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
     }
 

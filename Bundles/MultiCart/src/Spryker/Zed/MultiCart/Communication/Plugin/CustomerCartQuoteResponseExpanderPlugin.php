@@ -19,6 +19,7 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderP
 class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Adds customer quote collection to quote response transfer after cart operation handling.
      * - Replace quote with active quote if it exist.

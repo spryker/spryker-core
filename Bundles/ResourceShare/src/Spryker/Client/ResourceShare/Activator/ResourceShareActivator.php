@@ -91,8 +91,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function executeZedCallResourceShareActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
-    {
+    protected function executeZedCallResourceShareActivators(
+        ResourceShareRequestTransfer $resourceShareRequestTransfer,
+        ArrayObject $messageTransfers
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
         $resourceShareResponseTransfer->setMessages(
             $this->mergeResponseMessages(
@@ -110,8 +112,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function executeAfterZedClientActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
-    {
+    protected function executeAfterZedClientActivators(
+        ResourceShareRequestTransfer $resourceShareRequestTransfer,
+        ArrayObject $messageTransfers
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->afterZedResourceShareActivatorStrategyPlugins,
             $resourceShareRequestTransfer
