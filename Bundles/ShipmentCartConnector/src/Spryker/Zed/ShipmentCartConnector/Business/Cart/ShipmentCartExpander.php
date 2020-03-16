@@ -127,7 +127,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return false;
         }
 
-        if (!$shipmentMethodTransfer->getSourcePrice() && $this->existsQuoteShipmentExpenseSourcePrice($quoteTransfer, $shipmentGroupTransfer)) {
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isQuoteShipmentExpenseSourcePrice($quoteTransfer, $shipmentGroupTransfer)) {
             return true;
         }
 
@@ -144,7 +144,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      *
      * @return bool
      */
-    protected function existsQuoteShipmentExpenseSourcePrice(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    protected function isQuoteShipmentExpenseSourcePrice(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
         $expenseTransfer = $this->findExpenseByShipmentGroup($quoteTransfer, $shipmentGroupTransfer);
 
