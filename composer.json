@@ -597,6 +597,7 @@
     "spryker/shopping-list-session": "*",
     "spryker/shopping-list-session-extension": "*",
     "spryker/shopping-list-storage": "*",
+    "spryker/shopping-lists-rest-api": "*",
     "spryker/silex": "*",
     "spryker/sql-criteria-builder": "*",
     "spryker/state-machine": "*",
