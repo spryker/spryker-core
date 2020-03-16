@@ -11,15 +11,15 @@ import { IconModule } from '@spryker/icon';
 import { TextareaModule, TextareaComponent } from '@spryker/textarea';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { SelectModule, SelectComponent } from '@spryker/select';
-import { MpProfileComponent } from './mp-profile/mp-profile.component';
-import { MpProfileModule } from './mp-profile/mp-profile.module';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileModule } from './profile/profile.module';
 import { IconUnitedStatesModule, IconGermanyModule } from './icons';
 import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    MpProfileModule,
+    ProfileModule,
     BrowserModule,
     ButtonModule,
     CardModule,
@@ -41,7 +41,7 @@ export class AppModule extends CustomElementModule {
   protected components = [
     {
       selector: 'mp-profile',
-      component: MpProfileComponent
+      component: ProfileComponent
     },
     {
       selector: 'spy-button',
