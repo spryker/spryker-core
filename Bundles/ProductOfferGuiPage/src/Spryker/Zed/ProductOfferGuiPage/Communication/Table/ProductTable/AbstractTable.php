@@ -28,7 +28,7 @@ abstract class AbstractTable
 
     protected const DEFAULT_PAGE = 1;
     protected const DEFAULT_PAGE_SIZE = 10;
-    protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50];
+    protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
     protected const DEFAULT_ORDER_DIRECTION = 'ASC';
 
     /**

@@ -169,20 +169,8 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
             return $productTableCriteriaTransfer;
         }
 
-        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_CATEGORIES_FILTER_NAME, $this->filters)) {
-            $productTableCriteriaTransfer->setInCategories(
-                $this->filters[ProductOfferGuiPageConfig::PRODUCT_TABLE_CATEGORIES_FILTER_NAME]
-            );
-        }
-
         if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME, $this->filters)) {
             $productTableCriteriaTransfer->setIsActive(true);
-        }
-
-        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_STORES_FILTER_NAME, $this->filters)) {
-            $productTableCriteriaTransfer->setInStores(
-                $this->filters[ProductOfferGuiPageConfig::PRODUCT_TABLE_STORES_FILTER_NAME]
-            );
         }
 
         return $productTableCriteriaTransfer;

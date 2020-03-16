@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferGuiPage;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCategoryFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeBridge;
@@ -26,7 +25,6 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
-    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
@@ -58,7 +56,6 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addCategoryFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
 
@@ -136,22 +133,6 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferGuiPageToProductOfferFacadeBridge(
                 $container->getLocator()->productOffer()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCategoryFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_CATEGORY, function (Container $container) {
-            return new ProductOfferGuiPageToCategoryFacadeBridge(
-                $container->getLocator()->category()->facade()
             );
         });
 

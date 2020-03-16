@@ -153,14 +153,6 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_OFFERS)
-                ->setTitle('Offers')
-                ->setType('text')
-                ->setSortable(true)
-                ->setMultiple(false)
-        );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
                 ->setId(static::COLUMN_KEY_VALID_FROM)
                 ->setTitle('Valid From')
                 ->setType('date')
@@ -177,6 +169,14 @@ class ProductTable extends AbstractTable
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(false)
                 ->setHideable(false)
+                ->setMultiple(false)
+        );
+        $tableConfigurationTransfer->addColumn(
+            (new TableColumnConfigurationTransfer())
+                ->setId(static::COLUMN_KEY_OFFERS)
+                ->setTitle('Offers')
+                ->setType('text')
+                ->setSortable(true)
                 ->setMultiple(false)
         );
 

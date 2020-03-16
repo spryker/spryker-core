@@ -68,7 +68,6 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     protected function buildBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $merchantUserTransfer = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser();
         $localeId = $productTableCriteriaTransfer->requireLocale()
             ->getLocale()
             ->requireIdLocale()
@@ -91,7 +90,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConcreteTransfer::NAME)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductConcreteTransfer::VALID_FROM)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductConcreteTransfer::VALID_TO)
-            ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
             ->groupByIdProduct();
 
         return $productConcreteQuery;
@@ -162,8 +161,6 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     protected function addFilters(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->addIsActiveFilter($productConcreteQuery, $productTableCriteriaTransfer);
-        $productConcreteQuery = $this->addInStoresFilter($productConcreteQuery, $productTableCriteriaTransfer);
-        $productConcreteQuery = $this->addInCategoriesFilter($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addHasOffersFilter($productConcreteQuery, $productTableCriteriaTransfer);
 
         return $productConcreteQuery;
@@ -214,65 +211,6 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery->filterByIsActive(
             $productTableCriteriaTransfer->getIsActive()
         );
-
-        return $productConcreteQuery;
-    }
-
-    /**
-     * @module Store
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    protected function addInStoresFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
-    {
-        if (!$productTableCriteriaTransfer->getInStores()) {
-            return $productConcreteQuery;
-        }
-
-        $productConcreteQuery->useSpyProductAbstractQuery()
-                ->joinSpyProductAbstractStore()
-                ->useSpyProductAbstractStoreQuery()
-                    ->joinSpyStore()
-                    ->useSpyStoreQuery()
-                        ->filterByName_In($productTableCriteriaTransfer->getInStores())
-                    ->endUse()
-                ->endUse()
-            ->endUse();
-
-        return $productConcreteQuery;
-    }
-
-    /**
-     * @module ProductCategory
-     * @module Category
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    protected function addInCategoriesFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
-    {
-        if (!$productTableCriteriaTransfer->getInCategories()) {
-            return $productConcreteQuery;
-        }
-
-        $productConcreteQuery->joinSpyProductAbstract()
-            ->useSpyProductAbstractQuery()
-                ->joinSpyProductCategory()
-                ->useSpyProductCategoryQuery()
-                    ->joinSpyCategory()
-                    ->useSpyCategoryQuery()
-                        ->joinAttribute()
-                        ->useAttributeQuery()
-                            ->filterByName_In($productTableCriteriaTransfer->getInCategories())
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->endUse();
 
         return $productConcreteQuery;
     }

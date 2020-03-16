@@ -12,8 +12,8 @@ use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
-    protected const OPTION_NAME_YES = 'Yes';
-    protected const OPTION_NAME_NO = 'No';
+    protected const OPTION_NAME_ACTIVE = 'Active';
+    protected const OPTION_NAME_INACTIVE = 'Inactive';
 
     /**
      * @return \Generated\Shared\Transfer\TableFilterTransfer
@@ -22,7 +22,7 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     {
         return (new TableFilterTransfer())
             ->setKey(ProductOfferGuiPageConfig::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME)
-            ->setTitle('Is Active')
+            ->setTitle('Status')
             ->setType('select')
             ->addOption(static::OPTION_NAME_MULTISELECT, false)
             ->addOption(static::OPTION_NAME_VALUES, $this->getIsActiveOptions());
@@ -34,8 +34,14 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     protected function getIsActiveOptions(): array
     {
         return [
-            [static::OPTION_VALUE_KEY_TITLE => 'Yes', static::OPTION_VALUE_KEY_VALUE => 1],
-            [static::OPTION_VALUE_KEY_TITLE => 'No', static::OPTION_VALUE_KEY_VALUE => 2],
+            [
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_ACTIVE,
+                static::OPTION_VALUE_KEY_VALUE => 1,
+            ],
+            [
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_INACTIVE,
+                static::OPTION_VALUE_KEY_VALUE => 2,
+            ],
         ];
     }
 }
