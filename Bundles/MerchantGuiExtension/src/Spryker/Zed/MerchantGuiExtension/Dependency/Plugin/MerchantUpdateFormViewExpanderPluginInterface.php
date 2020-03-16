@@ -11,8 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
- *  Specification:
- * - Expands FormView with data that needed for the form render.
+ * Expands FormView with data that needed for the form render.
  *
  * Use this plugin if some additional data must present in form view.
  */
@@ -28,7 +27,7 @@ interface MerchantUpdateFormViewExpanderPluginInterface
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
-     * @return FormView
+     * @return \Symfony\Component\Form\FormView
      */
     public function expand(FormView $view, FormInterface $form, array $options): FormView;
 }
