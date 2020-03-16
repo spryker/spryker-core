@@ -31,7 +31,9 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
             ->addStep($this->createLocalizedAttributesExtractorStep([
                 MerchantDataSetInterface::URL,
             ]))
-            ->addStep(new MerchantWriterStep());
+            ->addStep(new MerchantWriterStep(
+                $this->getEventFacade()
+            ));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 

@@ -40,7 +40,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         return $productOfferPropelQuery
             ->select(static::CONCRETE_SKU)
             ->distinct()
-            ->withColumn(static::CONCRETE_SKU)
+            ->withColumn(SpyProductOfferTableMap::COL_CONCRETE_SKU, static::CONCRETE_SKU)
             ->find()
             ->getData();
     }

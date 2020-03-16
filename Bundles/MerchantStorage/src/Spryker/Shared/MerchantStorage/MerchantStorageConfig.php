@@ -31,5 +31,5 @@ class MerchantStorageConfig
      *
      * @api
      */
-    public const MERCHANT_RESOURCE_NAME = 'merchant_profile';
+    public const MERCHANT_RESOURCE_NAME = 'merchant';
 }

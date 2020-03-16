@@ -14,4 +14,7 @@
     <transfer name="DataImporterReport">
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

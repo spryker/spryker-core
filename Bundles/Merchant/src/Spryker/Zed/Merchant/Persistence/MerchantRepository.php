@@ -93,6 +93,10 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             $merchantQuery->filterByMerchantReference($merchantCriteriaFilterTransfer->getMerchantReference());
         }
 
+        if ($merchantCriteriaFilterTransfer->getMerchantIds()) {
+            $merchantQuery->filterByIdMerchant_In($merchantCriteriaFilterTransfer->getMerchantIds());
+        }
+
         if ($merchantCriteriaFilterTransfer->getIsActive() !== null) {
             $merchantQuery->filterByIsActive($merchantCriteriaFilterTransfer->getIsActive());
         }

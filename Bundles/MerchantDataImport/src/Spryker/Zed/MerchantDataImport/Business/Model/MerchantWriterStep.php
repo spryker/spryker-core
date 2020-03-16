@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantDataImport\Business\Model;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -15,6 +17,8 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -28,6 +32,24 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         MerchantDataSetInterface::STATUS,
         MerchantDataSetInterface::EMAIL,
     ];
+
+    /**
+     * @var \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    protected $entityEventTransfers = [];
+
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     */
+    public function __construct(DataImportToEventFacadeInterface $eventFacade)
+    {
+        $this->eventFacade = $eventFacade;
+    }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -53,6 +75,20 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
 
         $merchantEntity = $this->saveGlossaryKeyAttributes($merchantEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
         $merchantEntity->save();
+
+        $this->addPublishEvent($merchantEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function afterExecute(): void
+    {
+        foreach ($this->entityEventTransfers as $entityEventTransfer) {
+            $this->eventFacade->trigger(MerchantEvents::MERCHANT_PUBLISH, $entityEventTransfer);
+        }
+
+        $this->entityEventTransfers = [];
     }
 
     /**
@@ -122,5 +158,21 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         }
 
         $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
+     *
+     * @return void
+     */
+    protected function addPublishEvent(SpyMerchant $merchantEntity): void
+    {
+        $eventEntityTransfer = new EventEntityTransfer();
+        $eventEntityTransfer->setId($merchantEntity->getIdMerchant());
+        $eventEntityTransfer->setAdditionalValues([
+            SpyMerchantTableMap::COL_MERCHANT_REFERENCE => $merchantEntity->getMerchantReference(),
+        ]);
+
+        $this->entityEventTransfers[] = $eventEntityTransfer;
     }
 }
