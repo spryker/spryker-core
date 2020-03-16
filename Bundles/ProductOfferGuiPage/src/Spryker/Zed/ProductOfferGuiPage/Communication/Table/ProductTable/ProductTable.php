@@ -32,6 +32,8 @@ class ProductTable extends AbstractTable
 
     protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
 
+    protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
+
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface
      */
@@ -90,8 +92,9 @@ class ProductTable extends AbstractTable
         $tableConfigurationTransfer = $this->addColumnsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer = $this->addFiltersToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer = $this->addRowActionsToConfiguration($tableConfigurationTransfer);
+        $tableConfigurationTransfer = $this->addSearchOptionsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
-        $tableConfigurationTransfer->setAllowedFilters($this->productOfferGuiPageConfig->getFilterNameWhitelist());
+        $tableConfigurationTransfer->setAllowedFilters($this->productOfferGuiPageConfig->getAllowedFilterNames());
 
         return $tableConfigurationTransfer;
     }
@@ -283,10 +286,22 @@ class ProductTable extends AbstractTable
             ->setId('create-offer')
             ->setTitle('Create Offer')
             ->setType('form-overlay')
-            ->setUrl('https://path-to-create-offer-action/${context.row.sku}')
+            ->setUrl('https://path-to-create-offer-action/${row.sku}')
             ->setIcon('icon-name');
 
         $tableConfigurationTransfer->addRowAction($tableRowActionTransfer);
+
+        return $tableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     */
+    protected function addSearchOptionsToConfiguration(TableConfigurationTransfer $tableConfigurationTransfer): TableConfigurationTransfer
+    {
+        $tableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 
         return $tableConfigurationTransfer;
     }

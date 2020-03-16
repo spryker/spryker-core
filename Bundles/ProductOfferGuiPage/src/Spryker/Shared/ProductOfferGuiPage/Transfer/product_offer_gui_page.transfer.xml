@@ -17,7 +17,7 @@
         <property name="defaultSortColumn" type="string"/>
         <property name="rowActions" type="TableRowAction[]" singular="rowAction"/>
         <property name="allowedFilters" type="string[]" singular="allowedFilter"/>
-        <property name="search" type="string"/>
+        <property name="searchOptions" type="array" associative="true" singular="searchOption"/>
     </transfer>
 
     <transfer name="TableRowAction">
@@ -92,6 +92,7 @@
     <transfer name="ProductImageSet">
         <property name="productImages" type="ProductImage[]" singular="productImage"/>
         <property name="idProduct" type="int"/>
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="ProductImage">

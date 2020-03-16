@@ -28,6 +28,7 @@ class ProductImageMapper
     ): ProductImageSetTransfer {
         $productImageSetTransfer = $productImageSetTransfer->fromArray($productImageSetEntity->toArray(), true);
         $productImageSetTransfer->setIdProduct($productImageSetEntity->getFkProduct());
+        $productImageSetTransfer->setIdLocale($productImageSetEntity->getFkLocale());
 
         return $productImageSetTransfer;
     }

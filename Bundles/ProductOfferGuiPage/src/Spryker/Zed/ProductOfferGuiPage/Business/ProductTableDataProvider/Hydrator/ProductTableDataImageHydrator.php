@@ -43,13 +43,11 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): ProductTableDataTransfer {
         $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
-        $productImageSetCollectionTransfer = $this->findProductConcreteProductImageSetsForLocale(
-            $productTableDataTransfer,
-            $localeTransfer
-        );
+        $productImageSetCollectionTransfer = $this->findProductConcreteProductImageSetsForLocale($productTableDataTransfer);
         $productTableDataTransfer = $this->mergeConcreteProductsWithProductImageSets(
             $productTableDataTransfer,
-            $productImageSetCollectionTransfer
+            $productImageSetCollectionTransfer,
+            $localeTransfer
         );
 
         return $productTableDataTransfer;
@@ -57,19 +55,15 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
-    protected function findProductConcreteProductImageSetsForLocale(
-        ProductTableDataTransfer $productTableDataTransfer,
-        LocaleTransfer $localeTransfer
-    ): ProductImageSetCollectionTransfer {
+    protected function findProductConcreteProductImageSetsForLocale(ProductTableDataTransfer $productTableDataTransfer): ProductImageSetCollectionTransfer
+    {
         $productImageSetCriteriaTransfer = new ProductImageSetCriteriaTransfer();
         $productImageSetCriteriaTransfer->setProductConcreteIds(
             $this->extractProductConcreteIds($productTableDataTransfer)
         );
-        $productImageSetCriteriaTransfer->setLocaleId($localeTransfer->requireIdLocale()->getIdLocale());
 
         return $this->productImageFacade->getProductImageSets($productImageSetCriteriaTransfer);
     }
@@ -77,20 +71,32 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
      * @param \Generated\Shared\Transfer\ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
     protected function mergeConcreteProductsWithProductImageSets(
         ProductTableDataTransfer $productTableDataTransfer,
-        ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
+        ProductImageSetCollectionTransfer $productImageSetCollectionTransfer,
+        LocaleTransfer $localeTransfer
     ): ProductTableDataTransfer {
         foreach ($productTableDataTransfer->getConcreteProducts() as $productConcreteTransfer) {
             foreach ($productImageSetCollectionTransfer->getProductImageSets() as $productImageSetTransfer) {
-                if ($productConcreteTransfer->getIdProduct() === $productImageSetTransfer->getIdProduct()) {
-                    $productConcreteTransfer->addImageSet($productImageSetTransfer);
-
+                if ($productConcreteTransfer->getIdProduct() !== $productImageSetTransfer->getIdProduct()) {
                     continue;
                 }
+
+                $productImageSetLocaleId = $productImageSetTransfer->getIdLocale();
+
+                if (!$productImageSetLocaleId && $productConcreteTransfer->getImageSets()->count()) {
+                    continue;
+                }
+
+                if ($localeTransfer->getIdLocale() !== $productImageSetLocaleId) {
+                    continue;
+                }
+
+                $productConcreteTransfer->addImageSet($productImageSetTransfer);
             }
         }
 

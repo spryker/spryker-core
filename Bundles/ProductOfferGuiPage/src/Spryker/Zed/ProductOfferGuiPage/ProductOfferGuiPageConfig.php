@@ -24,7 +24,7 @@ class ProductOfferGuiPageConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    public function getFilterNameWhitelist(): array
+    public function getAllowedFilterNames(): array
     {
         return [
             static::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME,

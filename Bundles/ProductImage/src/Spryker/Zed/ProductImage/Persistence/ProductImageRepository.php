@@ -147,12 +147,6 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
                 ->joinWithSpyProductImage()
             ->endUse();
 
-        if ($productImageSetCriteriaTransfer->getLocaleId()) {
-            $localeCriteria = new Criteria();
-
-            $productImageSetQuery->filterByFkLocale($productImageSetCriteriaTransfer->getLocaleId());
-        }
-
         if ($productImageSetCriteriaTransfer->getProductConcreteIds()) {
             $productImageSetQuery->filterByFkProduct_In($productImageSetCriteriaTransfer->getProductConcreteIds());
         }

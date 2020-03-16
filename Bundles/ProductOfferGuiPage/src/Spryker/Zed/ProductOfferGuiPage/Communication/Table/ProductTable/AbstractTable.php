@@ -18,6 +18,7 @@ abstract class AbstractTable
     protected const CONFIG_AVAILABLE_PAGE_SIZES = 'pageSizes';
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
+    protected const CONFIG_SEARCH = 'search';
 
     protected const PARAM_PAGE = 'page';
     protected const PARAM_PAGE_SIZE = 'pageSize';
@@ -85,6 +86,7 @@ abstract class AbstractTable
             static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($tableConfigurationTransfer),
             static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($tableConfigurationTransfer),
             static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($tableConfigurationTransfer),
+            static::CONFIG_SEARCH => $tableConfigurationTransfer->getSearchOptions(),
         ];
     }
 
