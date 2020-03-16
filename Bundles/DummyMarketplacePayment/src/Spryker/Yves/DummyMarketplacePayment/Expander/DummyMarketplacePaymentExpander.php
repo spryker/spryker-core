@@ -19,10 +19,10 @@ class DummyMarketplacePaymentExpander implements DummyMarketplacePaymentExpander
      */
     public function addPaymentToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            $paymentTransfer->setPaymentProvider(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME)
-                ->setPaymentMethod('Marketplace Invoice');
-        }
+        $quoteTransfer
+            ->getPayment()
+            ->setPaymentProvider(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME)
+            ->setPaymentMethod('Marketplace Invoice');
 
         return $quoteTransfer;
     }

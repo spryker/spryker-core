@@ -13,7 +13,9 @@
     "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/payment": "*",
-    "spryker/sales": "*"
+    "spryker/propel": "*",
+    "spryker/sales": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/oms": "If you want to use OMS constants.",

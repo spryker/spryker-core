@@ -10,23 +10,10 @@ namespace Spryker\Zed\DummyMarketplacePayment\Business\Filter;
 use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 
 class PaymentMethodFilter implements PaymentMethodFilterInterface
 {
-    /**
-     * @var \Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig
-     */
-    protected $dummyMarketplacePaymentConfig;
-
-    /**
-     * @param \Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig $dummyMarketplacePaymentConfig
-     */
-    public function __construct(DummyMarketplacePaymentConfig $dummyMarketplacePaymentConfig)
-    {
-        $this->dummyMarketplacePaymentConfig = $dummyMarketplacePaymentConfig;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -54,7 +41,10 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
         $allowedPaymentMethods = new ArrayObject();
 
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
-            if (!in_array($paymentMethodTransfer->getMethodName(), $this->dummyMarketplacePaymentConfig->getDummyMarketplacePaymentMethods())) {
+            if (
+                !$paymentMethodTransfer->getPaymentProvider()
+                || $paymentMethodTransfer->getPaymentProvider()->getName() !== DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME
+            ) {
                 $allowedPaymentMethods->append($paymentMethodTransfer);
             }
         }

@@ -32,6 +32,6 @@ class DummyMarketplacePaymentExpanderPlugin extends AbstractPlugin implements St
     {
         return $this->getFactory()
             ->createMarketplacePaymentExpander()
-            ->addPaymentToQuote($request, $quoteTransfer);
+            ->addPaymentToQuote($quoteTransfer);
     }
 }
