@@ -93,7 +93,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
      *
      * @return array
      */
-    protected function registerSubscribedEventsByPublisher(array $eventCollection, array $subscribedEvents, string $publisherClassName, string $publishQueueName = null): array
+    protected function registerSubscribedEventsByPublisher(array $eventCollection, array $subscribedEvents, string $publisherClassName, ?string $publishQueueName = null): array
     {
         $defaultPublishQueueName = $this->publisherConfig->getPublishQueueName() ?? EventConstants::EVENT_QUEUE;
         $publishQueueName = $publishQueueName ?? $defaultPublishQueueName;
