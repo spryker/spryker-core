@@ -65,4 +65,20 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     {
         return $this->getRepository()->findOne($merchantUserCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function getCurrentMerchantUser(): MerchantUserTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserReader()
+            ->getCurrentMerchantUser();
+    }
 }

@@ -47,4 +47,9 @@ interface MerchantUserToUserFacadeInterface
      * @return bool
      */
     public function hasUserByUsername($username);
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser();
 }
