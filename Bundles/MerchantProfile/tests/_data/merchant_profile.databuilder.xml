@@ -59,9 +59,4 @@
         <property name="dataPrivacyGlossaryKey" dataBuilderRule="word"/>
     </transfer>
 
-    <transfer name="Url">
-        <property name="fkLocale" type="int" dataBuilderRule="=66"/>
-        <property name="url" type="string" dataBuilderRule="url"/>
-    </transfer>
-
 </transfers>

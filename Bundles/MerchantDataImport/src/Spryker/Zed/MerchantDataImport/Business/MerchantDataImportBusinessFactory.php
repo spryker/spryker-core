@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
 use Spryker\Zed\MerchantDataImport\Business\Model\MerchantWriterStep;
 
 /**
@@ -25,7 +26,12 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep(new MerchantWriterStep());
+        $dataSetStepBroker
+            ->addStep($this->createAddLocalesStep())
+            ->addStep($this->createLocalizedAttributesExtractorStep([
+                MerchantDataSetInterface::URL,
+            ]))
+            ->addStep(new MerchantWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 

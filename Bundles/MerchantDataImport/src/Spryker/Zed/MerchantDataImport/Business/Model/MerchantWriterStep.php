@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\MerchantDataImport\Business\Model;
 
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
+use Spryker\Zed\Url\Dependency\UrlEvents;
 
-class MerchantWriterStep implements DataImportStepInterface
+class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantDataSetInterface::MERCHANT_KEY,
@@ -45,6 +50,9 @@ class MerchantWriterStep implements DataImportStepInterface
             ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE])
             ->save();
+
+        $merchantEntity = $this->saveGlossaryKeyAttributes($merchantEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
+        $merchantEntity->save();
     }
 
     /**
@@ -72,5 +80,47 @@ class MerchantWriterStep implements DataImportStepInterface
         if (!$dataSet[$requiredDataSetKey]) {
             throw new InvalidDataException('"' . $requiredDataSetKey . '" is required.');
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
+     * @param array $glossaryKeyAttributes
+     *
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     */
+    protected function saveGlossaryKeyAttributes(SpyMerchant $merchantEntity, array $glossaryKeyAttributes): SpyMerchant
+    {
+        foreach ($glossaryKeyAttributes as $idLocale => $attributes) {
+            foreach ($attributes as $attributeName => $attributeValue) {
+                if ($attributeValue && $attributeName === MerchantDataSetInterface::URL) {
+                    $this->addMerchantProfileUrl($merchantEntity->getIdMerchant(), $idLocale, $attributeValue);
+                }
+            }
+        }
+
+        return $merchantEntity;
+    }
+
+    /**
+     * @param int $idMerchant
+     * @param int $idLocale
+     * @param string $url
+     *
+     * @return void
+     */
+    protected function addMerchantProfileUrl(int $idMerchant, int $idLocale, string $url): void
+    {
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceMerchant($idMerchant)
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
+
+        $urlEntity->setUrl($url);
+
+        if ($urlEntity->isNew() || $urlEntity->isModified()) {
+            $urlEntity->save();
+        }
+
+        $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
     }
 }
