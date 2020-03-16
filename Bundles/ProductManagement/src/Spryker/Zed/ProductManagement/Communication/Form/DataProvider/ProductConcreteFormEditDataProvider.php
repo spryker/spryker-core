@@ -188,8 +188,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantGeneralAndSeoData(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection();
         $localizedData = $productTransfer->getLocalizedAttributes();
 
@@ -289,8 +292,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantAbstractAttributes(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
         $attributesData = $productTransfer->getLocalizedAttributes();
 

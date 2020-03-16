@@ -18,5 +18,8 @@ interface PriceCartConnectorToPriceProductServiceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+    public function resolveProductPriceByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): ?PriceProductTransfer;
 }

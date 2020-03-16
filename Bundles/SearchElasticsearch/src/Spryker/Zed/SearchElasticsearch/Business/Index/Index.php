@@ -190,8 +190,10 @@ class Index implements IndexInterface
      *
      * @return array
      */
-    protected function buildCopyCommandRequestData(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): array
-    {
+    protected function buildCopyCommandRequestData(
+        SearchContextTransfer $sourceSearchContextTransfer,
+        SearchContextTransfer $targetSearchContextTransfer
+    ): array {
         $sourceIndexName = $this->resolveIndexNameFromSearchContextTransfer($sourceSearchContextTransfer);
         $targetIndexName = $this->resolveIndexNameFromSearchContextTransfer($targetSearchContextTransfer);
 

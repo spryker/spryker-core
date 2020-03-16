@@ -39,8 +39,11 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface $dependencyFinder
      */
-    public function __construct(ModuleFileFinderInterface $moduleFileFinder, DependencyContainerInterface $dependencyContainer, DependencyFinderInterface $dependencyFinder)
-    {
+    public function __construct(
+        ModuleFileFinderInterface $moduleFileFinder,
+        DependencyContainerInterface $dependencyContainer,
+        DependencyFinderInterface $dependencyFinder
+    ) {
         $this->moduleFileFinder = $moduleFileFinder;
         $this->dependencyContainer = $dependencyContainer;
         $this->dependencyFinder = $dependencyFinder;

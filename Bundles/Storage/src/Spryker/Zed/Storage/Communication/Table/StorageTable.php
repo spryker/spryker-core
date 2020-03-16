@@ -41,8 +41,11 @@ class StorageTable extends AbstractTable
      * @param \Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface $utilSanitizeService
      * @param int|null $defaultPageLength
      */
-    public function __construct(StorageClientInterface $storageClient, StorageToUtilSanitizeServiceInterface $utilSanitizeService, ?int $defaultPageLength = null)
-    {
+    public function __construct(
+        StorageClientInterface $storageClient,
+        StorageToUtilSanitizeServiceInterface $utilSanitizeService,
+        ?int $defaultPageLength = null
+    ) {
         $this->storageClient = $storageClient;
         $this->utilSanitizeService = $utilSanitizeService;
         $this->defaultPageLength = $defaultPageLength ?? static::DEFAULT_PAGE_LENGTH;
