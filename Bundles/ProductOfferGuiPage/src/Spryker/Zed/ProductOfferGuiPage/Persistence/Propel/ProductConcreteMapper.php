@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence\Propel;
 
-use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
@@ -30,24 +30,24 @@ class ProductConcreteMapper
 
     /**
      * @param \Propel\Runtime\Collection\Collection $productConcreteEntities
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    public function mapProductConcreteEntitiesToProductConcreteCollectionTransfer(
+    public function mapProductConcreteEntitiesToProductTableDataTransfer(
         Collection $productConcreteEntities,
-        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-    ): ProductConcreteCollectionTransfer {
+        ProductTableDataTransfer $productTableDataTransfer
+    ): ProductTableDataTransfer {
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $productConcreteTransfer = $this->mapProductConcreteEntityToProductConcreteTransfer(
                 $productConcreteEntity,
                 new ProductConcreteTransfer()
             );
 
-            $productConcreteCollectionTransfer->addProductConcrete($productConcreteTransfer);
+            $productTableDataTransfer->addProductConcrete($productConcreteTransfer);
         }
 
-        return $productConcreteCollectionTransfer;
+        return $productTableDataTransfer;
     }
 
     /**

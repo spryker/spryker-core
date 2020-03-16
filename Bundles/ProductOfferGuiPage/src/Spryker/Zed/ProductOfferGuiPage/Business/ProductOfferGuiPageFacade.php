@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Business;
 
-use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,9 +24,9 @@ class ProductOfferGuiPageFacade extends AbstractFacade implements ProductOfferGu
      *
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer
     {
         return $this->getFactory()->createProductTableDataProvider()->getProductTableData($productTableCriteriaTransfer);
     }

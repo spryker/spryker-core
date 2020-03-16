@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
 
-use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Generated\Shared\Transfer\TableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\TableConfigurationTransfer;
 use Generated\Shared\Transfer\TableDataTransfer;
@@ -76,9 +76,9 @@ class ProductTable extends AbstractTable
     protected function provideTableData(): TableDataTransfer
     {
         $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
-        $productConcreteCollectionTransfer = $this->productOfferGuiPageFacade->getProductTableData($productTableCriteriaTransfer);
+        $productTableDataTransfer = $this->productOfferGuiPageFacade->getProductTableData($productTableCriteriaTransfer);
 
-        return $this->mapProductConcreteCollectionTransferToTableDataTransfer($productConcreteCollectionTransfer, new TableDataTransfer());
+        return $this->mapProductTableDataTransferToTableDataTransfer($productTableDataTransfer, new TableDataTransfer());
     }
 
     /**
@@ -217,20 +217,20 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
      * @param \Generated\Shared\Transfer\TableDataTransfer $tableDataTransfer
      *
      * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException
      *
      * @return \Generated\Shared\Transfer\TableDataTransfer
      */
-    protected function mapProductConcreteCollectionTransferToTableDataTransfer(
-        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
+    protected function mapProductTableDataTransferToTableDataTransfer(
+        ProductTableDataTransfer $productTableDataTransfer,
         TableDataTransfer $tableDataTransfer
     ): TableDataTransfer {
         $tableRowsData = [];
 
-        foreach ($productConcreteCollectionTransfer->getConcreteProducts() as $productConcreteTransfer) {
+        foreach ($productTableDataTransfer->getConcreteProducts() as $productConcreteTransfer) {
             $tableRowsData[] = [
                 static::COLUMN_KEY_NAME => $productConcreteTransfer->getName(),
                 static::COLUMN_KEY_SKU => $productConcreteTransfer->getSku(),
@@ -238,13 +238,13 @@ class ProductTable extends AbstractTable
                 static::COLUMN_KEY_STORES => $productConcreteTransfer->getStoreNames()
                     ? explode(',', $productConcreteTransfer->getStoreNames())
                     : [],
-                static::COLUMN_KEY_OFFERS => $productConcreteTransfer->getHasOffers() ?? 0,
+                static::COLUMN_KEY_OFFERS => $productConcreteTransfer->getOffersCount() ?? 0,
                 static::COLUMN_KEY_VALID_FROM => $productConcreteTransfer->getValidFrom(),
                 static::COLUMN_KEY_VALID_TO => $productConcreteTransfer->getValidTo(),
             ];
         }
 
-        $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
+        $paginationTransfer = $productTableDataTransfer->getPagination();
 
         if (!$paginationTransfer) {
             throw new InvalidPaginationDataException('Pagination data is not present.');

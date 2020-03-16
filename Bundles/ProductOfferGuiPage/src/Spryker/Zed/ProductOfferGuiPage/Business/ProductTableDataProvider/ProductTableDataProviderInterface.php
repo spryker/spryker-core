@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider;
 
-use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableDataTransfer;
 
 interface ProductTableDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer;
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer;
 }

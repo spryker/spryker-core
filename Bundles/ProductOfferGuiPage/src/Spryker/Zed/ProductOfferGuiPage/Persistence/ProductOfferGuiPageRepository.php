@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -30,9 +30,9 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     /**
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    public function getConcreteProductsForProductTable(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer
     {
         $productConcreteMapper = $this->getFactory()->createProductConcreteMapper();
 
@@ -42,9 +42,9 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery = $this->addSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
         if (!$productTableCriteriaTransfer->getPagination()) {
-            return $productConcreteMapper->mapProductConcreteEntitiesToProductConcreteCollectionTransfer(
+            return $productConcreteMapper->mapProductConcreteEntitiesToProductTableDataTransfer(
                 $productConcreteQuery->find(),
-                new ProductConcreteCollectionTransfer()
+                new ProductTableDataTransfer()
             );
         }
 
@@ -52,9 +52,9 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $propelPager = $this->getPagerForQuery($productConcreteQuery, $paginationTransfer);
         $paginationTransfer = $this->hydratePaginationTransfer($paginationTransfer, $propelPager);
 
-        return $productConcreteMapper->mapProductConcreteEntitiesToProductConcreteCollectionTransfer(
+        return $productConcreteMapper->mapProductConcreteEntitiesToProductTableDataTransfer(
             $propelPager->getResults(),
-            new ProductConcreteCollectionTransfer()
+            new ProductTableDataTransfer()
         )->setPagination($paginationTransfer);
     }
 
@@ -87,26 +87,11 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                     ->joinSpyStore()
                 ->endUse()
             ->endUse()
-            ->addJoin(
-                [
-                    SpyProductTableMap::COL_SKU,
-                    SpyProductOfferTableMap::COL_FK_MERCHANT,
-                ],
-                [
-                    SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                    $merchantUserTransfer->getIdMerchant(),
-                ],
-                Criteria::LEFT_JOIN
-            )
             ->leftJoinSpyProductValidity()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConcreteTransfer::NAME)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductConcreteTransfer::VALID_FROM)
             ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductConcreteTransfer::VALID_TO)
             ->withColumn(sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
-            ->withColumn(
-                sprintf('COUNT(%s)', SpyProductOfferTableMap::COL_CONCRETE_SKU),
-                ProductConcreteTransfer::HAS_OFFERS
-            )
             ->groupByIdProduct();
 
         return $productConcreteQuery;
@@ -309,13 +294,24 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
             return $productConcreteQuery;
         }
 
-        $productConcreteQuery->having(
-            sprintf(
-                '(COUNT(%s) %s 0) = FALSE',
-                SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                $productConcreteHasOffers ? '>' : '='
-            )
-        );
+        $productConcreteQuery->addJoin(
+            [
+                    SpyProductTableMap::COL_SKU,
+                    SpyProductOfferTableMap::COL_FK_MERCHANT,
+                ],
+            [
+                    SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                    $merchantUserTransfer->getIdMerchant(),
+                ],
+            Criteria::LEFT_JOIN
+        )
+            ->having(
+                sprintf(
+                    '(COUNT(%s) %s 0) = FALSE',
+                    SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                    $productConcreteHasOffers ? '>' : '='
+                )
+            );
 
         return $productConcreteQuery;
     }

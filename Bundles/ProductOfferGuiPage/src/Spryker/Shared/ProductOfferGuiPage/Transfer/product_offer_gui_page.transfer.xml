@@ -58,7 +58,7 @@
         <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
     </transfer>
 
-    <transfer name="ProductConcreteCollection">
+    <transfer name="ProductTableData">
         <property name="concreteProducts" type="ProductConcrete[]" singular="productConcrete"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -81,7 +81,7 @@
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
         <property name="sku" type="string"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
-        <property name="hasOffers" type="bool"/>
+        <property name="offersCount" type="int"/>
         <property name="attributes" type="array" singular="attribute"/>
         <property name="storeNames" type="string"/>
         <property name="idProductConcrete" type="int"/>

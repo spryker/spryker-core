@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Business;
+namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider\Hydrator;
 
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
 
-interface ProductOfferGuiPageFacadeInterface
+interface ProductTableDataHydratorInterface
 {
     /**
-     * Specification:
-     * - Gets the list of concrete products and pagination data for product list table.
-     * - Returns ProductTableDataTransfer.
+     * Hydrates concrete product transfers from the collection with additional data.
      *
-     * @api
-     *
+     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer;
+    public function hydrateProductTableData(
+        ProductTableDataTransfer $productTableDataTransfer,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): ProductTableDataTransfer;
 }

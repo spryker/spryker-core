@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToCateg
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeBridge;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToUserFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceBridge;
@@ -43,6 +44,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addProductImageFacade($container);
+        $container = $this->addProductOfferFacade($container);
 
         return $container;
     }
@@ -118,6 +120,22 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductOfferGuiPageToProductImageFacadeBridge(
                 $container->getLocator()->productImage()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
+            return new ProductOfferGuiPageToProductOfferFacadeBridge(
+                $container->getLocator()->productOffer()->facade()
             );
         });
 
