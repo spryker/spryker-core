@@ -15,6 +15,8 @@ class MerchantStockDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_STOCK = 'merchant-stock';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantStockDataImporterConfiguration(): DataImporterConfigurationTransfer
