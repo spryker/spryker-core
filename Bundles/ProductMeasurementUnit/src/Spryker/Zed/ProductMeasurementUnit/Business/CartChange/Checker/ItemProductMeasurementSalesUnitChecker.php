@@ -106,7 +106,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
         }
 
         $idProductMeasurementSalesUnit = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
-        if (in_array($idProductMeasurementSalesUnit, $productMeasurementSalesUnitIds, true)) {
+        if (in_array($idProductMeasurementSalesUnit, $productMeasurementSalesUnitIds)) {
             return $cartPreCheckResponseTransfer;
         }
 
