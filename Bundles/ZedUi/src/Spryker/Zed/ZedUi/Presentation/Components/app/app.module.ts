@@ -10,6 +10,10 @@ import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
 import { LayoutMainModule } from './layout-main/layout-main.module';
 import { LayoutMainComponent } from './layout-main/layout-main.component';
+import { MerchantLayoutCenteredModule } from './merchant-layout-centered/merchant-layout-centered.module';
+import { MerchantLayoutCenteredComponent } from './merchant-layout-centered/merchant-layout-centered.component';
+import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
+import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-layout-main.component';
 
 @NgModule({
     imports: [
@@ -17,6 +21,8 @@ import { LayoutMainComponent } from './layout-main/layout-main.component';
         BrowserAnimationsModule,
         HttpClientModule,
         LayoutCenteredModule,
+	    MerchantLayoutCenteredModule,
+	    MerchantLayoutMainModule,
         LayoutMainModule,
         HeaderModule,
     ],
@@ -25,13 +31,21 @@ import { LayoutMainComponent } from './layout-main/layout-main.component';
 export class AppModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'mp-layout-centered',
+            selector: 'web-mp-layout-centered',
             component: LayoutCenteredComponent,
         },
-        {
-            selector: 'mp-layout-main',
-            component: LayoutMainComponent,
-        },
+	    {
+		    selector: 'web-mp-layout-main',
+		    component: LayoutMainComponent,
+	    },
+	    {
+		    selector: 'mp-merchant-layout-centered',
+		    component: MerchantLayoutCenteredComponent,
+	    },
+	    {
+		    selector: 'mp-merchant-layout-main',
+		    component: MerchantLayoutMainComponent,
+	    },
         {
             selector: 'mp-header',
             component: HeaderComponent,

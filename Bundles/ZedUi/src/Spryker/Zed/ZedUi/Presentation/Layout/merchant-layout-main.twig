@@ -4,10 +4,10 @@
     {% if navigation is defined %}
         {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
 
-        <mp-layout-main navigation-config="{{ navigationConfig }}">
+        <mp-merchant-layout-main navigation-config="{{ navigationConfig }}">
             <mp-header name="header"></mp-header>
 
             {% block content %}{% endblock %}
-        </mp-layout-main>
+        </mp-merchant-layout-main>
     {% endif %}
 {% endblock %}

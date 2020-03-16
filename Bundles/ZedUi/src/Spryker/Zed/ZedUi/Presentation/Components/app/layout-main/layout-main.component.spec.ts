@@ -84,8 +84,8 @@ describe('LayoutMainComponent', () => {
         });
 
         it('should show collapsed logo class if value is true', () => {
-            const collapsedClass = 'layout-main__logo--collapsed';
-            const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .layout-main__logo'));
+            const collapsedClass = 'mp-layout-main__logo--collapsed';
+            const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .mp-layout-main__logo'));
 
             layoutComponent.isCollapsed = true;
 
@@ -105,13 +105,13 @@ describe('LayoutMainComponent', () => {
 
     describe('Slots', () => {
         it('should render correct info inside `header` slot', () => {
-            const headerSlotContainerElem = fixture.debugElement.query(By.css('.layout-main__header'));
+            const headerSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main__header'));
 
             expect(headerSlotContainerElem.nativeElement.textContent).toMatch('Header Slot');
         });
 
         it('should render correct info inside main slot', () => {
-            const mainSlotContainerElem = fixture.debugElement.query(By.css('.layout-main__content'));
+            const mainSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main__content'));
 
             expect(mainSlotContainerElem.nativeElement.textContent).toMatch('Main Slot');
         });
