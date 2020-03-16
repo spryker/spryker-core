@@ -1,30 +1,33 @@
 @import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+@spy-profile-spacing: 15px;
 
-.profile-container {
-  font-family: @font-family;
+.mp-profile {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0 40px;
-  }
+  padding: 20px @spy-profile-spacing;
+  font-family: @font-family;
 
   &__title {
     font-size: @heading-1-font-size;
     font-weight: @font-weight-semi-bold;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 40px;
+  }
+
   &__row {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -15px;
+    margin: 0 -@spy-profile-spacing;
   }
 
   &__col {
-    padding: 0 15px;
+    padding: 0 @spy-profile-spacing;
 
     &--business-left {
       width: 58.33%;
@@ -75,4 +78,3 @@
     color: @green;
   }
 }
-

@@ -65,698 +65,706 @@
 {% endmacro %}
 
 {% block body %}
-    <mp-profile cloak>
-        <form name="{{ form.vars.name }}" method="{{ form.vars.method }}">
-            <input type="hidden" id="{{ id_merchant.vars.id }}" name="{{ id_merchant.vars.full_name }}" value="{{ id_merchant.vars.value }}" />
-            <input type="hidden" id="{{ description_glossary_key.vars.id }}" name="{{ description_glossary_key.vars.full_name }}" value="{{ description_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ banner_url_glossary_key.vars.id }}" name="{{ banner_url_glossary_key.vars.full_name }}" value="{{ banner_url_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ delivery_time_glossary_key.vars.id }}" name="{{ delivery_time_glossary_key.vars.full_name }}" value="{{ delivery_time_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ terms_conditions_glossary_key.vars.id }}" name="{{ terms_conditions_glossary_key.vars.full_name }}" value="{{ terms_conditions_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ cancellation_policy_glossary_key.vars.id }}" name="{{ cancellation_policy_glossary_key.vars.full_name }}" value="{{ cancellation_policy_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ imprint_glossary_key.vars.id }}" name="{{ imprint_glossary_key.vars.full_name }}" value="{{ imprint_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ data_privacy_glossary_key.vars.id }}" name="{{ data_privacy_glossary_key.vars.full_name }}" value="{{ data_privacy_glossary_key.vars.value }}" />
-            <input type="hidden" id="{{ id_merchant_profile_address.vars.id }}" name="{{ id_merchant_profile_address.vars.full_name }}" value="{{ id_merchant_profile_address.vars.value }}" />
-            <input type="hidden" id="{{ id_merchant_profile.vars.id }}" name="{{ id_merchant_profile.vars.full_name }}" value="{{ id_merchant_profile.vars.value }}" />
-            <input type="hidden" id="{{ _token.vars.id }}" name="{{ _token.vars.full_name }}" value="{{ _token.vars.value }}" />
+    <form name="{{ form.vars.name }}" method="{{ form.vars.method }}">
+        <input type="hidden" id="{{ id_merchant.vars.id }}" name="{{ id_merchant.vars.full_name }}" value="{{ id_merchant.vars.value }}" />
+        <input type="hidden" id="{{ description_glossary_key.vars.id }}" name="{{ description_glossary_key.vars.full_name }}" value="{{ description_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ banner_url_glossary_key.vars.id }}" name="{{ banner_url_glossary_key.vars.full_name }}" value="{{ banner_url_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ delivery_time_glossary_key.vars.id }}" name="{{ delivery_time_glossary_key.vars.full_name }}" value="{{ delivery_time_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ terms_conditions_glossary_key.vars.id }}" name="{{ terms_conditions_glossary_key.vars.full_name }}" value="{{ terms_conditions_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ cancellation_policy_glossary_key.vars.id }}" name="{{ cancellation_policy_glossary_key.vars.full_name }}" value="{{ cancellation_policy_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ imprint_glossary_key.vars.id }}" name="{{ imprint_glossary_key.vars.full_name }}" value="{{ imprint_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ data_privacy_glossary_key.vars.id }}" name="{{ data_privacy_glossary_key.vars.full_name }}" value="{{ data_privacy_glossary_key.vars.value }}" />
+        <input type="hidden" id="{{ id_merchant_profile_address.vars.id }}" name="{{ id_merchant_profile_address.vars.full_name }}" value="{{ id_merchant_profile_address.vars.value }}" />
+        <input type="hidden" id="{{ id_merchant_profile.vars.id }}" name="{{ id_merchant_profile.vars.full_name }}" value="{{ id_merchant_profile.vars.value }}" />
+        <input type="hidden" id="{{ _token.vars.id }}" name="{{ _token.vars.full_name }}" value="{{ _token.vars.value }}" />
 
-            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                {% set localeForm = form.children.locale %}
+        {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+            {% set localeForm = form.children.locale %}
 
-                <input type="hidden" id="{{ localeForm.children.idLocale.vars.id }}" name="{{ localeForm.children.idLocale.vars.full_name }}" value="{{ localeForm.children.idLocale.vars.value }}" />
-                <input type="hidden" id="{{ localeForm.children.localeName.vars.id }}" name="{{ localeForm.children.localeName.vars.full_name }}" value="{{ localeForm.children.localeName.vars.value }}" />
-            {% endfor %}
-            <div class="profile-container">
-                <div class="profile-container__row">
-                    <div class="profile-container__col profile-container__col--full">
-                        <div class="profile-container__header">
-                            <h1 class="profile-container__title">{{ 'Profile' | trans }}</h1>
-                            <spy-button type="submit">
-                                {{ 'Save' | trans }}
-                            </spy-button>
+            <input type="hidden" id="{{ localeForm.children.idLocale.vars.id }}" name="{{ localeForm.children.idLocale.vars.full_name }}" value="{{ localeForm.children.idLocale.vars.value }}" />
+            <input type="hidden" id="{{ localeForm.children.localeName.vars.id }}" name="{{ localeForm.children.localeName.vars.full_name }}" value="{{ localeForm.children.localeName.vars.value }}" />
+        {% endfor %}
+
+        <mp-profile cloak>
+            <h1 title class="mp-profile__title">{{ 'Profile' | trans }}</h1>
+
+            <spy-tabs>
+                <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ isBusinessInfoTabHasError }}">
+                    <div class="mp-profile__row">
+                        <div class="mp-profile__col mp-profile__col--business-left">
+                            <spy-card title="{{ 'Contact Person Details' | trans }}">
+                                <spy-form-item
+                                    for="{{ businessInfoTab.contact_person_role.vars.id }}"
+                                    error="{{ businessInfoTab.contact_person_role.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.contact_person_role.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.contact_person_role.vars.id }}"
+                                        required="{{ businessInfoTab.contact_person_role.vars.required }}"
+                                        name="{{ businessInfoTab.contact_person_role.vars.full_name }}"
+                                        value="{{ businessInfoTab.contact_person_role.vars.value }}"
+                                        placeholder="{{ businessInfoTab.contact_person_role.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.contact_person_title.vars.id }}"
+                                    error="{{ businessInfoTab.contact_person_title.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.contact_person_title.vars.label | trans }}
+                                    <spy-select
+                                        control
+                                        name="{{ businessInfoTab.contact_person_title.vars.full_name }}"
+                                        options="{{ businessInfoTab.contact_person_title.vars.choices | json_encode() }}"
+                                        value="{{ businessInfoTab.contact_person_title.vars.data }}"
+                                        required="{{ businessInfoTab.contact_person_title.vars.required }}"
+                                    ></spy-select>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.contact_person_first_name.vars.id }}"
+                                    error="{{ businessInfoTab.contact_person_first_name.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.contact_person_first_name.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.contact_person_first_name.vars.id }}"
+                                        required="{{ businessInfoTab.contact_person_first_name.vars.required }}"
+                                        name="{{ businessInfoTab.contact_person_first_name.vars.full_name }}"
+                                        value="{{ businessInfoTab.contact_person_first_name.vars.value }}"
+                                        placeholder="{{ businessInfoTab.contact_person_first_name.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.contact_person_last_name.vars.id }}"
+                                    error="{{ businessInfoTab.contact_person_last_name.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.contact_person_last_name.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.contact_person_last_name.vars.id }}"
+                                        required="{{ businessInfoTab.contact_person_last_name.vars.required }}"
+                                        name="{{ businessInfoTab.contact_person_last_name.vars.full_name }}"
+                                        value="{{ businessInfoTab.contact_person_last_name.vars.value }}"
+                                        placeholder="{{ businessInfoTab.contact_person_last_name.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.email.vars.id }}"
+                                    error="{{ businessInfoTab.email.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.email.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.email.vars.id }}"
+                                        required="{{ businessInfoTab.email.vars.required }}"
+                                        name="{{ businessInfoTab.email.vars.full_name }}"
+                                        value="{{ businessInfoTab.email.vars.value }}"
+                                        placeholder="{{ businessInfoTab.email.vars.attr.placeholder | default | trans }}"
+                                        type="email"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.contact_person_phone.vars.id }}"
+                                    error="{{ businessInfoTab.contact_person_phone.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.contact_person_phone.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.contact_person_phone.vars.id }}"
+                                        required="{{ businessInfoTab.contact_person_phone.vars.required }}"
+                                        name="{{ businessInfoTab.contact_person_phone.vars.full_name }}"
+                                        value="{{ businessInfoTab.contact_person_phone.vars.value }}"
+                                        placeholder="{{ businessInfoTab.contact_person_phone.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+                            </spy-card>
+                        </div>
+                        <div class="mp-profile__col mp-profile__col--business-right">
+                            <spy-card title="{{ 'Merchant Company Details' | trans }}">
+                                <spy-form-item
+                                    for="{{ businessInfoTab.name.vars.id }}"
+                                    error="{{ businessInfoTab.name.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.name.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.name.vars.id }}"
+                                        required="{{ businessInfoTab.name.vars.required }}"
+                                        name="{{ businessInfoTab.name.vars.full_name }}"
+                                        value="{{ businessInfoTab.name.vars.value }}"
+                                        placeholder="{{ businessInfoTab.name.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.registration_number.vars.id }}"
+                                    error="{{ businessInfoTab.registration_number.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.registration_number.vars.label | trans }}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ businessInfoTab.registration_number.vars.id }}"
+                                        required="{{ businessInfoTab.registration_number.vars.required }}"
+                                        name="{{ businessInfoTab.registration_number.vars.full_name }}"
+                                        value="{{ businessInfoTab.registration_number.vars.value }}"
+                                        placeholder="{{ businessInfoTab.registration_number.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+
+                                <spy-form-item
+                                    for="{{ businessInfoTab.merchant_reference.vars.id }}"
+                                    error="{{ businessInfoTab.merchant_reference.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ businessInfoTab.merchant_reference.vars.label | trans }}
+                                    {% set referenceAttrs = {
+                                        readonly: businessInfoTab.merchant_reference.vars.attr.read_only | default(false)
+                                    } | json_encode() %}
+                                    <spy-input
+                                        control
+                                        attrs="{{ referenceAttrs }}"
+                                        spy-id="{{ businessInfoTab.registration_number.vars.id }}"
+                                        required="{{ businessInfoTab.merchant_reference.vars.required }}"
+                                        name="{{ businessInfoTab.merchant_reference.vars.full_name }}"
+                                        value="{{ businessInfoTab.merchant_reference.vars.value }}"
+                                        placeholder="{{ businessInfoTab.merchant_reference.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
+                            </spy-card>
                         </div>
                     </div>
-                    <div class="profile-container__col profile-container__col--full">
-                        <spy-tabs>
-                            <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ isBusinessInfoTabHasError }}">
-                                <div class="profile-container__row">
-                                    <div class="profile-container__col profile-container__col--business-left">
-                                        <spy-card title="{{ 'Contact Person Details' | trans }}">
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.contact_person_role.vars.id }}"
-                                                error="{{ businessInfoTab.contact_person_role.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.contact_person_role.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.contact_person_role.vars.id }}"
-                                                    required="{{ businessInfoTab.contact_person_role.vars.required }}"
-                                                    name="{{ businessInfoTab.contact_person_role.vars.full_name }}"
-                                                    value="{{ businessInfoTab.contact_person_role.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.contact_person_role.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
+                </spy-tab>
+                <spy-tab title="{{ 'Online Profile' | trans }}" has-warning="{{ isOnlineProfileTabHasError }}">
+                    <div class="mp-profile__row">
+                        <div class="mp-profile__col mp-profile__col--online-left">
+                            <spy-card title="{{ 'Store Profile URL' | trans }} *">
+                                {% for urlForm in onlineProfileTab.urlCollection.children %}
+                                    <spy-form-item
+                                        error="{{ urlForm.children.url.vars.errors[0].message | default | trans }}"
+                                        no-label="true"
+                                        no-spaces="true"
+                                    >
+                                        <spy-input
+                                            control
+                                            attrs=""
+                                            outer-prefix="{{ urlForm.children.url.vars.label | trans }}"
+                                            spy-id="{{ urlForm.children.url.vars.id }}"
+                                            required="{{ urlForm.children.url.vars.required }}"
+                                            name="{{ urlForm.children.url.vars.full_name }}"
+                                            value="{{ urlForm.children.url.vars.value }}"
+                                            placeholder="{{ urlForm.children.url.vars.attr.placeholder | default | trans }}"
+                                            type="text"
+                                            cloak
+                                        >
+                                        </spy-input>
+                                        <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
+                                    </spy-form-item>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'About the store' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
 
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.contact_person_title.vars.id }}"
-                                                error="{{ businessInfoTab.contact_person_title.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.contact_person_title.vars.label | trans }}
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ descriptionGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-textarea
+                                                control
+                                                spyId="{{ descriptionGlossaryKey.vars.id }}"
+                                                name="{{ descriptionGlossaryKey.vars.full_name }}"
+                                                value="{{ descriptionGlossaryKey.vars.value }}"
+                                                required="{{ descriptionGlossaryKey.vars.required }}"
+                                            ></spy-textarea>
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Visual assets' | trans }}">
+                                <spy-form-item
+                                    for="{{ onlineProfileTab.logo_url.vars.id }}"
+                                    error="{{ onlineProfileTab.logo_url.vars.errors[0].message | default | trans }}"
+                                >
+                                    {{ onlineProfileTab.logo_url.vars.label | trans}}
+                                    <spy-input
+                                        control
+                                        attrs=""
+                                        spy-id="{{ onlineProfileTab.logo_url.vars.id }}"
+                                        required="{{ onlineProfileTab.logo_url.vars.required }}"
+                                        name="{{ onlineProfileTab.logo_url.vars.full_name }}"
+                                        value="{{ onlineProfileTab.logo_url.vars.value }}"
+                                        placeholder="{{ onlineProfileTab.logo_url.vars.attr.placeholder | default | trans }}"
+                                        type="text"
+                                        cloak
+                                    >
+                                    </spy-input>
+                                </spy-form-item>
 
-                                                <spy-select
-                                                    control
-                                                    name="{{ businessInfoTab.contact_person_title.vars.full_name }}"
-                                                    options="{{ businessInfoTab.contact_person_title.vars.choices | json_encode() }}"
-                                                    value="{{ businessInfoTab.contact_person_title.vars.data }}"
-                                                    required="{{ businessInfoTab.contact_person_title.vars.required }}"
-                                                ></spy-select>
-                                            </spy-form-item>
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set bannerUrlGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.bannerUrlGlossaryKey %}
 
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.contact_person_first_name.vars.id }}"
-                                                error="{{ businessInfoTab.contact_person_first_name.vars.errors[0].message | default | trans }}"
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ bannerUrlGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ bannerUrlGlossaryKey.vars.id }}"
+                                                required="{{ bannerUrlGlossaryKey.vars.required }}"
+                                                name="{{ bannerUrlGlossaryKey.vars.full_name }}"
+                                                value="{{ bannerUrlGlossaryKey.vars.value }}"
+                                                placeholder="{{ bannerUrlGlossaryKey.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
                                             >
-                                                {{ businessInfoTab.contact_person_first_name.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.contact_person_first_name.vars.id }}"
-                                                    required="{{ businessInfoTab.contact_person_first_name.vars.required }}"
-                                                    name="{{ businessInfoTab.contact_person_first_name.vars.full_name }}"
-                                                    value="{{ businessInfoTab.contact_person_first_name.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.contact_person_first_name.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.contact_person_last_name.vars.id }}"
-                                                error="{{ businessInfoTab.contact_person_last_name.vars.errors[0].message | default | trans }}"
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Contact Details & Address' | trans }}">
+                                <div class="mp-profile__row">
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.address1.vars.id }}"
+                                            error="{{ onlineProfileTab.address1.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.address1.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.address1.vars.id }}"
+                                                required="{{ onlineProfileTab.address1.vars.required }}"
+                                                name="{{ onlineProfileTab.address1.vars.full_name }}"
+                                                value="{{ onlineProfileTab.address1.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.address1.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
                                             >
-                                                {{ businessInfoTab.contact_person_last_name.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.contact_person_last_name.vars.id }}"
-                                                    required="{{ businessInfoTab.contact_person_last_name.vars.required }}"
-                                                    name="{{ businessInfoTab.contact_person_last_name.vars.full_name }}"
-                                                    value="{{ businessInfoTab.contact_person_last_name.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.contact_person_last_name.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.email.vars.id }}"
-                                                error="{{ businessInfoTab.email.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.email.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.email.vars.id }}"
-                                                    required="{{ businessInfoTab.email.vars.required }}"
-                                                    name="{{ businessInfoTab.email.vars.full_name }}"
-                                                    value="{{ businessInfoTab.email.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.email.vars.attr.placeholder | default | trans }}"
-                                                    type="email"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.contact_person_phone.vars.id }}"
-                                                error="{{ businessInfoTab.contact_person_phone.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.contact_person_phone.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.contact_person_phone.vars.id }}"
-                                                    required="{{ businessInfoTab.contact_person_phone.vars.required }}"
-                                                    name="{{ businessInfoTab.contact_person_phone.vars.full_name }}"
-                                                    value="{{ businessInfoTab.contact_person_phone.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.contact_person_phone.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-                                        </spy-card>
+                                            </spy-input>
+                                        </spy-form-item>
                                     </div>
-                                    <div class="profile-container__col profile-container__col--business-right">
-                                        <spy-card title="{{ 'Merchant Company Details' | trans }}">
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.name.vars.id }}"
-                                                error="{{ businessInfoTab.name.vars.errors[0].message | default | trans }}"
+                                    <div class="mp-profile__col mp-profile__col--number">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.address2.vars.id }}"
+                                            error="{{ onlineProfileTab.address2.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.address2.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.address2.vars.id }}"
+                                                required="{{ onlineProfileTab.address2.vars.required }}"
+                                                name="{{ onlineProfileTab.address2.vars.full_name }}"
+                                                value="{{ onlineProfileTab.address2.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.address2.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
                                             >
-                                                {{ businessInfoTab.name.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.name.vars.id }}"
-                                                    required="{{ businessInfoTab.name.vars.required }}"
-                                                    name="{{ businessInfoTab.name.vars.full_name }}"
-                                                    value="{{ businessInfoTab.name.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.name.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.registration_number.vars.id }}"
-                                                error="{{ businessInfoTab.registration_number.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.registration_number.vars.label | trans }}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ businessInfoTab.registration_number.vars.id }}"
-                                                    required="{{ businessInfoTab.registration_number.vars.required }}"
-                                                    name="{{ businessInfoTab.registration_number.vars.full_name }}"
-                                                    value="{{ businessInfoTab.registration_number.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.registration_number.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            <spy-form-item
-                                                for="{{ businessInfoTab.merchant_reference.vars.id }}"
-                                                error="{{ businessInfoTab.merchant_reference.vars.errors[0].message | default | trans }}"
-                                            >
-                                                {{ businessInfoTab.merchant_reference.vars.label | trans }}
-                                                {% set referenceAttrs = {
-                                                    readonly: businessInfoTab.merchant_reference.vars.attr.read_only | default(false)
-                                                } | json_encode() %}
-                                                <spy-input
-                                                    control
-                                                    attrs="{{ referenceAttrs }}"
-                                                    spy-id="{{ businessInfoTab.registration_number.vars.id }}"
-                                                    required="{{ businessInfoTab.merchant_reference.vars.required }}"
-                                                    name="{{ businessInfoTab.merchant_reference.vars.full_name }}"
-                                                    value="{{ businessInfoTab.merchant_reference.vars.value }}"
-                                                    placeholder="{{ businessInfoTab.merchant_reference.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-                                        </spy-card>
+                                            </spy-input>
+                                        </spy-form-item>
                                     </div>
-                                </div>
-                            </spy-tab>
-                            <spy-tab title="{{ 'Online Profile' | trans }}" has-warning="{{ isOnlineProfileTabHasError }}">
-                                <div class="profile-container__row">
-                                    <div class="profile-container__col profile-container__col--online-left">
-                                        <spy-card title="{{ 'Store Profile URL' | trans }} *">
-                                            {% for urlForm in onlineProfileTab.urlCollection.children %}
-                                                <spy-form-item
-                                                    error="{{ urlForm.children.url.vars.errors[0].message | default | trans }}"
-                                                >
-                                                    <spy-input
-                                                        control
-                                                        attrs=""
-                                                        outer-prefix="{{ urlForm.children.url.vars.label | trans }}"
-                                                        spy-id="{{ urlForm.children.url.vars.id }}"
-                                                        required="{{ urlForm.children.url.vars.required }}"
-                                                        name="{{ urlForm.children.url.vars.full_name }}"
-                                                        value="{{ urlForm.children.url.vars.value }}"
-                                                        placeholder="{{ urlForm.children.url.vars.attr.placeholder | default | trans }}"
-                                                        type="text"
-                                                        cloak
-                                                    >
-                                                    </spy-input>
-                                                    <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
-                                                </spy-form-item>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'About the store' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ descriptionGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-textarea
-                                                            control
-                                                            spyId="{{ descriptionGlossaryKey.vars.id }}"
-                                                            name="{{ descriptionGlossaryKey.vars.full_name }}"
-                                                            value="{{ descriptionGlossaryKey.vars.value }}"
-                                                            required="{{ descriptionGlossaryKey.vars.required }}"
-                                                        ></spy-textarea>
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Visual assets' | trans }}">
-                                            <spy-form-item
-                                                for="{{ onlineProfileTab.logo_url.vars.id }}"
-                                                error="{{ onlineProfileTab.logo_url.vars.errors[0].message | default | trans }}"
+                                    <div class="mp-profile__col mp-profile__col--code">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.zip_code.vars.id }}"
+                                            error="{{ onlineProfileTab.zip_code.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.zip_code.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.zip_code.vars.id }}"
+                                                required="{{ onlineProfileTab.zip_code.vars.required }}"
+                                                name="{{ onlineProfileTab.zip_code.vars.full_name }}"
+                                                value="{{ onlineProfileTab.zip_code.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.zip_code.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
                                             >
-                                                {{ onlineProfileTab.logo_url.vars.label | trans}}
-                                                <spy-input
-                                                    control
-                                                    attrs=""
-                                                    spy-id="{{ onlineProfileTab.logo_url.vars.id }}"
-                                                    required="{{ onlineProfileTab.logo_url.vars.required }}"
-                                                    name="{{ onlineProfileTab.logo_url.vars.full_name }}"
-                                                    value="{{ onlineProfileTab.logo_url.vars.value }}"
-                                                    placeholder="{{ onlineProfileTab.logo_url.vars.attr.placeholder | default | trans }}"
-                                                    type="text"
-                                                    cloak
-                                                >
-                                                </spy-input>
-                                            </spy-form-item>
-
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set bannerUrlGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.bannerUrlGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ bannerUrlGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ bannerUrlGlossaryKey.vars.id }}"
-                                                            required="{{ bannerUrlGlossaryKey.vars.required }}"
-                                                            name="{{ bannerUrlGlossaryKey.vars.full_name }}"
-                                                            value="{{ bannerUrlGlossaryKey.vars.value }}"
-                                                            placeholder="{{ bannerUrlGlossaryKey.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Contact Details & Address' | trans }}">
-                                            <div class="profile-container__row">
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.address1.vars.id }}"
-                                                        error="{{ onlineProfileTab.address1.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.address1.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.address1.vars.id }}"
-                                                            required="{{ onlineProfileTab.address1.vars.required }}"
-                                                            name="{{ onlineProfileTab.address1.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.address1.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.address1.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--number">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.address2.vars.id }}"
-                                                        error="{{ onlineProfileTab.address2.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.address2.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.address2.vars.id }}"
-                                                            required="{{ onlineProfileTab.address2.vars.required }}"
-                                                            name="{{ onlineProfileTab.address2.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.address2.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.address2.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--code">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.zip_code.vars.id }}"
-                                                        error="{{ onlineProfileTab.zip_code.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.zip_code.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.zip_code.vars.id }}"
-                                                            required="{{ onlineProfileTab.zip_code.vars.required }}"
-                                                            name="{{ onlineProfileTab.zip_code.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.zip_code.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.zip_code.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--full">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.address3.vars.id }}"
-                                                        error="{{ onlineProfileTab.address3.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.address3.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.address3.vars.id }}"
-                                                            required="{{ onlineProfileTab.address3.vars.required }}"
-                                                            name="{{ onlineProfileTab.address3.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.address3.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.address3.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.city.vars.id }}"
-                                                        error="{{ onlineProfileTab.city.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.city.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.city.vars.id }}"
-                                                            required="{{ onlineProfileTab.city.vars.required }}"
-                                                            name="{{ onlineProfileTab.city.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.city.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.city.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.fk_country.vars.id }}"
-                                                        error="{{ onlineProfileTab.fk_country.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.fk_country.vars.label | trans}}
-
-                                                        {% set countrySelectOptions = [{
-                                                            label: onlineProfileTab.fk_country.vars.placeholder | trans,
-                                                            value: ''
-                                                        }] | merge(onlineProfileTab.fk_country.vars.choices) %}
-                                                        <spy-select
-                                                            control
-                                                            options="{{ countrySelectOptions | json_encode() }}"
-                                                            name="{{ onlineProfileTab.fk_country.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.fk_country.vars.data }}"
-                                                            required="{{ onlineProfileTab.fk_country.vars.required }}"
-                                                            disabled="{{ onlineProfileTab.fk_country.vars.disabled }}"
-                                                        ></spy-select>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.latitude.vars.id }}"
-                                                        error="{{ onlineProfileTab.latitude.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.latitude.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.latitude.vars.id }}"
-                                                            required="{{ onlineProfileTab.latitude.vars.required }}"
-                                                            name="{{ onlineProfileTab.latitude.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.latitude.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.latitude.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.longitude.vars.id }}"
-                                                        error="{{ onlineProfileTab.longitude.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.longitude.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.longitude.vars.id }}"
-                                                            required="{{ onlineProfileTab.longitude.vars.required }}"
-                                                            name="{{ onlineProfileTab.longitude.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.longitude.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.longitude.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.public_phone.vars.id }}"
-                                                        error="{{ onlineProfileTab.public_phone.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.public_phone.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.public_phone.vars.id }}"
-                                                            required="{{ onlineProfileTab.public_phone.vars.required }}"
-                                                            name="{{ onlineProfileTab.public_phone.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.public_phone.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.public_phone.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--half">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.fax_number.vars.id }}"
-                                                        error="{{ onlineProfileTab.fax_number.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.fax_number.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.fax_number.vars.id }}"
-                                                            required="{{ onlineProfileTab.fax_number.vars.required }}"
-                                                            name="{{ onlineProfileTab.fax_number.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.fax_number.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.fax_number.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div class="profile-container__col profile-container__col--full">
-                                                    <spy-form-item
-                                                        for="{{ onlineProfileTab.public_email.vars.id }}"
-                                                        error="{{ onlineProfileTab.public_email.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        {{ onlineProfileTab.public_email.vars.label | trans}}
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ onlineProfileTab.public_email.vars.id }}"
-                                                            required="{{ onlineProfileTab.public_email.vars.required }}"
-                                                            name="{{ onlineProfileTab.public_email.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.public_email.vars.value }}"
-                                                            placeholder="{{ onlineProfileTab.public_email.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                        </spy-input>
-                                                    </spy-form-item>
-                                                </div>
-                                            </div>
-                                        </spy-card>
-                                        <spy-card title="{{ 'Average Delivery Time' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set deliveryTimeGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.deliveryTimeGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ deliveryTimeGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-input
-                                                            control
-                                                            attrs=""
-                                                            spy-id="{{ deliveryTimeGlossaryKey.vars.id }}"
-                                                            required="{{ deliveryTimeGlossaryKey.vars.required }}"
-                                                            name="{{ deliveryTimeGlossaryKey.vars.full_name }}"
-                                                            value="{{ deliveryTimeGlossaryKey.vars.value }}"
-                                                            placeholder="{{ deliveryTimeGlossaryKey.vars.attr.placeholder | default | trans }}"
-                                                            type="text"
-                                                            cloak
-                                                        >
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Terms and Conditions' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                            error="{{ termsConditionsGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-textarea
-                                                            control
-                                                            spy-id="{{ termsConditionsGlossaryKey.vars.id }}"
-                                                            name="{{ termsConditionsGlossaryKey.vars.full_name }}"
-                                                            value="{{ termsConditionsGlossaryKey.vars.value }}"
-                                                            required="{{ termsConditionsGlossaryKey.vars.required }}"
-                                                        ></spy-textarea>
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Return Policy' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set cancellationPolicyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.cancellationPolicyGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ cancellationPolicyGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-textarea
-                                                            control
-                                                            spy-id="{{ cancellationPolicyGlossaryKey.vars.id }}"
-                                                            name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"
-                                                            value="{{ cancellationPolicyGlossaryKey.vars.value }}"
-                                                            required="{{ cancellationPolicyGlossaryKey.vars.required }}"
-                                                        ></spy-textarea>
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Imprint' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set imprintGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.imprintGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ imprintGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-textarea
-                                                            control
-                                                            spy-id="{{ imprintGlossaryKey.vars.id }}"
-                                                            name="{{ imprintGlossaryKey.vars.full_name }}"
-                                                            value="{{ imprintGlossaryKey.vars.value }}"
-                                                            required="{{ imprintGlossaryKey.vars.required }}"
-                                                        ></spy-textarea>
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
-                                        <spy-card title="{{ 'Data Privacy' | trans }}">
-                                            {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
-                                                {% set dataPrivacyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.dataPrivacyGlossaryKey %}
-
-                                                <spy-collapsible
-                                                    class="{% if loop.first %}profile-container__collapsible{% endif %}"
-                                                    title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
-                                                    title="{{ form.children.locale.children.localeName.vars.value }}"
-                                                    active="true"
-                                                >
-                                                    <spy-form-item
-                                                        error="{{ dataPrivacyGlossaryKey.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-textarea
-                                                            control
-                                                            spy-id="{{ dataPrivacyGlossaryKey.vars.id }}"
-                                                            name="{{ dataPrivacyGlossaryKey.vars.full_name }}"
-                                                            value="{{ dataPrivacyGlossaryKey.vars.value }}"
-                                                            required="{{ dataPrivacyGlossaryKey.vars.required }}"
-                                                        ></spy-textarea>
-                                                    </spy-form-item>
-                                                </spy-collapsible>
-                                            {% endfor %}
-                                        </spy-card>
+                                            </spy-input>
+                                        </spy-form-item>
                                     </div>
-                                    <div class="profile-container__col profile-container__col--online-right">
-                                        <spy-card title="{{ 'Online Status' | trans }}">
-                                            <div class="profile-container__status">
-                                                <div>
-                                                    <h3 class="profile-container__status-title">Your Store is online.</h3>
-                                                </div>
-                                                <div>
-                                                    <spy-form-item
-                                                        error="{{ onlineProfileTab.is_active.vars.errors[0].message | default | trans }}"
-                                                    >
-                                                        <spy-toggle
-                                                            control
-                                                            name="{{ onlineProfileTab.is_active.vars.full_name }}"
-                                                            value="{{ onlineProfileTab.is_active.vars.value }}"
-                                                            required="{{ onlineProfileTab.is_active.vars.required }}"
-                                                        ></spy-toggle>
-                                                    </spy-form-item>
-                                                </div>
-                                                <div>
-                                                    <p>This means that your store is availiable online and people can see it.</p>
-                                                    <br>
-                                                    <p>So make sure it looks good!</p>
-                                                </div>
-                                            </div>
-                                        </spy-card>
+                                    <div class="mp-profile__col mp-profile__col--full">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.address3.vars.id }}"
+                                            error="{{ onlineProfileTab.address3.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.address3.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.address3.vars.id }}"
+                                                required="{{ onlineProfileTab.address3.vars.required }}"
+                                                name="{{ onlineProfileTab.address3.vars.full_name }}"
+                                                value="{{ onlineProfileTab.address3.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.address3.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.city.vars.id }}"
+                                            error="{{ onlineProfileTab.city.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.city.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.city.vars.id }}"
+                                                required="{{ onlineProfileTab.city.vars.required }}"
+                                                name="{{ onlineProfileTab.city.vars.full_name }}"
+                                                value="{{ onlineProfileTab.city.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.city.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.fk_country.vars.id }}"
+                                            error="{{ onlineProfileTab.fk_country.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.fk_country.vars.label | trans}}
+
+                                            {% set countrySelectOptions = [{
+                                                label: onlineProfileTab.fk_country.vars.placeholder | trans,
+                                                value: ''
+                                            }] | merge(onlineProfileTab.fk_country.vars.choices) %}
+                                            <spy-select
+                                                control
+                                                options="{{ countrySelectOptions | json_encode() }}"
+                                                name="{{ onlineProfileTab.fk_country.vars.full_name }}"
+                                                value="{{ onlineProfileTab.fk_country.vars.data }}"
+                                                required="{{ onlineProfileTab.fk_country.vars.required }}"
+                                                disabled="{{ onlineProfileTab.fk_country.vars.disabled }}"
+                                            ></spy-select>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.latitude.vars.id }}"
+                                            error="{{ onlineProfileTab.latitude.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.latitude.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.latitude.vars.id }}"
+                                                required="{{ onlineProfileTab.latitude.vars.required }}"
+                                                name="{{ onlineProfileTab.latitude.vars.full_name }}"
+                                                value="{{ onlineProfileTab.latitude.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.latitude.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.longitude.vars.id }}"
+                                            error="{{ onlineProfileTab.longitude.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.longitude.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.longitude.vars.id }}"
+                                                required="{{ onlineProfileTab.longitude.vars.required }}"
+                                                name="{{ onlineProfileTab.longitude.vars.full_name }}"
+                                                value="{{ onlineProfileTab.longitude.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.longitude.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.public_phone.vars.id }}"
+                                            error="{{ onlineProfileTab.public_phone.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.public_phone.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.public_phone.vars.id }}"
+                                                required="{{ onlineProfileTab.public_phone.vars.required }}"
+                                                name="{{ onlineProfileTab.public_phone.vars.full_name }}"
+                                                value="{{ onlineProfileTab.public_phone.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.public_phone.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.fax_number.vars.id }}"
+                                            error="{{ onlineProfileTab.fax_number.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.fax_number.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.fax_number.vars.id }}"
+                                                required="{{ onlineProfileTab.fax_number.vars.required }}"
+                                                name="{{ onlineProfileTab.fax_number.vars.full_name }}"
+                                                value="{{ onlineProfileTab.fax_number.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.fax_number.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--full">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.public_email.vars.id }}"
+                                            error="{{ onlineProfileTab.public_email.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.public_email.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.public_email.vars.id }}"
+                                                required="{{ onlineProfileTab.public_email.vars.required }}"
+                                                name="{{ onlineProfileTab.public_email.vars.full_name }}"
+                                                value="{{ onlineProfileTab.public_email.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.public_email.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
                                     </div>
                                 </div>
-                            </spy-tab>
-                        </spy-tabs>
+                            </spy-card>
+                            <spy-card title="{{ 'Average Delivery Time' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set deliveryTimeGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.deliveryTimeGlossaryKey %}
+
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ deliveryTimeGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ deliveryTimeGlossaryKey.vars.id }}"
+                                                required="{{ deliveryTimeGlossaryKey.vars.required }}"
+                                                name="{{ deliveryTimeGlossaryKey.vars.full_name }}"
+                                                value="{{ deliveryTimeGlossaryKey.vars.value }}"
+                                                placeholder="{{ deliveryTimeGlossaryKey.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Terms and Conditions' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
+
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ termsConditionsGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-textarea
+                                                control
+                                                spy-id="{{ termsConditionsGlossaryKey.vars.id }}"
+                                                name="{{ termsConditionsGlossaryKey.vars.full_name }}"
+                                                value="{{ termsConditionsGlossaryKey.vars.value }}"
+                                                required="{{ termsConditionsGlossaryKey.vars.required }}"
+                                            ></spy-textarea>
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Return Policy' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set cancellationPolicyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.cancellationPolicyGlossaryKey %}
+
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ cancellationPolicyGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-textarea
+                                                control
+                                                spy-id="{{ cancellationPolicyGlossaryKey.vars.id }}"
+                                                name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"
+                                                value="{{ cancellationPolicyGlossaryKey.vars.value }}"
+                                                required="{{ cancellationPolicyGlossaryKey.vars.required }}"
+                                            ></spy-textarea>
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Imprint' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set imprintGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.imprintGlossaryKey %}
+
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ imprintGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-textarea
+                                                control
+                                                spy-id="{{ imprintGlossaryKey.vars.id }}"
+                                                name="{{ imprintGlossaryKey.vars.full_name }}"
+                                                value="{{ imprintGlossaryKey.vars.value }}"
+                                                required="{{ imprintGlossaryKey.vars.required }}"
+                                            ></spy-textarea>
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                            <spy-card title="{{ 'Data Privacy' | trans }}">
+                                {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
+                                    {% set dataPrivacyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.dataPrivacyGlossaryKey %}
+
+                                    <spy-collapsible
+                                        class="{% if loop.first %}mp-profile__collapsible{% endif %}"
+                                        title-icon="{{ _self.langIcon(form.children.locale.children.localeName.vars.value) | trim }}"
+                                        title="{{ form.children.locale.children.localeName.vars.value }}"
+                                        active="true"
+                                    >
+                                        <spy-form-item
+                                            error="{{ dataPrivacyGlossaryKey.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-textarea
+                                                control
+                                                spy-id="{{ dataPrivacyGlossaryKey.vars.id }}"
+                                                name="{{ dataPrivacyGlossaryKey.vars.full_name }}"
+                                                value="{{ dataPrivacyGlossaryKey.vars.value }}"
+                                                required="{{ dataPrivacyGlossaryKey.vars.required }}"
+                                            ></spy-textarea>
+                                        </spy-form-item>
+                                    </spy-collapsible>
+                                {% endfor %}
+                            </spy-card>
+                        </div>
+                        <div class="mp-profile__col mp-profile__col--online-right">
+                            <spy-card title="{{ 'Online Status' | trans }}">
+                                <div class="mp-profile__status">
+                                    <div>
+                                        <h3 class="mp-profile__status-title">Your Store is online.</h3>
+                                    </div>
+                                    <div>
+                                        <spy-form-item
+                                            error="{{ onlineProfileTab.is_active.vars.errors[0].message | default | trans }}"
+                                            no-label="true"
+                                            no-spaces="true"
+                                        >
+                                            <spy-toggle
+                                                control
+                                                name="{{ onlineProfileTab.is_active.vars.full_name }}"
+                                                value="{{ onlineProfileTab.is_active.vars.value }}"
+                                                required="{{ onlineProfileTab.is_active.vars.required }}"
+                                            ></spy-toggle>
+                                        </spy-form-item>
+                                    </div>
+                                    <div>
+                                        {{ 'profile.status.message' | trans | raw }}
+                                    </div>
+                                </div>
+                            </spy-card>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </form>
-    </mp-profile>
+                </spy-tab>
+            </spy-tabs>
+
+            <spy-button action type="submit" class="mp-profile__submit">
+                {{ 'Save' | trans }}
+            </spy-button>
+        </mp-profile>
+    </form>
 {% endblock %}
 
 {% block footerJs %}

@@ -39,3 +39,6 @@ Contact Person Details,Contact Person Details
 Merchant Company Details,Merchant Company Details
 Business Info,Business Info
 Online Profile,Online Profile
+profile.status.message,"<p>This means that your store is availiable online and people can see it.</p>
+                                                <br>
+                                                <p>So make sure it looks good!</p>"
