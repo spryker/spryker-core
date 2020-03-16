@@ -28,7 +28,10 @@ interface CmsPageMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    public function mapCmsLocalizedAttributesTransfer(SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity, ?string $url = null): CmsPageAttributesTransfer;
+    public function mapCmsLocalizedAttributesTransfer(
+        SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
+        ?string $url = null
+    ): CmsPageAttributesTransfer;
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity

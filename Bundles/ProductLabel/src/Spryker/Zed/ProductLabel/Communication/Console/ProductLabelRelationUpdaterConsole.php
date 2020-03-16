@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface getRepository()
  */
 class ProductLabelRelationUpdaterConsole extends Console
 {

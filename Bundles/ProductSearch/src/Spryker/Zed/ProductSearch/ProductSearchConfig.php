@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
     public function getAvailableProductSearchFilterConfigs()

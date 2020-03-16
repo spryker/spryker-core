@@ -13,6 +13,8 @@ use Spryker\Shared\Customer\CustomerConstants;
 class CustomerConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getCustomerSecuredPattern(): string

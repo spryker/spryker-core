@@ -17,6 +17,8 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 class SharedCartConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
      */
     public function getQuotePermissionGroups(): array

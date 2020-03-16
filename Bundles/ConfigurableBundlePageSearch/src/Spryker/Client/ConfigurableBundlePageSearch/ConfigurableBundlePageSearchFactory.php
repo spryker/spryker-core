@@ -20,8 +20,9 @@ class ConfigurableBundlePageSearchFactory extends AbstractFactory
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function createConfigurableBundleTemplateSearchQuery(ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer): QueryInterface
-    {
+    public function createConfigurableBundleTemplateSearchQuery(
+        ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
+    ): QueryInterface {
         return new ConfigurableBundleTemplatePageSearchQueryPlugin($configurableBundleTemplatePageSearchRequestTransfer);
     }
 

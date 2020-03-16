@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ShoppingListPermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -45,8 +47,10 @@ class ShoppingListPermissionCustomerExpanderPlugin extends AbstractPlugin implem
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function addPermissionsToCustomerTransfer(CustomerTransfer $customerTransfer, PermissionCollectionTransfer $permissionCollectionTransfer): CustomerTransfer
-    {
+    protected function addPermissionsToCustomerTransfer(
+        CustomerTransfer $customerTransfer,
+        PermissionCollectionTransfer $permissionCollectionTransfer
+    ): CustomerTransfer {
         $customerPermissionCollection = $customerTransfer->getPermissions();
 
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {

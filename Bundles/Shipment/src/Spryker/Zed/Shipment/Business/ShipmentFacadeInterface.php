@@ -210,6 +210,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      *   - Hydrates order transfer with additional shipment data from shipment sales tables.
+     *   - Sorts order items by shipment ids in the case when multiple shipment addresses are defined in order items.
      *
      * @api
      *

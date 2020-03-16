@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $amount
@@ -33,6 +35,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param float $amount
@@ -46,6 +50,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $amount
@@ -59,6 +65,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
      * This method will return formatted string representation of the given MoneyTransfer object with currency symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00 €`
@@ -75,6 +82,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
      * This method will return float representation of the given MoneyTransfer object without symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00`
@@ -91,6 +99,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
      * This money will return a MoneyTransfer parsed from the given value.
      *
      * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
@@ -108,6 +117,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $value
@@ -120,6 +131,8 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param float $value

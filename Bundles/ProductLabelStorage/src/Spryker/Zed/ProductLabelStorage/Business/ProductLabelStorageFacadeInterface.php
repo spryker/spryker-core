@@ -13,6 +13,7 @@ interface ProductLabelStorageFacadeInterface
      * Specification:
      * - Stores label dictionary data as json encoded to storage table
      * - Sends a copy of data to queue based on module config
+     * - Deletes label dictionary storage entities if dictionary is empty
      *
      * @api
      *

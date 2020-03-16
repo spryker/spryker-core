@@ -220,8 +220,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $imageSets, ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $imageSets,
+        ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null
+    ) {
         if ($spyProductAbstractImageStorage === null) {
             $spyProductAbstractImageStorage = new SpyProductAbstractImageStorage();
         }
