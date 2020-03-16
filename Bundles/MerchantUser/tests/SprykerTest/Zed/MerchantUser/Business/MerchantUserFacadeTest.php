@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantUser\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
@@ -34,11 +35,6 @@ class MerchantUserFacadeTest extends Unit
      * @var \Generated\Shared\Transfer\MerchantUserTransfer
      */
     protected $merchantUserTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\UserTransfer
-     */
-    protected $newUserTransfer;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge
@@ -76,13 +72,6 @@ class MerchantUserFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->onlyMethods(['getUserById', 'updateUser', 'createUser'])
             ->getMockForAbstractClass();
-
-        $this->newUserTransfer = (new UserTransfer())
-            ->setFirstName('test_merchant_user')
-        ->setLastName('test_merchant_user')
-        ->setUsername('test_merchant_user@spryker.com');
-
-        $this->merchantUserTransfer = new MerchantUserTransfer();
     }
 
     /**
@@ -91,13 +80,15 @@ class MerchantUserFacadeTest extends Unit
     public function testCreateReturnsTrueIfUserDoesNotExist(): void
     {
         // Arrange
+        $userTransfer = (new UserBuilder())->build();
         $merchantTransfer = $this->tester->haveMerchant();
-        $this->merchantUserTransfer->setIdMerchant($merchantTransfer->getIdMerchant())->setUser($this->newUserTransfer);
+        $merchantUserTransfer = new MerchantUserTransfer();
+        $merchantUserTransfer->setIdMerchant($merchantTransfer->getIdMerchant())->setUser($userTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($this->merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
-            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($this->merchantUserTransfer->getIdMerchantUser())
+            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
         );
 
         // Assert
@@ -111,15 +102,17 @@ class MerchantUserFacadeTest extends Unit
     public function testCreateReturnsTrueIfUserExist(): void
     {
         // Arrange
+        $userTransfer = (new UserBuilder())->build();
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
+        $merchantUserTransfer = new MerchantUserTransfer();
 
-        $this->merchantUserTransfer->setIdMerchant($merchantTransfer->getIdMerchant())
-            ->setUser($this->newUserTransfer);
+        $merchantUserTransfer->setIdMerchant($merchantTransfer->getIdMerchant())
+            ->setUser($userTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($this->merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
-            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($this->merchantUserTransfer->getIdMerchantUser())
+            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
         );
 
         // Assert
@@ -133,20 +126,22 @@ class MerchantUserFacadeTest extends Unit
     public function testCreateReturnsFalseIfUserAlreadyHasMerchant(): void
     {
         // Arrange
+        $newUserTransfer = (new UserBuilder())->build();
         $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
+            UserTransfer::USERNAME => $newUserTransfer->getUsername(),
         ]);
+        $merchantUserTransfer = new MerchantUserTransfer();
 
         $merchantOneTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
         $merchantTwoTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_2@spryker.com']);
 
         $this->tester->haveMerchantUser($merchantOneTransfer, $userTransfer);
 
-        $this->merchantUserTransfer->setIdMerchant($merchantTwoTransfer->getIdMerchant())
-            ->setUser($this->newUserTransfer);
+        $merchantUserTransfer->setIdMerchant($merchantTwoTransfer->getIdMerchant())
+            ->setUser($newUserTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($this->merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
 
         // Assert
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccessful());
@@ -195,6 +190,7 @@ class MerchantUserFacadeTest extends Unit
     public function testUpdateWithNewActiveStatus(): void
     {
         // Arrange
+        $newUserTransfer = (new UserBuilder())->build();
         $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser([
@@ -211,7 +207,7 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
             ->with($userTransfer)
-            ->willReturn($this->newUserTransfer->setStatus('active'));
+            ->willReturn($newUserTransfer->setStatus('active'));
 
         $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
 
@@ -228,6 +224,7 @@ class MerchantUserFacadeTest extends Unit
     public function testUpdateWithNewBlockedStatus(): void
     {
         // Arrange
+        $newUserTransfer = (new UserBuilder())->build();
         $this->initializeFacadeMocks();
 
         $userTransfer = $this->tester->haveUser([
@@ -244,7 +241,7 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
             ->with($userTransfer)
-            ->willReturn($this->newUserTransfer->setStatus('active'));
+            ->willReturn($newUserTransfer->setStatus('active'));
 
         $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
 
@@ -269,7 +266,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
         // Act
-        $merchantUserTransferFromRequest = $this->tester->getFacade()->find(
+        $merchantUserTransferFromRequest = $this->tester->getFacade()->findOne(
             (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
         );
 

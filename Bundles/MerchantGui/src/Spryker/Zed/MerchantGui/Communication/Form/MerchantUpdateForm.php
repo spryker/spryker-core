@@ -39,7 +39,7 @@ class MerchantUpdateForm extends MerchantCreateForm
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
-     * @return $this|void
+     * @return $this
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

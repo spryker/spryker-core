@@ -17,7 +17,7 @@ interface MerchantUserFacadeInterface
      * Specification:
      * - Creates a new merchant user entity.
      * - Persists the entity to DB.
-     * - Returns MerchantUserResponse with newly created MerchantUserTransfer inside
+     * - Returns merchant user response with newly created merchant user transfer inside.
      *
      * @api
      *
@@ -29,8 +29,8 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Updates merchantUser with passed MerchantUserTransfer data
-     * - Returns MerchantUserResponse with updated MerchantUserTransfer inside
+     * - Updates MerchantUser with passed MerchantUser transfer data.
+     * - Returns MerchantUserResponse transfer with updated MerchantUser transfer inside.
      *
      * @api
      *
@@ -42,7 +42,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Disable merchantUsers that related to given criteria
+     * - Disable MerchantUsers that related to given criteria.
      *
      * @api
      *
@@ -54,7 +54,8 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Searching for merchantUser by given criteria
+     * - Searching for MerchantUser by given criteria
+     * - Returns MerchantUser transfer or null if MerchantUser was't found
      *
      * @api
      *
@@ -62,5 +63,5 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
+    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
 }

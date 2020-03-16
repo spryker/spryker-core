@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider;
@@ -24,7 +24,7 @@ class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvi
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         $options[MerchantUserUpdateForm::OPTION_STATUS_CHOICES] = $this->getStatusSelectChoices();
 
@@ -34,7 +34,7 @@ class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvi
     /**
      * @return array
      */
-    protected function getStatusSelectChoices()
+    protected function getStatusSelectChoices(): array
     {
         return [
             static::USER_STATUS_ACTIVE => static::USER_STATUS_ACTIVE,

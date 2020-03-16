@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Table;
@@ -23,11 +23,11 @@ class MerchantUserTable extends AbstractTable
     protected const ACTIONS = 'actions';
 
     /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
     /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
     /**
@@ -46,6 +46,10 @@ class MerchantUserTable extends AbstractTable
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_LAST_NAME
      */
     protected const COL_LAST_NAME = 'spy_user.last_name';
+    /**
+     * @uses \Orm\Zed\MerchantUser\Persistence\Map\SpyMerchantUserTableMap::COL_ID_MERCHANT_USER
+     */
+    protected const COL_ID_MERCHANT_USER = 'spy_merchant_user.id_merchant_user';
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS
      */
@@ -85,7 +89,7 @@ class MerchantUserTable extends AbstractTable
     /**
      * @var int
      */
-    private $merchantId;
+    protected $merchantId;
 
     /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
@@ -98,7 +102,9 @@ class MerchantUserTable extends AbstractTable
     }
 
     /**
-     * @inheritDoc
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -136,7 +142,9 @@ class MerchantUserTable extends AbstractTable
     }
 
     /**
-     * @inheritDoc
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -152,9 +160,9 @@ class MerchantUserTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-            $item['status'] = $this->convertStatusEnumKeyToValue($item['status']);
+            $item[static::MERCHANT_USER_STATUS] = $this->convertStatusEnumKeyToValue($item[static::MERCHANT_USER_STATUS]);
             $results[] = [
-                static::MERCHANT_USER_ID => $item['spy_merchant_user.id_merchant_user'],
+                static::MERCHANT_USER_ID => $item[static::COL_ID_MERCHANT_USER],
                 static::MERCHANT_USER_NAME => $item[static::MERCHANT_USER_NAME],
                 static::MERCHANT_USER_FIRST_NAME => $item[static::MERCHANT_USER_FIRST_NAME],
                 static::MERCHANT_USER_LAST_NAME => $item[static::MERCHANT_USER_LAST_NAME],
@@ -183,7 +191,7 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/edit-merchant-user',
                 [
-                    'merchant-user-id' => $item['spy_merchant_user.id_merchant_user'],
+                    'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
                     'merchant-id' => $this->merchantId,
                 ]
             ),
@@ -221,22 +229,23 @@ class MerchantUserTable extends AbstractTable
      */
     protected function buildAvailableStatusButton(array $item): string
     {
-        $availableStatus = $item['status'] === static::USER_STATUS_ACTIVE ?
-            static::USER_STATUS_BLOCKED  : static::USER_STATUS_ACTIVE;
+        $availableStatus = $item[static::MERCHANT_USER_STATUS] === static::USER_STATUS_ACTIVE
+            ? static::USER_STATUS_BLOCKED
+            : static::USER_STATUS_ACTIVE;
 
         $statusButtonCode = $this->generateButton(
             Url::generate(
                 '/merchant-user-gui/merchant-user-status',
                 [
-                    'merchant-user-id' => $item['spy_merchant_user.id_merchant_user'],
+                    'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
                     'merchant-id' => $this->merchantId,
                     'status' => $availableStatus,
                 ]
             ),
             static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_title'],
             [
-                'icon' => 'fa fa-key', 'class' =>
-                static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_class'],
+                'icon' => 'fa fa-key',
+                'class' => static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_class'],
             ]
         );
 

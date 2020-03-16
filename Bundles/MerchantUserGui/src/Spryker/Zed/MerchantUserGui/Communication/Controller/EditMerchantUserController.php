@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
@@ -25,11 +25,11 @@ class EditMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $merchantId = $this->castId($request->get('merchant-id'));
+        $merchantUserId = $this->castId($request->get('merchant-user-id'));
+
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
-        $providerData = $dataProvider->getData(
-            $request->get('merchant-id'),
-            $request->get('merchant-user-id')
-        );
+        $providerData = $dataProvider->getData($merchantId, $merchantUserId);
 
         $merchantUserUpdateForm = $this->getFactory()
             ->getMerchantUserUpdateForm($providerData, $dataProvider->getOptions())
@@ -41,7 +41,7 @@ class EditMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserUpdateForm->createView(),
-            'merchantId' => $request->get('merchant-id'),
+            'merchantId' => $merchantId,
         ]);
     }
 
@@ -53,9 +53,11 @@ class EditMerchantUserController extends AbstractController
      */
     protected function updateMerchant(Request $request, FormInterface $merchantUserUpdateForm)
     {
+        $merchantId = $this->castId($request->get('merchant-id'));
+
         $redirectUrl = sprintf(
             '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $request->get('merchant-id'),
+            $merchantId,
             '#tab-content-merchant-user'
         );
 

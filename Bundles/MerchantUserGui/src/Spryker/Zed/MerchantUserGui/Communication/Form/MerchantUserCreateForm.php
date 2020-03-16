@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form;
@@ -47,8 +47,8 @@ class MerchantUserCreateForm extends AbstractType
                 $submittedData = $form->getData();
 
                 if (
-                    array_key_exists(static::FIELD_USERNAME, $defaultData) === false ||
-                    $defaultData[static::FIELD_USERNAME] !== $submittedData[static::FIELD_USERNAME]
+                    array_key_exists(static::FIELD_USERNAME, $defaultData) === false
+                    || $defaultData[static::FIELD_USERNAME] !== $submittedData[static::FIELD_USERNAME]
                 ) {
                     return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_USERNAME_CHECK];
                 }
@@ -170,7 +170,7 @@ class MerchantUserCreateForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueEmailConstraint()
+    protected function createUniqueEmailConstraint(): Constraint
     {
         return new Callback([
             'callback' => function ($email, ExecutionContextInterface $contextInterface) {

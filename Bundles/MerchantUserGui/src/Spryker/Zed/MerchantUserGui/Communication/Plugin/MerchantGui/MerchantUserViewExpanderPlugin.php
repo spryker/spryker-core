@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Plugin\MerchantGui;
@@ -17,11 +17,8 @@ use Symfony\Component\Form\FormView;
  */
 class MerchantUserViewExpanderPlugin extends AbstractPlugin implements MerchantUpdateFormViewExpanderPluginInterface
 {
-    protected const FIELD_MERCHANT_PROFILE = 'merchantProfile';
-
     /**
-     * Specification:
-     * - Expands FormView with data
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,12 +26,14 @@ class MerchantUserViewExpanderPlugin extends AbstractPlugin implements MerchantU
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormView
      */
-    public function expand(FormView $view, FormInterface $form, array $options): void
+    public function expand(FormView $view, FormInterface $form, array $options): FormView
     {
         $view->vars['tables']['merchantUsersTable'] = $this->getFactory()->createMerchantUserTable(
             $form->getData()['idMerchant']
         )->render();
+
+        return $view;
     }
 }

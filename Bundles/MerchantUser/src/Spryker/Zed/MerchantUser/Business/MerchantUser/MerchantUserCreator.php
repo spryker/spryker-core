@@ -81,7 +81,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         $merchantUserTransfer->requireIdMerchant();
         $merchantUserTransfer->requireUser();
 
-        $userTransfer = $this->resolveUserTransferByMerchantUser($merchantUserTransfer->getUser());
+        $userTransfer = $this->persistUserByMerchantUser($merchantUserTransfer->getUser());
         $merchantUserTransfer->setIdUser($userTransfer->getIdUser())->setUser($userTransfer);
         $multipleMerchantCheckResponse = $this->checkForMultipleMerchant($merchantUserTransfer);
 
@@ -139,7 +139,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function resolveUserTransferByMerchantUser(UserTransfer $userTransfer): UserTransfer
+    protected function persistUserByMerchantUser(UserTransfer $userTransfer): UserTransfer
     {
         if (!$this->userFacade->hasUserByUsername($userTransfer->getUsername())) {
             $userTransfer->setPassword(

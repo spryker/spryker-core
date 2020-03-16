@@ -63,19 +63,23 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function disableMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): void
     {
         $this->getFactory()
-            ->createMerchantUsersUpdater()
+            ->createMerchantUserUpdater()
             ->disable($merchantUserCriteriaTransfer);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
+    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
     {
         return $this->getFactory()
             ->createMerchantUserReader()
-            ->find($merchantUserCriteriaTransfer);
+            ->findOne($merchantUserCriteriaTransfer);
     }
 }

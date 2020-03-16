@@ -41,7 +41,7 @@ class MerchantUserReader implements MerchantUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
+    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
     {
         $merchantUserTransfer = $this->merchantUserRepository->findOne($merchantUserCriteriaTransfer);
 

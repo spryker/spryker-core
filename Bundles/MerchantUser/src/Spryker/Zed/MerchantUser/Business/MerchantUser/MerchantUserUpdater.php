@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserUpdater implements MerchantUserUpdaterInterface
 {
@@ -19,6 +21,16 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
+     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     */
+    protected const USER_STATUS_BLOCKED = 'blocked';
+
+    /**
+     * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
+     */
+    protected $merchantUserRepository;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
@@ -33,13 +45,16 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface $authFacade
+     * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
-        MerchantUserToAuthFacadeInterface $authFacade
+        MerchantUserToAuthFacadeInterface $authFacade,
+        MerchantUserRepositoryInterface $merchantUserRepository
     ) {
         $this->userFacade = $userFacade;
         $this->authFacade = $authFacade;
+        $this->merchantUserRepository = $merchantUserRepository;
     }
 
     /**
@@ -62,6 +77,22 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
         $response->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
 
         return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return void
+     */
+    public function disable(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): void
+    {
+        $merchantUserTransfers = $this->merchantUserRepository->find($merchantUserCriteriaTransfer);
+
+        foreach ($merchantUserTransfers as $merchantUserTransfer) {
+            $userTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
+            $userTransfer->setStatus(static::USER_STATUS_BLOCKED);
+            $this->userFacade->updateUser($userTransfer);
+        }
     }
 
     /**

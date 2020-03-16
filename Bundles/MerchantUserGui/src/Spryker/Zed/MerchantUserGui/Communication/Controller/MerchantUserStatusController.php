@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
@@ -27,19 +27,19 @@ class MerchantUserStatusController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idMerchantUser = $request->query->get('merchant-user-id');
+        $idMerchantUser = $this->castId($request->query->get('merchant-user-id'));
         $newMerchantUserStatus = $request->query->get('status');
         $redirectUrl = sprintf('%s#%s', $request->headers->get('referer'), 'tab-content-merchant-user');
 
         if (!$idMerchantUser || !$newMerchantUserStatus) {
-            return $this->returnErrorRedirect($request, $redirectUrl);
+            return $this->returnWrongParametersErrorRedirect($redirectUrl);
         }
 
         $merchantUserCriteriaTransfer = new MerchantUserCriteriaTransfer();
         $merchantUserCriteriaTransfer->setIdMerchantUser($idMerchantUser)->setWithUser(true);
-        $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->find($merchantUserCriteriaTransfer);
+        $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->findOne($merchantUserCriteriaTransfer);
         if (!$merchantUserTransfer || !$merchantUserTransfer->getUser()) {
-            return $this->returnErrorRedirect($request, $redirectUrl);
+            return $this->returnWrongParametersErrorRedirect($redirectUrl);
         }
 
         $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);
@@ -47,7 +47,7 @@ class MerchantUserStatusController extends AbstractController
         $merchantResponseTransfer = $this->getFactory()->getMerchantUserFacade()->update($merchantUserTransfer);
 
         if (!$merchantResponseTransfer->getIsSuccessful()) {
-            return $this->returnErrorRedirect($request, $redirectUrl);
+            return $this->returnWrongParametersErrorRedirect($redirectUrl);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
@@ -56,12 +56,11 @@ class MerchantUserStatusController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $redirectUrl
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function returnErrorRedirect(Request $request, string $redirectUrl): RedirectResponse
+    protected function returnWrongParametersErrorRedirect(string $redirectUrl): RedirectResponse
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 

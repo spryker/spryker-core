@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantUserGui;
@@ -31,7 +31,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addPropelMerchantUSerQuery($container);
+        $container = $this->addMerchantUserPropelQuery($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addUserFacade($container);
 
@@ -43,7 +43,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPropelMerchantUSerQuery(Container $container): Container
+    protected function addMerchantUserPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_MERCHANT_USER_QUERY, function () {
             return SpyMerchantUserQuery::create();

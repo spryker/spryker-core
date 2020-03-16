@@ -12,8 +12,6 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdater;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdaterInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
@@ -49,18 +47,8 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantUserUpdater(
             $this->getUserFacade(),
-            $this->getAuthFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUsersUpdaterInterface
-     */
-    public function createMerchantUsersUpdater(): MerchantUsersUpdaterInterface
-    {
-        return new MerchantUsersUpdater(
-            $this->getRepository(),
-            $this->getUserFacade()
+            $this->getAuthFacade(),
+            $this->getRepository()
         );
     }
 
