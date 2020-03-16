@@ -25,7 +25,7 @@ interface CustomerAccessStorageRepositoryInterface
      *
      * @see \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface::findFilteredCustomerAccessStorageEntities()
      *
-     * @return array
+     * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
      */
     public function findAllCustomerAccessStorageEntities(): array;
 

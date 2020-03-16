@@ -41,7 +41,7 @@ class ContentGuiToLocaleFacadeBridge implements ContentGuiToLocaleFacadeInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return string[]
      */
     public function getAvailableLocales(): array
     {

@@ -792,10 +792,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an array of productIds as keys with array of attribute keys as values of a persisted products.
-     * - The attribute keys is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
-     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -922,8 +919,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
-    {
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer {
         return $this->getFactory()
             ->createProductSuggester()
             ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);

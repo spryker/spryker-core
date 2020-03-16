@@ -68,8 +68,9 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
-    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer): array
-    {
+    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(
+        MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+    ): array {
         $merchantOpeningHoursStoragePropelQuery = $this->applyFilters(
             $this->getFactory()->getMerchantOpeningHoursStoragePropelQuery(),
             $merchantOpeningHoursStorageCriteriaFilterTransfer

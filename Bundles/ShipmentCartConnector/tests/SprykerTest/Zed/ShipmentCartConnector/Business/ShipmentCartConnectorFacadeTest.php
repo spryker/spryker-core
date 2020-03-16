@@ -237,8 +237,10 @@ class ShipmentCartConnectorFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransferWithItemLevelShipments(ShipmentMethodTransfer $shipmentMethodTransfer, StoreTransfer $storeTransfer): CartChangeTransfer
-    {
+    protected function createCartChangeTransferWithItemLevelShipments(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): CartChangeTransfer {
         $cartChangeTransfer = (new CartChangeBuilder())->build();
 
         $quoteTransfer = (new QuoteBuilder())

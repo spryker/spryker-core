@@ -93,8 +93,10 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
-    {
+    protected function setProductIdentifierFromRequest(
+        Request $request,
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
         $priceProductTransfer = new PriceProductTransfer();
         $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
         $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);

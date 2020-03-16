@@ -47,6 +47,8 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostName()
@@ -55,6 +57,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesHostName(): string
@@ -63,6 +67,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
      *
      * @return bool
@@ -73,6 +79,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
      * @return array
@@ -83,6 +91,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedProxies()
@@ -91,6 +101,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeader(): int
@@ -99,6 +111,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedHosts()
@@ -107,6 +121,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProjectNamespace(): string
@@ -115,6 +131,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigEnvironmentName(): string
@@ -133,6 +151,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated The WhoopsErrorHandler is deprecated and replaced by a new ErrorHandlerApplicationPlugin.
      *
      * @return bool
@@ -153,6 +173,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSecurityHeaders(): array
