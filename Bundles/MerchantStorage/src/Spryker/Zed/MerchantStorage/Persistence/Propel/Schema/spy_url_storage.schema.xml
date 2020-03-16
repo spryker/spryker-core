@@ -6,6 +6,6 @@
           package="src.Orm.Zed.UrlStorage.Persistence">
 
     <table name="spy_url_storage" identifierQuoting="true">
-        <column name="fk_merchant_profile" type="INTEGER" required="false"/>
+        <column name="fk_merchant" type="INTEGER" required="false"/>
     </table>
 </database>

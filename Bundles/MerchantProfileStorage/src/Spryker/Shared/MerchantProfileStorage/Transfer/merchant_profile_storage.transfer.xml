@@ -45,10 +45,6 @@
         <property name="merchantProfiles" type="MerchantProfile[]" singular="merchantProfile"/>
     </transfer>
 
-    <transfer name="UrlStorage">
-        <property name="fkResourceMerchantProfile" type="int"/>
-    </transfer>
-
     <transfer name="UrlStorageResourceMap">
         <property name="resourceKey" type="string"/>
         <property name="type" type="string"/>

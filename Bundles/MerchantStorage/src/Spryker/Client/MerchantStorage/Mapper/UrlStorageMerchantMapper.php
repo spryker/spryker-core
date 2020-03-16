@@ -46,7 +46,7 @@ class UrlStorageMerchantMapper implements UrlStorageMerchantMapperInterface
     public function mapUrlStorageTransferToUrlStorageResourceMapTransfer(UrlStorageTransfer $urlStorageTransfer): UrlStorageResourceMapTransfer
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $idMerchant = $urlStorageTransfer->getFkResourceMerchantProfile();
+        $idMerchant = $urlStorageTransfer->getFkResourceMerchant();
 
         if ($idMerchant === null) {
             return $urlStorageResourceMapTransfer;

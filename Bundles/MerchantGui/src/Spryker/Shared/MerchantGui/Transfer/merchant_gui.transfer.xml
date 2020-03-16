@@ -66,4 +66,12 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="urlPrefix" type="string"/>
+        <property name="fkResourceMerchant" type="int"/>
+        <property name="idUrl" type="int"/>
+        <property name="url" type="string"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
 </transfers>

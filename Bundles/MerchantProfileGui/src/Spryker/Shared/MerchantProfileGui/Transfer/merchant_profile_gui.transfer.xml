@@ -85,14 +85,6 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
-    <transfer name="Url">
-        <property name="urlPrefix" type="string"/>
-        <property name="fkResourceMerchantProfile" type="int"/>
-        <property name="idUrl" type="int"/>
-        <property name="url" type="string"/>
-        <property name="fkLocale" type="int"/>
-    </transfer>
-
     <transfer name="MerchantProfileAddressCollection">
         <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>

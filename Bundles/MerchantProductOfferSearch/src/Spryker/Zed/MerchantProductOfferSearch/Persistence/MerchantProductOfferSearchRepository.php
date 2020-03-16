@@ -99,6 +99,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
         $productAbstractPropelQuery
             ->innerJoinSpyProduct()
             ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
+            ->addJoin(SpyProductOfferTableMap::COL_FK_MERCHANT, SpyMerchantTableMap::COL_ID_MERCHANT, Criteria::INNER_JOIN)
             ->addAnd($productAbstractPropelQuery->getNewCriterion(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, $productOfferIds, Criteria::IN));
 
         return $productAbstractPropelQuery
