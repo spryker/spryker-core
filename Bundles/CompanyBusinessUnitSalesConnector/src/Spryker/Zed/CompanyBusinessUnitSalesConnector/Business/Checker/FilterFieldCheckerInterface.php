@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker;
 
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
+
 interface FilterFieldCheckerInterface
 {
     /**
@@ -22,4 +25,13 @@ interface FilterFieldCheckerInterface
      * @return bool
      */
     public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer;
 }

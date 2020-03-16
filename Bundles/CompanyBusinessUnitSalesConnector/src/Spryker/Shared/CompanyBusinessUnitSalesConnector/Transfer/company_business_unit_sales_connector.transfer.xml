@@ -43,6 +43,19 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="FilterFieldCheckRequest">
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+    </transfer>
+
+    <transfer name="FilterFieldCheckResponse">
+        <property name="isSuccessful" type="boolean"/>
+    </transfer>
+
     <transfer name="QueryJoinCollection">
         <property name="queryJoins" type="QueryJoin[]" singular="queryJoin"/>
     </transfer>

@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -125,5 +127,22 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
         return $this->getFactory()
             ->createFilterFieldChecker()
             ->isCompanyUserFilterApplicable($filterFieldTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer {
+        return $this->getFactory()
+            ->createFilterFieldChecker()
+            ->isCompanyRelatedFiltersSet($filterFieldCheckRequestTransfer);
     }
 }

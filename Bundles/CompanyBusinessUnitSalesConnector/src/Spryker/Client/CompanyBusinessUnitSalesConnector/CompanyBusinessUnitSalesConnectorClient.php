@@ -9,6 +9,8 @@ namespace Spryker\Client\CompanyBusinessUnitSalesConnector;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -31,5 +33,22 @@ class CompanyBusinessUnitSalesConnectorClient extends AbstractClient implements 
         return $this->getFactory()
             ->createZedCompanyBusinessUnitSalesConnectorStub()
             ->getPermittedCompanyBusinessUnitCollection($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitSalesConnectorStub()
+            ->isCompanyRelatedFiltersSet($filterFieldCheckRequestTransfer);
     }
 }

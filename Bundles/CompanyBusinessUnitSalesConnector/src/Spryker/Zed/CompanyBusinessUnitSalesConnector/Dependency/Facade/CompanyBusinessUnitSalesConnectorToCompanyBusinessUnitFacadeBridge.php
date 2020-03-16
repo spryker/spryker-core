@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client;
+namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 
-class CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientBridge implements CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+class CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeBridge implements CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface
 {
     /**
-     * @var \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
      */
-    protected $companyBusinessUnitClient;
+    protected $companyBusinessUnitFacade;
 
     /**
-     * @param \Spryker\Client\CompanyBusinessUnit\CompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
-    public function __construct($companyBusinessUnitClient)
+    public function __construct($companyBusinessUnitFacade)
     {
-        $this->companyBusinessUnitClient = $companyBusinessUnitClient;
+        $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }
 
     /**
@@ -33,6 +33,6 @@ class CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientBridge impleme
     public function getRawCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->companyBusinessUnitClient->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+        return $this->companyBusinessUnitFacade->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }

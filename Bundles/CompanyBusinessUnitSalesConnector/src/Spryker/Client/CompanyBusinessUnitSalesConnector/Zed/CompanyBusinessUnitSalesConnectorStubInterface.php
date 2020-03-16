@@ -9,6 +9,8 @@ namespace Spryker\Client\CompanyBusinessUnitSalesConnector\Zed;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 
 interface CompanyBusinessUnitSalesConnectorStubInterface
 {
@@ -20,4 +22,13 @@ interface CompanyBusinessUnitSalesConnectorStubInterface
     public function getPermittedCompanyBusinessUnitCollection(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer;
 }

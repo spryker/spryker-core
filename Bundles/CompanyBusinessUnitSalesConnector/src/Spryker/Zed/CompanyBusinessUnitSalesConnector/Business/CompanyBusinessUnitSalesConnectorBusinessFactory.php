@@ -16,7 +16,8 @@ use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader\CompanyBusines
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriter;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorDependencyProvider;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -42,7 +43,7 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
     public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
     {
         return new CompanyBusinessUnitReader(
-            $this->getCompanyBusinessUnitClient()
+            $this->getCompanyBusinessUnitFacade()
         );
     }
 
@@ -51,7 +52,9 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
      */
     public function createFilterFieldChecker(): FilterFieldCheckerInterface
     {
-        return new FilterFieldChecker();
+        return new FilterFieldChecker(
+            $this->getCompanySalesConnectorFacade()
+        );
     }
 
     /**
@@ -63,10 +66,18 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface
      */
-    public function getCompanyBusinessUnitClient(): CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+    public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitSalesConnectorDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+        return $this->getProvidedDependency(CompanyBusinessUnitSalesConnectorDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface
+     */
+    public function getCompanySalesConnectorFacade(): CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitSalesConnectorDependencyProvider::FACADE_COMPANY_SALES_CONNECTOR);
     }
 }

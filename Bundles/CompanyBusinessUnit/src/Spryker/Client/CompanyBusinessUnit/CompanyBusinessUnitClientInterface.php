@@ -90,20 +90,6 @@ interface CompanyBusinessUnitClientInterface
 
     /**
      * Specification:
-     * - Returns company business units collection without relations.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getRawCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer;
-
-    /**
-     * Specification:
      * - Returns hierarchy tree of company business units relation.
      *
      * @api

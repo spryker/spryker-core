@@ -9,6 +9,8 @@ namespace Spryker\Client\CompanyBusinessUnitSalesConnector;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 
 interface CompanyBusinessUnitSalesConnectorClientInterface
 {
@@ -26,4 +28,18 @@ interface CompanyBusinessUnitSalesConnectorClientInterface
     public function getPermittedCompanyBusinessUnitCollection(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if filtering by company user name and email could be applied, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer;
 }

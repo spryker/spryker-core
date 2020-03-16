@@ -9,6 +9,8 @@ namespace Spryker\Client\CompanyBusinessUnitSalesConnector\Zed;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Spryker\Client\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToZedRequestClientInterface;
 
 class CompanyBusinessUnitSalesConnectorStub implements CompanyBusinessUnitSalesConnectorStubInterface
@@ -43,5 +45,24 @@ class CompanyBusinessUnitSalesConnectorStub implements CompanyBusinessUnitSalesC
         );
 
         return $companyBusinessUnitCollectionTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Controller\GatewayController::isCompanyUserFilterApplicableAction()
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer {
+        /** @var \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer $filterFieldCheckResponseTransfer */
+        $filterFieldCheckResponseTransfer = $this->zedRequestClient->call(
+            '/company-business-unit-sales-connector/gateway/is-company-related-filters-set',
+            $filterFieldCheckRequestTransfer
+        );
+
+        return $filterFieldCheckResponseTransfer;
     }
 }

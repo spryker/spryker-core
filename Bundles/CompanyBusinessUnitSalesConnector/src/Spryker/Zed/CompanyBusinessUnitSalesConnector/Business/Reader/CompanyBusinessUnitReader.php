@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Reader;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
@@ -18,17 +18,17 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface
+     * @var \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface
      */
-    protected $companyBusinessUnitClient;
+    protected $companyBusinessUnitFacade;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Client\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
     public function __construct(
-        CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+        CompanyBusinessUnitSalesConnectorToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
     ) {
-        $this->companyBusinessUnitClient = $companyBusinessUnitClient;
+        $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }
 
     /**
@@ -47,7 +47,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
                 ->setIdCompany($companyUserTransfer->getFkCompany());
 
-            return $this->companyBusinessUnitClient->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+            return $this->companyBusinessUnitFacade->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         }
 
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();

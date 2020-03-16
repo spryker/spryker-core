@@ -7,14 +7,25 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker;
 
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface;
 
 class FilterFieldChecker implements FilterFieldCheckerInterface
 {
     /**
-     * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY
+     * @var \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface
      */
-    protected const FILTER_FIELD_TYPE_COMPANY = 'company';
+    protected $companySalesConnectorFacade;
+
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface $companySalesConnectorFacade
+     */
+    public function __construct(CompanyBusinessUnitSalesConnectorToCompanySalesConnectorFacadeInterface $companySalesConnectorFacade)
+    {
+        $this->companySalesConnectorFacade = $companySalesConnectorFacade;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
@@ -35,12 +46,28 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
     {
         if (
             !$this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
-            && !$this->isFilterFieldSet($filterFieldTransfers, static::FILTER_FIELD_TYPE_COMPANY)
+            && !$this->companySalesConnectorFacade->isCompanyFilterApplicable($filterFieldTransfers)
         ) {
             return false;
         }
 
         return $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_ALL);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer {
+        $filterFieldTransfers = $filterFieldCheckRequestTransfer->getFilterFields()->getArrayCopy();
+
+        $isSuccessful = $this->companySalesConnectorFacade->isCompanyFilterApplicable($filterFieldTransfers)
+            || $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT);
+
+        return (new FilterFieldCheckResponseTransfer())->setIsSuccessful($isSuccessful);
     }
 
     /**
