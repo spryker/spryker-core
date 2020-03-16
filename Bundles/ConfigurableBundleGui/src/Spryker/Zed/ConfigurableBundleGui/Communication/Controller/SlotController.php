@@ -346,8 +346,9 @@ class SlotController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    protected function mapFormTransferToRegularTransfer(ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotTransfer
-    {
+    protected function mapFormTransferToRegularTransfer(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer = $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot();
         $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 

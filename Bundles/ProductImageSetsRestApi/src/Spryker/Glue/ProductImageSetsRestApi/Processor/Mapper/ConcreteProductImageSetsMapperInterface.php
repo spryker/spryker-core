@@ -16,5 +16,7 @@ interface ConcreteProductImageSetsMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapProductImageSetStorageTransfersToRestProductImageSetsAttributesTransfer(array $productImageSetStorageTransfers): RestProductImageSetsAttributesTransfer;
+    public function mapProductImageSetStorageTransfersToRestProductImageSetsAttributesTransfer(
+        array $productImageSetStorageTransfers
+    ): RestProductImageSetsAttributesTransfer;
 }

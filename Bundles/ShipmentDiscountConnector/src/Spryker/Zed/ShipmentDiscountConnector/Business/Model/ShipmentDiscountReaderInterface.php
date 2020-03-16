@@ -10,12 +10,12 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 interface ShipmentDiscountReaderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getCarrierList();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getMethodList();
 }

@@ -126,8 +126,10 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null): void
-    {
+    protected function storeDataSet(
+        CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer,
+        ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null
+    ): void {
         if ($spyCmsBlockCategoryStorage === null) {
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();
         }

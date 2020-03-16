@@ -87,8 +87,10 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function replaceCurrentQuoteFromList(QuoteResponseTransfer $quoteResponseTransfer, QuoteCollectionTransfer $sharedQuoteCollectionTransfer): QuoteResponseTransfer
-    {
+    protected function replaceCurrentQuoteFromList(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        QuoteCollectionTransfer $sharedQuoteCollectionTransfer
+    ): QuoteResponseTransfer {
         $currentQuoteTransfer = $quoteResponseTransfer->requireQuoteTransfer()->getQuoteTransfer();
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIdQuote() === $currentQuoteTransfer->getIdQuote()) {
@@ -107,8 +109,10 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      *
      * @return void
      */
-    protected function populateSharedQuoteCollectionWithCustomer(QuoteCollectionTransfer $sharedQuoteCollectionTransfer, CustomerTransfer $customerTransfer): void
-    {
+    protected function populateSharedQuoteCollectionWithCustomer(
+        QuoteCollectionTransfer $sharedQuoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
+    ): void {
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteTransfer->setCustomer($customerTransfer);
         }

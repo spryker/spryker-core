@@ -22,5 +22,7 @@ interface MerchantProductOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferCollection(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer;
+    public function getProductOfferCollection(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer;
 }

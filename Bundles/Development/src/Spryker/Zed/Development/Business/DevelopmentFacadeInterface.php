@@ -225,7 +225,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList();
 
@@ -454,7 +454,7 @@ interface DevelopmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
