@@ -30,6 +30,7 @@ use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 class DummyMarketplacePaymentFacadeTest extends Unit
 {
     protected const TEST_PRODUCT_OFFER_REFERENCE = 'TEST_PRODUCT_OFFER_REFERENCE';
+
     /**
      * @var \SprykerTest\Zed\DummyMarketplacePayment\DummyMarketplacePaymentBusinessTester
      */
