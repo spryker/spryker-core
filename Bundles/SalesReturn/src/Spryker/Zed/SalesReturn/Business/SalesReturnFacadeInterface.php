@@ -117,5 +117,5 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOutdatedOrderItemsWithReturnableFlag(array $itemTransfers): array;
+    public function expandOutdatedOrderItemsWithIsReturnable(array $itemTransfers): array;
 }

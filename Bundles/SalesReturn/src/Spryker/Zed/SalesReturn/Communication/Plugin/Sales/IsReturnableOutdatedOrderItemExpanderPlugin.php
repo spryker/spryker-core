@@ -14,7 +14,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  * @method \Spryker\Zed\SalesReturn\Business\SalesReturnFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReturn\SalesReturnConfig getConfig()
  */
-class ExpandOutdatedOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
+class IsReturnableOutdatedOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,6 +28,6 @@ class ExpandOutdatedOrderItemExpanderPlugin extends AbstractPlugin implements Or
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOutdatedOrderItemsWithReturnableFlag($itemTransfers);
+        return $this->getFacade()->expandOutdatedOrderItemsWithIsReturnable($itemTransfers);
     }
 }

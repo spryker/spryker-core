@@ -31,7 +31,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOutdatedOrderItemsWithReturnableFlag(array $itemTransfers): array
+    public function expandOutdatedOrderItemsWithIsReturnable(array $itemTransfers): array
     {
         foreach ($itemTransfers as $itemTransfer) {
             if ($this->isOrderItemOutdated($itemTransfer)) {

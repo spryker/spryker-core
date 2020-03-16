@@ -19,10 +19,10 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group ExpandOutdatedOrderItemsWithReturnableFlagTest
+ * @group ExpandOutdatedOrderItemsWithIsReturnableTest
  * Add your own group annotations below this line
  */
-class ExpandOutdatedOrderItemsWithReturnableFlagTest extends Unit
+class ExpandOutdatedOrderItemsWithIsReturnableTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -45,7 +45,7 @@ class ExpandOutdatedOrderItemsWithReturnableFlagTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->expandOutdatedOrderItemsWithReturnableFlag($itemTransfers);
+            ->expandOutdatedOrderItemsWithIsReturnable($itemTransfers);
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
@@ -69,7 +69,7 @@ class ExpandOutdatedOrderItemsWithReturnableFlagTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->expandOutdatedOrderItemsWithReturnableFlag($itemTransfers);
+            ->expandOutdatedOrderItemsWithIsReturnable($itemTransfers);
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
