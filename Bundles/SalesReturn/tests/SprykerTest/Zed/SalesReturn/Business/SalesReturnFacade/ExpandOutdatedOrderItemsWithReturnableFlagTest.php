@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,10 +19,10 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group SanitizeOutdatedOrderItemsTest
+ * @group ExpandOutdatedOrderItemsWithReturnableFlagTest
  * Add your own group annotations below this line
  */
-class SanitizeOutdatedOrderItemsTest extends Unit
+class ExpandOutdatedOrderItemsWithReturnableFlagTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -33,7 +32,7 @@ class SanitizeOutdatedOrderItemsTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeOutdatedOrderItemsCleanUpsOutdatedOrderItems(): void
+    public function testExpandOutdatedOrderItemsWithReturnableFlag(): void
     {
         // Arrange
         $itemTransfers = [
@@ -46,16 +45,19 @@ class SanitizeOutdatedOrderItemsTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->sanitizeOutdatedOrderItems(new ArrayObject($itemTransfers));
+            ->expandOutdatedOrderItemsWithReturnableFlag($itemTransfers);
 
         // Assert
-        $this->assertCount(2, $sanitizedItemTransfers);
+        $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
+        $this->assertFalse($sanitizedItemTransfers[1]->getIsReturnable());
+        $this->assertTrue($sanitizedItemTransfers[2]->getIsReturnable());
+        $this->assertTrue($sanitizedItemTransfers[3]->getIsReturnable());
     }
 
     /**
      * @return void
      */
-    public function testSanitizeOutdatedOrderItemsWithoutCreateAtField(): void
+    public function testExpandOutdatedOrderItemsWithReturnableFlagWithoutCreateAtField(): void
     {
         // Arrange
         $itemTransfers = [
@@ -67,10 +69,12 @@ class SanitizeOutdatedOrderItemsTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->sanitizeOutdatedOrderItems(new ArrayObject($itemTransfers));
+            ->expandOutdatedOrderItemsWithReturnableFlag($itemTransfers);
 
         // Assert
-        $this->assertCount(1, $sanitizedItemTransfers);
+        $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
+        $this->assertTrue($sanitizedItemTransfers[1]->getIsReturnable());
+        $this->assertFalse($sanitizedItemTransfers[2]->getIsReturnable());
     }
 
     /**
@@ -81,6 +85,7 @@ class SanitizeOutdatedOrderItemsTest extends Unit
     protected function buildItemTransferByCreatedAtTime(string $time = 'now'): ItemTransfer
     {
         return (new ItemTransfer())
+            ->setIsReturnable(true)
             ->setCreatedAt((new DateTime($time))->format('Y-m-d'));
     }
 }

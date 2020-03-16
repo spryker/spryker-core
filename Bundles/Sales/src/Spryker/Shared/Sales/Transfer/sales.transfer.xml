@@ -171,6 +171,7 @@
         <property name="unitProductOptionPriceAggregation" type="int"/>
         <property name="orderReference" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="isReturnable" type="bool"/>
     </transfer>
 
     <transfer name="ItemCollection">

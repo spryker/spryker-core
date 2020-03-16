@@ -25,8 +25,6 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_OMS = 'FACADE_OMS';
 
-    public const PLUGINS_RETURN_POLICY = 'PLUGINS_RETURN_POLICY';
-
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
@@ -42,8 +40,6 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
-
-        $container = $this->addReturnPolicyPlugins($container);
 
         return $container;
     }
@@ -132,27 +128,5 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         }));
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addReturnPolicyPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_RETURN_POLICY, function () {
-            return $this->getReturnPolicyPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[]
-     */
-    protected function getReturnPolicyPlugins(): array
-    {
-        return [];
     }
 }

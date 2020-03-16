@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculator;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface;
+use Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpander;
+use Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGenerator;
@@ -20,8 +22,6 @@ use Spryker\Zed\SalesReturn\Business\Reader\ReturnReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
-use Spryker\Zed\SalesReturn\Business\Sanitizer\OrderItemSanitizer;
-use Spryker\Zed\SalesReturn\Business\Sanitizer\OrderItemSanitizerInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
 use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggerer;
@@ -143,17 +143,16 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnableItemReader(
             $this->getSalesFacade(),
-            $this->getConfig(),
-            $this->getReturnPolicyPlugins()
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturn\Business\Sanitizer\OrderItemSanitizerInterface
+     * @return \Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpanderInterface
      */
-    public function createOrderItemSanitizer(): OrderItemSanitizerInterface
+    public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemSanitizer(
+        return new OrderItemExpander(
             $this->getConfig()
         );
     }
@@ -180,13 +179,5 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getOmsFacade(): SalesReturnToOmsFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::FACADE_OMS);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[]
-     */
-    public function getReturnPolicyPlugins(): array
-    {
-        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_POLICY);
     }
 }

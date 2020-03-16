@@ -73,6 +73,7 @@
         <property name="canceledAmount" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
+        <property name="isReturnable" type="bool"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">

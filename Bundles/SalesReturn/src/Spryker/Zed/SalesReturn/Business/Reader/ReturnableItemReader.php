@@ -27,23 +27,15 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     protected $salesReturnConfig;
 
     /**
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[]
-     */
-    protected $returnPolicyPlugins;
-
-    /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPolicyPluginInterface[] $returnPolicyPlugins
      */
     public function __construct(
         SalesReturnToSalesFacadeInterface $salesFacade,
-        SalesReturnConfig $salesReturnConfig,
-        array $returnPolicyPlugins
+        SalesReturnConfig $salesReturnConfig
     ) {
         $this->salesFacade = $salesFacade;
         $this->salesReturnConfig = $salesReturnConfig;
-        $this->returnPolicyPlugins = $returnPolicyPlugins;
     }
 
     /**
@@ -60,7 +52,7 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
 
-        $itemTransfers = $this->executeReturnPolicyPlugins($itemTransfers);
+        $itemTransfers = $this->excludeNonReturnableItems($itemTransfers);
 
         return (new ItemCollectionTransfer())
             ->setItems($itemTransfers);
@@ -71,13 +63,17 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function executeReturnPolicyPlugins(ArrayObject $itemTransfers): ArrayObject
+    protected function excludeNonReturnableItems(ArrayObject $itemTransfers): ArrayObject
     {
-        foreach ($this->returnPolicyPlugins as $returnPolicyPlugin) {
-            $itemTransfers = $returnPolicyPlugin->execute($itemTransfers);
+        $returnableItemTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getIsReturnable()) {
+                $returnableItemTransfers[] = $itemTransfer;
+            }
         }
 
-        return $itemTransfers;
+        return new ArrayObject($returnableItemTransfers);
     }
 
     /**
