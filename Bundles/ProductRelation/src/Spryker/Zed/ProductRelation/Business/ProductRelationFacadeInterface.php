@@ -127,7 +127,7 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Gets all product relations by given product abstract identifiers.
+     * - Retrieves all product relations by given product abstract identifiers.
      *
      * @api
      *
@@ -139,7 +139,7 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Gets product abstract IDs by product relation IDs.
+     * - Retrieves product abstract IDs by product relation IDs.
      *
      * @api
      *
@@ -162,5 +162,5 @@ interface ProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findFilteredProductRelations(int $offset, int $limit): array;
+    public function getFilteredProductRelations(int $offset, int $limit): array;
 }

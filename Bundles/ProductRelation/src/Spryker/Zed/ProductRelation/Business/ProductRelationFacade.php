@@ -150,7 +150,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      */
     public function getProductRelationsByIdProductAbstracts(array $productAbstractIds): array
     {
-        return $this->getRepository()->getProductRelationsByIdProductAbstracts($productAbstractIds);
+        return $this->getRepository()->getProductRelationsByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -178,7 +178,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findFilteredProductRelations(int $offset, int $limit): array
+    public function getFilteredProductRelations(int $offset, int $limit): array
     {
         return $this->getRepository()->findFilteredProductRelations($offset, $limit);
     }

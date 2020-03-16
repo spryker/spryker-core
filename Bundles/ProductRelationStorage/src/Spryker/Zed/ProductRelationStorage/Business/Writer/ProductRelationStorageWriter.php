@@ -218,7 +218,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
         $productRelationStorageTransfers = new ArrayObject();
 
         foreach ($productRelations as $productRelationTransfer) {
-            $storeNames = $this->extractStoreNamesFromStoreRelation($productRelationTransfer->getStoreRelation());
+            $storeNames = $this->getStoreNamesFromStoreRelationTransfer($productRelationTransfer->getStoreRelation());
 
             if (!in_array($store, $storeNames)) {
                 continue;
@@ -256,7 +256,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      *
      * @return string[]
      */
-    protected function extractStoreNamesFromStoreRelation(
+    protected function getStoreNamesFromStoreRelationTransfer(
         StoreRelationTransfer $storeRelationTransfer
     ): array {
         $storeNames = [];

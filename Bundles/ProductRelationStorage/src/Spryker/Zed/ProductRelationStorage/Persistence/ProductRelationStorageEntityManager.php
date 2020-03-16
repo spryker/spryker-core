@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductRelationStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
-use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -30,15 +29,12 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
             ->createSpyProductAbstractRelationStorageQuery()
             ->filterByFkProductAbstract($idProductAbstract)
             ->filterByStore($productAbstractRelationStorageTransfer->getStore())
-            ->findOne();
+            ->findOneOrCreate();
 
-        if (!$productAbstractRelationStorageEntity) {
-            $this->createProductAbstractRelationStorageEntity($idProductAbstract, $productAbstractRelationStorageTransfer);
-
-            return;
-        }
-
-        $this->updateProductAbstractRelationStorageEntity($productAbstractRelationStorageEntity, $productAbstractRelationStorageTransfer);
+        $productAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray())
+            ->setStore($productAbstractRelationStorageTransfer->getStore())
+            ->setIsSendingToQueue(true)
+            ->save();
     }
 
     /**
@@ -54,39 +50,5 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->find()
             ->delete();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage $productAbstractRelationStorageEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer $productAbstractRelationStorageTransfer
-     *
-     * @return void
-     */
-    protected function updateProductAbstractRelationStorageEntity(
-        SpyProductAbstractRelationStorage $productAbstractRelationStorageEntity,
-        ProductAbstractRelationStorageTransfer $productAbstractRelationStorageTransfer
-    ): void {
-        $productAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
-        $productAbstractRelationStorageEntity->setStore($productAbstractRelationStorageTransfer->getStore());
-        $productAbstractRelationStorageEntity->setIsSendingToQueue(true);
-        $productAbstractRelationStorageEntity->save();
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer $productAbstractRelationStorageTransfer
-     *
-     * @return void
-     */
-    protected function createProductAbstractRelationStorageEntity(
-        int $idProductAbstract,
-        ProductAbstractRelationStorageTransfer $productAbstractRelationStorageTransfer
-    ): void {
-        $productAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();
-        $productAbstractRelationStorageEntity->setStore($productAbstractRelationStorageTransfer->getStore());
-        $productAbstractRelationStorageEntity->setFkProductAbstract($idProductAbstract);
-        $productAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
-
-        $productAbstractRelationStorageEntity->save();
     }
 }

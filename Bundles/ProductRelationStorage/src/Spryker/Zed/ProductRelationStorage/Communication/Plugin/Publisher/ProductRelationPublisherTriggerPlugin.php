@@ -35,7 +35,7 @@ class ProductRelationPublisherTriggerPlugin extends AbstractPlugin implements Pu
     {
         return $this->getFactory()
             ->getProductRelationFacade()
-            ->findFilteredProductRelations($offset, $limit);
+            ->getFilteredProductRelations($offset, $limit);
     }
 
     /**

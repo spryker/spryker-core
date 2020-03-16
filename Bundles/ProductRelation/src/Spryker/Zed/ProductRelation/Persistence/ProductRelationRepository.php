@@ -204,7 +204,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getProductRelationsByIdProductAbstracts(array $idProductAbstracts): array
+    public function getProductRelationsByProductAbstractIds(array $idProductAbstracts): array
     {
         $productRelationEntities = $this->getFactory()
             ->createProductRelationQuery()
