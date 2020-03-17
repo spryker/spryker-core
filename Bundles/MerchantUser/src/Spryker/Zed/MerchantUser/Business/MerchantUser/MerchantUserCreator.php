@@ -93,7 +93,10 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
 
         $userTransfer = $this->persistUserByMerchantUser($merchantUserTransfer->getUser());
         $merchantUserTransfer->setIdUser($userTransfer->getIdUser())->setUser($userTransfer);
-        $multipleMerchantCheckResponse = $this->checkForMultipleMerchant($merchantUserTransfer);
+        $multipleMerchantCheckResponse = $this->checkForMultipleMerchant(
+            $merchantUserTransfer,
+            $merchantUserResponseTransfer
+        );
 
         if (!$multipleMerchantCheckResponse->getIsSuccessful()) {
             return $multipleMerchantCheckResponse;
@@ -111,13 +114,14 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserResponseTransfer $merchantUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    protected function checkForMultipleMerchant(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
-    {
-        $merchantUserResponseTransfer = new MerchantUserResponseTransfer();
-
+    protected function checkForMultipleMerchant(
+        MerchantUserTransfer $merchantUserTransfer,
+        MerchantUserResponseTransfer $merchantUserResponseTransfer
+    ): MerchantUserResponseTransfer {
         if (
             !$this->merchantUserConfig->canUserHaveManyMerchants()
             && $this->hasUserAnotherMerchant($merchantUserTransfer)
