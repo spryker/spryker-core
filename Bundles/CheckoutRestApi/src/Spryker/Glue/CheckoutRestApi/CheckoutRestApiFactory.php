@@ -170,7 +170,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface[]
      */
     protected function getCheckoutDataResponseMappers(): array
     {
