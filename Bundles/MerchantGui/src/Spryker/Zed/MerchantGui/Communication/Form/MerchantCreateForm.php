@@ -80,7 +80,7 @@ class MerchantCreateForm extends AbstractType
             ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID])
             ->addIsActiveField($builder);
 
-        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
+        $this->executeMerchantFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -252,9 +252,9 @@ class MerchantCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    protected function executeMerchantFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getFactory()->getMerchantProfileFormExpanderPlugins() as $formExpanderPlugin) {
+        foreach ($this->getFactory()->getMerchantFormExpanderPlugins() as $formExpanderPlugin) {
             $builder = $formExpanderPlugin->expand($builder, $options);
         }
 

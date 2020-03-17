@@ -37,7 +37,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addMerchantFacade($container);
         $container = $this->addPropelMerchantQuery($container);
-        $container = $this->addMerchantProfileFormExpanderPlugins($container);
+        $container = $this->addMerchantFormExpanderPlugins($container);
         $container = $this->addMerchantTableActionExpanderPlugins($container);
         $container = $this->addMerchantTableDataExpanderPlugins($container);
         $container = $this->addMerchantTableHeaderExpanderPlugins($container);
@@ -80,10 +80,10 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantProfileFormExpanderPlugins(Container $container): Container
+    protected function addMerchantFormExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER, function () {
-            return $this->getMerchantProfileFormExpanderPlugins();
+            return $this->getMerchantFormExpanderPlugins();
         });
 
         return $container;
@@ -162,7 +162,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface[]
      */
-    protected function getMerchantProfileFormExpanderPlugins(): array
+    protected function getMerchantFormExpanderPlugins(): array
     {
         return [];
     }

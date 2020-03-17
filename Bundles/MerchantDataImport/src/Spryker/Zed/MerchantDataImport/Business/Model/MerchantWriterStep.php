@@ -129,7 +129,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         foreach ($glossaryKeyAttributes as $idLocale => $attributes) {
             foreach ($attributes as $attributeName => $attributeValue) {
                 if ($attributeValue && $attributeName === MerchantDataSetInterface::URL) {
-                    $this->addMerchantProfileUrl($merchantEntity->getIdMerchant(), $idLocale, $attributeValue);
+                    $this->addMerchantUrl($merchantEntity->getIdMerchant(), $idLocale, $attributeValue);
                 }
             }
         }
@@ -144,7 +144,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
      *
      * @return void
      */
-    protected function addMerchantProfileUrl(int $idMerchant, int $idLocale, string $url): void
+    protected function addMerchantUrl(int $idMerchant, int $idLocale, string $url): void
     {
         $urlEntity = SpyUrlQuery::create()
             ->filterByFkResourceMerchant($idMerchant)
@@ -157,7 +157,10 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
             $urlEntity->save();
         }
 
-        $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+        $eventEntityTransfer = new EventEntityTransfer();
+        $eventEntityTransfer->setId($urlEntity->getIdUrl());
+
+        $this->eventFacade->trigger(UrlEvents::URL_PUBLISH, $eventEntityTransfer);
     }
 
     /**
