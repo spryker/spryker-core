@@ -65,4 +65,16 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Expands order items with metadata information.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithMetadata(array $itemTransfers): array;
 }

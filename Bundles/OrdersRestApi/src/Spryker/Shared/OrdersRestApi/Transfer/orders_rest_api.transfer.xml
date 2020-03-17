@@ -76,6 +76,7 @@
         <property name="subtotal" type="int"/>
         <property name="grandTotal" type="int"/>
         <property name="canceledTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
     </transfer>
 
     <transfer name="RestOrderExpensesAttributes">
