@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanySalesConnector\Communication\Plugin\Sales;
+namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  */
-class CompanyFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if filtering by company could be applied, false otherwise.
+     * - Returns true if filtering by company user name and email could be applied, false otherwise.
      *
      * @api
      *
@@ -28,14 +28,14 @@ class CompanyFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin impleme
      */
     public function isApplicable(OrderListTransfer $orderListTransfer): bool
     {
-        return $this->getFacade()->isCompanyFilterApplicable(
+        return $this->getFacade()->isCustomerFilterApplicable(
             $orderListTransfer->getFilterFields()->getArrayCopy()
         );
     }
 
     /**
      * {@inheritDoc}
-     * - Expands OrderListTransfer::queryJoins with additional QueryJoinTransfer to filter by company.
+     * - Expands OrderListTransfer::queryJoins with additional QueryJoinTransfers to filter by company user name and email.
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CompanyFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin impleme
      */
     public function expand(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $queryJoinCollectionTransfer = $this->getFacade()->expandQueryJoinCollectionWithCompanyFilter(
+        $queryJoinCollectionTransfer = $this->getFacade()->expandQueryJoinCollectionWithCompanyUserFilter(
             $orderListTransfer->getFilterFields()->getArrayCopy(),
             $orderListTransfer->getQueryJoins()
         );

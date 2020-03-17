@@ -122,11 +122,11 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @return bool
      */
-    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool
+    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool
     {
         return $this->getFactory()
             ->createFilterFieldChecker()
-            ->isCompanyUserFilterApplicable($filterFieldTransfers);
+            ->isCustomerFilterApplicable($filterFieldTransfers);
     }
 
     /**

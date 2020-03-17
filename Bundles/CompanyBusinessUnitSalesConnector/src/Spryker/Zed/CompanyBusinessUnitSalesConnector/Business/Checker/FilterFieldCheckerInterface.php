@@ -24,7 +24,7 @@ interface FilterFieldCheckerInterface
      *
      * @return bool
      */
-    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool;
+    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool;
 
     /**
      * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer

@@ -103,7 +103,7 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
      *
      * @return bool
      */
-    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool;
+    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool;
 
     /**
      * Specification:

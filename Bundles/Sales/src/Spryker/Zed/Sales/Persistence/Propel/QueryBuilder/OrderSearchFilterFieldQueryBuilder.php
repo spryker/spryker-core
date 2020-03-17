@@ -43,7 +43,6 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     protected const SEARCH_TYPE_DATE_FROM = 'dateFrom';
     protected const SEARCH_TYPE_DATE_TO = 'dateTo';
-    protected const SEARCH_TYPE_ORDER_BY = 'orderBy';
 
     protected const ORDER_SEARCH_TYPE_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,

@@ -48,7 +48,7 @@ class CompanyBusinessUnitSalesConnectorStub implements CompanyBusinessUnitSalesC
     }
 
     /**
-     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Controller\GatewayController::isCompanyUserFilterApplicableAction()
+     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Controller\GatewayController::isCustomerFilterApplicableAction()
      *
      * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
      *

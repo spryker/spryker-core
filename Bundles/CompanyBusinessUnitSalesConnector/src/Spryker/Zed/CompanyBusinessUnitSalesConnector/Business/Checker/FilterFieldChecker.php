@@ -42,7 +42,7 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
      *
      * @return bool
      */
-    public function isCompanyUserFilterApplicable(array $filterFieldTransfers): bool
+    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool
     {
         if (
             !$this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)

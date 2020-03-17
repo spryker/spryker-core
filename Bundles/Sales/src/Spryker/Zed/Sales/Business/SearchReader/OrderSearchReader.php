@@ -54,18 +54,14 @@ class OrderSearchReader implements OrderSearchReaderInterface
      */
     protected function executeOrderSearchQueryExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
-        $filterTransfers = $orderListTransfer->getFilterFields()->getArrayCopy();
+        $orderListTransfer->setQueryJoins(new QueryJoinCollectionTransfer());
 
         foreach ($this->orderSearchQueryExpanderPlugins as $orderSearchQueryExpanderPlugin) {
-            if ($orderSearchQueryExpanderPlugin->isApplicable($filterTransfers)) {
-                $queryJoinCollectionTransfer = $orderSearchQueryExpanderPlugin->expand(
-                    $filterTransfers,
-                    $queryJoinCollectionTransfer
-                );
+            if ($orderSearchQueryExpanderPlugin->isApplicable($orderListTransfer)) {
+                $orderListTransfer = $orderSearchQueryExpanderPlugin->expand($orderListTransfer);
             }
         }
 
-        return $orderListTransfer->setQueryJoins($queryJoinCollectionTransfer);
+        return $orderListTransfer;
     }
 }
