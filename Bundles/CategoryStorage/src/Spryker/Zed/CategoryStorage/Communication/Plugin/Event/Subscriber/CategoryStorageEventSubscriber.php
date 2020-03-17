@@ -242,7 +242,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCategoryAttributeDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeStorageUnpublishListener(),0, null, $this->getConfig()->getCategoryNodeEventQueueName());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeStorageUnpublishListener(), 0, null, $this->getConfig()->getCategoryNodeEventQueueName());
     }
 
     /**
