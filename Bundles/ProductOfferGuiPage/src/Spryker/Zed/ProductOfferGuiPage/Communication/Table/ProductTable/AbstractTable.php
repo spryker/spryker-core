@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
 
-use Generated\Shared\Transfer\TableConfigurationTransfer;
-use Generated\Shared\Transfer\TableDataTransfer;
+use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -57,9 +57,9 @@ abstract class AbstractTable
     protected $filters = [];
 
     /**
-     * @var \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @var \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected $tableConfigurationTransfer;
+    protected $guiTableConfigurationTransfer;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -69,9 +69,9 @@ abstract class AbstractTable
     public function getData(Request $request): array
     {
         $this->initialize($request);
-        $tableDataTransfer = $this->provideTableData();
+        $guiTableDataTransfer = $this->provideTableData();
 
-        return $tableDataTransfer->toArray();
+        return $guiTableDataTransfer->toArray();
     }
 
     /**
@@ -79,27 +79,27 @@ abstract class AbstractTable
      */
     public function getConfiguration(): array
     {
-        $tableConfigurationTransfer = $this->buildTableConfiguration();
+        $guiTableConfigurationTransfer = $this->buildTableConfiguration();
 
         return [
-            static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($tableConfigurationTransfer),
-            static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($tableConfigurationTransfer),
-            static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($tableConfigurationTransfer),
-            static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($tableConfigurationTransfer),
-            static::CONFIG_SEARCH => $tableConfigurationTransfer->getSearchOptions(),
+            static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
+            static::CONFIG_SEARCH => $guiTableConfigurationTransfer->getSearchOptions(),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
-    protected function prepareColumnsConfigurationData(TableConfigurationTransfer $tableConfigurationTransfer): array
+    protected function prepareColumnsConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         $columnsData = [];
 
-        foreach ($tableConfigurationTransfer->getColumns() as $columnTransfer) {
+        foreach ($guiTableConfigurationTransfer->getColumns() as $columnTransfer) {
             $columnsData[] = $columnTransfer->modifiedToArray();
         }
 
@@ -107,27 +107,27 @@ abstract class AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return int[]
      */
-    protected function prepareAvailablePageSizesConfigurationData(TableConfigurationTransfer $tableConfigurationTransfer): array
+    protected function prepareAvailablePageSizesConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        return !empty($tableConfigurationTransfer->getAvailablePageSizes())
-            ? $tableConfigurationTransfer->getAvailablePageSizes()
+        return !empty($guiTableConfigurationTransfer->getAvailablePageSizes())
+            ? $guiTableConfigurationTransfer->getAvailablePageSizes()
             : static::DEFAULT_AVAILABLE_PAGE_SIZES;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
-    protected function prepareFiltersConfigurationData(TableConfigurationTransfer $tableConfigurationTransfer): array
+    protected function prepareFiltersConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         $filtersData = [];
 
-        foreach ($tableConfigurationTransfer->getFilters() as $filterTransfer) {
+        foreach ($guiTableConfigurationTransfer->getFilters() as $filterTransfer) {
             $filtersData[] = $filterTransfer->toArray();
         }
 
@@ -135,15 +135,15 @@ abstract class AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
-    protected function prepareRowActions(TableConfigurationTransfer $tableConfigurationTransfer): array
+    protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         $rowActions = [];
 
-        foreach ($tableConfigurationTransfer->getRowActions() as $rowActionTransfer) {
+        foreach ($guiTableConfigurationTransfer->getRowActions() as $rowActionTransfer) {
             $rowActions[] = $rowActionTransfer->toArray();
         }
 
@@ -214,24 +214,24 @@ abstract class AbstractTable
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function getTableConfiguration(): TableConfigurationTransfer
+    protected function getTableConfiguration(): GuiTableConfigurationTransfer
     {
-        if ($this->tableConfigurationTransfer === null) {
-            $this->tableConfigurationTransfer = $this->buildTableConfiguration();
+        if ($this->guiTableConfigurationTransfer === null) {
+            $this->guiTableConfigurationTransfer = $this->buildTableConfiguration();
         }
 
-        return $this->tableConfigurationTransfer;
+        return $this->guiTableConfigurationTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TableDataTransfer
+     * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    abstract protected function provideTableData(): TableDataTransfer;
+    abstract protected function provideTableData(): GuiTableDataTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    abstract protected function buildTableConfiguration(): TableConfigurationTransfer;
+    abstract protected function buildTableConfiguration(): GuiTableConfigurationTransfer;
 }

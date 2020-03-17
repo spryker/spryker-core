@@ -3,24 +3,24 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="TableData">
+    <transfer name="GuiTableData">
         <property name="data" type="array" singular="data"/>
         <property name="total" type="int"/>
         <property name="page" type="int"/>
         <property name="size" type="int"/>
     </transfer>
 
-    <transfer name="TableConfiguration">
-        <property name="columns" type="TableColumnConfiguration[]" singular="column"/>
+    <transfer name="GuiTableConfiguration">
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
         <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
-        <property name="filters" type="TableFilter[]" singular="filter"/>
+        <property name="filters" type="GuiTableFilter[]" singular="filter"/>
         <property name="defaultSortColumn" type="string"/>
-        <property name="rowActions" type="TableRowAction[]" singular="rowAction"/>
+        <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
         <property name="allowedFilters" type="string[]" singular="allowedFilter"/>
         <property name="searchOptions" type="array" associative="true" singular="searchOption"/>
     </transfer>
 
-    <transfer name="TableRowAction">
+    <transfer name="GuiTableRowAction">
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>
@@ -28,7 +28,7 @@
         <property name="icon" type="string"/>
     </transfer>
 
-    <transfer name="TableColumnConfiguration">
+    <transfer name="GuiTableColumnConfiguration">
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="width" type="string"/>
@@ -39,7 +39,7 @@
         <property name="multiple" type="bool"/>
     </transfer>
 
-    <transfer name="TableFilter">
+    <transfer name="GuiTableFilter">
         <property name="key" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
-use Generated\Shared\Transfer\TableFilterTransfer;
+use Generated\Shared\Transfer\GuiTableFilterTransfer;
 
 interface ProductTableFilterDataProviderInterface
 {
@@ -18,7 +18,7 @@ interface ProductTableFilterDataProviderInterface
     public const OPTION_VALUE_KEY_TITLE = 'title';
 
     /**
-     * @return \Generated\Shared\Transfer\TableFilterTransfer
+     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): TableFilterTransfer;
+    public function getFilterData(): GuiTableFilterTransfer;
 }

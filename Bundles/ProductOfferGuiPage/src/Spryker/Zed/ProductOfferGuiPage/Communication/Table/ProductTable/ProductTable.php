@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
 
+use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableRowDataTransfer;
-use Generated\Shared\Transfer\TableColumnConfigurationTransfer;
-use Generated\Shared\Transfer\TableConfigurationTransfer;
-use Generated\Shared\Transfer\TableDataTransfer;
-use Generated\Shared\Transfer\TableRowActionTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
@@ -66,30 +66,30 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TableDataTransfer
+     * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    protected function provideTableData(): TableDataTransfer
+    protected function provideTableData(): GuiTableDataTransfer
     {
         $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
         $productTableDataTransfer = $this->productOfferGuiPageFacade->getProductTableData($productTableCriteriaTransfer);
 
-        return $this->mapProductTableDataTransferToTableDataTransfer($productTableDataTransfer, new TableDataTransfer());
+        return $this->mapProductTableDataTransferToTableDataTransfer($productTableDataTransfer, new GuiTableDataTransfer());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function buildTableConfiguration(): TableConfigurationTransfer
+    protected function buildTableConfiguration(): GuiTableConfigurationTransfer
     {
-        $tableConfigurationTransfer = new TableConfigurationTransfer();
-        $tableConfigurationTransfer = $this->addColumnsToConfiguration($tableConfigurationTransfer);
-        $tableConfigurationTransfer = $this->addFiltersToConfiguration($tableConfigurationTransfer);
-        $tableConfigurationTransfer = $this->addRowActionsToConfiguration($tableConfigurationTransfer);
-        $tableConfigurationTransfer = $this->addSearchOptionsToConfiguration($tableConfigurationTransfer);
-        $tableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
-        $tableConfigurationTransfer->setAllowedFilters($this->getAllowedFilterNames());
+        $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
+        $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
+        $guiTableConfigurationTransfer->setAllowedFilters($this->getAllowedFilterNames());
 
-        return $tableConfigurationTransfer;
+        return $guiTableConfigurationTransfer;
     }
 
     /**
@@ -104,14 +104,14 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addColumnsToConfiguration(TableConfigurationTransfer $tableConfigurationTransfer): TableConfigurationTransfer
+    protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_SKU)
                 ->setTitle('Sku')
                 ->setType('text')
@@ -119,8 +119,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_IMAGE)
                 ->setTitle('Image')
                 ->setType('image')
@@ -128,8 +128,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_NAME)
                 ->setTitle('Name')
                 ->setType('text')
@@ -137,8 +137,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STORES)
                 ->setTitle('Stores')
                 ->setType('text')
@@ -146,8 +146,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(true)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STATUS)
                 ->setTitle('Status')
                 ->setType('text')
@@ -155,8 +155,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_FROM)
                 ->setTitle('Valid From')
                 ->setType('date')
@@ -165,8 +165,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_TO)
                 ->setTitle('Valid To')
                 ->setType('date')
@@ -175,8 +175,8 @@ class ProductTable extends AbstractTable
                 ->setHideable(false)
                 ->setMultiple(false)
         );
-        $tableConfigurationTransfer->addColumn(
-            (new TableColumnConfigurationTransfer())
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_OFFERS)
                 ->setTitle('Offers')
                 ->setType('text')
@@ -184,21 +184,21 @@ class ProductTable extends AbstractTable
                 ->setMultiple(false)
         );
 
-        return $tableConfigurationTransfer;
+        return $guiTableConfigurationTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addFiltersToConfiguration(TableConfigurationTransfer $tableConfigurationTransfer): TableConfigurationTransfer
+    protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         foreach ($this->productTableFilterDataProviders as $productTableFilterDataProvider) {
-            $tableConfigurationTransfer->addFilter($productTableFilterDataProvider->getFilterData());
+            $guiTableConfigurationTransfer->addFilter($productTableFilterDataProvider->getFilterData());
         }
 
-        return $tableConfigurationTransfer;
+        return $guiTableConfigurationTransfer;
     }
 
     /**
@@ -225,16 +225,16 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
-     * @param \Generated\Shared\Transfer\TableDataTransfer $tableDataTransfer
+     * @param \Generated\Shared\Transfer\GuiTableDataTransfer $guiTableDataTransfer
      *
      * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException
      *
-     * @return \Generated\Shared\Transfer\TableDataTransfer
+     * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
     protected function mapProductTableDataTransferToTableDataTransfer(
         ProductTableDataTransfer $productTableDataTransfer,
-        TableDataTransfer $tableDataTransfer
-    ): TableDataTransfer {
+        GuiTableDataTransfer $guiTableDataTransfer
+    ): GuiTableDataTransfer {
         $tableRowsData = [];
 
         foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
@@ -256,7 +256,7 @@ class ProductTable extends AbstractTable
             throw new InvalidPaginationDataException('Pagination data is not present.');
         }
 
-        return $tableDataTransfer->setData($tableRowsData)
+        return $guiTableDataTransfer->setData($tableRowsData)
             ->setPage($paginationTransfer->getPage())
             ->setSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
@@ -265,34 +265,34 @@ class ProductTable extends AbstractTable
     /**
      * TODO: url needs to be adjusted once the create offer part is ready.
      *
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addRowActionsToConfiguration(TableConfigurationTransfer $tableConfigurationTransfer): TableConfigurationTransfer
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $tableRowActionTransfer = (new TableRowActionTransfer())
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
             ->setId('create-offer')
             ->setTitle('Create Offer')
             ->setType('form-overlay')
             ->setUrl('https://path-to-create-offer-action/${row.sku}')
             ->setIcon('icon-name');
 
-        $tableConfigurationTransfer->addRowAction($tableRowActionTransfer);
+        $guiTableConfigurationTransfer->addRowAction($guiTableRowActionTransfer);
 
-        return $tableConfigurationTransfer;
+        return $guiTableConfigurationTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TableConfigurationTransfer $tableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\TableConfigurationTransfer
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addSearchOptionsToConfiguration(TableConfigurationTransfer $tableConfigurationTransfer): TableConfigurationTransfer
+    protected function addSearchOptionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $tableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
+        $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 
-        return $tableConfigurationTransfer;
+        return $guiTableConfigurationTransfer;
     }
 
     /**

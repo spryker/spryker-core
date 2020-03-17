@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
-use Generated\Shared\Transfer\TableFilterTransfer;
+use Generated\Shared\Transfer\GuiTableFilterTransfer;
 
 class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
@@ -17,11 +17,11 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     protected const OPTION_NAME_INACTIVE = 'Inactive';
 
     /**
-     * @return \Generated\Shared\Transfer\TableFilterTransfer
+     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): TableFilterTransfer
+    public function getFilterData(): GuiTableFilterTransfer
     {
-        return (new TableFilterTransfer())
+        return (new GuiTableFilterTransfer())
             ->setKey(static::FILTER_NAME)
             ->setTitle('Status')
             ->setType('select')
