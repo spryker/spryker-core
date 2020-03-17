@@ -55,10 +55,13 @@
 
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
         <property name="merchantIds" type="array" singular="merchantId"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="MerchantCollection">
@@ -73,5 +76,11 @@
     </transfer>
 
     <transfer name="MerchantProfile">
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 </transfers>

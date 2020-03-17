@@ -5,12 +5,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/event-behavior": "*",
+    "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^2.0.0",
+    "spryker/propel-orm": "*",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {

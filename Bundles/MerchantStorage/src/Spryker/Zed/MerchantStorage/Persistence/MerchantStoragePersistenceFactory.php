@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantStorage\Persistence\Mapper\MerchantStorageMapper;
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface getRepository()
  */
 class MerchantStoragePersistenceFactory extends AbstractPersistenceFactory
 {

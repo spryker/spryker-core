@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantPubl
 /**
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
+ * @method \Spryker\Zed\MerchantStorage\Communication\MerchantStorageCommunicationFactory getFactory()
  */
 class MerchantStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
