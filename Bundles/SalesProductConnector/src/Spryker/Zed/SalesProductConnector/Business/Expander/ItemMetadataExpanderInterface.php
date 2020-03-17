@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesProductConnector\Business\Expander;
 
-interface MetadataExpanderInterface
+interface ItemMetadataExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

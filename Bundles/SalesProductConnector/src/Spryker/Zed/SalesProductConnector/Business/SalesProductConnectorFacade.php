@@ -95,7 +95,7 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
     public function expandOrderItemsWithMetadata(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createMetadataExpander()
+            ->createItemMetadataExpander()
             ->expandOrderItemsWithMetadata($itemTransfers);
     }
 }

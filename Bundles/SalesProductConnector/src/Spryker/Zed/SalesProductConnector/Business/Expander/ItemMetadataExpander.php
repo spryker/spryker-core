@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesProductConnector\Business\Expander;
 
 use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface;
 
-class MetadataExpander implements MetadataExpanderInterface
+class ItemMetadataExpander implements ItemMetadataExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface

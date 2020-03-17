@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesProductConnector\Business\Expander\MetadataExpander;
-use Spryker\Zed\SalesProductConnector\Business\Expander\MetadataExpanderInterface;
+use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpander;
+use Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpanderInterface;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataHydrator;
 use Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaver;
 use Spryker\Zed\SalesProductConnector\Business\Model\ProductIdHydrator;
@@ -55,11 +55,11 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesProductConnector\Business\Expander\MetadataExpanderInterface
+     * @return \Spryker\Zed\SalesProductConnector\Business\Expander\ItemMetadataExpanderInterface
      */
-    public function createMetadataExpander(): MetadataExpanderInterface
+    public function createItemMetadataExpander(): ItemMetadataExpanderInterface
     {
-        return new MetadataExpander(
+        return new ItemMetadataExpander(
             $this->getRepository()
         );
     }
