@@ -145,7 +145,7 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             'A user with the same email is already connected to another merchant.',
             $merchantUserResponseTransfer->getErrors()[0]->getMessage()
         );
@@ -271,7 +271,7 @@ class MerchantUserFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(
+        $this->assertSame(
             $merchantUserTransfer->getIdMerchantUser(),
             $merchantUserTransferFromRequest->getIdMerchantUser()
         );

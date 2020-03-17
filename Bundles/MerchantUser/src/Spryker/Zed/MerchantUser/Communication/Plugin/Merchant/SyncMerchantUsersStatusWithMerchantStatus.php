@@ -26,7 +26,7 @@ class SyncMerchantUsersStatusWithMerchantStatus extends AbstractPlugin implement
 
     /**
      * {@inheritDoc}
-     * - Update users with merchant data.
+     * - Update users status by merchant status.
      *
      * @api
      *

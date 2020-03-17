@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditMerchantUserController extends AbstractController
 {
     protected const MERCHANT_ID_PARAM_NAME = 'merchant-id';
+    protected const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,7 +29,7 @@ class EditMerchantUserController extends AbstractController
     public function indexAction(Request $request)
     {
         $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-        $merchantUserId = $this->castId($request->get('merchant-user-id'));
+        $merchantUserId = $this->castId($request->get(static::MERCHANT_USER_ID_PARAM_NAME));
 
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
         $providerData = $dataProvider->getData($merchantId, $merchantUserId);

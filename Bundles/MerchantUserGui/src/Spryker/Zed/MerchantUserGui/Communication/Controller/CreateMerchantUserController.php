@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateMerchantUserController extends AbstractController
 {
     protected const MERCHANT_ID_PARAM_NAME = 'merchant-id';
+    protected const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,7 +30,7 @@ class CreateMerchantUserController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createMerchantUserCreateFormDataProvider();
         $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-        $merchantUserId = $request->get('merchant-user-id');
+        $merchantUserId = $request->get(static::MERCHANT_USER_ID_PARAM_NAME);
 
         $merchantUserForm = $this->getFactory()
             ->getMerchantUserCreateForm($dataProvider->getData($merchantId, $merchantUserId))

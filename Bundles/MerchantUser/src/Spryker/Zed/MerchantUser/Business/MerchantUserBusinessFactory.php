@@ -16,8 +16,6 @@ use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
-use Spryker\Zed\MerchantUser\Business\User\UserMapper;
-use Spryker\Zed\MerchantUser\Business\User\UserMapperInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
