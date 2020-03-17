@@ -41,8 +41,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
-    {
+    public function getProductBundleCollectionByCriteriaFilter(
+        ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+    ): ProductBundleCollectionTransfer {
         $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkProduct();

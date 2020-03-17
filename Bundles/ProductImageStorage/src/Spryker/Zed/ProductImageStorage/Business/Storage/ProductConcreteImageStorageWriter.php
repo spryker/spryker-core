@@ -177,8 +177,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, array $imageSets, ?SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null)
-    {
+    protected function storeDataSet(
+        SpyProductLocalizedAttributes $spyProductLocalizedEntity,
+        array $imageSets,
+        ?SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null
+    ) {
         if ($spyProductConcreteImageStorage === null) {
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();
         }

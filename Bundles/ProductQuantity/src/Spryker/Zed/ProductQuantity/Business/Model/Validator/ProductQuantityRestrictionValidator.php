@@ -108,8 +108,12 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return void
      */
-    protected function validateItem(string $sku, int $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
-    {
+    protected function validateItem(
+        string $sku,
+        int $quantity,
+        ProductQuantityTransfer $productQuantityTransfer,
+        CartPreCheckResponseTransfer $responseTransfer
+    ): void {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();

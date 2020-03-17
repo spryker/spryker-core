@@ -38,8 +38,11 @@ abstract class AbstractProductTouch
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
      */
-    public function __construct(ProductToTouchInterface $touchFacade, ProductQueryContainerInterface $productQueryContainer, ProductAbstractStatusCheckerInterface $productAbstractStatusChecker)
-    {
+    public function __construct(
+        ProductToTouchInterface $touchFacade,
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
+    ) {
         $this->touchFacade = $touchFacade;
         $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractStatusChecker = $productAbstractStatusChecker;

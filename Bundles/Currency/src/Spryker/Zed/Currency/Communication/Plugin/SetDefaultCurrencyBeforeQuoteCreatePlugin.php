@@ -21,6 +21,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class SetDefaultCurrencyBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Set default currency to quote if it does not have
      *

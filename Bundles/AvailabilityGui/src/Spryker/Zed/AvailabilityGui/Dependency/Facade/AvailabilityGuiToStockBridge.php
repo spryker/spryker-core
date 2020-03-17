@@ -57,7 +57,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping()
     {
@@ -65,7 +65,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping()
     {
@@ -75,7 +75,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {

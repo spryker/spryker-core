@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductBundleQueryContainer extends AbstractQueryContainer implements ProductBundleQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -29,6 +31,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -45,6 +49,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -61,6 +67,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -75,6 +83,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductBundle
@@ -89,6 +99,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete

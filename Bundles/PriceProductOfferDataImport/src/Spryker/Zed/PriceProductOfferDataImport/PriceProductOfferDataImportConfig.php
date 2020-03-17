@@ -15,6 +15,8 @@ class PriceProductOfferDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRICE_PRODUCT_OFFER = 'price-product-offer';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getPriceProductOfferDataImporterConfiguration(): DataImporterConfigurationTransfer

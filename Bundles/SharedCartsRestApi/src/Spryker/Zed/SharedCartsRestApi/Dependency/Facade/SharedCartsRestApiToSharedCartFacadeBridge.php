@@ -96,8 +96,9 @@ class SharedCartsRestApiToSharedCartFacadeBridge implements SharedCartsRestApiTo
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
-    {
+    public function getShareDetailCollectionByShareDetailCriteria(
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): ShareDetailCollectionTransfer {
         return $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
     }
 }

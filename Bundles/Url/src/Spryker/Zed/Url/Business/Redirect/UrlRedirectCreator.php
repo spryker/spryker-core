@@ -37,8 +37,11 @@ class UrlRedirectCreator implements UrlRedirectCreatorInterface
      * @param \Spryker\Zed\Url\Business\Url\UrlCreatorInterface $urlCreator
      * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlCreatorInterface $urlCreator, UrlRedirectActivatorInterface $urlRedirectActivator)
-    {
+    public function __construct(
+        UrlQueryContainerInterface $urlQueryContainer,
+        UrlCreatorInterface $urlCreator,
+        UrlRedirectActivatorInterface $urlRedirectActivator
+    ) {
         $this->urlQueryContainer = $urlQueryContainer;
         $this->urlCreator = $urlCreator;
         $this->urlRedirectActivator = $urlRedirectActivator;

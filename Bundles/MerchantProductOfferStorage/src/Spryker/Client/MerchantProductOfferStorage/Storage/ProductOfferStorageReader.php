@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
@@ -75,30 +76,42 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer
-    {
-        $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
+    public function getProductOfferStorageCollection(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer {
+        $productOfferStorageCollectionTransfer = new ProductOfferStorageCollectionTransfer();
 
-        $concreteProductOffers = $this->getProductOfferReferences($productSku);
+        $productOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
 
-        if ($concreteProductOffers) {
-            foreach ($concreteProductOffers as $key => $concreteProductOffer) {
-                if ($key === '_timestamp') {
-                    continue;
-                }
-
-                $productOfferStorage = $this->findProductOfferStorageByReference($concreteProductOffer);
-                if ($productOfferStorage) {
-                    $productOfferStorageCollection->addProductOfferStorage($productOfferStorage);
-                }
-            }
+        if (!$productOfferReferences) {
+            return $productOfferStorageCollectionTransfer;
         }
 
-        return $productOfferStorageCollection;
+        foreach ($productOfferReferences as $key => $productOfferReference) {
+            if ($key === '_timestamp') {
+                continue;
+            }
+            $productOfferStorageTransfer = $this->findProductOfferStorageByReference($productOfferReference);
+
+            if ($productOfferStorageTransfer === null) {
+                continue;
+            }
+
+            if (
+                $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
+                && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()
+            ) {
+                continue;
+            }
+
+            $productOfferStorageCollectionTransfer->addProductOfferStorage($productOfferStorageTransfer);
+        }
+
+        return $productOfferStorageCollectionTransfer;
     }
 
     /**

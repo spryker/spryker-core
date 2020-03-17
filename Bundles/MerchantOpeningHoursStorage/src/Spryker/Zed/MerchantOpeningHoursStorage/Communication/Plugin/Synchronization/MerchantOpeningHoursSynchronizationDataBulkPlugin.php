@@ -134,8 +134,10 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer
      */
-    protected function createMerchantOpeningHoursStorageCriteriaFilterTransfer(FilterTransfer $filterTransfer, array $merchantIds): MerchantOpeningHoursStorageCriteriaFilterTransfer
-    {
+    protected function createMerchantOpeningHoursStorageCriteriaFilterTransfer(
+        FilterTransfer $filterTransfer,
+        array $merchantIds
+    ): MerchantOpeningHoursStorageCriteriaFilterTransfer {
         return (new MerchantOpeningHoursStorageCriteriaFilterTransfer())
             ->setFilter($filterTransfer)
             ->setMerchantIds($merchantIds);

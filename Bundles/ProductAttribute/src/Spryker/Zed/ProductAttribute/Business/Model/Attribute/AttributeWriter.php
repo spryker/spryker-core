@@ -151,8 +151,10 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    protected function createProductManagementAttributeEntity(ProductManagementAttributeTransfer $productManagementAttributeTransfer, ProductAttributeKeyTransfer $productAttributeKeyTransfer)
-    {
+    protected function createProductManagementAttributeEntity(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer,
+        ProductAttributeKeyTransfer $productAttributeKeyTransfer
+    ) {
         $productManagementAttributeEntity = new SpyProductManagementAttribute();
         $productManagementAttributeEntity->fromArray($productManagementAttributeTransfer->toArray());
         $productManagementAttributeEntity->setFkProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
@@ -169,8 +171,10 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    protected function updateProductManagementAttributeEntity(ProductManagementAttributeTransfer $productManagementAttributeTransfer, ProductAttributeKeyTransfer $productAttributeKeyTransfer)
-    {
+    protected function updateProductManagementAttributeEntity(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer,
+        ProductAttributeKeyTransfer $productAttributeKeyTransfer
+    ) {
         $productManagementAttributeEntity = $this->productAttributeQueryContainer
             ->queryProductManagementAttribute()
             ->findOneByIdProductManagementAttribute($productManagementAttributeTransfer->getIdProductManagementAttribute());

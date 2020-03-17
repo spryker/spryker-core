@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -60,6 +62,8 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

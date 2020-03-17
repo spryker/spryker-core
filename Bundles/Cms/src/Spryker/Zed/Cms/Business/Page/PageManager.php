@@ -435,8 +435,10 @@ class PageManager implements PageManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer): SpyCmsPageLocalizedAttributes
-    {
+    protected function getLocalizedAttributesForPage(
+        SpyCmsPage $pageEntity,
+        CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer
+    ): SpyCmsPageLocalizedAttributes {
         $cmsPageLocalizedAttributesQuery = $this->cmsQueryContainer
             ->queryCmsPageLocalizedAttributes()
             ->filterByFkCmsPage($pageEntity->getIdCmsPage());

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TestifyConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getOutputDirectoriesForCleanup(): array

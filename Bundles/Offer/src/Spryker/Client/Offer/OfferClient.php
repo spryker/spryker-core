@@ -19,6 +19,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class OfferClient extends AbstractClient implements OfferClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
@@ -41,6 +43,8 @@ class OfferClient extends AbstractClient implements OfferClientInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer

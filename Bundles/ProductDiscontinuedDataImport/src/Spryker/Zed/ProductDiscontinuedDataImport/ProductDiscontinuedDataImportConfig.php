@@ -20,6 +20,8 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_DISCONTINUED = 'product-discontinued';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductDiscontinuedDataImporterConfiguration(): DataImporterConfigurationTransfer

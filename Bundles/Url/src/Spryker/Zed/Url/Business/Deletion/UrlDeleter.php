@@ -42,8 +42,11 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
      * @param \Spryker\Zed\Url\Business\Url\UrlActivatorInterface $urlActivator
      * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlActivatorInterface $urlActivator, UrlRedirectActivatorInterface $urlRedirectActivator)
-    {
+    public function __construct(
+        UrlQueryContainerInterface $urlQueryContainer,
+        UrlActivatorInterface $urlActivator,
+        UrlRedirectActivatorInterface $urlRedirectActivator
+    ) {
         $this->urlQueryContainer = $urlQueryContainer;
         $this->urlActivator = $urlActivator;
         $this->urlRedirectActivator = $urlRedirectActivator;
