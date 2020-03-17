@@ -33,8 +33,12 @@ class ProductPageAttribute implements ProductPageAttributeInterface
      *
      * @return array
      */
-    public function getCombinedProductAttributes($abstractAttributesData, $abstractLocalizedAttributesData, $concreteAttributesData, $concreteLocalizedAttributesData)
-    {
+    public function getCombinedProductAttributes(
+        $abstractAttributesData,
+        $abstractLocalizedAttributesData,
+        $concreteAttributesData,
+        $concreteLocalizedAttributesData
+    ) {
         $decodedAbstractAttributesData = $this->productFacade->decodeProductAttributes($abstractAttributesData);
         $decodedAbstractLocalizedAttributesData = $this->productFacade->decodeProductAttributes($abstractLocalizedAttributesData);
 

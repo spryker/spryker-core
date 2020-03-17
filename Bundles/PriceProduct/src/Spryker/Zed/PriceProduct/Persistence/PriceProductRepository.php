@@ -296,8 +296,10 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findProductAbstractPricesByIdInAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): ObjectCollection
-    {
+    public function findProductAbstractPricesByIdInAndCriteria(
+        array $productAbstractIds,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): ObjectCollection {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
 
         $priceProductStoreQuery

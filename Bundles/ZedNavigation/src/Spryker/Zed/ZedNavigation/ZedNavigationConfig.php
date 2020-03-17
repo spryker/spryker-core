@@ -15,6 +15,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     public const MAX_LEVEL_COUNT = 5;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxMenuLevelCount()
@@ -23,6 +25,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getNavigationSchemaPathPattern()
@@ -36,6 +40,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getNavigationSchemaFileNamePattern()
@@ -44,6 +50,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRootNavigationSchema()
@@ -52,6 +60,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCacheFile()
@@ -60,6 +70,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isNavigationCacheEnabled()
@@ -68,6 +80,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isNavigationEnabled()
@@ -76,6 +90,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getBundlesDirectory()

@@ -110,8 +110,10 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName, ?string $productMeasurementUnitCode = null): ProductMeasurementUnitTransfer
-    {
+    protected function createProductMeasurementUnitTransfer(
+        ?string $productMeasurementUnitName,
+        ?string $productMeasurementUnitCode = null
+    ): ProductMeasurementUnitTransfer {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName ?: '');
 
@@ -127,8 +129,9 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): ProductMeasurementBaseUnitTransfer
-    {
+    protected function createProductMeasurementBaseUnitTransfer(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+    ): ProductMeasurementBaseUnitTransfer {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
         $amountBaseMeasurementUnitName = $salesOrderItemEntityTransfer->getAmountBaseMeasurementUnitName() ?? '';
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($amountBaseMeasurementUnitName);

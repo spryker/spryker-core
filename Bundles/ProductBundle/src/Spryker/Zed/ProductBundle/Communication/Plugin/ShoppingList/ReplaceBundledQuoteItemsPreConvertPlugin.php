@@ -21,6 +21,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPlug
 class ReplaceBundledQuoteItemsPreConvertPlugin extends AbstractPlugin implements QuoteItemsPreConvertPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Replace bundled items with bundle items.
      *

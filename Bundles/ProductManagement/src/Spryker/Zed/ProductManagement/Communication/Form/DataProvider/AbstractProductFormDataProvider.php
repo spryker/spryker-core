@@ -493,8 +493,10 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
-    {
+    protected function convertAbstractLocalizedAttributesToFormOptions(
+        ?ProductAbstractTransfer $productAbstractTransfer = null,
+        ?LocaleTransfer $localeTransfer = null
+    ) {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;

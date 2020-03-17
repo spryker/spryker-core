@@ -21,6 +21,11 @@
         <property name="frontEndReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+        <property name="labels" type="ProductLabelDictionaryItem[]" singular="label"/>
+    </transfer>
+
     <transfer name="FacetConfig">
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>

@@ -25,7 +25,7 @@ class LabelProvider implements LabelProviderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function findAllLabels()
     {

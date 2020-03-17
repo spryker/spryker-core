@@ -21,5 +21,10 @@ interface DocumentationGeneratorRestApiToYamlDumperInterface
      *
      * @return string
      */
-    public function dump($input, int $inline = self::YAML_DEFAULT_INLINE, int $indent = self::YAML_DEFAULT_INDENT, int $flags = self::YAML_DEFAULT_FLAG): string;
+    public function dump(
+        $input,
+        int $inline = self::YAML_DEFAULT_INLINE,
+        int $indent = self::YAML_DEFAULT_INDENT,
+        int $flags = self::YAML_DEFAULT_FLAG
+    ): string;
 }

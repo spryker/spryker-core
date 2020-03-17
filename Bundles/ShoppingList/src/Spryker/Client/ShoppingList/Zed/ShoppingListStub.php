@@ -39,6 +39,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::createShoppingListAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
@@ -52,6 +54,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::updateShoppingListAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
@@ -65,6 +69,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::removeShoppingListAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
@@ -78,6 +84,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::clearShoppingListAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
@@ -91,6 +99,46 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::addShoppingListItemAction()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/add-shopping-list-item',
+            $shoppingListItemTransfer
+        );
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::updateShoppingListItemByIdAction()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/update-shopping-list-item-by-id',
+            $shoppingListItemTransfer
+        );
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::addItemAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -104,6 +152,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::addItemsAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
@@ -117,6 +167,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::removeItemByIdAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
@@ -133,6 +185,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
@@ -146,6 +200,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListOverviewAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
@@ -162,6 +218,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getCustomerShoppingListCollectionAction()
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -178,6 +236,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListItemCollectionAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
@@ -194,12 +254,15 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListItemCollectionTransferAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
         $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/get-shopping-list-item-collection-transfer',
@@ -210,22 +273,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::createShoppingListFromQuoteAction()
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
-        $shoppingListItemTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/update-shopping-list-item',
-            $shoppingListItemTransfer
-        );
-
-        return $shoppingListItemTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
@@ -242,6 +291,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListPermissionGroupCollectionAction()
+     *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
@@ -256,12 +307,15 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::shareShoppingListWithCompanyBusinessUnitAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
+    public function shareShoppingListWithCompanyBusinessUnit(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer {
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
         $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
             '/shopping-list/gateway/share-shopping-list-with-company-business-unit',
@@ -272,6 +326,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::shareShoppingListWithCompanyUserAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
@@ -288,6 +344,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::updateShoppingListSharedEntitiesAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
@@ -320,6 +378,8 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::dismissShoppingListSharingAction()
+     *
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
@@ -333,5 +393,23 @@ class ShoppingListStub implements ShoppingListStubInterface
         );
 
         return $shoppingListShareResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::findShoppingListByUuid()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/find-shopping-list-by-uuid',
+            $shoppingListTransfer
+        );
+
+        return $shoppingListResponseTransfer;
     }
 }

@@ -312,10 +312,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param array $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param string $abstractKey
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -577,7 +577,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer|null $priceProductTransfer
-     * @param array $priceProductFilterTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
      * @return bool
      */

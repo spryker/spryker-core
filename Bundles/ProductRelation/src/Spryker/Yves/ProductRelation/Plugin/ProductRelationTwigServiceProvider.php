@@ -16,6 +16,11 @@ use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Yves\ProductRelation\ProductRelationFactory getFactory()
+ *
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget or \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
+ *
+ * @see \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget
+ * @see \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget
  */
 class ProductRelationTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

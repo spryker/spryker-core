@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -35,6 +37,8 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $paymentProvider
@@ -51,6 +55,8 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder

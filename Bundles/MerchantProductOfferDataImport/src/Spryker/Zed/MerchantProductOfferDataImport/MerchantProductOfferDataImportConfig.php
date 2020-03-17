@@ -16,6 +16,8 @@ class MerchantProductOfferDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_PRODUCT_OFFER_STORE = 'merchant-product-offer-store';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantProductOfferDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -26,6 +28,8 @@ class MerchantProductOfferDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantProductOfferStoreDataImporterConfiguration(): DataImporterConfigurationTransfer

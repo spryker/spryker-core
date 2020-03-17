@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -52,6 +53,7 @@ class MerchantLoginForm extends AbstractType
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
+                    new Email(),
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address',

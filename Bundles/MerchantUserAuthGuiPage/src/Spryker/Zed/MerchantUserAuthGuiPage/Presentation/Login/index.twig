@@ -12,7 +12,7 @@
             <spy-alert type="error">{{ error.message | trans }}</spy-alert>
         {% endfor %}
 
-        <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}">
+        <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}" novalidate>
             {% for formField in form.children if formField.vars.block_prefixes[1] != 'hidden' %}
                 <spy-form-item for="{{ formField.vars.id }}" error="{{ formField.vars.errors[0].message | default | trans }}">
                     {{ formField.vars.label | trans }}

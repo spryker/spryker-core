@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ChartGuiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
     public function getDefaultChartLayout(): ChartLayoutTransfer

@@ -23,8 +23,10 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandAmountForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
-    {
+    public function expandAmountForPersistentCartChange(
+        PersistentCartChangeTransfer $persistentCartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer {
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
             $amount = $this->findAmount($params, $itemTransfer->getSku());
 

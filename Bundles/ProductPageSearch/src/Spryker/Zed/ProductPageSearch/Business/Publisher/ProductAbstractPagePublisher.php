@@ -437,7 +437,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param int[] $productAbstractIds
      * @param string[] $localeIsoCodes
      *
-     * @return array[][]
+     * @return array
      */
     protected function getProductConcreteEntitiesWithProductSearchEntities(array $productAbstractIds, array $localeIsoCodes): array
     {
@@ -480,7 +480,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param array $productSearchEntities
      * @param array $productConcreteEntities
      *
-     * @return array[][]
+     * @return array
      */
     protected function hydrateProductConcreteEntitiesWithProductSearchEntities(array $productSearchEntities, array $productConcreteEntities): array
     {
@@ -502,7 +502,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param array $productCategories
      * @param array $productAbstractLocalizedEntities
      *
-     * @return array[][]
+     * @return array
      */
     protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productCategories, array $productAbstractLocalizedEntities)
     {
@@ -524,10 +524,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param array $productConcreteData
      * @param array $productAbstractLocalizedEntities
      *
-     * @return array[][]
+     * @return array
      */
-    protected function hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(array $productConcreteData, array $productAbstractLocalizedEntities): array
-    {
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(
+        array $productConcreteData,
+        array $productAbstractLocalizedEntities
+    ): array {
         $productConcretesByProductAbstractId = [];
         foreach ($productConcreteData as $productConcrete) {
             $productConcretesByProductAbstractId[$productConcrete['fk_product_abstract']][] = $productConcrete;

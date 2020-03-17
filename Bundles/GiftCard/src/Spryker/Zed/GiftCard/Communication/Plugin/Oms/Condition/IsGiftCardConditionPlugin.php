@@ -20,6 +20,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class IsGiftCardConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @todo Check if the id should be wrapped in a transfer. If yes, which one? Adapt accordingly. If no, remove this line.
