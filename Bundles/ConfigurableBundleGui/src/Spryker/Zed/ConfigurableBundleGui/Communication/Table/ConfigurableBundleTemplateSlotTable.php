@@ -177,8 +177,9 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
      *
      * @return \Propel\Runtime\Collection\ArrayCollection
      */
-    protected function expandConfigurableBundleTemplateSlotCollectionWithNumberOfItemsAndActions(ArrayCollection $configurableBundleTemplateSlotCollection): ArrayCollection
-    {
+    protected function expandConfigurableBundleTemplateSlotCollectionWithNumberOfItemsAndActions(
+        ArrayCollection $configurableBundleTemplateSlotCollection
+    ): ArrayCollection {
         foreach ($configurableBundleTemplateSlotCollection as $index => $configurableBundleTemplateSlotData) {
             $configurableBundleTemplateSlotCollection[$index][static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotData);
             $configurableBundleTemplateSlotCollection[$index][static::COL_NUMBER_OF_ITEMS] = count(

@@ -159,8 +159,9 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyUnitAddressCollectionTransfer
-    {
+    protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyUnitAddressCollectionTransfer {
         return $this->companyBusinessUnitAddressReader->getCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 

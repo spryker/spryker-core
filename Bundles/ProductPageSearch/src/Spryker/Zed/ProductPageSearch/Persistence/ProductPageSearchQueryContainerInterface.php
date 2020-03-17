@@ -176,7 +176,10 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(array $productAbstractIds, StoreTransfer $storeTransfer): SpyProductAbstractLocalizedAttributesQuery;
+    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(
+        array $productAbstractIds,
+        StoreTransfer $storeTransfer
+    ): SpyProductAbstractLocalizedAttributesQuery;
 
     /**
      * Specification:

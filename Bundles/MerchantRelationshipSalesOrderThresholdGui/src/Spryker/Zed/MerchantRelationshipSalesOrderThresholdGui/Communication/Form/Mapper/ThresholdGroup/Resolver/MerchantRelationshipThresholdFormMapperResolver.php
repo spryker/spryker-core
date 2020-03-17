@@ -51,8 +51,9 @@ class MerchantRelationshipThresholdFormMapperResolver implements MerchantRelatio
      *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface
      */
-    public function resolveMerchantRelationshipThresholdFormMapperClassInstanceByStrategyGroup(string $salesOrderThresholdTypeGroup): MerchantRelationshipThresholdFormMapperInterface
-    {
+    public function resolveMerchantRelationshipThresholdFormMapperClassInstanceByStrategyGroup(
+        string $salesOrderThresholdTypeGroup
+    ): MerchantRelationshipThresholdFormMapperInterface {
         if (!$this->hasMerchantRelationshipThresholdFormMapperByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingThresholdFormMapperException();
         }

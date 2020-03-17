@@ -21,7 +21,7 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
     public function getCommandPlugins();
 
@@ -35,7 +35,7 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
     public function getConditionPlugins();
 

@@ -69,8 +69,12 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandPageMapWithPlugins(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    protected function expandPageMapWithPlugins(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $data,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         foreach ($this->getFactory()->getConfigurableBundleTemplatePageMapExpanderPlugins() as $configurableBundleTemplatePageMapExpanderPlugin) {
             $configurableBundleTemplatePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
         }
