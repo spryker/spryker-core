@@ -14,11 +14,12 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  * @method \Spryker\Zed\SalesReturn\Business\SalesReturnFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReturn\SalesReturnConfig getConfig()
  */
-class IsReturnableOutdatedOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
+class IsReturnableOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Sets `Item::isReturnable=false` for outdated order items.
+     * - Verifies difference between order item creation date and config const.
+     * - If difference more than config const, sets `Item::isReturnable=false`.
      *
      * @api
      *
@@ -28,6 +29,6 @@ class IsReturnableOutdatedOrderItemExpanderPlugin extends AbstractPlugin impleme
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOutdatedOrderItemsWithIsReturnable($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithIsReturnable($itemTransfers);
     }
 }

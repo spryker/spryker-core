@@ -14,5 +14,5 @@ interface OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOutdatedOrderItemsWithIsReturnable(array $itemTransfers): array;
+    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
 }

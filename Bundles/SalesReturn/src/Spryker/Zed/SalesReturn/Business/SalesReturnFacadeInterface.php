@@ -109,7 +109,8 @@ interface SalesReturnFacadeInterface
 
     /**
      * Specification:
-     * - Sets `Item::isReturnable=false` for outdated order items.
+     * - Verifies difference between order item creation date and config const.
+     * - If difference more than config const, sets `Item::isReturnable=false`.
      *
      * @api
      *
@@ -117,5 +118,5 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOutdatedOrderItemsWithIsReturnable(array $itemTransfers): array;
+    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
 }
