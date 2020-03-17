@@ -49,7 +49,7 @@ interface ProductLabelDiscountConnectorFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function findAllLabels();
 }

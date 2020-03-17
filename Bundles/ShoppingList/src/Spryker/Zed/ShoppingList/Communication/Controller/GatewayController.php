@@ -69,6 +69,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use GatewayController::addShoppingListItemAction instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -76,6 +78,16 @@ class GatewayController extends AbstractGatewayController
     public function addItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFacade()->addItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
+        return $this->getFacade()->addShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -153,11 +165,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function updateShoppingListItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function updateShoppingListItemByIdAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        return $this->getFacade()->updateShoppingListItem($shoppingListItemTransfer);
+        return $this->getFacade()->updateShoppingListItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -218,5 +230,15 @@ class GatewayController extends AbstractGatewayController
     public function dismissShoppingListSharingAction(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
     {
         return $this->getFacade()->dismissShoppingListSharing($shoppingListDismissRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuidAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->findShoppingListByUuid($shoppingListTransfer);
     }
 }
