@@ -40,7 +40,7 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function build()
     {
