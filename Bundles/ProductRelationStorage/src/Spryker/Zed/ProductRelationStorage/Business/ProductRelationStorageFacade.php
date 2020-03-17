@@ -123,7 +123,7 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    public function findProductRelationStorageDataTransfersByIds(int $offset, int $limit, array $ids): array
     {
         return $this->getRepository()->findProductRelationStorageDataTransferByIds($offset, $limit, $ids);
     }

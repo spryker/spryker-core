@@ -130,12 +130,6 @@
     <transfer name="ProductAbstract">
     </transfer>
 
-    <transfer name="Money">
-    </transfer>
-
-    <transfer name="ProductAttributeKey">
-    </transfer>
-
     <transfer name="ProductRelationCriteriaFilter">
         <property name="productRelation" type="ProductRelation"/>
         <property name="limit" type="int"/>

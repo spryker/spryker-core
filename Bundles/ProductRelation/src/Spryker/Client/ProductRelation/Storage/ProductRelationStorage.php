@@ -61,11 +61,10 @@ class ProductRelationStorage implements ProductRelationStorageInterface
 
     /**
      * @param int $idAbstractProduct
-     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
-    public function getAll(int $idAbstractProduct, string $storeName): array
+    public function getAll($idAbstractProduct)
     {
         $key = $this->keyBuilder->generateKey($idAbstractProduct, $this->localeName);
 

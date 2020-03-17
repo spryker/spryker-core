@@ -32,7 +32,7 @@ class ProductRelationSynchronizationDataRepositoryPlugin extends AbstractPlugin 
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findProductRelationStorageDataTransferByIds($offset, $limit, $ids);
+        return $this->getFacade()->findProductRelationStorageDataTransfersByIds($offset, $limit, $ids);
     }
 
     /**
