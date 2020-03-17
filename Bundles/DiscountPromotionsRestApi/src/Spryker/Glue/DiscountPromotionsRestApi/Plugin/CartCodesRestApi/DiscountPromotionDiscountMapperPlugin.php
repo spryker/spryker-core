@@ -30,12 +30,14 @@ class DiscountPromotionDiscountMapperPlugin extends AbstractController implement
         DiscountTransfer $discountTransfer,
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer {
-        if (!$discountTransfer->getDiscountPromotion()) {
+        $discountPromotionTransfer = $discountTransfer->getDiscountPromotion();
+
+        if (!$discountPromotionTransfer) {
             return $restDiscountsAttributesTransfer;
         }
 
         return $restDiscountsAttributesTransfer
-            ->setDiscountPromotionAbstractSku($discountTransfer->getDiscountPromotion()->getAbstractSku())
-            ->setDiscountPromotionQuantity($discountTransfer->getDiscountPromotion()->getQuantity());
+            ->setDiscountPromotionAbstractSku($discountPromotionTransfer->getAbstractSku())
+            ->setDiscountPromotionQuantity($discountPromotionTransfer->getQuantity());
     }
 }
