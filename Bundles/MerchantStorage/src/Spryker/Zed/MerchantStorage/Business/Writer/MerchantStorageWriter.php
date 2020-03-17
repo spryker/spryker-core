@@ -72,6 +72,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     {
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $merchantCriteriaFilterTransfer->setMerchantIds($merchantIds);
+        $merchantCriteriaFilterTransfer->setIsActive(true);
 
         $merchantCollectionTransfer = $this->merchantFacade->find($merchantCriteriaFilterTransfer);
 
