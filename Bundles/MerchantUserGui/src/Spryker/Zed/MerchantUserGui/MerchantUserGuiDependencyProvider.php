@@ -45,9 +45,9 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantUserPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_MERCHANT_USER, function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_USER, $container->factory(function () {
             return SpyMerchantUserQuery::create();
-        });
+        }));
 
         return $container;
     }
