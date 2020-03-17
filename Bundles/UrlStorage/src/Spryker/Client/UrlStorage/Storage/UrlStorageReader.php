@@ -39,8 +39,11 @@ class UrlStorageReader implements UrlStorageReaderInterface
      * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[] $resourceMapperPlugins
      */
-    public function __construct(UrlStorageToStorageInterface $storageClient, UrlStorageToSynchronizationServiceInterface $synchronizationService, array $resourceMapperPlugins)
-    {
+    public function __construct(
+        UrlStorageToStorageInterface $storageClient,
+        UrlStorageToSynchronizationServiceInterface $synchronizationService,
+        array $resourceMapperPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->urlStorageResourceMapperPlugins = $resourceMapperPlugins;

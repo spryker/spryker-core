@@ -137,8 +137,9 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][]
      */
-    protected function groupConfigurableBundleTemplatePageSearchTransfers(ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer): array
-    {
+    protected function groupConfigurableBundleTemplatePageSearchTransfers(
+        ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
+    ): array {
         $groupedConfigurableBundleTemplatePageSearchTransfers = [];
 
         foreach ($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches() as $configurableBundleTemplatePageSearchTransfer) {
@@ -157,8 +158,10 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      *
      * @return void
      */
-    protected function storeConfigurableBundlePageSearches(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer, array $configurableBundleTemplatePageSearchTransfers): void
-    {
+    protected function storeConfigurableBundlePageSearches(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        array $configurableBundleTemplatePageSearchTransfers
+    ): void {
         $configurableBundleTemplatePageSearchTransfers = $this->getMappedConfigurableBundleTemplatePageSearchTransfers(
             $configurableBundleTemplateTransfer,
             $configurableBundleTemplatePageSearchTransfers

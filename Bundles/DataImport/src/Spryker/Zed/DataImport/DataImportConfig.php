@@ -94,8 +94,11 @@ class DataImportConfig extends AbstractBundleConfig
      *
      * @return \Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer
      */
-    protected function buildQueueDataImporterConfiguration(string $queueName, string $importType, array $queueConsumerOptions): QueueDataImporterConfigurationTransfer
-    {
+    protected function buildQueueDataImporterConfiguration(
+        string $queueName,
+        string $importType,
+        array $queueConsumerOptions
+    ): QueueDataImporterConfigurationTransfer {
         $dataImportQueueReaderConfigurationTransfer = new DataImporterQueueReaderConfigurationTransfer();
         $dataImportQueueReaderConfigurationTransfer
             ->setQueueName($queueName)

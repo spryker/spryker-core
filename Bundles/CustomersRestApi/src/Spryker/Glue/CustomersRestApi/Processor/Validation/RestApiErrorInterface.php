@@ -124,7 +124,11 @@ interface RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface;
+    public function addPasswordsDoNotMatchError(
+        RestResponseInterface $restResponse,
+        string $passwordFieldName,
+        string $passwordConfirmFieldName
+    ): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
@@ -132,7 +136,10 @@ interface RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnRegistration(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface;
+    public function processCustomerErrorOnRegistration(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
@@ -140,7 +147,10 @@ interface RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface;
+    public function processCustomerErrorOnUpdate(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
@@ -148,5 +158,8 @@ interface RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnPasswordUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface;
+    public function processCustomerErrorOnPasswordUpdate(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface;
 }

@@ -162,8 +162,11 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer, ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer): Decimal
-    {
+    protected function findProductConcreteAvailability(
+        ItemTransfer $itemTransfer,
+        StoreTransfer $storeTransfer,
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): Decimal {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
             ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productAvailabilityCriteriaTransfer);
 

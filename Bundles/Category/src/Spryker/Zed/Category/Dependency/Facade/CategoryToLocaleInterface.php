@@ -22,7 +22,7 @@ interface CategoryToLocaleInterface
     public function getLocale($localeName);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales();
 

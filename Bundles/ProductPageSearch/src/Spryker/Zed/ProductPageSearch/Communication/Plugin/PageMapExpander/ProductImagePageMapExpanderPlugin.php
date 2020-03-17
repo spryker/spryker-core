@@ -35,8 +35,12 @@ class ProductImagePageMapExpanderPlugin extends AbstractPlugin implements Produc
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $pageMapBuilder->addSearchResultData($pageMapTransfer, 'images', $productData['product_images']);
 
         return $pageMapTransfer;
