@@ -68,10 +68,6 @@
         <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
-    <transfer name="Merchant">
-        <property name="merchantProfile" type="MerchantProfile"/>
-    </transfer>
-
     <transfer name="Url">
     </transfer>
 

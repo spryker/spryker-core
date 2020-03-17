@@ -74,7 +74,7 @@ class EditMerchantController extends AbstractController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        return $this->updateMerchantProfileActivityStatus($request, true, static::MESSAGE_SUCCESS_ACTIVATE);
+        return $this->updateMerchantActivityStatus($request, true, static::MESSAGE_SUCCESS_ACTIVATE);
     }
 
     /**
@@ -84,7 +84,7 @@ class EditMerchantController extends AbstractController
      */
     public function deactivateAction(Request $request): RedirectResponse
     {
-        return $this->updateMerchantProfileActivityStatus($request, false, static::MESSAGE_SUCCESS_DEACTIVATE);
+        return $this->updateMerchantActivityStatus($request, false, static::MESSAGE_SUCCESS_DEACTIVATE);
     }
 
     /**
@@ -122,16 +122,16 @@ class EditMerchantController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function updateMerchantProfileActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
+    protected function updateMerchantActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
     {
-        $idMerchantProfile = $this->castId($request->query->get(static::REQUEST_ID_MERCHANT));
+        $idMerchant = $this->castId($request->query->get(static::REQUEST_ID_MERCHANT));
 
         $merchantFacade = $this->getFactory()
             ->getMerchantFacade();
 
         $merchantTransfer = $merchantFacade->findOne(
             (new MerchantCriteriaFilterTransfer())
-                ->setIdMerchant($idMerchantProfile)
+                ->setIdMerchant($idMerchant)
         );
 
         if (!$merchantTransfer) {

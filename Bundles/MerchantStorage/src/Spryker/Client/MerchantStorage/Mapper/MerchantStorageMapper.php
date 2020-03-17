@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MerchantStorage\Mapper;
 
-use Generated\Shared\Transfer\MerchantStorageProfileTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantStorageMapper implements MerchantStorageMapperInterface
@@ -21,12 +20,6 @@ class MerchantStorageMapper implements MerchantStorageMapperInterface
     {
         $merchantStorageTransfer = new MerchantStorageTransfer();
         $merchantStorageTransfer->fromArray($data, true);
-
-        $merchantStorageTransfer->setIdMerchant($data['fk_merchant']);
-        $merchantStorageProfileTransfer = new MerchantStorageProfileTransfer();
-        $merchantStorageProfileTransfer->fromArray($data, true);
-
-        $merchantStorageTransfer->setMerchantStorageProfile($merchantStorageProfileTransfer);
 
         return $merchantStorageTransfer;
     }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 
@@ -62,20 +61,7 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyMerchantEntityTransfer $merchantEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function mapMerchantEntityTransferToMerchantTransfer(SpyMerchantEntityTransfer $merchantEntityTransfer): MerchantTransfer
-    {
-        $merchantTransfer = (new MerchantTransfer())
-            ->fromArray($merchantEntityTransfer->toArray(), true);
-
-        return $merchantTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyMerchantEntityTransfer[] $collection
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $collection
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
@@ -86,8 +72,8 @@ class MerchantMapper implements MerchantMapperInterface
     ): MerchantCollectionTransfer {
         $merchants = new ArrayObject();
 
-        foreach ($collection as $merchantEntityTransfer) {
-            $merchants->append($this->mapMerchantEntityTransferToMerchantTransfer($merchantEntityTransfer));
+        foreach ($collection as $merchantEntity) {
+            $merchants->append($this->mapMerchantEntityToMerchantTransfer($merchantEntity, new MerchantTransfer()));
         }
 
         $merchantCollectionTransfer->setMerchants($merchants);
