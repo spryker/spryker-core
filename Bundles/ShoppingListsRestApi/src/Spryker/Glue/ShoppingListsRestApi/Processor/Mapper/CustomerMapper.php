@@ -36,8 +36,10 @@ class CustomerMapper implements CustomerMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected function mapRestUserTransferToCompanyUserTransfer(RestUserTransfer $restUserTransfer, CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
-    {
+    protected function mapRestUserTransferToCompanyUserTransfer(
+        RestUserTransfer $restUserTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer {
         return $companyUserTransfer->setIdCompanyUser($restUserTransfer->getIdCompanyUser())
             ->setUuid($restUserTransfer->getUuidCompanyUser())
             ->setFkCompany($restUserTransfer->getIdCompany())
