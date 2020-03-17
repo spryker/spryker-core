@@ -96,5 +96,5 @@ interface ProductRelationStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findProductRelationStorageDataTransfersByIds(int $offset, int $limit, array $ids): array;
 }
