@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -107,9 +108,14 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             $merchantOrderTransfer,
             $itemTransfers
         );
+        $merchantOrderTransfer = $this->addExpensesToMerchantOrder(
+            $merchantOrderTransfer,
+            $orderTransfer->getExpenses()
+        );
+        $merchantOrderTransfer->setPriceMode($orderTransfer->getPriceMode());
 
         return $merchantOrderTransfer->setTotals(
-            $this->merchantOrderTotalsCreator->createMerchantOrderTotals($orderTransfer, $merchantOrderTransfer)
+            $this->merchantOrderTotalsCreator->createMerchantOrderTotals($merchantOrderTransfer)
         );
     }
 
@@ -127,6 +133,27 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             $merchantOrderTransfer->addMerchantOrderItem(
                 $this->merchantOrderItemCreator->createMerchantOrderItem($itemTransfer, $merchantOrderTransfer)
             );
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \ArrayObject $expenseTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function addExpensesToMerchantOrder(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        ArrayObject $expenseTransfers
+    ): MerchantOrderTransfer {
+        foreach ($expenseTransfers as $expenseTransfer) {
+            if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+                continue;
+            }
+
+            $merchantOrderTransfer->addExpense($expenseTransfer);
         }
 
         return $merchantOrderTransfer;

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -39,39 +38,32 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     public function createMerchantOrderTotals(
-        OrderTransfer $orderTransfer,
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
-        $totalsTransfer = $this->calculateTotals($orderTransfer, $merchantOrderTransfer);
+        $totalsTransfer = $this->calculateTotals($merchantOrderTransfer);
 
         return $this->merchantSalesOrderEntityManager
             ->createMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder(), $totalsTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function calculateTotals(
-        OrderTransfer $orderTransfer,
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
         $calculationOrderTransfer = (new OrderTransfer())
-            ->setPriceMode($orderTransfer->getPriceMode())
+            ->setPriceMode($merchantOrderTransfer->getPriceMode())
+            ->setExpenses($merchantOrderTransfer->getExpenses())
             ->setTotals(new TotalsTransfer());
-        $calculationOrderTransfer = $this->expandOrderWithMerchantExpenses(
-            $calculationOrderTransfer,
-            $merchantOrderTransfer,
-            $orderTransfer->getExpenses()
-        );
+
         $calculationOrderTransfer = $this->expandOrderWithMerchantOrderItems(
             $calculationOrderTransfer,
             $merchantOrderTransfer
@@ -80,29 +72,6 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
 
         return $calculationOrderTransfer->getTotals();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param \ArrayObject $expenseTransfers
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function expandOrderWithMerchantExpenses(
-        OrderTransfer $calculationOrderTransfer,
-        MerchantOrderTransfer $merchantOrderTransfer,
-        ArrayObject $expenseTransfers
-    ): OrderTransfer {
-        foreach ($expenseTransfers as $expenseTransfer) {
-            if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-                continue;
-            }
-
-            $calculationOrderTransfer->addExpense($expenseTransfer);
-        }
-
-        return $calculationOrderTransfer;
     }
 
     /**

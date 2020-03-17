@@ -8,12 +8,8 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
@@ -29,14 +25,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
  */
 class MerchantSalesOrderFacadeTest extends Unit
 {
-    /**
-     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
-     */
-    protected const VALID_SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-    protected const INVALID_SHIPMENT_EXPENSE_TYPE = 'ANOTHER_EXPENSE_TYPE';
     protected const TEST_STATE_MACHINE = 'Test01';
-    protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
-    protected const TEST_SECOND_MERCHANT_REFERENCE = 'test-second-merchant-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -278,156 +267,43 @@ class MerchantSalesOrderFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testExpandOrderItemWithMerchantReturnsUpdatedTransferWithCorrectData(): void
-    {
-        // Arrange
-        $itemTransfer = $this->tester->getItemTransfer([
-            ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
-        ]);
-        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
-
-        // Act
-        $newSalesOrderItemEntityTransfer = $this->tester
-            ->getFacade()
-            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
-
-        // Assert
-        $this->assertSame(static::TEST_MERCHANT_REFERENCE, $newSalesOrderItemEntityTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
-    {
-        // Arrange
-        $itemTransfer = $this->tester->getItemTransfer();
-        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
-
-        // Act
-        $newSalesOrderItemEntityTransfer = $this->tester
-            ->getFacade()
-            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
-
-        // Assert
-        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandShipmentExpenseWithMerchantReferenceReturnsUpdatedTransfer(): void
-    {
-        // Arrange
-        $expenseTransfer = (new ExpenseTransfer())->setType(static::VALID_SHIPMENT_EXPENSE_TYPE);
-        $itemTransfer = (new ItemTransfer())->setMerchantReference(static::TEST_MERCHANT_REFERENCE);
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())->addItem($itemTransfer);
-
-        // Act
-        $expenseTransfer = $this->tester
-            ->getFacade()
-            ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
-
-        // Assert
-        $this->assertSame($expenseTransfer->getMerchantReference(), $itemTransfer->getMerchantReference());
-    }
-
-    /**
-     * @dataProvider getExpandShipmentExpenseWithMerchantReferenceNegativeScenarioDataProvider
-     *
-     * @param array $itemTransfersData
-     * @param string $expenseType
-     *
-     * @return void
-     */
-    public function testExpandShipmentExpenseWithMerchantReferenceDoesNothingWithIncorrectData(
-        array $itemTransfersData,
-        string $expenseType
-    ): void {
-        // Arrange
-        $expenseTransfer = (new ExpenseTransfer())->setType($expenseType);
-        $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        foreach ($itemTransfersData as $itemTransferData) {
-            $shipmentGroupTransfer->addItem((new ItemTransfer())->fromArray($itemTransferData));
-        }
-
-        // Act
-        $expenseTransfer = $this->tester
-            ->getFacade()
-            ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
-
-        // Assert
-        $this->assertNull($expenseTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return array
-     */
-    public function getExpandShipmentExpenseWithMerchantReferenceNegativeScenarioDataProvider(): array
-    {
-        return [
-            'with incorrect expense type' => [
-                [
-                    [
-                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
-                    ],
-                ],
-                static::INVALID_SHIPMENT_EXPENSE_TYPE,
-            ],
-            'with different merchant references' => [
-                [
-                    [
-                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
-                    ],
-                    [
-                        ExpenseTransfer::MERCHANT_REFERENCE => static::TEST_SECOND_MERCHANT_REFERENCE,
-                    ],
-                ],
-                static::VALID_SHIPMENT_EXPENSE_TYPE,
-            ],
-        ];
-    }
-
-    /**
      * @return array
      */
     public function getMerchantOrderPositiveScenarioDataProvider(): array
     {
         return [
             'by id merchant order' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by id order and id merchant' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_ORDER,
                     MerchantOrderCriteriaTransfer::ID_MERCHANT,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by id order and merchant reference' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_ORDER,
                     MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by merchant order reference' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'with items' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
                     MerchantOrderCriteriaTransfer::WITH_ITEMS,
                 ],
-                1,
+                'merchantOrderItemsCount' => 1,
             ],
         ];
     }
@@ -439,24 +315,24 @@ class MerchantSalesOrderFacadeTest extends Unit
     {
         return [
             'by id merchant order' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => 0,
                 ],
             ],
             'by id order and id merchant' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT => 0,
                     MerchantOrderCriteriaTransfer::ID_ORDER => 0,
                 ],
             ],
             'by id order and merchant reference' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => 'wrong_merchant_reference',
                     MerchantOrderCriteriaTransfer::ID_ORDER => 0,
                 ],
             ],
             'by merchant order reference' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => 'wrong_merchant_sales_order_reference',
                 ],
             ],

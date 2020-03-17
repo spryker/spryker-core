@@ -25,6 +25,8 @@
         <property name="merchantOrderReference" type="string"/>
         <property name="idOrder" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="totals" type="Totals"/>
     </transfer>
