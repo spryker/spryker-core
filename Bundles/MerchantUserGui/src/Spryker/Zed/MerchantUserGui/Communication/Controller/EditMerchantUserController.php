@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantUserController extends AbstractController
 {
+    protected const MERCHANT_ID_PARAM_NAME = 'merchant-id';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,7 +27,7 @@ class EditMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $merchantId = $this->castId($request->get('merchant-id'));
+        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
         $merchantUserId = $this->castId($request->get('merchant-user-id'));
 
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
@@ -53,7 +55,7 @@ class EditMerchantUserController extends AbstractController
      */
     protected function updateMerchant(Request $request, FormInterface $merchantUserUpdateForm)
     {
-        $merchantId = $this->castId($request->get('merchant-id'));
+        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
 
         $redirectUrl = sprintf(
             '/merchant-gui/edit-merchant?id-merchant=%s%s',
