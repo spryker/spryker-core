@@ -15,6 +15,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OrderCustomReferenceConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns the maximum permissible length of the order custom reference value.
+     *
+     * @api
+     *
      * @return int
      */
     public function getOrderCustomReferenceMaxLength(): int

@@ -14,6 +14,11 @@ class OrderCustomReferenceConfig extends AbstractSharedConfig
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
+     * Specification:
+     * - Returns the maximum permissible length of the order custom reference value.
+     *
+     * @api
+     *
      * @return int
      */
     public function getOrderCustomReferenceMaxLength(): int
