@@ -13,7 +13,7 @@ interface GlobInterface
      * @param string $pattern
      * @param int $flags
      *
-     * @return array
+     * @return string[]
      */
     public function glob(string $pattern, int $flags = 0): array;
 }
