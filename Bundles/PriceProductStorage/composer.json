@@ -8,7 +8,7 @@
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
-    "spryker/price-product": "^2.11.0 || ^4.0.0",
+    "spryker/price-product": "^4.14.0",
     "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/propel-orm": "^1.5.0",
