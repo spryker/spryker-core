@@ -315,16 +315,20 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param string $reference
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return string
      */
-    protected function getStorageKey(string $reference, string $locale): string
+    protected function getStorageKey(string $reference, string $locale, ?string $storeName = null): string
     {
+        if ($storeName === null) {
+            $storeName = APPLICATION_STORE;
+        }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($reference)
             ->setLocale($locale)
-            ->setStore($this->store->getStoreName());
+            ->setStore($storeName);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
@@ -351,12 +355,48 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
+     *
+     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException
+     *
+     * @return array
+     */
+    protected function getProductAbstractDataCacheByIdProductAbstractForLocaleNameAndStore(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): array {
+        if (!$this->hasProductAbstractDataCacheByIdProductAbstractForLocaleNameAndStore($idProductAbstract, $localeName, $storeName)) {
+            throw new NotFoundProductAbstractDataCacheException();
+        }
+
+        return static::$productsAbstractDataCache[$idProductAbstract][$localeName][$storeName];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return bool
      */
     protected function hasProductAbstractDataCacheByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName): bool
     {
         return isset(static::$productsAbstractDataCache[$idProductAbstract][$localeName]);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function hasProductAbstractDataCacheByIdProductAbstractForLocaleNameAndStore(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): bool {
+        return isset(static::$productsAbstractDataCache[$idProductAbstract][$localeName][$storeName]);
     }
 
     /**
@@ -383,6 +423,28 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         foreach ($productAbstractIds as $idProductAbstract) {
             if ($this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName)) {
                 $cachedProductAbstractData[$idProductAbstract] = $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName);
+            }
+        }
+
+        return $cachedProductAbstractData;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    protected function getProductAbstractDataCacheByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
+        $cachedProductAbstractData = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            if ($this->hasProductAbstractDataCacheByIdProductAbstractForLocaleNameAndStore($idProductAbstract, $localeName, $storeName)) {
+                $cachedProductAbstractData[$idProductAbstract] = $this->getProductAbstractDataCacheByIdProductAbstractForLocaleNameAndStore($idProductAbstract, $localeName, $storeName);
             }
         }
 
@@ -422,7 +484,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         string $localeName,
         string $storeName
     ): array {
-        $cachedProductAbstractStorageData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName, $storeName);
+        $cachedProductAbstractStorageData = $this->getProductAbstractDataCacheByProductAbstractIdsForLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
 
         $productAbstractIds = array_diff($productAbstractIds, array_keys($cachedProductAbstractStorageData));
         $productAbstractIds = $this->filterRestrictedProductAbstractIds($productAbstractIds);
@@ -430,7 +492,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             return $cachedProductAbstractStorageData;
         }
 
-        $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName);
+        $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName, $storeName);
 
         return $cachedProductAbstractStorageData + $productAbstractStorageData;
     }
@@ -438,16 +500,17 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param array $productAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    protected function getBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): array
+    protected function getBulkProductAbstractStorageData(array $productAbstractIds, string $localeName, ?string $storeName = null): array
     {
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
             return $this->getBulkProductAbstractStorageDataForCollectorCompatibilityMode($productAbstractIds, $localeName);
         }
 
-        $productStorageDataCollection = $this->storageClient->getMulti($this->generateStorageKeys($productAbstractIds, $localeName));
+        $productStorageDataCollection = $this->storageClient->getMulti($this->generateStorageKeys($productAbstractIds, $localeName, $storeName));
         $productStorageDataCollection = array_filter($productStorageDataCollection);
 
         return $this->mapBulkProductStorageData($productStorageDataCollection, $localeName);
@@ -456,14 +519,15 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return string[]
      */
-    protected function generateStorageKeys(array $productAbstractIds, string $localeName): array
+    protected function generateStorageKeys(array $productAbstractIds, string $localeName, ?string $storeName = null): array
     {
         $storageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $storageKeys[] = $this->getStorageKey((string)$idProductAbstract, $localeName);
+            $storageKeys[] = $this->getStorageKey((string)$idProductAbstract, $localeName, $storeName);
         }
 
         return $storageKeys;
