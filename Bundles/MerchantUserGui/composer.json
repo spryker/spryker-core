@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-user-gui",
+  "type": "library",
   "description": "MerchantUserGui module",
   "license": "proprietary",
   "require": {
@@ -12,6 +13,9 @@
     "spryker/user": "^3.3.0",
     "spryker/util-text": "^1.1.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -20,8 +24,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
@@ -30,8 +34,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
   }
 }
