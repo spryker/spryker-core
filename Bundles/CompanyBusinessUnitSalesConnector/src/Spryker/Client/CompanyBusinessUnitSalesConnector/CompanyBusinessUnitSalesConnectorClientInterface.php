@@ -31,7 +31,7 @@ interface CompanyBusinessUnitSalesConnectorClientInterface
 
     /**
      * Specification:
-     * - Returns true if filtering by company user name and email could be applied, false otherwise.
+     * - Returns true if filtering by company or business unit was applied, false otherwise.
      *
      * @api
      *

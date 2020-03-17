@@ -104,13 +104,13 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expandQueryJoinCollectionWithCompanyUserFilter(
+    public function expandQueryJoinCollectionWithCustomerFilter(
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
         return $this->getFactory()
             ->createOrderSearchQueryExpander()
-            ->expandQueryJoinCollectionWithCompanyUserFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
+            ->expandQueryJoinCollectionWithCustomerFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
     }
 
     /**

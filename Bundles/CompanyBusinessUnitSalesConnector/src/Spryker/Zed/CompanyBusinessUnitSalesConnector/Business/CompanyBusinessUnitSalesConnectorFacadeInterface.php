@@ -79,7 +79,7 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to filter by company user name and email.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to filter by customer name and email.
      *
      * @api
      *
@@ -88,14 +88,14 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expandQueryJoinCollectionWithCompanyUserFilter(
+    public function expandQueryJoinCollectionWithCustomerFilter(
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer;
 
     /**
      * Specification:
-     * - Returns true if filtering by company user name and email could be applied, false otherwise.
+     * - Returns true if filtering by customer name and email could be applied, false otherwise.
      *
      * @api
      *

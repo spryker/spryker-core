@@ -18,7 +18,7 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
-     * - Returns true if filtering by company user name and email could be applied, false otherwise.
+     * - Returns true if filtering by customer name and email could be applied, false otherwise.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
 
     /**
      * {@inheritDoc}
-     * - Expands OrderListTransfer::queryJoins with additional QueryJoinTransfers to filter by company user name and email.
+     * - Expands OrderListTransfer::queryJoins with additional QueryJoinTransfers to filter by customer name and email.
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
      */
     public function expand(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $queryJoinCollectionTransfer = $this->getFacade()->expandQueryJoinCollectionWithCompanyUserFilter(
+        $queryJoinCollectionTransfer = $this->getFacade()->expandQueryJoinCollectionWithCustomerFilter(
             $orderListTransfer->getFilterFields()->getArrayCopy(),
             $orderListTransfer->getQueryJoins()
         );

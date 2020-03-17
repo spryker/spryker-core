@@ -28,7 +28,7 @@ interface OrderSearchQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expandQueryJoinCollectionWithCompanyUserFilter(
+    public function expandQueryJoinCollectionWithCustomerFilter(
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer;
