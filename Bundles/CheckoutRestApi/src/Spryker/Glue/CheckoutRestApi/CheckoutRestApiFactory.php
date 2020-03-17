@@ -16,6 +16,9 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponsePaymentProvidersMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseRestAddressMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapper;
@@ -55,8 +58,8 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutDataMapper(): CheckoutDataMapperInterface
     {
         return new CheckoutDataMapper(
-            $this->getCheckoutDataResponseMapperPlugins(),
-            $this->getConfig()
+            $this->getCheckoutDataResponseMappers(),
+            $this->getCheckoutDataResponseMapperPlugins()
         );
     }
 
@@ -164,5 +167,41 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutDataResponseMapperPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCheckoutDataResponseMappers(): array
+    {
+        return [
+            $this->createCheckoutDataResponseRestAddressMapper(),
+            $this->createCheckoutDataResponsePaymentProvidersMapper(),
+            $this->createCheckoutDataResponseShipmentMethodsMapper(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createCheckoutDataResponseRestAddressMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new CheckoutDataResponseRestAddressMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createCheckoutDataResponsePaymentProvidersMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new CheckoutDataResponsePaymentProvidersMapper($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createCheckoutDataResponseShipmentMethodsMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new CheckoutDataResponsePaymentProvidersMapper($this->getConfig());
     }
 }

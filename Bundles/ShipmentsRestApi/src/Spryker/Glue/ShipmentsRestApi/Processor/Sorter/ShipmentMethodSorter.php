@@ -76,7 +76,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getPropertyValueBySort(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
     {
-        $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1] ?? null;
+        $field = $this->getSortResourceValue($currentSort);
 
         return $restShipmentMethodAttributeTransfer->offsetExists($field)
             ? (string)$restShipmentMethodAttributeTransfer->offsetGet($field) : null;
@@ -91,7 +91,27 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
     protected function filterSortsByResource(array $sorts, string $resource): array
     {
         return array_filter($sorts, function (SortInterface $sort) use ($resource) {
-            return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === $resource;
+            return $this->getSortResourceName($sort) === $resource;
         });
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
+     *
+     * @return string|null
+     */
+    protected function getSortResourceName(SortInterface $sort): ?string
+    {
+        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] ?? null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
+     *
+     * @return string|null
+     */
+    protected function getSortResourceValue(SortInterface $sort): ?string
+    {
+        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1] ?? null;
     }
 }
