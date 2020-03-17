@@ -38,4 +38,14 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    /**
+     * Defines queue name for publish.
+     */
+    public const PUBLISH_PRODUCT = 'publish.product';
+
+    /**
+     * Defines queue name for publish.
+     */
+    public const PUBLISH_PRODUCT_CONCRETE = 'publish.product_concrete';
 }
