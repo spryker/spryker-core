@@ -19,7 +19,7 @@ interface MerchantUpdateFormViewExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands FormView with data
+     * - Expands FormView with data.
      *
      * @api
      *
