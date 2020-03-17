@@ -11,6 +11,11 @@ use Webmozart\Glob\Glob as WebmozartGlob;
 
 class Glob implements GlobInterface
 {
+    public function __construct()
+    {
+        defined('GLOB_BRACE') || define('GLOB_BRACE', 0);
+    }
+
     /**
      * @param string $pattern
      * @param int $flags

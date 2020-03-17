@@ -27,7 +27,6 @@ class Environment
         static::defineApplicationStaticDir();
         static::defineApplicationVendorDir();
         static::defineApplicationDataDir();
-        static::shimGlobConstant();
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());
@@ -167,18 +166,6 @@ class Environment
                 define('APPLICATION_DATA', $applicationData);
             }
         }
-    }
-
-    /**
-     * On Alpine based systems `GLOB_BRACE` is not defined we need to shim it.
-     *
-     * @see https://github.com/zendframework/zend-stdlib/pull/59/files
-     *
-     * @return void
-     */
-    protected static function shimGlobConstant(): void
-    {
-        defined('GLOB_BRACE') || define('GLOB_BRACE', 0);
     }
 
     /**
