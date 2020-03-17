@@ -33,6 +33,7 @@
         <property name="idOrderItem" type="int"/>
         <property name="idMerchantOrder" type="int"/>
         <property name="orderItem" type="Item"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
