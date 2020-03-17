@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturn\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -15,16 +16,18 @@ class ReturnReasonMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnReasonEntities
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
      */
-    public function mapReturnReasonEntityCollectionToReturnReasonTransfers(ObjectCollection $salesReturnReasonEntities): array
+    public function mapReturnReasonEntityCollectionToReturnReasonCollection(ObjectCollection $salesReturnReasonEntities): ReturnReasonCollectionTransfer
     {
-        $returnReasonTransfers = [];
+        $returnReasonCollectionTransfer = new ReturnReasonCollectionTransfer();
 
         foreach ($salesReturnReasonEntities as $salesReturnReasonEntity) {
-            $returnReasonTransfers[] = (new ReturnReasonTransfer())->fromArray($salesReturnReasonEntity->toArray(), true);
+            $returnReasonCollectionTransfer->addReturnReason(
+                (new ReturnReasonTransfer())->fromArray($salesReturnReasonEntity->toArray(), true)
+            );
         }
 
-        return $returnReasonTransfers;
+        return $returnReasonCollectionTransfer;
     }
 }

@@ -18,6 +18,19 @@ class ReturnableItemsResourceController extends AbstractController
 {
     /**
      * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves returnable item by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request.",
+     *              "404": "Returnable item not found."
+     *          }
+     *     },
      *     "getCollection": {
      *          "summary": [
      *              "Retrieves list of returnable items."

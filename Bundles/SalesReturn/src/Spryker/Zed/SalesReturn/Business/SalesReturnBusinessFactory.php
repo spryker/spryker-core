@@ -18,8 +18,6 @@ use Spryker\Zed\SalesReturn\Business\Reader\ReturnableItemReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnableItemReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
-use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReader;
-use Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
 use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggerer;
@@ -105,14 +103,6 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function createReturnTotalCalculator(): ReturnTotalCalculatorInterface
     {
         return new ReturnTotalCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReturn\Business\Reader\ReturnReasonReaderInterface
-     */
-    public function createReturnReasonReader(): ReturnReasonReaderInterface
-    {
-        return new ReturnReasonReader($this->getRepository());
     }
 
     /**

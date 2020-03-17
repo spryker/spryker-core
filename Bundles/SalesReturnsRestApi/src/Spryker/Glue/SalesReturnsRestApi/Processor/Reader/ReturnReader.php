@@ -7,10 +7,12 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
+use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -19,7 +21,7 @@ use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterf
 use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 use Spryker\Shared\SalesReturnsRestApi\SalesReturnsRestApiConfig as SalesReturnsRestApiSharedConfig;
 
-class ReturnableItemReader implements ReturnableItemReaderInterface
+class ReturnReader implements ReturnReaderInterface
 {
     /**
      * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface
@@ -56,13 +58,13 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getReturnableItems(RestRequestInterface $restRequest): RestResponseInterface
+    public function getReturns(RestRequestInterface $restRequest): RestResponseInterface
     {
         if ($restRequest->getResource()->getId()) {
-            return $this->getReturnableItem($restRequest);
+            return $this->getReturnDetailAttributes($restRequest);
         }
 
-        return $this->getReturnableItemAttributes($restRequest);
+        return $this->getReturnAttributes($restRequest);
     }
 
     /**
@@ -70,15 +72,19 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getReturnableItemAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getReturnAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $returnableItemFilterTransfer = $this->createReturnableItemFilter($restRequest);
-        $itemCollectionTransfer = $this->salesReturnClient->getReturnableItems($returnableItemFilterTransfer);
+        $returnFilterTransfer = $this->createReturnFilter($restRequest);
+        $returnCollectionTransfer = $this->salesReturnClient->getReturns($returnFilterTransfer);
 
-        $restOrderItemsAttributesTransfers = $this->returnResourceMapper
-            ->mapItemCollectionTransferToRestOrderItemsAttributesTransfers($itemCollectionTransfer);
+        $restReturnsAttributesTransfers = $this->returnResourceMapper
+            ->mapReturnTransfersToRestReturnsAttributesTransfers($returnCollectionTransfer->getReturns());
 
-        return $this->createRestResponse($restOrderItemsAttributesTransfers);
+        return $this->createRestResponse(
+            $returnFilterTransfer,
+            $restReturnsAttributesTransfers,
+            $returnCollectionTransfer->getPagination()
+        );
     }
 
     /**
@@ -86,45 +92,54 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getReturnableItem(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getReturnDetailAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $returnableItemFilterTransfer = $this->createReturnableItemFilter($restRequest)
-            ->addSalesOrderItemUuid($restRequest->getResource()->getId());
+        $returnFilterTransfer = $this->createReturnFilter($restRequest)
+            ->setReturnReference($restRequest->getResource()->getId());
 
-        $itemTransfer = $this->salesReturnClient->getReturnableItems($returnableItemFilterTransfer)
-            ->getItems()
+        $returnTransfer = $this->salesReturnClient->getReturns($returnFilterTransfer)
+            ->getReturns()
             ->getIterator()
             ->current();
 
-        if (!$itemTransfer) {
-            return $this->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURNABLE_ITEM_NOT_FOUND);
+        if (!$returnTransfer) {
+            return $this->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND);
         }
 
-        $restOrderItemsAttributesTransfer = $this->returnResourceMapper
-            ->mapItemTransferToRestOrderItemsAttributesTransfer(
-                $itemTransfer,
-                new RestOrderItemsAttributesTransfer()
+        $restReturnDetailsAttributesTransfer = $this->returnResourceMapper
+            ->mapReturnTransferToRestReturnDetailsAttributesTransfer(
+                $returnTransfer,
+                new RestReturnDetailsAttributesTransfer()
             );
 
-        return $this->createDetailRestResponse($restOrderItemsAttributesTransfer);
+        return $this->createDetailRestResponse($restReturnDetailsAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[] $restOrderItemsAttributesTransfers
+     * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
+     * @param \Generated\Shared\Transfer\RestReturnsAttributesTransfer[] $restReturnsAttributesTransfers
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function createRestResponse(
-        array $restOrderItemsAttributesTransfers
+        ReturnFilterTransfer $returnFilterTransfer,
+        array $restReturnsAttributesTransfers,
+        PaginationTransfer $paginationTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this
+            ->restResourceBuilder
+            ->createRestResponse(
+                $paginationTransfer->getNbResults(),
+                $returnFilterTransfer->getFilter()->getLimit() ?? 0
+            );
 
-        foreach ($restOrderItemsAttributesTransfers as $restOrderItemsAttributesTransfer) {
+        foreach ($restReturnsAttributesTransfers as $restReturnsAttributesTransfer) {
             $restResponse->addResource(
                 $this->restResourceBuilder->createRestResource(
-                    SalesReturnsRestApiConfig::RESOURCE_RETURNABLE_ITEMS,
-                    $restOrderItemsAttributesTransfer->getUuid(),
-                    $restOrderItemsAttributesTransfer
+                    SalesReturnsRestApiConfig::RESOURCE_RETURNS,
+                    $restReturnsAttributesTransfer->getReturnReference(),
+                    $restReturnsAttributesTransfer
                 )
             );
         }
@@ -133,19 +148,19 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createDetailRestResponse(RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer): RestResponseInterface
+    protected function createDetailRestResponse(RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $restResponse->addResource(
             $this->restResourceBuilder->createRestResource(
-                SalesReturnsRestApiConfig::RESOURCE_RETURNABLE_ITEMS,
-                $restOrderItemsAttributesTransfer->getUuid(),
-                $restOrderItemsAttributesTransfer
+                SalesReturnsRestApiConfig::RESOURCE_RETURNS,
+                $restReturnDetailsAttributesTransfer->getReturnReference(),
+                $restReturnDetailsAttributesTransfer
             )
         );
 
@@ -174,12 +189,21 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\ReturnableItemFilterTransfer
+     * @return \Generated\Shared\Transfer\ReturnFilterTransfer
      */
-    protected function createReturnableItemFilter(RestRequestInterface $restRequest): ReturnableItemFilterTransfer
+    protected function createReturnFilter(RestRequestInterface $restRequest): ReturnFilterTransfer
     {
-        return (new ReturnableItemFilterTransfer())
+        $filterTransfer = new FilterTransfer();
+
+        if ($restRequest->getPage()) {
+            $filterTransfer
+                ->setOffset($restRequest->getPage()->getOffset())
+                ->setLimit($restRequest->getPage()->getLimit() ?? 0);
+        }
+
+        return (new ReturnFilterTransfer())
             ->fromArray($restRequest->getHttpRequest()->query->all(), true)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setFilter($filterTransfer);
     }
 }

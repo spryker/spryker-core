@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnItemFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 
 interface SalesReturnRepositoryInterface
@@ -25,9 +26,9 @@ interface SalesReturnRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
      */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): array;
+    public function getReturnReasonCollectionByFilter(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer;
 
     /**
      * @param string $customerReference

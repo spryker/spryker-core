@@ -37,7 +37,8 @@
 
     <transfer name="ReturnFilter">
         <property name="returnReference" type="string"/>
-        <property name="pagination" type="Pagination"/>
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="ReturnItemFilter">
@@ -51,6 +52,8 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="CreateReturnRequest">
@@ -74,6 +77,7 @@
 
     <transfer name="ReturnReasonCollection">
         <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnCollection">
@@ -107,6 +111,7 @@
     <transfer name="ReturnableItemFilter">
         <property name="customerReference" type="string"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
     </transfer>
 
     <transfer name="Pagination">

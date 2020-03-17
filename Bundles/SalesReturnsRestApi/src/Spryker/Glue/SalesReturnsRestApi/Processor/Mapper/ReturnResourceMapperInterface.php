@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 
@@ -38,6 +41,13 @@ interface ReturnResourceMapperInterface
     ): RestReturnDetailsAttributesTransfer;
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnTransfer[] $returnTransfers
+     *
+     * @return \Generated\Shared\Transfer\RestReturnsAttributesTransfer[]
+     */
+    public function mapReturnTransfersToRestReturnsAttributesTransfers(ArrayObject $returnTransfers): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[]
@@ -45,4 +55,15 @@ interface ReturnResourceMapperInterface
     public function mapItemCollectionTransferToRestOrderItemsAttributesTransfers(
         ItemCollectionTransfer $itemCollectionTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer;
 }

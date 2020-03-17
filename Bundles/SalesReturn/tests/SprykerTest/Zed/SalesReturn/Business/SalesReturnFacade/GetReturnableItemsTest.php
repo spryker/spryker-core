@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
@@ -78,37 +77,6 @@ class GetReturnableItemsTest extends Unit
 
         // Assert
         $this->assertCount(2, $itemCollectionTransfer->getItems());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetReturnableItemsRetrievesOrderItemsByFilter(): void
-    {
-        // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-
-        $firstOrderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
-        $secondOrderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
-
-        $firstItemTransfer = $firstOrderTransfer->getItems()->getIterator()->current();
-        $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
-
-        $this->tester->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-        $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::DELIVERED_STATE_NAME);
-
-        $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setFilter((new FilterTransfer())->setLimit(1));
-
-        // Act
-        $itemTransfers = $this->tester
-            ->getFacade()
-            ->getReturnableItems($returnableItemFilterTransfer)
-            ->getItems();
-
-        // Assert
-        $this->assertCount(1, $itemTransfers);
     }
 
     /**

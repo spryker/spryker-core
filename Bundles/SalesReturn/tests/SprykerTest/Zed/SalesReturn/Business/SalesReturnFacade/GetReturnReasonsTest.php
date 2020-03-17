@@ -91,6 +91,33 @@ class GetReturnReasonsTest extends Unit
     /**
      * @return void
      */
+    public function testGetReturnReasonsEnsureThatPaginationNbResultsExists(): void
+    {
+        // Arrange
+        $this->tester->haveReturnReasons([
+            'return.return_reasons.fake_reason_1.name',
+            'return.return_reasons.fake_reason_2.name',
+            'return.return_reasons.fake_reason_3.name',
+            'return.return_reasons.fake_reason_4.name',
+            'return.return_reasons.fake_reason_5.name',
+        ]);
+
+        $returnReasonFilterTransfer = (new ReturnReasonFilterTransfer())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        // Act
+        $returnReasonCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturnReasons($returnReasonFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $returnReasonCollectionTransfer->getReturnReasons());
+        $this->assertSame(5, $returnReasonCollectionTransfer->getPagination()->getNbResults());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetReturnReasonsInCaseEmptyTable(): void
     {
         // Arrange

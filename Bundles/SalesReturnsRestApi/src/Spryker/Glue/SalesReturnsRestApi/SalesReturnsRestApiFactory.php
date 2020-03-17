@@ -17,6 +17,8 @@ use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapper;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnableItemReader;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnableItemReaderInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReader;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReaderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReasonReader;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReasonReaderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Writer\ReturnWriter;
@@ -67,6 +69,18 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function createReturnableItemReader(): ReturnableItemReaderInterface
     {
         return new ReturnableItemReader(
+            $this->getSalesReturnClient(),
+            $this->getResourceBuilder(),
+            $this->createReturnResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReaderInterface
+     */
+    public function createReturnReader(): ReturnReaderInterface
+    {
+        return new ReturnReader(
             $this->getSalesReturnClient(),
             $this->getResourceBuilder(),
             $this->createReturnResourceMapper()

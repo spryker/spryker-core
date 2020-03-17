@@ -8,6 +8,7 @@
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -56,34 +57,37 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     public function getReturnReasons(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnReasonFilterTransfer = $this->createReturnReasonFilter($restRequest);
-
-        $returnReasonTransfers = $this->salesReturnClient
-            ->getReturnReasons($returnReasonFilterTransfer)
-            ->getReturnReasons();
+        $returnReasonCollectionTransfer = $this->salesReturnClient->getReturnReasons($returnReasonFilterTransfer);
 
         $restReturnReasonsAttributesTransfers = $this->returnReasonResourceMapper
             ->mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-                $returnReasonTransfers,
+                $returnReasonCollectionTransfer->getReturnReasons(),
                 $restRequest->getMetadata()->getLocale()
             );
 
-        return $this->createRestResponse($returnReasonFilterTransfer, $restReturnReasonsAttributesTransfers);
+        return $this->createRestResponse(
+            $returnReasonFilterTransfer,
+            $restReturnReasonsAttributesTransfers,
+            $returnReasonCollectionTransfer->getPagination()
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
      * @param \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[] $restReturnReasonsAttributesTransfers
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function createRestResponse(
         ReturnReasonFilterTransfer $returnReasonFilterTransfer,
-        array $restReturnReasonsAttributesTransfers
+        array $restReturnReasonsAttributesTransfers,
+        PaginationTransfer $paginationTransfer
     ): RestResponseInterface {
         $restResponse = $this
             ->restResourceBuilder
             ->createRestResponse(
-                count($restReturnReasonsAttributesTransfers),
+                $paginationTransfer->getNbResults(),
                 $returnReasonFilterTransfer->getFilter()->getLimit() ?? 0
             );
 

@@ -19,9 +19,13 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_RETURN_REASONS = 'return-reasons';
 
     // TODO: clarify it.
-    public const RESPONSE_RETURN_CANT_BE_CREATED = '3302';
+    public const RESPONSE_CODE_RETURN_CANT_BE_CREATED = '3302';
+    public const RESPONSE_CODE_CANT_FIND_RETURN = '801';
+    public const RESPONSE_CODE_CANT_FIND_RETURNABLE_ITEM = '901';
 
-    public const EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
+    public const RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
+    public const RESPONSE_MESSAGE_CANT_FIND_RETURN = 'Can\'t find return by the given return reference';
+    public const RESPONSE_MESSAGE_CANT_FIND_RETURNABLE_ITEM = 'Can\'t find returnable item by the given id';
 
     /**
      * @return (int|string)[][]
@@ -30,9 +34,19 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     {
         return [
             SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_RETURN_CANT_BE_CREATED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_RETURN_CANT_BE_CREATED,
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_RETURN_CANT_BE_CREATED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED,
+            ],
+            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CANT_FIND_RETURN,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_CANT_FIND_RETURN,
+            ],
+            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURNABLE_ITEM_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CANT_FIND_RETURNABLE_ITEM,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_CANT_FIND_RETURNABLE_ITEM,
             ],
         ];
     }
