@@ -48,8 +48,8 @@ class ProductRelationStorageToProductRelationFacadeBridge implements ProductRela
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findFilteredProductRelations(int $offset, int $limit): array
+    public function getFilteredProductRelations(int $offset, int $limit): array
     {
-        return $this->productRelationFacade->findFilteredProductRelations($offset, $limit);
+        return $this->productRelationFacade->getFilteredProductRelations($offset, $limit);
     }
 }

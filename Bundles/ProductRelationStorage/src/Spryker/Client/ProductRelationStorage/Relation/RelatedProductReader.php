@@ -126,7 +126,6 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     protected function getSortedProductAbstractIds(array $relationIds)
     {
-        $relationIds = array_values($relationIds);
         asort($relationIds, SORT_NATURAL);
 
         return array_keys($relationIds);

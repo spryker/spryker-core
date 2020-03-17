@@ -69,7 +69,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
             /** @var \Spryker\Client\ProductRelation\ProductRelationClientInterface $productRelationClient */
             $productRelationClient = $clientLocatorClassName::getInstance()->productRelation()->client();
 
-            $collectorData = $productRelationClient->getProductRelationsByIdProductAbstract($idProductAbstract, APPLICATION_STORE);
+            $collectorData = $productRelationClient->getProductRelationsByIdProductAbstractForStore($idProductAbstract, $storeName);
 
             $productAbstractRelationCollectorData = [
                 'id_product_abstract' => $idProductAbstract,

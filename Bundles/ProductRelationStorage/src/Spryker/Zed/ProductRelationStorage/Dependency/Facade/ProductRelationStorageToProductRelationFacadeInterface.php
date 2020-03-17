@@ -31,5 +31,5 @@ interface ProductRelationStorageToProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findFilteredProductRelations(int $offset, int $limit): array;
+    public function getFilteredProductRelations(int $offset, int $limit): array;
 }

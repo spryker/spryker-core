@@ -37,4 +37,18 @@ class ProductRelationStorageBusinessTester extends Actor
     {
         SpyProductAbstractRelationStorageQuery::create()->deleteAll();
     }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    public function isProductRelationStorageRecordExists(int $idProductAbstract, string $storeName): bool
+    {
+        return SpyProductAbstractRelationStorageQuery::create()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByStore($storeName)
+            ->exists();
+    }
 }

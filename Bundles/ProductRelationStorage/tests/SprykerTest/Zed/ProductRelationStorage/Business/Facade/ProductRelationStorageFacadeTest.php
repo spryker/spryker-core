@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationStoreTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
-use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -80,7 +79,10 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->isProductRelationStorageRecordExists($productRelationTransfer->getFkProductAbstract()),
+            $this->tester->isProductRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
             'Product abstract relation storage record should exists'
         );
     }
@@ -102,7 +104,10 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->isProductRelationStorageRecordExists($productRelationTransfer->getFkProductAbstract()),
+            $this->tester->isProductRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
             'Product abstract relation storage record should exists'
         );
     }
@@ -126,7 +131,10 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->isProductRelationStorageRecordExists($productRelationTransfer->getFkProductAbstract()),
+            $this->tester->isProductRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
             'Product abstract relation storage record should exists'
         );
     }
@@ -150,7 +158,10 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->isProductRelationStorageRecordExists($productRelationTransfer->getFkProductAbstract()),
+            $this->tester->isProductRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
             'Product abstract relation storage record should exists'
         );
     }
@@ -178,18 +189,5 @@ class ProductRelationStorageFacadeTest extends Unit
             'up-selling',
             $storeRelationTransfer
         );
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    protected function isProductRelationStorageRecordExists(int $idProductAbstract): bool
-    {
-        return SpyProductAbstractRelationStorageQuery::create()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByStore(static::STORE_NAME)
-            ->exists();
     }
 }

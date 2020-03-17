@@ -77,7 +77,7 @@ interface ProductRelationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getProductRelationsByIdProductAbstracts(array $idProductAbstracts): array;
+    public function getProductRelationsByProductAbstractIds(array $idProductAbstracts): array;
 
     /**
      * @param int[] $productRelationIds
