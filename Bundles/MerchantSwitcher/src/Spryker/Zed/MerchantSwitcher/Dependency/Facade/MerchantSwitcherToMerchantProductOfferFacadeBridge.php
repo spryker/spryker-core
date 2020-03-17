@@ -30,8 +30,9 @@ class MerchantSwitcherToMerchantProductOfferFacadeBridge implements MerchantSwit
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferCollection(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
-    {
+    public function getProductOfferCollection(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer {
         return $this->merchantProductOfferFacade->getProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);
     }
 }

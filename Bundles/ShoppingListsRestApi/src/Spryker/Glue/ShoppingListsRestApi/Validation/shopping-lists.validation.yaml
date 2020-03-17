@@ -1,0 +1,37 @@
+shopping-lists:
+    post:
+        name:
+            - NotBlank
+            - Required
+            -   Length:
+                    max: 255
+    patch:
+        name:
+            - NotBlank
+            - Required
+            -   Length:
+                    max: 255
+shopping-list-items:
+    post:
+        sku:
+            - Required
+            - NotBlank
+        quantity:
+            - Required
+            - NotBlank
+            -   Type:
+                    type: integer
+            -   GreaterThan:
+                    value: 0
+            -   LessThan:
+                    value: 2147483647
+    patch:
+        quantity:
+            - Required
+            - NotBlank
+            -   Type:
+                    type: integer
+            -   GreaterThan:
+                    value: 0
+            -   LessThan:
+                    value: 2147483647

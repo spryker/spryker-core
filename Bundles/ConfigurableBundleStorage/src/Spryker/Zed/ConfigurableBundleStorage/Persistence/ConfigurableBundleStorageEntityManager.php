@@ -41,8 +41,9 @@ class ConfigurableBundleStorageEntityManager extends AbstractEntityManager imple
      *
      * @return void
      */
-    public function saveConfigurableBundleTemplateImageStorageEntity(SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity): void
-    {
+    public function saveConfigurableBundleTemplateImageStorageEntity(
+        SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
+    ): void {
         $configurableBundleTemplateImageStorageEntity->save();
     }
 
@@ -51,8 +52,9 @@ class ConfigurableBundleStorageEntityManager extends AbstractEntityManager imple
      *
      * @return void
      */
-    public function deleteConfigurableBundleTemplateImageStorageEntity(SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity): void
-    {
+    public function deleteConfigurableBundleTemplateImageStorageEntity(
+        SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
+    ): void {
         $configurableBundleTemplateImageStorageEntity->delete();
     }
 }

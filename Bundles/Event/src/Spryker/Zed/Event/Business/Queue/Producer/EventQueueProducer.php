@@ -92,8 +92,13 @@ class EventQueueProducer implements EventQueueProducerInterface
      *
      * @return void
      */
-    protected function enqueueListenerBulkChunk(string $eventName, array $transfers, string $listener, ?string $queuePoolName = null, ?string $eventQueueName = null): void
-    {
+    protected function enqueueListenerBulkChunk(
+        string $eventName,
+        array $transfers,
+        string $listener,
+        ?string $queuePoolName = null,
+        ?string $eventQueueName = null
+    ): void {
         $queueSendMessageTransfers = [];
         foreach ($transfers as $transfer) {
             $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);

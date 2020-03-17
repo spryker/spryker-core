@@ -246,7 +246,9 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer;
 
     /**
      * Specification:

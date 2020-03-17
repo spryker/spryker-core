@@ -55,5 +55,7 @@ interface CompanyUnitAddressEntityManagerInterface
      *
      * @return void
      */
-    public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void;
+    public function saveAddressToBusinessUnitRelation(
+        SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
+    ): void;
 }

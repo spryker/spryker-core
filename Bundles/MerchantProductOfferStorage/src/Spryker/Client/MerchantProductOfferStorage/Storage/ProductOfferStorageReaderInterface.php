@@ -25,7 +25,9 @@ interface ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ProductOfferStorageCollectionTransfer;
+    public function getProductOfferStorageCollection(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer;
 
     /**
      * @param string $productOfferReference

@@ -116,8 +116,9 @@ class PriceProductOfferSynchronizationDataPlugin extends AbstractPlugin implemen
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity): SynchronizationDataTransfer
-    {
+    protected function createSynchronizationDataTransfer(
+        SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity
+    ): SynchronizationDataTransfer {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
         /** @var string $data */
