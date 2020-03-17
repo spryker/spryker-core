@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantStorage\Communication\MerchantStorageCommunicationFactory getFactory()
  */
-class MerchantPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritDoc}

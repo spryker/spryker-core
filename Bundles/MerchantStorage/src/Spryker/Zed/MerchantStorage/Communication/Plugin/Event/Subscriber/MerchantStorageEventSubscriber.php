@@ -11,7 +11,7 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
-use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantPublishListener;
+use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantStoragePublishListener;
 
 /**
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
@@ -31,8 +31,8 @@ class MerchantStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantPublishListener());
-        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantPublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantStoragePublishListener());
 
         return $eventCollection;
     }
