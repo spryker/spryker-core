@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { ProfileModule } from './profile.module';
 
-describe('LoginComponent', () => {
+describe('ProfileComponent', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
 
@@ -12,8 +12,11 @@ describe('LoginComponent', () => {
         selector: 'test',
         template: `
             <mp-profile>
-                <h1 title>Title</h1>
-                <spy-button action type="submit">
+                <h1 title ngClass="test-title">Title</h1>
+	            
+	            Page Content
+	            
+                <spy-button action type="submit" ngClass="test-action">
                     Button
                 </spy-button>
             </mp-profile>
@@ -31,22 +34,45 @@ describe('LoginComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
+
+        fixture.detectChanges();
     });
 
-    it('should create component', () => {
+	it('should create component', () => {
         expect(component).toBeTruthy();
-    });
+	});
 
-	describe('Header', () => {
+	describe('Profile header', () => {
 		it('should render page header',  () => {
-			const host = await createComponent({ animateSlides: true }, true);
-			const tabsElement = host.queryCss('nz-tabset')!;
+			const headerElem = fixture.debugElement.query(By.css('.mp-profile__header'));
 
-			expect(tabsElement.properties.nzAnimated).toBe(true);
+			expect(headerElem).toBeTruthy();
+		});
+
+		it('should render projected title inside header',  () => {
+			const titleElem = fixture.debugElement.query(By.css('.mp-profile__header .test-title'));
+
+			expect(titleElem).toBeTruthy();
+		});
+
+		it('should render projected action inside header',  () => {
+			const actionElem = fixture.debugElement.query(By.css('.mp-profile__header .test-action'));
+
+			expect(actionElem).toBeTruthy();
 		});
 	});
 
-	it('should create component', () => {
-		expect(component).toBeTruthy();
+	describe('Profile content', () => {
+		it('should render content col',  () => {
+			const contentElem = fixture.debugElement.query(By.css('.mp-profile__col--content'));
+
+			expect(contentElem).toBeTruthy();
+		});
+
+		it('should render projected content inside content col',  () => {
+			const contentElem = fixture.debugElement.query(By.css('.mp-profile__col--content'));
+
+			expect(contentElem.nativeElement.innerText).toBe('Page Content');
+		});
 	});
 });

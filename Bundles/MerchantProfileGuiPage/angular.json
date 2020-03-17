@@ -23,7 +23,7 @@
             "main": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [],
             "styles": [
               "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/styles.less"

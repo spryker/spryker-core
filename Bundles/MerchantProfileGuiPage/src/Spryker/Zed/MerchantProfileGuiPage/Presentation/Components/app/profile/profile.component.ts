@@ -6,6 +6,6 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
   styleUrls: ['./profile.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: {'class': 'mp-profile'}
+  host: {'class': 'mp-profile'},
 })
 export class ProfileComponent {}

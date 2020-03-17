@@ -8,5 +8,4 @@ import { ProfileComponent } from './profile.component';
 	declarations: [ProfileComponent],
 	exports: [ProfileComponent],
 })
-export class ProfileModule {
-}
+export class ProfileModule {}

@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
 import { ButtonModule, ButtonComponent } from '@spryker/button';
@@ -11,15 +10,14 @@ import { IconModule } from '@spryker/icon';
 import { TextareaModule, TextareaComponent } from '@spryker/textarea';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { SelectModule, SelectComponent } from '@spryker/select';
+import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
+
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
-import { IconUnitedStatesModule, IconGermanyModule } from './icons';
-import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
+import { IconUnitedStatesModule, IconGermanyModule } from '../icons';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
-    ProfileModule,
     BrowserModule,
     ButtonModule,
     CardModule,
@@ -32,7 +30,8 @@ import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
     SelectModule,
     IconUnitedStatesModule,
     IconGermanyModule,
-    TabsModule
+    TabsModule,
+    ProfileModule,
   ],
   providers: [],
   declarations: [],
