@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "postbuild": "run-s copy:*",
-    "copy:images": "cp -a ./node_modules/@spryker/logo/src/lib/logo/images/ ../../../../../public/Zed/assets/images",
+    "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/mp-login",
+    "copy:images": "cp -a ./node_modules/@spryker/logo/src/lib/logo/images/ $FE_ROOT_DIR/public/Zed/assets/images",
     "test": "ng test",
     "lint": "ng lint"
   },
@@ -44,6 +45,7 @@
     "@types/jasminewd2": "^2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "copyfiles": "^2.2.0",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "^4.3.0",
