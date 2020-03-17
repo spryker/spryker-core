@@ -32,6 +32,6 @@ class PluginResourceTypeStorage implements PluginResourceTypeStorageInterface
      */
     public function getResponseAttributesSchemaNameByResourceType(string $resourceType): string
     {
-        return !empty(static::$resourceTypes[$resourceType]) ? static::$resourceTypes[$resourceType] : '';
+        return static::$resourceTypes[$resourceType] ?: '';
     }
 }

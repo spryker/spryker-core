@@ -43,30 +43,27 @@ class SchemaItemsSpecificationComponent implements SchemaItemsSpecificationCompo
      */
     public function getSpecificationComponentData(): array
     {
-        $property = [];
         if (!$this->validateSchemaPropertyComponentTransfer()) {
             return [];
         }
 
-        $property = $this->addOneOf($property);
-
-        return $property;
+        return $this->addOneOf();
     }
 
     /**
-     * @param array $schemaProperty
+     * @param array $schemaItems
      *
      * @return array
      */
-    protected function addOneOf(array $schemaProperty): array
+    protected function addOneOf(array $schemaItems = []): array
     {
         if ($this->schemaItemsComponentTransfer->getOneOf()) {
             foreach ($this->schemaItemsComponentTransfer->getOneOf() as $ref) {
-                $schemaProperty[static::KEY_ONEOF][][static::KEY_REF] = $ref;
+                $schemaItems[static::KEY_ONEOF][][static::KEY_REF] = $ref;
             }
         }
 
-        return $schemaProperty;
+        return $schemaItems;
     }
 
     /**

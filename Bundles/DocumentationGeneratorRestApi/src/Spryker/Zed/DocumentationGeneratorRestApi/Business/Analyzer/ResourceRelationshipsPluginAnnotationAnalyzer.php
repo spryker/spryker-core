@@ -15,7 +15,14 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGe
 
 class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelationshipsPluginAnnotationAnalyzerInterface
 {
+    /**
+     * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::PATTERN_REGEX_GLUE_ANNOTATION
+     */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
+
+    /**
+     * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT
+     */
     protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 
     /**
