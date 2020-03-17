@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory getFactory()
+ */
 class DiscountPromotionDiscountMapperPlugin extends AbstractController implements DiscountMapperPluginInterface
 {
     /**
@@ -30,14 +33,9 @@ class DiscountPromotionDiscountMapperPlugin extends AbstractController implement
         DiscountTransfer $discountTransfer,
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer {
-        $discountPromotionTransfer = $discountTransfer->getDiscountPromotion();
-
-        if (!$discountPromotionTransfer) {
-            return $restDiscountsAttributesTransfer;
-        }
-
-        return $restDiscountsAttributesTransfer
-            ->setDiscountPromotionAbstractSku($discountPromotionTransfer->getAbstractSku())
-            ->setDiscountPromotionQuantity($discountPromotionTransfer->getQuantity());
+        return $this->getFactory()->createPromotionItemMapper()->mapDiscountPromotionToRestDiscountsAttributesTransfer(
+            $discountTransfer,
+            $restDiscountsAttributesTransfer
+        );
     }
 }
