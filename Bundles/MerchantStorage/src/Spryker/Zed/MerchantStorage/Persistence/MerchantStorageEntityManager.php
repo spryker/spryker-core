@@ -34,4 +34,19 @@ class MerchantStorageEntityManager extends AbstractEntityManager implements Merc
             ->createMerchantStorageMapper()
             ->mapMerchantStorageEntityToMerchantStorageTransfer($merchantStorageEntity, new MerchantStorageTransfer());
     }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return void
+     */
+    public function deleteMerchantStorageByMerchantIds(array $merchantIds)
+    {
+        $merchantStorageEntity = $this->getFactory()
+            ->createMerchantStorageQuery()
+            ->filterByIdMerchant_In($merchantIds)
+            ->find();
+
+        $merchantStorageEntity->delete();
+    }
 }

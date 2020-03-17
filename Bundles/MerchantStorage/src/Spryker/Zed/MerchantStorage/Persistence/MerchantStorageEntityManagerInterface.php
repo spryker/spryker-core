@@ -17,4 +17,11 @@ interface MerchantStorageEntityManagerInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
     public function saveMerchantStorage(MerchantStorageTransfer $merchantStorageTransfer): MerchantStorageTransfer;
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return void
+     */
+    public function deleteMerchantStorageByMerchantIds(array $merchantIds);
 }
