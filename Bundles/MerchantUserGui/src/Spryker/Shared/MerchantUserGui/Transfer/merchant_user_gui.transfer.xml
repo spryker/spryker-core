@@ -31,6 +31,16 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+    </transfer>
+
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="password" type="string"/>
