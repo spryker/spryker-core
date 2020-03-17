@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider\Hydrator;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
+use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductOfferFacadeInterface;
 
 class ProductTableDataOfferHydrator implements ProductTableDataHydratorInterface
@@ -63,9 +63,9 @@ class ProductTableDataOfferHydrator implements ProductTableDataHydratorInterface
      */
     protected function extractProductConcreteSkus(ProductTableDataTransfer $productConcreteDataCollectionTransfer): array
     {
-        $productConcreteIds = array_map(function (ProductConcreteTransfer $productConcreteTransfer): ?string {
-            return $productConcreteTransfer->getSku() ?? null;
-        }, $productConcreteDataCollectionTransfer->getConcreteProducts()->getArrayCopy());
+        $productConcreteIds = array_map(function (ProductTableRowDataTransfer $productTableRowDataTransfer): ?string {
+            return $productTableRowDataTransfer->getSku() ?? null;
+        }, $productConcreteDataCollectionTransfer->getRows()->getArrayCopy());
 
         $productConcreteIds = array_filter($productConcreteIds);
 
@@ -82,16 +82,16 @@ class ProductTableDataOfferHydrator implements ProductTableDataHydratorInterface
         ProductTableDataTransfer $productTableDataTransfer,
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): ProductTableDataTransfer {
-        foreach ($productTableDataTransfer->getConcreteProducts() as $productConcreteTransfer) {
+        foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
             $offersCount = 0;
 
             foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-                if ($productOfferTransfer->getConcreteSku() === $productConcreteTransfer->getSku()) {
+                if ($productOfferTransfer->getConcreteSku() === $productTableRowDataTransfer->getSku()) {
                     ++$offersCount;
                 }
             }
 
-            $productConcreteTransfer->setOffersCount($offersCount);
+            $productTableRowDataTransfer->setOffersCount($offersCount);
         }
 
         return $productTableDataTransfer;

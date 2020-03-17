@@ -59,8 +59,21 @@
     </transfer>
 
     <transfer name="ProductTableData">
-        <property name="concreteProducts" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="rows" type="ProductTableRowData[]" singular="row"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductTableRowData">
+        <property name="idProduct" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="image" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="offersCount" type="int"/>
+        <property name="stores" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -73,20 +86,6 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
-    </transfer>
-
-    <transfer name="ProductConcrete">
-        <property name="idProduct" type="int"/>
-        <property name="name" type="string"/>
-        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
-        <property name="sku" type="string"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
-        <property name="offersCount" type="int"/>
-        <property name="attributes" type="array" singular="attribute"/>
-        <property name="storeNames" type="string"/>
-        <property name="idProductConcrete" type="int"/>
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="ProductImageSet">

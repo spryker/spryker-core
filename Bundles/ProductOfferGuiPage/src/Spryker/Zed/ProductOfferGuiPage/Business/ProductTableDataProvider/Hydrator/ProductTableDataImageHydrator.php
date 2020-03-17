@@ -8,11 +8,12 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider\Hydrator;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
+use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToProductImageFacadeInterface;
 
 class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
@@ -44,7 +45,7 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
     ): ProductTableDataTransfer {
         $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
         $productImageSetCollectionTransfer = $this->findProductConcreteProductImageSetsForLocale($productTableDataTransfer);
-        $productTableDataTransfer = $this->mergeConcreteProductsWithProductImageSets(
+        $productTableDataTransfer = $this->addProductImagesToProductTableData(
             $productTableDataTransfer,
             $productImageSetCollectionTransfer,
             $localeTransfer
@@ -75,20 +76,20 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
-    protected function mergeConcreteProductsWithProductImageSets(
+    protected function addProductImagesToProductTableData(
         ProductTableDataTransfer $productTableDataTransfer,
         ProductImageSetCollectionTransfer $productImageSetCollectionTransfer,
         LocaleTransfer $localeTransfer
     ): ProductTableDataTransfer {
-        foreach ($productTableDataTransfer->getConcreteProducts() as $productConcreteTransfer) {
+        foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
             foreach ($productImageSetCollectionTransfer->getProductImageSets() as $productImageSetTransfer) {
-                if ($productConcreteTransfer->getIdProduct() !== $productImageSetTransfer->getIdProduct()) {
+                if ($productTableRowDataTransfer->getIdProduct() !== $productImageSetTransfer->getIdProduct()) {
                     continue;
                 }
 
                 $productImageSetLocaleId = $productImageSetTransfer->getIdLocale();
 
-                if (!$productImageSetLocaleId && $productConcreteTransfer->getImageSets()->count()) {
+                if (!$productImageSetLocaleId && $productTableRowDataTransfer->getImage()) {
                     continue;
                 }
 
@@ -96,7 +97,9 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
                     continue;
                 }
 
-                $productConcreteTransfer->addImageSet($productImageSetTransfer);
+                $productTableRowDataTransfer->setImage(
+                    $this->getFirstImageFromImageSet($productImageSetTransfer)
+                );
             }
         }
 
@@ -104,15 +107,29 @@ class ProductTableDataImageHydrator implements ProductTableDataHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productConcreteDataCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return string|null
+     */
+    protected function getFirstImageFromImageSet(ProductImageSetTransfer $productImageSetTransfer): ?string
+    {
+        if (!$productImageSetTransfer->getProductImages()->count()) {
+            return null;
+        }
+
+        return $productImageSetTransfer->getProductImages()[0]->getExternalUrlSmall();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
      *
      * @return int[]
      */
-    protected function extractProductConcreteIds(ProductTableDataTransfer $productConcreteDataCollectionTransfer): array
+    protected function extractProductConcreteIds(ProductTableDataTransfer $productTableDataTransfer): array
     {
-        $productConcreteIds = array_map(function (ProductConcreteTransfer $productConcreteTransfer) {
-            return $productConcreteTransfer->getIdProduct() ?? null;
-        }, $productConcreteDataCollectionTransfer->getConcreteProducts()->getArrayCopy());
+        $productConcreteIds = array_map(function (ProductTableRowDataTransfer $productTableRowDataTransfer) {
+            return $productTableRowDataTransfer->getIdProduct() ?? null;
+        }, $productTableDataTransfer->getRows()->getArrayCopy());
 
         $productConcreteIds = array_filter($productConcreteIds);
 

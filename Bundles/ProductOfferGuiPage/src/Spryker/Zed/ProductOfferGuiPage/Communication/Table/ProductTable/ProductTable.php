@@ -7,28 +7,29 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
+use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Generated\Shared\Transfer\TableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\TableConfigurationTransfer;
 use Generated\Shared\Transfer\TableDataTransfer;
 use Generated\Shared\Transfer\TableRowActionTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException;
-use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class ProductTable extends AbstractTable
 {
-    protected const COLUMN_KEY_NAME = 'name';
-    protected const COLUMN_KEY_SKU = 'sku';
-    protected const COLUMN_KEY_IMAGE = 'image';
-    protected const COLUMN_KEY_STORES = 'stores';
-    protected const COLUMN_KEY_STATUS = 'status';
-    protected const COLUMN_KEY_OFFERS = 'offers';
-    protected const COLUMN_KEY_VALID_FROM = 'validFrom';
-    protected const COLUMN_KEY_VALID_TO = 'validTo';
+    protected const COL_KEY_NAME = 'name';
+    protected const COL_KEY_SKU = 'sku';
+    protected const COL_KEY_IMAGE = 'image';
+    protected const COL_KEY_STORES = 'stores';
+    protected const COL_KEY_STATUS = 'status';
+    protected const COL_KEY_OFFERS = 'offers';
+    protected const COL_KEY_VALID_FROM = 'validFrom';
+    protected const COL_KEY_VALID_TO = 'validTo';
 
     protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
 
@@ -50,26 +51,18 @@ class ProductTable extends AbstractTable
     protected $productTableCriteriaBuilder;
 
     /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig
-     */
-    protected $productOfferGuiPageConfig;
-
-    /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[] $productTableFilterDataProviders
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
-     * @param \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig $productOfferGuiPageConfig
      */
     public function __construct(
         ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade,
         array $productTableFilterDataProviders,
-        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder,
-        ProductOfferGuiPageConfig $productOfferGuiPageConfig
+        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
     ) {
         $this->productOfferGuiPageFacade = $productOfferGuiPageFacade;
         $this->productTableFilterDataProviders = $productTableFilterDataProviders;
         $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
-        $this->productOfferGuiPageConfig = $productOfferGuiPageConfig;
     }
 
     /**
@@ -94,9 +87,20 @@ class ProductTable extends AbstractTable
         $tableConfigurationTransfer = $this->addRowActionsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer = $this->addSearchOptionsToConfiguration($tableConfigurationTransfer);
         $tableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
-        $tableConfigurationTransfer->setAllowedFilters($this->productOfferGuiPageConfig->getAllowedFilterNames());
+        $tableConfigurationTransfer->setAllowedFilters($this->getAllowedFilterNames());
 
         return $tableConfigurationTransfer;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllowedFilterNames(): array
+    {
+        return [
+            HasOffersProductTableFilterDataProvider::FILTER_NAME,
+            IsActiveProductTableFilterDataProvider::FILTER_NAME,
+        ];
     }
 
     /**
@@ -108,7 +112,7 @@ class ProductTable extends AbstractTable
     {
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_SKU)
+                ->setId(static::COL_KEY_SKU)
                 ->setTitle('Sku')
                 ->setType('text')
                 ->setSortable(true)
@@ -117,7 +121,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_IMAGE)
+                ->setId(static::COL_KEY_IMAGE)
                 ->setTitle('Image')
                 ->setType('image')
                 ->setSortable(false)
@@ -126,7 +130,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_NAME)
+                ->setId(static::COL_KEY_NAME)
                 ->setTitle('Name')
                 ->setType('text')
                 ->setSortable(true)
@@ -135,7 +139,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_STORES)
+                ->setId(static::COL_KEY_STORES)
                 ->setTitle('Stores')
                 ->setType('text')
                 ->setSortable(false)
@@ -144,7 +148,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_STATUS)
+                ->setId(static::COL_KEY_STATUS)
                 ->setTitle('Status')
                 ->setType('text')
                 ->setSortable(true)
@@ -153,7 +157,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_VALID_FROM)
+                ->setId(static::COL_KEY_VALID_FROM)
                 ->setTitle('Valid From')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
@@ -163,7 +167,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_VALID_TO)
+                ->setId(static::COL_KEY_VALID_TO)
                 ->setTitle('Valid To')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
@@ -173,7 +177,7 @@ class ProductTable extends AbstractTable
         );
         $tableConfigurationTransfer->addColumn(
             (new TableColumnConfigurationTransfer())
-                ->setId(static::COLUMN_KEY_OFFERS)
+                ->setId(static::COL_KEY_OFFERS)
                 ->setTitle('Offers')
                 ->setType('text')
                 ->setSortable(true)
@@ -202,7 +206,7 @@ class ProductTable extends AbstractTable
      */
     protected function getDefaultSortColumnKey(): string
     {
-        return static::COLUMN_KEY_NAME;
+        return static::COL_KEY_SKU;
     }
 
     /**
@@ -233,17 +237,16 @@ class ProductTable extends AbstractTable
     ): TableDataTransfer {
         $tableRowsData = [];
 
-        foreach ($productTableDataTransfer->getConcreteProducts() as $productConcreteTransfer) {
+        foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
             $tableRowsData[] = [
-                static::COLUMN_KEY_NAME => $productConcreteTransfer->getName(),
-                static::COLUMN_KEY_SKU => $productConcreteTransfer->getSku(),
-                static::COLUMN_KEY_IMAGE => $this->getImage($productConcreteTransfer),
-                static::COLUMN_KEY_STORES => $productConcreteTransfer->getStoreNames()
-                    ? explode(',', $productConcreteTransfer->getStoreNames())
-                    : [],
-                static::COLUMN_KEY_OFFERS => $productConcreteTransfer->getOffersCount() ?? 0,
-                static::COLUMN_KEY_VALID_FROM => $productConcreteTransfer->getValidFrom(),
-                static::COLUMN_KEY_VALID_TO => $productConcreteTransfer->getValidTo(),
+                static::COL_KEY_NAME => $this->buildNameColumnData($productTableRowDataTransfer),
+                static::COL_KEY_SKU => $productTableRowDataTransfer->getSku(),
+                static::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
+                static::COL_KEY_STORES => $this->buildStoresColumnData($productTableRowDataTransfer),
+                static::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount() ?? 0,
+                static::COL_KEY_STATUS => $productTableRowDataTransfer->getIsActive(),
+                static::COL_KEY_VALID_FROM => $productTableRowDataTransfer->getValidFrom(),
+                static::COL_KEY_VALID_TO => $productTableRowDataTransfer->getValidTo(),
             ];
         }
 
@@ -257,20 +260,6 @@ class ProductTable extends AbstractTable
             ->setPage($paginationTransfer->getPage())
             ->setSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return string|null
-     */
-    protected function getImage(ProductConcreteTransfer $productConcreteTransfer): ?string
-    {
-        if (!$productConcreteTransfer->getImageSets()->count()) {
-            return null;
-        }
-
-        return $productConcreteTransfer->getImageSets()[0]->getProductImages()[0]->getExternalUrlSmall();
     }
 
     /**
@@ -304,5 +293,47 @@ class ProductTable extends AbstractTable
         $tableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 
         return $tableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     *
+     * @return string[]|string
+     */
+    protected function buildStoresColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer)
+    {
+        $productConcreteStores = explode(',', $productTableRowDataTransfer->getStores());
+
+        if (count($productConcreteStores) === 1) {
+            return $productConcreteStores[0];
+        }
+
+        return $productConcreteStores;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function buildNameColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
+    {
+        $productConcreteName = $productTableRowDataTransfer->getName();
+
+        if (!$productConcreteName) {
+            return null;
+        }
+
+        $extendedProductConcreteNameParts = [$productConcreteName];
+
+        foreach ($productTableRowDataTransfer->getAttributes() as $productConcreteAttribute) {
+            if (!$productConcreteAttribute) {
+                continue;
+            }
+
+            $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
+        }
+
+        return implode(', ', $extendedProductConcreteNameParts);
     }
 }

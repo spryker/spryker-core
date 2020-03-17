@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\TableFilterTransfer;
-use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class HasOffersProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
+    public const FILTER_NAME = 'offers';
+
     protected const OPTION_NAME_WITH_OFFERS = 'With Offers';
     protected const OPTION_NAME_WITHOUT_OFFERS = 'Without Offers';
 
@@ -21,7 +22,7 @@ class HasOffersProductTableFilterDataProvider implements ProductTableFilterDataP
     public function getFilterData(): TableFilterTransfer
     {
         return (new TableFilterTransfer())
-            ->setKey(ProductOfferGuiPageConfig::PRODUCT_TABLE_HAS_OFFERS_FILTER_NAME)
+            ->setKey(static::FILTER_NAME)
             ->setTitle('Offers')
             ->setType('select')
             ->addOption(static::OPTION_NAME_MULTISELECT, false)

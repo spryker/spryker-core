@@ -19,7 +19,6 @@ use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig getConfig()
  */
 class ProductOfferGuiPageBusinessFactory extends AbstractBusinessFactory
 {

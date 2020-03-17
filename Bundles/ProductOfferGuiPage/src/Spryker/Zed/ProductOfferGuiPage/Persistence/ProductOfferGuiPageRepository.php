@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
+use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -21,6 +21,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductTableDataMapper;
 
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPagePersistenceFactory getFactory()
@@ -34,7 +35,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer
     {
-        $productConcreteMapper = $this->getFactory()->createProductConcreteMapper();
+        $productConcreteMapper = $this->getFactory()->createProductTableDataMapper();
 
         $productConcreteQuery = $this->buildBaseQuery($productTableCriteriaTransfer);
         $productConcreteQuery = $this->applySearch($productConcreteQuery, $productTableCriteriaTransfer);
@@ -42,8 +43,8 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery = $this->addSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
         if (!$productTableCriteriaTransfer->getPagination()) {
-            return $productConcreteMapper->mapProductConcreteEntitiesToProductTableDataTransfer(
-                $productConcreteQuery->find(),
+            return $productConcreteMapper->mapProductTableDataArrayToTableDataTransfer(
+                $productConcreteQuery->find()->getData(),
                 new ProductTableDataTransfer()
             );
         }
@@ -52,10 +53,13 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $propelPager = $this->getPagerForQuery($productConcreteQuery, $paginationTransfer);
         $paginationTransfer = $this->hydratePaginationTransfer($paginationTransfer, $propelPager);
 
-        return $productConcreteMapper->mapProductConcreteEntitiesToProductTableDataTransfer(
-            $propelPager->getResults(),
+        $productTableDataTransfer = $productConcreteMapper->mapProductTableDataArrayToTableDataTransfer(
+            $propelPager->getResults()->getData(),
             new ProductTableDataTransfer()
-        )->setPagination($paginationTransfer);
+        );
+        $productTableDataTransfer->setPagination($paginationTransfer);
+
+        return $productTableDataTransfer;
     }
 
     /**
@@ -87,10 +91,24 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
                 ->endUse()
             ->endUse()
             ->leftJoinSpyProductValidity()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConcreteTransfer::NAME)
-            ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductConcreteTransfer::VALID_FROM)
-            ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductConcreteTransfer::VALID_TO)
-            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME), ProductConcreteTransfer::STORE_NAMES)
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductTableRowDataTransfer::ID_PRODUCT)
+            ->withColumn(SpyProductTableMap::COL_SKU, ProductTableRowDataTransfer::SKU)
+            ->withColumn(SpyProductTableMap::COL_ATTRIBUTES, ProductTableRowDataTransfer::ATTRIBUTES)
+            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, ProductTableRowDataTransfer::IS_ACTIVE)
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductTableRowDataTransfer::NAME)
+            ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductTableRowDataTransfer::VALID_FROM)
+            ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductTableRowDataTransfer::VALID_TO)
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME), ProductTableRowDataTransfer::STORES)
+            ->select([
+                ProductTableRowDataTransfer::ID_PRODUCT,
+                ProductTableRowDataTransfer::SKU,
+                ProductTableRowDataTransfer::ATTRIBUTES,
+                ProductTableRowDataTransfer::IS_ACTIVE,
+                ProductTableRowDataTransfer::NAME,
+                ProductTableRowDataTransfer::VALID_FROM,
+                ProductTableRowDataTransfer::VALID_TO,
+                ProductTableRowDataTransfer::STORES,
+            ])
             ->groupByIdProduct();
 
         return $productConcreteQuery;
@@ -111,7 +129,13 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         }
 
         foreach ($productTableCriteriaTransfer->getOrderBy() as $field => $direction) {
-            $productConcreteQuery->orderBy($field, $direction);
+            $sortField = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$field] ?? null;
+
+            if (!$sortField) {
+                continue;
+            }
+
+            $productConcreteQuery->orderBy($sortField, $direction);
         }
 
         return $productConcreteQuery;

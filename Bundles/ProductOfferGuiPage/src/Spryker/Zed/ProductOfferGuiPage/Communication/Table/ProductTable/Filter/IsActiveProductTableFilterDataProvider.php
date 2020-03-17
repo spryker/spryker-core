@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\TableFilterTransfer;
-use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
 {
+    public const FILTER_NAME = 'status';
+
     protected const OPTION_NAME_ACTIVE = 'Active';
     protected const OPTION_NAME_INACTIVE = 'Inactive';
 
@@ -21,7 +22,7 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     public function getFilterData(): TableFilterTransfer
     {
         return (new TableFilterTransfer())
-            ->setKey(ProductOfferGuiPageConfig::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME)
+            ->setKey(static::FILTER_NAME)
             ->setTitle('Status')
             ->setType('select')
             ->addOption(static::OPTION_NAME_MULTISELECT, false)

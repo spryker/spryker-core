@@ -9,9 +9,10 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Crite
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig;
 
 class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterface
 {
@@ -169,8 +170,12 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
             return $productTableCriteriaTransfer;
         }
 
-        if (array_key_exists(ProductOfferGuiPageConfig::PRODUCT_TABLE_IS_ACTIVE_FILTER_NAME, $this->filters)) {
+        if (array_key_exists(IsActiveProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
             $productTableCriteriaTransfer->setIsActive(true);
+        }
+
+        if (array_key_exists(HasOffersProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
+            $productTableCriteriaTransfer->setHasOffers(true);
         }
 
         return $productTableCriteriaTransfer;

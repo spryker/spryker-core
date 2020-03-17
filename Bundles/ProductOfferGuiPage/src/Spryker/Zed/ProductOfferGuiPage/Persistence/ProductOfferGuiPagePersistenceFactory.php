@@ -10,21 +10,20 @@ namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductConcreteMapper;
+use Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductTableDataMapper;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageConfig getConfig()
  */
 class ProductOfferGuiPagePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductConcreteMapper
+     * @return \Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductTableDataMapper
      */
-    public function createProductConcreteMapper(): ProductConcreteMapper
+    public function createProductTableDataMapper(): ProductTableDataMapper
     {
-        return new ProductConcreteMapper(
+        return new ProductTableDataMapper(
             $this->getUtilEncodingService()
         );
     }
