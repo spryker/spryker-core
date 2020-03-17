@@ -97,8 +97,10 @@ class StoresResourceMapper implements StoresResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected function addDefaultCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $defaultCurrency): StoresRestAttributesTransfer
-    {
+    protected function addDefaultCurrencyToStoresRestAttributes(
+        StoresRestAttributesTransfer $storesRestAttributes,
+        string $defaultCurrency
+    ): StoresRestAttributesTransfer {
         $storesRestAttributes->setDefaultCurrency($defaultCurrency);
 
         return $storesRestAttributes;
@@ -110,8 +112,10 @@ class StoresResourceMapper implements StoresResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected function addStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCountryAttributes): StoresRestAttributesTransfer
-    {
+    protected function addStoreCountryToStoresRestAttributes(
+        StoresRestAttributesTransfer $storesRestAttributes,
+        array $storeCountryAttributes
+    ): StoresRestAttributesTransfer {
         foreach ($storeCountryAttributes as $storeCountryAttribute) {
             $storesRestAttributes->addCountry($storeCountryAttribute);
         }
@@ -125,8 +129,10 @@ class StoresResourceMapper implements StoresResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected function addStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCurrencyAttributes): StoresRestAttributesTransfer
-    {
+    protected function addStoreCurrencyToStoresRestAttributes(
+        StoresRestAttributesTransfer $storesRestAttributes,
+        array $storeCurrencyAttributes
+    ): StoresRestAttributesTransfer {
         foreach ($storeCurrencyAttributes as $storeCurrencyAttribute) {
             $storesRestAttributes->addCurrency($storeCurrencyAttribute);
         }

@@ -196,8 +196,10 @@ class RequestFormatter implements RequestFormatterInterface
         RequestBuilderInterface $requestBuilder,
         array $queryParameters
     ): void {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_FIELDS]) ||
-            !is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])) {
+        if (
+            !isset($queryParameters[RequestConstantsInterface::QUERY_FIELDS]) ||
+            !is_array($queryParameters[RequestConstantsInterface::QUERY_FIELDS])
+        ) {
             return;
         }
 

@@ -15,6 +15,8 @@ class CacheConfig extends AbstractBundleConfig
     public const STORE_PATTERN_MARKER = '{STORE}';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCachePath()
@@ -23,6 +25,8 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAutoloaderCachePath()
@@ -31,6 +35,8 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorePatternMarker()
@@ -39,6 +45,8 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllowedStores()

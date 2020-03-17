@@ -18,9 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
 {
     /**
-     * Specification:
-     * - Converts int amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,9 +33,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Converts float amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,9 +48,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Converts string amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,8 +63,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Converts MoneyTransfer Object into string representation with currency symbol
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,8 +80,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Converts MoneyTransfer Object into string representation without currency symbol
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,8 +97,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Parses a formatted string representation to MoneyTransfer
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,8 +112,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification
-     * - Converts an integer value into decimal value
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,8 +126,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     }
 
     /**
-     * Specification
-     * - Converts a decimal value into integer value
+     * {@inheritDoc}
      *
      * @api
      *

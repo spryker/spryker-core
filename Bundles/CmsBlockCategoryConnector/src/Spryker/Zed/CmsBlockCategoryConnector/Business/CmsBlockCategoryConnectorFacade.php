@@ -93,6 +93,8 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory

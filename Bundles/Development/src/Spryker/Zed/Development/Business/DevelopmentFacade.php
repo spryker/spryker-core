@@ -64,7 +64,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return int
      */
-    public function runFixtures($module, array $options = []): int
+    public function runFixtures(?string $module, array $options = []): int
     {
         return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
@@ -313,7 +313,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList()
     {
@@ -540,7 +540,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {

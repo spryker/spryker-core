@@ -65,6 +65,7 @@
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
         <property name="customer" type="Customer"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -155,6 +156,9 @@
     </transfer>
 
     <transfer name="QuotePermissionGroup">
+    </transfer>
+
+    <transfer name="Item">
     </transfer>
 
 </transfers>

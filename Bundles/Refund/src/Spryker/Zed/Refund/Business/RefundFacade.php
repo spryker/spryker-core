@@ -18,11 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
     /**
-     * Specification:
-     * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
-     * - Adds refundable amount to RefundTransfer.
-     * - Adds items with canceled amount to RefundTransfer.
-     * - Uses calculator plugin stack for calculation.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,8 +33,7 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Calculates refundable item amount.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,8 +49,7 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Calculates refundable expense amount.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,9 +65,7 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists calculated Refund amount.
-     * - Sets calculated refund amount as canceled amount to each sales order item.
+     * {@inheritDoc}
      *
      * @api
      *

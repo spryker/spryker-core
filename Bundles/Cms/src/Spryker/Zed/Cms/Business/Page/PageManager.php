@@ -58,8 +58,13 @@ class PageManager implements PageManagerInterface
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface $urlFacade
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, CmsToGlossaryFacadeInterface $glossaryFacade, CmsToTouchFacadeInterface $touchFacade, CmsToUrlFacadeInterface $urlFacade)
-    {
+    public function __construct(
+        CmsQueryContainerInterface $cmsQueryContainer,
+        TemplateManagerInterface $templateManager,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
+        CmsToTouchFacadeInterface $touchFacade,
+        CmsToUrlFacadeInterface $urlFacade
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->glossaryFacade = $glossaryFacade;
@@ -419,8 +424,10 @@ class PageManager implements PageManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer): SpyCmsPageLocalizedAttributes
-    {
+    protected function getLocalizedAttributesForPage(
+        SpyCmsPage $pageEntity,
+        CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer
+    ): SpyCmsPageLocalizedAttributes {
         $cmsPageLocalizedAttributesQuery = $this->cmsQueryContainer
             ->queryCmsPageLocalizedAttributes()
             ->filterByFkCmsPage($pageEntity->getIdCmsPage());

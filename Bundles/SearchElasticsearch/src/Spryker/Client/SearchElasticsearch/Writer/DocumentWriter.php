@@ -41,7 +41,7 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        $document = $this->createSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
+        $document = $this->createElasticaDocumentFromSearchDocumentTransfer($searchDocumentTransfer);
         $index = $this->elasticaClient->getIndex($document->getIndex());
         $index->addDocuments([$document]);
         $response = $index->refresh();
@@ -73,7 +73,7 @@ class DocumentWriter implements DocumentWriterInterface
         $documents = [];
 
         foreach ($searchDocumentTransfers as $searchDocumentTransfer) {
-            $documents[] = $this->createSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
+            $documents[] = $this->createElasticaDocumentFromSearchDocumentTransfer($searchDocumentTransfer);
         }
 
         return $documents;
@@ -84,7 +84,7 @@ class DocumentWriter implements DocumentWriterInterface
      *
      * @return \Elastica\Document
      */
-    protected function createSearchDocumentTransferToElasticaDocument(SearchDocumentTransfer $searchDocumentTransfer): Document
+    protected function createElasticaDocumentFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): Document
     {
         $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);

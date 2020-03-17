@@ -58,8 +58,12 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      *
      * @return int[]
      */
-    protected function filterProductIdsByCustomerProductLists(array $productIds, array $productListStorageTransfers, array $customerWhitelistIds, array $customerBlacklistIds): array
-    {
+    protected function filterProductIdsByCustomerProductLists(
+        array $productIds,
+        array $productListStorageTransfers,
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
+    ): array {
         if (!$productListStorageTransfers || (!$customerBlacklistIds && !$customerWhitelistIds)) {
             return $productIds;
         }
@@ -131,7 +135,8 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      */
     protected function assertProductListTransferRequiredType($productListStorageTransfer): void
     {
-        if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
+        if (
+            !$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
             && !$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer
         ) {
             $expectedType = implode(' or ', [ProductAbstractProductListStorageTransfer::class, ProductConcreteProductListStorageTransfer::class]);

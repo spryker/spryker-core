@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -14,6 +15,7 @@ use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableM
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -148,6 +150,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
@@ -184,5 +188,29 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->endUse()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createProductConcretePageSearchQuery();
+
+        if ($productIds !== []) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        $productConcretePageSearchEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductPageSearchMapper()
+            ->mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers($productConcretePageSearchEntityCollection);
     }
 }

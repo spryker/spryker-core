@@ -234,8 +234,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer
-    {
+    public function addPlaceholderText(
+        PageTransfer $pageTransfer,
+        string $placeholder,
+        string $value,
+        ?LocaleTransfer $localeTransfer = null,
+        bool $autoGlossaryKeyIncrement = true
+    ): PageKeyMappingTransfer {
         $template = $this->templateManager->getTemplateById($pageTransfer->getFkTemplate());
 
         $uniquePlaceholder = $placeholder . '-' . $pageTransfer->getIdCmsPage();
@@ -366,8 +371,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createGlossaryPageKeyMapping(PageTransfer $page, string $placeholder, string $keyName, string $value, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer
-    {
+    protected function createGlossaryPageKeyMapping(
+        PageTransfer $page,
+        string $placeholder,
+        string $keyName,
+        string $value,
+        ?LocaleTransfer $localeTransfer = null
+    ): PageKeyMappingTransfer {
         $idKey = $this->glossaryFacade->getOrCreateKey($keyName);
         $this->createGlossaryTranslation($keyName, $value, $localeTransfer);
         $pageKeyMapping = $this->createPageKeyMappingTransfer($page, $placeholder, $idKey);

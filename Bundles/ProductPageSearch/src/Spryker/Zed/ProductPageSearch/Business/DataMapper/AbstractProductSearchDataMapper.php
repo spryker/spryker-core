@@ -96,21 +96,27 @@ abstract class AbstractProductSearchDataMapper
         switch ($normalizedKey) {
             case PageIndexMap::SEARCH_RESULT_DATA:
                 $result = $this->transformSearchResultData($result, $pageMapTransfer->getSearchResultData());
+
                 break;
             case PageIndexMap::STRING_FACET:
                 $result = $this->transformStringFacet($result, $pageMapTransfer->getStringFacet());
+
                 break;
             case PageIndexMap::INTEGER_FACET:
                 $result = $this->transformIntegerFacet($result, $pageMapTransfer->getIntegerFacet());
+
                 break;
             case PageIndexMap::STRING_SORT:
                 $result = $this->transformStringSort($result, $pageMapTransfer->getStringSort());
+
                 break;
             case PageIndexMap::INTEGER_SORT:
                 $result = $this->transformIntegerSort($result, $pageMapTransfer->getIntegerSort());
+
                 break;
             case PageIndexMap::CATEGORY:
                 $result = $this->transformCategory($result, $pageMapTransfer->getCategory());
+
                 break;
             default:
                 $result = $this->transformOther($result, $normalizedKey, $value);
@@ -255,7 +261,7 @@ abstract class AbstractProductSearchDataMapper
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getPageIndexMapProperties(): array
     {

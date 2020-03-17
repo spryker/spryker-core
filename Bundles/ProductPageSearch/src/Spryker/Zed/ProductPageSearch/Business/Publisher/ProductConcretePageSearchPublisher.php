@@ -143,7 +143,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return array
      */
@@ -177,7 +177,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcretePageSearchTransfers
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
      *
      * @return void
      */
@@ -345,8 +345,10 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function expandProductConcretePageSearchTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    protected function expandProductConcretePageSearchTransferWithPlugins(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         foreach ($this->pageDataExpanderPlugins as $pageDataExpanderPlugin) {
             $productConcretePageSearchTransfer = $pageDataExpanderPlugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
         }

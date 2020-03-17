@@ -66,6 +66,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public const CMS_NAME = 'name';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
@@ -78,6 +80,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $path
@@ -93,6 +97,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -108,6 +114,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -120,6 +128,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -133,6 +143,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -160,6 +172,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -186,6 +200,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -204,6 +220,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -231,6 +249,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -247,6 +267,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -262,6 +284,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -279,6 +303,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idMapping
@@ -294,6 +320,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idMapping
@@ -311,6 +339,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -323,6 +353,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -338,6 +370,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -361,6 +395,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUrl
@@ -374,6 +410,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUrlRedirect
@@ -387,6 +425,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -398,6 +438,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -411,6 +453,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -433,6 +477,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUrl
@@ -446,6 +492,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $value
@@ -463,6 +511,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -484,6 +534,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -500,6 +552,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $categoryName
@@ -533,6 +587,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -561,6 +617,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
@@ -571,6 +629,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -585,6 +645,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -599,6 +661,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $placeholders
@@ -615,6 +679,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -654,6 +720,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -670,6 +738,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsVersion
@@ -684,6 +754,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
@@ -695,6 +767,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPage
@@ -709,6 +783,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $idGlossaryKeys
@@ -722,6 +798,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsPage

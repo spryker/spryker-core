@@ -8,11 +8,10 @@
 namespace SprykerTest\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents;
@@ -33,10 +32,6 @@ use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Listener\Pri
  */
 class PriceProductOfferStoragePublishListenerTest extends Unit
 {
-    protected const CURRENCY = 'EUR';
-    protected const PRODUCT_SKU = 'PRODUCT_SKU';
-    protected const STORE = 'DE';
-
     /**
      * @var \SprykerTest\Zed\PriceProductOfferStorage\PriceProductOfferStorageTester
      */
@@ -77,15 +72,11 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $this->productConcreteTransfer->getSku(),
         ]);
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE]);
-        $priceTypeTransfer = $this->tester->havePriceType();
-        $idCurrency = $this->tester->haveCurrency([CurrencyTransfer::NAME => static::CURRENCY]);
 
         $this->priceProductOfferTransfer = $this->tester->havePriceProductOffer([
             PriceProductOfferTransfer::FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-            PriceProductOfferTransfer::FK_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
-            PriceProductOfferTransfer::FK_STORE => $storeTransfer->getIdStore(),
-            PriceProductOfferTransfer::FK_CURRENCY => $idCurrency,
+            PriceProductTransfer::SKU_PRODUCT => $this->productConcreteTransfer->getSku(),
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $this->productConcreteTransfer->getAbstractSku(),
         ]);
     }
 
