@@ -11,4 +11,7 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="Merchant">
+    </transfer>
+
 </transfers>

@@ -9,14 +9,21 @@ namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantFormDataProvider
 {
+    /**
+     * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
+     */
+    protected $merchantFacade;
+
     /**
      * @var \Spryker\Zed\MerchantGui\MerchantGuiConfig
      */
@@ -28,26 +35,33 @@ class MerchantFormDataProvider
     protected $localeFacade;
 
     /**
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantGui\MerchantGuiConfig $config
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
+        MerchantGuiToMerchantFacadeInterface $merchantFacade,
         MerchantGuiConfig $config,
         MerchantGuiToLocaleFacadeInterface $localeFacade
     ) {
+        $this->merchantFacade = $merchantFacade;
         $this->config = $config;
         $this->localeFacade = $localeFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
+     * @param int|null $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function getData(?MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function getData(?int $idMerchant = null): MerchantTransfer
     {
-        if ($merchantTransfer === null) {
-            $merchantTransfer = new MerchantTransfer();
+        $merchantTransfer = new MerchantTransfer();
+
+        if ($idMerchant) {
+            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+            $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
+            $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
         }
 
         $merchantTransfer = $this->addInitialUrlCollection($merchantTransfer);
@@ -102,13 +116,15 @@ class MerchantFormDataProvider
     }
 
     /**
+     * @param int|null $idMerchant
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(?int $idMerchant = null): array
     {
         return [
             'data_class' => MerchantTransfer::class,
-            MerchantCreateForm::OPTION_CURRENT_ID => null,
+            MerchantCreateForm::OPTION_CURRENT_ID => $idMerchant,
         ];
     }
 

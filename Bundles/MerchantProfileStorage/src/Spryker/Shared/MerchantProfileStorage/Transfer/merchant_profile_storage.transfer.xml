@@ -64,6 +64,7 @@
 
     <transfer name="MerchantProfile">
         <property name="fkMerchant" type="int"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -73,6 +74,9 @@
     </transfer>
 
     <transfer name="Url">
+    </transfer>
+
+    <transfer name="UrlStorage">
     </transfer>
 
 </transfers>
