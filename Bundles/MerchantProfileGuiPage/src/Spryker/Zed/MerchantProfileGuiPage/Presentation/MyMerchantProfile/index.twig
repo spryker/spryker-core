@@ -290,7 +290,16 @@
                                             cloak
                                         >
                                         </spy-input>
-                                        <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
+                                        <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ urlForm.children.fkLocale.vars.id }}"
+                                                name="{{ urlForm.children.fkLocale.vars.full_name }}"
+                                                value="{{ urlForm.children.fkLocale.vars.value }}"
+                                                type="hidden"
+                                                cloak
+                                        >
+                                        </spy-input>
                                     </spy-form-item>
                                 {% endfor %}
                             </spy-card>
