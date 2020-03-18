@@ -30,8 +30,9 @@ class ConfigurableBundlePageSearchToConfigurableBundleFacadeBridge implements Co
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): ConfigurableBundleTemplateCollectionTransfer
-    {
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer {
         return $this->configurableBundleFacade->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
     }
 }

@@ -62,6 +62,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFieldsList(): array
@@ -81,6 +83,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultSortFieldForSuccessTable(): string
@@ -89,6 +93,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getIdPriceProductScheduleKey(): string
@@ -97,6 +103,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAbstractSkuKey(): string
@@ -105,6 +113,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getConcreteSkuKey(): string
@@ -113,6 +123,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStoreKey(): string
@@ -121,6 +133,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrencyKey(): string
@@ -129,6 +143,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeKey(): string
@@ -137,6 +153,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getValueNetKey(): string
@@ -145,6 +163,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getValueGrossKey(): string
@@ -153,6 +173,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFromIncludedKey(): string
@@ -161,6 +183,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getToIncludedKey(): string
@@ -169,6 +193,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMaxFileSize(): string
@@ -177,6 +203,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getFileMimeTypes(): array

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -33,6 +35,8 @@ class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockV
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

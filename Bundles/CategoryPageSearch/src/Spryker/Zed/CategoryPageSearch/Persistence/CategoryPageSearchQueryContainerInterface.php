@@ -51,16 +51,16 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     /**
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -69,9 +69,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     /**
      * @api
      *
-     * @param array $categoryTemplateIds
+     * @param int[] $categoryTemplateIds
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds);
 

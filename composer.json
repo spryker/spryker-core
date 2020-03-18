@@ -521,6 +521,8 @@
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/propel-query-builder": "*",
+    "spryker/publisher": "*",
+    "spryker/publisher-extension": "*",
     "spryker/queue": "*",
     "spryker/quick-order": "*",
     "spryker/quick-order-extension": "*",
@@ -661,6 +663,7 @@
     "spryker/zed-navigation": "*",
     "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
+    "spryker/zed-ui": "*",
     "spryker/zend": "*"
   }
 }

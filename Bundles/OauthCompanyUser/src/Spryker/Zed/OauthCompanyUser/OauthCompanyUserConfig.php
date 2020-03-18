@@ -19,6 +19,8 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
     public const GRANT_TYPE_ID_COMPANY_USER = 'idCompanyUser';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCompanyUserScopes(): array

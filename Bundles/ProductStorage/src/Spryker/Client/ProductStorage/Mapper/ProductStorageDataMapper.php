@@ -32,7 +32,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
-     * @uses ProductStorageDataMapper::filterProductStorageExpanderPlugins()
+     * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper::filterProductStorageExpanderPlugins()
      *
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[] $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
@@ -53,8 +53,12 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null)
-    {
+    public function mapProductStorageData(
+        $locale,
+        array $productStorageData,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ) {
         $productStorageData = $this->filterAbstractProductVariantsData($productStorageData);
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);

@@ -15,12 +15,16 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantDataSetInterface;
 
 class MerchantProfileWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE
+     */
+    protected const GLOSSARY_KEY_PUBLISH_WRITE = 'Glossary.key.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -98,7 +102,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
                 $glossaryTranslationEntity->save();
             }
 
-            $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryKeyEntity->getIdGlossaryKey());
+            $this->addPublishEvents(static::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryKeyEntity->getIdGlossaryKey());
         }
 
         return $merchantProfileEntity;

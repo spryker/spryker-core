@@ -156,7 +156,9 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
      */
-    public function checkShoppingListItemProductIsNotDiscontinued(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer;
+    public function checkShoppingListItemProductIsNotDiscontinued(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer;
 
     /**
      * Specification:

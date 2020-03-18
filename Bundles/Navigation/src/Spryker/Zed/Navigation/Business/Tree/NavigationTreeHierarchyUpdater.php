@@ -158,8 +158,11 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
      */
-    protected function setNavigationNodeEntityChanges(SpyNavigationNode $navigationNodeEntity, NavigationNodeTransfer $navigationNodeTransfer, $fkParentNavigationNode)
-    {
+    protected function setNavigationNodeEntityChanges(
+        SpyNavigationNode $navigationNodeEntity,
+        NavigationNodeTransfer $navigationNodeTransfer,
+        $fkParentNavigationNode
+    ) {
         $navigationNodeEntity
             ->setPosition($navigationNodeTransfer->getPosition())
             ->setFkParentNavigationNode($fkParentNavigationNode);

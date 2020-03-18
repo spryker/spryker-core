@@ -18,6 +18,8 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
@@ -31,6 +33,8 @@ class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return int

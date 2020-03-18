@@ -23,6 +23,8 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer

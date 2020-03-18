@@ -14,6 +14,8 @@ class NavigationGuiConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedirectUrl(): string

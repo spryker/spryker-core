@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ZedRequestConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @param string $fileName
      *
      * @return string
@@ -37,6 +39,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string|null $bundleControllerAction
      *
      * @return string
@@ -52,6 +56,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -60,6 +66,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isRepeatEnabled(): bool

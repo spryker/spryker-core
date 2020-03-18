@@ -15,6 +15,8 @@ class CompanyUserDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMPANY_USER = 'company-user';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyUserDataImporterConfiguration(): DataImporterConfigurationTransfer

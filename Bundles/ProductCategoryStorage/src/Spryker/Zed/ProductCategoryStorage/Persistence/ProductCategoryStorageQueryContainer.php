@@ -26,6 +26,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     public const FK_CATEGORY = 'fkCategory';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -47,6 +49,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed in the next major.
@@ -88,6 +92,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -105,6 +111,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -121,6 +129,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -136,6 +146,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -152,6 +164,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -169,6 +183,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryIds
@@ -185,6 +201,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $nodeIds
@@ -201,6 +219,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -244,6 +264,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -254,6 +276,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

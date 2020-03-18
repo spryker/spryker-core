@@ -25,7 +25,7 @@ interface AvailabilityNotificationSubscriptionMapperInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $availabilityNotificationSubscriptionEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function mapAvailabilityNotificationSubscriptionTransferCollection(ObjectCollection $availabilityNotificationSubscriptionEntities): array;
 }

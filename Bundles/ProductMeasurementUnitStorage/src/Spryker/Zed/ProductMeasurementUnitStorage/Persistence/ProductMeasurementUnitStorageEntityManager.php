@@ -56,8 +56,9 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
      *
      * @return void
      */
-    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer): void
-    {
+    public function saveProductConcreteMeasurementUnitStorageEntity(
+        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
+    ): void {
         $productConcreteMeasurementUnitStorageEntityTransfer->requireFkProduct();
 
         $spyProductConcreteMeasurementUnitStorageEntity = $this->getFactory()

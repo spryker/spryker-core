@@ -20,6 +20,7 @@ use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerI
 class PermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Expands the CustomerIdentifierTransfer with permissions collection if idCompanyUser is set up in CustomerIdentifierTransfer.
      *
