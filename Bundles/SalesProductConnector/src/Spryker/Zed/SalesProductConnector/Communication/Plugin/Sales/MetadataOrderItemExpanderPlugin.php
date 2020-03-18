@@ -7,31 +7,28 @@
 
 namespace Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
-class ItemMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
+class MetadataOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
-     *   - Can be used to add additional data to OrderTransfer
+     * - Expands order items with metadata information.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function hydrate(OrderTransfer $orderTransfer)
+    public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->hydrateItemMetadata($orderTransfer);
+        return $this->getFacade()->expandOrderItemsWithMetadata($itemTransfers);
     }
 }

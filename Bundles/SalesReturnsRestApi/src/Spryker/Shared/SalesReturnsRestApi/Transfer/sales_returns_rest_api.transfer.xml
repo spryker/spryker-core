@@ -13,6 +13,7 @@
 
     <transfer name="ReturnReasonCollection">
         <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnReasonFilter">
@@ -56,6 +57,7 @@
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="RestReturnableItemRequestAttributes">
@@ -127,12 +129,17 @@
 
     <transfer name="ReturnCollection">
         <property name="returns" type="Return[]" singular="return"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ReturnFilter">
         <property name="returnReference" type="string"/>
         <property name="filter" type="Filter"/>
         <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
     </transfer>
 
 </transfers>
