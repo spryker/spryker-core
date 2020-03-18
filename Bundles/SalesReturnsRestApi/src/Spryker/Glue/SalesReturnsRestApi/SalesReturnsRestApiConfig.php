@@ -28,6 +28,8 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_CANT_FIND_RETURNABLE_ITEM = 'Can\'t find returnable item by the given id';
 
     /**
+     * @api
+     *
      * @return (int|string)[][]
      */
     public function getErrorIdentifierToRestErrorMapping(): array

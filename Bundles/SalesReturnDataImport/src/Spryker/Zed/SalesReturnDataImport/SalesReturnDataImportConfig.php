@@ -15,6 +15,8 @@ class SalesReturnDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_RETURN_REASON = 'return-reason';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getReturnReasonDataImporterConfiguration(): DataImporterConfigurationTransfer

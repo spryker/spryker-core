@@ -36,8 +36,10 @@ class ReturnMapper
      *
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnItem
      */
-    public function mapReturnItemTransferToSalesReturnItemEntity(ReturnItemTransfer $returnItemTransfer, SpySalesReturnItem $salesReturnItemEntity): SpySalesReturnItem
-    {
+    public function mapReturnItemTransferToSalesReturnItemEntity(
+        ReturnItemTransfer $returnItemTransfer,
+        SpySalesReturnItem $salesReturnItemEntity
+    ): SpySalesReturnItem {
         $salesReturnItemEntity->fromArray($returnItemTransfer->modifiedToArray());
         $salesReturnItemEntity
             ->setFkSalesReturn($returnItemTransfer->getIdSalesReturn())

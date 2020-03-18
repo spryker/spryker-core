@@ -20,6 +20,8 @@ class SalesReturnConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getReturnReferenceFormat(): string
@@ -28,6 +30,8 @@ class SalesReturnConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getReturnableStateNames(): array
@@ -36,6 +40,8 @@ class SalesReturnConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getReturnableNumberOfDays(): int
@@ -44,6 +50,8 @@ class SalesReturnConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getReturnEvent(): string

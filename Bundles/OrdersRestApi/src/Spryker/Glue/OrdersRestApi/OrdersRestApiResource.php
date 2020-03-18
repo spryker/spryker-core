@@ -22,8 +22,10 @@ class OrdersRestApiResource extends AbstractRestResource implements OrdersRestAp
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
      */
-    public function mapItemTransferToRestOrderItemsAttributesTransfer(ItemTransfer $itemTransfer, RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer): RestOrderItemsAttributesTransfer
-    {
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
         return $this->getFactory()
             ->createOrderResourceMapper()
             ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, $restOrderItemsAttributesTransfer);
