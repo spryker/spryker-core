@@ -107,4 +107,17 @@ interface SalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Verifies difference between order item creation date and config const.
+     * - If difference more than config const, sets `Item::isReturnable=false`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
 }

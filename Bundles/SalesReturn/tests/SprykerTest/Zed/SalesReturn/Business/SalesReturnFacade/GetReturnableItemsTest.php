@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -149,29 +148,5 @@ class GetReturnableItemsTest extends Unit
 
         // Assert
         $this->assertEmpty($itemCollectionTransfer->getItems());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetReturnableItemsThrowsExceptionWithoutCustomerReference(): void
-    {
-        // Arrange
-        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference(null)
-            ->addOrderReference($orderTransfer->getOrderReference());
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester
-            ->getFacade()
-            ->getReturnableItems($returnableItemFilterTransfer);
     }
 }

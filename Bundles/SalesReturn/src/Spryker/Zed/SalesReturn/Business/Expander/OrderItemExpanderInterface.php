@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReturnExtension\Dependency\Plugin;
+namespace Spryker\Zed\SalesReturn\Business\Expander;
 
-interface ReturnPolicyPluginInterface
+interface OrderItemExpanderInterface
 {
     /**
-     * Specification:
-     * - ...
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function execute(array $itemTransfers): array;
+    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
 }

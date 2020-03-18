@@ -55,6 +55,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfers[] = (new ItemTransfer())
                 ->fromArray($salesOrderItemEntity->toArray(), true)
+                ->setIsReturnable(true)
                 ->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference())
                 ->setSumGrossPrice($salesOrderItemEntity->getGrossPrice())
                 ->setSumNetPrice($salesOrderItemEntity->getNetPrice())
