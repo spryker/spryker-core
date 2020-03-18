@@ -7,4 +7,14 @@
         <property name="merchantReferences" type="string[]"/>
     </transfer>
 
+    <transfer name="RestMerchantsAttributes">
+        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantStorage">
+        <property name="merchantReference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
