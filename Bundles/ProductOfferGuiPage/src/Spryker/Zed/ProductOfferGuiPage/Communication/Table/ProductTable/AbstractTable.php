@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractTable
 {
     protected const CONFIG_COLUMNS = 'columns';
+    protected const CONFIG_DATA_URL = 'dataUrl';
     protected const CONFIG_AVAILABLE_PAGE_SIZES = 'pageSizes';
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
@@ -79,10 +80,11 @@ abstract class AbstractTable
      */
     public function getConfiguration(): array
     {
-        $guiTableConfigurationTransfer = $this->buildTableConfiguration();
+        $guiTableConfigurationTransfer = $this->getTableConfiguration();
 
         return [
             static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_DATA_URL => $guiTableConfigurationTransfer->getDataUrl(),
             static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
@@ -174,7 +176,7 @@ abstract class AbstractTable
     protected function setSorting(Request $request): void
     {
         $sortingData = $request->query->has(static::PARAM_ORDER_BY) ? json_decode($request->query->get(static::PARAM_ORDER_BY), true) : null;
-        $defaultSortColumn = $this->buildTableConfiguration()->getDefaultSortColumn();
+        $defaultSortColumn = $this->getTableConfiguration()->getDefaultSortColumn();
 
         if (!$sortingData && $defaultSortColumn) {
             $sortingData = [$defaultSortColumn => static::DEFAULT_ORDER_DIRECTION];
