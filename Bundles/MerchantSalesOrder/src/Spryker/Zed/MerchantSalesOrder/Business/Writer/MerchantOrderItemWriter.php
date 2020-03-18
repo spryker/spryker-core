@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -49,14 +49,17 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
     {
         $merchantOrderItemTransfer->requireIdMerchantOrderItem();
         $merchantOrderItemResponseTransfer = (new MerchantOrderItemResponseTransfer())->setIsSuccessful(true);
-        $merchantOrderItemCriteriaFilterTransfer = (new MerchantOrderItemCriteriaFilterTransfer())
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
             ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
-        if (!$this->merchantSalesOrderRepository->existsMerchantOrderItem($merchantOrderItemCriteriaFilterTransfer->getIdMerchantOrderItem())) {
+        $existingMerchantOrderItemTransfer = $this->merchantSalesOrderRepository->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
+
+        if (!$existingMerchantOrderItemTransfer) {
             return $this->addErrorMessage($merchantOrderItemResponseTransfer, static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND);
         }
 
-        $merchantOrderItemTransfer = $this->merchantSalesOrderEntityManager->updateMerchantOrderItem($merchantOrderItemTransfer);
+        $existingMerchantOrderItemTransfer->fromArray($merchantOrderItemTransfer->modifiedToArray(), true);
+        $merchantOrderItemTransfer = $this->merchantSalesOrderEntityManager->updateMerchantOrderItem($existingMerchantOrderItemTransfer);
 
         $merchantOrderItemResponseTransfer->setMerchantOrderItem($merchantOrderItemTransfer);
 
@@ -69,8 +72,10 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
      */
-    protected function addErrorMessage(MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer, string $message): MerchantOrderItemResponseTransfer
-    {
+    protected function addErrorMessage(
+        MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer,
+        string $message
+    ): MerchantOrderItemResponseTransfer {
         return $merchantOrderItemResponseTransfer
             ->setIsSuccessful(false)
             ->addMessage((new MessageTransfer())->setMessage($message));

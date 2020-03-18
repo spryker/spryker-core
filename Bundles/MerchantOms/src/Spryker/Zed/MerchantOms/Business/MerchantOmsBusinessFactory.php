@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
+ * @method \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface getRepository()
  */
 class MerchantOmsBusinessFactory extends AbstractBusinessFactory
 {

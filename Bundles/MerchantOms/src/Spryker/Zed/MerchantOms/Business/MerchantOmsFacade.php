@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface getRepository()
  */
 class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInterface
 {
@@ -41,5 +42,19 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
     {
         $this->getFactory()->createMerchantOmsEventTrigger()->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $stateIds
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     */
+    public function getStateMachineItemsByStateIds(array $stateIds): array
+    {
+        return $this->getRepository()->getStateMachineItemsByStateIds($stateIds);
     }
 }

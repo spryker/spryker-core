@@ -36,6 +36,11 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="MerchantOrderItemCriteria">
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="idOrderItem" type="int"/>
+    </transfer>
+
     <transfer name="MerchantOrderCriteria">
         <property name="idMerchantOrder" type="int"/>
         <property name="merchantOrderReference" type="string"/>
@@ -45,10 +50,6 @@
         <property name="withItems" type="bool"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
-    </transfer>
-
-    <transfer name="MerchantOrderItemCriteriaFilter">
-        <property name="idMerchantOrderItem" type="int"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">

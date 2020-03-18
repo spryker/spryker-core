@@ -13,13 +13,41 @@ class MerchantOmsConfig extends AbstractBundleConfig
 {
     public const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
 
+    protected const MERCHANT_STATE_MACHINE_INITIAL_STATE = 'new';
+
     protected const MERCHANT_OMS_DEFAULT_PROCESS_NAME = 'MerchantDefaultStateMachine';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantOmsDefaultProcessName(): string
     {
         return static::MERCHANT_OMS_DEFAULT_PROCESS_NAME;
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getMerchantOmsActiveProcesses(): array
+    {
+        return [
+            static::MERCHANT_OMS_DEFAULT_PROCESS_NAME,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getMerchantProcessInitialStateMap(): array
+    {
+        return [
+            static::MERCHANT_OMS_DEFAULT_PROCESS_NAME => static::MERCHANT_STATE_MACHINE_INITIAL_STATE,
+        ];
     }
 }
