@@ -136,7 +136,7 @@ interface ProductRelationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getProductRelationsByIdProductAbstracts(array $productAbstractIds): array;
+    public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * Specification:

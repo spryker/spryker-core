@@ -149,7 +149,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getProductRelationsByIdProductAbstracts(array $productAbstractIds): array
+    public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->getRepository()->getProductRelationsByProductAbstractIds($productAbstractIds);
     }

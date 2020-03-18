@@ -160,7 +160,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
             ->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
 
         $productRelationTransfers = $this->productRelationFacade
-            ->getProductRelationsByIdProductAbstracts($productAbstractIds);
+            ->getProductRelationsByProductAbstractIds($productAbstractIds);
 
         $productRelations = $this->productRelationStorageGrouper
             ->groupProductRelationsByProductAbstractAndStore($productRelationTransfers);
