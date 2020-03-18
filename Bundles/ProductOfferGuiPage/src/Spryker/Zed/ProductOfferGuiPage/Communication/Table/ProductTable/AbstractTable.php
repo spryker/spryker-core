@@ -22,15 +22,16 @@ abstract class AbstractTable
     protected const CONFIG_SEARCH = 'search';
 
     protected const PARAM_PAGE = 'page';
-    protected const PARAM_PAGE_SIZE = 'pageSize';
-    protected const PARAM_ORDER_BY = 'orderBy';
+    protected const PARAM_PAGE_SIZE = 'size';
+    protected const PARAM_SORT_BY = 'sortBy';
+    protected const PARAM_SORT_DIRECTION = 'sortDirection';
     protected const PARAM_SEARCH_TERM = 'search';
     protected const PARAM_FILTERS = 'filters';
 
     protected const DEFAULT_PAGE = 1;
     protected const DEFAULT_PAGE_SIZE = 10;
     protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
-    protected const DEFAULT_ORDER_DIRECTION = 'ASC';
+    protected const DEFAULT_SORT_DIRECTION = 'ASC';
 
     /**
      * @var string|null
@@ -175,20 +176,14 @@ abstract class AbstractTable
      */
     protected function setSorting(Request $request): void
     {
-        $sortingData = $request->query->has(static::PARAM_ORDER_BY) ? json_decode($request->query->get(static::PARAM_ORDER_BY), true) : null;
-        $defaultSortColumn = $this->getTableConfiguration()->getDefaultSortColumn();
+        $sortByColumn = $request->query->get(static::PARAM_SORT_BY) ?? $this->getTableConfiguration()->getDefaultSortColumn();
+        $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION) ?? static::DEFAULT_SORT_DIRECTION;
 
-        if (!$sortingData && $defaultSortColumn) {
-            $sortingData = [$defaultSortColumn => static::DEFAULT_ORDER_DIRECTION];
-        }
-
-        if (!$sortingData) {
+        if (!$sortByColumn) {
             throw new InvalidSortingDataException('Sorting data is not present.');
         }
 
-        foreach ($sortingData as $field => $direction) {
-            $this->sorting[$field] = $direction;
-        }
+        $this->sorting[$sortByColumn] = $sortDirection;
     }
 
     /**
