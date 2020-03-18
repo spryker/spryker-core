@@ -249,7 +249,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Returns true if request version reference and custom shipment price are set, false otherwise.
+     * - Returns true if request reference is empty and custom shipment price is set, false otherwise.
      *
      * @api
      *
