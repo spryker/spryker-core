@@ -566,8 +566,12 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    protected function executeCreateAndTouchTranslationTransaction(string $keyName, LocaleTransfer $localeTransfer, string $value, bool $isActive = true): TranslationTransfer
-    {
+    protected function executeCreateAndTouchTranslationTransaction(
+        string $keyName,
+        LocaleTransfer $localeTransfer,
+        string $value,
+        bool $isActive = true
+    ): TranslationTransfer {
         $translation = $this->createTranslation($keyName, $localeTransfer, $value, $isActive);
         if ($isActive) {
             $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());

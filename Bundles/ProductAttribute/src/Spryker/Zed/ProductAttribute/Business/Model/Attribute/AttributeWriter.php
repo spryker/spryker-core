@@ -100,8 +100,9 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    protected function executeCreateProductManagementAttributeTransaction(ProductManagementAttributeTransfer $productManagementAttributeTransfer): ProductManagementAttributeTransfer
-    {
+    protected function executeCreateProductManagementAttributeTransaction(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ): ProductManagementAttributeTransfer {
         $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
         $productManagementAttributeTransfer = $this->createProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
         $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
@@ -115,8 +116,9 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    protected function executeUpdateProductManagementAttributeTransaction(ProductManagementAttributeTransfer $productManagementAttributeTransfer): ProductManagementAttributeTransfer
-    {
+    protected function executeUpdateProductManagementAttributeTransaction(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ): ProductManagementAttributeTransfer {
         $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
         $productManagementAttributeTransfer = $this->updateProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
         $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
