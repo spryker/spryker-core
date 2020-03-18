@@ -27,39 +27,31 @@ class MerchantUserCreateFormDataProvider
     }
 
     /**
-     * @param int $merchantId
-     * @param int|null $merchantUserId
+     * @param int $idMerchant
+     * @param int|null $idMerchantUser
      *
      * @return array
      */
-    public function getData(int $merchantId, ?int $merchantUserId = null): array
+    public function getData(int $idMerchant, ?int $idMerchantUser = null): array
     {
-        if ($merchantUserId === null) {
-             return [MerchantUserCreateForm::FIELD_MERCHANT_ID => $merchantId];
+        if ($idMerchantUser === null) {
+             return [MerchantUserCreateForm::FIELD_MERCHANT_ID => $idMerchant];
         }
 
-        $merchantUserCriteria = $this->createMerchantUserCriteria($merchantUserId);
-
-        $merchantUserTransfer = $this->merchantUserFacade->findOne($merchantUserCriteria);
+        $merchantUserTransfer = $this->merchantUserFacade->findOne(
+            (new MerchantUserCriteriaTransfer())
+                ->setIdMerchantUser($idMerchantUser)
+                ->setWithUser(true)
+        );
 
         $merchantUserTransfer->requireUser();
 
         $formData = $this->unsetPasswordField($merchantUserTransfer->getUser()->toArray());
 
-        $formData[MerchantUserCreateForm::FIELD_MERCHANT_ID] = $merchantId;
-        $formData[MerchantUserCreateForm::FIELD_MERCHANT_USER_ID] = $merchantUserId;
+        $formData[MerchantUserCreateForm::FIELD_MERCHANT_ID] = $idMerchant;
+        $formData[MerchantUserCreateForm::FIELD_MERCHANT_USER_ID] = $idMerchantUser;
 
         return $formData;
-    }
-
-    /**
-     * @param int $merchantUserId
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserCriteriaTransfer
-     */
-    protected function createMerchantUserCriteria(int $merchantUserId): MerchantUserCriteriaTransfer
-    {
-        return (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserId)->setWithUser(true);
     }
 
     /**

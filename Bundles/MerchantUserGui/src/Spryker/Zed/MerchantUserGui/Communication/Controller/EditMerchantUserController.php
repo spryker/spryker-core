@@ -28,11 +28,11 @@ class EditMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-        $merchantUserId = $this->castId($request->get(static::MERCHANT_USER_ID_PARAM_NAME));
+        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchantUser = $this->castId($request->get(static::MERCHANT_USER_ID_PARAM_NAME));
 
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
-        $providerData = $dataProvider->getData($merchantId, $merchantUserId);
+        $providerData = $dataProvider->getData($idMerchant, $idMerchantUser);
 
         $merchantUserUpdateForm = $this->getFactory()
             ->getMerchantUserUpdateForm($providerData, $dataProvider->getOptions())
@@ -44,7 +44,7 @@ class EditMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserUpdateForm->createView(),
-            'merchantId' => $merchantId,
+            'merchantId' => $idMerchant,
         ]);
     }
 
@@ -56,11 +56,11 @@ class EditMerchantUserController extends AbstractController
      */
     protected function updateMerchant(Request $request, FormInterface $merchantUserUpdateForm)
     {
-        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
 
         $redirectUrl = sprintf(
             '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $merchantId,
+            $idMerchant,
             '#tab-content-merchant-user'
         );
 
