@@ -17,18 +17,20 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "singleBundle": true,
             "outputPath": "../../../../../public/Zed/assets/js/mp-profile",
-            "index": "",
+            "index": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [],
+            "assets": [
+              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/assets"
+            ],
             "styles": [
               "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/styles.less"
             ],
-            "scripts": []
+            "scripts": [],
+            "singleBundle": true
           },
           "configurations": {
             "production": {
@@ -39,11 +41,10 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -86,8 +87,13 @@
             "polyfills": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [],
-            "styles": [],
+            "assets": [
+              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/favicon.ico",
+              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/assets"
+            ],
+            "styles": [
+              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/styles.less"
+            ],
             "scripts": []
           }
         },

@@ -8,6 +8,6 @@
     "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/main.ts"
   ],
   "include": [
-    "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/**/*.ts"
+    "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/**/*.d.ts"
   ]
 }

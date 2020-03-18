@@ -186,6 +186,7 @@
                                 <spy-form-item
                                     for="{{ businessInfoTab.contact_person_phone.vars.id }}"
                                     error="{{ businessInfoTab.contact_person_phone.vars.errors[0].message | default | trans }}"
+                                    no-spaces="true"
                                 >
                                     {{ businessInfoTab.contact_person_phone.vars.label | trans}}
                                     <spy-input
@@ -246,6 +247,7 @@
                                 <spy-form-item
                                     for="{{ businessInfoTab.merchant_reference.vars.id }}"
                                     error="{{ businessInfoTab.merchant_reference.vars.errors[0].message | default | trans }}"
+                                    no-spaces="true"
                                 >
                                     {{ businessInfoTab.merchant_reference.vars.label | trans }}
                                     {% set referenceAttrs = {
@@ -276,6 +278,7 @@
                                     <spy-form-item
                                         error="{{ urlForm.children.url.vars.errors[0].message | default | trans }}"
                                         no-label="true"
+                                        no-spaces="{{ loop.last ? 'true' : 'false' }}"
                                     >
                                         <spy-input
                                             control

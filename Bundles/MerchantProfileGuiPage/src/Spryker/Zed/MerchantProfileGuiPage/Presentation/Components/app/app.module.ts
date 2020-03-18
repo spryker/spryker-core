@@ -19,76 +19,76 @@ import { ProfileModule } from './profile/profile.module';
 import { IconUnitedStatesModule, IconGermanyModule } from '../icons';
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    ButtonModule,
-    CardModule,
-    FormItemModule,
-    InputModule,
-    CollapsibleModule,
-    IconModule,
-    TextareaModule,
-    ToggleModule,
-    SelectModule,
-    LabelModule,
-    IconUnitedStatesModule,
-    IconGermanyModule,
-    TabsModule,
-    ProfileModule,
-  ],
-  providers: [],
-  declarations: [],
+	imports: [
+		BrowserAnimationsModule,
+		BrowserModule,
+		ButtonModule,
+		CardModule,
+		FormItemModule,
+		InputModule,
+		CollapsibleModule,
+		IconModule,
+		TextareaModule,
+		ToggleModule,
+		SelectModule,
+		LabelModule,
+		IconUnitedStatesModule,
+		IconGermanyModule,
+		TabsModule,
+		ProfileModule,
+	],
+	providers: [],
+	declarations: [],
 })
 export class AppModule extends CustomElementModule {
-  protected components = [
-    {
-      selector: 'mp-profile',
-      component: ProfileComponent
-    },
-    {
-      selector: 'spy-button',
-      component: ButtonComponent
-    },
-    {
-      selector: 'spy-form-item',
-      component: FormItemComponent
-    },
-    {
-      selector: 'spy-input',
-      component: InputComponent
-    },
-    {
-      selector: 'spy-textarea',
-      component: TextareaComponent
-    },
-    {
-      selector: 'spy-card',
-      component: CardComponent
-    },
-    {
-      selector: 'spy-collapsible',
-      component: CollapsibleComponent
-    },
-    {
-      selector: 'spy-toggle',
-      component: ToggleComponent
-    },
-    {
-      selector: 'spy-select',
-      component: SelectComponent
-    },
-    {
-      selector: 'spy-label',
-      component: LabelComponent
-    },
-    {
-      selector: 'spy-tabs',
-      component: TabsComponent
-    },
-    {
-      selector: 'spy-tab',
-      component: TabComponent
-    }
-  ];
+	protected components = [
+		{
+			selector: 'mp-profile',
+			component: ProfileComponent
+		},
+		{
+			selector: 'spy-button',
+			component: ButtonComponent
+		},
+		{
+			selector: 'spy-form-item',
+			component: FormItemComponent
+		},
+		{
+			selector: 'spy-input',
+			component: InputComponent
+		},
+		{
+			selector: 'spy-textarea',
+			component: TextareaComponent
+		},
+		{
+			selector: 'spy-card',
+			component: CardComponent
+		},
+		{
+			selector: 'spy-collapsible',
+			component: CollapsibleComponent
+		},
+		{
+			selector: 'spy-toggle',
+			component: ToggleComponent
+		},
+		{
+			selector: 'spy-select',
+			component: SelectComponent
+		},
+		{
+			selector: 'spy-label',
+			component: LabelComponent
+		},
+		{
+			selector: 'spy-tabs',
+			component: TabsComponent
+		},
+		{
+			selector: 'spy-tab',
+			component: TabComponent
+		}
+	];
 }
