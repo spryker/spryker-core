@@ -1,4 +1,4 @@
-{% extends '@ZedUi/Layout/merchant-layout.twig' %}
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
 
 {% set merchantProfileForm = form.children.merchantProfile %}
 {% set addressCollection = merchantProfileForm.children.addressCollection %}
@@ -64,7 +64,7 @@
     {% endif %}
 {% endmacro %}
 
-{% block body %}
+{% block content %}
     <form name="{{ form.vars.name }}" method="{{ form.vars.method }}">
         <input type="hidden" id="{{ id_merchant.vars.id }}" name="{{ id_merchant.vars.full_name }}" value="{{ id_merchant.vars.value }}" />
         <input type="hidden" id="{{ description_glossary_key.vars.id }}" name="{{ description_glossary_key.vars.full_name }}" value="{{ description_glossary_key.vars.value }}" />
@@ -92,7 +92,7 @@
                 <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ isBusinessInfoTabHasError | boolToStr }}">
                     <div class="mp-profile__row">
                         <div class="mp-profile__col mp-profile__col--business-left">
-                            <spy-card title="{{ 'Contact Person Details' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Contact Person Details' | trans }}">
                                 <spy-form-item
                                     for="{{ businessInfoTab.contact_person_role.vars.id }}"
                                     error="{{ businessInfoTab.contact_person_role.vars.errors[0].message | default | trans }}"
@@ -204,7 +204,7 @@
                             </spy-card>
                         </div>
                         <div class="mp-profile__col mp-profile__col--business-right">
-                            <spy-card title="{{ 'Merchant Company Details' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Merchant Company Details' | trans }}">
                                 <spy-form-item
                                     for="{{ businessInfoTab.name.vars.id }}"
                                     error="{{ businessInfoTab.name.vars.errors[0].message | default | trans }}"
@@ -271,12 +271,11 @@
                 <spy-tab title="{{ 'Online Profile' | trans }}" has-warning="{{ isOnlineProfileTabHasError | boolToStr }}">
                     <div class="mp-profile__row">
                         <div class="mp-profile__col mp-profile__col--online-left">
-                            <spy-card title="{{ 'Store Profile URL' | trans }} *">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Store Profile URL' | trans }} *">
                                 {% for urlForm in onlineProfileTab.urlCollection.children %}
                                     <spy-form-item
                                         error="{{ urlForm.children.url.vars.errors[0].message | default | trans }}"
                                         no-label="true"
-                                        no-spaces="true"
                                     >
                                         <spy-input
                                             control
@@ -295,7 +294,7 @@
                                     </spy-form-item>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'About the store' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'About the store' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
 
@@ -321,7 +320,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Visual assets' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Visual assets' | trans }}">
                                 <spy-form-item
                                     for="{{ onlineProfileTab.logo_url.vars.id }}"
                                     error="{{ onlineProfileTab.logo_url.vars.errors[0].message | default | trans }}"
@@ -340,6 +339,10 @@
                                     >
                                     </spy-input>
                                 </spy-form-item>
+
+                                <spy-label cloak>
+                                    {{ 'Banner URL' | trans }} *
+                                </spy-label>
 
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set bannerUrlGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.bannerUrlGlossaryKey %}
@@ -370,7 +373,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Contact Details & Address' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Contact Details & Address' | trans }}">
                                 <div class="mp-profile__row">
                                     <div class="mp-profile__col mp-profile__col--half">
                                         <spy-form-item
@@ -595,7 +598,7 @@
                                     </div>
                                 </div>
                             </spy-card>
-                            <spy-card title="{{ 'Average Delivery Time' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Average Delivery Time' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set deliveryTimeGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.deliveryTimeGlossaryKey %}
 
@@ -625,7 +628,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Terms and Conditions' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Terms and Conditions' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
 
@@ -651,7 +654,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Return Policy' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Return Policy' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set cancellationPolicyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.cancellationPolicyGlossaryKey %}
 
@@ -677,7 +680,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Imprint' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Imprint' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set imprintGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.imprintGlossaryKey %}
 
@@ -703,7 +706,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card title="{{ 'Data Privacy' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Data Privacy' | trans }}">
                                 {% for form in onlineProfileTab.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set dataPrivacyGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.dataPrivacyGlossaryKey %}
 
@@ -731,7 +734,7 @@
                             </spy-card>
                         </div>
                         <div class="mp-profile__col mp-profile__col--online-right">
-                            <spy-card title="{{ 'Online Status' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Online Status' | trans }}">
                                 <div class="mp-profile__status">
                                     <div>
                                         <h3 class="mp-profile__status-title">Your Store is online.</h3>

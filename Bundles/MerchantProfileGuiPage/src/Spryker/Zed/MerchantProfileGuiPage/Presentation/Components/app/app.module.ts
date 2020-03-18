@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
 import { ButtonModule, ButtonComponent } from '@spryker/button';
@@ -11,6 +12,7 @@ import { TextareaModule, TextareaComponent } from '@spryker/textarea';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
+import { LabelModule, LabelComponent } from '@spryker/label';
 
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
@@ -18,6 +20,7 @@ import { IconUnitedStatesModule, IconGermanyModule } from '../icons';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     ButtonModule,
     CardModule,
@@ -28,6 +31,7 @@ import { IconUnitedStatesModule, IconGermanyModule } from '../icons';
     TextareaModule,
     ToggleModule,
     SelectModule,
+    LabelModule,
     IconUnitedStatesModule,
     IconGermanyModule,
     TabsModule,
@@ -73,6 +77,10 @@ export class AppModule extends CustomElementModule {
     {
       selector: 'spy-select',
       component: SelectComponent
+    },
+    {
+      selector: 'spy-label',
+      component: LabelComponent
     },
     {
       selector: 'spy-tabs',
