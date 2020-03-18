@@ -15,6 +15,11 @@ class ProductRelationDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_RELATION = 'product-relation';
     public const IMPORT_TYPE_PRODUCT_RELATION_STORE = 'product-relation-store';
 
+    /**
+     * @uses \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH
+     */
+    public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
+
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**

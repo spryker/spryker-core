@@ -124,7 +124,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     protected function getRelationIds($idProductAbstract)
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, APPLICATION_STORE);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];

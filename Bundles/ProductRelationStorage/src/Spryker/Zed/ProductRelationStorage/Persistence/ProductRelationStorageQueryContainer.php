@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductRelationStorage\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
+ * @deprecated Will be removed without replacement.
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStoragePersistenceFactory getFactory()
  */
 class ProductRelationStorageQueryContainer extends AbstractQueryContainer implements ProductRelationStorageQueryContainerInterface

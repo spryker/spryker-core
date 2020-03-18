@@ -11,8 +11,8 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\DataSet\ProductRelationStoreDataSetInterface;
+use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
 
 class ProductRelationStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -32,6 +32,6 @@ class ProductRelationStoreWriterStep extends PublishAwareStep implements DataImp
 
         $productRelationEntity = $productRelationStoreEntity->getProductRelation();
 
-        $this->addPublishEvents(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
+        $this->addPublishEvents(ProductRelationDataImportConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
     }
 }

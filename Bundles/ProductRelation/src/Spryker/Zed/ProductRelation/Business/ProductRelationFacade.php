@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
@@ -137,5 +138,48 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array
     {
         return $this->getRepository()->getProductAbstractDataById($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getRepository()->getProductRelationsByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productRelationIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductRelationIds(
+        array $productRelationIds
+    ): array {
+        return $this->getRepository()->getProductAbstractIdsByProductRelationIds($productRelationIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->findProductRelationsForFilter($filterTransfer);
     }
 }

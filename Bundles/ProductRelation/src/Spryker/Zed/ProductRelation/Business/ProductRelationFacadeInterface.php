@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
@@ -124,4 +125,42 @@ interface ProductRelationFacadeInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
+     * Specification:
+     * - Retrieves all product relations by given product abstract identifiers.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract IDs by product relation IDs.
+     *
+     * @api
+     *
+     * @param int[] $productRelationIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductRelationIds(
+        array $productRelationIds
+    ): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product relation transfers according to provided offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     */
+    public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
 }

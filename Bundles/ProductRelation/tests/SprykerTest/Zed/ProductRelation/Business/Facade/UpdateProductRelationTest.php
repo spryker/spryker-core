@@ -55,9 +55,11 @@ class UpdateProductRelationTest extends Unit
         $this->tester->ensureProductRelationTableIsEmpty();
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $relatedProductAbstractTransfer = $this->tester->haveProductAbstract();
+
         $productRelationTransfer = $this->tester->haveProductRelation(
             $productAbstractTransfer->getSku(),
-            $relatedProductAbstractTransfer->getIdProductAbstract()
+            $relatedProductAbstractTransfer->getIdProductAbstract(),
+            'test'
         );
 
         $storeTransfer = $this->tester->haveStore([
@@ -72,6 +74,7 @@ class UpdateProductRelationTest extends Unit
                 $storeTransfer,
             ],
         ])->build();
+
         $productRelationTransfer->setStoreRelation($storeRelationTransfer);
         $productRelationTransfer->setProductRelationKey('test');
 
