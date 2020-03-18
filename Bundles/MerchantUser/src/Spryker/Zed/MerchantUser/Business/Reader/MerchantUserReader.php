@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
+namespace Spryker\Zed\MerchantUser\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
@@ -45,10 +45,10 @@ class MerchantUserReader implements MerchantUserReaderInterface
     {
         $merchantUserTransfer = $this->merchantUserRepository->findOne($merchantUserCriteriaTransfer);
 
-        if ($merchantUserTransfer && $merchantUserCriteriaTransfer->getWithUser()) {
-            $merchantUserTransfer->setUser($this->userFacade->getUserById($merchantUserTransfer->getIdUser()));
+        if (!$merchantUserTransfer || !$merchantUserCriteriaTransfer->getWithUser()) {
+            return $merchantUserTransfer;
         }
 
-        return $merchantUserTransfer;
+        return $merchantUserTransfer->setUser($this->userFacade->getUserById($merchantUserTransfer->getIdUser()));
     }
 }

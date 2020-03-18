@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormView;
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
  */
-class MerchantUserViewExpanderPlugin extends AbstractPlugin implements MerchantUpdateFormViewExpanderPluginInterface
+class MerchantUserViewMerchantUpdateFormViewExpanderPlugin extends AbstractPlugin implements MerchantUpdateFormViewExpanderPluginInterface
 {
     /**
      * {@inheritDoc}

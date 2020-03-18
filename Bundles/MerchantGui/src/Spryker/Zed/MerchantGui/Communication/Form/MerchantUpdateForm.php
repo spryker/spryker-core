@@ -39,14 +39,12 @@ class MerchantUpdateForm extends MerchantCreateForm
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
-     * @return $this
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         foreach ($this->getFactory()->getMerchantUpdateFormViewExpanderPlugins() as $formViewExpanderPlugin) {
-            $formViewExpanderPlugin->expand($view, $form, $options);
+            $view = $formViewExpanderPlugin->expand($view, $form, $options);
         }
-
-        return $this;
     }
 }

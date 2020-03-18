@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 /**
  * Expands FormView with data that needed for the form render.
  *
- * Use this plugin if some additional data must present in form view.
+ * Use this plugin if additional data must present in the form view.
  */
 interface MerchantUpdateFormViewExpanderPluginInterface
 {

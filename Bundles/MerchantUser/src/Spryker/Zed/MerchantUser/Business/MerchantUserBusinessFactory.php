@@ -10,12 +10,12 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreator;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReader;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdater;
-use Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface;
+use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
+use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface;
+use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReader;
+use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface;
+use Spryker\Zed\MerchantUser\Business\Writer\MerchantUserUpdater;
+use Spryker\Zed\MerchantUser\Business\Writer\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -30,7 +30,7 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 class MerchantUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserCreatorInterface
+     * @return \Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface
      */
     public function createMerchantUserCreator(): MerchantUserCreatorInterface
     {
@@ -53,7 +53,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserUpdaterInterface
+     * @return \Spryker\Zed\MerchantUser\Business\Writer\MerchantUserUpdaterInterface
      */
     public function createMerchantUserUpdater(): MerchantUserUpdaterInterface
     {
@@ -65,7 +65,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\MerchantUser\MerchantUserReaderInterface
+     * @return \Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface
      */
     public function createMerchantUserReader(): MerchantUserReaderInterface
     {

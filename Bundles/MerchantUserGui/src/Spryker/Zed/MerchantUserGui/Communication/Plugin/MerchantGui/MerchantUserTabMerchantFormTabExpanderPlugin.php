@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPl
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
  */
-class MerchantUserTabExpanderPlugin extends AbstractPlugin implements MerchantFormTabExpanderPluginInterface
+class MerchantUserTabMerchantFormTabExpanderPlugin extends AbstractPlugin implements MerchantFormTabExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
