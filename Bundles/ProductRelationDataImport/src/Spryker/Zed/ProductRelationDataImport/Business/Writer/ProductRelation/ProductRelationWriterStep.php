@@ -11,8 +11,8 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\DataSet\ProductRelationDataSetInterface;
+use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
 
 class ProductRelationWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -35,6 +35,6 @@ class ProductRelationWriterStep extends PublishAwareStep implements DataImportSt
             ->setIsRebuildScheduled($dataSet[ProductRelationDataSetInterface::COL_IS_REBUILD_SCHEDULED] ?? false)
             ->save();
 
-        $this->addPublishEvents(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
+        $this->addPublishEvents(ProductRelationDataImportConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
     }
 }
