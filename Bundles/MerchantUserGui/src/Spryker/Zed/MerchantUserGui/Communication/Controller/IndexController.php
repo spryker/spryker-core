@@ -23,9 +23,9 @@ class IndexController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $merchantId = $this->castId($request->get('merchant-id'));
+        $idMerchant = $this->castId($request->get('merchant-id'));
 
-        $categoryTable = $this->getFactory()->createMerchantUserTable($merchantId);
+        $categoryTable = $this->getFactory()->createMerchantUserTable($idMerchant);
 
         return $this->jsonResponse(
             $categoryTable->fetchData()

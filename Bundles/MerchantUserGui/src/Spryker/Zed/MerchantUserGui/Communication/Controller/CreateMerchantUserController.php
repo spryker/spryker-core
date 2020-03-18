@@ -29,11 +29,11 @@ class CreateMerchantUserController extends AbstractController
     public function indexAction(Request $request)
     {
         $dataProvider = $this->getFactory()->createMerchantUserCreateFormDataProvider();
-        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-        $merchantUserId = $request->get(static::MERCHANT_USER_ID_PARAM_NAME);
+        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchantUser = $request->get(static::MERCHANT_USER_ID_PARAM_NAME);
 
         $merchantUserForm = $this->getFactory()
-            ->getMerchantUserCreateForm($dataProvider->getData($merchantId, $merchantUserId))
+            ->getMerchantUserCreateForm($dataProvider->getData($idMerchant, $idMerchantUser))
             ->handleRequest($request);
 
         if ($merchantUserForm->isSubmitted() && $merchantUserForm->isValid()) {
@@ -42,7 +42,7 @@ class CreateMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserForm->createView(),
-            'merchantId' => $merchantId,
+            'merchantId' => $idMerchant,
         ]);
     }
 
@@ -54,17 +54,17 @@ class CreateMerchantUserController extends AbstractController
      */
     protected function createMerchantUser(Request $request, FormInterface $merchantForm)
     {
-        $merchantId = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
 
         $redirectUrl = sprintf(
             '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $merchantId,
+            $idMerchant,
             '#tab-content-merchant-user'
         );
 
         $userTransfer = (new UserTransfer())->fromArray($merchantForm->getData(), true);
         $merchantUserTransfer = (new MerchantUserTransfer())->setUser($userTransfer)
-            ->setIdMerchant($merchantId);
+            ->setIdMerchant($idMerchant);
 
         $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create($merchantUserTransfer);
 
@@ -80,7 +80,7 @@ class CreateMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantForm->createView(),
-            'merchantId' => $merchantId,
+            'merchantId' => $idMerchant,
         ]);
     }
 }

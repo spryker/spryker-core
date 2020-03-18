@@ -85,16 +85,16 @@ class MerchantUserTable extends AbstractTable
     /**
      * @var int
      */
-    protected $merchantId;
+    protected $idMerchant;
 
     /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
-     * @param int $merchantId
+     * @param int $idMerchant
      */
-    public function __construct(SpyMerchantUserQuery $merchantUserQuery, int $merchantId)
+    public function __construct(SpyMerchantUserQuery $merchantUserQuery, int $idMerchant)
     {
         $this->merchantUserQuery = $merchantUserQuery;
-        $this->merchantId = $merchantId;
+        $this->idMerchant        = $idMerchant;
     }
 
     /**
@@ -105,7 +105,7 @@ class MerchantUserTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            static::MERCHANT_USER_ID => 'Merchant User Id',
+            static::MERCHANT_USER_ID => 'Merchant User ID',
             static::MERCHANT_USER_NAME => 'E-mail',
             static::MERCHANT_USER_FIRST_NAME => 'First Name',
             static::MERCHANT_USER_LAST_NAME => 'Last Name',
@@ -132,7 +132,7 @@ class MerchantUserTable extends AbstractTable
             static::MERCHANT_USER_STATUS,
         ]);
 
-        $config->setUrl(sprintf('table?%s=%d', 'merchant-id', $this->merchantId));
+        $config->setUrl(sprintf('table?%s=%d', 'merchant-id', $this->idMerchant));
 
         return $config;
     }
@@ -146,7 +146,7 @@ class MerchantUserTable extends AbstractTable
     {
         $query = $this->merchantUserQuery
             ->innerJoinSpyUser()
-            ->filterByFkMerchant($this->merchantId)
+            ->filterByFkMerchant($this->idMerchant)
             ->withColumn(static::COL_STATUS, static::MERCHANT_USER_STATUS)
             ->withColumn(static::COL_FIRST_NAME, static::MERCHANT_USER_FIRST_NAME)
             ->withColumn(static::COL_LAST_NAME, static::MERCHANT_USER_LAST_NAME)
@@ -188,7 +188,7 @@ class MerchantUserTable extends AbstractTable
                 '/merchant-user-gui/edit-merchant-user',
                 [
                     'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
-                    'merchant-id' => $this->merchantId,
+                    'merchant-id' => $this->idMerchant,
                 ]
             ),
             'Edit'
@@ -234,7 +234,7 @@ class MerchantUserTable extends AbstractTable
                 '/merchant-user-gui/merchant-user-status',
                 [
                     'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
-                    'merchant-id' => $this->merchantId,
+                    'merchant-id' => $this->idMerchant,
                     'status' => $availableStatus,
                 ]
             ),
