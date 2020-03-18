@@ -9,7 +9,7 @@ namespace Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 
-interface DiscountPromotionsRestApiToDiscountPromotionInterface
+interface DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
 {
     /**
      * @param string $uuid
