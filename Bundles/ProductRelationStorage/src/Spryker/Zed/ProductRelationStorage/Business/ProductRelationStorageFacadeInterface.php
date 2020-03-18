@@ -76,7 +76,7 @@ interface ProductRelationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Publishes product relation data by create, update and delete events from spy_product_relation_product_abstract table.
+     * - Publishes product relation data by create and delete events from spy_product_relation_product_abstract table.
      *
      * @api
      *
