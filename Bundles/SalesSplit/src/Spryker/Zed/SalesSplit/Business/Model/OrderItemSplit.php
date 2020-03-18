@@ -13,12 +13,15 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 
 class OrderItemSplit implements OrderItemSplitInterface
 {
+    use TransactionTrait;
+
     public const SPLIT_MARKER = 'split#';
 
     /**
@@ -75,11 +78,9 @@ class OrderItemSplit implements OrderItemSplitInterface
                 ->setValidationMessages($this->validator->getMessages());
         }
 
-        $this->getConnection()->beginTransaction();
-        $newSalesOrderItem = $this->copy($salesOrderItemEntity, $quantityToSplit);
-        $this->updateParentQuantity($salesOrderItemEntity, $quantityToSplit);
-
-        $this->getConnection()->commit();
+        $newSalesOrderItem = $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderItemEntity, $quantityToSplit): SpySalesOrderItem {
+            return $this->executeSplitTransaction($salesOrderItemEntity, $quantityToSplit);
+        });
 
         return $splitResponseTransfer
             ->setSuccess(true)
@@ -90,6 +91,20 @@ class OrderItemSplit implements OrderItemSplitInterface
                     $salesOrderItemEntity->getIdSalesOrderItem()
                 )
             );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param int $quantityToSplit
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function executeSplitTransaction(SpySalesOrderItem $salesOrderItemEntity, int $quantityToSplit): SpySalesOrderItem
+    {
+        $newSalesOrderItem = $this->copy($salesOrderItemEntity, $quantityToSplit);
+        $this->updateParentQuantity($salesOrderItemEntity, $quantityToSplit);
+
+        return $newSalesOrderItem;
     }
 
     /**

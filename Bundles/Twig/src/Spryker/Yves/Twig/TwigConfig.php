@@ -47,16 +47,16 @@ class TwigConfig extends AbstractBundleConfig
 
         foreach ($namespaces as $namespace) {
             if ($themeName !== '' && $themeName !== $themeNameDefault) {
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
-                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
             }
 
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeNameDefault;
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeNameDefault;
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeNameDefault;
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeNameDefault;
         }
 
         return $paths;
@@ -92,8 +92,8 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getCoreNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $this->getThemeNameDefault();
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $this->getThemeNameDefault();
+            $paths[] = rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $this->getThemeNameDefault();
+            $paths[] = rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $this->getThemeNameDefault();
         }
 
         return $paths;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 
-class DiscountPromotionsRestApiToDiscountPromotionBridge implements DiscountPromotionsRestApiToDiscountPromotionInterface
+class DiscountPromotionsRestApiToDiscountPromotionFacadeBridge implements DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
 {
     /**
      * @var \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface
