@@ -290,17 +290,8 @@
                                             cloak
                                         >
                                         </spy-input>
-                                        <spy-input
-                                                control
-                                                attrs=""
-                                                spy-id="{{ urlForm.children.fkLocale.vars.id }}"
-                                                name="{{ urlForm.children.fkLocale.vars.full_name }}"
-                                                value="{{ urlForm.children.fkLocale.vars.value }}"
-                                                type="hidden"
-                                                cloak
-                                        >
-                                        </spy-input>
                                     </spy-form-item>
+                                    <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
                                 {% endfor %}
                             </spy-card>
                             <spy-card class="mp-profile__card" cloak title="{{ 'About the store' | trans }}">
