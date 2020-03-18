@@ -69,6 +69,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationContactUrl(): string
@@ -77,6 +79,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationContactEmail(): string
@@ -85,6 +89,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationTitleInfo(): string
