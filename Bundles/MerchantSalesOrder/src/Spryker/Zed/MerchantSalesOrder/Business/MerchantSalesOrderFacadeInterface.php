@@ -81,4 +81,16 @@ interface MerchantSalesOrderFacadeInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification:
+     * - Expands order with merchant references of order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchants(OrderTransfer $orderTransfer): OrderTransfer;
 }
