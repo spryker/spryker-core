@@ -8,13 +8,12 @@
 namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductRelationGui\Communication\ProductRelationGuiCommunicationFactory getFactory()
  */
-class ViewController extends AbstractController
+class ViewController extends BaseProductRelationController
 {
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
     protected const REDIRECT_URL = '/product-relation-gui/list/index';
@@ -40,7 +39,7 @@ class ViewController extends AbstractController
 
         $productRelationResponseTransfer->requireProductRelation();
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
-        $productTable = $this->getFactory()->createProductTable($idProductRelation);
+        $productRuleTable = $this->getFactory()->createProductRuleTable($productRelationTransfer);
 
         $productAbstractTransfer = $this->getFactory()
             ->getProductFacade()
@@ -53,7 +52,7 @@ class ViewController extends AbstractController
         return [
             'productRelation' => $productRelationTransfer,
             'product' => $productAbstractTransfer,
-            'productTable' => $productTable->render(),
+            'productRuleTable' => $productRuleTable->render(),
             'locale' => $localeTransfer,
         ];
     }
