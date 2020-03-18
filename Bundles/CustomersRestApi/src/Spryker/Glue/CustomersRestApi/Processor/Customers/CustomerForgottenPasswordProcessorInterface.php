@@ -17,5 +17,7 @@ interface CustomerForgottenPasswordProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function sendPasswordRestoreMail(RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface;
+    public function sendPasswordRestoreMail(
+        RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
+    ): RestResponseInterface;
 }

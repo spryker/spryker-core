@@ -197,8 +197,12 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */
-    protected function createGlobalAggregation(array $facetFilters, FacetConfigTransfer $facetConfigTransfer, BoolQuery $boolQuery, AbstractAggregation $facetAggregation): AbstractAggregation
-    {
+    protected function createGlobalAggregation(
+        array $facetFilters,
+        FacetConfigTransfer $facetConfigTransfer,
+        BoolQuery $boolQuery,
+        AbstractAggregation $facetAggregation
+    ): AbstractAggregation {
         $aggregationFilterQuery = $this->getGlobalAggregationFilters($facetConfigTransfer, $boolQuery, $facetFilters);
 
         $filterAggregation = $this

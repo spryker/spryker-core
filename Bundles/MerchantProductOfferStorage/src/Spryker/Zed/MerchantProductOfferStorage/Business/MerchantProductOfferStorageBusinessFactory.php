@@ -23,6 +23,7 @@ use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependenc
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
  */
 class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
@@ -48,8 +49,8 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferStorageWriter(
             $this->getEventBehaviorFacade(),
-            $this->getProductOfferFacade(),
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade()
         );

@@ -20,6 +20,8 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     public const PERMISSION_CONTEXT_CURRENCY_CODE = 'PERMISSION_CONTEXT_CURRENCY_CODE';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRequiredQuoteFieldsForApprovalProcess(): array
@@ -28,6 +30,8 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed without replacement. BC-reason only.
      *
      * @return bool

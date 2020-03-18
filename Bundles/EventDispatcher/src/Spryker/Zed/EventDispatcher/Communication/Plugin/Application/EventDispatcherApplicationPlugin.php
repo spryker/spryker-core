@@ -86,8 +86,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function copyExistingListeners(EventDispatcherInterface $eventDispatcher, SymfonyEventDispatcherInterface $existingEventDispatcher): EventDispatcherInterface
-    {
+    protected function copyExistingListeners(
+        EventDispatcherInterface $eventDispatcher,
+        SymfonyEventDispatcherInterface $existingEventDispatcher
+    ): EventDispatcherInterface {
         $existingListeners = $existingEventDispatcher->getListeners();
 
         foreach ($existingListeners as $eventName => $eventListeners) {

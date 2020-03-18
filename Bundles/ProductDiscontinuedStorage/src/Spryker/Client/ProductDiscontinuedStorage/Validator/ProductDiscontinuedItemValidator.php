@@ -31,8 +31,10 @@ class ProductDiscontinuedItemValidator implements ProductDiscontinuedItemValidat
      * @param \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader
      * @param \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface $localeClient
      */
-    public function __construct(ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader, ProductDiscontinuedStorageToLocaleClientInterface $localeClient)
-    {
+    public function __construct(
+        ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader,
+        ProductDiscontinuedStorageToLocaleClientInterface $localeClient
+    ) {
         $this->productDiscontinuedStorageReader = $productDiscontinuedStorageReader;
         $this->localeClient = $localeClient;
     }

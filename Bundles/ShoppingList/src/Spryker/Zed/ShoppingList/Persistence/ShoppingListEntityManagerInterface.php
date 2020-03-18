@@ -133,7 +133,9 @@ interface ShoppingListEntityManagerInterface
      *
      * @return void
      */
-    public function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer): void;
+    public function createShoppingListCompanyBusinessUnitBlacklist(
+        ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+    ): void;
 
     /**
      * @param int $idShoppingList

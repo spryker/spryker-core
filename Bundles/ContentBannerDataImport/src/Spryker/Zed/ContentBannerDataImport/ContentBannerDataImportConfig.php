@@ -16,6 +16,8 @@ class ContentBannerDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CONTENT_BANNER = 'content-banner';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getContentBannerDataImporterConfiguration(): DataImporterConfigurationTransfer
