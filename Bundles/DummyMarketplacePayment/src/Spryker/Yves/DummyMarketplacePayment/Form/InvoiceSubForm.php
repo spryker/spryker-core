@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\DummyMarketplacePayment\Form;
@@ -15,15 +15,13 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentFactory getFactory()
+ */
 class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
     public const FIELD_DATE_OF_BIRTH = 'dateOfBirth';
-    public const MIN_BIRTHDAY_DATE_STRING = '-18 years';
 
     protected const PAYMENT_METHOD = 'invoice';
 
@@ -102,35 +100,12 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                     'placeholder' => 'customer.birth_date',
                 ],
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
-                    $this->createBirthdayConstraint(),
+                    $this->getFactory()->createNotBlankConstraint(),
+                    $this->getFactory()->createDateOfBirthValueConstraint(),
                 ],
             ]
         );
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    protected function createNotBlankConstraint(): Constraint
-    {
-        return new NotBlank(['groups' => $this->getPropertyPath()]);
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    protected function createBirthdayConstraint(): Constraint
-    {
-        return new Callback([
-            'callback' => function ($date, ExecutionContextInterface $context) {
-                if (strtotime($date) > strtotime(static::MIN_BIRTHDAY_DATE_STRING)) {
-                    $context->addViolation('checkout.step.payment.must_be_older_than_18_years');
-                }
-            },
-            'groups' => $this->getPropertyPath(),
-        ]);
     }
 }

@@ -2,18 +2,21 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\DummyMarketplacePayment;
 
 use Spryker\Yves\DummyMarketplacePayment\Expander\DummyMarketplacePaymentExpander;
 use Spryker\Yves\DummyMarketplacePayment\Expander\DummyMarketplacePaymentExpanderInterface;
+use Spryker\Yves\DummyMarketplacePayment\Form\Constraint\DateOfBirthValueConstraint;
 use Spryker\Yves\DummyMarketplacePayment\Form\DataProvider\InvoiceFormDataProvider;
 use Spryker\Yves\DummyMarketplacePayment\Form\InvoiceSubForm;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
@@ -42,5 +45,21 @@ class DummyMarketplacePaymentFactory extends AbstractFactory
     public function createInvoiceFormDataProvider(): StepEngineFormDataProviderInterface
     {
         return new InvoiceFormDataProvider();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createDateOfBirthValueConstraint(): Constraint
+    {
+        return new DateOfBirthValueConstraint();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createNotBlankConstraint(): Constraint
+    {
+        return new NotBlank();
     }
 }

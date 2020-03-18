@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 
 interface MerchantOmsFacadeInterface
 {
@@ -49,9 +48,9 @@ interface MerchantOmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByCriteria(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
+    public function getStateMachineItemsByStateIds(array $stateIds): array;
 }

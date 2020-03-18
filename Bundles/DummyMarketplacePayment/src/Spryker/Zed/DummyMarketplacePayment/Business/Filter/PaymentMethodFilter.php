@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DummyMarketplacePayment\Business\Filter;
@@ -60,11 +60,11 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     protected function hasItemsProductOfferReference(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getProductOfferReference()) {
-                return false;
+            if ($itemTransfer->getProductOfferReference()) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

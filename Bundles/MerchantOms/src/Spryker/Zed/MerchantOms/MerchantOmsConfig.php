@@ -30,10 +30,24 @@ class MerchantOmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string
+     * @return array
      */
-    public function getMerchantStateMachineInitialState(): string
+    public function getMerchantOmsActiveProcesses(): array
     {
-        return static::MERCHANT_STATE_MACHINE_INITIAL_STATE;
+        return [
+            static::MERCHANT_OMS_DEFAULT_PROCESS_NAME,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getMerchantProcessInitialStateMap(): array
+    {
+        return [
+            static::MERCHANT_OMS_DEFAULT_PROCESS_NAME => static::MERCHANT_STATE_MACHINE_INITIAL_STATE,
+        ];
     }
 }

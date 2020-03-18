@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantOms\Persistence;
 interface MerchantOmsRepositoryInterface
 {
     /**
-     * @param int $idState
+     * @param array $stateIds
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getMerchantOrderItemIdsByIdState(int $idState): array;
+    public function getStateMachineItemsByStateIds(array $stateIds): array;
 }
