@@ -52,15 +52,15 @@ class ProductRelationStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductRelationStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    public function findProductRelationStorageDataTransferByIds(FilterTransfer $filterTransfer, array $ids): array
     {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $filterTransfer->setOrderBy(SpyProductAbstractRelationStorageTableMap::COL_ID_PRODUCT_ABSTRACT_RELATION_STORAGE);
+
         $query = $this->getFactory()->createSpyProductAbstractRelationStorageQuery();
 
         if ($ids !== []) {

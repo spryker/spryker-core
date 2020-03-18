@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -117,14 +118,13 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductRelationStorageDataTransfersByIds(int $offset, int $limit, array $ids): array
+    public function findProductRelationStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
     {
-        return $this->getRepository()->findProductRelationStorageDataTransferByIds($offset, $limit, $ids);
+        return $this->getRepository()->findProductRelationStorageDataTransferByIds($filterTransfer, $ids);
     }
 }

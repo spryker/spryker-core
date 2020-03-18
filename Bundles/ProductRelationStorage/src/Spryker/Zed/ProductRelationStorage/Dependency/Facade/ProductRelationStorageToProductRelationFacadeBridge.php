@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 class ProductRelationStorageToProductRelationFacadeBridge implements ProductRelationStorageToProductRelationFacadeInterface
 {
     /**
@@ -43,13 +45,12 @@ class ProductRelationStorageToProductRelationFacadeBridge implements ProductRela
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getFilteredProductRelations(int $offset, int $limit): array
+    public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array
     {
-        return $this->productRelationFacade->getFilteredProductRelations($offset, $limit);
+        return $this->productRelationFacade->findProductRelationsForFilter($filterTransfer);
     }
 }

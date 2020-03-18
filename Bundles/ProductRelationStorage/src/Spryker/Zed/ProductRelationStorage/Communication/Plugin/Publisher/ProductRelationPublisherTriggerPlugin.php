@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -33,9 +34,11 @@ class ProductRelationPublisherTriggerPlugin extends AbstractPlugin implements Pu
      */
     public function getData(int $offset, int $limit): array
     {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
         return $this->getFactory()
             ->getProductRelationFacade()
-            ->getFilteredProductRelations($offset, $limit);
+            ->findProductRelationsForFilter($filterTransfer);
     }
 
     /**
@@ -72,5 +75,18 @@ class ProductRelationPublisherTriggerPlugin extends AbstractPlugin implements Pu
     public function getIdColumnName(): ?string
     {
         return SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

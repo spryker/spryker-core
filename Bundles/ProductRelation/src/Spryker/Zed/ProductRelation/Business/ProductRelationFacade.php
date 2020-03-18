@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
@@ -173,13 +174,12 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getFilteredProductRelations(int $offset, int $limit): array
+    public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->findFilteredProductRelations($offset, $limit);
+        return $this->getRepository()->findProductRelationsForFilter($filterTransfer);
     }
 }

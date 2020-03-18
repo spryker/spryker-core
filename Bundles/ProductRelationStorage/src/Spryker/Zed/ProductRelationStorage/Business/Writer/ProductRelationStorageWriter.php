@@ -175,9 +175,9 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function storeData(array $productRelations)
     {
-        foreach ($productRelations as $idProduct => $productRelationTransfersByStore) {
+        foreach ($productRelations as $idProductAbstract => $productRelationTransfersByStore) {
             foreach ($productRelationTransfersByStore as $store => $productRelationTransfers) {
-                $this->storeDataSet($idProduct, $store, $productRelationTransfers);
+                $this->storeDataSet($idProductAbstract, $store, $productRelationTransfers);
             }
         }
     }
