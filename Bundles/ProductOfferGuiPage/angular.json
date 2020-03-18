@@ -23,6 +23,7 @@
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "singleBundle": true,
             "assets": [
               "src/Spryker/Zed/ProductOfferGuiPage/Presentation/Components/assets"
             ],
@@ -40,14 +41,13 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "singleBundle": true,
               "budgets": [
                 {
                   "type": "initial",
