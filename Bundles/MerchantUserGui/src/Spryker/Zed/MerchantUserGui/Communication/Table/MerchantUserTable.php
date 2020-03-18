@@ -31,10 +31,6 @@ class MerchantUserTable extends AbstractTable
      */
     protected const USER_STATUS_ACTIVE = 'active';
     /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_ID_USER
-     */
-    protected const COL_ID_USER = 'spy_user.id_user';
-    /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_USERNAME
      */
     protected const COL_USERNAME = 'spy_user.username';
@@ -233,7 +229,7 @@ class MerchantUserTable extends AbstractTable
             ? static::USER_STATUS_BLOCKED
             : static::USER_STATUS_ACTIVE;
 
-        $statusButtonCode = $this->generateButton(
+        return $this->generateButton(
             Url::generate(
                 '/merchant-user-gui/merchant-user-status',
                 [
@@ -248,8 +244,6 @@ class MerchantUserTable extends AbstractTable
                 'class' => static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_class'],
             ]
         );
-
-        return $statusButtonCode;
     }
 
     /**
