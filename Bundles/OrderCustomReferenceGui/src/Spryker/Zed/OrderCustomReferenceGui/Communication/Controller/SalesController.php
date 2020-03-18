@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SalesController extends AbstractController
 {
-    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED = 'Order Custom Reference was successfully changed.';
+    protected const MESSAGE_ORDER_CUSTOM_REFERENCE_SUCCESSFULLY_CHANGED = 'Custom order reference was successfully changed.';
 
     protected const PARAM_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
     protected const PARAM_ID_SALES_ORDER = 'idSalesOrder';
