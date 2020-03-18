@@ -64,7 +64,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

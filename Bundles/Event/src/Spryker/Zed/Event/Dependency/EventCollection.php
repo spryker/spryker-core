@@ -72,8 +72,14 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
-    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0, $queuePoolName = null, $eventQueueName = null)
-    {
+    protected function add(
+        $eventName,
+        EventBaseHandlerInterface $eventHandler,
+        $isHandledInQueue = false,
+        $priority = 0,
+        $queuePoolName = null,
+        $eventQueueName = null
+    ) {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = new SplPriorityQueue();
         }

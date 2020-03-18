@@ -55,7 +55,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

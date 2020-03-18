@@ -60,7 +60,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {
