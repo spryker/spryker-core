@@ -29,10 +29,15 @@
 
     <transfer name="PaymentMethod">
         <property name="methodName" type="string"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
     </transfer>
 
     <transfer name="Item">
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
