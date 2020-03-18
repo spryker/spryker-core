@@ -308,6 +308,25 @@ class MerchantSalesOrderFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandOrderWithMerchants(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemTransfer())->setMerchantReference(static::TEST_MERCHANT_REFERENCE);
+        $orderTransfer = (new OrderTransfer())->addItem($itemTransfer);
+
+        // Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchants($orderTransfer);
+
+        // Assert
+        $this->assertCount($orderTransfer->getItems()->count(), $orderTransfer->getMerchantReferences());
+        $this->assertSame($itemTransfer->getMerchantReference(), $orderTransfer->getMerchantReferences()[0]);
+    }
+
+    /**
      * @return array
      */
     public function getMerchantOrderPositiveScenarioDataProvider(): array
