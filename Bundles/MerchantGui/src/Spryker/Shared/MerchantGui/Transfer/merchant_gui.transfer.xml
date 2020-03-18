@@ -8,6 +8,7 @@
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>
         <property name="addressCollection" type="MerchantAddressCollection"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -72,6 +73,11 @@
         <property name="idUrl" type="int"/>
         <property name="url" type="string"/>
         <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>

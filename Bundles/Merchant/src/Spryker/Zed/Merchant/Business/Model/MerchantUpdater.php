@@ -132,8 +132,8 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer);
+        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
         return $merchantTransfer;

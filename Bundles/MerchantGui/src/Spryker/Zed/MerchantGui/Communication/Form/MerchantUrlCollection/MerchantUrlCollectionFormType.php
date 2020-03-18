@@ -2,10 +2,10 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection;
+namespace Spryker\Zed\MerchantGui\Communication\Form\MerchantUrlCollection;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -17,10 +17,10 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
-class MerchantProfileUrlCollectionFormType extends AbstractType
+class MerchantUrlCollectionFormType extends AbstractType
 {
     public const FIELD_URL = 'url';
     protected const TEMPLATE_PATH = 'url';

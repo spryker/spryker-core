@@ -10,7 +10,9 @@ namespace Spryker\Zed\MerchantGui;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -19,6 +21,8 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
+    public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_DATA_EXPANDER = 'PLUGINS_MERCHANT_TABLE_DATA_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER = 'PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER';
@@ -43,6 +47,8 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantTableHeaderExpanderPlugins($container);
         $container = $this->addMerchantTableConfigExpanderPlugins($container);
         $container = $this->addMerchantFormTabsExpanderPlugins($container);
+        $container = $this->addUrlFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -154,6 +160,34 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_MERCHANT_FORM_TABS_EXPANDER, function () {
             return $this->getMerchantFormTabsExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_URL, function (Container $container) {
+            return new MerchantGuiToUrlFacadeBridge($container->getLocator()->url()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new MerchantGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;

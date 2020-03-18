@@ -2,13 +2,13 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint;
+namespace Spryker\Zed\MerchantGui\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantUrlCollection\MerchantUrlCollectionFormType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -42,14 +42,14 @@ class UniqueUrlValidator extends ConstraintValidator
         if ($this->hasUrl($value->getUrl(), $constraint)) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
-                ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
+                ->atPath(MerchantUrlCollectionFormType::FIELD_URL)
                 ->addViolation();
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     * @param \Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */
@@ -58,8 +58,8 @@ class UniqueUrlValidator extends ConstraintValidator
         $existingUrlTransfer = $this->findUrl($urlTransfer->getUrl(), $constraint);
         if (
             $existingUrlTransfer
-            && $existingUrlTransfer->getFkResourceMerchantProfile()
-            && (int)$existingUrlTransfer->getFkResourceMerchantProfile() === (int)$urlTransfer->getFkResourceMerchantProfile()
+            && $existingUrlTransfer->getFkResourceMerchant()
+            && (int)$existingUrlTransfer->getFkResourceMerchant() === (int)$urlTransfer->getFkResourceMerchant()
         ) {
             return false;
         }
@@ -69,7 +69,7 @@ class UniqueUrlValidator extends ConstraintValidator
 
     /**
      * @param string $url
-     * @param \Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
@@ -85,7 +85,7 @@ class UniqueUrlValidator extends ConstraintValidator
 
     /**
      * @param string $url
-     * @param \Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */

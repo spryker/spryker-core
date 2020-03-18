@@ -2,15 +2,15 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer;
+namespace Spryker\Zed\MerchantGui\Communication\Form\Transformer;
 
 use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
-class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInterface
+class MerchantUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer[] $value
@@ -19,18 +19,18 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      */
     public function transform($value): ArrayObject
     {
-        $merchantProfileUrlCollection = new ArrayObject();
+        $merchantUrlCollection = new ArrayObject();
         if (empty($value)) {
-            return $merchantProfileUrlCollection;
+            return $merchantUrlCollection;
         }
         foreach ($value as $urlTransfer) {
             $url = $urlTransfer->getUrl();
             $url = preg_replace('#^' . $urlTransfer->getUrlPrefix() . '#i', '', $url);
             $urlTransfer->setUrl($url);
-            $merchantProfileUrlCollection->append($urlTransfer);
+            $merchantUrlCollection->append($urlTransfer);
         }
 
-        return $merchantProfileUrlCollection;
+        return $merchantUrlCollection;
     }
 
     /**
@@ -40,24 +40,24 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      */
     public function reverseTransform($value): ArrayObject
     {
-        $merchantProfileUrlCollection = new ArrayObject();
+        $merchantUrlCollection = new ArrayObject();
         if (empty($value)) {
-            return $merchantProfileUrlCollection;
+            return $merchantUrlCollection;
         }
         foreach ($value as $urlTransfer) {
             $urlPrefix = $urlTransfer->getUrlPrefix();
             $url = $urlTransfer->getUrl();
             if ($urlPrefix === null || preg_match('#^' . $urlPrefix . '#i', $url) > 0) {
-                $merchantProfileUrlCollection->append($urlTransfer);
+                $merchantUrlCollection->append($urlTransfer);
 
                 continue;
             }
             $url = preg_replace('#^/#', '', $url);
             $urlWithPrefix = $urlPrefix . $url;
             $urlTransfer->setUrl($urlWithPrefix);
-            $merchantProfileUrlCollection->append($urlTransfer);
+            $merchantUrlCollection->append($urlTransfer);
         }
 
-        return $merchantProfileUrlCollection;
+        return $merchantUrlCollection;
     }
 }

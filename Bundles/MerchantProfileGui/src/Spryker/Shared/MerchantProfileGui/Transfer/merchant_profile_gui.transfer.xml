@@ -9,7 +9,6 @@
 
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="fkMerchant" type="int"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>

@@ -50,4 +50,16 @@ class MerchantGuiConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_DENIED
      */
     public const STATUS_DENIED = 'denied';
+
+    protected const PREFIX_MERCHANT_PROFILE_URL = 'merchant';
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantUrlPrefix(): string
+    {
+        return static::PREFIX_MERCHANT_PROFILE_URL;
+    }
 }
