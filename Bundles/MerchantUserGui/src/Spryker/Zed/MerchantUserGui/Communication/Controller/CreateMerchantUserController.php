@@ -42,7 +42,7 @@ class CreateMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserForm->createView(),
-            'merchantId' => $idMerchant,
+            'idMerchant' => $idMerchant,
         ]);
     }
 
@@ -80,7 +80,7 @@ class CreateMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantForm->createView(),
-            'merchantId' => $idMerchant,
+            'idMerchant' => $idMerchant,
         ]);
     }
 }

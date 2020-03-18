@@ -44,7 +44,7 @@ class EditMerchantUserController extends AbstractController
 
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserUpdateForm->createView(),
-            'merchantId' => $idMerchant,
+            'idMerchant' => $idMerchant,
         ]);
     }
 

@@ -94,7 +94,7 @@ class MerchantUserTable extends AbstractTable
     public function __construct(SpyMerchantUserQuery $merchantUserQuery, int $idMerchant)
     {
         $this->merchantUserQuery = $merchantUserQuery;
-        $this->idMerchant        = $idMerchant;
+        $this->idMerchant = $idMerchant;
     }
 
     /**
