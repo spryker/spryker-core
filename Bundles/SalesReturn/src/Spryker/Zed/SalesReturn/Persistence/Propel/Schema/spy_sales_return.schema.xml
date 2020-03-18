@@ -66,7 +66,7 @@
 
     <table name="spy_sales_return_reason" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return_reason" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="glossary_key_reason" type="LONGVARCHAR" required="true"/>
+        <column name="glossary_key_reason" required="true" type="VARCHAR" size="5000"/>
 
         <unique name="spy_sales_return_reason-glossary_key_reason">
             <unique-column name="glossary_key_reason"/>
