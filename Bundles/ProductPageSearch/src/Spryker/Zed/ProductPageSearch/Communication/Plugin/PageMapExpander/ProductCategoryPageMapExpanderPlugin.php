@@ -48,8 +48,12 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $directParentCategories = $productData['category_node_ids'];
         $allParentCategories = $productData['all_parent_category_ids'];
 

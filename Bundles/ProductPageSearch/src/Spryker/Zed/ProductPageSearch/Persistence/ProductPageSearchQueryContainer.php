@@ -103,8 +103,10 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(array $productAbstractIds, StoreTransfer $storeTransfer): SpyProductAbstractLocalizedAttributesQuery
-    {
+    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(
+        array $productAbstractIds,
+        StoreTransfer $storeTransfer
+    ): SpyProductAbstractLocalizedAttributesQuery {
         $storeLocaleIsoCodes = array_map(function (string $localeIsoCode) {
             return $localeIsoCode;
         }, $storeTransfer->getAvailableLocaleIsoCodes());

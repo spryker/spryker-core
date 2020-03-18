@@ -19,5 +19,9 @@ interface ProductViewImageExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(ProductViewTransfer $productViewTransfer, $locale, $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME);
+    public function expandProductViewImageData(
+        ProductViewTransfer $productViewTransfer,
+        $locale,
+        $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME
+    );
 }

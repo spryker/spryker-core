@@ -31,8 +31,11 @@ class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExec
      * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[] $companyBusinessUnitPostSavePlugins
      * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[] $companyBusinessUnitPreDeletePlugins
      */
-    public function __construct(array $companyBusinessUnitTransferExpanderPlugins, array $companyBusinessUnitPostSavePlugins, array $companyBusinessUnitPreDeletePlugins)
-    {
+    public function __construct(
+        array $companyBusinessUnitTransferExpanderPlugins,
+        array $companyBusinessUnitPostSavePlugins,
+        array $companyBusinessUnitPreDeletePlugins
+    ) {
         $this->companyBusinessUnitTransferExpanderPlugins = $companyBusinessUnitTransferExpanderPlugins;
         $this->companyBusinessUnitPostSavePlugins = $companyBusinessUnitPostSavePlugins;
         $this->companyBusinessUnitPreDeletePlugins = $companyBusinessUnitPreDeletePlugins;

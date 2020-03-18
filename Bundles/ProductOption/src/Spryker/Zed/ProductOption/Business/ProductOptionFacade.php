@@ -268,8 +268,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
-    {
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer {
         return $this->getFactory()
             ->createProductOptionValueReader()
             ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);

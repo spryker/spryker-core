@@ -45,7 +45,7 @@ interface AvailabilityToStockFacadeInterface
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping();
 

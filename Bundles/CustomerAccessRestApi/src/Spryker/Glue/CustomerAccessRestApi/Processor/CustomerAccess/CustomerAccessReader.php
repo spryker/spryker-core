@@ -83,8 +83,10 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      *
      * @return bool
      */
-    protected function isCustomerAccessContentTypeUnrestricted(ContentTypeAccessTransfer $contentTypeAccessTransfer, array $customerAccessContentTypeResourceType): bool
-    {
+    protected function isCustomerAccessContentTypeUnrestricted(
+        ContentTypeAccessTransfer $contentTypeAccessTransfer,
+        array $customerAccessContentTypeResourceType
+    ): bool {
         return !array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted();
     }
 }
