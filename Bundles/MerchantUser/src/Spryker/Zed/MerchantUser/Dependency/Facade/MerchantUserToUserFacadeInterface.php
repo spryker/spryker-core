@@ -42,6 +42,13 @@ interface MerchantUserToUserFacadeInterface
     public function updateUser(UserTransfer $user);
 
     /**
+     * @param int $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser);
+
+    /**
      * @param string $username
      *
      * @return bool

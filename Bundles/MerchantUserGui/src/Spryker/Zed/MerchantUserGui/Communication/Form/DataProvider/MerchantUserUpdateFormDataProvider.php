@@ -12,12 +12,12 @@ use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
 class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvider
 {
     /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
 

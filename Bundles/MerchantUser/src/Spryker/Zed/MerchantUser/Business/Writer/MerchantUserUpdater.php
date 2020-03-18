@@ -72,11 +72,9 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
 
         $this->resetUserPassword($originalUserTransfer, $userTransfer);
 
-        $response = new MerchantUserResponseTransfer();
-
-        $response->setIsSuccessful(true)->setMerchantUser($merchantUserTransfer);
-
-        return $response;
+        return (new MerchantUserResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setMerchantUser($merchantUserTransfer);
     }
 
     /**
@@ -89,9 +87,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
         $merchantUserTransfers = $this->merchantUserRepository->find($merchantUserCriteriaTransfer);
 
         foreach ($merchantUserTransfers as $merchantUserTransfer) {
-            $userTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
-            $userTransfer->setStatus(static::USER_STATUS_BLOCKED);
-            $this->userFacade->updateUser($userTransfer);
+            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUser());
         }
     }
 

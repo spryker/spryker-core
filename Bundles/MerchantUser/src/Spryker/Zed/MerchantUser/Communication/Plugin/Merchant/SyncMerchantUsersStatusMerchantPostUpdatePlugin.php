@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInte
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
  */
-class SyncMerchantUsersStatusWithMerchantStatus extends AbstractPlugin implements MerchantPostUpdatePluginInterface
+class SyncMerchantUsersStatusMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface
 {
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_DENIED
