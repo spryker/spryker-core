@@ -35,6 +35,8 @@ class ProductTable extends AbstractTable
 
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
+    protected const DATA_URL = '/product-offer-gui-page/product-list/get-table-data';
+
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface
      */
@@ -88,6 +90,7 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setAllowedFilters($this->getAllowedFilterNames());
+        $guiTableConfigurationTransfer->setDataUrl(static::DATA_URL);
 
         return $guiTableConfigurationTransfer;
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,12 +19,28 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductListController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request): array
+    public function indexAction(): array
     {
-        return $this->viewResponse();
+        $productTable = $this->getFactory()->createProductTable();
+
+        return $this->viewResponse(
+            $productTable->getConfiguration()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getTableDataAction(Request $request): JsonResponse
+    {
+        $productTable = $this->getFactory()->createProductTable();
+
+        return new JsonResponse(
+            $productTable->getData($request)
+        );
     }
 }
