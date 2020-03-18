@@ -298,15 +298,7 @@ class MerchantUserFacadeTest extends Unit
         $this->tester->haveMerchantUser($merchantTransfer, $userOneTransfer);
         $this->tester->haveMerchantUser($merchantTransfer, $userTwoTransfer);
 
-        $this->userFacadeMock->expects($this->exactly(2))->method('getUserById')
-            ->willReturnOnConsecutiveCalls($userOneTransfer, $userTwoTransfer);
-
-        $this->userFacadeMock->expects($this->exactly(2))->method('updateUser')
-            ->with(
-                $this->callback(function (UserTransfer $userTransfer) {
-                    return $userTransfer->getStatus() === 'blocked';
-                })
-            );
+        $this->userFacadeMock->expects($this->exactly(2))->method('deactivateUser');
 
         // Act
         $this->tester->getFacade()->disableMerchantUsers(
