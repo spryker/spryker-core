@@ -265,7 +265,7 @@ class ProductRelationStorageFacadeTest extends Unit
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should not exists'
         );
     }
 
