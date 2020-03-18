@@ -33,6 +33,6 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getActiveMerchants(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->get($merchantCriteriaFilterTransfer);
     }
 }

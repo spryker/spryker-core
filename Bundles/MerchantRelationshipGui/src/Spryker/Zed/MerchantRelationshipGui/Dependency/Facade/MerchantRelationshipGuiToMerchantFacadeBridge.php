@@ -33,12 +33,8 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        if (method_exists($this->merchantFacade, 'find')) {
-            return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
-        }
-
-        return $this->merchantFacade->getMerchants($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->get($merchantCriteriaFilterTransfer);
     }
 }

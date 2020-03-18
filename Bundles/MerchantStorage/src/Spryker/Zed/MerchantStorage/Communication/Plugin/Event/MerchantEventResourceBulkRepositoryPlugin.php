@@ -50,7 +50,7 @@ class MerchantEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
         $merchantCriteriaFilterTransfer = $this->createMerchantCriteriaFilterTransfer($filterTransfer);
         $merchantCollectionTransfer = $this->getFactory()
             ->getMerchantFacade()
-            ->find($merchantCriteriaFilterTransfer);
+            ->get($merchantCriteriaFilterTransfer);
 
         return $merchantCollectionTransfer->getMerchants()->getArrayCopy();
     }

@@ -16,8 +16,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
-  "suggest": {
-  },
+  "suggest": [],
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

@@ -141,7 +141,7 @@ class MerchantRelationshipFormDataProvider
     {
         $choices = [];
 
-        foreach ($this->merchantFacade->find(new MerchantCriteriaFilterTransfer())->getMerchants() as $merchant) {
+        foreach ($this->merchantFacade->get(new MerchantCriteriaFilterTransfer())->getMerchants() as $merchant) {
             $idMerchant = $merchant->getIdMerchant();
             $choices[$idMerchant] = sprintf(
                 '%d - %s',
