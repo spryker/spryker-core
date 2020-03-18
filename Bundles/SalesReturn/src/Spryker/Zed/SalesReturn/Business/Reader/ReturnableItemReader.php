@@ -52,10 +52,28 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
             ->getOrderItems($orderItemFilterTransfer)
             ->getItems();
 
-        // TODO: execute ReturnPolicyPluginInterface plugin stack.
+        $itemTransfers = $this->excludeNonReturnableItems($itemTransfers);
 
         return (new ItemCollectionTransfer())
-            ->setItems(new ArrayObject($itemTransfers));
+            ->setItems($itemTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function excludeNonReturnableItems(ArrayObject $itemTransfers): ArrayObject
+    {
+        $returnableItemTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getIsReturnable()) {
+                $returnableItemTransfers[] = $itemTransfer;
+            }
+        }
+
+        return new ArrayObject($returnableItemTransfers);
     }
 
     /**

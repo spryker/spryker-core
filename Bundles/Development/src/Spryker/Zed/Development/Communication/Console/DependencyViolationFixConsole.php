@@ -175,8 +175,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequire(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInRequire(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE) {
             $composerJsonArray['require'][$composerName] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require', $composerName));
@@ -196,8 +199,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequireDev(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInRequireDev(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE_DEV) {
             $composerJsonArray['require-dev'][$composerName] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require-dev', $composerName));
@@ -217,8 +223,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInSuggest(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInSuggest(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_SUGGEST) {
             $composerJsonArray['suggest'][$composerName] = 'ADD SUGGEST DESCRIPTION';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $composerName));

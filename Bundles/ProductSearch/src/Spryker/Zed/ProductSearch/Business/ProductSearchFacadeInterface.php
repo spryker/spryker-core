@@ -59,7 +59,11 @@ interface ProductSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes): PageMapTransfer;
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ): PageMapTransfer;
 
     /**
      * Specification:

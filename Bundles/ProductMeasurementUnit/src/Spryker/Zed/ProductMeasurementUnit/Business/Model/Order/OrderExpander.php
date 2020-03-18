@@ -99,8 +99,10 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName, ?string $productMeasurementUnitCode = null): ProductMeasurementUnitTransfer
-    {
+    protected function createProductMeasurementUnitTransfer(
+        ?string $productMeasurementUnitName,
+        ?string $productMeasurementUnitCode = null
+    ): ProductMeasurementUnitTransfer {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName ?: '');
 

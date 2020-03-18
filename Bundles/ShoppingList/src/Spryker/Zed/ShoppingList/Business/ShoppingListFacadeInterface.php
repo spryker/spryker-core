@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -80,11 +81,52 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     * - Adds item to shopping list.
+     * - Requires ShoppingListItemTransfer.sku, ShoppingListItemTransfer.quantity.
+     * - Creates shopping list for customer if ShoppingListItemTransfer.fkShoppingList is not provided.
+     * - Checks shopping list write permissions.
+     * - Executes ShoppingListItemPostSavePlugin plugins after save.
+     * - Adds create shopping list success message if shopping list created.
+     * - Fails and adds error message when the product does not exist.
+     * - Fails and adds error message when quantity is less or equal to zero or greater than 2147483647.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates shopping list item.
+     * - Requires ShoppingListItemTransfer.idShoppingListItem, ShoppingListItemTransfer.fkShoppingList, ShoppingListItemTransfer.quantity.
+     * - Checks shopping list write permissions.
+     * - Executes ShoppingListItemPostSavePlugin plugins after save.
+     * - Fails when quantity is less or equal to zero or greater than 2147483647.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
      *  - Adds item to shopping list.
      *  - Adds create shopping list success message if shopping list created.
      *  - Fails and adds error message when quantity is lesser equal than zero.
      *
      * @api
+     *
+     * @deprecated Use ShoppingListFacadeInterface::addShoppingListItem instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -181,13 +223,17 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:
      *  - Update shopping list item.
      *
      * @api
+     *
+     * @deprecated Use ShoppingListFacadeInterface::updateShoppingListItemById instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -239,7 +285,9 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+    public function shareShoppingListWithCompanyBusinessUnit(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:
@@ -287,7 +335,9 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function unShareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+    public function unShareShoppingListWithCompanyBusinessUnit(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:
@@ -314,4 +364,34 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds shopping list by uuid.
+     * - Requires uuid field to be set in ShoppingListTransfer.
+     * - Requires idCompanyUser field to be set in ShoppingListTransfer.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if product in shopping list item is active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsActive(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer;
 }

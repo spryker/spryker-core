@@ -43,8 +43,11 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(ProductViewTransfer $productViewTransfer, $locale, $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME)
-    {
+    public function expandProductViewImageData(
+        ProductViewTransfer $productViewTransfer,
+        $locale,
+        $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME
+    ) {
         $images = $this->getImages($productViewTransfer, $locale, $imageSetName);
 
         if ($images) {

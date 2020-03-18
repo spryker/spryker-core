@@ -559,7 +559,6 @@
     "spryker/sales-reclamation-gui": "*",
     "spryker/sales-return": "*",
     "spryker/sales-return-data-import": "*",
-    "spryker/sales-return-extension": "*",
     "spryker/sales-split": "*",
     "spryker/sales-statistics": "*",
     "spryker/scheduler": "*",

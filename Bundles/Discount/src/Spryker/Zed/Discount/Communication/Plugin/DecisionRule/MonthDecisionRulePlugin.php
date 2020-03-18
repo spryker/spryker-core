@@ -56,7 +56,7 @@ class MonthDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlug
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

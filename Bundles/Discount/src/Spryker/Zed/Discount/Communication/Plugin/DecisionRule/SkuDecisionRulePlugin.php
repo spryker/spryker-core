@@ -57,7 +57,7 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {
