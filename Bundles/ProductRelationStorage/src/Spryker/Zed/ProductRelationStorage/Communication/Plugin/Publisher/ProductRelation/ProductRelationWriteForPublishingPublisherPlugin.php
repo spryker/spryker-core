@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation;
 
+use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -21,6 +21,7 @@ class ProductRelationWriteForPublishingPublisherPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritDoc}
+     * - Publishes product relation data by publish and unpublish events from spy_product_relation table.
      *
      * @api
      *
@@ -45,7 +46,6 @@ class ProductRelationWriteForPublishingPublisherPlugin extends AbstractPlugin im
     {
         return [
             ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH,
-            ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_UNPUBLISH,
         ];
     }
 }

@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductRelation\Dependency;
 
+/**
+ * @deprecated Use ProductRelationStorageConfigInstead
+ * @see \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig
+ */
 interface ProductRelationEvents
 {
     /**
@@ -63,7 +67,6 @@ interface ProductRelationEvents
      *
      * @api
      *
-     * @deprecated Use ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_CREATE instead.
      * @see \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig::ENTITY_SPY_PRODUCT_RELATION_CREATE
      */
     public const ENTITY_SPY_PRODUCT_RELATION_CREATE = 'Entity.spy_product_relation.create';

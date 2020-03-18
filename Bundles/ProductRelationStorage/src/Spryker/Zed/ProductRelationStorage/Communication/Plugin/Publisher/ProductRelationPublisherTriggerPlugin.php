@@ -24,6 +24,7 @@ class ProductRelationPublisherTriggerPlugin extends AbstractPlugin implements Pu
 {
     /**
      * {@inheritDoc}
+     * - Retrieves product relations by provided limit and offset.
      *
      * @api
      *

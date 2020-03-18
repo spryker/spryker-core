@@ -63,7 +63,7 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationEvents(): void
+    public function testWriteCollectionByProductRelationEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -79,7 +79,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -90,7 +90,7 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationPublishingEvents(): void
+    public function testWriteCollectionByProductRelationPublishingEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -104,7 +104,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -115,7 +115,7 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationProductAbstractEvents(): void
+    public function testWriteCollectionByProductRelationProductAbstractEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -131,7 +131,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -142,7 +142,7 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationStoreEvents(): void
+    public function testWriteCollectionByProductRelationStoreEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -158,7 +158,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),

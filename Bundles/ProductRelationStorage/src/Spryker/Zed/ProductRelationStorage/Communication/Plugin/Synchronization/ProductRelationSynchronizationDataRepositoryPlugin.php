@@ -22,6 +22,7 @@ class ProductRelationSynchronizationDataRepositoryPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
+     * - Retrieves a collection of product relation storage transfer according to provided offset, limit and ids.
      *
      * @api
      *
