@@ -43,4 +43,24 @@ class PriceProductStorageConfig extends AbstractSharedConfig
      * Defines queue name for publish.
      */
     public const PUBLISH_PRICE_PRODUCT_CONCRETE = 'publish.price_product_concrete';
+
+    /**
+     * Defines error queue name as used when with asynchronous event handling
+     */
+    public const PUBLISH_PRICE_PRODUCT_ABSTRACT_ERROR_QUEUE = 'publish.price_product_abstract.error';
+
+    /**
+     * Defines retry queue name as used when with asynchronous event handling.
+     */
+    public const PUBLISH_PRICE_PRODUCT_ABSTRACT_RETRY_QUEUE = 'publish.price_product_abstract.retry';
+
+    /**
+     * Defines error queue name as used when with asynchronous event handling
+     */
+    public const PUBLISH_PRICE_PRODUCT_CONCRETE_ERROR_QUEUE = 'publish.price_product_concrete.error';
+
+    /**
+     * Defines retry queue name as used when with asynchronous event handling.
+     */
+    public const PUBLISH_PRICE_PRODUCT_CONCRETE_RETRY_QUEUE = 'publish.price_product_concrete.retry';
 }

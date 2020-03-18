@@ -61,4 +61,24 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * Defines queue name for publish.
      */
     public const PUBLISH_PRODUCT_CONCRETE_IMAGE = 'publish.product_image_concrete';
+
+    /**
+     * Defines error queue name as used when with asynchronous event handling
+     */
+    public const PUBLISH_PRODUCT_ABSTRACT_IMAGE_ERROR_QUEUE = 'publish.product_image_abstract.error';
+
+    /**
+     * Defines retry queue name as used when with asynchronous event handling.
+     */
+    public const PUBLISH_PRODUCT_ABSTRACT_IMAGE_RETRY_QUEUE = 'publish.abstract_product_image.retry';
+
+    /**
+     * Defines error queue name as used when with asynchronous event handling
+     */
+    public const PUBLISH_PRODUCT_CONCRETE_IMAGE_ERROR_QUEUE = 'publish.product_image_concrete.error';
+
+    /**
+     * Defines retry queue name as used when with asynchronous event handling.
+     */
+    public const PUBLISH_PRODUCT_CONCRETE_IMAGE_RETRY_QUEUE = 'publish.concrete_image.retry';
 }

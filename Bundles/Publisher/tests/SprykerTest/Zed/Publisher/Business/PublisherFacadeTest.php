@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Publisher\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Publisher\PublisherConfig as SharedPublisherConfig;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 use SprykerTest\Zed\Publisher\Business\Collator\MockPublishEventCollator;
 
@@ -32,23 +33,47 @@ class PublisherFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPublisherPluginsMethodReturnsFlattedArray(): void
+    public function testGetPublisherPluginsMethodReturnsFlattedArrayWithDefinedQueueName(): void
     {
-        $this->setPublisherRegistryPlugins();
+        // Arrange
+        $this->setPublisherRegistryPlugins(SharedPublisherConfig::PUBLISH_QUEUE);
 
-        $publisherEvents = $this->tester->getFacade()
-            ->getPublisherEventCollection();
+        // Act
+        $publisherEvents = $this->tester->getFacade()->getPublisherEventCollection();
 
-        $this->assertSame($this->getMergedPublisherEvents(), $publisherEvents);
+        // Assert
+        $this->assertSame($this->getMergedPublisherEventsWithDefinedQueueName(), $publisherEvents);
     }
 
     /**
      * @return void
      */
-    protected function setPublisherRegistryPlugins(): void
+    public function testGetPublisherPluginsMethodReturnsFlattedArrayWithDefaultQueueName(): void
     {
+        // Arrange
+        $this->setPublisherRegistryPlugins();
+
+        // Act
+        $publisherEvents = $this->tester->getFacade()->getPublisherEventCollection();
+
+        // Assert
+        $this->assertSame($this->getMergedPublisherEventsWithoutDefinedQueueName(), $publisherEvents);
+    }
+
+    /**
+     * @param string|null $publishQueueName
+     *
+     * @return void
+     */
+    protected function setPublisherRegistryPlugins(?string $publishQueueName = null): void
+    {
+        $this->tester->mockConfigMethod('getPublishQueueName', function () use ($publishQueueName) {
+            return $publishQueueName;
+        });
+
         $this->tester->mockFactoryMethod('createPublisherEventCollator', new MockPublishEventCollator(
-            $this->getPublisherRegistryPlugins()
+            $this->getPublisherRegistryPlugins(),
+            $this->tester->getModuleConfig()
         ));
     }
 
@@ -98,7 +123,28 @@ class PublisherFacadeTest extends Unit
     /**
      * @return array
      */
-    protected function getMergedPublisherEvents(): array
+    protected function getMergedPublisherEventsWithDefinedQueueName(): array
+    {
+        return [
+            SharedPublisherConfig::PUBLISH_QUEUE => [
+                'TestEvent-1' => [
+                    'TestPluginClassFooPlugin',
+                ],
+                'TestEvent-2' => [
+                    'TestPluginClassFooPlugin',
+                    'TestPluginClassBarPlugin',
+                ],
+                'TestEvent-3' => [
+                    'TestPluginClassBazPlugin',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMergedPublisherEventsWithoutDefinedQueueName(): array
     {
         return [
             'event' => [

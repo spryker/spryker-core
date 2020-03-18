@@ -44,14 +44,4 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     {
         return static::AVAILABILITY_NOTIFICATION_UNSUBSCRIBE_BY_KEY_URI;
     }
-
-    /**
-     * @api
-     *
-     * @return string|null
-     */
-    public function getAvailabilityNotificationEventQueueName(): ?string
-    {
-        return null;
-    }
 }
