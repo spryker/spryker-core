@@ -17,5 +17,7 @@ interface ProductOfferAvailabilityProviderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer;
+    public function findProductConcreteAvailabilityForRequest(
+        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+    ): ?ProductConcreteAvailabilityTransfer;
 }

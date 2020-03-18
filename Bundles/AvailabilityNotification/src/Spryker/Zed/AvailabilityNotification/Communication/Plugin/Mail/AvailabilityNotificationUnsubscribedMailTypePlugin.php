@@ -21,6 +21,8 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
     public const AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL = 'AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder

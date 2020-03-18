@@ -99,8 +99,9 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    protected function executeDismissShoppingListSharingTransaction(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
-    {
+    protected function executeDismissShoppingListSharingTransaction(
+        ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+    ): ShoppingListShareResponseTransfer {
         $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
         $shoppingListShareResponseTransfer->setIsSuccess($this->deleteShoppingListCompanyUser($shoppingListDismissRequest));
         $shoppingListShareResponseTransfer->setIsSuccess(

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data
@@ -29,6 +31,8 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data

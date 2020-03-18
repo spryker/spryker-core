@@ -22,6 +22,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
 class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * {@inehritDoc}
      * - Adds product review related data to product abstract search data.
      *

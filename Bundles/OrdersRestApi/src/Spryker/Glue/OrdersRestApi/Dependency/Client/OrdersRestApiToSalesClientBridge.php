@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\OrdersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -26,13 +27,13 @@ class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getPaginatedOrder(OrderListTransfer $orderListTransfer)
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
     {
-        return $this->salesClient->getPaginatedOrder($orderListTransfer);
+        return $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
     }
 
     /**
