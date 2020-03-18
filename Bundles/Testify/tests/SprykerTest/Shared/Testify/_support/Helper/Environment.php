@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
@@ -16,28 +15,19 @@ class Environment extends Module
 {
     protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
 
+    protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
+
     /**
-     * @var string
+     * @var array
+     */
+    protected $config = [
+        self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
+    ];
+
+    /**
+     * @var string|null
      */
     protected $rootDirectory;
-
-    /**
-     * @var bool
-     */
-    protected $runIsolatedModuleTests = false;
-
-    /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param array|null $config
-     */
-    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
-    {
-        parent::__construct($moduleContainer, $config);
-
-        if (isset($config['runIsolatedModuleTests'])) {
-            $this->runIsolatedModuleTests = (bool)$config['runIsolatedModuleTests'];
-        }
-    }
 
     /**
      * @return void
@@ -67,7 +57,7 @@ class Environment extends Module
      */
     protected function prepareIsolatedModuleTests(): void
     {
-        if ($this->runIsolatedModuleTests) {
+        if ($this->config[static::CONFIG_IS_ISOLATED_MODULE_TEST]) {
             $this->createDefaultStoreFile();
             $this->createStoresFile();
         }
@@ -118,7 +108,7 @@ class Environment extends Module
      */
     protected function getModuleUnderTestRootDirectory(): ?string
     {
-        if ($this->runIsolatedModuleTests) {
+        if ($this->config[static::CONFIG_IS_ISOLATED_MODULE_TEST]) {
             return $this->buildModuleUnderTestRootDirectory();
         }
 
@@ -168,7 +158,7 @@ class Environment extends Module
      */
     protected function canBuildVirtualDirectory(): bool
     {
-        return ($this->runIsolatedModuleTests && $this->hasModule('\\' . VirtualFilesystemHelper::class));
+        return ($this->config[static::CONFIG_IS_ISOLATED_MODULE_TEST] && $this->hasModule('\\' . VirtualFilesystemHelper::class));
     }
 
     /**

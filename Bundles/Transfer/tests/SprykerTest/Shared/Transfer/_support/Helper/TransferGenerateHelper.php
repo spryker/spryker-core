@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Shared\Transfer\Helper;
 
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Psr\Log\NullLogger;
 use Spryker\Zed\Transfer\Business\TransferFacade;
@@ -17,26 +16,18 @@ use Symfony\Component\Finder\Finder;
 class TransferGenerateHelper extends Module
 {
     protected const TARGET_DIRECTORY = 'target_directory';
+    protected const CONFIG_SCHEMA_DIRECTORIES = 'schemaDirectories';
+    protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
 
     /**
-     * @var string[]
+     * @var array
      */
-    protected $schemaDirectories = [
-        'src/*/Shared/*/Transfer/',
+    protected $config = [
+        self::CONFIG_SCHEMA_DIRECTORIES => [
+            'src/*/Shared/*/Transfer/',
+        ],
+        self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
     ];
-
-    /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param array|null $config
-     */
-    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
-    {
-        parent::__construct($moduleContainer, $config);
-
-        if (isset($config['schemaDirectories'])) {
-            $this->schemaDirectories = $config['schemaDirectories'];
-        }
-    }
 
     /**
      * @param array $settings
@@ -45,8 +36,10 @@ class TransferGenerateHelper extends Module
      */
     public function _beforeSuite($settings = [])
     {
-        $this->generateTransferObjects();
-        $this->addAutoloader();
+        if ($this->config[static::CONFIG_IS_ISOLATED_MODULE_TEST]) {
+            $this->generateTransferObjects();
+            $this->addAutoloader();
+        }
     }
 
     /**
@@ -96,7 +89,7 @@ class TransferGenerateHelper extends Module
      */
     protected function copySchemasFromDefinedSchemaDirectories(): void
     {
-        $finder = $this->createTransferSchemaFinder($this->schemaDirectories);
+        $finder = $this->createTransferSchemaFinder($this->config[static::CONFIG_SCHEMA_DIRECTORIES]);
 
         if ($finder->count() > 0) {
             $pathForTransferSchemas = $this->getTargetSchemaDirectory();
@@ -169,6 +162,8 @@ class TransferGenerateHelper extends Module
             }
 
             require_once $transferFilePath;
+
+            return true;
         });
     }
 }
