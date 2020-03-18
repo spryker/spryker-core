@@ -68,7 +68,7 @@ class DummyMarketplacePaymentFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE));
+        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(null));
         $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(null));
 
         $paymentMethod = (new PaymentMethodTransfer())
