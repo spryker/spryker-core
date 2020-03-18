@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantStockDataImport\Business\MerchantStock;
+namespace Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step;
 
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStockQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;

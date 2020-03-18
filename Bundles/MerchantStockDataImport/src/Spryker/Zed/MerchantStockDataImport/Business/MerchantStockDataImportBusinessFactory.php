@@ -10,8 +10,8 @@ namespace Spryker\Zed\MerchantStockDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\MerchantStockWriterStep;
 use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step\MerchantReferenceToIdMerchantStep;
+use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step\MerchantStockWriterStep;
 use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step\StockNameToIdStockStep;
 
 /**

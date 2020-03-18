@@ -8,16 +8,13 @@
 namespace Spryker\Zed\MerchantStock\Persistence;
 
 use Generated\Shared\Transfer\MerchantStockTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StockTransfer;
 
 interface MerchantStockEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     * @param \Generated\Shared\Transfer\MerchantStockTransfer $merchantStockTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStockTransfer
      */
-    public function createMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): MerchantStockTransfer;
+    public function createMerchantStock(MerchantStockTransfer $merchantStockTransfer): MerchantStockTransfer;
 }

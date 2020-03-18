@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantStock\Business\Writer;
 
 use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeInterface;
@@ -51,7 +52,13 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
-        $this->merchantStockEntityManager->createMerchantStock($merchantTransfer, $stockTransfer);
+
+        $merchantStockTransfer = (new MerchantStockTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchant())
+            ->setIdStock($stockTransfer->getIdStock())
+            ->setIsDefault(true);
+
+        $this->merchantStockEntityManager->createMerchantStock($merchantStockTransfer);
         $merchantTransfer->addStock($stockTransfer);
 
         return (new MerchantResponseTransfer())

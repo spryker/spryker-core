@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 
 use Generated\Shared\Transfer\MerchantStockTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
@@ -38,32 +37,25 @@ class MerchantStockMapper
         SpyMerchantStock $merchantStockEntity,
         MerchantStockTransfer $merchantStockTransfer
     ): MerchantStockTransfer {
-        return $merchantStockTransfer->fromArray($merchantStockEntity->toArray(), true);
+        return $merchantStockTransfer->setIdMerchantStock($merchantStockEntity->getIdMerchantStock())
+            ->setIdMerchant($merchantStockEntity->getFkMerchant())
+            ->setIdStock($merchantStockEntity->getFkStock())
+            ->setIsDefault($merchantStockEntity->getIsDefault());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantStockTransfer $merchantStockTransfer
      * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
      *
      * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock
      */
-    public function mapMerchantTransferToMerchantStockEntity(
-        MerchantTransfer $merchantTransfer,
+    public function mapMerchantStockTransferToMerchantStockEntity(
+        MerchantStockTransfer $merchantStockTransfer,
         SpyMerchantStock $merchantStockEntity
     ): SpyMerchantStock {
-        return $merchantStockEntity->setFkMerchant($merchantTransfer->getIdMerchant());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock $merchantStockEntity
-     *
-     * @return \Orm\Zed\MerchantStock\Persistence\SpyMerchantStock
-     */
-    public function mapStockTransferToMerchantStockEntity(
-        StockTransfer $stockTransfer,
-        SpyMerchantStock $merchantStockEntity
-    ): SpyMerchantStock {
-        return $merchantStockEntity->setFkStock($stockTransfer->getIdStock());
+        return $merchantStockEntity->setIdMerchantStock($merchantStockTransfer->getIdMerchantStock())
+            ->setFkMerchant($merchantStockTransfer->getIdMerchant())
+            ->setFkStock($merchantStockTransfer->getIdStock())
+            ->setIsDefault($merchantStockTransfer->getIsDefault());
     }
 }
