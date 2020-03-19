@@ -19,7 +19,12 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const URL_BUILDER = 'url builder';
     public const SERVICE_ENCODING = 'util encoding service';
+
+    /**
+     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER` instead.
+     */
     public const PLUGINS_NAVIGATION_ITEM_FILTER = 'PLUGINS_NAVIGATION_ITEM_FILTER';
+    public const PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER = 'PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +35,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUrlBuilder($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addNavigationItemFilterPlugins($container);
+        $container = $this->addNavigationItemCollectionFilterPlugins($container);
 
         return $container;
     }
@@ -66,6 +71,8 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::addNavigationItemCollectionFilterPlugins()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -80,9 +87,33 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addNavigationItemCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER, function () {
+            return $this->getNavigationItemCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::getNavigationItemCollectionFilterPlugins()` instead.
+     *
      * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */
     protected function getNavigationItemFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     */
+    protected function getNavigationItemCollectionFilterPlugins(): array
     {
         return [];
     }

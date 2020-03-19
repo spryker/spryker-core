@@ -15,6 +15,8 @@ use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Rule;
 use Spryker\Zed\Acl\Business\Model\RuleValidator;
+use Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilter;
+use Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -54,6 +56,17 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createRuleValidatorHelper(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilterInterface
+     */
+    public function createNavigationItemFilter(): NavigationItemFilterInterface
+    {
+        return new NavigationItemFilter(
+            $this->createRuleModel(),
+            $this->getUserFacade()
         );
     }
 

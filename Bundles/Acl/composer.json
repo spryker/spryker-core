@@ -15,7 +15,7 @@
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-text": "^1.1.0",
-    "spryker/zed-navigation-extension": "^1.0.0"
+    "spryker/zed-navigation-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/application": "*",

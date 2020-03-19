@@ -51,12 +51,12 @@ class Rule implements RuleInterface
     /**
      * @var \Generated\Shared\Transfer\GroupsTransfer[]
      */
-    protected static $groupsTransferCache = [];
+    protected $groupsTransferCache = [];
 
     /**
      * @var \Generated\Shared\Transfer\RulesTransfer[]
      */
-    protected static $rulesTransferCache = [];
+    protected $rulesTransferCache = [];
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
@@ -315,6 +315,10 @@ class Rule implements RuleInterface
             return true;
         }
 
+        if (!$userTransfer->getIdUser()) {
+            return false;
+        }
+
         $groupsTransfer = $this->getGroupsTransferByIdUser($userTransfer->getIdUser());
         if (!$groupsTransfer->getGroups()) {
             return false;
@@ -347,14 +351,14 @@ class Rule implements RuleInterface
      */
     protected function getGroupsTransferByIdUser(int $idUser): GroupsTransfer
     {
-        if (isset(static::$groupsTransferCache[$idUser])) {
-            return static::$groupsTransferCache[$idUser];
+        if (isset($this->groupsTransferCache[$idUser])) {
+            return $this->groupsTransferCache[$idUser];
         }
 
         $groupsTransfer = $this->group->getUserGroups($idUser);
-        static::$groupsTransferCache[$idUser] = $groupsTransfer;
+        $this->groupsTransferCache[$idUser] = $groupsTransfer;
 
-        return $groupsTransfer;
+        return $this->group->getUserGroups($idUser);
     }
 
     /**
@@ -364,12 +368,12 @@ class Rule implements RuleInterface
      */
     protected function getRulesTransferByIdGroup(int $idGroup): RulesTransfer
     {
-        if (isset(static::$rulesTransferCache[$idGroup])) {
-            return static::$rulesTransferCache[$idGroup];
+        if (isset($this->rulesTransferCache[$idGroup])) {
+            return $this->rulesTransferCache[$idGroup];
         }
 
         $rulesTransfer = $this->getRulesForGroupId($idGroup);
-        static::$rulesTransferCache[$idGroup] = $rulesTransfer;
+        $this->rulesTransferCache[$idGroup] = $rulesTransfer;
 
         return $rulesTransfer;
     }
