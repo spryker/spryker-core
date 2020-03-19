@@ -12,7 +12,7 @@ use ArrayObject;
 interface ReclamationItemEventsFinderInterface
 {
     /**
-     * @param \ArrayObject\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
      * @param string[][] $eventsGroupedByItem
      *
      * @return string[]

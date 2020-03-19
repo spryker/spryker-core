@@ -69,7 +69,7 @@ class ProductMoneyCollectionDataProvider
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
@@ -109,11 +109,11 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
      * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeCurrencyCollection
      * @param bool[] $existingCurrencyMap
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function mergeMultiStoreMoneyCollection(
         ArrayObject $currentFormMoneyValueCollection,
