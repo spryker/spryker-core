@@ -11,4 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class MerchantsRestApiConfig extends AbstractBundleConfig
 {
+    public const RESOURCE_MERCHANTS = 'merchants';
+
+    public const RESPONSE_CODE_MERCHANT_NOT_FOUND = '3501';
+
+    public const RESPONSE_DETAIL_MERCHANT_NOT_FOUND = 'Merchant not found.';
 }
