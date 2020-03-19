@@ -489,8 +489,14 @@ class ClassDefinitionTest extends Unit
      *
      * @return array
      */
-    private function getPropertyAssociative(string $name, string $type, ?string $singular = null, ?string $return = null, array $bundles = [], $isAssociative = false): array
-    {
+    private function getPropertyAssociative(
+        string $name,
+        string $type,
+        ?string $singular = null,
+        ?string $return = null,
+        array $bundles = [],
+        $isAssociative = false
+    ): array {
         $property = [
             'name' => $name,
             'type' => ($return === null) ? $type : $return,

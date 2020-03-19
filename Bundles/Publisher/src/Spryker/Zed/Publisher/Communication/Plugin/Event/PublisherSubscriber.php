@@ -55,8 +55,12 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName, string $queueName): EventCollectionInterface
-    {
+    protected function addListenerToEventCollection(
+        EventCollectionInterface $eventCollection,
+        array $listeners,
+        string $eventName,
+        string $queueName
+    ): EventCollectionInterface {
         foreach ($listeners as $listener) {
             $eventCollection->addListenerQueued($eventName, new $listener(), 0, null, $queueName);
         }

@@ -93,8 +93,12 @@ class PriceProductMapper implements PriceProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function findProductTransferInCollection(int $idMerchantRelationship, string $currencyCode, string $priceType, array &$priceProductTransfers): PriceProductTransfer
-    {
+    protected function findProductTransferInCollection(
+        int $idMerchantRelationship,
+        string $currencyCode,
+        string $priceType,
+        array &$priceProductTransfers
+    ): PriceProductTransfer {
         $index = implode(static::INDEX_SEPARATOR, [
             $idMerchantRelationship,
             $currencyCode,

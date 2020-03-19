@@ -212,8 +212,9 @@ class CartCodesRestApiFacadeTest extends Test
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory
      */
-    protected function createMockCartCodesRestApiBusinessFactory(CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade): CartCodesRestApiBusinessFactory
-    {
+    protected function createMockCartCodesRestApiBusinessFactory(
+        CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade
+    ): CartCodesRestApiBusinessFactory {
         $mockCartCodesRestApiBusinessFactory = $this->getMockBuilder(CartCodesRestApiBusinessFactory::class)
             ->setMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
             ->getMock();

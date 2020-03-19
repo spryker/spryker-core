@@ -170,8 +170,11 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      *
      * @return void
      */
-    protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
-    {
+    protected function processGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        ?AnnotationTransfer $annotationTransfer
+    ): void {
         if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }

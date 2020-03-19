@@ -526,8 +526,10 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return array
      */
-    protected function hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(array $productConcreteData, array $productAbstractLocalizedEntities): array
-    {
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities(
+        array $productConcreteData,
+        array $productAbstractLocalizedEntities
+    ): array {
         $productConcretesByProductAbstractId = [];
         foreach ($productConcreteData as $productConcrete) {
             $productConcretesByProductAbstractId[$productConcrete['fk_product_abstract']][] = $productConcrete;

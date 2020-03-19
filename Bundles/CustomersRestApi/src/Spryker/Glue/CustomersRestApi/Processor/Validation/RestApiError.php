@@ -265,8 +265,11 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface
-    {
+    public function addPasswordsDoNotMatchError(
+        RestResponseInterface $restResponse,
+        string $passwordFieldName,
+        string $passwordConfirmFieldName
+    ): RestResponseInterface {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -318,8 +321,10 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnRegistration(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
-    {
+    public function processCustomerErrorOnRegistration(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface {
         $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
 
         if (!count($restResponse->getErrors())) {
@@ -355,8 +360,10 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnPasswordUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
-    {
+    public function processCustomerErrorOnPasswordUpdate(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface {
         $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
 
         if (!count($restResponse->getErrors())) {

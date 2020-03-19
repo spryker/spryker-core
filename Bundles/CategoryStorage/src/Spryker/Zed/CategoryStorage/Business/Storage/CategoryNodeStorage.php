@@ -47,8 +47,12 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(CategoryStorageQueryContainerInterface $queryContainer, CategoryStorageToUtilSanitizeServiceInterface $utilSanitize, Store $store, $isSendingToQueue)
-    {
+    public function __construct(
+        CategoryStorageQueryContainerInterface $queryContainer,
+        CategoryStorageToUtilSanitizeServiceInterface $utilSanitize,
+        Store $store,
+        $isSendingToQueue
+    ) {
         $this->queryContainer = $queryContainer;
         $this->utilSanitize = $utilSanitize;
         $this->store = $store;
@@ -126,8 +130,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      *
      * @return void
      */
-    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, ?SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
-    {
+    protected function storeDataSet(
+        CategoryNodeStorageTransfer $categoryNodeStorageTransfer,
+        $localeName,
+        ?SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null
+    ) {
         if ($spyCategoryNodeStorageEntity === null) {
             $spyCategoryNodeStorageEntity = new SpyCategoryNodeStorage();
         }
