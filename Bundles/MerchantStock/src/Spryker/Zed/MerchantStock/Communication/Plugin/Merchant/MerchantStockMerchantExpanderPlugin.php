@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Communication\Plugin\Merchant;
 
+use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
@@ -29,7 +30,11 @@ class MerchantStockMerchantExpanderPlugin extends AbstractPlugin implements Merc
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $stockCollectionTransfer = $this->getFacade()->getStockCollectionByMerchant($merchantTransfer);
+        $merchantStockCriteriaTransfer = (new MerchantStockCriteriaTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchant());
+
+        $stockCollectionTransfer = $this->getFacade()
+            ->getStockCollectionByMerchant($merchantStockCriteriaTransfer);
 
         return $merchantTransfer->setStocks($stockCollectionTransfer->getStocks());
     }

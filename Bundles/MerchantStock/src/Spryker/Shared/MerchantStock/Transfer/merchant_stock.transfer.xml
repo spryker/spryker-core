@@ -36,4 +36,8 @@
         <property name="stocks" type="Stock[]" singular="stock"/>
     </transfer>
 
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
 </transfers>

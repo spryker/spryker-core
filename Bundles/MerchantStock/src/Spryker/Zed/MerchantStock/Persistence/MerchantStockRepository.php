@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence;
 
-use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,16 +18,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantStockRepository extends AbstractRepository implements MerchantStockRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStockCollectionByMerchant(MerchantTransfer $merchantTransfer): StockCollectionTransfer
+    public function getStockCollectionByMerchant(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
         $merchantStocksEntities = $this->getFactory()
             ->createMerchantStockPropelQuery()
             ->leftJoinWithSpyStock()
-            ->filterByFkMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
+            ->filterByFkMerchant($merchantStockCriteriaTransfer->requireIdMerchant()->getIdMerchant())
             ->find();
 
         $stockCollectionTransfer = new StockCollectionTransfer();
