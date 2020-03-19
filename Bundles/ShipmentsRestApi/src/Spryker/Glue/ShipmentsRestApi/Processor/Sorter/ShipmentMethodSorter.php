@@ -76,10 +76,10 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getPropertyValueBySort(RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer, SortInterface $currentSort): ?string
     {
-        $field = $this->getSortResourceValue($currentSort);
+        $resourceValue = $this->getSortResourceValue($currentSort);
 
-        return $restShipmentMethodAttributeTransfer->offsetExists($field)
-            ? (string)$restShipmentMethodAttributeTransfer->offsetGet($field) : null;
+        return $restShipmentMethodAttributeTransfer->offsetExists($resourceValue)
+            ? (string)$restShipmentMethodAttributeTransfer->offsetGet($resourceValue) : null;
     }
 
     /**
@@ -102,7 +102,9 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getSortResourceName(SortInterface $sort): ?string
     {
-        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] ?? null;
+        $resourceName = explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0];
+
+        return $resourceName ?? null;
     }
 
     /**
@@ -112,6 +114,8 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getSortResourceValue(SortInterface $sort): ?string
     {
-        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1] ?? null;
+        $resourceValue = explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1];
+
+        return $resourceValue ?? null;
     }
 }
