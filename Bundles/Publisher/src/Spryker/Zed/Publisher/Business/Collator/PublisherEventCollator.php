@@ -13,7 +13,7 @@ use Spryker\Zed\Publisher\PublisherConfig;
 class PublisherEventCollator implements PublisherEventCollatorInterface
 {
     /**
-     * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     * @var array
      */
     protected $publisherPlugins;
 
@@ -28,7 +28,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     protected static $eventCollectionBuffer;
 
     /**
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[] $publisherPlugins
+     * @param array $publisherPlugins
      * @param \Spryker\Zed\Publisher\PublisherConfig $publisherConfig
      */
     public function __construct(array $publisherPlugins, PublisherConfig $publisherConfig)
@@ -59,6 +59,8 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
         foreach ($this->publisherPlugins as $queueName => $publisherData) {
             if (is_object($publisherData)) {
                 $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherData->getSubscribedEvents(), get_class($publisherData));
+
+                continue;
             }
 
             if (is_array($publisherData)) {

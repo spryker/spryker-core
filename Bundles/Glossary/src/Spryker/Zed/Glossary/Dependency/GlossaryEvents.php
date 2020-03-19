@@ -13,7 +13,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for key publishing
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE} instead.
      *
      * @api
      */
@@ -23,7 +23,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for key un-publishing
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_DELETE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_DELETE} instead.
      *
      * @api
      */
@@ -33,7 +33,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_key entity creation
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_CREATE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_CREATE} instead.
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_key entity changes
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE} instead.
      *
      * @api
      */
@@ -53,7 +53,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_key entity deletion
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE} instead.
      *
      * @api
      */
@@ -63,7 +63,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_translation entity creation
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE} instead.
      *
      * @api
      */
@@ -73,7 +73,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_translation entity changes
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE} instead.
      *
      * @api
      */
@@ -83,7 +83,7 @@ interface GlossaryEvents
      * Specification
      * - This events will be used for spy_glossary_translation entity deletion
      *
-     * @deprecated Use `Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE` instead.
+     * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE} instead.
      *
      * @api
      */

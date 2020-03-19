@@ -29,7 +29,7 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     * @return array
      */
     public function getPublisherPlugins(): array
     {
