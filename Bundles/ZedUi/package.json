@@ -7,7 +7,7 @@
     "build": "ng build --prod",
     "postbuild": "run-s copy:*",
     "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/zed-ui",
-    "copy:reset": "cp ./src/Spryker/Zed/ZedUi/Presentation/Components/assets/reset.css $FE_ROOT_DIR/public/Zed/assets/css",
+    "copy:reset": "copyfiles -u 7 src/Spryker/Zed/ZedUi/Presentation/Components/assets/**/*.css $FE_ROOT_DIR/public/Zed/assets/css",
     "test": "ng test",
     "lint": "ng lint"
   },

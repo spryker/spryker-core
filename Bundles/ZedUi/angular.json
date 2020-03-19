@@ -24,7 +24,6 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/Spryker/Zed/ZedUi/Presentation/Components/assets"
             ],
             "styles": ["src/Spryker/Zed/ZedUi/Presentation/Components/styles.less"],
             "singleBundle": true,
