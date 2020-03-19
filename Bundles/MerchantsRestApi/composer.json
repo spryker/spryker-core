@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchants-rest-api",
+  "type": "library",
   "description": "MerchantsRestApi module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,9 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -15,7 +19,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

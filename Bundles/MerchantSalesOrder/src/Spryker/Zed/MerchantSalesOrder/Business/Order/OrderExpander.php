@@ -18,17 +18,16 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandOrderWithMerchants(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $merchantReferences = [];
-
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference() || in_array($itemTransfer->getMerchantReference(), $merchantReferences)) {
+            if (
+                !$itemTransfer->getMerchantReference()
+                || in_array($itemTransfer->getMerchantReference(), $orderTransfer->getMerchantReferences())
+            ) {
                 continue;
             }
 
-            $merchantReferences[] = $itemTransfer->getMerchantReference();
+            $orderTransfer->addMerchantReference($itemTransfer->getMerchantReference());
         }
-
-        $orderTransfer->setMerchantReferences($merchantReferences);
 
         return $orderTransfer;
     }
