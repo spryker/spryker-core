@@ -28,6 +28,7 @@ class OrdersResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestOrderDetailsAttributesTransfer",
      *          "responses": {
+     *              "403": "Unauthorized request.",
      *              "404": "Order not found."
      *          }
      *     },
@@ -38,7 +39,10 @@ class OrdersResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }]
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request."
+     *          }
      *     }
      * })
      *

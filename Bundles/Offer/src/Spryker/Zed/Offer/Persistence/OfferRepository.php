@@ -117,7 +117,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
 
     /**
      * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
-     * @param array $offerEntityTransfers
+     * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer[] $offerEntityTransfers
      *
      * @return \Generated\Shared\Transfer\OfferListTransfer
      */

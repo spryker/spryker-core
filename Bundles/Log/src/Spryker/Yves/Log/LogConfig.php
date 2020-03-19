@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class LogConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getChannelName()
@@ -21,6 +23,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function getSanitizerFieldNames()
@@ -29,6 +33,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function getSanitizedFieldValue()
@@ -37,6 +43,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLogFilePath()
@@ -49,6 +57,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int|string
      */
     public function getLogLevel()
@@ -57,6 +67,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getExceptionLogFilePath()
@@ -69,6 +81,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueName()

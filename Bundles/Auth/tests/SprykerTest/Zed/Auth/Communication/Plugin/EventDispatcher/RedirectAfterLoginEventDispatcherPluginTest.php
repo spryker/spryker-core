@@ -188,8 +188,10 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
      *
      * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
      */
-    protected function dispatchEvent(FilterResponseEvent $event, RedirectAfterLoginEventDispatcherPlugin $redirectAfterLoginEventDispatcherPlugin): FilterResponseEvent
-    {
+    protected function dispatchEvent(
+        FilterResponseEvent $event,
+        RedirectAfterLoginEventDispatcherPlugin $redirectAfterLoginEventDispatcherPlugin
+    ): FilterResponseEvent {
         $eventDispatcher = new EventDispatcher();
         $redirectAfterLoginEventDispatcherPlugin->extend($eventDispatcher, new Container());
 

@@ -201,7 +201,7 @@ class LocaleManager
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales()
     {

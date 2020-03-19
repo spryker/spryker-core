@@ -69,8 +69,10 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
-    {
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer {
         return $this->productRepository->getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
             $suggestion,
             $paginationTransfer,

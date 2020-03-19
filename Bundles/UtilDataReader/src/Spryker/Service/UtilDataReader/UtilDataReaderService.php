@@ -91,8 +91,13 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection)
-    {
+    public function getBatchIteratorOrdered(
+        CriteriaBuilderInterface $criteriaBuilder,
+        QueryContainerInterface $connection,
+        $chunkSize,
+        $orderBy,
+        $orderByDirection
+    ) {
         return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy, $orderByDirection);
     }
 

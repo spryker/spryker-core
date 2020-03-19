@@ -20,6 +20,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class ResolveQuoteNameBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Resolve quote name to make it unique for customer before quote save.
      *

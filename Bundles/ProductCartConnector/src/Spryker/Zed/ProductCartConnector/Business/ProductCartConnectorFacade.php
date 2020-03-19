@@ -17,10 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCartConnectorFacade extends AbstractFacade implements ProductCartConnectorFacadeInterface
 {
     /**
-     * Specification:
-     * - Reads a persisted concrete product from database.
-     * - Expands the items of the CartChangeTransfer with the concrete product's data.
-     * - Returns the expanded CartChangeTransfer.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,9 +33,7 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
     }
 
     /**
-     * Specification:
-     * - Checks added to cart products on existing
-     * - Returns pre-check transfer with error messages (in negative case)
+     * {@inheritDoc}
      *
      * @api
      *

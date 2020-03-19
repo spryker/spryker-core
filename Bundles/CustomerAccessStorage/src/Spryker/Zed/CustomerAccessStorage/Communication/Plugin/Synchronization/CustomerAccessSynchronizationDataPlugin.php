@@ -84,6 +84,8 @@ class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids

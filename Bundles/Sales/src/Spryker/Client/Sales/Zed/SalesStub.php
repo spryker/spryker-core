@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Sales\Zed;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -53,6 +54,23 @@ class SalesStub implements SalesStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::getOffsetPaginatedCustomerOrderListAction
+     *
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListRequestTransfer */
+        $orderListRequestTransfer = $this->zedStub->call('/sales/gateway/get-offset-paginated-customer-order-list', $orderListRequestTransfer);
+
+        return $orderListRequestTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::getPaginatedCustomerOrdersOverviewAction
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
