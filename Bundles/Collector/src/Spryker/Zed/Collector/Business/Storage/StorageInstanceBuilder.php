@@ -107,10 +107,11 @@ class StorageInstanceBuilder
         switch ($kvAdapter) {
             case static::KV_ADAPTER_REDIS:
                 $config = static::getRedisClientConfig();
-                break;
 
+                break;
             case static::SEARCH_ELASTICA_ADAPTER:
                 $config = static::getElasticsearchClientConfig();
+
                 break;
         }
 

@@ -13,6 +13,8 @@ use Spryker\Shared\Flysystem\FlysystemConstants;
 class FlysystemConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getFilesystemConfig()
@@ -21,6 +23,8 @@ class FlysystemConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getFlysystemConfig()

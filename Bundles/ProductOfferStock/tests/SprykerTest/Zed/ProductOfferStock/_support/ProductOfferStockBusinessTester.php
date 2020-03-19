@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductOfferStock;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 
 /**
  * Inherited Methods
@@ -22,6 +23,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\ProductOfferStock\Business\ProductOfferStockFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -32,4 +34,22 @@ class ProductOfferStockBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function ensureProductOfferStockTableIsEmpty(): void
+    {
+        $query = $this->getProductOfferStockQuery();
+        $this->ensureDatabaseTableIsEmpty($query);
+        $query->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
+     */
+    public function getProductOfferStockQuery(): SpyProductOfferStockQuery
+    {
+        return SpyProductOfferStockQuery::create();
+    }
 }

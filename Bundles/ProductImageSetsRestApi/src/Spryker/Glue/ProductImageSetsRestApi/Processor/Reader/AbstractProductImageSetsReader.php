@@ -132,8 +132,10 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildProductImageSetsResource(string $sku, ProductAbstractImageStorageTransfer $productImageAbstractStorageTransfer): RestResourceInterface
-    {
+    protected function buildProductImageSetsResource(
+        string $sku,
+        ProductAbstractImageStorageTransfer $productImageAbstractStorageTransfer
+    ): RestResourceInterface {
         $restProductAbstractImageSetAttributesTransfer = $this->abstractProductImageSetsMapper
             ->mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer($productImageAbstractStorageTransfer);
 

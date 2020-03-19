@@ -40,7 +40,8 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        if (!$restCheckoutRequestAttributesTransfer->getShipment()
+        if (
+            !$restCheckoutRequestAttributesTransfer->getShipment()
             || !$restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod()
         ) {
             return $quoteTransfer;

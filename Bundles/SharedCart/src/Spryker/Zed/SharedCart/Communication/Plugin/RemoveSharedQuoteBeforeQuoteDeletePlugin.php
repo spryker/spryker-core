@@ -19,6 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class RemoveSharedQuoteBeforeQuoteDeletePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Removes shared links before quote delete
      *

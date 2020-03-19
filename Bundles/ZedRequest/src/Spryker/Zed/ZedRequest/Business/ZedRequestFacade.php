@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $bundleControllerAction

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class GrandTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

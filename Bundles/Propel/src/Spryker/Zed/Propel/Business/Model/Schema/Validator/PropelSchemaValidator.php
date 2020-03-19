@@ -178,8 +178,13 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      *
      * @return \SimpleXMLElement
      */
-    protected function getToXmlElementChild(SimpleXMLElement $toXmlElement, ArrayObject $toXmlElements, string $fromXmlElementName, string $fromXmlChildTagName, SimpleXMLElement $fromXmlChildElement): SimpleXMLElement
-    {
+    protected function getToXmlElementChild(
+        SimpleXMLElement $toXmlElement,
+        ArrayObject $toXmlElements,
+        string $fromXmlElementName,
+        string $fromXmlChildTagName,
+        SimpleXMLElement $fromXmlChildElement
+    ): SimpleXMLElement {
         if (isset($toXmlElements[$fromXmlElementName])) {
             return $toXmlElements[$fromXmlElementName];
         }

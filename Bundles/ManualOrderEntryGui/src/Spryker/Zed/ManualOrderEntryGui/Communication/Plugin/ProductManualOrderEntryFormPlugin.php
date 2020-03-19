@@ -35,6 +35,8 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -45,6 +47,8 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,6 +62,8 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -81,6 +87,8 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -93,6 +101,8 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -35,8 +35,11 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
      * @param \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessCreatorInterface $customerAccessCreator
      * @param \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface $customerAccessReader
      */
-    public function __construct(CustomerAccessConfig $customerAccessConfig, CustomerAccessCreatorInterface $customerAccessCreator, CustomerAccessReaderInterface $customerAccessReader)
-    {
+    public function __construct(
+        CustomerAccessConfig $customerAccessConfig,
+        CustomerAccessCreatorInterface $customerAccessCreator,
+        CustomerAccessReaderInterface $customerAccessReader
+    ) {
         $this->customerAccessCreator = $customerAccessCreator;
         $this->customerAccessReader = $customerAccessReader;
         $this->customerAccessConfig = $customerAccessConfig;
@@ -53,6 +56,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
                 print sprintf(static::ALERT_MESSAGE . PHP_EOL, $contentType);
+
                 continue;
             }
 

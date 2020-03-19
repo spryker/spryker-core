@@ -49,8 +49,13 @@ class OutgoingGraphBuilder
      * @param \Spryker\Zed\Development\Business\Dependency\ManagerInterface $dependencyManager
      * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, ModuleDependencyParserInterface $moduleDependencyParser, ManagerInterface $dependencyManager, array $bundlesToFilter = [])
-    {
+    public function __construct(
+        $bundleName,
+        GraphPlugin $graph,
+        ModuleDependencyParserInterface $moduleDependencyParser,
+        ManagerInterface $dependencyManager,
+        array $bundlesToFilter = []
+    ) {
         $this->bundleName = $bundleName;
         $this->graph = $graph;
         $this->moduleDependencyParser = $moduleDependencyParser;

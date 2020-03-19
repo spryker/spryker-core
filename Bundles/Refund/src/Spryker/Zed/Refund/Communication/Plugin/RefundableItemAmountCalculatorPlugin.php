@@ -21,6 +21,8 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 class RefundableItemAmountCalculatorPlugin extends AbstractPlugin implements RefundCalculatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer

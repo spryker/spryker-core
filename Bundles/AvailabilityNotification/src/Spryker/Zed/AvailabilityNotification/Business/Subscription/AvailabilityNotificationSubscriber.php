@@ -58,8 +58,9 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function subscribe(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         $availabilityNotificationSubscriptionTransfer->requireEmail();
         $availabilityNotificationSubscriptionTransfer->requireSku();
 

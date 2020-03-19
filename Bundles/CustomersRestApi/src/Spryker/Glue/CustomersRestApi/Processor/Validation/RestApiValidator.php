@@ -67,14 +67,18 @@ class RestApiValidator implements RestApiValidatorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function validateCustomerGender(RestCustomersAttributesTransfer $restCustomersAttributesTransfer, RestResponseInterface $restResponse): RestResponseInterface
-    {
+    public function validateCustomerGender(
+        RestCustomersAttributesTransfer $restCustomersAttributesTransfer,
+        RestResponseInterface $restResponse
+    ): RestResponseInterface {
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
         }
 
-        if ($restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
-            !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+        if (
+            $restCustomersAttributesTransfer->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($restCustomersAttributesTransfer->getGender(), static::CUSTOMERS_GENDERS_ENUM)
+        ) {
             return $this->apiErrors->addNotValidGenderError($restResponse);
         }
 

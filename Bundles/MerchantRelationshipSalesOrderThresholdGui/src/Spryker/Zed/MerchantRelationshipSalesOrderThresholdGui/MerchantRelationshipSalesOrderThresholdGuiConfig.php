@@ -73,6 +73,8 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     ];
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return array
@@ -83,6 +85,8 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface[]
      */
     public function getStrategyGroupToFormTypeMap(): array
@@ -91,6 +95,8 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return array
@@ -101,6 +107,8 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface[]
      */
     public function getStrategyGroupToDataProviderMap(): array

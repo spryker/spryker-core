@@ -130,7 +130,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
      *
@@ -249,6 +249,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                     }
                     if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
                         $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+
                         continue;
                     }
 

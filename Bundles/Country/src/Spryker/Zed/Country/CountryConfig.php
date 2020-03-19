@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CountryConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getTerritoriesBlacklist()
@@ -32,6 +34,8 @@ class CountryConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCldrDir()
