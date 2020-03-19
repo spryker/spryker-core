@@ -10,7 +10,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataRespon
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 
-class CheckoutDataResponseRestAddressMapper implements CheckoutDataResponseMapperInterface
+class AddressCheckoutDataResponseRestMapper implements CheckoutDataResponseMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer

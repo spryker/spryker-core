@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\RestPaymentProviderTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 
-class CheckoutDataResponsePaymentProvidersMapper implements CheckoutDataResponseMapperInterface
+class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseMapperInterface
 {
     /**
      * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig

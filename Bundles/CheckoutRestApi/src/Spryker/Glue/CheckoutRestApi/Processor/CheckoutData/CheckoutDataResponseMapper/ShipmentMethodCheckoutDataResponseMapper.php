@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 
-class CheckoutDataResponseShipmentMethodsMapper implements CheckoutDataResponseMapperInterface
+class ShipmentMethodCheckoutDataResponseMapper implements CheckoutDataResponseMapperInterface
 {
     /**
      * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
