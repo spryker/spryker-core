@@ -51,7 +51,7 @@ class MerchantStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStockCollectionByMerchantReturnsRelatedStocks(): void
+    public function testGetReturnsRelatedStocks(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -65,7 +65,7 @@ class MerchantStockFacadeTest extends Unit
             ->setIdMerchant($merchantTransfer->getIdMerchant());
 
         // Act
-        $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantStockCriteriaTransfer);
+        $stockCollectionTransfer = $this->tester->getFacade()->get($merchantStockCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($stockCollectionTransfer->getStocks());
@@ -75,7 +75,7 @@ class MerchantStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStockCollectionByMerchantReturnsEmptyStocks(): void
+    public function testGetReturnsEmptyStocks(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -84,7 +84,7 @@ class MerchantStockFacadeTest extends Unit
             ->setIdMerchant($merchantTransfer->getIdMerchant());
 
         // Act
-        $stockCollectionTransfer = $this->tester->getFacade()->getStockCollectionByMerchant($merchantStockCriteriaTransfer);
+        $stockCollectionTransfer = $this->tester->getFacade()->get($merchantStockCriteriaTransfer);
 
         // Assert
         $this->assertEmpty($stockCollectionTransfer->getStocks());
