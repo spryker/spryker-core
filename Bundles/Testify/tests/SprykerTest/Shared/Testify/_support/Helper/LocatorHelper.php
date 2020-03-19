@@ -157,6 +157,8 @@ class LocatorHelper extends Module
      */
     public function _after(TestInterface $test): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 
