@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-user-gui.svg)](https://travis-ci.org/spryker/merchant-user-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-Merchant User Gui Module provides Zed UI interface for merchantUser management.
+Merchant User Gui Module provides Zed UI interface for merchant users management.
 
 ## Installation
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Table;
 
+use Orm\Zed\MerchantUser\Persistence\Map\SpyMerchantUserTableMap;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -23,48 +24,16 @@ class MerchantUserTable extends AbstractTable
     protected const ACTIONS = 'actions';
 
     /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
-     */
-    protected const USER_STATUS_BLOCKED = 'blocked';
-    /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
-     */
-    protected const USER_STATUS_ACTIVE = 'active';
-    /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_USERNAME
-     */
-    protected const COL_USERNAME = 'spy_user.username';
-    /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_FIRST_NAME
-     */
-    protected const COL_FIRST_NAME = 'spy_user.first_name';
-    /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_LAST_NAME
-     */
-    protected const COL_LAST_NAME = 'spy_user.last_name';
-    /**
-     * @uses \Orm\Zed\MerchantUser\Persistence\Map\SpyMerchantUserTableMap::COL_ID_MERCHANT_USER
-     */
-    protected const COL_ID_MERCHANT_USER = 'spy_merchant_user.id_merchant_user';
-    /**
-     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS
-     */
-    protected const COL_STATUS = 'spy_user.status';
-    /**
-     * @var string
-     */
-    protected const COL_ACTIONS = 'actions';
-    /**
      * @var array
      */
     protected const STATUS_CLASS_LABEL_MAPPING = [
-        self::USER_STATUS_ACTIVE => [
+        SpyUserTableMap::COL_STATUS_ACTIVE => [
             'title' => 'Active',
             'class' => 'label-info',
             'status_change_action_title' => 'Activate',
             'status_change_action_class' => 'btn-create',
         ],
-        self::USER_STATUS_BLOCKED => [
+        SpyUserTableMap::COL_STATUS_BLOCKED => [
             'title' => 'Blocked',
             'class' => 'label-danger',
             'status_change_action_title' => 'Deny Access',
@@ -147,10 +116,10 @@ class MerchantUserTable extends AbstractTable
         $query = $this->merchantUserQuery
             ->innerJoinSpyUser()
             ->filterByFkMerchant($this->idMerchant)
-            ->withColumn(static::COL_STATUS, static::MERCHANT_USER_STATUS)
-            ->withColumn(static::COL_FIRST_NAME, static::MERCHANT_USER_FIRST_NAME)
-            ->withColumn(static::COL_LAST_NAME, static::MERCHANT_USER_LAST_NAME)
-            ->withColumn(static::COL_USERNAME, static::MERCHANT_USER_NAME);
+            ->withColumn(SpyUserTableMap::COL_STATUS, static::MERCHANT_USER_STATUS)
+            ->withColumn(SpyUserTableMap::COL_FIRST_NAME, static::MERCHANT_USER_FIRST_NAME)
+            ->withColumn(SpyUserTableMap::COL_LAST_NAME, static::MERCHANT_USER_LAST_NAME)
+            ->withColumn(SpyUserTableMap::COL_USERNAME, static::MERCHANT_USER_NAME);
 
         $queryResults = $this->runQuery($query, $config);
         $results = [];
@@ -158,7 +127,7 @@ class MerchantUserTable extends AbstractTable
         foreach ($queryResults as $item) {
             $item[static::MERCHANT_USER_STATUS] = $this->convertStatusEnumKeyToValue($item[static::MERCHANT_USER_STATUS]);
             $results[] = [
-                static::MERCHANT_USER_ID => $item[static::COL_ID_MERCHANT_USER],
+                static::MERCHANT_USER_ID => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                 static::MERCHANT_USER_NAME => $item[static::MERCHANT_USER_NAME],
                 static::MERCHANT_USER_FIRST_NAME => $item[static::MERCHANT_USER_FIRST_NAME],
                 static::MERCHANT_USER_LAST_NAME => $item[static::MERCHANT_USER_LAST_NAME],
@@ -187,7 +156,7 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/edit-merchant-user',
                 [
-                    'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
+                    'merchant-user-id' => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'merchant-id' => $this->idMerchant,
                 ]
             ),
@@ -225,15 +194,15 @@ class MerchantUserTable extends AbstractTable
      */
     protected function buildAvailableStatusButton(array $item): string
     {
-        $availableStatus = $item[static::MERCHANT_USER_STATUS] === static::USER_STATUS_ACTIVE
-            ? static::USER_STATUS_BLOCKED
-            : static::USER_STATUS_ACTIVE;
+        $availableStatus = $item[static::MERCHANT_USER_STATUS] === SpyUserTableMap::COL_STATUS_ACTIVE
+            ? SpyUserTableMap::COL_STATUS_BLOCKED
+            : SpyUserTableMap::COL_STATUS_ACTIVE;
 
         return $this->generateButton(
             Url::generate(
                 '/merchant-user-gui/merchant-user-status',
                 [
-                    'merchant-user-id' => $item[static::COL_ID_MERCHANT_USER],
+                    'merchant-user-id' => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'merchant-id' => $this->idMerchant,
                     'status' => $availableStatus,
                 ]
@@ -253,7 +222,7 @@ class MerchantUserTable extends AbstractTable
      */
     protected function convertStatusEnumKeyToValue(int $status): string
     {
-        $options = SpyUserTableMap::getValueSet(static::COL_STATUS);
+        $options = SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS);
 
         return $options[$status];
     }

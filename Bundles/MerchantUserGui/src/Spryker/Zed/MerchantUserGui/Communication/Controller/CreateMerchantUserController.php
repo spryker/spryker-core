@@ -69,7 +69,7 @@ class CreateMerchantUserController extends AbstractController
         $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create($merchantUserTransfer);
 
         if ($merchantUserResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('Merchant user was successfully created');
+            $this->addSuccessMessage('Merchant user was successfully created.');
 
             return $this->redirectResponse($redirectUrl);
         }
