@@ -363,6 +363,7 @@ class ProductTable extends AbstractProductTable
                 'data-select-product' => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 'data-row' => htmlentities($this->utilEncodingService->encodeJson($item), ENT_QUOTES, 'UTF-8'),
                 'id' => 'select-product-' . $item[SpyProductAbstractTableMap::COL_SKU],
+                'icon' => '',
             ]
         );
     }

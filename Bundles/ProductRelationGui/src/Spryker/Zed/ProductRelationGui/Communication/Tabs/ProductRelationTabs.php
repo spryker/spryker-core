@@ -15,11 +15,11 @@ class ProductRelationTabs extends AbstractTabs
 {
     protected const RELATION_TAB_NAME = 'relation-type';
     protected const RELATION_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-relation-type.twig';
-    protected const RELATION_TAB_TITLE = 'Relation type';
+    protected const RELATION_TAB_TITLE = 'Settings';
 
     protected const ASSIGN_TAB_NAME = 'assign-products';
     protected const ASSIGN_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-assign-products.twig';
-    protected const ASSIGN_TAB_TITLE = 'Assign products';
+    protected const ASSIGN_TAB_TITLE = 'Products';
 
     protected const FOOTER_TEMPLATE = '@ProductRelationGui/_partial/form-submit.twig';
 

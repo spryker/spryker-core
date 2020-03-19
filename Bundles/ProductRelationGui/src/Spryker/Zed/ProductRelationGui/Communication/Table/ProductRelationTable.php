@@ -273,7 +273,10 @@ class ProductRelationTable extends AbstractTable
                     ViewController::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
                 ]
             ),
-            'View'
+            'View',
+            [
+                'icon' => 'fa-eye',
+            ]
         );
     }
 

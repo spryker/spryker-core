@@ -8,13 +8,13 @@
 {% block action %}
     {% set redirectUrl = url('/product-relation-gui/view/index', {'id-product-relation' : productRelation.idProductRelation}) %}
 
-    {{ editActionButton(url('/product-relation-gui/edit/index', { 'id-product-relation': productRelation.idProductRelation }), 'Edit' | trans) }}
     {{ backActionButton('/product-relation-gui/list/index', 'List Product relations' | trans) }}
+    {{ editActionButton(url('/product-relation-gui/edit/index', { 'id-product-relation': productRelation.idProductRelation }), 'Edit' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' | trans }  %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans }  %}
         {% block widget_content %}
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Product relation key' | trans }}</b></div>

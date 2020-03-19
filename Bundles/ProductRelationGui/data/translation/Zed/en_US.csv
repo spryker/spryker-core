@@ -1,7 +1,7 @@
 "Abstract product name","Abstract product name"
 "Abstract product name:","Abstract product name:"
 Activate,Activate
-"Add Product Relations","Add Product Relations"
+"Create Product Relations","Create Product Relations"
 "Assign related products","Assign related products"
 "Create Product Relation","Create Product Relation"
 Deactivate,Deactivate
@@ -11,7 +11,7 @@ Edit,Edit
 "Is active:","Is active:"
 "List of Product Relations","List of Product Relations"
 "Number of products","Number of products"
-"Please select product from the list below","Please select product from the list below"
+"Please select product from the list below *","Please select product from the list below *"
 "Product relation successfully created","Product relation successfully created"
 "Product relation successfully modified","Product relation successfully modified"
 "Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
@@ -38,7 +38,6 @@ Status,Status
 Active,Active
 Inactive,Inactive
 "Product owning the relation","Product owning the relation"
-"General information","General information"
 "Store relation","Store relation"
 Stores,Stores
 "Product relation #%d not found","Product relation #%d not found"

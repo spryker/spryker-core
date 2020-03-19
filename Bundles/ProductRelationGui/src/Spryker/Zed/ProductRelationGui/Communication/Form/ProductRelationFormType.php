@@ -112,7 +112,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_IS_REBUILD_SCHEDULED, CheckboxType::class, [
             'label' => 'Update regularly',
-
+            'required' => false,
         ]);
 
         return $this;
@@ -127,6 +127,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
             'label' => 'Is active',
+            'required' => false,
         ]);
 
         return $this;
@@ -156,6 +157,11 @@ class ProductRelationFormType extends AbstractType
             'label' => 'Relation type',
             'property_path' => ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY,
             'choices' => array_flip($options[static::OPTION_RELATION_CHOICES]),
+            'placeholder' => 'Select a relation type',
+            'constraints' => [
+                new Required(),
+                new NotBlank(),
+            ],
         ]);
 
         return $this;

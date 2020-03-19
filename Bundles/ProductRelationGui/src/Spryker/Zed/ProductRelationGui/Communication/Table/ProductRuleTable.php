@@ -15,7 +15,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
@@ -193,61 +192,6 @@ class ProductRuleTable extends AbstractProductTable
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getActions(array $data): array
-    {
-        $action = $this->createViewProductAbstractButton($data);
-        $action .= ' ' . $this->createViewInShopButton($data);
-
-        return [
-            static::COL_ACTION => $action,
-        ];
-    }
-
-    /**
-     * @param array $product
-     *
-     * @return string
-     */
-    protected function createViewProductAbstractButton(array $product): string
-    {
-        $viewAbstractProductUrl = Url::generate(
-            '/product-management/view',
-            [
-                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $product[static::COL_ID_PRODUCT_ABSTRACT],
-            ]
-        );
-
-        return $this->generateViewButton(
-            $viewAbstractProductUrl,
-            'View',
-            ['target' => '_blank']
-        );
-    }
-
-    /**
-     * @param array $product
-     *
-     * @return string
-     */
-    protected function createViewInShopButton(array $product): string
-    {
-        $url = $this->getProductUrl($product);
-        if (!$url) {
-            return '';
-        }
-
-        return $this->generateViewButton(
-            $url,
-            'View in Shop',
-            ['target' => '_blank']
-        );
-    }
-
-    /**
      * @param array $product
      *
      * @return string|null
@@ -279,7 +223,7 @@ class ProductRuleTable extends AbstractProductTable
      */
     protected function formatRow(array $data): array
     {
-        return array_merge($this->getRowData($data), $this->getActions($data));
+        return $this->getRowData($data);
     }
 
     /**
@@ -313,7 +257,6 @@ class ProductRuleTable extends AbstractProductTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             static::COL_CATEGORY_NAME => 'Categories',
             static::COL_STATUS => 'Status',
-            static::COL_ACTION => '',
         ]);
     }
 

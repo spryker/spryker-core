@@ -12,8 +12,8 @@
 
                 <pages>
                     <product-relations-create>
-                        <label>Create new Product Relation</label>
-                        <title>Create new Product Relation</title>
+                        <label>Create Product Relation</label>
+                        <title>Create Product Relation</title>
                         <bundle>product-relation-gui</bundle>
                         <controller>create</controller>
                         <action>index</action>
