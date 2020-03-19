@@ -30,9 +30,9 @@ class MerchantOmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
-    public function getMerchantOmsActiveProcesses(): array
+    public function getMerchantOmsProcesses(): array
     {
         return [
             static::MERCHANT_OMS_DEFAULT_PROCESS_NAME,
@@ -42,7 +42,7 @@ class MerchantOmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getMerchantProcessInitialStateMap(): array
     {

@@ -42,9 +42,8 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Finds merchant order items with provided criteria.
-     * - Requires MerchantOrderItemCriteria.stateMachineItemStateIds transfer field to be set.
-     * - Returns array of StateMachineItem transfers with identifier(id of merchant order item) and idItemState.
+     * - Finds merchant order items.
+     * - Returns array of StateMachineItem transfers filled with identifier(id of merchant order item) and idItemState.
      *
      * @api
      *

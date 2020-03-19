@@ -20,7 +20,6 @@ class MerchantProductOfferPaymentMethodFilterPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Filters dummy marketplace payment methods.
      * - If not all order items contain of product reference, then filters dummy marketplace payment methods out.
      *
      * @api

@@ -65,7 +65,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getActiveProcesses(): array
     {
-        return $this->getConfig()->getMerchantOmsActiveProcesses();
+        return $this->getConfig()->getMerchantOmsProcesses();
     }
 
     /**
