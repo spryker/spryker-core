@@ -8,18 +8,23 @@
 namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\NavigationItemBuilder;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
+use Generated\Shared\Transfer\NavigationItemTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
@@ -643,5 +648,116 @@ class AclTest extends Unit
             $hasAccess = $this->facade->checkAccess($user, rand(100, 999), rand(100, 999), rand(100, 999));
             $this->assertEquals(false, $hasAccess);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterNavigationItemCollectionByAccessibilityReturnsFilteredCollectionWithCorrectData(): void
+    {
+        $groupData = $this->mockGroupData();
+        $roleData = $this->mockRoleData();
+        $roleTransfer = $this->facade->addRole($roleData['name']);
+        $groupTransfer = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+
+        $rulesData = [];
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('deny', $roleTransfer->getIdAclRole());
+
+        $userData = $this->mockUserData();
+        $userTransfer = $this->mockAddUser($userData);
+        $aclToUserBridgeMock = $this->getAclToUserBridgeMock();
+        $aclToUserBridgeMock->method('hasCurrentUser')->willReturn(true);
+        $aclToUserBridgeMock->method('getCurrentUser')->willReturn($userTransfer);
+
+        $this->facade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+
+        $navigationItemCollectionTransfer = (new NavigationItemCollectionTransfer());
+
+        foreach ($rulesData as $ruleKey => $ruleData) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer->fromArray($ruleData, true);
+            $this->facade->addRule($ruleTransfer);
+
+            $navigationItemTransfer = $this->getNavigationItemTransfer([
+                NavigationItemTransfer::MODULE => $ruleData['bundle'],
+                NavigationItemTransfer::CONTROLLER => $ruleData['controller'],
+                NavigationItemTransfer::ACTION => $ruleData['action'],
+            ]);
+
+            $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
+        }
+
+        $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
+            $navigationItemCollectionTransfer
+        );
+        $this->assertCount(2, $navigationItemCollectionTransfer->getNavigationItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterNavigationItemCollectionByAccessibilityReturnsEmptyCollectionIfUserIsUnauthorized(): void
+    {
+        $groupData = $this->mockGroupData();
+        $roleData = $this->mockRoleData();
+        $roleTransfer = $this->facade->addRole($roleData['name']);
+        $groupTransfer = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+
+        $rulesData = [];
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+
+        $userData = $this->mockUserData();
+        $userTransfer = $this->mockAddUser($userData);
+        $aclToUserBridgeMock = $this->getAclToUserBridgeMock();
+        $aclToUserBridgeMock->method('hasCurrentUser')->willReturn(false);
+
+        $this->facade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+
+        $navigationItemCollectionTransfer = (new NavigationItemCollectionTransfer());
+
+        foreach ($rulesData as $ruleKey => $ruleData) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer->fromArray($ruleData, true);
+            $this->facade->addRule($ruleTransfer);
+
+            $navigationItemTransfer = $this->getNavigationItemTransfer([
+                NavigationItemTransfer::MODULE => $ruleData['bundle'],
+                NavigationItemTransfer::CONTROLLER => $ruleData['controller'],
+                NavigationItemTransfer::ACTION => $ruleData['action'],
+            ]);
+
+            $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
+        }
+
+        $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
+            $navigationItemCollectionTransfer
+        );
+        $this->assertCount(0, $navigationItemCollectionTransfer->getNavigationItems());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
+     */
+    protected function getAclToUserBridgeMock(): AclToUserInterface
+    {
+        $aclToUserBridge = $this->getMockBuilder(AclToUserInterface::class)->getMock();
+        $this->tester->setDependency(AclDependencyProvider::FACADE_USER, $aclToUserBridge);
+
+        return $aclToUserBridge;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemTransfer
+     */
+    protected function getNavigationItemTransfer(array $seedData): NavigationItemTransfer
+    {
+        return (new NavigationItemBuilder($seedData))->build();
     }
 }
