@@ -36,7 +36,7 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
     {
         if (
             $cartChangeTransfer->getOperation() !== static::OPERATION_ADD
-            && $cartChangeTransfer->getOperation() !== static::OPERATION_ADD
+            && $cartChangeTransfer->getOperation() !== static::OPERATION_REMOVE
         ) {
             return $cartChangeTransfer;
         }
@@ -71,8 +71,8 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
      */
     protected function clearShipmentExpenses(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $quoteTransfer = $cartChangeTransfer->getQuote();
         $expenseTransfers = new ArrayObject();
+        $quoteTransfer = $cartChangeTransfer->getQuote();
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {

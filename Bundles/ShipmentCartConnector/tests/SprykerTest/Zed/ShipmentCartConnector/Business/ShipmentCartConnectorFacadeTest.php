@@ -43,6 +43,11 @@ class ShipmentCartConnectorFacadeTest extends Unit
     ];
 
     /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     */
+    protected const OPERATION_ADD = 'add';
+
+    /**
      * @var \SprykerTest\Zed\ShipmentCartConnector\ShipmentCartConnectorBusinessTester
      */
     protected $tester;
@@ -250,6 +255,91 @@ class ShipmentCartConnectorFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearItemLevelShipment(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+        $itemTransfer = $cartChangeTransfer->getItems()->getIterator()->current();
+
+        // Assert
+        $this->assertEmpty($itemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearShipmentExpenses(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $this->assertEmpty($cartChangeTransfer->getQuote()->getExpenses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldNotClearItemLevelShipment(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $itemTransfer = $cartChangeTransfer->getItems()->getIterator()->current();
+        $this->assertNotEmpty($itemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearQuoteLevelShipment(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithQuoteLevelShipment($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $this->assertEmpty($cartChangeTransfer->getQuote()->getShipment()->getMethod());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -324,6 +414,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $quoteTransfer->addExpense($shipmentExpense);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->addItem($itemTransfer);
 
         return $cartChangeTransfer;
     }

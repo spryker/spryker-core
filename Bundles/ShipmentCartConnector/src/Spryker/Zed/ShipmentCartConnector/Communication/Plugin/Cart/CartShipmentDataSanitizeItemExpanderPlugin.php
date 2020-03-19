@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
  */
-class ShipmentCartConnectorItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class CartShipmentDataSanitizeItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,7 +28,7 @@ class ShipmentCartConnectorItemExpanderPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFacade()->clearShipmentMethod($cartChangeTransfer);
     }
