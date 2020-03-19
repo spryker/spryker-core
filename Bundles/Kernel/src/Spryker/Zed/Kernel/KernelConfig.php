@@ -18,7 +18,7 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getProjectOrganizations(): array
     {
@@ -28,7 +28,7 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getCoreOrganizations(): array
     {
@@ -48,7 +48,7 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getPathsToProjectModules(): array
     {
@@ -64,7 +64,7 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getPathsToCoreModules(): array
     {
@@ -89,7 +89,7 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getResolvableTypeClassNamePatternMap(): array
     {

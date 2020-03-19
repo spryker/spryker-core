@@ -10,7 +10,7 @@ namespace Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheWriter;
 interface CacheWriterInterface
 {
     /**
-     * @param array $cache
+     * @param string[] $cache
      *
      * @return void
      */

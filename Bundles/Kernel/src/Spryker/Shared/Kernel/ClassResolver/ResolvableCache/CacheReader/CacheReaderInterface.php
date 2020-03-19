@@ -10,7 +10,7 @@ namespace Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader;
 interface CacheReaderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function read(): array;
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Kernel\Business\ModuleNamesFinder;
 interface ModuleNamesFinderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function findModuleNames(): array;
 }
