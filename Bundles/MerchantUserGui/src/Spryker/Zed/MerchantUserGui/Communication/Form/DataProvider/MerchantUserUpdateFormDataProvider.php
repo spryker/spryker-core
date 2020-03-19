@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
+use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface;
 
-class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvider
+class MerchantUserUpdateFormDataProvider
 {
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
@@ -20,6 +23,33 @@ class MerchantUserUpdateFormDataProvider extends MerchantUserCreateFormDataProvi
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
+     * @var \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface
+     */
+    protected $merchantUserFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface $merchantUserFacade
+     */
+    public function __construct(MerchantUserGuiToMerchantUserFacadeInterface $merchantUserFacade)
+    {
+        $this->merchantUserFacade = $merchantUserFacade;
+    }
+
+    /**
+     * @param int $idMerchantUser
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function getData(int $idMerchantUser): MerchantUserTransfer
+    {
+        return $merchantUserTransfer = $this->merchantUserFacade->findOne(
+            (new MerchantUserCriteriaTransfer())
+                ->setIdMerchantUser($idMerchantUser)
+                ->setWithUser(true)
+        );
+    }
 
     /**
      * @return array

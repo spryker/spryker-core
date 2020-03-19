@@ -12,7 +12,14 @@ interface MerchantUserGuiToUserFacadeInterface
     /**
      * @param string $username
      *
-     * @return mixed
+     * @return bool
      */
     public function hasUserByUsername($username);
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserByUsername($username);
 }

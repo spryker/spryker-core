@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateMerchantUserController extends AbstractController
 {
     protected const MERCHANT_ID_PARAM_NAME = 'merchant-id';
-    protected const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,16 +27,12 @@ class CreateMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createMerchantUserCreateFormDataProvider();
         $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-        $idMerchantUser = $request->get(static::MERCHANT_USER_ID_PARAM_NAME);
 
-        $merchantUserForm = $this->getFactory()
-            ->getMerchantUserCreateForm($dataProvider->getData($idMerchant, $idMerchantUser))
-            ->handleRequest($request);
+        $merchantUserForm = $this->getFactory()->getMerchantUserCreateForm()->handleRequest($request);
 
         if ($merchantUserForm->isSubmitted() && $merchantUserForm->isValid()) {
-            return $this->createMerchantUser($request, $merchantUserForm);
+            return $this->createMerchantUser($idMerchant, $merchantUserForm);
         }
 
         return $this->viewResponse([
@@ -47,26 +42,24 @@ class CreateMerchantUserController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $merchantForm
+     * @param int $idMerchant
+     * @param \Symfony\Component\Form\FormInterface $merchantUserForm
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createMerchantUser(Request $request, FormInterface $merchantForm)
+    protected function createMerchantUser(int $idMerchant, FormInterface $merchantUserForm)
     {
-        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
-
         $redirectUrl = sprintf(
             '/merchant-gui/edit-merchant?id-merchant=%s%s',
             $idMerchant,
             '#tab-content-merchant-user'
         );
 
-        $userTransfer = (new UserTransfer())->fromArray($merchantForm->getData(), true);
-        $merchantUserTransfer = (new MerchantUserTransfer())->setUser($userTransfer)
-            ->setIdMerchant($idMerchant);
+        $userTransfer = (new UserTransfer())->fromArray($merchantUserForm->getData(), true);
 
-        $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create(
+            (new MerchantUserTransfer())->setUser($userTransfer)->setIdMerchant($idMerchant)
+        );
 
         if ($merchantUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage('Merchant user was successfully created.');
@@ -79,7 +72,7 @@ class CreateMerchantUserController extends AbstractController
         }
 
         return $this->viewResponse([
-            'merchantUserForm' => $merchantForm->createView(),
+            'merchantUserForm' => $merchantUserForm->createView(),
             'idMerchant' => $idMerchant,
         ]);
     }

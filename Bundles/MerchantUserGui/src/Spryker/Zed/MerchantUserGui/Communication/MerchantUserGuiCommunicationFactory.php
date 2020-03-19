@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider\MerchantUserCreateFormDataProvider;
 use Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider\MerchantUserUpdateFormDataProvider;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserCreateForm;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
@@ -37,14 +37,6 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantUserPropelQuery(): SpyMerchantUserQuery
     {
         return $this->getProvidedDependency(MerchantUserGuiDependencyProvider::PROPEL_QUERY_MERCHANT_USER);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider\MerchantUserCreateFormDataProvider
-     */
-    public function createMerchantUserCreateFormDataProvider(): MerchantUserCreateFormDataProvider
-    {
-        return new MerchantUserCreateFormDataProvider($this->getMerchantUserFacade());
     }
 
     /**
@@ -83,13 +75,13 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMerchantUserUpdateForm(?array $data = null, array $options = []): FormInterface
+    public function getMerchantUserUpdateForm(UserTransfer $userTransfer, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MerchantUserUpdateForm::class, $data, $options);
+        return $this->getFormFactory()->create(MerchantUserUpdateForm::class, $userTransfer, $options);
     }
 }

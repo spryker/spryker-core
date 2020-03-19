@@ -25,10 +25,20 @@ class MerchantUserGuiToUserFacadeBridge implements MerchantUserGuiToUserFacadeIn
     /**
      * @param string $username
      *
-     * @return mixed
+     * @return bool
      */
     public function hasUserByUsername($username)
     {
         return $this->userFacade->hasUserByUsername($username);
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserByUsername($username)
+    {
+        return $this->userFacade->getUserByUsername($username);
     }
 }

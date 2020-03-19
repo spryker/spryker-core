@@ -8,10 +8,8 @@
 namespace Spryker\Zed\MerchantUserGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -25,11 +23,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class MerchantUserCreateForm extends AbstractType
 {
     public const FIELD_USERNAME = 'username';
-    public const FIELD_FIRST_NAME = 'first_name';
-    public const FIELD_LAST_NAME = 'last_name';
-    public const FIELD_MERCHANT_ID = 'id_merchant';
-    public const FIELD_MERCHANT_USER_ID = 'id_merchant_user';
-    public const FIELD_PASSWORD = 'password';
+    public const FIELD_FIRST_NAME = 'firstName';
+    public const FIELD_LAST_NAME = 'lastName';
     public const FIELD_STATUS = 'status';
 
     protected const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
@@ -41,21 +36,7 @@ class MerchantUserCreateForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
-                $defaultData = $form->getConfig()->getData();
-                $submittedData = $form->getData();
-
-                if (
-                    array_key_exists(static::FIELD_USERNAME, $defaultData) === false
-                    || $defaultData[static::FIELD_USERNAME] !== $submittedData[static::FIELD_USERNAME]
-                ) {
-                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_USERNAME_CHECK];
-                }
-
-                return [Constraint::DEFAULT_GROUP];
-            },
-        ]);
+        $resolver->setDefaults(['validation_groups' => static::GROUP_UNIQUE_USERNAME_CHECK]);
     }
 
     /**
@@ -103,34 +84,6 @@ class MerchantUserCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMerchantId(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_MERCHANT_ID, HiddenType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addMerchantUserId(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_MERCHANT_USER_ID, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
@@ -165,7 +118,15 @@ class MerchantUserCreateForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($email, ExecutionContextInterface $contextInterface) {
-                if ($this->getFactory()->getUserFacade()->hasUserByUsername($email)) {
+                if (!$this->getFactory()->getUserFacade()->hasUserByUsername($email)) {
+                    return;
+                }
+
+                $userTransfer = $this->getFactory()->getUserFacade()->getUserByUsername($email);
+                /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
+                $formDataUserTransfer = $contextInterface->getRoot()->getData();
+
+                if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
                     $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
                         '{{ username }}' => $email,
                     ]);
