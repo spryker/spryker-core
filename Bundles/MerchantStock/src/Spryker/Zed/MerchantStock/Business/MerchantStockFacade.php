@@ -43,8 +43,8 @@ class MerchantStockFacade extends AbstractFacade implements MerchantStockFacadeI
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStockCollectionByMerchant(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
+    public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
-        return $this->getRepository()->getStockCollectionByMerchant($merchantStockCriteriaTransfer);
+        return $this->getRepository()->get($merchantStockCriteriaTransfer);
     }
 }

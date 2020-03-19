@@ -22,7 +22,7 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStockCollectionByMerchant(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
+    public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
         $merchantStocksEntities = $this->getFactory()
             ->createMerchantStockPropelQuery()
