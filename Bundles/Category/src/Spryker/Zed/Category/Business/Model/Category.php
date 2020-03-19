@@ -20,9 +20,12 @@ use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class Category
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
      */
@@ -143,8 +146,52 @@ class Category
      */
     public function create(CategoryTransfer $categoryTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
+            $this->executeCreateTransaction($categoryTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer)
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
+            $this->executeUpdateTransaction($categoryTransfer);
+        });
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
+            $this->executeDeleteTransaction($idCategory);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->category->getAllCategoryCollection($localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function executeCreateTransaction(CategoryTransfer $categoryTransfer): void
+    {
         $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_CREATE, $categoryTransfer);
 
         $this->category->create($categoryTransfer);
@@ -157,8 +204,6 @@ class Category
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
         $this->categoryPluginExecutor->executePostCreatePlugins($categoryTransfer);
-
-        $this->queryContainer->getConnection()->commit();
     }
 
     /**
@@ -166,10 +211,8 @@ class Category
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    protected function executeUpdateTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_UPDATE, $categoryTransfer);
 
         $this->runUpdatePlugins($categoryTransfer);
@@ -183,8 +226,6 @@ class Category
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
 
         $this->categoryPluginExecutor->executePostUpdatePlugins($categoryTransfer);
-
-        $this->queryContainer->getConnection()->commit();
     }
 
     /**
@@ -204,10 +245,8 @@ class Category
      *
      * @return void
      */
-    public function delete($idCategory)
+    protected function executeDeleteTransaction(int $idCategory): void
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
         $categoryTransfer = $this->createCategoryTransfer($idCategory);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_DELETE, $categoryTransfer);
@@ -222,18 +261,6 @@ class Category
         $this->category->delete($idCategory);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_DELETE, $categoryTransfer);
-
-        $this->queryContainer->getConnection()->commit();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
-    {
-        return $this->category->getAllCategoryCollection($localeTransfer);
     }
 
     /**
