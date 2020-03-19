@@ -301,12 +301,8 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         }
 
         $merchantUserId = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser()->requireIdMerchant()->getIdMerchant();
-        $productConcreteQuery->addAnd(
-            $productConcreteQuery->getNewCriterion(
-                sprintf('(%s)', $this->createProductOffersCountSubquery($merchantUserId)),
-                0,
-                Criteria::GREATER_THAN
-            )
+        $productConcreteQuery->where(
+            sprintf('(%s) > 0', $this->createProductOffersCountSubquery($merchantUserId))
         );
 
         return $productConcreteQuery;
