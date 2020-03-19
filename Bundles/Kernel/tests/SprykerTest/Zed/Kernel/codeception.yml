@@ -17,9 +17,14 @@ suites:
         class_name: KernelZedTester
         modules:
             enabled:
-                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\FactoryHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Kernel\Helper\ResolvableCacheBuilderHelper
+                - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\ClassHelper
+                - \SprykerTest\Shared\Kernel\Helper\ClassResolverHelper

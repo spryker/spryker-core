@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
-use Codeception\Step;
 use Codeception\TestInterface;
 use ReflectionClass;
 use ReflectionProperty;
@@ -88,6 +87,18 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test): void
+    {
+        $this->clearLocators();
+        $this->clearCaches();
+        $this->configureNamespacesForClassResolver();
+    }
+
+    /**
      * @return void
      */
     protected function clearLocators(): void
@@ -109,16 +120,6 @@ class LocatorHelper extends Module
             $instanceProperty->setAccessible(true);
             $instanceProperty->setValue([]);
         }
-    }
-
-    /**
-     * @param \Codeception\Step $step
-     *
-     * @return void
-     */
-    public function _beforeStep(Step $step): void
-    {
-        $this->configureNamespacesForClassResolver();
     }
 
     /**
