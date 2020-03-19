@@ -107,12 +107,15 @@ class ProductRelationMapper
             );
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
 
+        $productRelationEntity->resetPartialProductRelationStores();
         $productRelationTransfer->setStoreRelation(
             $this->storeRelationMapper->mapProductRelationStoreEntitiesToStoreRelationTransfer(
                 $productRelationEntity->getProductRelationStores(),
                 $this->createStoreRelationTransfer($productRelationTransfer)
             )
         );
+
+        $productRelationEntity->resetPartialSpyProductRelationProductAbstracts();
         $productRelationTransfer = $this->productMapper->mapProductRelationRelatedProductEntitiesToProductRelationTransfer(
             $productRelationEntity->getSpyProductRelationProductAbstracts(),
             $productRelationTransfer

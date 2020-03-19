@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -21,6 +22,7 @@ class ProductRelationSynchronizationDataRepositoryPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
+     * - Retrieves a collection of product relation storage transfer according to provided offset, limit and ids.
      *
      * @api
      *
@@ -32,7 +34,9 @@ class ProductRelationSynchronizationDataRepositoryPlugin extends AbstractPlugin 
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findProductRelationStorageDataTransfersByIds($offset, $limit, $ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->findProductRelationStorageDataTransfersByIds($filterTransfer, $ids);
     }
 
     /**
@@ -93,5 +97,18 @@ class ProductRelationSynchronizationDataRepositoryPlugin extends AbstractPlugin 
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductAbstractRelationSynchronizationPoolName();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

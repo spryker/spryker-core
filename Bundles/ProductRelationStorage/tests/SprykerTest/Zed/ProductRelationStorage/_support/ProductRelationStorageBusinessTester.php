@@ -44,7 +44,7 @@ class ProductRelationStorageBusinessTester extends Actor
      *
      * @return bool
      */
-    public function isProductRelationStorageRecordExists(int $idProductAbstract, string $storeName): bool
+    public function isProductAbstractRelationStorageRecordExists(int $idProductAbstract, string $storeName): bool
     {
         return SpyProductAbstractRelationStorageQuery::create()
             ->filterByFkProductAbstract($idProductAbstract)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
@@ -89,10 +90,9 @@ interface ProductRelationRepositoryInterface
     ): array;
 
     /**
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function findFilteredProductRelations(int $offset, int $limit): array;
+    public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
 }

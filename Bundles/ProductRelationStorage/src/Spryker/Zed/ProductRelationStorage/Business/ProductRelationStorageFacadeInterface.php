@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductRelationStorageFacadeInterface
 {
     /**
@@ -74,7 +76,7 @@ interface ProductRelationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Publishes product relation data by create, update and delete events from spy_product_relation_product_abstract table.
+     * - Publishes product relation data by create and delete events from spy_product_relation_product_abstract table.
      *
      * @api
      *
@@ -90,11 +92,10 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductRelationStorageDataTransfersByIds(int $offset, int $limit, array $ids): array;
+    public function findProductRelationStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
 }

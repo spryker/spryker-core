@@ -30,9 +30,17 @@ class ProductRelationDataHelper extends Module
      */
     public function ensureProductRelationTableIsEmpty(): void
     {
-        SpyProductRelationStoreQuery::create()->deleteAll();
-        SpyProductRelationProductAbstractQuery::create()->deleteAll();
+        $this->ensureProductRelationStoreTableIsEmpty();
+        $this->ensureProductRelationProductAbstractTableIsEmpty();
         SpyProductRelationQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductRelationProductAbstractTableIsEmpty(): void
+    {
+        SpyProductRelationProductAbstractQuery::create()->deleteAll();
     }
 
     /**

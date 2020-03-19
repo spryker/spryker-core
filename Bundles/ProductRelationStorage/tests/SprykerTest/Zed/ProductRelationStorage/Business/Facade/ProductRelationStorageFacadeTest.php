@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationStoreTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
+use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -45,6 +47,11 @@ class ProductRelationStorageFacadeTest extends Unit
     protected $productRelationStorageFacade;
 
     /**
+     * @var \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface
+     */
+    protected $productRelationFacade;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -58,12 +65,13 @@ class ProductRelationStorageFacadeTest extends Unit
         });
 
         $this->productRelationStorageFacade = $this->tester->getFacade();
+        $this->productRelationFacade = $this->tester->getLocator()->productRelation()->facade();
     }
 
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationEvents(): void
+    public function testWriteCollectionByProductRelationEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -79,7 +87,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -90,7 +98,37 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationPublishingEvents(): void
+    public function testWriteCollectionByProductRelationEventsShouldRemoveProductRelationFromProductAbstractRelationStorage(): void
+    {
+        // Arrange
+        $productRelationTransfer = $this->prepareProductRelation();
+        $idProductAbstract = $productRelationTransfer->getFkProductAbstract();
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+            ]),
+        ];
+        $this->productRelationStorageFacade->writeCollectionByProductRelationEvents($eventTransfers);
+        $this->productRelationFacade->deleteProductRelation($productRelationTransfer->getIdProductRelation());
+
+        // Act
+        $this->productRelationStorageFacade->writeCollectionByProductRelationEvents($eventTransfers);
+
+        // Assert
+        $this->assertFalse(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
+            'Product abstract relation storage record should not exists'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByProductRelationPublishingEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -104,7 +142,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -115,7 +153,7 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationProductAbstractEvents(): void
+    public function testWriteCollectionByProductRelationProductAbstractEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -131,7 +169,7 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
@@ -142,7 +180,43 @@ class ProductRelationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByProductRelationStoreEvents(): void
+    public function testWriteCollectionByProductRelationProductAbstractEventsShouldRemoveRelatedProductFromProductAbstractRelationStorage(): void
+    {
+        // Arrange
+        $productRelationTransfer = $this->prepareProductRelation();
+        $idProductAbstract = $productRelationTransfer->getFkProductAbstract();
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductRelationProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+            ]),
+        ];
+        $this->productRelationStorageFacade->writeCollectionByProductRelationProductAbstractEvents($eventTransfers);
+        $productRelationTransfer->getQuerySet()->getRules()[0]->setValue('test');
+        $this->productRelationFacade->updateProductRelation($productRelationTransfer);
+
+        // Act
+        $this->productRelationStorageFacade->writeCollectionByProductRelationProductAbstractEvents($eventTransfers);
+
+        // Assert
+        $productAbstractRelationStorageData = SpyProductAbstractRelationStorageQuery::create()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByStore(static::STORE_NAME)
+            ->findOne()
+            ->getData();
+        $productAbstractIds = $productAbstractRelationStorageData['product_relations'][0]['product_abstract_ids'];
+
+        $this->assertSame(
+            $productAbstractIds,
+            [],
+            'Product abstract relation storage record should not contain related products'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByProductRelationStoreEventsShouldSaveProductAbstractRelationStorage(): void
     {
         // Arrange
         $productRelationTransfer = $this->prepareProductRelation();
@@ -158,11 +232,40 @@ class ProductRelationStorageFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isProductRelationStorageRecordExists(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
                 static::STORE_NAME
             ),
             'Product abstract relation storage record should exists'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByProductRelationStoreEventsShouldRemoveProductAbstractRelationStorage(): void
+    {
+        // Arrange
+        $productRelationTransfer = $this->prepareProductRelation();
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductRelationStoreTableMap::COL_FK_PRODUCT_RELATION => $productRelationTransfer->getIdProductRelation(),
+            ]),
+        ];
+        $this->productRelationStorageFacade->writeCollectionByProductRelationStoreEvents($eventTransfers);
+        SpyProductRelationStoreQuery::create()->filterByFkProductRelation($productRelationTransfer->getIdProductRelation())->delete();
+
+        // Act
+        $this->productRelationStorageFacade->writeCollectionByProductRelationStoreEvents($eventTransfers);
+
+        // Assert
+        $this->assertFalse(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
+            'Product abstract relation storage record should not exists'
         );
     }
 

@@ -240,7 +240,7 @@ class ProductRelationStorageListenerTest extends Unit
     protected function assertProductAbstractRelationStorage(int $beforeCount): void
     {
         $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()
-            ->filterByStore('DE')
+            ->filterByStore(static::STORE_DE)
             ->count();
         $this->assertGreaterThan($beforeCount, $productRelationStorageCount);
         $productAbstractRelationStorage = SpyProductAbstractRelationStorageQuery::create()
