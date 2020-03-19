@@ -16,12 +16,12 @@ interface QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool;
 }
