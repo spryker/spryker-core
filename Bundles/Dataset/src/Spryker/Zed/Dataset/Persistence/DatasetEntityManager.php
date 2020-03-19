@@ -267,7 +267,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \ArrayObject $localizedAttributesToSave
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesToSave
      * @param array $existingDatasetLocalizedAttributes
      *
      * @return void
@@ -290,7 +290,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \ArrayObject $localizedAttributesToSave
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesToSave
      *
      * @return void
      */

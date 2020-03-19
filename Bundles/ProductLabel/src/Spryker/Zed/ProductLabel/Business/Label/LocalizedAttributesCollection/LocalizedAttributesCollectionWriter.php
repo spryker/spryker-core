@@ -53,7 +53,7 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
     }
 
     /**
-     * @param \ArrayObject $localizedAttributesTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransferCollection
      *
      * @return void
      */
