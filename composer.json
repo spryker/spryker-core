@@ -308,6 +308,7 @@
     "spryker/manual-order-entry-gui": "*",
     "spryker/manual-order-entry-gui-extension": "*",
     "spryker/merchant": "*",
+    "spryker/merchant-dashboard-gui-page": "*",
     "spryker/merchant-data-import": "*",
     "spryker/merchant-extension": "*",
     "spryker/merchant-gui": "*",
