@@ -52,9 +52,9 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     }
 
     /**
-     * @param \ArrayObject $restNavigationNodeTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
      */
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {

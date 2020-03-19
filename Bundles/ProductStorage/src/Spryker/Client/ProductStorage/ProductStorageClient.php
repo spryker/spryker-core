@@ -153,8 +153,12 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null)
-    {
+    public function mapProductStorageData(
+        array $data,
+        $localeName,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ) {
         return $this->getFactory()
             ->createProductStorageDataMapper()
             ->mapProductStorageData($localeName, $data, $selectedAttributes, $productStorageCriteriaTransfer);
@@ -284,6 +288,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *
@@ -291,6 +297,29 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
+        trigger_error('Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.', E_USER_DEPRECATED);
+
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
@@ -372,8 +401,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     }
 
     /**
-     * Specification:
-     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     * {@inheritDoc}
      *
      * @api
      *

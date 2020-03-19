@@ -31,6 +31,8 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     ];
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -69,6 +71,8 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

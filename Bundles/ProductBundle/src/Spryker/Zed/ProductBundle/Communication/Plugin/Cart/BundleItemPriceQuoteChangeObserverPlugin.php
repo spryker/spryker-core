@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BundleItemPriceQuoteChangeObserverPlugin extends AbstractPlugin implements QuoteChangeObserverPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Check bundle items price update.
      *

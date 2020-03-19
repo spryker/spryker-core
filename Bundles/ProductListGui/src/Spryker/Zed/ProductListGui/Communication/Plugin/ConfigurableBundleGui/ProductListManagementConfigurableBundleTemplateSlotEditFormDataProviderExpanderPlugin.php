@@ -44,8 +44,9 @@ class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExp
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    public function expandData(ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotEditFormTransfer
-    {
+    public function expandData(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotEditFormTransfer {
         $productListAggregateFormTransfer = $this->getFactory()
             ->createProductListAggregateFormDataProviderExpander()
             ->expandProductListAggregateFormData($configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm());

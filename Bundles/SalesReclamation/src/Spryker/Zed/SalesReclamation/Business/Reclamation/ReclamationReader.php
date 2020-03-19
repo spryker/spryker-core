@@ -67,7 +67,7 @@ class ReclamationReader implements ReclamationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[]
      */
     protected function expandReclamationItems(ReclamationTransfer $reclamationTransfer): ArrayObject
     {

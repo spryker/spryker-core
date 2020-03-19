@@ -1015,8 +1015,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
      */
-    protected function getAuthenticationSuccessHandler(ContainerInterface $container, string $firewallName, array $options): AuthenticationSuccessHandlerInterface
-    {
+    protected function getAuthenticationSuccessHandler(
+        ContainerInterface $container,
+        string $firewallName,
+        array $options
+    ): AuthenticationSuccessHandlerInterface {
         $securityConfiguration = $this->getSecurityConfiguration($container);
         if (isset($securityConfiguration->getAuthenticationSuccessHandlers()[$firewallName])) {
             return call_user_func($securityConfiguration->getAuthenticationSuccessHandlers()[$firewallName], $container, $options);
@@ -1036,8 +1039,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
      */
-    protected function getAuthenticationFailureHandler(ContainerInterface $container, string $firewallName, array $options): AuthenticationFailureHandlerInterface
-    {
+    protected function getAuthenticationFailureHandler(
+        ContainerInterface $container,
+        string $firewallName,
+        array $options
+    ): AuthenticationFailureHandlerInterface {
         $securityConfiguration = $this->getSecurityConfiguration($container);
         if (isset($securityConfiguration->getAuthenticationFailureHandlers()[$firewallName])) {
             return call_user_func($securityConfiguration->getAuthenticationFailureHandlers()[$firewallName], $container, $options);

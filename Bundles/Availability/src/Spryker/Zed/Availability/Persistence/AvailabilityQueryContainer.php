@@ -42,6 +42,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -56,6 +58,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -72,6 +76,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $abstractSku
@@ -86,6 +92,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idAvailabilityAbstract
@@ -102,6 +110,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idAvailabilityAbstract
@@ -120,6 +130,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -180,6 +192,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -206,6 +220,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -226,6 +242,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $stockNames
@@ -279,6 +297,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -293,6 +313,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -337,6 +359,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -364,6 +388,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery

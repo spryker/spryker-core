@@ -87,7 +87,13 @@ interface UtilDataReaderServiceInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection);
+    public function getBatchIteratorOrdered(
+        CriteriaBuilderInterface $criteriaBuilder,
+        QueryContainerInterface $connection,
+        $chunkSize,
+        $orderBy,
+        $orderByDirection
+    );
 
     /**
      * @api

@@ -15,6 +15,8 @@ class OauthConfig extends AbstractSharedConfig
     /**
      * Path to public key location
      *
+     * @api
+     *
      * @see https://oauth2.thephpleague.com/installation/
      *
      * @return string
@@ -26,6 +28,8 @@ class OauthConfig extends AbstractSharedConfig
 
     /**
      * Path to private key location
+     *
+     * @api
      *
      * @see https://oauth2.thephpleague.com/installation/
      *
@@ -39,6 +43,8 @@ class OauthConfig extends AbstractSharedConfig
     /**
      * Encryption key used to encrypt data
      *
+     * @api
+     *
      * @return string
      */
     public function getEncryptionKey(): string
@@ -49,6 +55,8 @@ class OauthConfig extends AbstractSharedConfig
     /**
      * Interval for how long is the refresh token is valid, this will be feed to \DateTime object
      *
+     * @api
+     *
      * @return string
      */
     public function getRefreshTokenTTL(): string
@@ -58,6 +66,8 @@ class OauthConfig extends AbstractSharedConfig
 
     /**
      *  Interval for how long is the access token is valid, this will be feed to \DateTime object
+     *
+     * @api
      *
      * @return string
      */

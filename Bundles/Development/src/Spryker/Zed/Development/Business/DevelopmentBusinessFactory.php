@@ -1424,7 +1424,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEngineBundleList()
     {

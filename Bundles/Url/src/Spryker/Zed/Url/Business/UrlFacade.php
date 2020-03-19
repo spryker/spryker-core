@@ -386,6 +386,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() instead.
@@ -405,6 +407,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
@@ -421,6 +425,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::hasUrl() instead.
@@ -437,6 +443,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::findUrl() instead.
@@ -454,6 +462,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::findUrl() instead.
@@ -490,6 +500,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
@@ -507,6 +519,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
@@ -523,6 +537,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::activateUrl() instead.
@@ -537,6 +553,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::deactivateUrl() instead.
@@ -551,6 +569,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -569,6 +589,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -587,6 +609,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -605,6 +629,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -623,6 +649,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -639,6 +667,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::activateUrlRedirect() instead.
@@ -655,6 +685,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
@@ -671,6 +703,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -687,6 +721,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This method will be removed with next major release because of invalid dependency direction. Use ProductFacade::getProductUrl() instead.

@@ -68,7 +68,10 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesWithoutPriceExtraction(int $idProductConcrete, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 
     /**
      * @param string[] $concreteSkus

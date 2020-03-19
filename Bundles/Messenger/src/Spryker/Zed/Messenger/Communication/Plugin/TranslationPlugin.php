@@ -12,6 +12,8 @@ use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
 class TranslationPlugin implements TranslationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -24,6 +26,8 @@ class TranslationPlugin implements TranslationPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
