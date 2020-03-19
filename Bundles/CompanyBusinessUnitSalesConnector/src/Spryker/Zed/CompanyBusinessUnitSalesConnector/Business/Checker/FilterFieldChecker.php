@@ -44,14 +44,25 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
      */
     public function isCustomerFilterApplicable(array $filterFieldTransfers): bool
     {
-        if (
-            !$this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
-            && !$this->companySalesConnectorFacade->isCompanyFilterApplicable($filterFieldTransfers)
-        ) {
+        if (!$this->isCompanyRelatedFiltersExist($filterFieldTransfers)) {
             return false;
         }
 
         return $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_ALL);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCustomerSortingApplicable(array $filterFieldTransfers): bool
+    {
+        if (!$this->isCompanyRelatedFiltersExist($filterFieldTransfers)) {
+            return false;
+        }
+
+        return $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_ORDER_BY);
     }
 
     /**
@@ -64,8 +75,7 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
     ): FilterFieldCheckResponseTransfer {
         $filterFieldTransfers = $filterFieldCheckRequestTransfer->getFilterFields()->getArrayCopy();
 
-        $isSuccessful = $this->companySalesConnectorFacade->isCompanyFilterApplicable($filterFieldTransfers)
-            || $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT);
+        $isSuccessful = $this->isCompanyRelatedFiltersExist($filterFieldTransfers);
 
         return (new FilterFieldCheckResponseTransfer())->setIsSuccessful($isSuccessful);
     }
@@ -85,5 +95,16 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    protected function isCompanyRelatedFiltersExist(array $filterFieldTransfers): bool
+    {
+        return $this->companySalesConnectorFacade->isCompanyFilterApplicable($filterFieldTransfers)
+            || $this->isFilterFieldSet($filterFieldTransfers, OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT);
     }
 }

@@ -118,4 +118,32 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
     public function isCompanyRelatedFiltersSet(
         FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
     ): FilterFieldCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if sorting by customer name or email could be applied.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCustomerSortingApplicable(array $filterFieldTransfers): bool;
+
+    /**
+     * Specification:
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to sort by customer name or email.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCustomerSorting(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
 }

@@ -27,6 +27,13 @@ interface FilterFieldCheckerInterface
     public function isCustomerFilterApplicable(array $filterFieldTransfers): bool;
 
     /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    public function isCustomerSortingApplicable(array $filterFieldTransfers): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
      *
      * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer

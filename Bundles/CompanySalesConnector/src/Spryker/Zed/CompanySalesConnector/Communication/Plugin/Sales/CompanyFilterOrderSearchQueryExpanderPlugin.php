@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface;
 
@@ -22,34 +22,33 @@ class CompanyFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin impleme
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      *
      * @return bool
      */
-    public function isApplicable(OrderListTransfer $orderListTransfer): bool
+    public function isApplicable(array $filterFieldTransfers): bool
     {
-        return $this->getFacade()->isCompanyFilterApplicable(
-            $orderListTransfer->getFilterFields()->getArrayCopy()
-        );
+        return $this->getFacade()->isCompanyFilterApplicable($filterFieldTransfers);
     }
 
     /**
      * {@inheritDoc}
-     * - Expands OrderListTransfer::queryJoins with additional QueryJoinTransfer to filter by company.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expand(OrderListTransfer $orderListTransfer): OrderListTransfer
-    {
-        $queryJoinCollectionTransfer = $this->getFacade()->expandQueryJoinCollectionWithCompanyFilter(
-            $orderListTransfer->getFilterFields()->getArrayCopy(),
-            $orderListTransfer->getQueryJoins()
+    public function expand(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        return $this->getFacade()->expandQueryJoinCollectionWithCompanyFilter(
+            $filterFieldTransfers,
+            $queryJoinCollectionTransfer
         );
-
-        return $orderListTransfer->setQueryJoins($queryJoinCollectionTransfer);
     }
 }

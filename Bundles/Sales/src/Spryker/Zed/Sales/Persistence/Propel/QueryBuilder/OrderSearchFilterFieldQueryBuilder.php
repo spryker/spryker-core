@@ -56,6 +56,9 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     ];
 
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+    protected const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
+
+    protected const DELIMITER_ORDER_BY = '::';
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
@@ -67,74 +70,48 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
         SpySalesOrderQuery $salesOrderQuery,
         OrderListTransfer $orderListTransfer
     ): SpySalesOrderQuery {
-        if ($orderListTransfer->getFilter()) {
-            $this->mapQuerySortingColumn($orderListTransfer);
+        foreach ($orderListTransfer->getFilterFields() as $filterFieldTransfer) {
+            $salesOrderQuery = $this->addQueryFilter($salesOrderQuery, $filterFieldTransfer);
         }
-
-        $salesOrderQuery = $this->addQueryFilters($salesOrderQuery, $orderListTransfer);
 
         return $salesOrderQuery;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return void
-     */
-    protected function mapQuerySortingColumn(OrderListTransfer $orderListTransfer): void
-    {
-        $filterTransfer = $orderListTransfer->getFilter();
-        $mappedColumn = static::ORDER_BY_COLUMN_MAPPING[$filterTransfer->getOrderBy()] ?? null;
-
-        if ($mappedColumn) {
-            $filterTransfer->setOrderBy($mappedColumn);
-        }
-
-        if (!$filterTransfer->getOrderDirection()) {
-            $filterTransfer->setOrderDirection(Criteria::ASC);
-        }
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer $filterFieldTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    protected function addQueryFilters(
+    protected function addQueryFilter(
         SpySalesOrderQuery $salesOrderQuery,
-        OrderListTransfer $orderListTransfer
+        FilterFieldTransfer $filterFieldTransfer
     ): SpySalesOrderQuery {
-        foreach ($orderListTransfer->getFilterFields() as $filterFieldTransfer) {
             $filterFieldType = $filterFieldTransfer->getType();
 
-            if (
-                $filterFieldType === static::SEARCH_TYPE_DATE_FROM
-                || $filterFieldType === static::SEARCH_TYPE_DATE_TO
-            ) {
-                $salesOrderQuery = $this->addDateFilter(
-                    $salesOrderQuery,
-                    $filterFieldTransfer
-                );
+        if ($filterFieldType === static::SEARCH_TYPE_DATE_FROM || $filterFieldType === static::SEARCH_TYPE_DATE_TO) {
+            return $this->addDateFilter(
+                $salesOrderQuery,
+                $filterFieldTransfer
+            );
+        }
 
-                continue;
-            }
+        if ($filterFieldType === static::SEARCH_TYPE_ALL || isset(static::ORDER_SEARCH_TYPE_MAPPING[$filterFieldType])) {
+            return $this->addSearchTypeFilter(
+                $salesOrderQuery,
+                $filterFieldTransfer
+            );
+        }
 
-            if (
-                $filterFieldType === static::SEARCH_TYPE_ALL
-                || isset(static::ORDER_SEARCH_TYPE_MAPPING[$filterFieldType])
-            ) {
-                $salesOrderQuery = $this->addSearchTypeFilter(
-                    $salesOrderQuery,
-                    $filterFieldTransfer
-                );
+        if ($filterFieldType === static::FILTER_FIELD_TYPE_ORDER_BY) {
+            return $this->addOrderByFilter(
+                $salesOrderQuery,
+                $filterFieldTransfer
+            );
+        }
 
-                continue;
-            }
-
-            if ($filterFieldType === static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE) {
-                $salesOrderQuery->filterByCustomerReference($filterFieldTransfer->getValue());
-            }
+        if ($filterFieldType === static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE) {
+            $salesOrderQuery->filterByCustomerReference($filterFieldTransfer->getValue());
         }
 
         return $salesOrderQuery;
@@ -221,6 +198,27 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
             Criteria::LESS_EQUAL;
 
         $salesOrderQuery->filterByCreatedAt($filterFieldTransfer->getValue(), $comparison);
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer $filterFieldTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addOrderByFilter(
+        SpySalesOrderQuery $salesOrderQuery,
+        FilterFieldTransfer $filterFieldTransfer
+    ): SpySalesOrderQuery {
+        [$orderColumn, $orderDirection] = explode(static::DELIMITER_ORDER_BY, $filterFieldTransfer->getValue());
+
+        $orderColumn = static::ORDER_BY_COLUMN_MAPPING[$orderColumn] ?? null;
+
+        if ($orderColumn) {
+            $salesOrderQuery->orderBy($orderColumn, $orderDirection);
+        }
 
         return $salesOrderQuery;
     }

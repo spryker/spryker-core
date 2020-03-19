@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 
 interface OrderSearchQueryExpanderPluginInterface
 {
@@ -17,21 +17,25 @@ interface OrderSearchQueryExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      *
      * @return bool
      */
-    public function isApplicable(OrderListTransfer $orderListTransfer): bool;
+    public function isApplicable(array $filterFieldTransfers): bool;
 
     /**
      * Specification:
-     * - Expands OrderListTransfer:queryJoins with additional QueryJoinTransfers.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
      */
-    public function expand(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function expand(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
 }

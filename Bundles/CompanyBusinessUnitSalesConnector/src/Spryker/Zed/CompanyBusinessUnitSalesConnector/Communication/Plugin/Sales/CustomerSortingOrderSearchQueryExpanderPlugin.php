@@ -14,11 +14,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginI
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  */
-class CompanyBusinessUnitFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CustomerSortingOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if filtering by company business unit could be applied, false otherwise.
+     * - Returns true if sorting by customer name or email could be applied, false otherwise.
      *
      * @api
      *
@@ -28,12 +28,12 @@ class CompanyBusinessUnitFilterOrderSearchQueryExpanderPlugin extends AbstractPl
      */
     public function isApplicable(array $filterFieldTransfers): bool
     {
-        return $this->getFacade()->isCompanyBusinessUnitFilterApplicable($filterFieldTransfers);
+        return $this->getFacade()->isCustomerSortingApplicable($filterFieldTransfers);
     }
 
     /**
      * {@inheritDoc}
-     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company business unit.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to sort by customer name or email.
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CompanyBusinessUnitFilterOrderSearchQueryExpanderPlugin extends AbstractPl
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
-        return $this->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
+        return $this->getFacade()->expandQueryJoinCollectionWithCustomerSorting(
             $filterFieldTransfers,
             $queryJoinCollectionTransfer
         );

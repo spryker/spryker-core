@@ -19,16 +19,27 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL
      */
     public const FILTER_FIELD_TYPE_ALL = 'all';
+
     public const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
-    protected const COLUMN_FIRST_NAME = 'first_name';
-    protected const COLUMN_LAST_NAME = 'last_name';
+    public const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
+
+    public const MAPPED_ORDER_BY_FILTERS = [
+        'customerName' => self::COLUMN_FULL_NAME,
+        'customerEmail' => self::COLUMN_EMAIL,
+    ];
+
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
-     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
      */
-    protected const COMPARISON_EQUAL = '=';
+    protected const COLUMN_FIRST_NAME = 'first_name';
+
+    /**
+     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
+     */
+    protected const COLUMN_LAST_NAME = 'last_name';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
@@ -39,6 +50,16 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL
      */
     protected const COLUMN_EMAIL = 'email';
+
+    /**
+     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     */
+    protected const COMPARISON_EQUAL = '=';
+
+    /**
+     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::DELIMITER_ORDER_BY
+     */
+    protected const DELIMITER_ORDER_BY = '::';
 
     /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
@@ -84,14 +105,45 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCompanyUserEmailFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCustomerEmailFilterQueryJoin($filterFieldTransfer->getValue())
         );
 
         $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCompanyUserNameFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCustomerNameFilterQueryJoin($filterFieldTransfer->getValue())
         );
 
         return $queryJoinCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCustomerSorting(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer {
+        $filterFieldTransfer = $this->extractFilterFieldByType(
+            $filterFieldTransfers,
+            static::FILTER_FIELD_TYPE_ORDER_BY
+        );
+
+        if (!$filterFieldTransfer) {
+            return $queryJoinCollectionTransfer;
+        }
+
+        $mappedOrderByFilters = array_keys(static::MAPPED_ORDER_BY_FILTERS);
+        [$orderColumn, $orderDirection] = explode(static::DELIMITER_ORDER_BY, $filterFieldTransfer->getValue());
+
+        if (!in_array($orderColumn, $mappedOrderByFilters, true) || !$orderDirection) {
+            return $queryJoinCollectionTransfer;
+        }
+
+        return $queryJoinCollectionTransfer->addQueryJoin(
+            $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection)
+        );
     }
 
     /**
@@ -131,7 +183,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
-    protected function createCompanyUserEmailFilterQueryJoin(string $searchString): QueryJoinTransfer
+    protected function createCustomerEmailFilterQueryJoin(string $searchString): QueryJoinTransfer
     {
         $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
             ->setMergeWithCondition(OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL)
@@ -146,16 +198,38 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
-    protected function createCompanyUserNameFilterQueryJoin(string $searchString): QueryJoinTransfer
+    protected function createCustomerNameFilterQueryJoin(string $searchString): QueryJoinTransfer
     {
-        $withColumn = sprintf('CONCAT(%s,\' \', %s)', static::COLUMN_FIRST_NAME, static::COLUMN_LAST_NAME);
+        $fullNameColumn = $this->getConcatenatedFullNameColumn();
 
         $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
             ->setMergeWithCondition(OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL)
-            ->setColumn($withColumn)
+            ->setColumn($fullNameColumn)
             ->setValue($searchString);
 
-        return (new QueryJoinTransfer())->setWithColumns([static::COLUMN_FULL_NAME => $withColumn])
+        return (new QueryJoinTransfer())->setWithColumns([static::COLUMN_FULL_NAME => $fullNameColumn])
             ->addQueryWhereCondition($queryWhereConditionTransfer);
+    }
+
+    /**
+     * @param string $orderBy
+     * @param string $orderDirection
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinTransfer
+     */
+    protected function createCustomerSortingQueryJoin(string $orderBy, string $orderDirection): QueryJoinTransfer
+    {
+        return (new QueryJoinTransfer())
+            ->setWithColumns([static::COLUMN_FULL_NAME => $this->getConcatenatedFullNameColumn()])
+            ->setOrderBy(static::MAPPED_ORDER_BY_FILTERS[$orderBy])
+            ->setOrderDirection($orderDirection);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getConcatenatedFullNameColumn(): string
+    {
+        return sprintf('CONCAT(%s,\' \', %s)', static::COLUMN_FIRST_NAME, static::COLUMN_LAST_NAME);
     }
 }
