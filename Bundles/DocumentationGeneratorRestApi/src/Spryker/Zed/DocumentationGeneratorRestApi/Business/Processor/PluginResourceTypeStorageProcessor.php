@@ -116,8 +116,10 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
      *
      * @return void
      */
-    protected function addPluginResourceTypeToStorageGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
-    {
+    protected function addPluginResourceTypeToStorageGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        ?AnnotationTransfer $annotationTransfer
+    ): void {
         if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }

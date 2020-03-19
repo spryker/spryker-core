@@ -79,8 +79,11 @@ class ResourceRelationship implements ResourceRelationshipInterface
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
-    public function getIncludeSchemaDataTransfersFromForPlugin(ResourceRoutePluginInterface $plugin, string $transferClassName, string $responseSchemaName): array
-    {
+    public function getIncludeSchemaDataTransfersFromForPlugin(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseSchemaName
+    ): array {
         $schemaDataTransfers = [];
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 

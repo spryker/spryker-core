@@ -109,8 +109,10 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
      */
-    protected function addOneOf(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer, SchemaPropertyTransfer $property): SchemaPropertyComponentTransfer
-    {
+    protected function addOneOf(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
         if ($property->getOneOf()) {
             $schemaPropertyComponentTransfer->setOneOf($property->getOneOf());
         }
@@ -124,8 +126,10 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
      */
-    protected function addType(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer, SchemaPropertyTransfer $property): SchemaPropertyComponentTransfer
-    {
+    protected function addType(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
         if ($property->getType()) {
             $schemaPropertyComponentTransfer->setType($property->getType());
         }
@@ -139,8 +143,10 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
      */
-    protected function addReference(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer, SchemaPropertyTransfer $property): SchemaPropertyComponentTransfer
-    {
+    protected function addReference(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
         if ($property->getReference()) {
             $schemaPropertyComponentTransfer->setSchemaReference($property->getReference());
         }
@@ -154,8 +160,10 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
      */
-    protected function addItemsType(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer, SchemaPropertyTransfer $property): SchemaPropertyComponentTransfer
-    {
+    protected function addItemsType(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
         if ($property->getItemsType()) {
             $schemaPropertyComponentTransfer->setItemsType($property->getItemsType());
         }
@@ -169,8 +177,10 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return \Generated\Shared\Transfer\SchemaPropertyComponentTransfer
      */
-    protected function addItemsReference(SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer, SchemaPropertyTransfer $property): SchemaPropertyComponentTransfer
-    {
+    protected function addItemsReference(
+        SchemaPropertyComponentTransfer $schemaPropertyComponentTransfer,
+        SchemaPropertyTransfer $property
+    ): SchemaPropertyComponentTransfer {
         if ($property->getItemsReference()) {
             $schemaPropertyComponentTransfer->setItemsSchemaReference($property->getItemsReference());
         }
