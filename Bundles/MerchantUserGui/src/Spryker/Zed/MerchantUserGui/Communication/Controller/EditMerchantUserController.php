@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantUserController extends AbstractController
 {
-    protected const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
+    public const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantUserStatusController extends AbstractController
 {
+    public const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'User status can\'t be updated.';
     protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'User status has been updated.';
 
@@ -27,7 +28,7 @@ class MerchantUserStatusController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idMerchantUser = $this->castId($request->query->get('merchant-user-id'));
+        $idMerchantUser = $this->castId($request->query->get(static::MERCHANT_USER_ID_PARAM_NAME));
         $newMerchantUserStatus = $request->query->get('status');
         $redirectUrl = sprintf('%s#%s', $request->headers->get('referer'), 'tab-content-merchant-user');
 

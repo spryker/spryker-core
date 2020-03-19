@@ -13,6 +13,9 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantUserGui\Communication\Controller\EditMerchantUserController;
+use Spryker\Zed\MerchantUserGui\Communication\Controller\IndexController;
+use Spryker\Zed\MerchantUserGui\Communication\Controller\MerchantUserStatusController;
 
 class MerchantUserTable extends AbstractTable
 {
@@ -101,7 +104,7 @@ class MerchantUserTable extends AbstractTable
             static::MERCHANT_USER_STATUS,
         ]);
 
-        $config->setUrl(sprintf('table?%s=%d', 'merchant-id', $this->idMerchant));
+        $config->setUrl(sprintf('table?%s=%d', IndexController::MERCHANT_ID_PARAM_NAME, $this->idMerchant));
 
         return $config;
     }
@@ -156,8 +159,8 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/edit-merchant-user',
                 [
-                    'merchant-user-id' => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                    'merchant-id' => $this->idMerchant,
+                    EditMerchantUserController::MERCHANT_USER_ID_PARAM_NAME
+                    => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                 ]
             ),
             'Edit'
@@ -202,8 +205,8 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/merchant-user-status',
                 [
-                    'merchant-user-id' => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                    'merchant-id' => $this->idMerchant,
+                    MerchantUserStatusController::MERCHANT_USER_ID_PARAM_NAME
+                    => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'status' => $availableStatus,
                 ]
             ),
