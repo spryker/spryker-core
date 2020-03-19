@@ -18,7 +18,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function getClassTargetDirectory()
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/Transfer/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Generated/Shared/Transfer/';
     }
 
     /**
@@ -28,7 +28,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function getDataBuilderTargetDirectory()
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/DataBuilder/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Generated/Shared/DataBuilder/';
     }
 
     /**
@@ -55,10 +55,20 @@ class TransferConfig extends AbstractBundleConfig
     {
         $globPatterns = $this->getSourceDirectories();
 
-        $globPatterns[] = APPLICATION_ROOT_DIR . '/tests/_data';
-        $globPatterns[] = APPLICATION_VENDOR_DIR . '/*/*/tests/_data/';
+        $globPatterns[] = rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . '/tests/_data';
+        $globPatterns[] = rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/tests/_data/';
 
         return $globPatterns;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTransferFileNamePattern(): string
+    {
+        return '/(.*?).transfer.xml/';
     }
 
     /**
@@ -88,7 +98,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getSprykerCoreSourceDirectoryGlobPattern()
     {
-        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Shared/*/Transfer/';
+        return rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/src/*/Shared/*/Transfer/';
     }
 
     /**
@@ -111,7 +121,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getApplicationSourceDirectoryGlobPattern()
     {
-        return APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/*/Shared/*/Transfer/';
     }
 
     /**
@@ -135,7 +145,7 @@ class TransferConfig extends AbstractBundleConfig
     public function getEntitiesSourceDirectories()
     {
         return [
-            APPLICATION_SOURCE_DIR . '/Orm/Propel/' . APPLICATION_STORE . '/Schema/',
+            rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Orm/Propel/' . APPLICATION_STORE . '/Schema/',
         ];
     }
 
