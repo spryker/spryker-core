@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductQuantity;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -132,5 +133,22 @@ class ProductQuantityBusinessTester extends Actor
         );
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $groupKey
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function createItemTransferWithNormalizableQuantity(string $sku, string $groupKey, int $quantity): ItemTransfer
+    {
+        return (new ItemBuilder([
+            ItemTransfer::SKU => $sku,
+            ItemTransfer::GROUP_KEY => $groupKey,
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::NORMALIZABLE_FIELDS => ['quantity'],
+        ]))->build();
     }
 }

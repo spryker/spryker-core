@@ -17,7 +17,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "../../../../../public/Zed/assets/js/mp-dashboard",
+            "outputPath": "dist",
             "index": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/MerchantDashboardGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
