@@ -1,7 +1,5 @@
 namespace: CompanyUnitAddressLabel
 
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/CompanyUnitAddressLabel
 

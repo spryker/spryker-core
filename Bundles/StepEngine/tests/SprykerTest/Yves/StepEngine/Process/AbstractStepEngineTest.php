@@ -59,7 +59,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    protected function getUrlGeneratorMock()
+    protected function getUrlGeneratorMock(): UrlGeneratorInterface
     {
         $urlGeneratorMock = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $urlGeneratorMock->method('generate')->will($this->returnCallback([$this, 'urlGeneratorCallBack']));
@@ -94,8 +94,13 @@ abstract class AbstractStepEngineTest extends Unit
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    protected function getStepMock(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', ?string $escapeRoute = null): StepInterface
-    {
+    protected function getStepMock(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        ?string $escapeRoute = null
+    ): StepInterface {
         return new StepMock($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 
@@ -115,7 +120,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function getDataTransferMock()
+    protected function getDataTransferMock(): AbstractTransfer
     {
         return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }
@@ -123,7 +128,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface
      */
-    protected function getStepWithExternalRedirectUrl()
+    protected function getStepWithExternalRedirectUrl(): StepWithExternalRedirectInterface
     {
         $stepMock = $this->getMockBuilder(StepWithExternalRedirectInterface::class)->getMock();
         $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);

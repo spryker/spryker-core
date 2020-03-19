@@ -59,8 +59,8 @@ class SharedCartToMultiCartClientBridge implements SharedCartToMultiCartClientIn
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->multiCartClient->setDefaultQuote($quoteTransfer);
+        return $this->multiCartClient->markQuoteAsDefault($quoteTransfer);
     }
 }

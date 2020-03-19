@@ -18,6 +18,8 @@ class MessengerConfig extends AbstractBundleConfig
     protected static $messageTray = SharedMessengerConfig::SESSION_TRAY;
 
     /**
+     * @api
+     *
      * @param string $messageTray
      *
      * @return void
@@ -28,6 +30,8 @@ class MessengerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public static function getTray()

@@ -51,6 +51,8 @@ class ContentProductGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_abstract_list.template.top-title';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getContentWidgetTemplates(): array
@@ -62,6 +64,8 @@ class ContentProductGuiConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

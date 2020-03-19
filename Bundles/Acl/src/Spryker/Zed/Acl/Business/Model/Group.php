@@ -81,7 +81,7 @@ class Group implements GroupInterface
             $entity = new SpyAclGroup();
         }
 
-        $entity->setName($group->getName());
+        $entity->fromArray($group->toArray());
         $entity->save();
 
         $transfer = new GroupTransfer();

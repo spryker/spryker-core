@@ -14,6 +14,8 @@ use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
+use Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessenger;
+use Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriter;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReader;
@@ -36,6 +38,7 @@ use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserW
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface as SharedCartToStoreFacadeInterface;
@@ -237,5 +240,24 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->createQuoteShareDetailsReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\Messenger\SharedCartMessengerInterface
+     */
+    public function createSharedCartMessenger(): SharedCartMessengerInterface
+    {
+        return new SharedCartMessenger(
+            $this->getRepository(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): SharedCartToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_MESSENGER);
     }
 }

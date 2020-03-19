@@ -76,7 +76,7 @@ class CouplingBetweenObjectsTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects
      */
-    protected function getCouplingBetweenObjectsMock()
+    protected function getCouplingBetweenObjectsMock(): CouplingBetweenObjects
     {
         $mockBuilder = $this->getMockBuilder(CouplingBetweenObjects::class);
         $mockBuilder->setMethods(['addViolation', 'getIntProperty']);
@@ -93,7 +93,7 @@ class CouplingBetweenObjectsTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
-    protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName)
+    protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractNode::class);
         $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])

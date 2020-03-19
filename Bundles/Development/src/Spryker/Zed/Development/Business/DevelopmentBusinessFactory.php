@@ -233,10 +233,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createCodeTester()
     {
         return new CodeTester(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getPathToCore(),
+            $this->getModuleFinderFacade(),
             $this->createConfigArgumentCollectionBuilder(),
-            $this->getConfig()->getProcessTimeout()
+            $this->getConfig()
         );
     }
 
@@ -1425,7 +1424,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEngineBundleList()
     {

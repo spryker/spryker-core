@@ -210,7 +210,7 @@ class FormCollectionHandlerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    private function getFormCollectionHandlerMock(array $formCollectionHandlerMethods = [], array $arguments = [])
+    private function getFormCollectionHandlerMock(array $formCollectionHandlerMethods = [], array $arguments = []): FormCollectionHandlerInterface
     {
         if (empty($arguments)) {
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
@@ -226,7 +226,7 @@ class FormCollectionHandlerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormFactoryInterface
      */
-    private function getFormFactoryMock(array $formFactoryMethods = [])
+    private function getFormFactoryMock(array $formFactoryMethods = []): FormFactoryInterface
     {
         return $this->getMockForAbstractClass(FormFactoryInterface::class, [], '', false, false, true, $formFactoryMethods);
     }
@@ -234,7 +234,7 @@ class FormCollectionHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    private function getDataProviderMock()
+    private function getDataProviderMock(): StepEngineFormDataProviderInterface
     {
         $dataProviderMock = $this->getMockBuilder(StepEngineFormDataProviderInterface::class)->getMock();
         $dataProviderMock->method('getData')->willReturnArgument(0);
@@ -245,7 +245,7 @@ class FormCollectionHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    private function getDataTransferMock()
+    private function getDataTransferMock(): AbstractTransfer
     {
         $dataTransferMock = $this->getMockBuilder(AbstractTransfer::class);
 

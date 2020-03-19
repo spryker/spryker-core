@@ -101,13 +101,20 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restPaymentProviderTransfer->setPaymentProviderName($paymentProviderTransfer->getName());
 
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-                $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($restPaymentProviderTransfer->getPaymentProviderName(), $paymentMethodTransfer->getMethodName());
-                if (in_array($paymentSelection, $availablePaymentMethodsList)) {
-                    $restPaymentMethodTransfer = (new RestPaymentMethodTransfer())
-                        ->setPaymentMethodName($paymentMethodTransfer->getMethodName());
-                    $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentSelection));
-                    $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
+                $restPaymentMethodTransfer = (new RestPaymentMethodTransfer());
+                $restPaymentMethodTransfer->setPaymentMethodName($paymentMethodTransfer->getMethodName());
+
+                if ($this->config->isPaymentProviderMethodToStateMachineMappingEnabled()) {
+                    $restPaymentMethodTransfer = $this->setPaymentMethodNameFromPaymentSelection(
+                        $restPaymentMethodTransfer,
+                        $availablePaymentMethodsList,
+                        $restPaymentProviderTransfer->getPaymentProviderName(),
+                        $paymentMethodTransfer->getMethodName()
+                    );
                 }
+
+                $restPaymentMethodTransfer->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentMethodTransfer->getMethodName()));
+                $restPaymentProviderTransfer->addPaymentMethod($restPaymentMethodTransfer);
             }
             $restCheckoutDataResponseAttributesTransfer->addPaymentProvider($restPaymentProviderTransfer);
         }
@@ -151,6 +158,28 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return $availablePaymentMethodsList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestPaymentMethodTransfer $restPaymentMethodTransfer
+     * @param string[] $availablePaymentMethodsList
+     * @param string $paymentProviderName
+     * @param string $paymentMethodName
+     *
+     * @return \Generated\Shared\Transfer\RestPaymentMethodTransfer
+     */
+    protected function setPaymentMethodNameFromPaymentSelection(
+        RestPaymentMethodTransfer $restPaymentMethodTransfer,
+        array $availablePaymentMethodsList,
+        string $paymentProviderName,
+        string $paymentMethodName
+    ): RestPaymentMethodTransfer {
+        $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderName, $paymentMethodName);
+        if (in_array($paymentSelection, $availablePaymentMethodsList, true)) {
+            $restPaymentMethodTransfer->setPaymentMethodName($paymentMethodName);
+        }
+
+        return $restPaymentMethodTransfer;
     }
 
     /**

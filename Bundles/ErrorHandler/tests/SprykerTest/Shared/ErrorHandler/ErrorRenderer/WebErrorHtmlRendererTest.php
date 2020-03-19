@@ -12,6 +12,7 @@ use Exception;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 /**
@@ -97,7 +98,7 @@ class WebErrorHtmlRendererTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
-    protected function getErrorPageMock(string $application)
+    protected function getErrorPageMock(string $application): ErrorRendererInterface
     {
         $errorPageMock = $this->getMockBuilder(WebHtmlErrorRenderer::class)
             ->setMethods(['getHtmlErrorPageContent'])

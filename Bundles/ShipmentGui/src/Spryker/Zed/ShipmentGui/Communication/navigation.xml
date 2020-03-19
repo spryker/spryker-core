@@ -36,8 +36,8 @@
                 <title>Shipments</title>
                 <pages>
                     <shipment-carrier-create>
-                        <label>Create new Shipment Carrier</label>
-                        <title>Create new Shipment Carrier</title>
+                        <label>Create new Carrier company</label>
+                        <title>Create new Carrier company</title>
                         <bundle>shipment-gui</bundle>
                         <controller>create-carrier</controller>
                         <action>index</action>

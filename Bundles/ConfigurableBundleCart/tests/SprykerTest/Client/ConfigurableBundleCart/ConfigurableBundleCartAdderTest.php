@@ -160,7 +160,7 @@ class ConfigurableBundleCartAdderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientBridge
      */
-    protected function createCartClientMock()
+    protected function createCartClientMock(): ConfigurableBundleCartToCartClientBridge
     {
         return $this->getMockBuilder(ConfigurableBundleCartToCartClientBridge::class)
             ->onlyMethods([
@@ -175,7 +175,7 @@ class ConfigurableBundleCartAdderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder
      */
-    protected function createConfiguredBundleCartAdderMock($cartClientMock)
+    protected function createConfiguredBundleCartAdderMock($cartClientMock): ConfiguredBundleCartAdder
     {
         return $this->getMockBuilder(ConfiguredBundleCartAdder::class)
             ->setConstructorArgs([
@@ -189,7 +189,7 @@ class ConfigurableBundleCartAdderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator
      */
-    protected function createConfiguredBundleGroupKeyGeneratorMock()
+    protected function createConfiguredBundleGroupKeyGeneratorMock(): ConfiguredBundleGroupKeyGenerator
     {
         return $this->getMockBuilder(ConfiguredBundleGroupKeyGenerator::class)
             ->disableOriginalConstructor()

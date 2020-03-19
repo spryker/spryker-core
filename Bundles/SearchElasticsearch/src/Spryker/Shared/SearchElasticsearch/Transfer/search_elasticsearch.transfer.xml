@@ -42,6 +42,7 @@
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>
         <property name="isDescending" type="bool"/>
+        <property name="unmappedType" type="string"/>
     </transfer>
 
     <transfer name="FacetSearchResult">

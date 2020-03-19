@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DiscountQuoteChangeObserverPlugin extends AbstractPlugin implements QuoteChangeObserverPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Checks cart changes on cart validate.
      *

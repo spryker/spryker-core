@@ -1,6 +1,4 @@
 namespace: GlueApplication
-actor: Tester
-
 include:
     - tests/SprykerTest/Glue/GlueApplication
 
@@ -16,6 +14,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }

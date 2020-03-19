@@ -78,15 +78,17 @@ class DecisionRuleAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification
      */
-    protected function createDecisionRuleAndSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock): DecisionRuleAndSpecification
-    {
+    protected function createDecisionRuleAndSpecification(
+        DecisionRuleSpecificationInterface $leftMock,
+        DecisionRuleSpecificationInterface $rightMock
+    ): DecisionRuleAndSpecification {
         return new DecisionRuleAndSpecification($leftMock, $rightMock);
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

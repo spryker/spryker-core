@@ -227,7 +227,8 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if ($this->config->getFullImportTypes()
+            if (
+                $this->config->getFullImportTypes()
                 && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes(), true)
             ) {
                 continue;
@@ -280,7 +281,8 @@ class DataImporterCollection implements
      */
     protected function getDataImportersByImportGroup(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): array
     {
-        if (!$dataImporterConfigurationTransfer
+        if (
+            !$dataImporterConfigurationTransfer
             || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL
         ) {
             return $this->dataImporter;

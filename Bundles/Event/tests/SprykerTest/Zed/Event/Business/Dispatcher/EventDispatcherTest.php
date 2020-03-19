@@ -168,7 +168,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface
      */
-    protected function createQueueProducerMock()
+    protected function createQueueProducerMock(): EventQueueProducerInterface
     {
         return $this->getMockBuilder(EventQueueProducerInterface::class)
             ->getMock();
@@ -177,7 +177,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
-    protected function createEventLoggerMock()
+    protected function createEventLoggerMock(): EventLoggerInterface
     {
         return $this->getMockBuilder(EventLoggerInterface::class)
             ->getMock();
@@ -186,7 +186,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
      */
-    protected function createEventListenerMock()
+    protected function createEventListenerMock(): EventHandlerInterface
     {
         return $this->getMockBuilder(EventHandlerInterface::class)
             ->getMock();
@@ -195,7 +195,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createTransferMock()
+    protected function createTransferMock(): TransferInterface
     {
         return $this->getMockBuilder(TransferInterface::class)
             ->getMock();
@@ -204,7 +204,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
-    protected function createUtilEncodingMock()
+    protected function createUtilEncodingMock(): EventToUtilEncodingInterface
     {
         return $this->getMockBuilder(EventToUtilEncodingInterface::class)
             ->getMock();

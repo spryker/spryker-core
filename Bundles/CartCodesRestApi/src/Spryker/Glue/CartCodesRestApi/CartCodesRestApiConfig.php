@@ -42,6 +42,8 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CART_CODE_CANT_BE_ADDED = 'Cart code can\'t be added.';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array

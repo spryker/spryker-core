@@ -1139,7 +1139,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createDiscountRuleWithValueOptionsPluginMock()
+    protected function createDiscountRuleWithValueOptionsPluginMock(): DiscountRuleWithValueOptionsPluginInterface
     {
         $discountRulePluginMock = $this->getMockBuilder(DiscountRuleWithValueOptionsPluginInterface::class)
             ->setMethods(['getQueryStringValueOptions', 'getFieldName'])

@@ -3,7 +3,7 @@
           namespace="Orm\Zed\WeekdaySchedule\Persistence"
           package="src.Orm.Zed.WeekdaySchedule.Persistence">
 
-    <table name="spy_weekday_schedule" phpName="SpyWeekdaySchedule">
+    <table name="spy_weekday_schedule">
         <column name="id_weekday_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="day" required="true" type="ENUM" valueSet="MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY"/>
         <column name="time_from" type="TIME"/>
@@ -14,7 +14,7 @@
         <id-method-parameter value="spy_weekday_schedule_pk_seq"/>
     </table>
 
-    <table name="spy_date_schedule" phpName="SpyDateSchedule">
+    <table name="spy_date_schedule">
         <column name="id_date_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="date" type="DATE" required="true"/>
         <column name="time_from" type="TIME"/>

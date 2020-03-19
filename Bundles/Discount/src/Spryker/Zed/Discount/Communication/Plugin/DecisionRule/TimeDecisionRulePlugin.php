@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -36,12 +38,12 @@ class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugi
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isTimeSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -54,11 +56,12 @@ class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugi
     }
 
     /**
+     * {@inheritDoc}
      * Data types used by this field. (string, integer, list)
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

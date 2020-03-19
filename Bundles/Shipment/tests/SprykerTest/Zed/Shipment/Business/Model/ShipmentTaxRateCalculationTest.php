@@ -232,7 +232,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer
      */
-    protected function createQueryContainerMock(?float $countryTaxRate)
+    protected function createQueryContainerMock(?float $countryTaxRate): ShipmentQueryContainer
     {
         $return = $countryTaxRate === null ? null : [ShipmentQueryContainer::COL_MAX_TAX_RATE => $countryTaxRate];
 
@@ -260,7 +260,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge
      */
-    protected function createProductOptionToTaxBridgeMock()
+    protected function createProductOptionToTaxBridgeMock(): ShipmentToTaxBridge
     {
         $bridgeMock = $this->getMockBuilder(ShipmentToTaxBridge::class)
             ->disableOriginalConstructor()

@@ -74,7 +74,7 @@ class StepHandlerPluginCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
      */
-    private function getStepHandlerPlugin()
+    private function getStepHandlerPlugin(): StepHandlerPluginInterface
     {
         return $this->getMockBuilder(StepHandlerPluginInterface::class)->getMock();
     }

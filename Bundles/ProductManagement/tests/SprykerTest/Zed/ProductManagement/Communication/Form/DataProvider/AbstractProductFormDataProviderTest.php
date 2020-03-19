@@ -71,7 +71,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductFormDataProviderMock()
+    protected function getProductFormDataProviderMock(): AbstractProductFormDataProvider
     {
         $productFormDataProviderMock = $this->getMockBuilder(AbstractProductFormDataProvider::class)
             ->disableOriginalConstructor()

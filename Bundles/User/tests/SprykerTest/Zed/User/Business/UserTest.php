@@ -380,7 +380,7 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
-    protected function createSessionClient()
+    protected function createSessionClient(): SessionClient
     {
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
 
@@ -390,7 +390,7 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
-    protected function createQueryContainer()
+    protected function createQueryContainer(): UserQueryContainerInterface
     {
         $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
 

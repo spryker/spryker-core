@@ -75,8 +75,10 @@ class ProductStorage implements ProductStorageInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function getValidShoppingListItems(ShoppingListOverviewResponseTransfer $shoppingListResponseTransfer, array $productSkuCollection): ShoppingListItemCollectionTransfer
-    {
+    protected function getValidShoppingListItems(
+        ShoppingListOverviewResponseTransfer $shoppingListResponseTransfer,
+        array $productSkuCollection
+    ): ShoppingListItemCollectionTransfer {
         $validShoppingListItems = new ShoppingListItemCollectionTransfer();
 
         $storageProductCollection = $this->getStorageProductCollection($productSkuCollection);

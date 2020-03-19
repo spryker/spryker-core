@@ -188,7 +188,7 @@ class AbstractPlaceOrderStepTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
      */
-    protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient)
+    protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient): AbstractPlaceOrderStep
     {
         $errorCodeToEscapeRouteMatching = [
             self::ERROR_CODE_123 => self::ESCAPE_ROUTE_123,
@@ -201,7 +201,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
      */
-    private function getCheckoutClientMock()
+    private function getCheckoutClientMock(): CheckoutClientInterface
     {
         return $this->getMockBuilder(CheckoutClientInterface::class)->getMock();
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
 
-    <table name="spy_product_abstract" idMethod="native" allowPkInsert="true" phpName="SpyProductAbstract">
+    <table name="spy_product_abstract" idMethod="native" allowPkInsert="true">
         <column name="fk_tax_set" type="INTEGER" required="false"/>
         <foreign-key name="spy_product_abstract-fk_tax_set" foreignTable="spy_tax_set">
             <reference local="fk_tax_set" foreign="id_tax_set"/>

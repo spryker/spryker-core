@@ -50,7 +50,7 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
     public function getMoneyValueCollectionForEntity(SpyDiscount $discountEntity)
     {

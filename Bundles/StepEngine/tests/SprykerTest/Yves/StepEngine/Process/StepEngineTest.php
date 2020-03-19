@@ -157,7 +157,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormInterface
      */
-    protected function getFormMock()
+    protected function getFormMock(): FormInterface
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
     }
@@ -165,7 +165,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    protected function getFormCollectionHandlerMock()
+    protected function getFormCollectionHandlerMock(): FormCollectionHandlerInterface
     {
         return $this->getMockBuilder(FormCollectionHandlerInterface::class)->getMock();
     }
@@ -175,7 +175,7 @@ class StepEngineTest extends AbstractStepEngineTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    private function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
+    private function getDataContainerMock(?AbstractTransfer $dataTransfer = null): DataContainerInterface
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 

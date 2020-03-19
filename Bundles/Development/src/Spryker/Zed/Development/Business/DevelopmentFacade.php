@@ -25,6 +25,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
@@ -38,32 +40,38 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = [])
+    public function runTest(?string $module, array $options = []): int
     {
-        $this->getFactory()->createCodeTester()->runTest($module, $options);
+        return $this->getFactory()->createCodeTester()->runTest($module, $options);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runFixtures($module, array $options = [])
+    public function runFixtures(?string $module, array $options = []): int
     {
-        $this->getFactory()->createCodeTester()->runFixtures($module, $options);
+        return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $module
@@ -77,7 +85,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @internal
      *
      * @param string $module
      * @param string $toModule
@@ -91,6 +103,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use Spryk tool instead.
@@ -106,6 +120,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @internal
@@ -182,6 +198,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $module
@@ -194,6 +212,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -204,6 +224,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $moduleToView
@@ -218,6 +240,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|bool $moduleToView
@@ -230,6 +254,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param bool $showEngineModule
@@ -243,6 +269,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $moduleToView
@@ -255,6 +283,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -265,6 +295,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This method is not used anymore.
@@ -277,9 +309,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList()
     {
@@ -287,6 +321,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This method is not used anymore.
@@ -299,6 +335,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
@@ -311,6 +349,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -321,6 +361,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -331,6 +373,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -341,6 +385,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -351,6 +397,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -388,6 +436,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Use `listAllModules` instead.
@@ -490,7 +540,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {

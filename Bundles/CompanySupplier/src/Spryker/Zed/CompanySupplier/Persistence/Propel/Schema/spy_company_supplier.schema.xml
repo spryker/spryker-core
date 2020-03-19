@@ -23,7 +23,7 @@
         <id-method-parameter value="spy_company_supplier_to_product_pk_seq"/>
     </table>
 
-    <table name="spy_company_type" idMethod="native" phpName="SpyCompanyType" allowPkInsert="true">
+    <table name="spy_company_type" idMethod="native" allowPkInsert="true">
         <column name="id_company_type" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <id-method-parameter value="spy_company_type_pk_seq"/>

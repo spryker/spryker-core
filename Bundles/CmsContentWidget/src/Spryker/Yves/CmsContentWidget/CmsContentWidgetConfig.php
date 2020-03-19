@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class CmsContentWidgetConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isDebugModeEnabled(): bool

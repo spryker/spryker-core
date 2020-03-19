@@ -32,6 +32,7 @@
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
     </transfer>
@@ -66,12 +67,20 @@
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
         <property name="isActive" type="bool"/>
+        <property name="merchantReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="Url">
         <property name="idUrl" type="int"/>
         <property name="fkResourceMerchantProfile" type="int"/>
         <property name="urlPrefix" type="string"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">
@@ -80,7 +89,6 @@
 
     <transfer name="MerchantProfileAddress">
         <property name="idMerchantProfileAddress" type="int"/>
-        <property name="key" type="string"/>
         <property name="fkCountry" type="int"/>
         <property name="countryName" type="string"/>
         <property name="address1" type="string"/>
@@ -96,6 +104,45 @@
     </transfer>
 
     <transfer name="EventEntity">
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
 </transfers>

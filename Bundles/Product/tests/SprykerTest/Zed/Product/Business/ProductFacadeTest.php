@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -132,5 +133,66 @@ class ProductFacadeTest extends Unit
             'processor_cache' .
             SkuGenerator::SKU_TYPE_SEPARATOR .
             '12MB';
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByOneProductAbstractIdAndLocale(): void
+    {
+        // Arrange
+        $this->tester->createProductUrls();
+
+        $idProductAbstract = $this->tester->getProductAbstractIds()[0];
+
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
+            ->setProductAbstractIds([$idProductAbstract])
+            ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+
+        $correctUrl = $this->tester->getProductUrl($idProductAbstract, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $productUrls);
+        $this->assertSame($correctUrl, $productUrls[0]->getUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByLocaleAndWithoutProductAbstractIds(): void
+    {
+        // Arrange
+        $idLocale = $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $this->tester->createProductUrls();
+
+        $expectedProductUrlsCount = $this->tester->getUrlsCount($idLocale);
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())->setIdLocale($idLocale);
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount($expectedProductUrlsCount, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByProductAbstractIdAndWithoutLocale(): void
+    {
+        // Arrange
+        $this->tester->createProductUrls();
+
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
+            ->setProductAbstractIds([$this->tester->getProductAbstractIds()[0]]);
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $productUrls);
     }
 }

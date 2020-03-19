@@ -3,7 +3,7 @@
           namespace="Orm\Zed\ShoppingListProductOptionConnector\Persistence"
           package="src.Orm.Zed.ShoppingListProductOptionConnector.Persistence"
 >
-    <table name="spy_shopping_list_product_option" phpName="SpyShoppingListProductOption">
+    <table name="spy_shopping_list_product_option">
         <column name="id_shopping_list_item_product_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list_item" required="true" type="INTEGER"/>
         <column name="fk_product_option_value" required="true" type="INTEGER"/>

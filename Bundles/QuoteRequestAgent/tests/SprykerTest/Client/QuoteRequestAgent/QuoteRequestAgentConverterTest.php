@@ -15,7 +15,6 @@ use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteClientBridge;
 use Spryker\Client\QuoteRequestAgent\Status\QuoteRequestAgentStatus;
@@ -87,9 +86,9 @@ class QuoteRequestAgentConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestAgentConverterMock(): MockObject
+    protected function createQuoteRequestAgentConverterMock(): QuoteRequestAgentConverter
     {
         return $this->getMockBuilder(QuoteRequestAgentConverter::class)
             ->setConstructorArgs([
@@ -101,17 +100,17 @@ class QuoteRequestAgentConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteClientBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestAgentToQuoteClientBridgeMock(): MockObject
+    protected function createQuoteRequestAgentToQuoteClientBridgeMock(): QuoteRequestAgentToQuoteClientBridge
     {
         return $this->createPartialMock(QuoteRequestAgentToQuoteClientBridge::class, ['setQuote']);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\QuoteRequestAgent\Status\QuoteRequestAgentStatus|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestAgentStatusMock(): MockObject
+    protected function createQuoteRequestAgentStatusMock(): QuoteRequestAgentStatus
     {
         $quoteRequestAgentStatusMock = $this->getMockBuilder(QuoteRequestAgentStatus::class)
             ->disableOriginalConstructor()

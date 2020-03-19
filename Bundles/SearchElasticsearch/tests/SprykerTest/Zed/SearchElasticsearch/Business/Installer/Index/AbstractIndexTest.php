@@ -35,7 +35,7 @@ abstract class AbstractIndexTest extends Unit
      *
      * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMappingBuilderMock(array $mappings = [])
+    protected function createMappingBuilderMock(array $mappings = []): MappingBuilderInterface
     {
         $mappingMock = $this->createMock(Mapping::class);
         $mappingMock->method('toArray')->willReturn($mappings);
@@ -51,7 +51,7 @@ abstract class AbstractIndexTest extends Unit
      *
      * @return \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createClientMock(?Index $indexMock = null)
+    protected function createClientMock(?Index $indexMock = null): Client
     {
         $clientMock = $this->createMock(Client::class);
         $clientMock->method('getIndex')->willReturn(
@@ -64,7 +64,7 @@ abstract class AbstractIndexTest extends Unit
     /**
      * @return \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createIndexMock()
+    protected function createIndexMock(): Index
     {
         return $this->createMock(Index::class);
     }

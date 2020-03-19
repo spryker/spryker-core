@@ -92,7 +92,7 @@ class LanguageNegotiationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface
      */
-    protected function createStoreClientMock()
+    protected function createStoreClientMock(): GlueApplicationToStoreClientInterface
     {
         $storeClientMock = $this->getMockBuilder(GlueApplicationToStoreClientInterface::class)
             ->setMethods(['getCurrentStore'])

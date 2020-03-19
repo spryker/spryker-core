@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
@@ -581,9 +580,9 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCartsRestApiBusinessFactory(): MockObject
+    protected function getMockCartsRestApiBusinessFactory(): CartsRestApiBusinessFactory
     {
         $cartsRestApiBusinessFactoryMock = $this->createPartialMock(
             CartsRestApiBusinessFactory::class,
@@ -609,11 +608,11 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockQuoteFacade(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    protected function addMockQuoteFacade(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
         $quoteFacadeMock = $this->createPartialMock(
             QuoteFacade::class,
@@ -634,11 +633,11 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCartFacade(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    protected function addMockCartFacade(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
         $cartFacadeMock = $this->createPartialMock(
             CartFacade::class,
@@ -659,11 +658,11 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockPersistentCartFacade(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    protected function addMockPersistentCartFacade(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
         $persistentCartFacadeMock = $this->createPartialMock(
             PersistentCartFacade::class,
@@ -693,11 +692,11 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockStoreFacade(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    protected function addMockStoreFacade(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
         $storeFacadeMock = $this->createPartialMock(
             StoreFacade::class,
@@ -718,11 +717,11 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addQuoteCreatorPlugin(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    protected function addQuoteCreatorPlugin(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
         $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
             ->willReturn($this->createMockQuoteCreatorPlugin());
@@ -731,9 +730,9 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockQuoteCreatorPlugin(): MockObject
+    protected function createMockQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         $mockQuoteCreatorPlugin = $this->createPartialMock(
             QuoteCreatorPluginInterface::class,

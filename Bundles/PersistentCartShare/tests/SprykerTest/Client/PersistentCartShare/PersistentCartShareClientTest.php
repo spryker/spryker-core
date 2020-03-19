@@ -55,7 +55,7 @@ class PersistentCartShareClientTest extends Unit
     /**
      * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createShareOptionPluginMock()
+    protected function createShareOptionPluginMock(): CartShareOptionPluginInterface
     {
         $cartShareOptionPluginMock = $this->getMockBuilder(CartShareOptionPluginInterface::class)
             ->setMethods(['getShareOptionKey', 'getShareOptionGroup', 'isApplicable'])

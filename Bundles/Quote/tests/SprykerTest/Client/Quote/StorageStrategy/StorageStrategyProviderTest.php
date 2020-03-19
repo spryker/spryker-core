@@ -133,7 +133,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteConfig
      */
-    protected function createQuoteConfigMock()
+    protected function createQuoteConfigMock(): QuoteConfig
     {
         return $this->getMockBuilder(QuoteConfig::class)
             ->getMock();
@@ -194,9 +194,9 @@ class StorageStrategyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\\Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface
      */
-    protected function createCustomerClientMock()
+    protected function createCustomerClientMock(): QuoteToCustomerClientInterface
     {
         return $this->getMockBuilder(QuoteToCustomerClientInterface::class)
             ->getMock();
@@ -205,7 +205,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Zed\QuoteStubInterface
      */
-    protected function createQuoteZedStubMock()
+    protected function createQuoteZedStubMock(): QuoteStubInterface
     {
         return $this->getMockBuilder(QuoteStubInterface::class)
             ->getMock();
@@ -214,7 +214,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    protected function createQuoteLockStatusValidatorMock()
+    protected function createQuoteLockStatusValidatorMock(): QuoteLockStatusValidatorInterface
     {
         return $this->createMock(QuoteLockStatusValidatorInterface::class);
     }
@@ -222,7 +222,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
      */
-    protected function createQuoteEditStatusValidatorMock()
+    protected function createQuoteEditStatusValidatorMock(): QuoteEditStatusValidatorInterface
     {
         return $this->createMock(QuoteEditStatusValidatorInterface::class);
     }
@@ -230,7 +230,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
      */
-    protected function createCurrencyClientMock()
+    protected function createCurrencyClientMock(): QuoteToCurrencyClientInterface
     {
         return $this->getMockBuilder(QuoteToCurrencyClientInterface::class)
             ->getMock();
@@ -239,7 +239,7 @@ class StorageStrategyProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
      */
-    protected function createQuoteLockerMock()
+    protected function createQuoteLockerMock(): QuoteLockerInterface
     {
         return $this->createMock(QuoteLockerInterface::class);
     }

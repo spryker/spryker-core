@@ -155,7 +155,7 @@ class GraphTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
      */
-    private function createAdapterMock()
+    private function createAdapterMock(): GraphAdapterInterface
     {
         $adapterMock = $this->getMockBuilder(GraphAdapterInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $adapterMock->method('render')->willReturn('');

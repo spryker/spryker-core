@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
@@ -25,7 +27,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -41,8 +43,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
-     * @param array $pageDataExpanderPluginNames
+     * @param int[] $productAbstractIds
+     * @param string[] $pageDataExpanderPluginNames
      *
      * @return void
      */
@@ -58,7 +60,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -192,5 +194,49 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
                 $productData,
                 $localeTransfer
             );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $priceProductStoreIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
+    {
+        return $this->getRepository()->getProductAbstractIdsByPriceProductStoreIds($priceProductStoreIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageLoadTransferWithPriceData(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createPriceProductPageExpander()->expandProductPageLoadTransferWithPricesData($productPageLoadTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
+    {
+        return $this->getRepository()
+            ->getSynchronizationDataTransfersByFilterAndProductIds($filterTransfer, $productIds);
     }
 }

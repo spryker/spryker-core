@@ -22,6 +22,8 @@ class OrderShippedMailTypePlugin extends AbstractPlugin implements MailTypePlugi
     public const MAIL_TYPE = 'order shipped mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class OrderShippedMailTypePlugin extends AbstractPlugin implements MailTypePlugi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder

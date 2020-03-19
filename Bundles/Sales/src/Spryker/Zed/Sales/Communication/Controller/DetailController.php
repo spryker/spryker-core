@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
@@ -59,7 +60,7 @@ class DetailController extends AbstractController
         }
 
         $groupedOrderItems = $this->getFacade()
-            ->getUniqueOrderItems($orderTransfer->getItems());
+            ->getUniqueItemsFromOrder($orderTransfer);
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,

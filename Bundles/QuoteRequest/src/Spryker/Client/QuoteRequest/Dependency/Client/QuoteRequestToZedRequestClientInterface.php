@@ -14,7 +14,7 @@ interface QuoteRequestToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest();
+    public function addFlashMessagesFromLastZedRequest(): void;
 
     /**
      * @param string $url
@@ -23,5 +23,5 @@ interface QuoteRequestToZedRequestClientInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null);
+    public function call(string $url, TransferInterface $object, $requestOptions = null): TransferInterface;
 }

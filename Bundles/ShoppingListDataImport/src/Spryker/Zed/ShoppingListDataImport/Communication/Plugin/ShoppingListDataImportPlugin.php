@@ -20,6 +20,8 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 class ShoppingListDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -33,6 +35,8 @@ class ShoppingListDataImportPlugin extends AbstractPlugin implements DataImportP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

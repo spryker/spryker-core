@@ -9,16 +9,21 @@ namespace SprykerTest\Zed\Oms\Helper;
 
 use Codeception\Module;
 use DateInterval;
+use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use Symfony\Component\Process\Process;
 
 class OmsHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use ConfigHelperTrait;
 
     /**
@@ -118,5 +123,28 @@ class OmsHelper extends Module
 
         $this->setConfig(OmsConstants::PROCESS_LOCATION, $xmlFolder);
         $this->setConfig(OmsConstants::ACTIVE_PROCESSES, $activeProcesses);
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\OmsProductReservationTransfer
+     */
+    public function haveOmsProductReservation(array $seed): OmsProductReservationTransfer
+    {
+        $omsProductReservationTransfer = new OmsProductReservationBuilder($seed);
+        $omsProductReservationTransfer = $omsProductReservationTransfer->build();
+
+        $omsProductReservationEntity = (new SpyOmsProductReservation());
+        $omsProductReservationEntity->fromArray($omsProductReservationTransfer->toArray());
+        $omsProductReservationEntity->save();
+
+        $omsProductReservationTransfer->fromArray($omsProductReservationEntity->toArray(), true);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($omsProductReservationEntity): void {
+            $omsProductReservationEntity->delete();
+        });
+
+        return $omsProductReservationTransfer;
     }
 }

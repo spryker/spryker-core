@@ -146,8 +146,11 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      *
      * @return void
      */
-    protected function processGetResourceCollectionPath(ResourceRoutePluginInterface $plugin, string $resourcePath, ?AnnotationTransfer $annotationTransfer): void
-    {
+    protected function processGetResourceCollectionPath(
+        ResourceRoutePluginInterface $plugin,
+        string $resourcePath,
+        ?AnnotationTransfer $annotationTransfer
+    ): void {
         if (!$annotationTransfer || !$this->resourceRouteCollection->has(Request::METHOD_GET)) {
             return;
         }
@@ -259,6 +262,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                         static::KEY_ID => $this->getResourceIdFromResourceType($parentPlugin->getResourceType()),
                         static::KEY_PARENT => $this->getParentResource($parentPlugin, $pluginsStack),
                     ];
+
                     break;
                 }
             }

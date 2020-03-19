@@ -26,8 +26,11 @@ class AvailabilityNotificationDataHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveAvailabilityNotificationSubscriptionTransfer(ProductConcreteTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer = null, array $seedData = []): AbstractTransfer
-    {
+    public function haveAvailabilityNotificationSubscriptionTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?CustomerTransfer $customerTransfer = null,
+        array $seedData = []
+    ): AbstractTransfer {
         $availabilityNotificationSubscriptionTransfer = (new AvailabilityNotificationSubscriptionBuilder($seedData))
             ->build()
             ->setSku($productConcreteTransfer->getSKU());
@@ -46,8 +49,11 @@ class AvailabilityNotificationDataHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveAvailabilityNotificationSubscription(ProductConcreteTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer = null, array $seedData = []): AbstractTransfer
-    {
+    public function haveAvailabilityNotificationSubscription(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?CustomerTransfer $customerTransfer = null,
+        array $seedData = []
+    ): AbstractTransfer {
         $availabilityNotificationSubscription = $this->haveAvailabilityNotificationSubscriptionTransfer($productConcreteTransfer, $customerTransfer, $seedData);
 
         $result = $this->getAvailabilityNotificationSubscriptionFacade()->subscribe($availabilityNotificationSubscription);

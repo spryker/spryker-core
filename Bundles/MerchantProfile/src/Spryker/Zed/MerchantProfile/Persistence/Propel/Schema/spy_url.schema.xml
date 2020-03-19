@@ -3,7 +3,7 @@
           namespace="Orm\Zed\Url\Persistence"
           package="src.Orm.Zed.Url.Persistence">
 
-    <table name="spy_url" phpName="SpyUrl">
+    <table name="spy_url">
         <column name="fk_resource_merchant_profile" type="INTEGER"/>
         <foreign-key name="spy_url-fk_resource_merchant_profile" foreignTable="spy_merchant_profile" phpName="SpyMerchantProfile" onDelete="CASCADE">
             <reference foreign="id_merchant_profile" local="fk_resource_merchant_profile"/>

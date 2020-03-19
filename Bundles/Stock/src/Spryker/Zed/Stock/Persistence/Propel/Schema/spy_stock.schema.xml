@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Stock\Persistence" package="src.Orm.Zed.Stock.Persistence">
 
-    <table name="spy_stock" phpName="SpyStock">
+    <table name="spy_stock">
         <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" defaultValue="true"/>
@@ -12,7 +12,7 @@
         <id-method-parameter value="spy_stock_pk_seq"/>
     </table>
 
-    <table name="spy_stock_product" phpName="SpyStockProduct">
+    <table name="spy_stock_product">
         <column name="id_stock_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
@@ -39,7 +39,7 @@
         <id-method-parameter value="spy_stock_product_pk_seq"/>
     </table>
 
-    <table name="spy_stock_store" phpName="SpyStockStore">
+    <table name="spy_stock_store">
         <column name="id_stock_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
