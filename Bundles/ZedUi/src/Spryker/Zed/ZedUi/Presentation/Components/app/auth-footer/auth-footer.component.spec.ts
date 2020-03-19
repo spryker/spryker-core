@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MpAuthFooterComponent } from './mp-auth-footer.component';
+import { AuthFooterComponent } from './auth-footer.component';
 import { By } from '@angular/platform-browser';
 
-describe('ZedAuthFooterComponent', () => {
-    let component: MpAuthFooterComponent;
-    let fixture: ComponentFixture<MpAuthFooterComponent>;
+describe('AuthFooterComponent', () => {
+    let component: AuthFooterComponent;
+    let fixture: ComponentFixture<AuthFooterComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [MpAuthFooterComponent]
+            declarations: [AuthFooterComponent]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(MpAuthFooterComponent);
+        fixture = TestBed.createComponent(AuthFooterComponent);
         component = fixture.componentInstance;
     });
 
