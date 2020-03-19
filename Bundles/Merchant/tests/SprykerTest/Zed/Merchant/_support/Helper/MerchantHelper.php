@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Zed\Merchant\Helper;
 
+use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\DataBuilder\UrlBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Merchant\MerchantConfig;
@@ -30,6 +32,7 @@ class MerchantHelper extends Module
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
+        $merchantTransfer->setUrlCollection($this->createMerchantUrlTransfers());
 
         $merchantResponseTransfer = $this->getLocator()
             ->merchant()
@@ -38,6 +41,18 @@ class MerchantHelper extends Module
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function createMerchantUrlTransfers(): ArrayObject
+    {
+        $urlTransfer = (new UrlBuilder())->build();
+        $urlCollection = new ArrayObject();
+        $urlCollection->append($urlTransfer);
+
+        return $urlCollection;
     }
 
     /**

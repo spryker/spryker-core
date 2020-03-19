@@ -195,8 +195,8 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
 
         $productOfferStorageWriter = new ProductConcreteOffersStorageWriter(
             $this->getMerchantProductOfferStorageToEventBehaviorFacadeInterfaceMock($productOfferTransfer),
-            $this->getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock($productOfferCollectionTransfer),
             $merchantProductOfferStorageEntityManager,
+            $this->getMerchantProductOfferStorageRepositoryInterfaceMock($productOfferCollectionTransfer),
             $productOfferStorageDeleter,
             $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock()
         );
