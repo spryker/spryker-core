@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Business\ProductTableDataProvider;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider;
 
+use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductTableDataTransfer;
 
 interface ProductTableDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
+     * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer;
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): GuiTableDataTransfer;
 }

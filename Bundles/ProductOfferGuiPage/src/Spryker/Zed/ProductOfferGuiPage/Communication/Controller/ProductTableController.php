@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Communication\ProductOfferGuiPageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface getFacade()
  */
-class ProductListController extends AbstractController
+class ProductTableController extends AbstractController
 {
     /**
      * @return array
@@ -35,7 +34,7 @@ class ProductListController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getTableDataAction(Request $request): JsonResponse
+    public function getDataAction(Request $request): JsonResponse
     {
         $productTable = $this->getFactory()->createProductTable();
 

@@ -11,8 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
-use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
-use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -254,17 +252,4 @@ interface ProductImageFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
-
-    /**
-     * Specification:
-     * - Gets product image sets by product image set criteria.
-     * - Each image set is represented by ProductImageSetTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
-     */
-    public function getProductImageSets(ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer): ProductImageSetCollectionTransfer;
 }

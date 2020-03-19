@@ -76,12 +76,12 @@ class ProductTableDataMapper
         $rowsData = [];
 
         foreach ($productTableDataArray as $productTableRowDataArray) {
-            $attributes = $this->utilEncodingService->decodeJson(
+            $productConcreteAttributes = $this->utilEncodingService->decodeJson(
                 $productTableRowDataArray[ProductTableRowDataTransfer::ATTRIBUTES] ?? null,
                 true
             );
             $productTableRowDataTransfer = (new ProductTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
-            $productTableRowDataTransfer->setAttributes(is_array($attributes) ? $attributes : []);
+            $productTableRowDataTransfer->setAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
             $rowsData[] = $productTableRowDataTransfer;
         }
 

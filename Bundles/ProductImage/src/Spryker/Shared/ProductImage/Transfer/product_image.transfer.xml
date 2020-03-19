@@ -10,7 +10,6 @@
         <property name="locale" type="Locale"/>
         <property name="idProduct" type="int"/>
         <property name="idProductAbstract" type="int"/>
-        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="ProductImage">
@@ -38,14 +37,6 @@
     <transfer name="ProductImageFilter">
         <property name="productImageSetIds" type="array" singular="productImageSetId"/>
         <property name="productImageIds" type="array" singular="productImageId"/>
-    </transfer>
-
-    <transfer name="ProductImageSetCollection">
-        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
-    </transfer>
-
-    <transfer name="ProductImageSetCriteria">
-        <property name="productConcreteIds" type="int[]" singular="productConcreteId"/>
     </transfer>
 
 </transfers>

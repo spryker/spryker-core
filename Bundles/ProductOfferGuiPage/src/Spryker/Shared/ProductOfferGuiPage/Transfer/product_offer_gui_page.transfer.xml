@@ -7,7 +7,7 @@
         <property name="data" type="array" singular="data"/>
         <property name="total" type="int"/>
         <property name="page" type="int"/>
-        <property name="size" type="int"/>
+        <property name="pageSize" type="int"/>
     </transfer>
 
     <transfer name="GuiTableConfiguration">
@@ -16,8 +16,8 @@
         <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
         <property name="filters" type="GuiTableFilter[]" singular="filter"/>
         <property name="defaultSortColumn" type="string"/>
+        <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
-        <property name="allowedFilters" type="string[]" singular="allowedFilter"/>
         <property name="searchOptions" type="array" associative="true" singular="searchOption"/>
     </transfer>
 
@@ -25,8 +25,7 @@
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>
-        <property name="url" type="string"/>
-        <property name="icon" type="string"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
     <transfer name="GuiTableColumnConfiguration">
@@ -37,14 +36,15 @@
         <property name="hideable" type="bool"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-        <property name="multiple" type="bool"/>
+        <property name="multiRenderMode" type="bool"/>
+        <property name="multiRenderModeLimit" type="int"/>
     </transfer>
 
     <transfer name="GuiTableFilter">
-        <property name="key" type="string"/>
+        <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>
-        <property name="options" type="array" singular="option" associative="true"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
     <transfer name="ProductTableCriteria">
@@ -65,10 +65,9 @@
     </transfer>
 
     <transfer name="ProductTableRowData">
-        <property name="idProduct" type="int"/>
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
-        <property name="image" type="string"/>
+        <property name="images" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="attributes" type="array" singular="attribute"/>
         <property name="offersCount" type="int"/>
@@ -89,70 +88,12 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
-    <transfer name="ProductImageSet">
-        <property name="productImages" type="ProductImage[]" singular="productImage"/>
-        <property name="idProduct" type="int"/>
-        <property name="idLocale" type="int"/>
-    </transfer>
-
-    <transfer name="ProductImage">
-        <property name="externalUrlSmall" type="string"/>
-    </transfer>
-
-    <transfer name="MerchantUserCriteriaFilter">
-        <property name="idUser" type="int"/>
-    </transfer>
-
-    <transfer name="User">
-        <property name="idUser" type="int"/>
-    </transfer>
-
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="concreteSkus" type="string[]" singular="concreteSku"/>
-        <property name="idMerchant" type="int"/>
-    </transfer>
-
-    <transfer name="ProductOfferCollection">
-        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
-    </transfer>
-
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
     </transfer>
 
-    <transfer name="CategoryCollection">
-        <property name="categories" type="Category[]" singular="category"/>
-    </transfer>
-
-    <transfer name="ProductOffer">
-        <property name="fkMerchant" type="int"/>
-        <property name="concreteSku" type="string"/>
-    </transfer>
-
-    <transfer name="Category">
-        <property name="idCategory" type="int"/>
-        <property name="name" type="string"/>
-    </transfer>
-
-    <transfer name="LocalizedAttributes">
-    </transfer>
-
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
-    </transfer>
-
-    <transfer name="Store">
-        <property name="idStore" type="int"/>
-        <property name="name" type="string"/>
-    </transfer>
-
-    <transfer name="ProductImageSetCollection">
-        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
-    </transfer>
-
-    <transfer name="ProductImageSetCriteria">
-        <property name="productConcreteIds" type="int[]" singular="productConcreteId"/>
-        <property name="localeId" type="int"/>
     </transfer>
 
 </transfers>

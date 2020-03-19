@@ -10,19 +10,19 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface getFacade()
  */
 class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -32,7 +32,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function createProductTable(): ProductTable
     {
         return new ProductTable(
-            $this->getFacade(),
+            $this->getUtilEncodingService(),
+            $this->createProductTableDataProvider(),
             $this->createProductTableFilterDataProviders(),
             $this->createProductTableCriteriaBuilder()
         );
@@ -46,6 +47,16 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
         return new ProductTableCriteriaBuilder(
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
+     */
+    public function createProductTableDataProvider(): ProductTableDataProviderInterface
+    {
+        return new ProductTableDataProvider(
+            $this->getRepository()
         );
     }
 
@@ -90,14 +101,6 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function getUtilEncodingService(): ProductOfferGuiPageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductOfferGuiPageToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_STORE);
     }
 
     /**

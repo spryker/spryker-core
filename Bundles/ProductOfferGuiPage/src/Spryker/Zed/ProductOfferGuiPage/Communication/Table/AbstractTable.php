@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +33,11 @@ abstract class AbstractTable
     protected const DEFAULT_PAGE_SIZE = 10;
     protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
     protected const DEFAULT_SORT_DIRECTION = 'ASC';
+
+    /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
 
     /**
      * @var string|null
@@ -62,6 +68,14 @@ abstract class AbstractTable
      * @var \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     protected $guiTableConfigurationTransfer;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -176,14 +190,59 @@ abstract class AbstractTable
      */
     protected function setSorting(Request $request): void
     {
-        $sortByColumn = $request->query->get(static::PARAM_SORT_BY) ?? $this->getTableConfiguration()->getDefaultSortColumn();
+        $sortColumn = $this->getSortColumn($request);
         $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION) ?? static::DEFAULT_SORT_DIRECTION;
 
-        if (!$sortByColumn) {
+        if (!$sortColumn) {
             throw new InvalidSortingDataException('Sorting data is not present.');
         }
 
-        $this->sorting[$sortByColumn] = $sortDirection;
+        $this->sorting[$sortColumn] = $sortDirection;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string|null
+     */
+    protected function getSortColumn(Request $request): ?string
+    {
+        $sortColumn = $request->query->get(static::PARAM_SORT_BY, $this->getTableConfiguration()->getDefaultSortColumn());
+        $this->assertSortColumn($sortColumn);
+
+        return $sortColumn;
+    }
+
+    /**
+     * @param string $sortColumn
+     *
+     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException
+     *
+     * @return void
+     */
+    protected function assertSortColumn(string $sortColumn): void
+    {
+        foreach ($this->getTableConfiguration()->getColumns() as $tableColumnConfigurationTransfer) {
+            if ($tableColumnConfigurationTransfer->getSortable() && $tableColumnConfigurationTransfer->getId() === $sortColumn) {
+                return;
+            }
+        }
+
+        throw new InvalidSortingDataException(
+            sprintf('Sort column %s is not present in the configured list of sortable columns of `%s`', $sortColumn, static::class)
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getSortDirection(Request $request): string
+    {
+        $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION, $this->getTableConfiguration()->getDefaultSortDirection());
+
+        return $sortDirection ?? static::DEFAULT_SORT_DIRECTION;
     }
 
     /**
@@ -193,21 +252,35 @@ abstract class AbstractTable
      */
     protected function setFilters(Request $request): void
     {
-        $filtersData = json_decode($request->query->get(static::PARAM_FILTERS), true);
+        $filtersData = $this->utilEncodingService->decodeJson($request->query->get(static::PARAM_FILTERS), true);
 
         if (!$filtersData) {
             return;
         }
 
-        $allowedFilterNames = $this->getTableConfiguration()->getAllowedFilters();
+        $availableFilterIds = $this->getAvailableFilterIds();
 
-        foreach ($filtersData as $filterName => $filterData) {
-            if (!in_array($filterName, $allowedFilterNames, true)) {
+        foreach ($filtersData as $filterId => $filterData) {
+            if (!in_array($filterId, $availableFilterIds, true)) {
                 continue;
             }
 
-            $this->filters[$filterName] = $filterData;
+            $this->filters[$filterId] = $filterData;
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAvailableFilterIds(): array
+    {
+        $availableFilterIds = [];
+
+        foreach ($this->getTableConfiguration()->getFilters() as $filterTransfer) {
+            $availableFilterIds[] = $filterTransfer->getId();
+        }
+
+        return $availableFilterIds;
     }
 
     /**
