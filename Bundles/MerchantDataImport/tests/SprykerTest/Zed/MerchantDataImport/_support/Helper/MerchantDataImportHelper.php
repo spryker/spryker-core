@@ -17,20 +17,13 @@ class MerchantDataImportHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @param string[] $references
+     *
      * @return void
      */
-    public function assertDatabaseTableIsEmpty(): void
+    public function assertDatabaseTableContainsData(array $references): void
     {
-        $query = $this->getMerchantQuery();
-        $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
-    }
-
-    /**
-     * @return void
-     */
-    public function assertDatabaseTableContainsData(): void
-    {
-        $query = $this->getMerchantQuery();
+        $query = $this->getMerchantQuery()->filterByMerchantReference_In($references);
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 

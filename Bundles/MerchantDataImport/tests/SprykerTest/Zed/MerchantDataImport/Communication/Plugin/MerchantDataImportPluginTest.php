@@ -27,6 +27,7 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
  */
 class MerchantDataImportPluginTest extends Unit
 {
+    protected const MERCHANT_REFERENCE = 'MER000006-test';
     /**
      * @var \SprykerTest\Zed\MerchantDataImport\MerchantDataImportCommunicationTester
      */
@@ -37,9 +38,7 @@ class MerchantDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->truncateMerchantRelations();
-
-        $this->tester->assertDatabaseTableIsEmpty();
+        $this->tester->deleteMerchantByReferences([static::MERCHANT_REFERENCE]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant.csv');
@@ -52,7 +51,7 @@ class MerchantDataImportPluginTest extends Unit
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertDatabaseTableContainsData([static::MERCHANT_REFERENCE]);
     }
 
     /**
