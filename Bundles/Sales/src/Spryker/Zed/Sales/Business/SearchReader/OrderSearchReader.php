@@ -20,20 +20,20 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
-    protected $orderExpanderPlugins;
+    protected $searchOrderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $orderExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
-        array $orderExpanderPlugins
+        array $searchOrderExpanderPlugins
     ) {
         $this->salesRepository = $salesRepository;
-        $this->orderExpanderPlugins = $orderExpanderPlugins;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
     }
 
     /**
@@ -77,8 +77,8 @@ class OrderSearchReader implements OrderSearchReaderInterface
      */
     protected function executeOrderExpanderPlugins(OrderTransfer $orderTransfer): OrderTransfer
     {
-        foreach ($this->orderExpanderPlugins as $orderExpanderPlugin) {
-            $orderTransfer = $orderExpanderPlugin->hydrate($orderTransfer);
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfer = $searchOrderExpanderPlugin->expand($orderTransfer);
         }
 
         return $orderTransfer;
