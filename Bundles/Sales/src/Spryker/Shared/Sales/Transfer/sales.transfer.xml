@@ -54,7 +54,6 @@
 
     <transfer name="OrderList">
         <property name="idCustomer" type="int" deprecated="use Customer property instead."/>
-        <property name="customer" type="Customer"/>
         <property name="customerReference" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="filter" type="Filter"/>
