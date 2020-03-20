@@ -82,7 +82,7 @@ interface AvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+    public function queryProductAbstractWithStockByProductAbstractIds(
         array $productAbstractIds,
         int $idLocale,
         int $idStore,
@@ -121,7 +121,11 @@ interface AvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(int $idLocale, int $idStore, array $stockIds): SpyProductAbstractQuery;
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
+        int $idLocale,
+        int $idStore,
+        array $stockIds
+    ): SpyProductAbstractQuery;
 
     /**
      * @api
@@ -173,5 +177,5 @@ interface AvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery;
+    public function queryAvailabilityAbstractByIdStore(int $idStore): SpyAvailabilityAbstractQuery;
 }

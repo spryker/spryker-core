@@ -137,7 +137,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
         $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
         $productAbstractEntities = $this->availabilityHelper
-            ->getProductAbstractEntitiesWithStockByProductAbstractIdsAndIdLocale(
+            ->getProductAbstractEntitiesWithStockByProductAbstractIds(
                 $productAbstractIds,
                 $this->idLocale,
                 $this->idStore
@@ -186,7 +186,7 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function countTotal(ModelCriteria $query): int
     {
         return $this->availabilityHelper
-            ->queryAvailabilityAbstractByFkStore($this->idStore)
+            ->queryAvailabilityAbstractByIdStore($this->idStore)
             ->count();
     }
 

@@ -348,7 +348,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+    public function queryProductAbstractWithStockByProductAbstractIds(
         array $productAbstractIds,
         int $idLocale,
         int $idStore,
@@ -408,7 +408,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery
+    public function queryAvailabilityAbstractByIdStore(int $idStore): SpyAvailabilityAbstractQuery
     {
         return $this->queryAllAvailabilityAbstracts()
             ->addAnd(SpyAvailabilityAbstractTableMap::COL_FK_STORE, $idStore);
@@ -441,7 +441,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
-     * @param array $stockIds
+     * @param int[] $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

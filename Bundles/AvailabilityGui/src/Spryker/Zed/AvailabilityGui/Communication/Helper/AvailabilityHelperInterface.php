@@ -132,12 +132,12 @@ interface AvailabilityHelperInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
-    public function getProductAbstractEntitiesWithStockByProductAbstractIdsAndIdLocale(array $productAbstractIds, int $idLocale, int $idStore): array;
+    public function getProductAbstractEntitiesWithStockByProductAbstractIds(array $productAbstractIds, int $idLocale, int $idStore): array;
 
     /**
      * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery;
+    public function queryAvailabilityAbstractByIdStore(int $idStore): SpyAvailabilityAbstractQuery;
 }

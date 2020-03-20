@@ -87,13 +87,13 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+    public function queryProductAbstractWithStockByProductAbstractIds(
         array $productAbstractIds,
         int $idLocale,
         int $idStore,
         array $stockNames = []
     ): SpyProductAbstractQuery {
-        return $this->availabilityQueryContainer->queryProductAbstractWithStockByProductAbstractIdsAndIdLocale(
+        return $this->availabilityQueryContainer->queryProductAbstractWithStockByProductAbstractIds(
             $productAbstractIds,
             $idLocale,
             $idStore,
@@ -106,8 +106,8 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByFkStore(int $idStore): SpyAvailabilityAbstractQuery
+    public function queryAvailabilityAbstractByIdStore(int $idStore): SpyAvailabilityAbstractQuery
     {
-        return $this->availabilityQueryContainer->queryAvailabilityAbstractByFkStore($idStore);
+        return $this->availabilityQueryContainer->queryAvailabilityAbstractByIdStore($idStore);
     }
 }
