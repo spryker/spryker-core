@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ZedNavigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheBuilder;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor;
-use Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilter;
-use Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator;
@@ -41,7 +41,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilterInterface
+     * @return \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
      */
     public function createNavigationItemFilter(): NavigationItemFilterInterface
     {
@@ -138,7 +138,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()} instead.
      *
      * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */

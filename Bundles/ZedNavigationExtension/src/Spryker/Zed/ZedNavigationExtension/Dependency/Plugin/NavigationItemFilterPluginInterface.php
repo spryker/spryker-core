@@ -10,7 +10,7 @@ namespace Spryker\Zed\ZedNavigationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\NavigationItemTransfer;
 
 /**
- * @deprecated Use `\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface} instead.
  */
 interface NavigationItemFilterPluginInterface
 {

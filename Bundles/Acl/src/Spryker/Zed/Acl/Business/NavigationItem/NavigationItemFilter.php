@@ -31,7 +31,8 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     public function __construct(
         RuleInterface $rule,
         AclToUserInterface $userFacade
-    ) {
+    )
+    {
         $this->rule = $rule;
         $this->userFacade = $userFacade;
     }
@@ -52,6 +53,10 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         $navigationItemTransfers = $navigationItemCollectionTransfer->getNavigationItems()->getArrayCopy();
 
         foreach ($navigationItemTransfers as $navigationItemKey => $navigationItemTransfer) {
+            if (!$this->isNavigationItemTransferValidForAclAccessCheck($navigationItemTransfer)) {
+                continue;
+            }
+
             $isNavigationItemAllowed = $this->rule->isAllowed(
                 $userTransfer,
                 $navigationItemTransfer->getModule(),
@@ -67,5 +72,17 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         return $navigationItemCollectionTransfer->setNavigationItems(
             new ArrayObject($navigationItemTransfers)
         );
+    }
+
+    /**
+     * @param $navigationItemTransfer
+     *
+     * @return bool
+     */
+    protected function isNavigationItemTransferValidForAclAccessCheck($navigationItemTransfer): bool
+    {
+        return $navigationItemTransfer->getModule()
+            && $navigationItemTransfer->getController()
+            && $navigationItemTransfer->getAction();
     }
 }

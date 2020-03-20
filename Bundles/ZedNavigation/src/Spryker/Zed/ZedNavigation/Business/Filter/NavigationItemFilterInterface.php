@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ZedNavigation\Business\Model\Filter;
+namespace Spryker\Zed\ZedNavigation\Business\Filter;
 
 interface NavigationItemFilterInterface
 {

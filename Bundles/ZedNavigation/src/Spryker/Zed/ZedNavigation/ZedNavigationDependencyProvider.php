@@ -21,7 +21,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_ENCODING = 'util encoding service';
 
     /**
-     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER` instead.
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER} instead.
      */
     public const PLUGINS_NAVIGATION_ITEM_FILTER = 'PLUGINS_NAVIGATION_ITEM_FILTER';
     public const PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER = 'PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER';
@@ -71,7 +71,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::addNavigationItemCollectionFilterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::addNavigationItemCollectionFilterPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -101,7 +101,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::getNavigationItemCollectionFilterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::getNavigationItemCollectionFilterPlugins()} instead.
      *
      * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */

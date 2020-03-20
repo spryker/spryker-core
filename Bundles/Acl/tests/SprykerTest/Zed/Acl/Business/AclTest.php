@@ -655,6 +655,7 @@ class AclTest extends Unit
      */
     public function testFilterNavigationItemCollectionByAccessibilityReturnsFilteredCollectionWithCorrectData(): void
     {
+        // Arrange
         $groupData = $this->mockGroupData();
         $roleData = $this->mockRoleData();
         $roleTransfer = $this->facade->addRole($roleData['name']);
@@ -690,10 +691,21 @@ class AclTest extends Unit
             $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
         }
 
+        $navigationItemTransfer = $this->getNavigationItemTransfer([
+            NavigationItemTransfer::MODULE => null,
+            NavigationItemTransfer::CONTROLLER => null,
+            NavigationItemTransfer::ACTION => null,
+        ]);
+        $navigationItemCollectionTransfer->addNavigationItem('empty-navigation-item', $navigationItemTransfer);
+
+        // Act
         $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
             $navigationItemCollectionTransfer
         );
-        $this->assertCount(2, $navigationItemCollectionTransfer->getNavigationItems());
+
+        // Assert
+        $this->assertCount(3, $navigationItemCollectionTransfer->getNavigationItems());
+        $this->assertArrayHasKey('empty-navigation-item', $navigationItemCollectionTransfer->getNavigationItems());
     }
 
     /**
@@ -701,6 +713,7 @@ class AclTest extends Unit
      */
     public function testFilterNavigationItemCollectionByAccessibilityReturnsEmptyCollectionIfUserIsUnauthorized(): void
     {
+        // Arrange
         $groupData = $this->mockGroupData();
         $roleData = $this->mockRoleData();
         $roleTransfer = $this->facade->addRole($roleData['name']);
@@ -734,9 +747,12 @@ class AclTest extends Unit
             $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
         }
 
+        // Act
         $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
             $navigationItemCollectionTransfer
         );
+
+        // Assert
         $this->assertCount(0, $navigationItemCollectionTransfer->getNavigationItems());
     }
 

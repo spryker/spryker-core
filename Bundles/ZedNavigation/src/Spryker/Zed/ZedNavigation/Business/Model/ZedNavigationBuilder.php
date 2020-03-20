@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Model;
 
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface;
-use Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
 
 class ZedNavigationBuilder
@@ -33,7 +33,7 @@ class ZedNavigationBuilder
     private $pathExtractor;
 
     /**
-     * @var \Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilterInterface
+     * @var \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
      */
     protected $navigationItemFilter;
 
@@ -41,7 +41,7 @@ class ZedNavigationBuilder
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface $menuFormatter
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface $pathExtractor
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Filter\NavigationItemFilterInterface $navigationItemFilter
+     * @param \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface $navigationItemFilter
      */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
