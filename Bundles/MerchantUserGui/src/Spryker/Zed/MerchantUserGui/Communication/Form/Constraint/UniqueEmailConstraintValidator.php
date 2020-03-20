@@ -13,8 +13,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 class UniqueEmailConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param $email
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param string $email
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint $constraint
      *
      * @return void
      */
@@ -25,6 +25,7 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
         }
 
         $userTransfer = $constraint->getUserFacade()->getUserByUsername($email);
+        /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
         $formDataUserTransfer = $this->context->getRoot()->getData();
 
         if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
