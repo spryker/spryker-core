@@ -121,9 +121,8 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             }
 
             $navigationItemTransfer = (new NavigationItemTransfer())
-                ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null)
-                ->setController($navigationItem[MenuFormatter::CONTROLLER] ?? null)
-                ->setAction($navigationItem[MenuFormatter::ACTION] ?? null);
+                ->fromArray($navigationItem, true)
+                ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null);
             $navigationItemCollectionTransfer->addNavigationItem(
                 $this->getNavigationItemKey($navigationItem),
                 $navigationItemTransfer
