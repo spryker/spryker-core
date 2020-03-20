@@ -10,12 +10,8 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
@@ -28,16 +24,6 @@ class MerchantUserCreateForm extends AbstractType
     public const FIELD_STATUS = 'status';
 
     protected const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(['validation_groups' => static::GROUP_UNIQUE_USERNAME_CHECK]);
-    }
 
     /**
      * @return string
@@ -72,7 +58,7 @@ class MerchantUserCreateForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
-                    $this->createUniqueEmailConstraint(),
+                    $this->getFactory()->createUniqueEmailConstraint(),
                 ],
             ]);
 
@@ -111,28 +97,27 @@ class MerchantUserCreateForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    protected function createUniqueEmailConstraint(): Constraint
-    {
-        return new Callback([
-            'callback' => function ($email, ExecutionContextInterface $contextInterface) {
-                if (!$this->getFactory()->getUserFacade()->hasUserByUsername($email)) {
-                    return;
-                }
-
-                $userTransfer = $this->getFactory()->getUserFacade()->getUserByUsername($email);
-                /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
-                $formDataUserTransfer = $contextInterface->getRoot()->getData();
-
-                if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
-                    $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
-                        '{{ username }}' => $email,
-                    ]);
-                }
-            },
-            'groups' => [self::GROUP_UNIQUE_USERNAME_CHECK],
-        ]);
-    }
+//    /**
+//     * @return \Symfony\Component\Validator\Constraint
+//     */
+//    protected function createUniqueEmailConstraint(): Constraint
+//    {
+//        return new Callback([
+//            'callback' => function ($email, ExecutionContextInterface $contextInterface) {
+//                if (!$this->getFactory()->getUserFacade()->hasUserByUsername($email)) {
+//                    return;
+//                }
+//
+//                $userTransfer = $this->getFactory()->getUserFacade()->getUserByUsername($email);
+//                /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
+//                $formDataUserTransfer = $contextInterface->getRoot()->getData();
+//
+//                if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
+//                    $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
+//                        '{{ username }}' => $email,
+//                    ]);
+//                }
+//            },
+//        ]);
+//    }
 }

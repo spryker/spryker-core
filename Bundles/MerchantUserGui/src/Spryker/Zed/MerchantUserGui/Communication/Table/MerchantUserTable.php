@@ -104,7 +104,7 @@ class MerchantUserTable extends AbstractTable
             static::MERCHANT_USER_STATUS,
         ]);
 
-        $config->setUrl(sprintf('table?%s=%d', IndexController::MERCHANT_ID_PARAM_NAME, $this->idMerchant));
+        $config->setUrl(sprintf('table?%s=%d', IndexController::PARAM_MERCHANT_ID, $this->idMerchant));
 
         return $config;
     }
@@ -159,8 +159,8 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/edit-merchant-user',
                 [
-                    EditMerchantUserController::MERCHANT_USER_ID_PARAM_NAME
-                    => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
+                    EditMerchantUserController::PARAM_MERCHANT_USER_ID =>
+                        $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                 ]
             ),
             'Edit'
@@ -205,8 +205,8 @@ class MerchantUserTable extends AbstractTable
             Url::generate(
                 '/merchant-user-gui/merchant-user-status',
                 [
-                    MerchantUserStatusController::MERCHANT_USER_ID_PARAM_NAME
-                    => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
+                    MerchantUserStatusController::PARAM_MERCHANT_USER_ID =>
+                        $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'status' => $availableStatus,
                 ]
             ),

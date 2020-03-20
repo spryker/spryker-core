@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUserGui\Communication;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint;
 use Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider\MerchantUserUpdateFormDataProvider;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserCreateForm;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
@@ -45,6 +46,16 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantUserUpdateFormDataProvider(): MerchantUserUpdateFormDataProvider
     {
         return new MerchantUserUpdateFormDataProvider($this->getMerchantUserFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint
+     */
+    public function createUniqueEmailConstraint(): UniqueEmailConstraint
+    {
+        return new UniqueEmailConstraint(
+            [UniqueEmailConstraint::PARAM_USER_FACADE => $this->getUserFacade()]
+        );
     }
 
     /**

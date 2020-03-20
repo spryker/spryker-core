@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantUserController extends AbstractController
 {
-    public const MERCHANT_USER_ID_PARAM_NAME = 'merchant-user-id';
+    public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,7 +26,7 @@ class EditMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idMerchantUser = $this->castId($request->get(static::MERCHANT_USER_ID_PARAM_NAME));
+        $idMerchantUser = $this->castId($request->get(static::PARAM_MERCHANT_USER_ID));
 
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
         $merchantUserTransfer = $dataProvider->getData($idMerchantUser);

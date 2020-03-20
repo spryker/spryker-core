@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateMerchantUserController extends AbstractController
 {
-    protected const MERCHANT_ID_PARAM_NAME = 'merchant-id';
+    protected const PARAM_MERCHANT_ID = 'merchant-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,7 +27,7 @@ class CreateMerchantUserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchant = $this->castId($request->get(static::PARAM_MERCHANT_ID));
 
         $merchantUserForm = $this->getFactory()->getMerchantUserCreateForm()->handleRequest($request);
 

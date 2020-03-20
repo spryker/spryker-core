@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    public const MERCHANT_ID_PARAM_NAME = 'merchant-id';
+    public const PARAM_MERCHANT_ID = 'merchant-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $idMerchant = $this->castId($request->get(static::MERCHANT_ID_PARAM_NAME));
+        $idMerchant = $this->castId($request->get(static::PARAM_MERCHANT_ID));
 
         $categoryTable = $this->getFactory()->createMerchantUserTable($idMerchant);
 
