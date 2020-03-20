@@ -96,28 +96,4 @@ class MerchantUserCreateForm extends AbstractType
 
         return $this;
     }
-
-//    /**
-//     * @return \Symfony\Component\Validator\Constraint
-//     */
-//    protected function createUniqueEmailConstraint(): Constraint
-//    {
-//        return new Callback([
-//            'callback' => function ($email, ExecutionContextInterface $contextInterface) {
-//                if (!$this->getFactory()->getUserFacade()->hasUserByUsername($email)) {
-//                    return;
-//                }
-//
-//                $userTransfer = $this->getFactory()->getUserFacade()->getUserByUsername($email);
-//                /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
-//                $formDataUserTransfer = $contextInterface->getRoot()->getData();
-//
-//                if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
-//                    $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
-//                        '{{ username }}' => $email,
-//                    ]);
-//                }
-//            },
-//        ]);
-//    }
 }
