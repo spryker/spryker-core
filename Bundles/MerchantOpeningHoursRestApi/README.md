@@ -1,7 +1,7 @@
 # MerchantOpeningHoursRestApi Module
 [![Build Status](https://travis-ci.org/spryker/merchant-opening-hours-rest-api.svg)](https://travis-ci.org/spryker/merchant-opening-hours-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+MerchantOpeningHoursRestApi module provides endpoints to manage merchant opening hours.
 
 ## Installation
 

@@ -96,7 +96,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         return $this->restResourceBuilder->createRestResponse()
             ->addError(
                 (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );

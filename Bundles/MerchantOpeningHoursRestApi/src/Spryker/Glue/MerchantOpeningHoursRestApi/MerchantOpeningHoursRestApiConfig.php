@@ -31,6 +31,6 @@ class MerchantOpeningHoursRestApiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING
      */
-    public const RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING = 'Merchant identifier is missing.';
+    public const RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING = 'Merchant identifier is not specified.';
     public const RESPONSE_DETAIL_MERCHANT_OPENING_HOURS_NOT_FOUND = 'Merchant opening hours not found.';
 }

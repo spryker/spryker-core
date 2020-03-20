@@ -102,7 +102,7 @@ class MerchantOpeningHourRestResponseBuilder implements MerchantOpeningHourRestR
         return $this->restResourceBuilder->createRestResponse()
             ->addError(
                 (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
                     ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );

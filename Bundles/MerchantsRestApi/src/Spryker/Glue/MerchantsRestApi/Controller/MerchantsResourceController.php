@@ -23,12 +23,11 @@ class MerchantsResourceController extends AbstractController
      *              "Retrieves a merchant by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "404": "Merchant is not found."
-     *              "422": "Unprocessable entity."
+     *              "400": "Unprocessable entity."
+     *              "404": "Merchant not found."
      *          },
      *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestMerchantsAttributesTransfer"
      *     }
