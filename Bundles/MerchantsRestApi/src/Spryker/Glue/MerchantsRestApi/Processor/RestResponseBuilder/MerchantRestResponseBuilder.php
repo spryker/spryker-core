@@ -91,14 +91,14 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantParamMissingErrorResponse(): RestResponseInterface
+    public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse()
             ->addError(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_REQUEST_PARAMETER_MISSING)
-                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_REQUEST_PARAMETER_MISSING)
+                    ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
+                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
     }
 }

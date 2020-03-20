@@ -53,11 +53,20 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
      */
     public function getMerchantOpeningHours(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient->getMerchantOpeningHoursByMerchantIds([1]);
-
         $merchantReference = $this->findMerchantIdentifier($restRequest);
         if (!$merchantReference) {
-            //TODO return error
+            return $this->merchantsRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
+        }
+
+        $merchantStorageTransfers = $this->merchantsStorageClient->findByMerchantReference([$merchantReference]);
+        if (!$merchantStorageTransfers) {
+            return $this->merchantsRestResponseBuilder->createMerchantNotFoundError();
+        }
+
+        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
+            ->getMerchantOpeningHoursByMerchantIds([$merchantStorageTransfers[0]->getIdMerchant()]);
+        if (!$merchantOpeningHoursStorageTransfers) {
+            return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursNotFoundErrorResponse();
         }
 
         return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResponse(
