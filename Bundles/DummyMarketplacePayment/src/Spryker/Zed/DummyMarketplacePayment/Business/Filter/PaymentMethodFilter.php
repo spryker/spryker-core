@@ -43,7 +43,7 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
             if (
                 !$paymentMethodTransfer->getPaymentProvider()
-                || $paymentMethodTransfer->getPaymentProvider()->getName() !== DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME
+                || $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey() !== DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME
             ) {
                 $allowedPaymentMethods->append($paymentMethodTransfer);
             }
