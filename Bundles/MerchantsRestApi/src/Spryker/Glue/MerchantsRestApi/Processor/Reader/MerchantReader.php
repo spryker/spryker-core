@@ -10,29 +10,29 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
-class MerchantsReader implements MerchantsReaderInterface
+class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface
      */
-    protected $merchantsStorageClient;
+    protected $merchantStorageClient;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface
      */
     protected $merchantsRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantsStorageClient
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
      */
     public function __construct(
-        MerchantsRestApiToMerchantsStorageClientInterface $merchantsStorageClient,
-        MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
+        MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
+        MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
     ) {
-        $this->merchantsStorageClient = $merchantsStorageClient;
+        $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
     }
 
@@ -43,7 +43,7 @@ class MerchantsReader implements MerchantsReaderInterface
      */
     public function getMerchantById(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantStorageTransfer = $this->merchantsStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
+        $merchantStorageTransfer = $this->merchantStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
 
         if (!$merchantStorageTransfer) {
             return $this->merchantsRestResponseBuilder->createMerchantNotFoundError();

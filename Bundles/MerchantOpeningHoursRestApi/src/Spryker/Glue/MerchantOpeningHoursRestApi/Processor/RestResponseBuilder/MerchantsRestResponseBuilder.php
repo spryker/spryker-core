@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantsRestApi\Processor\Builder;
+namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
+use Generated\Shared\Transfer\RestMerchantOpeningHoursAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface;
+use Spryker\Glue\MerchantOpeningHoursRestApi\MerchantOpeningHoursRestApiConfig;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterface
+class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -24,17 +24,17 @@ class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterf
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface
+     * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantMapperInterface
      */
     protected $merchantsResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface $merchantsResourceMapper
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantMapperInterface $merchantsResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        MerchantResourceMapperInterface $merchantsResourceMapper
+        MerchantMapperInterface $merchantsResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->merchantsResourceMapper = $merchantsResourceMapper;
@@ -45,17 +45,17 @@ class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterf
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer)
+    public function createMerchantOpeningHoursRestResource(MerchantStorageTransfer $merchantStorageTransfer)
     {
-        $restMerchantsAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
+        $restMerchantOpeningHoursAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
             $merchantStorageTransfer,
-            new RestMerchantsAttributesTransfer()
+            new RestMerchantOpeningHoursAttributesTransfer()
         );
 
         return $this->restResourceBuilder->createRestResource(
-            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+            MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANTS,
             $merchantStorageTransfer->getMerchantReference(),
-            $restMerchantsAttributesTransfer
+            $restMerchantOpeningHoursAttributesTransfer
         );
     }
 
@@ -64,9 +64,9 @@ class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterf
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantsRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface
+    public function createMerchantOpeningHoursRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface
     {
-        $merchantsRestResource = $this->createMerchantsRestResource($merchantStorageTransfer);
+        $merchantsRestResource = $this->createMerchantOpeningHoursRestResource($merchantStorageTransfer);
 
         return $this->restResourceBuilder
             ->createRestResponse()
@@ -80,8 +80,8 @@ class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterf
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND)
-            ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND);
+            ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND)
+            ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND);
 
         return $this->restResourceBuilder
             ->createRestResponse()
