@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentCartConnector\Business\Applier;
+namespace Spryker\Zed\ShipmentCartConnector\Business\Calculator;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-interface ShipmentSourcePriceApplierInterface
+interface ShipmentMethodPriceCalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
@@ -18,5 +18,5 @@ interface ShipmentSourcePriceApplierInterface
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    public function applySourcePrices(MoneyValueTransfer $moneyValueTransfer, ShipmentMethodTransfer $shipmentMethodTransfer): MoneyValueTransfer;
+    public function calculateSourcePrices(MoneyValueTransfer $moneyValueTransfer, ShipmentMethodTransfer $shipmentMethodTransfer): MoneyValueTransfer;
 }

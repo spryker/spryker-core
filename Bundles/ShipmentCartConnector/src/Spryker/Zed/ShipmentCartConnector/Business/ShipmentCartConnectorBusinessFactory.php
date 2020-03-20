@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplier;
-use Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface;
+use Spryker\Zed\ShipmentCartConnector\Business\Calculator\ShipmentMethodPriceCalculator;
+use Spryker\Zed\ShipmentCartConnector\Business\Calculator\ShipmentMethodPriceCalculatorInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
@@ -38,7 +38,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ShipmentCartExpander(
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
-            $this->createSourcePriceApplier()
+            $this->createSourcePriceCalculator()
         );
     }
 
@@ -51,7 +51,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getPriceFacade(),
             $this->getShipmentService(),
-            $this->createSourcePriceApplier()
+            $this->createSourcePriceCalculator()
         );
     }
 
@@ -142,10 +142,10 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Applier\ShipmentSourcePriceApplierInterface
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Calculator\ShipmentMethodPriceCalculatorInterface
      */
-    public function createSourcePriceApplier(): ShipmentSourcePriceApplierInterface
+    public function createSourcePriceCalculator(): ShipmentMethodPriceCalculatorInterface
     {
-        return new ShipmentSourcePriceApplier();
+        return new ShipmentMethodPriceCalculator();
     }
 }

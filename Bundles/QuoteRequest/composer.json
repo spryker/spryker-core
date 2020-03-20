@@ -30,7 +30,7 @@
     "spryker/code-sniffer": "*",
     "spryker/company-business-unit": "*",
     "spryker/propel": "*",
-    "spryker/shipment": "^8.0.0",
+    "spryker/shipment": "*",
     "spryker/testify": "*"
   },
   "suggest": {

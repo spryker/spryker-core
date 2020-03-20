@@ -251,11 +251,11 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteChecker()
-            ->isQuoteInQuoteRequestProcess($quoteTransfer);
+            ->isEditableQuoteRequestVersion($quoteTransfer);
     }
 
     /**
@@ -267,10 +267,10 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteChecker()
-            ->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+            ->isEditableQuoteShipmentSourcePrice($quoteTransfer);
     }
 }

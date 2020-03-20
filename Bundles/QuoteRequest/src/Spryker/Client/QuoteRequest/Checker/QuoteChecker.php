@@ -23,7 +23,7 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getQuoteRequestReference() && !$quoteTransfer->getQuoteRequestVersionReference();
     }
@@ -33,7 +33,7 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool
     {
         return !$quoteTransfer->getQuoteRequestReference() && $this->isShipmentSourcePriceSet($quoteTransfer);
     }

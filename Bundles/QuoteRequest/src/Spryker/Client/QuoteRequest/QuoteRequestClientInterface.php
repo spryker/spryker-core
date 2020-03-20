@@ -245,11 +245,11 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:
-     * - Returns true if request version reference and custom shipment price are set, false otherwise.
+     * - Returns true if request reference is empty and custom shipment price is set, false otherwise.
      *
      * @api
      *
@@ -257,5 +257,5 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool;
 }
