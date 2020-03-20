@@ -17,6 +17,23 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class MerchantsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a merchant by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "404": "Merchant is not found."
+     *              "422": "Unprocessable entity."
+     *          },
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestMerchantsAttributesTransfer"
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
