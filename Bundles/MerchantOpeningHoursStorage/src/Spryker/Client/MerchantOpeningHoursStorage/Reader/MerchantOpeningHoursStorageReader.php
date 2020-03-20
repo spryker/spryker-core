@@ -66,6 +66,49 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     }
 
     /**
+     * @param array $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
+    {
+        $merchantOpeningHoursStorageData = $this->storageClient->getMulti(
+            $this->generateKeys($merchantIds)
+        );
+
+        if (!$merchantOpeningHoursStorageData) {
+            return [];
+        }
+
+        $merchantOpeningHoursStorageTransfers = [];
+        foreach ($merchantOpeningHoursStorageData as $merchantOpeningHoursStorageDatum) {
+            $merchantOpeningHoursStorageTransfers[] = $this->merchantOpeningHoursMapper
+                ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer(
+                    json_decode($merchantOpeningHoursStorageDatum),
+                    (new MerchantOpeningHoursStorageTransfer())
+                );
+        }
+
+        return $merchantOpeningHoursStorageTransfers;
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return string[]
+     */
+    protected function generateKeys(array $merchantIds): array
+    {
+        $merchantOpeningHoursStorageKeys = [];
+        foreach ($merchantIds as $idMerchant) {
+            $merchantOpeningHoursStorageKeys[] = $this->generateKey($idMerchant);
+        }
+
+        return $merchantOpeningHoursStorageKeys;
+    }
+
+
+    /**
      * @param int $idMerchant
      *
      * @return string

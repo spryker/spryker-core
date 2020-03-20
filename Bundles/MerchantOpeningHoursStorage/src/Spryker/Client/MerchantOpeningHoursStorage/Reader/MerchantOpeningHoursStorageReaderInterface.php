@@ -17,4 +17,11 @@ interface MerchantOpeningHoursStorageReaderInterface
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer|null
      */
     public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer;
+
+    /**
+     * @param array $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array;
 }
