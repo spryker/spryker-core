@@ -9,19 +9,19 @@ namespace Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface;
+use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface;
 
 class DiscountPromotionMapper implements DiscountPromotionMapperInterface
 {
     /**
-     * @var \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface
+     * @var \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
      */
     protected $discountPromotionFacade;
 
     /**
-     * @param \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface $discountPromotionFacade
+     * @param \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface $discountPromotionFacade
      */
-    public function __construct(DiscountPromotionsRestApiToDiscountPromotionInterface $discountPromotionFacade)
+    public function __construct(DiscountPromotionsRestApiToDiscountPromotionFacadeInterface $discountPromotionFacade)
     {
         $this->discountPromotionFacade = $discountPromotionFacade;
     }
