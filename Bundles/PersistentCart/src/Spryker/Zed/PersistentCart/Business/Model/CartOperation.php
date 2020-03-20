@@ -83,8 +83,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         return $this->quoteItemOperation->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
@@ -109,8 +109,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         return $this->quoteItemOperation->addValidItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
@@ -134,8 +134,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         $itemTransferList = [];
@@ -221,8 +221,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
+            (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true)
         );
 
         $itemsToAdding = $this->prepareItemsForAdding($persistentCartChangeTransfer, $quoteTransfer);
@@ -357,8 +357,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeQuantityTransfer->getQuote()
+            $persistentCartChangeQuantityTransfer->getQuote(),
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
@@ -392,8 +392,8 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeQuantityTransfer->getQuote()
+            $persistentCartChangeQuantityTransfer->getQuote(),
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
