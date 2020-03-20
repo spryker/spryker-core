@@ -38,17 +38,24 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             $navigationItems,
             $navigationItemCollectionTransfer
         );
+        $navigationItemCollectionTransfer = $this->applyFilterPlugins($navigationItemCollectionTransfer);
 
+        return $this->filterNavigationItemsByNavigationItemCollectionTransfer(
+            $navigationItems,
+            $navigationItemCollectionTransfer
+        );
+    }
+
+    protected function applyFilterPlugins(
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): NavigationItemCollectionTransfer {
         foreach ($this->navigationItemCollectionFilterPlugins as $navigationItemCollectionFilterPlugin) {
             $navigationItemCollectionTransfer = $navigationItemCollectionFilterPlugin->filter(
                 $navigationItemCollectionTransfer
             );
         }
 
-        return $this->filterNavigationItemsByNavigationItemCollectionTransfer(
-            $navigationItems,
-            $navigationItemCollectionTransfer
-        );
+        return $navigationItemCollectionTransfer;
     }
 
     /**
@@ -114,9 +121,9 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             }
 
             $navigationItemTransfer = (new NavigationItemTransfer())
-                ->setModule($navigationItem[MenuFormatter::BUNDLE])
-                ->setController($navigationItem[MenuFormatter::CONTROLLER])
-                ->setAction($navigationItem[MenuFormatter::ACTION]);
+                ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null)
+                ->setController($navigationItem[MenuFormatter::CONTROLLER] ?? null)
+                ->setAction($navigationItem[MenuFormatter::ACTION] ?? null);
             $navigationItemCollectionTransfer->addNavigationItem(
                 $this->getNavigationItemKey($navigationItem),
                 $navigationItemTransfer
@@ -137,17 +144,25 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     }
 
     /**
-     * @param array $navigationItem
+     * @param string[] $navigationItem
      *
      * @return string
      */
     protected function getNavigationItemKey(array $navigationItem): string
     {
-        return sprintf(
-            '%s:%s:%s',
-            $navigationItem[MenuFormatter::BUNDLE],
-            $navigationItem[MenuFormatter::CONTROLLER],
-            $navigationItem[MenuFormatter::ACTION]
-        );
+        if (
+            isset($navigationItem[MenuFormatter::BUNDLE])
+            && isset($navigationItem[MenuFormatter::CONTROLLER])
+            && isset($navigationItem[MenuFormatter::ACTION])
+        ) {
+            return sprintf(
+                '%s:%s:%s',
+                $navigationItem[MenuFormatter::BUNDLE],
+                $navigationItem[MenuFormatter::CONTROLLER],
+                $navigationItem[MenuFormatter::ACTION]
+            );
+        }
+
+        return $navigationItem[MenuFormatter::URI];
     }
 }

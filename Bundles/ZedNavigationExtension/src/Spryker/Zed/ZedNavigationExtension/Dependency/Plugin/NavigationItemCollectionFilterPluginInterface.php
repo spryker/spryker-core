@@ -17,9 +17,7 @@ interface NavigationItemCollectionFilterPluginInterface
 {
     /**
      * Specification:
-     * - Iterates through the navigation items collection.
-     * - Removes the navigation item if it cannot be visible in menu.
-     * - Returns the filtered navigation items collection.
+     * - Filters provided navigation items, filtered ones will be displayed in the navigation.
      *
      * @api
      *

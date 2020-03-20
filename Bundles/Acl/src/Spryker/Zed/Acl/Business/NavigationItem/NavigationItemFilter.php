@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Business\NavigationItem;
 
 use ArrayObject;
 use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
+use Generated\Shared\Transfer\NavigationItemTransfer;
 use Spryker\Zed\Acl\Business\Model\RuleInterface;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 
@@ -28,10 +29,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
      * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
      */
-    public function __construct(
-        RuleInterface $rule,
-        AclToUserInterface $userFacade
-    )
+    public function __construct(RuleInterface $rule, AclToUserInterface $userFacade)
     {
         $this->rule = $rule;
         $this->userFacade = $userFacade;
@@ -75,12 +73,13 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     }
 
     /**
-     * @param $navigationItemTransfer
+     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItemTransfer
      *
      * @return bool
      */
-    protected function isNavigationItemTransferValidForAclAccessCheck($navigationItemTransfer): bool
-    {
+    protected function isNavigationItemTransferValidForAclAccessCheck(
+        NavigationItemTransfer $navigationItemTransfer
+    ): bool {
         return $navigationItemTransfer->getModule()
             && $navigationItemTransfer->getController()
             && $navigationItemTransfer->getAction();
