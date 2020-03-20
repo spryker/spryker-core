@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
@@ -33,9 +33,9 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface
      */
-    public function createMerchantsRestResponseBuilder(): MerchantsRestResponseBuilderInterface
+    public function createMerchantsRestResponseBuilder(): MerchantRestResponseBuilderInterface
     {
         return new MerchantRestResponseBuilder(
             $this->getResourceBuilder(),

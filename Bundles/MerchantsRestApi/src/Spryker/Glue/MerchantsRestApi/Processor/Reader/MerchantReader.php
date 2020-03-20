@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
 class MerchantReader implements MerchantReaderInterface
 {
@@ -20,17 +20,17 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantStorageClient;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface
      */
     protected $merchantsRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
      */
     public function __construct(
         MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
-        MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
+        MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
     ) {
         $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;

@@ -16,7 +16,7 @@ use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MerchantRestResponseBuilder implements MerchantsRestResponseBuilderInterface
+class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface

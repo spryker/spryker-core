@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
+namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface MerchantsRestResponseBuilderInterface
+interface MerchantOpeningHoursRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantsRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface;
+    public function createMerchantOpeningHoursRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
