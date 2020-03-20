@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
-
 class MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientBridge implements MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface
 {
     /**
@@ -32,15 +30,5 @@ class MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientBridge imple
     public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
     {
         return $this->merchantOpeningHoursStorageClient->getMerchantOpeningHoursByMerchantIds($merchantIds);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer|null
-     */
-    public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
-    {
-        return $this->merchantOpeningHoursStorageClient->findMerchantOpeningHoursByIdMerchant($idMerchant);
     }
 }
