@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductAbstractNotBlankConstraintValidator extends ConstraintValidator
 {
-    protected const VIOLATION_MESSAGE = 'ID product abstract should exists.';
+    protected const VIOLATION_MESSAGE = 'Abstract product is not selected.';
 
     /**
      * @param mixed|\Generated\Shared\Transfer\ProductRelationTransfer $value
