@@ -46,6 +46,11 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
+     */
     protected function applyFilterPlugins(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {
