@@ -22,6 +22,20 @@ class MerchantMapper implements MerchantMapperInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
     ): RestMerchantsAttributesTransfer {
-        return $restMerchantsAttributesTransfer->setMerchantName($merchantStorageTransfer->getName());
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
+
+        $legalInformationTransfer = ($restMerchantsAttributesTransfer->getLegalInformation())
+            ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
+            ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacyGlossaryKey())
+            ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
+            ->setTerms($merchantStorageProfileTransfer->getTermsConditionsGlossaryKey());
+
+        return $restMerchantsAttributesTransfer->fromArray($merchantStorageProfileTransfer->toArray(), true)
+            ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
+            ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
+            ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
+            ->setMerchantPageUrl($merchantStorageProfileTransfer->getMerchantUrl())
+            ->setLegalInformation($legalInformationTransfer)
+            ->setMerchantName($merchantStorageTransfer->getName());
     }
 }
