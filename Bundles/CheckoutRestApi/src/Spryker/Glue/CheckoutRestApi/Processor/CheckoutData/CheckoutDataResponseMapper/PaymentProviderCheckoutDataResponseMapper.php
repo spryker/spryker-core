@@ -36,8 +36,10 @@ class PaymentProviderCheckoutDataResponseMapper implements CheckoutDataResponseM
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    public function map($restCheckoutDataTransfer, $restCheckoutDataResponseAttributesTransfer): RestCheckoutDataResponseAttributesTransfer
-    {
+    public function map(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+    ): RestCheckoutDataResponseAttributesTransfer {
         if ($this->config->isPaymentProvidersMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
                 $restCheckoutDataTransfer,

@@ -38,8 +38,6 @@ class ShipmentMethodCheckoutDataResponseMapper implements CheckoutDataResponseMa
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        $restCheckoutDataResponseAttributesTransfer = new RestCheckoutDataResponseAttributesTransfer();
-
         if ($this->config->isShipmentMethodsMappedToAttributes()) {
             $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
                 $restCheckoutDataTransfer,

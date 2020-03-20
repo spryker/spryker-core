@@ -9,6 +9,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataRespon
 
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 
 class AddressCheckoutDataResponseMapper implements CheckoutDataResponseMapperInterface
 {
@@ -18,8 +19,10 @@ class AddressCheckoutDataResponseMapper implements CheckoutDataResponseMapperInt
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    public function map($restCheckoutDataTransfer, $restCheckoutDataResponseAttributesTransfer): RestCheckoutDataResponseAttributesTransfer
-    {
+    public function map(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+    ): RestCheckoutDataResponseAttributesTransfer {
         $addresses = $restCheckoutDataTransfer->getAddresses()->getAddresses();
         foreach ($addresses as $addressTransfer) {
             $restCheckoutDataResponseAttributesTransfer->addAddress(
