@@ -21,6 +21,8 @@ class AclNavigationItemCollectionFilterPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
+     * - Checks if the navigation item can be accessed by the current user.
+     * - Returns the navigation items collection without inaccessible items.
      * - Returns the empty collection in case there is no authorized user.
      *
      * @api
