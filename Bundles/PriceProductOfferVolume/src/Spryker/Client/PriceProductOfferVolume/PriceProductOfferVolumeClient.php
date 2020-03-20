@@ -23,10 +23,10 @@ class PriceProductOfferVolumeClient extends AbstractClient implements PriceProdu
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPricesForProductOffer(array $priceProductTransfers): array
+    public function extractProductPrices(array $priceProductTransfers): array
     {
         return $this->getFactory()
             ->createProductOfferVolumePriceExtractor()
-            ->extractProductPricesForProductOffer($priceProductTransfers);
+            ->extractProductPrices($priceProductTransfers);
     }
 }

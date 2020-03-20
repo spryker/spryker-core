@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductOfferVolume\Plugin\PriceProductOfferStorageExtension;
+namespace Spryker\Client\PriceProductOfferVolume\Plugin\PriceProductOfferStorage;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface;
@@ -24,8 +24,8 @@ class PriceProductOfferVolumeExtractorPlugin extends AbstractPlugin implements P
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPricesForProductOffer(array $priceProductTransfers): array
+    public function extractProductPrices(array $priceProductTransfers): array
     {
-        return $this->getClient()->extractProductPricesForProductOffer($priceProductTransfers);
+        return $this->getClient()->extractProductPrices($priceProductTransfers);
     }
 }

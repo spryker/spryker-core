@@ -34,7 +34,7 @@ class PriceProductOfferVolumeClientTest extends Unit
         $priceProductTransfers = $this->tester->preparePriceProductsWithVolumePrices();
 
         // Act
-        $priceProductTransfers = $this->tester->getClient()->extractProductPricesForProductOffer($priceProductTransfers);
+        $priceProductTransfers = $this->tester->getClient()->extractProductPrices($priceProductTransfers);
 
         // Assert
         $this->assertGreaterThan(1, count($priceProductTransfers));
