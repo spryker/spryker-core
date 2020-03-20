@@ -140,7 +140,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param \ArrayObject $expenseTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
