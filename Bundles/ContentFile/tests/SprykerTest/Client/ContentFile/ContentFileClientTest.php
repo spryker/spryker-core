@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentFile\ContentFileDependencyProvider;
 use Spryker\Client\ContentFile\Dependency\Client\ContentFileToContentStorageClientInterface;
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
+use Spryker\Client\Storage\StorageDependencyProvider;
+use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
 
 /**
  * Auto-generated group annotations
@@ -39,6 +41,9 @@ class ContentFileClientTest extends Unit
      */
     public function testExecuteFileListTypeByKeyNotFound(): void
     {
+        // Arrange
+        $this->tester->setDependency(StorageDependencyProvider::PLUGIN_STORAGE, new StorageRedisPlugin());
+
         // Act
         $contentFileListTypeTransfer = $this->tester->getClient()
             ->executeFileListTypeByKey(static::WRONG_KEY_CONTENT, static::LOCALE_NAME);
