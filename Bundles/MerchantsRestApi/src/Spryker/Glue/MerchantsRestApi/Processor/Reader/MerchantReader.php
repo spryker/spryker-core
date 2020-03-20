@@ -17,7 +17,7 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface
      */
-    protected $merchantsStorageClient;
+    protected $merchantStorageClient;
 
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface
@@ -25,14 +25,14 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantsRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantsStorageClient
+     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
      * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
      */
     public function __construct(
-        MerchantsRestApiToMerchantsStorageClientInterface $merchantsStorageClient,
+        MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
         MerchantsRestResponseBuilderInterface $merchantsRestResponseBuilder
     ) {
-        $this->merchantsStorageClient = $merchantsStorageClient;
+        $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
     }
 
@@ -43,7 +43,7 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchantById(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantStorageTransfer = $this->merchantsStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
+        $merchantStorageTransfer = $this->merchantStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
 
         if (!$merchantStorageTransfer) {
             return $this->merchantsRestResponseBuilder->createMerchantNotFoundError();
