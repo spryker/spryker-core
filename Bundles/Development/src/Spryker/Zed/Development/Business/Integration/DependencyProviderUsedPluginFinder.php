@@ -85,8 +85,11 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsageInModule(ModuleTransfer $moduleTransfer, ApplicationTransfer $applicationTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer)
-    {
+    protected function addPluginUsageInModule(
+        ModuleTransfer $moduleTransfer,
+        ApplicationTransfer $applicationTransfer,
+        DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+    ) {
         $finder = $this->getFinderForModule(
             $this->getPath($moduleTransfer, $applicationTransfer)
         );

@@ -100,8 +100,9 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
      */
-    public function getQuoteRequestOverviewCollection(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): QuoteRequestOverviewCollectionTransfer
-    {
+    public function getQuoteRequestOverviewCollection(
+        QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
+    ): QuoteRequestOverviewCollectionTransfer {
         return $this->getZedStub()->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
     }
 

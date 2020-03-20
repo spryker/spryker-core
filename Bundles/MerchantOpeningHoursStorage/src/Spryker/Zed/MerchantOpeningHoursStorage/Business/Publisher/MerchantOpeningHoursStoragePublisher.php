@@ -60,8 +60,10 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer
      */
-    protected function createMerchantOpeningHoursStorageTransfer(ArrayObject $weekdayScheduleTransfers, ArrayObject $dateScheduleTransfers): MerchantOpeningHoursStorageTransfer
-    {
+    protected function createMerchantOpeningHoursStorageTransfer(
+        ArrayObject $weekdayScheduleTransfers,
+        ArrayObject $dateScheduleTransfers
+    ): MerchantOpeningHoursStorageTransfer {
         return (new MerchantOpeningHoursStorageTransfer())
             ->setWeekdaySchedule($weekdayScheduleTransfers)
             ->setDateSchedule($dateScheduleTransfers);

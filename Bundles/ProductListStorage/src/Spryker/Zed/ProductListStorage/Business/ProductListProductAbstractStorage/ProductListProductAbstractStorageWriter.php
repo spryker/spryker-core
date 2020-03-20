@@ -164,8 +164,10 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      *
      * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage
      */
-    protected function getProductAbstractProductListStorageEntity(int $idProductAbstract, array $indexedProductAbstractProductListStorageEntities): SpyProductAbstractProductListStorage
-    {
+    protected function getProductAbstractProductListStorageEntity(
+        int $idProductAbstract,
+        array $indexedProductAbstractProductListStorageEntities
+    ): SpyProductAbstractProductListStorage {
         if (isset($indexedProductAbstractProductListStorageEntities[$idProductAbstract])) {
             return $indexedProductAbstractProductListStorageEntities[$idProductAbstract];
         }

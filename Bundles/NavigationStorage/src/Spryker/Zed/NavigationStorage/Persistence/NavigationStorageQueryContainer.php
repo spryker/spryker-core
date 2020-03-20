@@ -58,7 +58,7 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @param array $navigationNodeIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryNavigationIdsByNavigationNodeIds(array $navigationNodeIds)
     {
@@ -77,7 +77,7 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @param array $urlIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryNavigationIdsByUrlIds(array $urlIds)
     {

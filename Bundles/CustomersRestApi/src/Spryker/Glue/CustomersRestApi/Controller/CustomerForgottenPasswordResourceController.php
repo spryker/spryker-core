@@ -23,8 +23,10 @@ class CustomerForgottenPasswordResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createCustomerForgottenPasswordProcessor()
             ->sendPasswordRestoreMail($restCustomerForgottenPasswordAttributesTransfer);

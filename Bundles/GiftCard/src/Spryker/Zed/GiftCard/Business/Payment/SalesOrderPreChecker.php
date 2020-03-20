@@ -150,9 +150,9 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \ArrayObject $errors
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $errors
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
     protected function checkGiftCardApplicability(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, ArrayObject $errors)
     {
@@ -169,9 +169,9 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-     * @param \ArrayObject $errors
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $errors
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
     protected function checkGiftCardAmount(GiftCardTransfer $giftCardTransfer, PaymentTransfer $paymentTransfer, ArrayObject $errors)
     {
@@ -188,9 +188,9 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \ArrayObject $errors
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $errors
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
     protected function checkGiftCardCurrency(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, ArrayObject $errors)
     {
