@@ -48,7 +48,7 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @deprecated Use SalesProductConnectorFacade::expandOrderItemsWithMetadata() instead.
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithMetadata()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

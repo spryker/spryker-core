@@ -29,6 +29,6 @@ class CheckReturnableStateOrderItemExpanderPlugin extends AbstractPlugin impleme
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderItemsByItemState($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithIsReturnableByItemState($itemTransfers);
     }
 }

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\SalesProductConnector\Communication\Plugin\MetadataOrderItemExpanderPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\SalesProductConnector\Communication\Plugin\MetadataOrderItemExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()

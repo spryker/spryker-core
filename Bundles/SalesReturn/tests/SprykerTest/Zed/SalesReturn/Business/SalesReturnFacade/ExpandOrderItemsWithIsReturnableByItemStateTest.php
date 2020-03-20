@@ -20,10 +20,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group ExpandOrderItemsByItemStateTest
+ * @group ExpandOrderItemsWithIsReturnableByItemStateTest
  * Add your own group annotations below this line
  */
-class ExpandOrderItemsByItemStateTest extends Unit
+class ExpandOrderItemsWithIsReturnableByItemStateTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -33,7 +33,7 @@ class ExpandOrderItemsByItemStateTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsByItemState(): void
+    public function testExpandOrderItemsWithIsReturnableByItemState(): void
     {
         // Arrange
         $itemTransfers = [
@@ -46,7 +46,7 @@ class ExpandOrderItemsByItemStateTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsByItemState($itemTransfers);
+            ->expandOrderItemsWithIsReturnableByItemState($itemTransfers);
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
@@ -58,7 +58,7 @@ class ExpandOrderItemsByItemStateTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsByItemStateThrowsExceptionWithoutItemState(): void
+    public function testExpandOrderItemsWithIsReturnableByItemStateThrowsExceptionWithoutItemState(): void
     {
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -66,13 +66,13 @@ class ExpandOrderItemsByItemStateTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->expandOrderItemsByItemState([new ItemTransfer()]);
+            ->expandOrderItemsWithIsReturnableByItemState([new ItemTransfer()]);
     }
 
     /**
      * @return void
      */
-    public function testExpandOrderItemsByItemStateThrowsExceptionWithoutItemStateName(): void
+    public function testExpandOrderItemsWithIsReturnableByItemStateThrowsExceptionWithoutItemStateName(): void
     {
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -80,7 +80,7 @@ class ExpandOrderItemsByItemStateTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->expandOrderItemsByItemState([(new ItemTransfer())->setState(new ItemStateTransfer())]);
+            ->expandOrderItemsWithIsReturnableByItemState([(new ItemTransfer())->setState(new ItemStateTransfer())]);
     }
 
     /**

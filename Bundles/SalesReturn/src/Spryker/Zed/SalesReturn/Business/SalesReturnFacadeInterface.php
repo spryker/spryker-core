@@ -123,6 +123,8 @@ interface SalesReturnFacadeInterface
 
     /**
      * Specification:
+     * - Requires ItemTransfer::state.
+     * - Requires ItemStateTransfer::name.
      * - Compares order item state with returnable states.
      * - If item state is not applicable for return, sets `Item::isReturnable=false`.
      *
@@ -132,5 +134,5 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsByItemState(array $itemTransfers): array;
+    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array;
 }
