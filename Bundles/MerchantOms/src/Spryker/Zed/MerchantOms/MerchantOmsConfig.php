@@ -13,7 +13,7 @@ class MerchantOmsConfig extends AbstractBundleConfig
 {
     public const MERCHANT_OMS_STATE_MACHINE_NAME = 'Merchant';
 
-    protected const MERCHANT_STATE_MACHINE_INITIAL_STATE = 'new';
+    protected const MERCHANT_STATE_MACHINE_INITIAL_STATE = 'created';
 
     protected const MERCHANT_OMS_DEFAULT_PROCESS_NAME = 'MerchantDefaultStateMachine';
 
