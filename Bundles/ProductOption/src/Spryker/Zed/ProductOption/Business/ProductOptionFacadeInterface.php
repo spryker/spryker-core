@@ -167,7 +167,7 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions} instead.
+     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

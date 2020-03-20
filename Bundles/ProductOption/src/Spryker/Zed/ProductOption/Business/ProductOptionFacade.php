@@ -182,7 +182,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions} instead.
+     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
