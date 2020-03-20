@@ -28,7 +28,7 @@ class ProductTable extends AbstractTable
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
 
-    protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+    protected const PATTERN_DATE_FORMAT = 'DD/MM/YYYY';
 
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 

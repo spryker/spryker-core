@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException;
+use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -184,7 +184,7 @@ abstract class AbstractTable
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException
+     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingConfigurationException
      *
      * @return void
      */
@@ -194,7 +194,7 @@ abstract class AbstractTable
         $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION) ?? static::DEFAULT_SORT_DIRECTION;
 
         if (!$sortColumn) {
-            throw new InvalidSortingDataException('Sorting data is not present.');
+            throw new InvalidSortingConfigurationException('Sort column is not present.');
         }
 
         $this->sorting[$sortColumn] = $sortDirection;
@@ -216,7 +216,7 @@ abstract class AbstractTable
     /**
      * @param string $sortColumn
      *
-     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingDataException
+     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingConfigurationException
      *
      * @return void
      */
@@ -228,7 +228,7 @@ abstract class AbstractTable
             }
         }
 
-        throw new InvalidSortingDataException(
+        throw new InvalidSortingConfigurationException(
             sprintf('Sort column %s is not present in the configured list of sortable columns of `%s`', $sortColumn, static::class)
         );
     }

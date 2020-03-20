@@ -9,6 +9,6 @@ namespace Spryker\Zed\ProductOfferGuiPage\Exception;
 
 use Exception;
 
-class InvalidSortingColumnException extends Exception
+class InvalidSortingConfigurationException extends Exception
 {
 }
