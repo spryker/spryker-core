@@ -5,7 +5,7 @@
 
     <table name="spy_company_business_unit">
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_company_business_unit"/>
+            <parameter name="key_columns" value="id_company_business_unit.fk_company"/>
         </behavior>
     </table>
 
