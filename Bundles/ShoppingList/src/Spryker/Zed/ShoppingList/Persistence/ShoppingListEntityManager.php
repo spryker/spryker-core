@@ -473,10 +473,10 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListItemEntityCollection->save();
 
         $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        foreach ($shoppingListItemEntityCollection as $spyShoppingListItem) {
+        foreach ($shoppingListItemEntityCollection as $shoppingListItemEntity) {
             $savedShoppingListItemCollectionTransfer->addItem(
                 $shoppingListItemMapper->mapSpyShoppingListItemEntityToShoppingListItemTransfer(
-                    $spyShoppingListItem,
+                    $shoppingListItemEntity,
                     new ShoppingListItemTransfer()
                 )
             );
