@@ -23,4 +23,9 @@ interface MerchantRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createMerchantNotFoundError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantParamMissingErrorResponse(): RestResponseInterface;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\LegalInformationTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
@@ -24,7 +25,7 @@ class MerchantMapper implements MerchantMapperInterface
     ): RestMerchantsAttributesTransfer {
         $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
 
-        $legalInformationTransfer = ($restMerchantsAttributesTransfer->getLegalInformation())
+        $legalInformationTransfer = (new LegalInformationTransfer())
             ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
             ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacyGlossaryKey())
             ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
