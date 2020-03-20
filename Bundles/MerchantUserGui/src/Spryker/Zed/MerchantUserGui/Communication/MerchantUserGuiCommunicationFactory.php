@@ -54,7 +54,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createUniqueEmailConstraint(): UniqueEmailConstraint
     {
         return new UniqueEmailConstraint(
-            [UniqueEmailConstraint::PARAM_USER_FACADE => $this->getUserFacade()]
+            [UniqueEmailConstraint::OPTION_USER_FACADE => $this->getUserFacade()]
         );
     }
 

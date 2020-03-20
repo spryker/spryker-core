@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueEmailConstraint extends SymfonyConstraint
 {
-    public const PARAM_USER_FACADE = 'userFacade';
+    public const OPTION_USER_FACADE = 'userFacade';
 
     protected const MESSAGE = 'User with email "{{ username }}" already exists.';
 
