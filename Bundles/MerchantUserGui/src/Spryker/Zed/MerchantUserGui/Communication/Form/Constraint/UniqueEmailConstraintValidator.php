@@ -29,9 +29,9 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
         $formDataUserTransfer = $this->context->getRoot()->getData();
 
         if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
-            $this->context->addViolation('User with email "{{ username }}" already exists.', [
-                '{{ username }}' => $email,
-            ]);
+            $this->context->buildViolation($constraint->getMessage())
+                ->setParameter('{{ username }}', $email)
+                ->addViolation();
         }
     }
 }
