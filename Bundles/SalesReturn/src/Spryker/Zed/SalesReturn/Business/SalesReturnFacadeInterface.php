@@ -120,4 +120,17 @@ interface SalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Compares order item state with returnable states.
+     * - If item state is not applicable for return, sets `Item::isReturnable=false`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsByItemState(array $itemTransfers): array;
 }

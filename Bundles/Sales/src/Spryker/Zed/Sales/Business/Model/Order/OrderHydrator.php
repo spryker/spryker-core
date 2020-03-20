@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -45,18 +46,26 @@ class OrderHydrator implements OrderHydratorInterface
     protected $hydrateOrderPlugins;
 
     /**
+     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    protected $orderItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        array $hydrateOrderPlugins = []
+        array $hydrateOrderPlugins = [],
+        array $orderItemExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
+        $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
     }
 
     /**
@@ -198,12 +207,17 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $itemTransfers = [];
+
         $criteria = new Criteria();
         $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+
         foreach ($orderEntity->getItems($criteria) as $orderItemEntity) {
-            $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
-            $orderTransfer->addItem($itemTransfer);
+            $itemTransfers[] = $this->hydrateOrderItemTransfer($orderItemEntity);
         }
+
+        $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
+        $orderTransfer->setItems(new ArrayObject($itemTransfers));
     }
 
     /**
@@ -247,6 +261,7 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
         $itemTransfer->setIsOrdered(true);
+        $itemTransfer->setIsReturnable(true);
 
         $this->deriveOrderItemUnitPrices($itemTransfer);
 
@@ -254,6 +269,20 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
+    {
+        foreach ($this->orderItemExpanderPlugins as $orderItemExpanderPlugin) {
+            $itemTransfers = $orderItemExpanderPlugin->expand($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 
     /**
@@ -399,6 +428,8 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Oms\Communication\Plugin\Sales\StateHistoryOrderItemExpanderPlugin instead.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
