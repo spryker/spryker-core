@@ -40,8 +40,9 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function isProductListDeletable(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer
-    {
+    public function isProductListDeletable(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ProductListResponseTransfer {
         $configurableBundleTemplateSlotFilterTransfer
             ->requireProductList()
             ->getProductList()

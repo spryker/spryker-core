@@ -9,6 +9,8 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -16,7 +18,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
 
 /**
@@ -244,6 +248,50 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function createOrderAddressTransfer(): AddressTransfer
     {
         return new AddressTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerOrderListByCustomerReference(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
+    {
+        $orderListQuery = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
+
+        $ordersCount = $orderListQuery->count();
+        if (!$ordersCount) {
+            return new OrderListTransfer();
+        }
+
+        $orderListQuery = $this->applyFilterToQuery($orderListQuery, $orderListRequestTransfer->getFilter());
+
+        $orderListTransfer = $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer());
+
+        $orderListTransfer->setPagination((new PaginationTransfer())->setNbResults($ordersCount));
+
+        return $orderListTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderListQuery
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer): SpySalesOrderQuery
+    {
+        if ($filterTransfer) {
+            $orderListQuery->mergeWith(
+                (new PropelFilterCriteria($filterTransfer))->toCriteria()
+            );
+        }
+
+        return $orderListQuery;
     }
 
     /**

@@ -118,8 +118,9 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
-    {
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer {
         return $this->getZedStub()->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
     }
 

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductLabelGuiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultPriceType()

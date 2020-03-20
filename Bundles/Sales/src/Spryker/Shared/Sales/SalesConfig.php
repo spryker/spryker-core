@@ -19,6 +19,8 @@ class SalesConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getOrderSearchTypes(): array

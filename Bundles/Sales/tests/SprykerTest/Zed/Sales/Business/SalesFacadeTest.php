@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Sales\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -134,6 +135,28 @@ class SalesFacadeTest extends Unit
         //Assert
         $this->assertNotNull($order);
         $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOffsetPaginatedCustomerOrderList(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $orderEntity = $this->tester->haveSalesOrderEntity();
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+        ]);
+
+        //Act
+        $orderListTransfer = $salesFacade->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
+
+        //Assert
+        $this->assertNotNull($orderListTransfer);
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+        $this->assertNotEmpty($orderListTransfer->getOrders());
+        $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
     }
 
     /**

@@ -23,6 +23,8 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContaine
 class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData

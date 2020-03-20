@@ -23,8 +23,10 @@ class CustomerRestorePasswordResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function patchAction(RestRequestInterface $restRequest, RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): RestResponseInterface
-    {
+    public function patchAction(
+        RestRequestInterface $restRequest,
+        RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createCustomerPasswordWriter()
             ->restorePassword($restCustomerRestorePasswordAttributesTransfer);

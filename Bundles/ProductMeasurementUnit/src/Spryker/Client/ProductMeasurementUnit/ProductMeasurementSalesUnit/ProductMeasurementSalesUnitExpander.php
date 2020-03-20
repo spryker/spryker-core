@@ -23,8 +23,10 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
-    {
+    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(
+        PersistentCartChangeTransfer $cartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer {
         $idSalesUnit = $this->getIdSalesUnit($params);
         if ($idSalesUnit < 1) {
             return $cartChangeTransfer;

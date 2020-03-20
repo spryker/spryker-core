@@ -19,6 +19,8 @@ class AclConfig extends AbstractBundleConfig
     protected $rules = [];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getRules()
@@ -29,6 +31,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -47,6 +51,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCredentials()
@@ -55,6 +61,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAccessDeniedUri()
@@ -63,6 +71,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getInstallerRules()
@@ -80,6 +90,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getInstallerRoles()
@@ -94,6 +106,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getInstallerGroups()
@@ -106,6 +120,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getInstallerUsers()
@@ -119,6 +135,8 @@ class AclConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getUserRuleWhitelist()

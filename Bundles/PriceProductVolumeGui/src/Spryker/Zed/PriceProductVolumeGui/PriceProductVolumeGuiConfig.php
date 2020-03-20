@@ -27,6 +27,8 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefaultName(): string
@@ -35,6 +37,8 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeDefaultName(): string
@@ -43,6 +47,8 @@ class PriceProductVolumeGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getVolumePriceTypeName(): string

@@ -34,6 +34,8 @@ use Spryker\Zed\User\Business\UserFacade;
  */
 class AclTest extends Unit
 {
+    protected const NOT_EXISTING_ACL_GROUP_ID = 0;
+
     /**
      * @var \Spryker\Zed\Acl\Business\AclFacade
      */
@@ -155,7 +157,7 @@ class AclTest extends Unit
     {
         // Arrange
         $groupTransfer = $this->tester->haveGroup();
-        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setReference($groupTransfer->getReference());
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setIdAclGroup($groupTransfer->getIdAclGroup());
 
         //Act
         $foundGroupTransfer = $this->facade->findGroup($groupCriteriaTransfer);
@@ -170,8 +172,7 @@ class AclTest extends Unit
     public function testFindGroupReturnsNullWithIncorrectData(): void
     {
         // Arrange
-        $groupTransfer = $this->tester->haveGroup();
-        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setReference($groupTransfer->getReference() . 'test');
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setIdAclGroup(static::NOT_EXISTING_ACL_GROUP_ID);
 
         //Act
         $foundGroupTransfer = $this->facade->findGroup($groupCriteriaTransfer);
