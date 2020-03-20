@@ -94,8 +94,13 @@ abstract class AbstractStepEngineTest extends Unit
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    protected function getStepMock(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', ?string $escapeRoute = null): StepInterface
-    {
+    protected function getStepMock(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        ?string $escapeRoute = null
+    ): StepInterface {
         return new StepMock($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 

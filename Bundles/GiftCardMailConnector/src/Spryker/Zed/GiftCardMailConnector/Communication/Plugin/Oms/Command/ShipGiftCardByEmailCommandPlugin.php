@@ -20,6 +20,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 class ShipGiftCardByEmailCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Finds Gift Cards in the provided order
      * - Send Gift Cards info via email

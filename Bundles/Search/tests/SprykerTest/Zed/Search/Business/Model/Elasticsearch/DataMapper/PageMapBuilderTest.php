@@ -62,8 +62,12 @@ class PageMapBuilderTest extends Unit
      *
      * @return void
      */
-    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat(string $field, string $attributeName, $attributeValue, array $expectedResult): void
-    {
+    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat(
+        string $field,
+        string $attributeName,
+        $attributeValue,
+        array $expectedResult
+    ): void {
         $pageMapTransfer = new PageMapTransfer();
         $this->pageMapBuilder->add($pageMapTransfer, $field, $attributeName, $attributeValue);
 

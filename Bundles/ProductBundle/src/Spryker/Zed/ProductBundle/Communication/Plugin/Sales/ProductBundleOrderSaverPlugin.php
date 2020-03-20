@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductBundleOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -26,8 +26,10 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
      */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
-    {
+    public function __construct(
+        ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer,
+        ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
+    ) {
         $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
         $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
     }

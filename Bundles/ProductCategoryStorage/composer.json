@@ -21,6 +21,7 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
+    "spryker/storage-redis": "^1.0.0",
     "spryker/testify": "*"
   },
   "suggest": {

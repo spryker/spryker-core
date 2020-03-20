@@ -15,6 +15,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CalculationClientInterface
 {
     /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Recalculates the given quote.
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
+     *  - Returns updated quote.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

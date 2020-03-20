@@ -72,5 +72,8 @@ interface ShoppingListNoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function mapItemCartNoteToShoppingListItemNote(
+        ItemTransfer $itemTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer;
 }

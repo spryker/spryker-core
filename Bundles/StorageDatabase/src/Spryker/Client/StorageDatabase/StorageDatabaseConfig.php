@@ -21,6 +21,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getConnectionConfigForCurrentEngine(): array
@@ -32,6 +34,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isDbDebug(): bool
@@ -65,6 +69,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultStorageTablePrefix(): string
@@ -73,6 +79,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultStorageTableSuffix(): string
@@ -81,6 +89,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageTableNamePartSeparator(): string
@@ -89,6 +99,8 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDbEngineName(): string

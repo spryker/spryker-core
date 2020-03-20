@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryNavigationConnectorFacade extends AbstractFacade implements CategoryNavigationConnectorFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

@@ -58,8 +58,10 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function validateItemsAmounts(CartChangeTransfer $cartChangeTransfer, CartPreCheckResponseTransfer $cartPreCheckResponseTransfer): CartPreCheckResponseTransfer
-    {
+    protected function validateItemsAmounts(
+        CartChangeTransfer $cartChangeTransfer,
+        CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+    ): CartPreCheckResponseTransfer {
         $itemTransfers = $this->selectItemTransfersWithAmountSalesUnit($cartChangeTransfer);
 
         if (!$itemTransfers) {
