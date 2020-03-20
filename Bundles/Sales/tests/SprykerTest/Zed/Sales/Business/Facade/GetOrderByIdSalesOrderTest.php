@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
@@ -53,19 +52,12 @@ class GetOrderByIdSalesOrderTest extends Test
             [$this->getOrderItemExpanderPluginMock()]
         );
 
-        $idSalesOrderItem = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)
-            ->getOrderItems()
-            ->getIterator()
-            ->current()
-            ->getIdSalesOrderItem();
-
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->addSalesOrderItemId($idSalesOrderItem);
+        $idSalesOrder = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)->getIdSalesOrder();
 
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->getOrderItems($orderItemFilterTransfer)
+            ->getOrderByIdSalesOrder($idSalesOrder)
             ->getItems();
 
         // Assert
