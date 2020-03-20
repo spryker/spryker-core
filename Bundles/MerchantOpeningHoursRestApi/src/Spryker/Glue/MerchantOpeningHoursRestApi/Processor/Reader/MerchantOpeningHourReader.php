@@ -70,7 +70,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
         }
 
         return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResponse(
-            $merchantOpeningHoursStorageTransfers[0],
+            reset($merchantOpeningHoursStorageTransfers),
             $merchantReference
         );
     }
