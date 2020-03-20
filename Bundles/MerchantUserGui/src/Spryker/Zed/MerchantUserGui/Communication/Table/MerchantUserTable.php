@@ -225,8 +225,6 @@ class MerchantUserTable extends AbstractTable
      */
     protected function convertStatusEnumKeyToValue(int $status): string
     {
-        $options = SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS);
-
-        return $options[$status];
+        return SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)[$status];
     }
 }

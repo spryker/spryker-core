@@ -56,9 +56,9 @@ class MerchantUserUpdateFormDataProvider
      */
     public function getOptions(): array
     {
-        $options[MerchantUserUpdateForm::OPTION_STATUS_CHOICES] = $this->getStatusSelectChoices();
-
-        return $options;
+        return [
+            MerchantUserUpdateForm::OPTION_STATUS_CHOICES => $this->getStatusSelectChoices(),
+        ];
     }
 
     /**
