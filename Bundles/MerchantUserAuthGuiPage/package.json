@@ -7,7 +7,7 @@
     "build": "ng build --prod",
     "postbuild": "run-s copy:*",
     "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/mp-login",
-    "copy:images": "cp -a ./node_modules/@spryker/logo/src/lib/logo/images/ $FE_ROOT_DIR/public/Zed/assets/images",
+    "copy:images": "copyfiles -u 7 node_modules/@spryker/logo/src/lib/logo/images/**/* $FE_ROOT_DIR/public/Zed/assets/images",
     "test": "ng test",
     "lint": "ng lint"
   },

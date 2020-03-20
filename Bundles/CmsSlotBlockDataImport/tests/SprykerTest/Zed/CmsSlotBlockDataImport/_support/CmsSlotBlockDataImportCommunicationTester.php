@@ -100,7 +100,7 @@ class CmsSlotBlockDataImportCommunicationTester extends Actor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CmsSlotBlockConditionTransfer[]
      */
     public function getCmsSlotBlockConditions(
         CategoryTransfer $categoryTransfer,
