@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
-class MerchantResourceMapper implements MerchantResourceMapperInterface
+class MerchantMapper implements MerchantMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer

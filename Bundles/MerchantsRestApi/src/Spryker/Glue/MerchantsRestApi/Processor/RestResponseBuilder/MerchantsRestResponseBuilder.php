@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantsRestApi\Processor\Builder;
+namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterface
@@ -24,17 +24,17 @@ class MerchantsRestResponseBuilder implements MerchantsRestResponseBuilderInterf
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface
      */
     protected $merchantsResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface $merchantsResourceMapper
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface $merchantsResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        MerchantResourceMapperInterface $merchantsResourceMapper
+        MerchantMapperInterface $merchantsResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->merchantsResourceMapper = $merchantsResourceMapper;

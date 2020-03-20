@@ -9,12 +9,12 @@ namespace Spryker\Glue\MerchantsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilder;
-use Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilderInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapper;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReader;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReaderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilder;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig getConfig()
@@ -22,18 +22,18 @@ use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReaderInterface;
 class MerchantsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReaderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface
      */
-    public function createMerchantsReader(): MerchantsReaderInterface
+    public function createMerchantsReader(): MerchantReaderInterface
     {
-        return new MerchantsReader(
+        return new MerchantReader(
             $this->getMerchantStorageClient(),
             $this->createMerchantsRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Builder\MerchantsRestResponseBuilderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantsRestResponseBuilderInterface
      */
     public function createMerchantsRestResponseBuilder(): MerchantsRestResponseBuilderInterface
     {
@@ -52,10 +52,10 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantResourceMapperInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface
      */
-    public function createMerchantResourceMapper(): MerchantResourceMapperInterface
+    public function createMerchantResourceMapper(): MerchantMapperInterface
     {
-        return new MerchantResourceMapper();
+        return new MerchantMapper();
     }
 }
