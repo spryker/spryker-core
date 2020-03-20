@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
-use Codeception\Step;
 use Codeception\TestInterface;
 use ReflectionClass;
 use ReflectionProperty;
@@ -100,16 +99,6 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @param \Codeception\Step $step
-     *
-     * @return void
-     */
-    public function _beforeStep(Step $step): void
-    {
-        $this->configureNamespacesForClassResolver();
-    }
-
-    /**
      * @return void
      */
     protected function clearLocators(): void
@@ -151,6 +140,8 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\BusinessHelper::getFacade()} instead.
+     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade(): AbstractFacade

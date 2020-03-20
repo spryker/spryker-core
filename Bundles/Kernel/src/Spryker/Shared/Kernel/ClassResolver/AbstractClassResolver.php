@@ -233,25 +233,7 @@ abstract class AbstractClassResolver
             return $this->getCached($cacheKey);
         }
 
-        $className = $this->findClassName();
-
-        if ($className !== null) {
-            return $className;
-        }
-
-        $classNameCandidates = $this->buildClassNames();
-
-        foreach ($classNameCandidates as $classNameCandidate) {
-            if ($this->classExists($classNameCandidate)) {
-                if ($cacheKey !== null) {
-                    $this->addCache($cacheKey, $classNameCandidate);
-                }
-
-                return $classNameCandidate;
-            }
-        }
-
-        return null;
+        return $this->findClassName();
     }
 
     /**
