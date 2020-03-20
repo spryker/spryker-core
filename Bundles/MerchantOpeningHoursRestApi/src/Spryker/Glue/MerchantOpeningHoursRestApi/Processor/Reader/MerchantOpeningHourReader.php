@@ -24,7 +24,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface
      */
-    protected $merchantsStorageClient;
+    protected $merchantStorageClient;
 
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface
@@ -33,16 +33,16 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
 
     /**
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantsStorageClient
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder
      */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
-        MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantsStorageClient,
+        MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
         MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder
     ) {
         $this->merchantOpeningHoursStorageClient = $merchantOpeningHoursStorageClient;
-        $this->merchantsStorageClient = $merchantsStorageClient;
+        $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
     }
 
@@ -58,7 +58,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
             return $this->merchantsRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
-        $merchantStorageTransfers = $this->merchantsStorageClient->findByMerchantReference([$merchantReference]);
+        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference([$merchantReference]);
         if (!$merchantStorageTransfers) {
             return $this->merchantsRestResponseBuilder->createMerchantNotFoundError();
         }
