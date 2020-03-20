@@ -344,9 +344,9 @@ class GiftCardReader implements GiftCardReaderInterface
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
+    public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
     {
-        return $this->giftCardRepository->getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus($abstractSkus);
+        return $this->giftCardRepository->getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus($abstractSkus);
     }
 
     /**

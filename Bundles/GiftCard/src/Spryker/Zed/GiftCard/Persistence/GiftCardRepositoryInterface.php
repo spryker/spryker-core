@@ -12,14 +12,14 @@ interface GiftCardRepositoryInterface
     /**
      * @param string[] $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
+    public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
 
     /**
      * @param string[] $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
      */
     public function getGiftCardConcreteConfigurationsForProductByConcreteSkus(array $concreteSkus): array;
 }

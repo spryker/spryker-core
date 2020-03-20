@@ -93,7 +93,7 @@ interface GiftCardReaderInterface
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
+    public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
 
     /**
      * @param string[] $concreteSkus

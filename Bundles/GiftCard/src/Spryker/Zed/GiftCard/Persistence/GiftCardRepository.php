@@ -21,7 +21,7 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    public function getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
+    public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
     {
         $giftCardProductAbstractConfigurationEntities = $this->getFactory()
             ->createSpyGiftCardProductAbstractConfigurationQuery()
