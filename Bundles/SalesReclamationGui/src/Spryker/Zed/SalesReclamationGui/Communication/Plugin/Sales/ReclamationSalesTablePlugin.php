@@ -25,6 +25,8 @@ class ReclamationSalesTablePlugin implements SalesTablePluginInterface
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param callable $buttonGenerator

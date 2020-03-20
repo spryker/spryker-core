@@ -34,7 +34,7 @@ interface DataImportFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function listImporters(): array;
 

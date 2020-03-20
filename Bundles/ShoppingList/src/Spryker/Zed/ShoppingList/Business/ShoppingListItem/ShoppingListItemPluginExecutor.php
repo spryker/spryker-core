@@ -129,31 +129,52 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function executeAddShoppingListItemPreCheckPlugins(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
+        $commonShoppingListPreAddItemCheckResponseTransfer = (new ShoppingListPreAddItemCheckResponseTransfer())
+            ->setIsSuccess(true);
+
+        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
+            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($shoppingListItemTransfer);
+            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
+                $this->processErrorMessages(
+                    $shoppingListPreAddItemCheckResponseTransfer,
+                    $commonShoppingListPreAddItemCheckResponseTransfer->setIsSuccess(false)
+                );
+            }
+        }
+
+        return $commonShoppingListPreAddItemCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
      * @return bool
      */
     public function executeAddItemPreCheckPlugins(ShoppingListItemTransfer $shoppingListItemTransfer): bool
     {
-        $isValid = true;
-        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
-            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($shoppingListItemTransfer);
-            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
-                $this->processErrorMessages($shoppingListPreAddItemCheckResponseTransfer);
-                $isValid = false;
-            }
-        }
-
-        return $isValid;
+        return $this->executeAddShoppingListItemPreCheckPlugins($shoppingListItemTransfer)->getIsSuccess();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer $commonShoppingListPreAddItemCheckResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
      */
-    protected function processErrorMessages(ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer): void
-    {
+    protected function processErrorMessages(
+        ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer,
+        ShoppingListPreAddItemCheckResponseTransfer $commonShoppingListPreAddItemCheckResponseTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
         foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
             $this->messengerFacade->addErrorMessage($messageTransfer);
+            $commonShoppingListPreAddItemCheckResponseTransfer->addMessage($messageTransfer);
         }
+
+        return $commonShoppingListPreAddItemCheckResponseTransfer;
     }
 }

@@ -104,8 +104,10 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
+    public function mapItemCartNoteToShoppingListItemNote(
+        ItemTransfer $itemTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
         return $this->getFactory()
             ->createItemToShoppingListItemMapper()
             ->mapItemCartNoteToShoppingListItemNote($itemTransfer, $shoppingListItemTransfer);

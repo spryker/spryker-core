@@ -49,6 +49,8 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void

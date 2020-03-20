@@ -261,7 +261,7 @@ abstract class AbstractProductSearchDataMapper
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getPageIndexMapProperties(): array
     {

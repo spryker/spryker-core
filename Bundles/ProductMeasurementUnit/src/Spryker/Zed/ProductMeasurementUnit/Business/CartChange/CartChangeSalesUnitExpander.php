@@ -85,8 +85,10 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function addProductMeasurementSalesUnitToItems(CartChangeTransfer $cartChangeTransfer, array $indexedProductMeasurementSalesUnitIds): CartChangeTransfer
-    {
+    protected function addProductMeasurementSalesUnitToItems(
+        CartChangeTransfer $cartChangeTransfer,
+        array $indexedProductMeasurementSalesUnitIds
+    ): CartChangeTransfer {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getQuantitySalesUnit() || !isset($indexedProductMeasurementSalesUnitIds[$itemTransfer->getSku()])) {
                 continue;

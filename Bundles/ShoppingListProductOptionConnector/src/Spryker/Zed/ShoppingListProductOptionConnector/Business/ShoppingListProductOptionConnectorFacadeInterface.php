@@ -78,7 +78,10 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(
+        ItemTransfer $itemTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer;
 
     /**
      * Specification:

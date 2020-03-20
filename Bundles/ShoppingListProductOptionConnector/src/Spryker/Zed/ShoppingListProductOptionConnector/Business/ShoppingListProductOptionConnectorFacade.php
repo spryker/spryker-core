@@ -94,8 +94,10 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(
+        ItemTransfer $itemTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
         return $this->getFactory()
             ->createCartItemToShoppingListItemMapper()
             ->map($itemTransfer, $shoppingListItemTransfer);

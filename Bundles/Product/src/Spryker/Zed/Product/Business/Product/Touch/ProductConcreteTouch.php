@@ -18,14 +18,22 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
      */
     public function touchProductConcrete($idProductConcrete)
     {
-        $concreteProductEntity = $this->getProductEntity($idProductConcrete);
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductConcrete): void {
+            $this->executeTouchProductConcreteTransaction($idProductConcrete);
+        });
+    }
 
-        $this->productQueryContainer->getConnection()->beginTransaction();
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function executeTouchProductConcreteTransaction(int $idProductConcrete): void
+    {
+        $concreteProductEntity = $this->getProductEntity($idProductConcrete);
 
         $this->touchConcreteByStatus($concreteProductEntity);
         $this->touchAbstractByStatus($concreteProductEntity->getFkProductAbstract());
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**

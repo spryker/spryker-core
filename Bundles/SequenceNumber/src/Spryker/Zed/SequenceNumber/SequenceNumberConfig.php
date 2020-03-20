@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SequenceNumberConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer|null $settings
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
@@ -53,6 +55,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPaddingLength()
@@ -61,6 +65,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getOffset()
@@ -69,6 +75,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getNumberIncrementMin()
@@ -77,6 +85,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getNumberIncrementMax()
@@ -85,6 +95,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSequenceName()
@@ -93,6 +105,8 @@ class SequenceNumberConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSequenceLimits()

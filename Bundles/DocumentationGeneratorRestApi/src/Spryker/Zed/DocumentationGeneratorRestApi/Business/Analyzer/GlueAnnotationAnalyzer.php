@@ -49,8 +49,10 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface $glueControllerFinder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(GlueControllerFinderInterface $glueControllerFinder, DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    public function __construct(
+        GlueControllerFinderInterface $glueControllerFinder,
+        DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->glueControllerFinder = $glueControllerFinder;
         $this->utilEncodingService = $utilEncodingService;
     }
