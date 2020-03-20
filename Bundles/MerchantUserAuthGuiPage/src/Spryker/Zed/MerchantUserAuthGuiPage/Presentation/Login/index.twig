@@ -20,7 +20,7 @@
                         control
                         spy-id="{{ formField.vars.id }}"
                         attrs=""
-                        required="{{ formField.vars.required }}"
+                        required="{{ formField.vars.required | boolToStr }}"
                         name="{{ formField.vars.full_name }}"
                         value="{{ formField.vars.value }}"
                         type="{{ formField.vars.block_prefixes[2] }}"

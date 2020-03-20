@@ -132,7 +132,7 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => static::LABEL_EMAIL,
-            'required' => false,
+            'required' => true,
             'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
 
@@ -224,6 +224,8 @@ class MerchantForm extends AbstractType
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         return [
+            new Required(),
+            new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
             new UniqueEmail([

@@ -3,7 +3,7 @@
     <merchant-profile-gui-page>
         <label>Profile</label>
         <title>Profile</title>
-        <icon>fa-file-text-o</icon>
+        <icon>profile</icon>
         <bundle>merchant-profile-gui-page</bundle>
         <controller>my-merchant-profile</controller>
         <action>index</action>
