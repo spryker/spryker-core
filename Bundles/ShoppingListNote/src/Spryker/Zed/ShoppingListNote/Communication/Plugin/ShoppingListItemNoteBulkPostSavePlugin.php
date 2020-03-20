@@ -23,12 +23,12 @@ class ShoppingListItemNoteBulkPostSavePlugin extends AbstractPlugin implements S
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function execute(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
+    public function execute(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        return $this->getFacade()->saveShoppingListItemNotesForShoppingListItemCollection($shoppingListItemTransfers);
+        return $this->getFacade()->saveShoppingListItemNotesForShoppingListItemCollection($shoppingListItemCollectionTransfer);
     }
 }

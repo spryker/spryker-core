@@ -153,10 +153,13 @@ interface ShoppingListEntityManagerInterface
     public function deleteCompanyBusinessUnitBlacklistByBusinessUnitId(int $idCompanyBusinessUnit): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItems(ShoppingListItemCollectionTransfer $shoppingListItemTransfers, ShoppingListTransfer $shoppingListTransfer): ShoppingListItemCollectionTransfer;
+    public function saveShoppingListItems(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListItemCollectionTransfer;
 }

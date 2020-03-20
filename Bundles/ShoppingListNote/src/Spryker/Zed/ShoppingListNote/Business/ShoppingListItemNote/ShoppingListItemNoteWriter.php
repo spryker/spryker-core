@@ -57,18 +57,19 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemNoteForShoppingListItemBulk(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
-    {
-        $result = new ShoppingListItemCollectionTransfer();
-        foreach ($shoppingListItemTransfers->getItems() as $shoppingListItem) {
-            $result->addItem($this->saveShoppingListItemNoteForShoppingListItem($shoppingListItem));
+    public function saveShoppingListItemNoteForShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItem) {
+            $savedShoppingListItemCollectionTransfer->addItem($this->saveShoppingListItemNoteForShoppingListItem($shoppingListItem));
         }
 
-        return $result;
+        return $savedShoppingListItemCollectionTransfer;
     }
 
     /**

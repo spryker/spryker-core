@@ -64,7 +64,7 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapEntityToTransfer(
+    public function mapSpyShoppingListItemEntityToShoppingListItemTransfer(
         SpyShoppingListItem $shoppingListItemEntity,
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListItemTransfer {

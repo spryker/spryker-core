@@ -170,7 +170,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         ItemCollectionTransfer $itemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
-        $shoppingListItemTransfers = new ShoppingListItemCollectionTransfer();
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
         foreach ($itemCollectionTransfer->getItems() as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -180,9 +180,9 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
             foreach ($this->itemToShoppingListItemMapperPlugins as $itemToShoppingListItemMapperPlugin) {
                 $shoppingListItemTransfer = $itemToShoppingListItemMapperPlugin->map($item, $shoppingListItemTransfer);
             }
-            $shoppingListItemTransfers->addItem($shoppingListItemTransfer);
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
         }
-        $this->shoppingListItemOperation->saveShoppingListItemBulk($shoppingListItemTransfers, $shoppingListTransfer);
+        $this->shoppingListItemOperation->saveShoppingListItemBulk($shoppingListItemCollectionTransfer, $shoppingListTransfer);
     }
 
     /**

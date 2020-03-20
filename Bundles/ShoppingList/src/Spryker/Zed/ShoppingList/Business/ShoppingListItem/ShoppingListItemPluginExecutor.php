@@ -99,17 +99,17 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function executeBulkPostSavePlugins(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
+    public function executeBulkPostSavePlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
         foreach ($this->bulkPostSavePlugins as $bulkPostSavePlugin) {
-            $shoppingListItemTransfers = $bulkPostSavePlugin->execute($shoppingListItemTransfers);
+            $shoppingListItemCollectionTransfer = $bulkPostSavePlugin->execute($shoppingListItemCollectionTransfer);
         }
 
-        return $shoppingListItemTransfers;
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**

@@ -45,20 +45,21 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(ShoppingListItemCollectionTransfer $shoppingListItemTransfers): ShoppingListItemCollectionTransfer
-    {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfers) {
-            $result = new ShoppingListItemCollectionTransfer();
-            foreach ($shoppingListItemTransfers->getItems() as $shoppingListItemTransfer) {
+    public function saveShoppingListItemProductOptionsBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
+            $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+            foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
                 $this->executeSaveShoppingListItemProductOptionsTransaction($shoppingListItemTransfer);
-                $result->addItem($shoppingListItemTransfer);
+                $savedShoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
             }
 
-            return $result;
+            return $savedShoppingListItemCollectionTransfer;
         });
     }
 
