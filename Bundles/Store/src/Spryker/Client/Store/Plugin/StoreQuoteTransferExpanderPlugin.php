@@ -43,7 +43,7 @@ class StoreQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTr
      */
     protected function getCurrentStore(): StoreTransfer
     {
-        if (!static::$currentStoreTransfer) {
+        if (static::$currentStoreTransfer === null) {
             static::$currentStoreTransfer = $this->getClient()->getCurrentStore();
         }
 

@@ -120,7 +120,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
      */
     protected function getGrossPriceModeIdentifier(): string
     {
-        if (!static::$grossPriceModeIdentifier) {
+        if (static::$grossPriceModeIdentifier === null) {
             static::$grossPriceModeIdentifier = $this->priceClient->getGrossPriceModeIdentifier();
         }
 
@@ -132,7 +132,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
      */
     protected function getNetPriceModeIdentifier(): string
     {
-        if (!static::$netPriceModeIdentifier) {
+        if (static::$netPriceModeIdentifier === null) {
             static::$netPriceModeIdentifier = $this->priceClient->getNetPriceModeIdentifier();
         }
 
@@ -144,7 +144,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
      */
     protected function getRestCurrencyTransfer(): RestCurrencyTransfer
     {
-        if (!static::$restCurrencyTransfer) {
+        if (static::$restCurrencyTransfer === null) {
             static::$restCurrencyTransfer = (new RestCurrencyTransfer())
                 ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
         }

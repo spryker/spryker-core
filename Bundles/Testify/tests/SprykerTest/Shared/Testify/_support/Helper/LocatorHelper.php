@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
+use Codeception\Step;
 use Codeception\TestInterface;
 use ReflectionClass;
 use ReflectionProperty;
@@ -95,6 +96,16 @@ class LocatorHelper extends Module
     {
         $this->clearLocators();
         $this->clearCaches();
+        $this->configureNamespacesForClassResolver();
+    }
+
+    /**
+     * @param \Codeception\Step $step
+     *
+     * @return void
+     */
+    public function _beforeStep(Step $step): void
+    {
         $this->configureNamespacesForClassResolver();
     }
 

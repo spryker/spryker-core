@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Business\ModuleNamesFinder\ModuleNamesFinderInterface;
 
 /**
  * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ * @method \Spryker\Shared\Kernel\KernelSharedFactory getSharedFactory()
  */
 class KernelBusinessFactory extends AbstractBusinessFactory
 {
