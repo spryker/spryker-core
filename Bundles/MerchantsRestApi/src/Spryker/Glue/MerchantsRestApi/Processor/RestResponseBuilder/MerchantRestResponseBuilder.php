@@ -78,13 +78,27 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
      */
     public function createMerchantNotFoundError(): RestResponseInterface
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND)
-            ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND);
-
         return $this->restResourceBuilder
             ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+            ->addError(
+                (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_NOT_FOUND)
+                    ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND)
+                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND)
+            );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantParamMissingErrorResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()
+            ->addError(
+                (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_REQUEST_PARAMETER_MISSING)
+                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_REQUEST_PARAMETER_MISSING)
+            );
     }
 }

@@ -6,14 +6,12 @@
         <property name="publicEmail" type="string"/>
         <property name="publicPhone" type="string"/>
         <property name="logoUrl" type="string"/>
-
         <property name="bannerUrl" type="string"/>
         <property name="description" type="string"/>
         <property name="deliveryTime" type="string"/>
         <property name="merchantPageUrl" type="string"/>
-
         <property name="legalInformation" type="LegalInformation"/>
-        <property name="active" type="bool"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="LegalInformation">
@@ -35,11 +33,9 @@
         <property name="bannerUrlGlossaryKey" type="string"/>
         <property name="descriptionGlossaryKey" type="string"/>
         <property name="publicEmail" type="string"/>
-
         <property name="publicPhone" type="string"/>
         <property name="deliveryTimeGlossaryKey" type="string"/>
         <property name="logoUrl" type="string"/>
-
         <property name="termsConditionsGlossaryKey" type="string"/>
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>

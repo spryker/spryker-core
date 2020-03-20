@@ -14,6 +14,8 @@ class MerchantsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_MERCHANTS = 'merchants';
 
     public const RESPONSE_CODE_MERCHANT_NOT_FOUND = '3501';
-
     public const RESPONSE_DETAIL_MERCHANT_NOT_FOUND = 'Merchant not found.';
+
+    public const RESPONSE_CODE_MERCHANT_REQUEST_PARAMETER_MISSING = '3502';
+    public const RESPONSE_DETAIL_MERCHANT_REQUEST_PARAMETER_MISSING = 'Merchant request parameter is missing.';
 }

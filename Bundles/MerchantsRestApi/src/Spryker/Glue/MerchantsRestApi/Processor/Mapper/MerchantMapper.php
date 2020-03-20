@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\LegalInformationTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
@@ -22,6 +23,20 @@ class MerchantMapper implements MerchantMapperInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
     ): RestMerchantsAttributesTransfer {
-        return $restMerchantsAttributesTransfer->setMerchantName($merchantStorageTransfer->getName());
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
+
+        $legalInformationTransfer = (new LegalInformationTransfer())
+            ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
+            ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacyGlossaryKey())
+            ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
+            ->setTerms($merchantStorageProfileTransfer->getTermsConditionsGlossaryKey());
+
+        return $restMerchantsAttributesTransfer->fromArray($merchantStorageProfileTransfer->toArray(), true)
+            ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
+            ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
+            ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
+            ->setMerchantPageUrl($merchantStorageProfileTransfer->getMerchantUrl())
+            ->setLegalInformation($legalInformationTransfer)
+            ->setMerchantName($merchantStorageTransfer->getName());
     }
 }

@@ -9,12 +9,12 @@ namespace Spryker\Glue\MerchantsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig getConfig()
@@ -48,7 +48,7 @@ class MerchantsRestApiFactory extends AbstractFactory
      */
     public function getMerchantStorageClient(): MerchantsRestApiToMerchantsStorageClientInterface
     {
-        return $this->getProvidedDependency(MerchantsRestApiDependencyProvider::CLIENT_MERCHANTS_STORAGE);
+        return $this->getProvidedDependency(MerchantsRestApiDependencyProvider::CLIENT_MERCHANT_STORAGE);
     }
 
     /**
