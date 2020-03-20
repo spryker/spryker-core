@@ -32,6 +32,6 @@ class ProductRelationStoreWriterStep extends PublishAwareStep implements DataImp
 
         $productRelationEntity = $productRelationStoreEntity->getProductRelation();
 
-        $this->addPublishEvents(ProductRelationDataImportConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH, $productRelationEntity->getFkProductAbstract());
+        $this->addPublishEvents(ProductRelationDataImportConfig::PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH, $productRelationEntity->getFkProductAbstract());
     }
 }

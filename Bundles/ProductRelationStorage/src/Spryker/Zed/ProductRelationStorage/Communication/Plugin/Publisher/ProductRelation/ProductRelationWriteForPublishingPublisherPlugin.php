@@ -46,6 +46,7 @@ class ProductRelationWriteForPublishingPublisherPlugin extends AbstractPlugin im
     {
         return [
             ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_PUBLISH,
+            ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH,
         ];
     }
 }

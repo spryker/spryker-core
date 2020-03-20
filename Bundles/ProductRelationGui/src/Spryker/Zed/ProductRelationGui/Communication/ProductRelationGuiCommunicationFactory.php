@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductAbstractNotBlankConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductRelationKeyUniqueConstraint;
-use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract;
+use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstractAndQuerySet;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
@@ -67,10 +67,10 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    public function createUniqueRelationTypeForProductAbstractConstraint(): Constraint
+    public function createUniqueRelationTypeForProductAbstractAndQuerySetConstraint(): Constraint
     {
-        return new UniqueRelationTypeForProductAbstract([
-            UniqueRelationTypeForProductAbstract::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
+        return new UniqueRelationTypeForProductAbstractAndQuerySet([
+            UniqueRelationTypeForProductAbstractAndQuerySet::OPTION_PRODUCT_RELATION_FACADE => $this->getProductRelationFacade(),
             'groups' => [
                 ProductRelationFormType::GROUP_AFTER,
             ],

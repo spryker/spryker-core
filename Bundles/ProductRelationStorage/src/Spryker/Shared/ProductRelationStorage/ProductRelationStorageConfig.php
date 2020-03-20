@@ -49,6 +49,14 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
+    public const PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH = 'ProductRelation.product_abstract_relation_store.publish';
+
+    /**
+     * Specification:
+     * - This event is used for writing product relation to the storage.
+     *
+     * @api
+     */
     public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
 
     /**

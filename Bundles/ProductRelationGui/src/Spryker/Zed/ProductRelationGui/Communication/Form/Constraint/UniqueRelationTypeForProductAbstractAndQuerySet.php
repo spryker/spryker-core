@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Form\Constraint;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductRelationFacadeInterface;
 use Symfony\Component\Validator\Constraint;
 
-class UniqueRelationTypeForProductAbstract extends Constraint
+class UniqueRelationTypeForProductAbstractAndQuerySet extends Constraint
 {
     public const OPTION_PRODUCT_RELATION_FACADE = 'productRelationFacade';
 

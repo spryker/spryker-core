@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
+class UniqueRelationTypeForProductAbstractAndQuerySetValidator extends ConstraintValidator
 {
     /**
      * Checks if the passed productRelationTransfer is valid.
@@ -32,8 +32,8 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
             return;
         }
 
-        if (!$constraint instanceof UniqueRelationTypeForProductAbstract) {
-            throw new UnexpectedTypeException($constraint, UniqueRelationTypeForProductAbstract::class);
+        if (!$constraint instanceof UniqueRelationTypeForProductAbstractAndQuerySet) {
+            throw new UnexpectedTypeException($constraint, UniqueRelationTypeForProductAbstractAndQuerySet::class);
         }
 
         if ($this->hasProductRelationType($constraint, $value)) {
@@ -42,18 +42,19 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstract $uniqueRelationTypeForProductAbstract
+     * @param \Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstractAndQuerySet $uniqueRelationTypeForProductAbstract
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
      * @return bool
      */
     protected function hasProductRelationType(
-        UniqueRelationTypeForProductAbstract $uniqueRelationTypeForProductAbstract,
+        UniqueRelationTypeForProductAbstractAndQuerySet $uniqueRelationTypeForProductAbstract,
         ProductRelationTransfer $productRelationTransfer
     ) {
         $productRelationCriteriaTransfer = (new ProductRelationCriteriaTransfer())
             ->setFkProductAbstract($productRelationTransfer->getFkProductAbstract())
-            ->setRelationTypeKey($productRelationTransfer->getProductRelationType()->getKey());
+            ->setRelationTypeKey($productRelationTransfer->getProductRelationType()->getKey())
+            ->setQuerySet($productRelationTransfer->getQuerySet());
 
         $resultProductRelationTransfer = $uniqueRelationTypeForProductAbstract->getProductRelationFacade()
             ->findProductRelationByCriteria($productRelationCriteriaTransfer);
@@ -79,7 +80,7 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
         $this->context
             ->buildViolation(
                 sprintf(
-                    'Selected product already has "%s" relation type.',
+                    'Selected product already has "%s" relation type for the given rule.',
                     $value->getProductRelationType()->getKey()
                 )
             )

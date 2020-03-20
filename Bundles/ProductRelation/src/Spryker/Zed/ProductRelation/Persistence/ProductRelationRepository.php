@@ -37,6 +37,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         $idProductAbstract = $productRelationCriteriaTransfer->getFkProductAbstract();
         $relationTypeKey = $productRelationCriteriaTransfer->getRelationTypeKey();
         $productRelationKey = $productRelationCriteriaTransfer->getProductRelationKey();
+        $propelQueryBuilderRuleSetTransfer = $productRelationCriteriaTransfer->getQuerySet();
 
         if ($idProductAbstract !== null) {
             $productRelationQuery->filterByFkProductAbstract($idProductAbstract);
@@ -51,6 +52,13 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
 
         if ($productRelationKey !== null) {
             $productRelationQuery->filterByProductRelationKey($productRelationKey);
+        }
+
+        if ($propelQueryBuilderRuleSetTransfer !== null) {
+            $querySetData = $this->getFactory()
+                ->getUtilEncodingService()
+                ->encodeJson($propelQueryBuilderRuleSetTransfer->toArray());
+            $productRelationQuery->filterByQuerySetData($querySetData);
         }
 
         $productRelationEntity = $productRelationQuery->findOne();

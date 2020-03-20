@@ -30,9 +30,10 @@
             <reference local="fk_product_relation_type" foreign="id_product_relation_type"/>
         </foreign-key>
 
-        <unique name="spy_product-relation-unique-fk_product_abstract">
+        <unique name="spy_product-relation-unique-fk_product_abstract-query_set_data">
             <unique-column name="fk_product_abstract"/>
             <unique-column name="fk_product_relation_type"/>
+            <unique-column name="query_set_data"/>
         </unique>
 
         <behavior name="timestampable"/>

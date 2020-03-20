@@ -22,6 +22,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="relationTypeKey" type="string"/>
         <property name="productRelationKey" type="string"/>
+        <property name="querySet" type="PropelQueryBuilderRuleSet"/>
     </transfer>
 
     <transfer name="StoreRelation">
