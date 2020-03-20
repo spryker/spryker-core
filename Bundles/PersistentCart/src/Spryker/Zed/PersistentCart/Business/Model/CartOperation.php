@@ -457,20 +457,20 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $persistentQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeQuotes(QuoteTransfer $quoteTransfer, ?QuoteTransfer $persistentQuoteTransfer): QuoteTransfer
+    protected function mergeQuotes(QuoteTransfer $persistentQuoteTransfer, ?QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$persistentQuoteTransfer) {
-            return $quoteTransfer;
+        if (!$quoteTransfer) {
+            return $persistentQuoteTransfer;
         }
 
-        $quoteTransfer->fromArray($persistentQuoteTransfer->toArray(), true);
+        $persistentQuoteTransfer->fromArray($quoteTransfer->toArray(), true);
 
-        return $quoteTransfer;
+        return $persistentQuoteTransfer;
     }
 
     /**
