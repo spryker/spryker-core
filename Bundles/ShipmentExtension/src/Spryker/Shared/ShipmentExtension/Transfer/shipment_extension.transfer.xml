@@ -9,4 +9,7 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="Expense">
+    </transfer>
+
 </transfers>
