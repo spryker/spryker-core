@@ -34,7 +34,7 @@ class MerchantStockMerchantExpanderPlugin extends AbstractPlugin implements Merc
             ->setIdMerchant($merchantTransfer->getIdMerchant());
 
         $stockCollectionTransfer = $this->getFacade()
-            ->getStockCollectionByMerchant($merchantStockCriteriaTransfer);
+            ->get($merchantStockCriteriaTransfer);
 
         return $merchantTransfer->setStocks($stockCollectionTransfer->getStocks());
     }
