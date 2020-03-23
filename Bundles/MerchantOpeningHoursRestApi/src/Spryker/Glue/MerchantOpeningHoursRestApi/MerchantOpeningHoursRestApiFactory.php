@@ -8,6 +8,7 @@
 namespace Spryker\Glue\MerchantOpeningHoursRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader\MerchantOpeningHourReader;
@@ -54,5 +55,13 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
     public function getMerchantStorageClient(): MerchantOpeningHoursRestApiToMerchantStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantOpeningHoursRestApiDependencyProvider::CLIENT_MERCHANT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): MerchantOpeningHoursRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(MerchantOpeningHoursRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

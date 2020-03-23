@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
@@ -45,7 +46,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer)
+    public function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer): RestResourceInterface
     {
         $restMerchantsAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
             $merchantStorageTransfer,

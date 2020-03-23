@@ -9,6 +9,7 @@ namespace Spryker\Glue\MerchantOpeningHoursRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientBridge;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientBridge;
 
@@ -19,6 +20,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
 {
     public const CLIENT_MERCHANT_OPENING_HOURS_STORAGE = 'CLIENT_MERCHANT_OPENING_HOURS_STORAGE';
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,6 +32,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
         $container = parent::provideDependencies($container);
         $container = $this->addMerchantOpeningHoursStorageClient($container);
         $container = $this->addMerchantStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -60,6 +63,22 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursRestApiToMerchantStorageClientBridge(
             //TODO
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new MerchantOpeningHoursRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 
