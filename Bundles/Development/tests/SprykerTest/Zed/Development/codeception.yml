@@ -16,7 +16,6 @@ suites:
         class_name: DevelopmentBusinessTester
         modules:
             enabled:
-                - Asserts
                 - Filesystem
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
