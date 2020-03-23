@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\PathAnnotationsTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
@@ -178,9 +177,7 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
         $this->pluginResourceTypeStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
 
-        if (!$plugin instanceof ResourceWithParentPluginInterface) {
-            $this->addResourceRelationshipsToStorage($plugin);
-        }
+        $this->addResourceRelationshipsToStorage($plugin);
     }
 
     /**
