@@ -10,9 +10,12 @@ namespace SprykerTest\Client\ProductStorage;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductAbstractStorageBuilder;
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
+use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
 use Spryker\Client\ProductStorage\ProductStorageFactory;
+use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 
 /**
  * Auto-generated group annotations
@@ -61,21 +64,18 @@ class ProductStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductVariantDataWillNotSetFalseToNull(): void
+    public function testExpandProductVariantDataMergeAbstractAndConcreteArrayFilterDoesNotRemoveFalse(): void
     {
         // Arrange
-        $this->getStorageClientMock()
-            ->expects($this->once())
-            ->method('get')
-            ->willReturn(['available' => false]);
+        $productViewTransfer = $this->tester->createProductViewTransfer();
+        $productConcreteStorageReaderMock = $this->getProductConcreteStorageReaderMock();
 
         // Act
-        $productViewTransfer = $this->tester
-            ->getProductStorageClient()
-            ->expandProductVariantData($this->tester->createProductViewTransfer(), 'DE');
+        $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock))
+            ->expandProductVariantData($productViewTransfer, 'DE');
 
         // Assert
-        $this->assertFalse($productViewTransfer->getAvailable());
+        $this->assertFalse($productConcreteStorageData[ProductViewTransfer::AVAILABLE]);
     }
 
     /**
@@ -91,6 +91,19 @@ class ProductStorageClientTest extends Unit
         );
 
         return $storageClientMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
+     */
+    protected function getProductConcreteStorageReaderMock(): ProductConcreteStorageReaderInterface
+    {
+        $productConcreteStorageReaderMock = $this->getMockBuilder(ProductConcreteStorageReaderInterface::class)->getMock();
+        $productConcreteStorageReaderMock
+            ->method('findProductConcreteStorageData')
+            ->willReturn([ProductViewTransfer::AVAILABLE => false]);
+
+        return $productConcreteStorageReaderMock;
     }
 
     /**
