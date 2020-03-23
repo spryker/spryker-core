@@ -64,8 +64,6 @@ interface MerchantUserFacadeInterface
      *
      * @api
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
-     *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
     public function getCurrentMerchantUser(): MerchantUserTransfer;

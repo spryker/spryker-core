@@ -24,13 +24,13 @@ class MerchantProfileAddressFormType extends AbstractType
 {
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
-    public const FIELD_ID_MERCHANT_PROFILE_ADDRESS = 'id_merchant_profile_address';
-    public const FIELD_CITY = 'city';
-    public const FIELD_ZIP_CODE = 'zip_code';
-    public const FIELD_FK_COUNTRY = 'fk_country';
-    public const FIELD_ADDRESS_1 = 'address1';
-    public const FIELD_ADDRESS_2 = 'address2';
-    public const FIELD_ADDRESS_3 = 'address3';
+    protected const FIELD_ID_MERCHANT_PROFILE_ADDRESS = 'id_merchant_profile_address';
+    protected const FIELD_CITY = 'city';
+    protected const FIELD_ZIP_CODE = 'zip_code';
+    protected const FIELD_FK_COUNTRY = 'fk_country';
+    protected const FIELD_ADDRESS_1 = 'address1';
+    protected const FIELD_ADDRESS_2 = 'address2';
+    protected const FIELD_ADDRESS_3 = 'address3';
 
     protected const LABEL_CITY = 'City';
     protected const LABEL_ZIP_CODE = 'Zip Code';

@@ -20,7 +20,7 @@ class MerchantUserReader implements MerchantUserReaderInterface
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
@@ -28,14 +28,14 @@ class MerchantUserReader implements MerchantUserReaderInterface
     protected $merchantUserRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      */
     public function __construct(
-        MerchantUserToUserFacadeInterface $merchantUserFacade,
+        MerchantUserToUserFacadeInterface $userFacade,
         MerchantUserRepositoryInterface $merchantUserRepository
     ) {
-        $this->merchantUserFacade = $merchantUserFacade;
+        $this->userFacade = $userFacade;
         $this->merchantUserRepository = $merchantUserRepository;
     }
 
@@ -46,7 +46,7 @@ class MerchantUserReader implements MerchantUserReaderInterface
      */
     public function getCurrentMerchantUser(): MerchantUserTransfer
     {
-        $userTransfer = $this->merchantUserFacade->getCurrentUser();
+        $userTransfer = $this->userFacade->getCurrentUser();
         $merchantUserCriteriaFilterTransfer = (new MerchantUserCriteriaFilterTransfer())->setIdUser(
             $userTransfer->getIdUser()
         );
