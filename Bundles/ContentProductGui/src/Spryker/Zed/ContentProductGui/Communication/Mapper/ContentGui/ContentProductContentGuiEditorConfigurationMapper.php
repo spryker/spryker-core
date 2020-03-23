@@ -26,7 +26,7 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
      */
     public function getTemplates(): array
     {

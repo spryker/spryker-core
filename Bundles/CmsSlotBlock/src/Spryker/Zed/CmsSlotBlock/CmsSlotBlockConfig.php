@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsSlotBlockConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[][]
      */
     public function getTemplateConditionsAssignment(): array

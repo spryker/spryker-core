@@ -37,8 +37,10 @@ class NavigationStorage implements NavigationStorageInterface
      * @param \Spryker\Client\NavigationStorage\Dependency\Client\NavigationStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\NavigationStorage\Dependency\Service\NavigationStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(NavigationStorageToStorageClientInterface $storageClient, NavigationStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        NavigationStorageToStorageClientInterface $storageClient,
+        NavigationStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }

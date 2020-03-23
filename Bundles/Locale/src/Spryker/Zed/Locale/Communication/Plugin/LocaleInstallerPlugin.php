@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class LocaleInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void

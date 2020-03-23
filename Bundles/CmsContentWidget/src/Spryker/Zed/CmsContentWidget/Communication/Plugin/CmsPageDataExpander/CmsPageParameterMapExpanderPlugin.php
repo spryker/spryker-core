@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsPageParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageDataExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageData

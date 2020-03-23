@@ -18,6 +18,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
     public const FIELD_CREATED_AT = 'created_at';
+    public const FIELD_UPDATED_AT = 'updated_at';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface
@@ -52,6 +53,9 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         }
         if (isset($virtualPropertiesCollection[static::FIELD_CREATED_AT])) {
             $shoppingListTransfer->setCreatedAt($virtualPropertiesCollection[static::FIELD_CREATED_AT]);
+        }
+        if (isset($virtualPropertiesCollection[static::FIELD_UPDATED_AT])) {
+            $shoppingListTransfer->setUpdatedAt($virtualPropertiesCollection[static::FIELD_UPDATED_AT]);
         }
 
         $this->addItemsCount($shoppingListEntityTransfer, $shoppingListTransfer);

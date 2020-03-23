@@ -105,8 +105,10 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(array $facets, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
-    {
+    protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(
+        array $facets,
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+    ): RestCatalogSearchAttributesTransfer {
         foreach ($facets as $facet) {
             if ($facet instanceof FacetSearchResultTransfer) {
                 $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);

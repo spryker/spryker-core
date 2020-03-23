@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCustomerPermissionCollectorStoragePlugin extends AbstractCollectorPlugin
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

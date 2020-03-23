@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -37,6 +39,7 @@ class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionR
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -49,9 +52,11 @@ class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionR
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

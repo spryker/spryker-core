@@ -25,7 +25,7 @@ class AclRepository extends AbstractRepository implements AclRepositoryInterface
     {
         $aclGroupQuery = $this->getFactory()
             ->createGroupQuery()
-            ->filterByArray($groupCriteriaTransfer->modifiedToArray());
+            ->filterByArray($groupCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased());
 
         $aclGroupEntity = $aclGroupQuery->findOne();
 

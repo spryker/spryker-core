@@ -33,5 +33,9 @@ interface ProductPageSearchToProductSearchInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes);
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    );
 }

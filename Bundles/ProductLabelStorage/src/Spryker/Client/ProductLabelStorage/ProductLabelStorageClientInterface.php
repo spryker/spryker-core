@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductLabelStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface ProductLabelStorageClientInterface
 {
     /**
@@ -73,4 +75,18 @@ interface ProductLabelStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
     public function findLabelByName($labelName, $localeName, ?string $storeName = null);
+
+    /**
+     * Specification:
+     * - Expands ProductViewTransfer with product labels.
+     * - Requires ProductViewTransfer.idProductAbstract to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer;
 }
