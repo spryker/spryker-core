@@ -48,7 +48,7 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
     }
 
     /**
-     * @uses ItemTransfer::getBundleItemIdentifier()
+     * @uses \Generated\Shared\Transfer\ItemTransfer::getBundleItemIdentifier()
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

@@ -21,8 +21,11 @@ class StockStoreRelationMapper
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStockStoreEntitiesToStoreRelationTransfer(int $idStock, array $stockStoreEntities, StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer
-    {
+    public function mapStockStoreEntitiesToStoreRelationTransfer(
+        int $idStock,
+        array $stockStoreEntities,
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
         $storeTransfers = $this->mapStoreTransfers($stockStoreEntities);
         $idStores = $this->getIdStoresFromStoreTransferCollection($storeTransfers);
 

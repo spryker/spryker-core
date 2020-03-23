@@ -16,6 +16,8 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
     public const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'price schedule data import';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getPriceProductScheduleDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -29,6 +31,8 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceProductScheduleListDefaultName(): string

@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductImageQueryContainer extends AbstractQueryContainer implements ProductImageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductImageSet
@@ -33,6 +35,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
@@ -44,6 +48,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
@@ -55,6 +61,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
@@ -66,6 +74,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -85,6 +95,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -104,6 +116,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -120,6 +134,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -136,6 +152,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductImageSet
@@ -154,6 +172,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -168,6 +188,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -183,6 +205,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -197,6 +221,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -212,6 +238,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductImageSet

@@ -19,5 +19,8 @@ interface WishlistItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function add(RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer, RestRequestInterface $restRequest): RestResponseInterface;
+    public function add(
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface;
 }

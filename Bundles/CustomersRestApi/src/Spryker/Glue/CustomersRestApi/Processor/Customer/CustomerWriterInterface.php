@@ -20,7 +20,10 @@ interface CustomerWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function registerCustomer(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface;
+    public function registerCustomer(
+        RestRequestInterface $restRequest,
+        RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+    ): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -28,7 +31,10 @@ interface CustomerWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomerPassword(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface;
+    public function updateCustomerPassword(
+        RestRequestInterface $restRequest,
+        RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+    ): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

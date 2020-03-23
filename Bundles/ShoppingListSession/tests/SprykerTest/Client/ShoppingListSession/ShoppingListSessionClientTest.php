@@ -152,8 +152,9 @@ class ShoppingListSessionClientTest extends Unit
      *
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getShoppingListClientMock(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListSessionToShoppingListClientBridgeInterface
-    {
+    private function getShoppingListClientMock(
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+    ): ShoppingListSessionToShoppingListClientBridgeInterface {
         $shoppingListClientMock = $this->getMockBuilder(ShoppingListSessionToShoppingListClientBridgeInterface::class)
             ->setMethods(['getCustomerShoppingListCollection', 'updateCustomerPermission'])
             ->disableOriginalConstructor()

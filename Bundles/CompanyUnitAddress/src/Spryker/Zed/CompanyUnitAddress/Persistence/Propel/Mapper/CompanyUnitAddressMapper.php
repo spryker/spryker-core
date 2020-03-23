@@ -44,8 +44,9 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function mapCompanyBusinessUnitCollection(SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer): CompanyBusinessUnitCollectionTransfer
-    {
+    protected function mapCompanyBusinessUnitCollection(
+        SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         foreach ($companyUnitAddressEntityTransfer->getSpyCompanyUnitAddressToCompanyBusinessUnits() as $companyUnitAddressToCompanyBusinessUnit) {
             $companyBusinessUnitEntityTransfer = $companyUnitAddressToCompanyBusinessUnit->getCompanyBusinessUnit();

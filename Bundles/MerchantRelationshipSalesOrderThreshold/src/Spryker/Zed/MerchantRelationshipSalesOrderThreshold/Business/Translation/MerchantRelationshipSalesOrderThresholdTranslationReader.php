@@ -42,8 +42,9 @@ class MerchantRelationshipSalesOrderThresholdTranslationReader implements Mercha
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
-    public function hydrateLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
-    {
+    public function hydrateLocalizedMessages(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): MerchantRelationshipSalesOrderThresholdTransfer {
         $storeTransfer = $this->storeFacade
             ->getStoreByName($merchantRelationshipSalesOrderThresholdTransfer->getStore()->getName());
 
