@@ -31,14 +31,15 @@ interface MerchantOmsFacadeInterface
      * - Requires MerchantOmsTriggerRequest.merchantOrderItems transfer field to be set.
      * - Requires MerchantOmsTriggerRequest.merchantOmsEventName transfer field to be set.
      * - Dispatches a merchant OMS event for each merchant order item.
+     * - Returns the number of transitioned merchant order items.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return void
+     * @return int
      */
-    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void;
+    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int;
 
     /**
      * Specification:
