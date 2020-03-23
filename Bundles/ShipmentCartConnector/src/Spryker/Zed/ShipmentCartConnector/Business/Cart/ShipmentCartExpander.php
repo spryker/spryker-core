@@ -104,7 +104,9 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
             $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
             $shipmentMethodTransfer->setSourcePrice($cartShipmentMethodTransfer->getSourcePrice());
-            $shipmentGroupTransfer->getShipment()->setMethod($shipmentMethodTransfer);
+            $shipmentGroupTransfer->getShipment()->setMethod(
+                (new ShipmentMethodTransfer())->fromArray($shipmentMethodTransfer->toArray())
+            );
 
             $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
         }
