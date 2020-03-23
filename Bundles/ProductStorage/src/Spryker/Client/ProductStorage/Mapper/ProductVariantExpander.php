@@ -178,21 +178,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return $productViewTransfer;
         }
 
-        return $this->mergeAbstractAndConcreteProducts($productViewTransfer, $productConcreteStorageData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productConcreteStorageData
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function mergeAbstractAndConcreteProducts(ProductViewTransfer $productViewTransfer, array $productConcreteStorageData)
-    {
-        $productConcreteStorageData = array_filter($productConcreteStorageData);
-        $productViewTransfer->fromArray($productConcreteStorageData, true);
-
-        return $productViewTransfer;
+        return $productViewTransfer->fromArray($productConcreteStorageData, true);
     }
 
     /**
@@ -216,7 +202,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return $productViewTransfer;
         }
 
-        return $this->mergeAbstractAndConcreteProducts($productViewTransfer, $productConcreteStorageData);
+        return $productViewTransfer->fromArray($productConcreteStorageData, true);
     }
 
     /**
