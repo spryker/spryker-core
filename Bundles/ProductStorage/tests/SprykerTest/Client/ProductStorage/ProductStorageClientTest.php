@@ -59,6 +59,27 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandProductVariantDataWillNotSetFalseToNull(): void
+    {
+        // Arrange
+        $this->getStorageClientMock()
+            ->expects($this->once())
+            ->method('get')
+            ->willReturn(['available' => false]);
+
+        // Act
+        $productViewTransfer = $this->tester
+            ->getProductStorageClient()
+            ->expandProductVariantData($this->tester->createProductViewTransfer(), 'DE');
+
+        // Assert
+        $this->assertFalse($productViewTransfer->getAvailable());
+
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
     protected function getStorageClientMock(): ProductStorageToStorageClientInterface
