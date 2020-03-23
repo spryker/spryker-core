@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\SearchReader;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderSearchReader implements OrderSearchReaderInterface
@@ -45,42 +43,26 @@ class OrderSearchReader implements OrderSearchReaderInterface
     {
         $orderListTransfer = $this->salesRepository->searchOrders($orderListTransfer);
 
-        $orderTransfers = $this->expandOrderTransfers(
-            $orderListTransfer->getOrders()
+        $orderTransfers = $this->executeOrderExpanderPlugins(
+            $orderListTransfer->getOrders()->getArrayCopy()
         );
 
-        return $orderListTransfer->setOrders($orderTransfers);
+        $orderListTransfer->getOrders()->exchangeArray($orderTransfers);
+
+        return $orderListTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function expandOrderTransfers(ArrayObject $orderTransfers): ArrayObject
-    {
-        $expandedOrderTransfers = [];
-
-        foreach ($orderTransfers as $orderTransfer) {
-            $expandedOrderTransfers[] = $this->executeOrderExpanderPlugins($orderTransfer);
-        }
-
-        $orderTransfers->exchangeArray($expandedOrderTransfers);
-
-        return $orderTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function executeOrderExpanderPlugins(OrderTransfer $orderTransfer): OrderTransfer
+    protected function executeOrderExpanderPlugins(array $orderTransfers): array
     {
         foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
-            $orderTransfer = $searchOrderExpanderPlugin->expand($orderTransfer);
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
         }
 
-        return $orderTransfer;
+        return $orderTransfers;
     }
 }

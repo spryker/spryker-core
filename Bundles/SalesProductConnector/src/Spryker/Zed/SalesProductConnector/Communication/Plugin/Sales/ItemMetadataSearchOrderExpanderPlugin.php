@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface;
 
@@ -19,22 +18,16 @@ class ItemMetadataSearchOrderExpanderPlugin extends AbstractPlugin implements Se
 {
     /**
      * {@inheritDoc}
-     * - Expands order items with metadata information.
+     * - Expands items of each order with metadata information.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function expand(OrderTransfer $orderTransfer): OrderTransfer
+    public function expand(array $orderTransfers): array
     {
-        $itemTransfers = $this->getFacade()->expandOrderItemsWithMetadata(
-            $orderTransfer->getItems()->getArrayCopy()
-        );
-
-        $orderTransfer->getItems()->exchangeArray($itemTransfers);
-
-        return $orderTransfer;
+        return $this->getFacade()->expandOrdersWithMetadata($orderTransfers);
     }
 }

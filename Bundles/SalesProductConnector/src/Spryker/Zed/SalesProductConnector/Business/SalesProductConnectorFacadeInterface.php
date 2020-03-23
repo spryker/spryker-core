@@ -68,13 +68,13 @@ interface SalesProductConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Expands order items with metadata information.
+     * - Expands OrderTransfers with metadata information.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function expandOrderItemsWithMetadata(array $itemTransfers): array;
+    public function expandOrdersWithMetadata(array $orderTransfers): array;
 }
