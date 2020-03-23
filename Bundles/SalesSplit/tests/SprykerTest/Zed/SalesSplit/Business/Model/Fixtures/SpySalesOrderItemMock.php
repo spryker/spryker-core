@@ -17,7 +17,7 @@ class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
     protected $propelModelCopy;
 
     /**
-     * @param bool|false $deepCopy
+     * @param bool $deepCopy
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */

@@ -208,7 +208,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
      * @param array $productRelations
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductRelationStorageTransfer[]
      */
     protected function getProductRelationStorageTransfers(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations)
     {
