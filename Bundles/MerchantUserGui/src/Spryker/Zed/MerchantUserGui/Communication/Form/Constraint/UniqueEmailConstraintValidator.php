@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueEmailConstraintValidator extends ConstraintValidator
 {
@@ -16,10 +17,16 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
      * @param string $email
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint $constraint
      *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
      * @return void
      */
     public function validate($email, Constraint $constraint): void
     {
+        if (!$constraint instanceof UniqueEmailConstraint) {
+            throw new UnexpectedTypeException($constraint, UniqueEmailConstraint::class);
+        }
+
         if (!$constraint->getUserFacade()->hasUserByUsername($email)) {
             return;
         }
