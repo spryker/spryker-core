@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 /**
  * Inherited Methods
@@ -141,5 +142,13 @@ class CompanyBusinessUnitTester extends Actor
         }
 
         return $companyBusinessUnitTreeNodes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBusinessUnitsCount(): int
+    {
+        return SpyCompanyBusinessUnitQuery::create()->count();
     }
 }
