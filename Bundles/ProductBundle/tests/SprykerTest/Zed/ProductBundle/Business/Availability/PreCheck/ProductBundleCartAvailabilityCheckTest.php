@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -144,8 +145,16 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 
         $productBundleConfig = $this->createProductBundleConfigMock();
 
+        $productBundleReader = $this->createProductBundleReaderMock();
+
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $productBundleConfig])
+            ->setConstructorArgs([
+                $availabilityFacadeMock,
+                $productBundleQueryContainerMock,
+                $storeFacadeMock,
+                $productBundleConfig,
+                $productBundleReader,
+            ])
             ->setMethods(['findBundledProducts'])
             ->getMock();
 
@@ -166,5 +175,13 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     */
+    protected function createProductBundleReaderMock(): ProductBundleReaderInterface
+    {
+        return $this->getMockBuilder(ProductBundleReaderInterface::class)->getMock();
     }
 }
