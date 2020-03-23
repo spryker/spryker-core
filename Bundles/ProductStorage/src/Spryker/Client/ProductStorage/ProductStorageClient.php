@@ -420,21 +420,4 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductVariantData(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
-    {
-        return $this->getFactory()
-            ->createVariantExpander()
-            ->expandProductVariantData($productViewTransfer, $locale);
-    }
 }

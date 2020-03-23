@@ -355,18 +355,4 @@ interface ProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
-
-    /**
-     * Specification:
-     * - Expands the transfer object with the attribute map, product variant map.
-     * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductVariantData(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer;
 }
