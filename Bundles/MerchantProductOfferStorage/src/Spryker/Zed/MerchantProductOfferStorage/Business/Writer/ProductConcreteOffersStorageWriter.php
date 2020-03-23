@@ -174,6 +174,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         return (new ProductOfferCriteriaFilterTransfer())
             ->setConcreteSkus($productConcreteSkus)
             ->setIsActive(true)
+            ->setIsActiveMerchant(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
     }

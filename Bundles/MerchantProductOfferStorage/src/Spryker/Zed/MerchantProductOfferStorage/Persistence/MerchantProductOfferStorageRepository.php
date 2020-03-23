@@ -55,9 +55,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
-            ->useSpyMerchantQuery()
-                ->filterByIsActive(true)
-            ->endUse();
+            ->joinSpyMerchant();
 
         $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);
 
@@ -94,6 +92,10 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
 
         if ($productOfferCriteriaFilterTransfer->getApprovalStatuses()) {
             $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getIsActiveMerchant() !== null) {
+            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaFilterTransfer->getIsActiveMerchant());
         }
 
         if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null || $productOfferCriteriaFilterTransfer->getConcreteSkus()) {
