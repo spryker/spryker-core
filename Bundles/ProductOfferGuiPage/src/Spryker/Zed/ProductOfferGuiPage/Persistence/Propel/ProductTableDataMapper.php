@@ -77,11 +77,16 @@ class ProductTableDataMapper
 
         foreach ($productTableDataArray as $productTableRowDataArray) {
             $productConcreteAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::ATTRIBUTES] ?? null,
+                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
+                true
+            );
+            $productAbstractAttributes = $this->utilEncodingService->decodeJson(
+                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES] ?? null,
                 true
             );
             $productTableRowDataTransfer = (new ProductTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
-            $productTableRowDataTransfer->setAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
+            $productTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
+            $productTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
             $rowsData[] = $productTableRowDataTransfer;
         }
 

@@ -67,9 +67,10 @@
     <transfer name="ProductTableRowData">
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
-        <property name="images" type="string"/>
+        <property name="image" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="attributes" type="array" singular="attribute"/>
+        <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
+        <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
         <property name="offersCount" type="int"/>
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>
