@@ -29,7 +29,8 @@ class ProductRelationWriterStep extends PublishAwareStep implements DataImportSt
 
         if ($productRelationEntity->isNew()) {
             $productRelationEntity->setFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
-                ->setQuerySetData($dataSet[ProductRelationDataSetInterface::COL_RULE]);
+                ->setQuerySetData($dataSet[ProductRelationDataSetInterface::COL_RULE])
+                ->setFkProductRelationType($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_RELATION_TYPE]);
         }
 
         $productRelationEntity
