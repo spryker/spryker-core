@@ -17,15 +17,13 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "../../../../../public/Zed/assets/js/mp-profile",
+            "outputPath": "dist",
             "index": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/assets"
-            ],
+            "assets": [],
             "styles": [
               "src/Spryker/Zed/MerchantProfileGuiPage/Presentation/Components/styles.less"
             ],

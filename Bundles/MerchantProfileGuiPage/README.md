@@ -9,6 +9,12 @@ This module provides Zed UI interface for merchant profile management for the Me
 composer require spryker/merchant-profile-gui-page
 ```
 
+## FE Installation
+```
+npm install
+npm run build
+```
+
 ## Documentation
 
 [Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
