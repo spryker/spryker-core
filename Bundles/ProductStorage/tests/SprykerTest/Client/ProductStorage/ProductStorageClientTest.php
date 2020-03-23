@@ -76,7 +76,6 @@ class ProductStorageClientTest extends Unit
 
         // Assert
         $this->assertFalse($productViewTransfer->getAvailable());
-
     }
 
     /**
