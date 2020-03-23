@@ -14,6 +14,8 @@ class CompanyBusinessUnitConfig extends AbstractBundleConfig
     protected const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Headquarters';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCompanyBusinessUnitDefaultName(): string

@@ -59,7 +59,7 @@ class CategoryExtractor implements AggregationExtractorInterface
     /**
      * @param array $aggregation
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
      */
     protected function extractFacetData(array $aggregation)
     {

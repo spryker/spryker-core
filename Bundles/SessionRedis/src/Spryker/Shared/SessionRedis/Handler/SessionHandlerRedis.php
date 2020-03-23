@@ -49,8 +49,12 @@ class SessionHandlerRedis implements SessionHandlerInterface
      * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
      * @param int $lifetime
      */
-    public function __construct(SessionRedisWrapperInterface $redisClient, SessionKeyBuilderInterface $keyBuilder, SessionRedisToMonitoringServiceInterface $monitoringService, $lifetime)
-    {
+    public function __construct(
+        SessionRedisWrapperInterface $redisClient,
+        SessionKeyBuilderInterface $keyBuilder,
+        SessionRedisToMonitoringServiceInterface $monitoringService,
+        $lifetime
+    ) {
         $this->redisClient = $redisClient;
         $this->keyBuilder = $keyBuilder;
         $this->lifetime = $lifetime;

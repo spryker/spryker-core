@@ -26,8 +26,9 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferCollection(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
-    {
+    public function getProductOfferCollection(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer {
         return $this->getFactory()
             ->createMerchantProductOfferReader()
             ->getMerchantProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);

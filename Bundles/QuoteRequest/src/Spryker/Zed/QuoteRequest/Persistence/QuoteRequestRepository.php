@@ -59,8 +59,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
-    {
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer {
         $quoteRequestVersionQuery = $this->getFactory()
             ->getQuoteRequestVersionPropelQuery()
             ->joinWithSpyQuoteRequest()

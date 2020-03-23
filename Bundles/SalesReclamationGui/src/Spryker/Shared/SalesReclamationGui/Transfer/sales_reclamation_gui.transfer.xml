@@ -25,6 +25,7 @@
     </transfer>
 
     <transfer name="ReclamationItem">
+        <property name="orderItem" type="Item"/>
     </transfer>
 
 </transfers>

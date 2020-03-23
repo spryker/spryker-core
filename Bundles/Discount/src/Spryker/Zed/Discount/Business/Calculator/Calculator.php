@@ -328,8 +328,8 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountTransferCollection
-     * @param \ArrayObject $oldCartRuleDiscountTransferCollection
-     * @param \ArrayObject $oldVoucherDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldCartRuleDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldVoucherDiscountTransferCollection
      *
      * @return void
      */
@@ -372,8 +372,8 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \ArrayObject $oldCartRuleDiscountTransferCollection
-     * @param \ArrayObject $oldVoucherDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldCartRuleDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldVoucherDiscountTransferCollection
      *
      * @return bool
      */

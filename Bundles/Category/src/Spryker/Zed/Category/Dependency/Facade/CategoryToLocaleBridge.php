@@ -41,7 +41,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales()
     {

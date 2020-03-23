@@ -25,6 +25,8 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -78,6 +80,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -103,6 +107,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -113,6 +119,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -127,6 +135,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -147,6 +157,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -176,6 +188,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -208,6 +222,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -228,6 +244,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -282,6 +300,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -295,6 +315,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNodeDescendant
@@ -308,6 +330,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -350,6 +374,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -400,6 +426,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -424,6 +452,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -458,6 +488,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -470,6 +502,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -484,6 +518,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -496,6 +532,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -508,6 +546,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -520,6 +560,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -550,6 +592,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -562,6 +606,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $categoryKey
@@ -574,6 +620,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $categoryKey
@@ -590,6 +638,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode
@@ -602,6 +652,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -625,6 +677,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -644,6 +698,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -661,6 +717,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -683,6 +741,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -718,6 +778,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -790,6 +852,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -828,6 +892,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -867,6 +933,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -906,6 +974,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -944,6 +1014,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -959,6 +1031,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -983,6 +1057,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $categoryKey
@@ -1000,6 +1076,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -1024,6 +1102,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -1039,6 +1119,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idParentNode
@@ -1063,6 +1145,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -1080,6 +1164,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -1095,6 +1181,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -1106,6 +1194,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryTemplate
@@ -1119,6 +1209,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $nameCategoryTemplate
@@ -1132,6 +1224,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idNode

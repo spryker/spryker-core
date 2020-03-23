@@ -18,6 +18,8 @@ class ProductMeasurementUnitDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_MEASUREMENT_SALES_UNIT_STORE = 'product-measurement-sales-unit-store';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductMeasurementUnitDataImportConfiguration(): DataImporterConfigurationTransfer
@@ -28,6 +30,8 @@ class ProductMeasurementUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductMeasurementBaseUnitDataImportConfiguration(): DataImporterConfigurationTransfer
@@ -38,6 +42,8 @@ class ProductMeasurementUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductMeasurementSalesUnitDataImportConfiguration(): DataImporterConfigurationTransfer
@@ -48,6 +54,8 @@ class ProductMeasurementUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductMeasurementSalesUnitStoreDataImportConfiguration(): DataImporterConfigurationTransfer

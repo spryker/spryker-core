@@ -41,7 +41,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListTransfer, $shoppingListEntity);
 
         $shoppingListEntity->save();
-        $shoppingListTransfer->setIdShoppingList($shoppingListEntity->getIdShoppingList());
+        $shoppingListTransfer->fromArray($shoppingListEntity->toArray());
 
         return $shoppingListTransfer;
     }
@@ -109,7 +109,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
 
         $shoppingListItemEntity->save();
-        $shoppingListItemTransfer->setIdShoppingListItem($shoppingListItemEntity->getIdShoppingListItem());
+        $shoppingListItemTransfer->fromArray($shoppingListItemEntity->toArray(), true);
 
         return $shoppingListItemTransfer;
     }
@@ -129,6 +129,8 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListItemTransfer, $shoppingListItemEntity);
 
         $shoppingListItemEntity->save();
+
+        $shoppingListItemTransfer->fromArray($shoppingListItemEntity->toArray(), true);
 
         return $shoppingListItemTransfer;
     }
@@ -397,8 +399,9 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      *
      * @return void
      */
-    public function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer): void
-    {
+    public function createShoppingListCompanyBusinessUnitBlacklist(
+        ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+    ): void {
         $shoppingListCompanyBusinessUnitBlacklistEntity = new SpyShoppingListCompanyBusinessUnitBlacklist();
         $shoppingListCompanyBusinessUnitBlacklistEntity->fromArray($shoppingListCompanyBusinessUnitBlacklistTransfer->modifiedToArray());
         $shoppingListCompanyBusinessUnitBlacklistEntity->save();

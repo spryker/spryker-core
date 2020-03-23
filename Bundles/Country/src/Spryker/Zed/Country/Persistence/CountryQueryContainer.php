@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
@@ -25,6 +27,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $iso2Code
@@ -41,6 +45,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $iso3Code
@@ -57,6 +63,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
@@ -67,6 +75,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $isoCode

@@ -20,7 +20,7 @@ use Throwable;
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
 {
     /**
-     * @uses /Spryker\Shared\ContentProduct/ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
      */
     protected const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 

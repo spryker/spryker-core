@@ -15,6 +15,8 @@ class CommentDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMMENT = 'comment';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCommentDataImporterConfiguration(): DataImporterConfigurationTransfer

@@ -31,8 +31,10 @@ class OrderPaymentsResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createOrderPaymentUpdater()
             ->updateOrderPayment($restRequest, $restOrderPaymentsAttributesTransfer);

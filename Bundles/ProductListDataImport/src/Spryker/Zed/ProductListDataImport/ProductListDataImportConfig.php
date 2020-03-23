@@ -17,6 +17,8 @@ class ProductListDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_LIST_PRODUCT_CONCRETE = 'product-list-product-concrete';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductListDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -27,6 +29,8 @@ class ProductListDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductListCategoryDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -37,6 +41,8 @@ class ProductListDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductListProductConcreteDataImporterConfiguration(): DataImporterConfigurationTransfer
