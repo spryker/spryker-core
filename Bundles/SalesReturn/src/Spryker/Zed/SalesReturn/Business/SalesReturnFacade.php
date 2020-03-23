@@ -135,4 +135,20 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
             ->createOrderItemExpander()
             ->expandOrderItemsWithIsReturnable($itemTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithIsReturnableByItemState($itemTransfers);
+    }
 }

@@ -60,6 +60,8 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithMetadata()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

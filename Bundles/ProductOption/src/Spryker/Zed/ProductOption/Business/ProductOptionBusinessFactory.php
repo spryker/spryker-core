@@ -153,6 +153,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrateInterface
      */
     public function createProductOptionOrderHydrate()

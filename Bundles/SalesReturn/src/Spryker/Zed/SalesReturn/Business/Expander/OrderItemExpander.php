@@ -43,6 +43,29 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array
+    {
+        $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer
+                ->requireState()
+                ->getState()
+                    ->requireName();
+
+            if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
+                $itemTransfer->setIsReturnable(false);
+            }
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool

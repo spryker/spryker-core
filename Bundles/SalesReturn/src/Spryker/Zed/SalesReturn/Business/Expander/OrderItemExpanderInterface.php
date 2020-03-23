@@ -15,4 +15,11 @@ interface OrderItemExpanderInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array;
 }
