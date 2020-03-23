@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantStockRepository extends AbstractRepository implements MerchantStockRepositoryInterface
 {
     /**
+     * @module Stock
+     *
      * @param \Generated\Shared\Transfer\MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
