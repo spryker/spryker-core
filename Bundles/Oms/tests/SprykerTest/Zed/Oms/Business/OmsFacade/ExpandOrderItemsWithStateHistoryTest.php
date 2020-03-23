@@ -28,6 +28,7 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     protected const FAKE_SALES_ORDER_ITEM_ID = 666;
 
     protected const SHIPPED_STATE_NAME = 'shipped';
+    protected const DELIVERED_STATE_NAME = 'delivered';
 
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
@@ -77,11 +78,12 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
         $itemTransfer->setState(new ItemStateTransfer());
 
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::DELIVERED_STATE_NAME);
 
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithStateHistory($orderTransfer->getItems()->getArrayCopy());
+            ->expandOrderItemsWithStateHistory([$itemTransfer]);
 
         // Assert
         $this->assertNotNull($itemTransfers[0]->getState()->getCreatedAt());
