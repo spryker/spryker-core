@@ -19,6 +19,11 @@ class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCatalogSearchAbstractProductsTransfer"
+     * })
+     *
      * - Adds `abstract-products` as a relationship.
      *
      * @api

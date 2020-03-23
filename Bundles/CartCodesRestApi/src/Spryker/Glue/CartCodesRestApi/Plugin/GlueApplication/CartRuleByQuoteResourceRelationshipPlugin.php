@@ -19,6 +19,11 @@ class CartRuleByQuoteResourceRelationshipPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
+     * })
+     *
      * - Adds cart-rules resource as relationship by quote.
      *
      * @api

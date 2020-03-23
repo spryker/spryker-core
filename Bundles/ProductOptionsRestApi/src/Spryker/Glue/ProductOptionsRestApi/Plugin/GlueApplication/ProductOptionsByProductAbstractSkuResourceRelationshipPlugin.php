@@ -19,6 +19,11 @@ class ProductOptionsByProductAbstractSkuResourceRelationshipPlugin extends Abstr
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestProductOptionsAttributesTransfer"
+     * })
+     *
      * - Adds product-options resource as relationship by product abstract sku.
      *
      * @api

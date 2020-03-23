@@ -15,12 +15,12 @@ interface PluginResourceTypeStorageInterface
      *
      * @return void
      */
-    public function add(string $resourceType, string $responseAttributesSchemaName): void;
+    public function addResourceSchemaName(string $resourceType, string $responseAttributesSchemaName): void;
 
     /**
      * @param string $resourceType
      *
      * @return string
      */
-    public function getResponseAttributesSchemaNameByResourceType(string $resourceType): string;
+    public function getResourceSchemaNameByResourceType(string $resourceType): string;
 }

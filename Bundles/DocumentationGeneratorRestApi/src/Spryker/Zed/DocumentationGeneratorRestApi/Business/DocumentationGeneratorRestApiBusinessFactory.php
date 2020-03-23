@@ -366,7 +366,8 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createPluginResourceTypeStorage(),
             $this->createResourceTransferAnalyzer(),
             $this->createResourceRelationshipsPluginAnalyzer(),
-            $this->createGlueAnnotationAnalyzer()
+            $this->createGlueAnnotationAnalyzer(),
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
         );
     }
 

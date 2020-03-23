@@ -19,6 +19,11 @@ class ShoppingListItemByShoppingListResourceRelationshipPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
+     * })
+     *
      * - Adds `shopping-list-items` resource as relationship by shopping list.
      * - Requires ShoppingListTransfer be provided in resource payload.
      *

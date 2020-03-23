@@ -20,6 +20,10 @@ class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements R
     /**
      * {@inheritDoc}
      *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCustomersResponseAttributesTransfer"
+     * })
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

@@ -20,7 +20,7 @@ class PluginResourceTypeStorage implements PluginResourceTypeStorageInterface
      *
      * @return void
      */
-    public function add(string $resourceType, string $responseAttributesSchemaName): void
+    public function addResourceSchemaName(string $resourceType, string $responseAttributesSchemaName): void
     {
         static::$resourceTypes[$resourceType] = $responseAttributesSchemaName;
     }
@@ -30,8 +30,8 @@ class PluginResourceTypeStorage implements PluginResourceTypeStorageInterface
      *
      * @return string
      */
-    public function getResponseAttributesSchemaNameByResourceType(string $resourceType): string
+    public function getResourceSchemaNameByResourceType(string $resourceType): string
     {
-        return static::$resourceTypes[$resourceType] ?: '';
+        return static::$resourceTypes[$resourceType] ?? '';
     }
 }

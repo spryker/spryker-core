@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,11 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
     protected $resourceRelationshipPluginAnalyzer;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
+     */
+    protected $resourceRelationshipsPluginAnnotationAnalyzer;
+
+    /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     protected $resourceRouteCollection;
@@ -52,17 +58,20 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
      */
     public function __construct(
         PluginResourceTypeStorageInterface $pluginResourceTypeStorage,
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
         ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer,
-        GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
+        GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
+        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
     ) {
         $this->pluginResourceTypeStorage = $pluginResourceTypeStorage;
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
+        $this->resourceRelationshipsPluginAnnotationAnalyzer = $resourceRelationshipsPluginAnnotationAnalyzer;
     }
 
     /**
@@ -167,7 +176,7 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
-        $this->pluginResourceTypeStorage->add($plugin->getResourceType(), $responseDataSchemaName);
+        $this->pluginResourceTypeStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
 
         if (!$plugin instanceof ResourceWithParentPluginInterface) {
             $this->addResourceRelationshipsToStorage($plugin);
@@ -184,7 +193,7 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
-        $this->pluginResourceTypeStorage->add($plugin->getResourceType(), $responseDataSchemaName);
+        $this->pluginResourceTypeStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
         $this->addResourceRelationshipsToStorage($plugin);
     }
 
@@ -211,9 +220,23 @@ class PluginResourceTypeStorageProcessor implements PluginResourceTypeStoragePro
     protected function addResourceRelationshipsToStorage(ResourceRoutePluginInterface $plugin): void
     {
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
-        if ($resourceRelationships) {
-            foreach ($resourceRelationships as $key => $resourceRelationship) {
-                $this->pluginResourceTypeStorage->add($key, static::SCHEMA_NAME_RELATIONSHIPS_DATA);
+        if (!$resourceRelationships) {
+            return;
+        }
+
+        foreach ($resourceRelationships as $key => $resourceRelationship) {
+            $pluginAnnotationsTransfer = $this
+                ->resourceRelationshipsPluginAnnotationAnalyzer
+                ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationship);
+
+            if ($pluginAnnotationsTransfer->getResourceAttributesClassName()) {
+                $responseAttributesSchema = $this
+                    ->resourceTransferAnalyzer
+                    ->createResponseAttributesSchemaNameFromTransferClassName(
+                        $pluginAnnotationsTransfer->getResourceAttributesClassName()
+                    );
+
+                $this->pluginResourceTypeStorage->addResourceSchemaName($key, $responseAttributesSchema);
             }
         }
     }

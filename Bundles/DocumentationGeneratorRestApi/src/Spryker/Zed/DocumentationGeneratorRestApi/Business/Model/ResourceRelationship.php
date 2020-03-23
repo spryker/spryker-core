@@ -60,13 +60,19 @@ class ResourceRelationship implements ResourceRelationshipInterface
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
-    public function getSchemaDataTransfersFromForPlugin(ResourceRoutePluginInterface $plugin, string $transferClassName, string $responseDataSchemaName): array
-    {
+    public function getAllSchemaDataTransfersForPlugin(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseDataSchemaName
+    ): array {
         $schemaDataTransfers = [];
-        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
+        $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         if ($resourceRelationships) {
-            $schemaDataTransfers = $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName);
+            $schemaDataTransfers = array_merge(
+                $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName),
+                $this->createIncludedSchemaDataTransfers($responseDataSchemaName, $resourceRelationships, $transferClassName)
+            );
         }
 
         return $schemaDataTransfers;
@@ -74,24 +80,38 @@ class ResourceRelationship implements ResourceRelationshipInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $transferClassName
-     * @param string $responseSchemaName
      *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     * @return string[]
      */
-    public function getIncludeSchemaDataTransfersFromForPlugin(
-        ResourceRoutePluginInterface $plugin,
-        string $transferClassName,
-        string $responseSchemaName
-    ): array {
-        $schemaDataTransfers = [];
-        $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
+    public function getResourceAttributesClassNamesFromPlugin(ResourceRoutePluginInterface $plugin): array
+    {
+        $resourceAttributesClassNames = [];
+        $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         if ($resourceRelationships) {
-            $schemaDataTransfers = $this->createIncludedSchemaDataTransfers($responseSchemaName, $resourceRelationships, $transferClassName);
+            foreach ($resourceRelationships as $resourceRelationship) {
+                $pluginAnnotationsTransfer = $this
+                    ->resourceRelationshipsPluginAnnotationAnalyzer
+                    ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationship);
+                $resourceAttributesClassName = $pluginAnnotationsTransfer->getResourceAttributesClassName();
+
+                if ($resourceAttributesClassName) {
+                    $resourceAttributesClassNames[] = $resourceAttributesClassName;
+                }
+            }
         }
 
-        return $schemaDataTransfers;
+        return $resourceAttributesClassNames;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     */
+    protected function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
+    {
+        return $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
     }
 
     /**
@@ -126,7 +146,9 @@ class ResourceRelationship implements ResourceRelationshipInterface
         array $resourceRelationships,
         string $transferClassName
     ): array {
-        $resourceRelationshipsSchemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName($transferClassName);
+        $resourceRelationshipsSchemaName = $this
+            ->resourceTransferAnalyzer
+            ->createResourceRelationshipSchemaNameFromTransferClassName($transferClassName);
 
         return [
             $this->schemaBuilder->createRelationshipBaseSchema($responseDataSchemaName, $resourceRelationshipsSchemaName),

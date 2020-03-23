@@ -46,7 +46,7 @@ class ResourceRelationshipPluginFinder implements ResourceRelationshipPluginFind
         $pluginClass = get_class($plugin);
         $pluginNamespaceExploded = explode('\\', $pluginClass);
 
-        $existingDirectories = $this->getPluginSourceDirectories(array_slice($pluginNamespaceExploded, -3)[0]);
+        $existingDirectories = $this->getPluginSourceDirectories(array_slice($pluginNamespaceExploded, -4)[0]);
 
         if (!$existingDirectories) {
             return [];

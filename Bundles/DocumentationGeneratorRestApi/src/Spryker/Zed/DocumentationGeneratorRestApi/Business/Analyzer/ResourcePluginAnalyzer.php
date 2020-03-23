@@ -26,7 +26,6 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected const KEY_PATHS = 'paths';
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
-    protected const SCHEMA_NAME_RELATIONSHIPS_DATA = 'RestRelationshipsData';
 
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
     protected const PATTERN_PATH_ID = '{%sId}';

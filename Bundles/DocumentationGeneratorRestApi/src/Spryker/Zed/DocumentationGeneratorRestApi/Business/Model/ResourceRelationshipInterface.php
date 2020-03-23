@@ -18,7 +18,7 @@ interface ResourceRelationshipInterface
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
-    public function getSchemaDataTransfersFromForPlugin(
+    public function getAllSchemaDataTransfersForPlugin(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
         string $responseDataSchemaName
@@ -26,14 +26,8 @@ interface ResourceRelationshipInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $transferClassName
-     * @param string $responseDataSchemaName
      *
-     * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
+     * @return array
      */
-    public function getIncludeSchemaDataTransfersFromForPlugin(
-        ResourceRoutePluginInterface $plugin,
-        string $transferClassName,
-        string $responseDataSchemaName
-    ): array;
+    public function getResourceAttributesClassNamesFromPlugin(ResourceRoutePluginInterface $plugin): array;
 }

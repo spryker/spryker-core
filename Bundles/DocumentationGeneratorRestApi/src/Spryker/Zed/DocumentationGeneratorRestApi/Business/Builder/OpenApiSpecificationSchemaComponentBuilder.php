@@ -217,7 +217,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         foreach ($resourceRelationships as $resourceRelationship) {
             $schemaName = $this
                 ->pluginResourceTypeStorage
-                ->getResponseAttributesSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
+                ->getResourceSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
             $schema->addOneOf(
                 sprintf(
                     static::PATTERN_SCHEMA_REFERENCE,
