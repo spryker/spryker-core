@@ -64,9 +64,9 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addUtilEncodingService(Container $container): Container
     {
@@ -78,5 +78,4 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyPr
 
         return $container;
     }
-
 }
