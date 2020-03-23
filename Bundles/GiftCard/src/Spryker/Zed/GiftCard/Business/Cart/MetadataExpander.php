@@ -40,7 +40,7 @@ class MetadataExpander implements MetadataExpanderInterface
         $skus = $this->getAbstractAndConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
         $abstractConfiguration = $this
             ->giftCardReader
-            ->getGiftCartAbstractConfigurationsForProductAbstractByAbstractSkus($skus[static::SKU_ABSTRACT]);
+            ->getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus($skus[static::SKU_ABSTRACT]);
         $indexedGiftCardAbstractConfigurationForAbstractProductTransfers = $this
             ->indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku($abstractConfiguration);
 
@@ -118,8 +118,9 @@ class MetadataExpander implements MetadataExpanderInterface
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
      */
-    protected function indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku(array $giftCardAbstractConfigurationForProductAbstractTransfers): array
-    {
+    protected function indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku(
+        array $giftCardAbstractConfigurationForProductAbstractTransfers
+    ): array {
         $indexedGiftCardAbstractConfigurationForProductAbstractTransfers = [];
 
         foreach ($giftCardAbstractConfigurationForProductAbstractTransfers as $giftCardAbstractProductConfigurationForProductAbstractTransfer) {

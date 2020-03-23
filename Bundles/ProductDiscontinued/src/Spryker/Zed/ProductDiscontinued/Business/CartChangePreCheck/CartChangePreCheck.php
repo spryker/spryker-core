@@ -83,7 +83,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string[] $indexedProductDiscontinuedTransfers
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer[] $indexedProductDiscontinuedTransfers
      *
      * @return bool
      */
