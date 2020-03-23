@@ -24,14 +24,15 @@ class ProductRelationWriterStep extends PublishAwareStep implements DataImportSt
     public function execute(DataSetInterface $dataSet): void
     {
         $productRelationEntity = SpyProductRelationQuery::create()
-            ->filterByFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
-            ->filterByFkProductRelationType($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_RELATION_TYPE])
-            ->filterByQuerySetData(ProductRelationDataSetInterface::COL_RULE)
+            ->filterByProductRelationKey($dataSet[ProductRelationDataSetInterface::COL_PRODUCT_RELATION_KEY])
             ->findOneOrCreate();
 
+        if ($productRelationEntity->isNew()) {
+            $productRelationEntity->setFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
+                ->setQuerySetData($dataSet[ProductRelationDataSetInterface::COL_RULE]);
+        }
+
         $productRelationEntity
-            ->setQuerySetData($dataSet[ProductRelationDataSetInterface::COL_RULE])
-            ->setProductRelationKey($dataSet[ProductRelationDataSetInterface::COL_PRODUCT_RELATION_KEY])
             ->setIsActive($dataSet[ProductRelationDataSetInterface::COL_IS_ACTIVE] ?? false)
             ->setIsRebuildScheduled($dataSet[ProductRelationDataSetInterface::COL_IS_REBUILD_SCHEDULED] ?? false)
             ->save();
