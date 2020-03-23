@@ -17,9 +17,11 @@ interface ProductLabelStorageFacadeInterface
      *
      * @api
      *
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function publishLabelDictionary();
+    public function publishLabelDictionary(array $productLabelIds);
 
     /**
      * Specification:
@@ -28,9 +30,11 @@ interface ProductLabelStorageFacadeInterface
      *
      * @api
      *
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function unpublishLabelDictionary();
+    public function unpublishLabelDictionary(array $productLabelIds);
 
     /**
      * Specification:

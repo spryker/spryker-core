@@ -9,6 +9,10 @@
     </transfer>
 
     <transfer name="ProductLabelDictionaryStorage">
+        <property name="idProductLabelDictionaryStorage" type="int"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="key" type="string"/>
         <property name="items" type="ProductLabelDictionaryItem[]" singular="item"/>
     </transfer>
 

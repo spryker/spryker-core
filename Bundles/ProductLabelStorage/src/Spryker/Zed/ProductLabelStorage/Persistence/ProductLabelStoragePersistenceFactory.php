@@ -10,11 +10,15 @@ namespace Spryker\Zed\ProductLabelStorage\Persistence;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface getRepository()
  */
 class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -48,5 +52,21 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createSpyProductLabelDictionaryStorageQuery()
     {
         return SpyProductLabelDictionaryStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
+     */
+    public function createProductLabelLocalizedAttributesMapper()
+    {
+        return new ProductLabelLocalizedAttributesMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper
+     */
+    public function createProductLabelDictionaryStorageMapper()
+    {
+        return new ProductLabelDictionaryStorageMapper();
     }
 }

@@ -28,3 +28,4 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

@@ -18,10 +18,20 @@
         <property name="position" type="int"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property
+            name="productLabelProductAbstracts"
+            type="ProductLabelProductAbstract[]"
+            singular="ProductLabelProductAbstract"/>
+        <property
             name="localizedAttributesCollection"
             singular="localizedAttributes"
             type="ProductLabelLocalizedAttributes[]"
         />
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstract">
+        <property name="idProductLabelProductAbstract" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="fkProductLabel" type="int"/>
     </transfer>
 
     <transfer name="ProductLabelLocalizedAttributes">
@@ -72,6 +82,12 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductLabelCriteria">
+        <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
+        <property name="idProductLabels" type="array" singular="idProductLabel"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
 </transfers>

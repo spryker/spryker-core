@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepository getRepository()
  */
 class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelStorageFacadeInterface
 {
@@ -19,11 +21,13 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function publishLabelDictionary()
+    public function publishLabelDictionary(array $productLabelIds)
     {
-        $this->getFactory()->createProductLabelDictionaryStorageWriter()->publish();
+        $this->getFactory()->createProductLabelDictionaryStorageWriter()->publish($productLabelIds);
     }
 
     /**
@@ -31,11 +35,13 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function unpublishLabelDictionary()
+    public function unpublishLabelDictionary(array $productLabelIds)
     {
-        $this->getFactory()->createProductLabelDictionaryStorageWriter()->unpublish();
+        $this->getFactory()->createProductLabelDictionaryStorageWriter()->unpublish($productLabelIds);
     }
 
     /**

@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
  */
 class ProductLabelMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {

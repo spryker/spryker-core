@@ -10,12 +10,16 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Storage;
 interface ProductLabelDictionaryStorageWriterInterface
 {
     /**
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function publish();
+    public function publish(array $productLabelIds = []);
 
     /**
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function unpublish();
+    public function unpublish(array $productLabelIds = []);
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
@@ -119,6 +120,20 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createLabelReader()
             ->findAllActiveLabelIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
+    {
+        return $this->getRepository()->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
     }
 
     /**

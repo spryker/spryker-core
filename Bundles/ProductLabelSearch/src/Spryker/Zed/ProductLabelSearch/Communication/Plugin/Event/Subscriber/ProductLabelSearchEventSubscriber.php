@@ -18,6 +18,7 @@ use Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener\ProductLa
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
  */
 class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

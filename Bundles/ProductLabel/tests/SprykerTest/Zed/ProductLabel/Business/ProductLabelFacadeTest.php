@@ -11,9 +11,11 @@ use Codeception\Test\Unit;
 use DateInterval;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
+use Generated\Shared\DataBuilder\ProductLabelCriteriaBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
@@ -80,6 +82,59 @@ class ProductLabelFacadeTest extends Unit
             ->findOne();
 
         $this->assertNull($deletedProductLabel, 'Product label record was not deleted');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActiveLabelsByCriteria(): void
+    {
+        //Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+                $storeTransferAT->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransferDE,
+                $storeTransferAT,
+
+            ],
+        ];
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        $productLabelCriteria = (new ProductLabelCriteriaBuilder())->seed([
+            ProductLabelCriteriaTransfer::ID_PRODUCT_ABSTRACTS => [$idProductAbstract],
+            ProductLabelCriteriaTransfer::ID_PRODUCT_LABELS => [$idProductLabel],
+            ProductLabelCriteriaTransfer::STORE_NAME => $storeTransferDE->getName(),
+
+        ])->build();
+
+        //Act
+        $productLabelFacade = $this->getProductLabelFacade();
+        $activeProductLabelsByTheGivenCriteria = $productLabelFacade->getActiveLabelsByCriteria($productLabelCriteria);
+
+        //Assert
+        $this->assertCount(
+            1,
+            $activeProductLabelsByTheGivenCriteria,
+            'Product label not found'
+        );
+
+        $this->assertEquals(
+            $idProductLabel,
+            $activeProductLabelsByTheGivenCriteria[0]->getIdProductLabel(),
+            'Wrong product label'
+        );
     }
 
     /**

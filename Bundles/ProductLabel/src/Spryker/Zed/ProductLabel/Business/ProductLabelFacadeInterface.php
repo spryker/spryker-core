@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
@@ -91,6 +92,23 @@ interface ProductLabelFacadeInterface
      * @return int[]
      */
     public function findActiveLabelIdsByIdProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Finds product labels by the given criteria.
+     * - Expects store name to be provided.
+     * - Expects product abstract ids to be provided.
+     * - Expects product label ids to be provided.
+     * - Returns a collection of product-label transfers.
+     * - Returns an empty collection if either store name or product label ids or product abstract ids are missing.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array;
 
     /**
      * Specification:

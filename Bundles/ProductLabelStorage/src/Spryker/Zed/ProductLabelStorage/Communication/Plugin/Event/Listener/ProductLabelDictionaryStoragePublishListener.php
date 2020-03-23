@@ -35,6 +35,10 @@ class ProductLabelDictionaryStoragePublishListener extends AbstractPlugin implem
     {
         $this->preventTransaction();
 
-        $this->getFacade()->publishLabelDictionary();
+        $productLabelIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventTransfers);
+
+        $this->getFacade()->publishLabelDictionary($productLabelIds);
     }
 }

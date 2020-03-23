@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
  */
 class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
@@ -30,11 +31,22 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
+        $productAbstractPageSearchTransfer->setLabelIds(
+            $this->getLabelIds($productData, $productAbstractPageSearchTransfer)
+        );
+    }
+
+    /**
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     *
+     * @return array
+     */
+    protected function getLabelIds(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
+    {
         $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
 
-        $productAbstractPageSearchTransfer->setLabelIds(
-            $productPayloadTransfer->getLabelIds() ?? []
-        );
+        return $productPayloadTransfer->getLabelIds()[$productPayloadTransfer->getIdProductAbstract()][$productAbstractPageSearchTransfer->getStore()] ?? [];
     }
 
     /**

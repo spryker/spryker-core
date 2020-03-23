@@ -12,7 +12,10 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelMapper;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper;
 
 /**
@@ -52,7 +55,11 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createProductLabelMapper(): ProductLabelMapper
     {
-        return new ProductLabelMapper($this->createProductLabelStoreRelationMapper());
+        return new ProductLabelMapper(
+            $this->createProductLabelStoreRelationMapper(),
+            $this->createProductLabelLocalizedAttributesMapper(),
+            $this->createProductLabelProductAbstractsMapper()
+        );
     }
 
     /**
@@ -69,5 +76,29 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     public function createProductLabelStoreQuery(): SpyProductLabelStoreQuery
     {
         return SpyProductLabelStoreQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
+     */
+    public function createProductLabelLocalizedAttributesMapper()
+    {
+        return new ProductLabelLocalizedAttributesMapper($this->createLocaleMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper
+     */
+    public function createLocaleMapper()
+    {
+        return new LocaleMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper
+     */
+    public function createProductLabelProductAbstractsMapper()
+    {
+        return new ProductLabelProductAbstractsMapper();
     }
 }

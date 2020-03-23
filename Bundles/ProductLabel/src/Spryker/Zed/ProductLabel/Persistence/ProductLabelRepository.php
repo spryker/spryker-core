@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
@@ -93,6 +94,48 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
             ->leftJoinWithProductLabelStore()
+            ->find();
+
+        return $this->getFactory()
+            ->createProductLabelMapper()
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
+    {
+        $productLabelEntities = $this->getFactory()
+            ->createProductLabelQuery()
+            ->_if(count($productLabelCriteriaTransfer->getIdProductLabels()))
+                ->filterByIdProductLabel_In($productLabelCriteriaTransfer->getIdProductLabels())
+            ->_endif()
+            ->_if(count($productLabelCriteriaTransfer->getIdProductAbstracts()))
+                ->useSpyProductLabelProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getIdProductAbstracts())
+                ->endUse()
+            ->_endIf()
+            ->_if($productLabelCriteriaTransfer->getStoreName())
+                ->useProductLabelStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName($productLabelCriteriaTransfer->getStoreName())
+                    ->endUse()
+                ->endUse()
+            ->_endIf()
+            ->leftJoinSpyProductLabelLocalizedAttributes()
+            ->filterByIsActive(true)
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->_or()
+            ->filterByValidFrom(null, Criteria::ISNULL)
+            ->filterByValidTo('now', Criteria::GREATER_EQUAL)
+            ->_or()
+            ->filterByValidTo(null, Criteria::ISNULL)
+            ->orderByIsExclusive(Criteria::DESC)
+            ->orderByPosition(Criteria::ASC)
+            ->groupByIdProductLabel()
             ->find();
 
         return $this->getFactory()
