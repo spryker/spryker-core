@@ -79,6 +79,11 @@ class DummyMarketplacePaymentFacadeTest extends Unit
         $filteredPaymentMethodsTransfer = $this->tester->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
 
         // Assert
-        $this->assertEmpty($filteredPaymentMethodsTransfer->getMethods());
+        foreach ($filteredPaymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+            $this->assertNotSame(
+                DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME,
+                $paymentMethodTransfer->getPaymentProvider()->getName()
+            );
+        }
     }
 }
