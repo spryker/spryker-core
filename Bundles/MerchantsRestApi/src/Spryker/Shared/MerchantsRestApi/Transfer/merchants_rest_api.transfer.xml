@@ -17,7 +17,7 @@
     <transfer name="LegalInformation">
         <property name="terms" type="string"/>
         <property name="cancellationPolicy" type="string"/>
-        <property name="Imprint" type="string"/>
+        <property name="imprint" type="string"/>
         <property name="dataPrivacy" type="string"/>
     </transfer>
 
