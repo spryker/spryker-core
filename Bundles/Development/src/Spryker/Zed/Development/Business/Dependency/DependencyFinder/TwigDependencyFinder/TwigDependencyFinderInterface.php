@@ -23,5 +23,8 @@ interface TwigDependencyFinderInterface
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function checkDependencyInFile(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface;
+    public function checkDependencyInFile(
+        DependencyFinderContextInterface $context,
+        DependencyContainerInterface $dependencyContainer
+    ): DependencyContainerInterface;
 }

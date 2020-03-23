@@ -36,8 +36,12 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $price = $productData['price'];
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, 'price', $price)

@@ -278,7 +278,7 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getFormattedAddressArray(AddressTransfer $addressTransfer)
     {

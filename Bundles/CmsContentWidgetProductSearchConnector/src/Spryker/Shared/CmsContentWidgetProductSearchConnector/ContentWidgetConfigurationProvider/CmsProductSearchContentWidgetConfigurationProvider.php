@@ -23,7 +23,7 @@ class CmsProductSearchContentWidgetConfigurationProvider implements CmsContentWi
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableTemplates()
     {

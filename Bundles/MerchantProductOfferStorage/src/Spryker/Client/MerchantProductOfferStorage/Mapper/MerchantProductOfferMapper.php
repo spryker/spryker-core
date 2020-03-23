@@ -17,8 +17,10 @@ class MerchantProductOfferMapper implements MerchantProductOfferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
-    public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(array $data, ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
-    {
+    public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
+        array $data,
+        ProductOfferStorageTransfer $productOfferStorageTransfer
+    ): ProductOfferStorageTransfer {
         $productOfferStorageTransfer->fromArray($data, true);
 
         return $productOfferStorageTransfer;

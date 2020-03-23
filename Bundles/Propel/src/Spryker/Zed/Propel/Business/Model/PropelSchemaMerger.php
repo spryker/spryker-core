@@ -268,8 +268,12 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return \SimpleXMLElement|null
      */
-    protected function getToXmlElementChild(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlChildElement, string $fromXmlChildTagName, string $source): ?SimpleXMLElement
-    {
+    protected function getToXmlElementChild(
+        SimpleXMLElement $toXmlElement,
+        SimpleXMLElement $fromXmlChildElement,
+        string $fromXmlChildTagName,
+        string $source
+    ): ?SimpleXMLElement {
         $toXmlElements = $this->retrieveToXmlElements($toXmlElement);
         $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
 
@@ -327,7 +331,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\SimpleXMLElement[]
      */
     private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {
