@@ -48,7 +48,7 @@ class ItemExpander implements ItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return string[]
      */
     protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
