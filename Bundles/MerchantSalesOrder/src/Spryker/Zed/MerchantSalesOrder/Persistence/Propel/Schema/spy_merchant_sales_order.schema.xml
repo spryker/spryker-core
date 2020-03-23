@@ -19,6 +19,10 @@
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
 
+        <index name="index-spy_merchant_sales_order-fk_sales_order">
+            <index-column name="fk_sales_order"/>
+        </index>
+
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_merchant_sales_order_pk_seq"/>

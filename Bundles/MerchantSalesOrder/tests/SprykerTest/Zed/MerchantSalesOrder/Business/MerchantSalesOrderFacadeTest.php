@@ -8,12 +8,10 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
@@ -30,7 +28,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 class MerchantSalesOrderFacadeTest extends Unit
 {
     protected const TEST_STATE_MACHINE = 'Test01';
-    protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
 
@@ -335,44 +332,6 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemWithMerchantReturnsUpdatedTransferWithCorrectData(): void
-    {
-        // Arrange
-        $itemTransfer = $this->tester->getItemTransfer([
-            ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
-        ]);
-        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
-
-        // Act
-        $newSalesOrderItemEntityTransfer = $this->tester
-            ->getFacade()
-            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
-
-        // Assert
-        $this->assertSame(static::TEST_MERCHANT_REFERENCE, $newSalesOrderItemEntityTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
-    {
-        // Arrange
-        $itemTransfer = $this->tester->getItemTransfer();
-        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
-
-        // Act
-        $newSalesOrderItemEntityTransfer = $this->tester
-            ->getFacade()
-            ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
-
-        // Assert
-        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateMerchantOrderItemReturnsCorrectUpdatedTransfer(): void
     {
         //Arrange
@@ -429,37 +388,37 @@ class MerchantSalesOrderFacadeTest extends Unit
     {
         return [
             'by id merchant order' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by id order and id merchant' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_ORDER,
                     MerchantOrderCriteriaTransfer::ID_MERCHANT,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by id order and merchant reference' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_ORDER,
                     MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'by merchant order reference' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE,
                 ],
-                0,
+                'merchantOrderItemsCount' => 0,
             ],
             'with items' => [
-                [
+                'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
                     MerchantOrderCriteriaTransfer::WITH_ITEMS,
                 ],
-                1,
+                'merchantOrderItemsCount' => 1,
             ],
         ];
     }
@@ -471,24 +430,24 @@ class MerchantSalesOrderFacadeTest extends Unit
     {
         return [
             'by id merchant order' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => 0,
                 ],
             ],
             'by id order and id merchant' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT => 0,
                     MerchantOrderCriteriaTransfer::ID_ORDER => 0,
                 ],
             ],
             'by id order and merchant reference' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => 'wrong_merchant_reference',
                     MerchantOrderCriteriaTransfer::ID_ORDER => 0,
                 ],
             ],
             'by merchant order reference' => [
-                [
+                'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => 'wrong_merchant_sales_order_reference',
                 ],
             ],

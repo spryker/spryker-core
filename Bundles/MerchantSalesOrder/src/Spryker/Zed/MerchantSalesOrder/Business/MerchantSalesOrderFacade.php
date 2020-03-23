@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -86,6 +88,25 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandOrderItemWithMerchant($salesOrderItemEntityTransfer, $itemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function expandShipmentExpenseWithMerchantReference(
+        ExpenseTransfer $expenseTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): ExpenseTransfer {
+        return $this->getFactory()
+            ->createExpenseExpander()
+            ->expandShipmentExpenseWithMerchantReference($expenseTransfer, $shipmentGroupTransfer);
     }
 
     /**
