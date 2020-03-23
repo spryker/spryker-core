@@ -26,6 +26,7 @@ class ProductRelationWriterStep extends PublishAwareStep implements DataImportSt
         $productRelationEntity = SpyProductRelationQuery::create()
             ->filterByFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
             ->filterByFkProductRelationType($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_RELATION_TYPE])
+            ->filterByQuerySetData(ProductRelationDataSetInterface::COL_RULE)
             ->findOneOrCreate();
 
         $productRelationEntity
