@@ -72,18 +72,13 @@ class DummyMarketplacePaymentFacadeTest extends Unit
         $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(null));
 
         $paymentMethod = (new PaymentMethodTransfer())
-            ->setPaymentProvider((new PaymentProviderTransfer())->setName(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME));
+            ->setPaymentProvider((new PaymentProviderTransfer())->setPaymentProviderKey(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME));
         $paymentMethodsTransfer = (new PaymentMethodsTransfer())->addMethod($paymentMethod);
 
         // Act
         $filteredPaymentMethodsTransfer = $this->tester->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
 
         // Assert
-        foreach ($filteredPaymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
-            $this->assertNotSame(
-                DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME,
-                $paymentMethodTransfer->getPaymentProvider()->getName()
-            );
-        }
+        $this->assertEmpty($filteredPaymentMethodsTransfer->getMethods()->getArrayCopy());
     }
 }
