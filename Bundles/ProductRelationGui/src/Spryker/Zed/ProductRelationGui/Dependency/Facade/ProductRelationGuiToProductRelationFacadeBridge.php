@@ -86,4 +86,14 @@ class ProductRelationGuiToProductRelationFacadeBridge implements ProductRelation
     {
         return $this->productRelationFacade->getProductAbstractDataById($idProductAbstract, $idLocale);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getStoresByProductRelationCriteria(ProductRelationCriteriaTransfer $productRelationCriteriaTransfer): array
+    {
+        return $this->productRelationFacade->getStoresByProductRelationCriteria($productRelationCriteriaTransfer);
+    }
 }

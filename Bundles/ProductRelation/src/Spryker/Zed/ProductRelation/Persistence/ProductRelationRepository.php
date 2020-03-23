@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ProductRelationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -268,5 +270,30 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         return $this->getFactory()
             ->createProductRelationMapper()
             ->mapProductRelationEntitiesToProductRelationTransfers($productRelationEntities, []);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getStoresByProductRelationCriteria(ProductRelationCriteriaTransfer $productRelationCriteriaTransfer): array
+    {
+        return $this->getFactory()->createProductRelationStoreQuery()
+            ->leftJoinWithStore()
+            ->select([
+                SpyStoreTableMap::COL_NAME,
+                SpyStoreTableMap::COL_ID_STORE,
+            ])
+            ->distinct()
+            ->useProductRelationQuery()
+                ->filterByFkProductAbstract($productRelationCriteriaTransfer->getFkProductAbstract())
+                  ->filterByProductRelationKey($productRelationCriteriaTransfer->getProductRelationKey(), Criteria::NOT_EQUAL)
+                ->useSpyProductRelationTypeQuery()
+                    ->filterByKey($productRelationCriteriaTransfer->getRelationTypeKey())
+                ->endUse()
+            ->endUse()
+            ->find()
+            ->getData();
     }
 }

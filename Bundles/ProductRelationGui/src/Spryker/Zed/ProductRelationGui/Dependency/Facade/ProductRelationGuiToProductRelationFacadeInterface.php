@@ -57,4 +57,13 @@ interface ProductRelationGuiToProductRelationFacadeInterface
      * @return array
      */
     public function getProductAbstractDataById(int $idProductAbstract, int $idLocale): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getStoresByProductRelationCriteria(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): array;
 }

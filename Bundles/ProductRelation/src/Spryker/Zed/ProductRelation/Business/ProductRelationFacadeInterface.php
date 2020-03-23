@@ -163,4 +163,19 @@ interface ProductRelationFacadeInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves the list of stores by provided criteria.
+     * - Expects that fk_product_abstract and relation_type_key were provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getStoresByProductRelationCriteria(
+        ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
+    ): array;
 }

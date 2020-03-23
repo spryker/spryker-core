@@ -80,6 +80,7 @@ class ProductRelationFormType extends AbstractType
             'constraints' => [
                 $this->getFactory()->createProductAbstractNotBlankConstraint(),
                 $this->getFactory()->createUniqueRelationTypeForProductAbstractAndQuerySetConstraint(),
+                $this->getFactory()->createUniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraint(),
             ],
         ]);
     }
