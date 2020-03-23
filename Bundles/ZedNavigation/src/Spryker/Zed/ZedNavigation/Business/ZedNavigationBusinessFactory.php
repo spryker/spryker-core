@@ -46,6 +46,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationItemFilter(): NavigationItemFilterInterface
     {
         return new NavigationItemFilter(
+            $this->getNavigationItemFilterPlugins(),
             $this->getNavigationItemCollectionFilterPlugins()
         );
     }

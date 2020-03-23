@@ -14,15 +14,22 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 class NavigationItemFilter implements NavigationItemFilterInterface
 {
     /**
+     * @var \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     */
+    protected $navigationItemFilterPlugins;
+
+    /**
      * @var \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
      */
     protected $navigationItemCollectionFilterPlugins;
 
     /**
+     * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[] $navigationItemFilterPlugins
      * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[] $navigationItemCollectionFilterPlugins
      */
-    public function __construct(array $navigationItemCollectionFilterPlugins)
+    public function __construct(array $navigationItemFilterPlugins, array $navigationItemCollectionFilterPlugins)
     {
+        $this->navigationItemFilterPlugins = $navigationItemFilterPlugins;
         $this->navigationItemCollectionFilterPlugins = $navigationItemCollectionFilterPlugins;
     }
 
@@ -38,7 +45,9 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             $navigationItems,
             $navigationItemCollectionTransfer
         );
-        $navigationItemCollectionTransfer = $this->applyFilterPlugins($navigationItemCollectionTransfer);
+        $navigationItemCollectionTransfer = $this->applyNavigationItemCollectionFilterPlugins(
+            $navigationItemCollectionTransfer
+        );
 
         return $this->filterNavigationItemsByNavigationItemCollectionTransfer(
             $navigationItems,
@@ -51,7 +60,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
      *
      * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
      */
-    protected function applyFilterPlugins(
+    protected function applyNavigationItemCollectionFilterPlugins(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {
         foreach ($this->navigationItemCollectionFilterPlugins as $navigationItemCollectionFilterPlugin) {
@@ -94,10 +103,16 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 continue;
             }
 
-            if (
-                $navigationItemCollectionTransfer->getNavigationItems()
-                    ->offsetExists($this->getNavigationItemKey($navigationItem))
-            ) {
+            $navigationItemKey = $this->getNavigationItemKey($navigationItem);
+
+            if (!$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
+                continue;
+            }
+
+            $navigationItemTransfer = $navigationItemCollectionTransfer->getNavigationItems()
+                ->offsetGet($navigationItemKey);
+
+            if ($this->isNavigationItemVisible($navigationItemTransfer)) {
                 $filteredNavigationItems[] = $navigationItem;
             }
         }
@@ -145,6 +160,22 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     protected function hasNestedNavigationItems(array $navigationItem): bool
     {
         return isset($navigationItem[MenuFormatter::PAGES]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItemTransfer
+     *
+     * @return bool
+     */
+    protected function isNavigationItemVisible(NavigationItemTransfer $navigationItemTransfer): bool
+    {
+        foreach ($this->navigationItemFilterPlugins as $navigationItemFilterPlugin) {
+            if (!$navigationItemFilterPlugin->isVisible($navigationItemTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

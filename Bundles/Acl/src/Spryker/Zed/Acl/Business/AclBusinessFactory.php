@@ -10,13 +10,13 @@ namespace Spryker\Zed\Acl\Business;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\Acl\AclConfigReader;
 use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Rule;
 use Spryker\Zed\Acl\Business\Model\RuleValidator;
-use Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilter;
-use Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -60,7 +60,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Acl\Business\NavigationItem\NavigationItemFilterInterface
+     * @return \Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface
      */
     public function createNavigationItemFilter(): NavigationItemFilterInterface
     {

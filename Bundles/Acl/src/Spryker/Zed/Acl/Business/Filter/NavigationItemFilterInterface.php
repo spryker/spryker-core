@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Acl\Business\NavigationItem;
+namespace Spryker\Zed\Acl\Business\Filter;
 
 use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 

@@ -35,6 +35,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUrlBuilder($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addNavigationItemFilterPlugins($container);
         $container = $this->addNavigationItemCollectionFilterPlugins($container);
 
         return $container;
