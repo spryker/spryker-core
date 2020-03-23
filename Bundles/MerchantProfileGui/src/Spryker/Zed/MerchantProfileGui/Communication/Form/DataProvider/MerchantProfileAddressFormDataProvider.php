@@ -21,8 +21,9 @@ class MerchantProfileAddressFormDataProvider
     /**
      * @param \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface $countryFacade
      */
-    public function __construct(MerchantProfileGuiToCountryFacadeInterface $countryFacade)
-    {
+    public function __construct(
+        MerchantProfileGuiToCountryFacadeInterface $countryFacade
+    ) {
         $this->countryFacade = $countryFacade;
     }
 

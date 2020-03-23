@@ -21,9 +21,8 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
     /**
      * @param \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface $countryFacade
      */
-    public function __construct(
-        MerchantProfileGuiPageToCountryFacadeInterface $countryFacade
-    ) {
+    public function __construct(MerchantProfileGuiPageToCountryFacadeInterface $countryFacade)
+    {
         $this->countryFacade = $countryFacade;
     }
 
