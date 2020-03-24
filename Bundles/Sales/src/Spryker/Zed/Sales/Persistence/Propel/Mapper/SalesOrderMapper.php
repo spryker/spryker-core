@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -71,7 +72,7 @@ class SalesOrderMapper
                 $orderTransfer = $orderTransfers->offsetGet($idSalesOrder);
 
                 $orderTransfer->addItem(
-                    (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true)
+                    $this->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer())
                 );
             }
         }
@@ -102,6 +103,26 @@ class SalesOrderMapper
         }
 
         return $orderTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapSalesOrderItemEntityToItemTransfer(
+        SpySalesOrderItem $salesOrderItemEntity,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
+
+        $itemTransfer->setSumNetPrice($salesOrderItemEntity->getNetPrice());
+        $itemTransfer->setSumGrossPrice($salesOrderItemEntity->getGrossPrice());
+        $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
+
+        return $itemTransfer;
     }
 
     /**

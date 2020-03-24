@@ -18,11 +18,20 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
-    public function __construct(SalesRepositoryInterface $salesRepository)
-    {
+    protected $searchOrderExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
+     */
+    public function __construct(
+        SalesRepositoryInterface $salesRepository,
+        array $searchOrderExpanderPlugins
+    ) {
         $this->salesRepository = $salesRepository;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
     }
 
     /**
@@ -32,6 +41,28 @@ class OrderSearchReader implements OrderSearchReaderInterface
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        return $this->salesRepository->searchOrders($orderListTransfer);
+        $orderListTransfer = $this->salesRepository->searchOrders($orderListTransfer);
+
+        $orderTransfers = $this->executeOrderExpanderPlugins(
+            $orderListTransfer->getOrders()->getArrayCopy()
+        );
+
+        $orderListTransfer->getOrders()->exchangeArray($orderTransfers);
+
+        return $orderListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    protected function executeOrderExpanderPlugins(array $orderTransfers): array
+    {
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
+        }
+
+        return $orderTransfers;
     }
 }

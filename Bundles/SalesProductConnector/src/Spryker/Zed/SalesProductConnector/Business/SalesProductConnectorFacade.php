@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface getRepository()
  */
 class SalesProductConnectorFacade extends AbstractFacade implements SalesProductConnectorFacadeInterface
 {
@@ -80,5 +81,21 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
     public function hydrateProductIds(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()->createProductIdHydrator()->hydrateProductIds($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithMetadata(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandOrdersWithMetadata($orderTransfers);
     }
 }

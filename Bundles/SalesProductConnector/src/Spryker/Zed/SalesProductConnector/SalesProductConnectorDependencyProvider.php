@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesProductConnector\Dependency\QueryContainer\ProductToSalesProductConnectorQueryContainerBridge;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
+ */
 class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -39,9 +42,29 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
+
+        $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new SalesProductConnectorToUtilEncodingBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }
