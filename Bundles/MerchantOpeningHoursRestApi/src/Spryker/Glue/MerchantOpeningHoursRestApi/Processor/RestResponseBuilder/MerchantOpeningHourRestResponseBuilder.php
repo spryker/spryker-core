@@ -103,8 +103,8 @@ class MerchantOpeningHourRestResponseBuilder implements MerchantOpeningHourRestR
             ->addError(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
-                    ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
+                    ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_OPENING_HOURS_NOT_FOUND)
+                    ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_OPENING_HOURS_NOT_FOUND)
             );
     }
 }
