@@ -17,6 +17,7 @@ class MerchantsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
 {
     /**
      * {@inheritDoc}
+     * - Configures available actions for `merchants` resource.
      *
      * @api
      *

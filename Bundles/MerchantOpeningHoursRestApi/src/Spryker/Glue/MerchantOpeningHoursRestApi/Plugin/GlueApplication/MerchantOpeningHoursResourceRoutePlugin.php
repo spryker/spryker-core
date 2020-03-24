@@ -18,6 +18,7 @@ class MerchantOpeningHoursResourceRoutePlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
+     * - Configures available actions for `merchant-opening-hours` resource.
      *
      * @api
      *

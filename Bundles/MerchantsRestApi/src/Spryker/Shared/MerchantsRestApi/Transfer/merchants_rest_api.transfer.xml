@@ -53,4 +53,8 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+    </transfer>
+
 </transfers>

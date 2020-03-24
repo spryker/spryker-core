@@ -18,7 +18,16 @@ use Spryker\Glue\MerchantOpeningHoursRestApi\MerchantOpeningHoursRestApiConfig;
 class MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     * - Adds `merchant-opening-hours` resource as a relationship by the resource id.
+     * - Identifier of passed resources should contain `merchant` reference.
+     *
+     * @api
+     *
+     * @param array $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
@@ -29,6 +38,10 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin extends 
 
     /**
      * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
      */
     public function getRelationshipResourceType(): string
     {

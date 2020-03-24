@@ -32,6 +32,7 @@
     </transfer>
 
     <transfer name="MerchantOpeningHoursStorage">
+        <property name="dateSchedule" type="DateSchedule[]" singular="dateSchedule"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

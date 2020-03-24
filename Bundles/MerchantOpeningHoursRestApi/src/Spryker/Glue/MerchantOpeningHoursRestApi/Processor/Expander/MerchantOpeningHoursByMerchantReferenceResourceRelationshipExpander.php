@@ -68,7 +68,7 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
             ->getMerchantOpeningHoursByMerchantIds($merchantIds);
 
-        $merchantOpeningHoursStorageTransfers = $this->flipIdsToMerchantReference($merchantOpeningHoursStorageTransfers, $merchantIds);
+        $merchantOpeningHoursStorageTransfers = $this->flipIdsToMerchantReferences($merchantOpeningHoursStorageTransfers, $merchantIds);
 
         $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
             ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
@@ -123,7 +123,7 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    protected function flipIdsToMerchantReference(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
+    protected function flipIdsToMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
     {
         $flippedMerchantOpeningHoursStorageTransfers = [];
         $merchantIds = array_flip($merchantIds);
