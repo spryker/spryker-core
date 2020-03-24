@@ -55,7 +55,7 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
      */
     protected function clearItemsShipmentMethod(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment()) {
                 $itemTransfer->getShipment()->setMethod(null);
             }

@@ -275,7 +275,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         // Act
         $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
-        $itemTransfer = $cartChangeTransfer->getItems()->getIterator()->current();
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
 
         // Assert
         $this->assertEmpty($itemTransfer->getShipment()->getMethod());
@@ -297,7 +297,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         // Act
         $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
-        $itemTransfer = $cartChangeTransfer->getItems()->getIterator()->current();
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
 
         // Assert
         $this->assertEmpty($itemTransfer->getShipment()->getMethod());
@@ -341,7 +341,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
 
         // Assert
-        $itemTransfer = $cartChangeTransfer->getItems()->getIterator()->current();
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
         $this->assertNotEmpty($itemTransfer->getShipment()->getMethod());
     }
 
@@ -441,7 +441,6 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $quoteTransfer->addExpense($shipmentExpense);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->addItem($itemTransfer);
 
         return $cartChangeTransfer;
     }
