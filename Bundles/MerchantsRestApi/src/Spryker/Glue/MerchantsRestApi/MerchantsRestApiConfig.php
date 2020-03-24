@@ -19,7 +19,4 @@ class MerchantsRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING = '3502';
     public const RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING = 'Merchant identifier is not specified.';
-
-    public const RESPONSE_CODE_MERCHANT_ADDRESSES_NOT_FOUND = '3504';
-    public const RESPONSE_DETAIL_MERCHANT_ADDRESSES_NOT_FOUND = 'Merchant addresses not found.';
 }

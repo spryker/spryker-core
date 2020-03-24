@@ -37,9 +37,4 @@ interface MerchantAddressesRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createMerchantAddressesNotFoundErrorResponse(): RestResponseInterface;
 }

@@ -104,18 +104,4 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
     }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createMerchantAddressesNotFoundErrorResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_ADDRESSES_NOT_FOUND)
-                    ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_ADDRESSES_NOT_FOUND)
-            );
-    }
 }
