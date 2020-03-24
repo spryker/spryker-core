@@ -79,7 +79,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentTransfer)) {
+            if (!$this->isShipmentExpenseUpdateNeeded($quoteTransfer, $shipmentGroupTransfer)) {
                 continue;
             }
 
@@ -116,23 +116,48 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return bool
      */
-    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
-        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
 
-        if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
+        if (!$shipmentTransfer || !$shipmentTransfer->getMethod() || !$shipmentTransfer->getMethod()->getIdShipmentMethod()) {
             return false;
         }
+
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
 
         if ($this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) || $shipmentMethodTransfer->getSourcePrice()) {
             return true;
         }
 
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isQuoteShipmentExpenseSourcePriceSet($quoteTransfer, $shipmentGroupTransfer)) {
+            return true;
+        }
+
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteShipmentExpenseSourcePriceSet(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    {
+        $expenseTransfer = $this->findExpenseByShipmentGroup($quoteTransfer, $shipmentGroupTransfer);
+
+        if (!$expenseTransfer || !$expenseTransfer->getShipment()) {
+            return false;
+        }
+
+        $expenseShipmentMethod = $expenseTransfer->getShipment()->getMethod();
+
+        return $expenseShipmentMethod->getSourcePrice() !== null;
     }
 
     /**
