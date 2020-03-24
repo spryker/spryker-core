@@ -14,5 +14,5 @@ interface MerchantsRestApiToMerchantStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function findByMerchantReference(array $merchantReferences): array;
+    public function getByMerchantReferences(array $merchantReferences): array;
 }

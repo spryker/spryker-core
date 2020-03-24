@@ -40,18 +40,18 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $indexedMerchantStorageTransfers
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestResourceCollection(array $indexedMerchantStorageTransfers): array
+    public function createRestResources(array $merchantStorageTransfers): array
     {
-        $merchantRestResourceCollection = [];
-        foreach ($indexedMerchantStorageTransfers as $merchantReference => $merchantStorageTransfer) {
-            $merchantRestResourceCollection[$merchantReference] = $this->createMerchantRestResource($merchantStorageTransfer);
+        $merchantRestResources = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantRestResources[] = $this->createMerchantRestResource($merchantStorageTransfer);
         }
 
-        return $merchantRestResourceCollection;
+        return $merchantRestResources;
     }
 
     /**
@@ -67,15 +67,15 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                 new RestMerchantsAttributesTransfer()
             );
 
-        $restResourceId = $merchantStorageTransfer->getMerchantReference();
+        $idRestResource = $merchantStorageTransfer->getMerchantReference();
 
         return $this->restResourceBuilder->createRestResource(
             MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-            $restResourceId,
+            $idRestResource,
             $restMerchantsAttributesTransfer
         )->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($restResourceId)
+            $this->createSelfLink($idRestResource)
         );
     }
 

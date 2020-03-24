@@ -9,7 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface MerchantResourceRelationshipExpanderInterface
+interface MerchantRelationshipOrderResourceExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,5 +17,5 @@ interface MerchantResourceRelationshipExpanderInterface
      *
      * @return void
      */
-    public function addRelationshipsByOrderItemsMerchantReferences(array $resources, RestRequestInterface $restRequest): void;
+    public function addRelationshipsByOrderMerchantReferences(array $resources, RestRequestInterface $restRequest): void;
 }

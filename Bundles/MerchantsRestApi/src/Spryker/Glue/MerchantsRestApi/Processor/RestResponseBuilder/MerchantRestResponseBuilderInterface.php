@@ -10,9 +10,9 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 interface MerchantRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $indexedMerchantStorageTransfers
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestResourceCollection(array $indexedMerchantStorageTransfers): array;
+    public function createRestResources(array $merchantStorageTransfers): array;
 }

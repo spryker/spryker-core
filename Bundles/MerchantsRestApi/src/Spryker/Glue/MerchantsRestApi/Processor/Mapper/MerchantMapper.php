@@ -22,7 +22,6 @@ class MerchantMapper implements MerchantMapperInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
     ): RestMerchantsAttributesTransfer {
-        return $restMerchantsAttributesTransfer->setReference($merchantStorageTransfer->getMerchantReference())
-            ->fromArray($merchantStorageTransfer->toArray(), true);
+        return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true);
     }
 }

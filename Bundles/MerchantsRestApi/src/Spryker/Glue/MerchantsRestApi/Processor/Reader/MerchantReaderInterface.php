@@ -7,12 +7,12 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
-interface MerchantStorageReaderInterface
+interface MerchantReaderInterface
 {
     /**
      * @param string[] $merchantReferences
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getMerchantsResourceCollection(array $merchantReferences): array;
+    public function getMerchantsResources(array $merchantReferences): array;
 }

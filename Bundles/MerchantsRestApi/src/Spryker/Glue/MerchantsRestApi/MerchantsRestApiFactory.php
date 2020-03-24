@@ -9,23 +9,23 @@ namespace Spryker\Glue\MerchantsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantResourceRelationshipExpander;
-use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantResourceRelationshipExpanderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantRelationshipOrderResourceExpander;
+use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantRelationshipOrderResourceExpanderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantStorageReader;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantStorageReaderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
 class MerchantsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantRelationshipOrderResourceExpanderInterface
      */
-    public function createMerchantResourceRelationshipExpander(): MerchantResourceRelationshipExpanderInterface
+    public function createMerchantRelationshipOrderResourceExpander(): MerchantRelationshipOrderResourceExpanderInterface
     {
-        return new MerchantResourceRelationshipExpander($this->createMerchantStorageReader());
+        return new MerchantRelationshipOrderResourceExpander($this->createMerchantStorageReader());
     }
 
     /**
@@ -37,11 +37,11 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantStorageReaderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface
      */
-    public function createMerchantStorageReader(): MerchantStorageReaderInterface
+    public function createMerchantStorageReader(): MerchantReaderInterface
     {
-        return new MerchantStorageReader($this->getMerchantStorageClient(), $this->createMerchantRestResponseBuilder());
+        return new MerchantReader($this->getMerchantStorageClient(), $this->createMerchantRestResponseBuilder());
     }
 
     /**

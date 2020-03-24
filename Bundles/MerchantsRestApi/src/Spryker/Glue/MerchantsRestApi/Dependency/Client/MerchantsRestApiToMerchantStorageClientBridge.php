@@ -27,9 +27,11 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
      *
      * @return array
      */
-    public function findByMerchantReference(array $merchantReferences): array
+    public function getByMerchantReferences(array $merchantReferences): array
     {
-        // TODO: Implement findByMerchantReference() method.
+        // TODO: Replace implementation with:
+        // return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+
         $result = [];
         foreach ($merchantReferences as $merchantReference) {
             $result[] = (new MerchantStorageTransfer())->setMerchantReference($merchantReference);

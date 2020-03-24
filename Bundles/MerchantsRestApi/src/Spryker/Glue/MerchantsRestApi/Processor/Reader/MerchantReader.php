@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
-class MerchantStorageReader implements MerchantStorageReaderInterface
+class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface
@@ -39,28 +39,10 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getMerchantsResourceCollection(array $merchantReferences): array
+    public function getMerchantsResources(array $merchantReferences): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
 
-        $indexedMerchantStorageTransfers = $this->indexByMerchantReference($merchantStorageTransfers);
-
-        return $this->merchantRestResponseBuilder->createRestResourceCollection($indexedMerchantStorageTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    protected function indexByMerchantReference(array $merchantStorageTransfers): array
-    {
-        $indexedMerchantStorageTransfers = [];
-
-        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $indexedMerchantStorageTransfers[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer;
-        }
-
-        return $indexedMerchantStorageTransfers;
+        return $this->merchantRestResponseBuilder->createRestResources($merchantStorageTransfers);
     }
 }

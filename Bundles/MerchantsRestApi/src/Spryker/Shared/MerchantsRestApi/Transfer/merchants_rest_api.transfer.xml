@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="RestMerchantsAttributes">
-        <property name="reference" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 

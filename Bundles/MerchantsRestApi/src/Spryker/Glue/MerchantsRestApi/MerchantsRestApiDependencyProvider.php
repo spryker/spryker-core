@@ -40,8 +40,10 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addMerchantStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
-            // TODO: add merchant storage
-            return new MerchantsRestApiToMerchantStorageClientBridge();
+            return new MerchantsRestApiToMerchantStorageClientBridge(
+            // TODO: uncomment when MerchantStorage will be released.
+//                $container->getLocator()->merchantStorage()->client()
+            );
         });
 
         return $container;
