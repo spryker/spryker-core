@@ -33,6 +33,21 @@ class ProductTableDataMapper
     protected const COL_KEY_STATUS = 'status';
 
     /**
+     * @uses \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable::COL_KEY_IMAGE
+     */
+    protected const COL_KEY_IMAGE = 'image';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable::COL_KEY_OFFERS
+     */
+    protected const COL_KEY_OFFERS = 'offers';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable::COL_KEY_STORES
+     */
+    protected const COL_KEY_STORES = 'stores';
+
+    /**
      * @uses \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable::COL_KEY_VALID_FROM
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
@@ -46,6 +61,9 @@ class ProductTableDataMapper
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
         self::COL_KEY_NAME => SpyProductLocalizedAttributesTableMap::COL_NAME,
         self::COL_KEY_STATUS => SpyProductTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_IMAGE => ProductTableRowDataTransfer::IMAGE,
+        self::COL_KEY_OFFERS => ProductTableRowDataTransfer::OFFERS_COUNT,
+        self::COL_KEY_STORES => ProductTableRowDataTransfer::STORES,
         self::COL_KEY_VALID_FROM => SpyProductValidityTableMap::COL_VALID_FROM,
         self::COL_KEY_VALID_TO => SpyProductValidityTableMap::COL_VALID_TO,
     ];
@@ -76,12 +94,17 @@ class ProductTableDataMapper
         $rowsData = [];
 
         foreach ($productTableDataArray as $productTableRowDataArray) {
-            $attributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::ATTRIBUTES] ?? null,
+            $productConcreteAttributes = $this->utilEncodingService->decodeJson(
+                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
+                true
+            );
+            $productAbstractAttributes = $this->utilEncodingService->decodeJson(
+                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES] ?? null,
                 true
             );
             $productTableRowDataTransfer = (new ProductTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
-            $productTableRowDataTransfer->setAttributes(is_array($attributes) ? $attributes : []);
+            $productTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
+            $productTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
             $rowsData[] = $productTableRowDataTransfer;
         }
 

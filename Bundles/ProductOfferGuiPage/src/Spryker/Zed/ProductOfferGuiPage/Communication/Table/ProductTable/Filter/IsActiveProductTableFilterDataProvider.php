@@ -22,11 +22,11 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     public function getFilterData(): GuiTableFilterTransfer
     {
         return (new GuiTableFilterTransfer())
-            ->setKey(static::FILTER_NAME)
+            ->setId(static::FILTER_NAME)
             ->setTitle('Status')
             ->setType('select')
-            ->addOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addOption(static::OPTION_NAME_VALUES, $this->getIsActiveOptions());
+            ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
+            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsActiveOptions());
     }
 
     /**

@@ -12,35 +12,35 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductTableDataTransfer;
-use Generated\Shared\Transfer\ProductTableRowDataTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 
 class ProductTable extends AbstractTable
 {
-    protected const COL_KEY_NAME = 'name';
-    protected const COL_KEY_SKU = 'sku';
-    protected const COL_KEY_IMAGE = 'image';
-    protected const COL_KEY_STORES = 'stores';
-    protected const COL_KEY_STATUS = 'status';
-    protected const COL_KEY_OFFERS = 'offers';
-    protected const COL_KEY_VALID_FROM = 'validFrom';
-    protected const COL_KEY_VALID_TO = 'validTo';
+    public const COL_KEY_NAME = 'name';
+    public const COL_KEY_SKU = 'sku';
+    public const COL_KEY_IMAGE = 'image';
+    public const COL_KEY_STORES = 'stores';
+    public const COL_KEY_STATUS = 'status';
+    public const COL_KEY_OFFERS = 'offers';
+    public const COL_KEY_VALID_FROM = 'validFrom';
+    public const COL_KEY_VALID_TO = 'validTo';
 
-    protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+    protected const PATTERN_DATE_FORMAT = 'DD/MM/YYYY';
 
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
-    protected const DATA_URL = '/product-offer-gui-page/product-list/get-table-data';
+    /**
+     * @uses \Spryker\Zed\ProductOfferGuiPage\Communication\Controller\ProductTableController::getDataAction()
+     */
+    protected const DATA_URL = '/product-offer-gui-page/product-table/get-data';
 
     /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
      */
-    protected $productOfferGuiPageFacade;
+    protected $productTableDataProvider;
 
     /**
      * @var array|\Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[]
@@ -53,16 +53,19 @@ class ProductTable extends AbstractTable
     protected $productTableCriteriaBuilder;
 
     /**
-     * @param \Spryker\Zed\ProductOfferGuiPage\Business\ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface $productTableDataProvider
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[] $productTableFilterDataProviders
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
      */
     public function __construct(
-        ProductOfferGuiPageFacadeInterface $productOfferGuiPageFacade,
+        ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductTableDataProviderInterface $productTableDataProvider,
         array $productTableFilterDataProviders,
         ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
     ) {
-        $this->productOfferGuiPageFacade = $productOfferGuiPageFacade;
+        parent::__construct($utilEncodingService);
+        $this->productTableDataProvider = $productTableDataProvider;
         $this->productTableFilterDataProviders = $productTableFilterDataProviders;
         $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
     }
@@ -73,9 +76,8 @@ class ProductTable extends AbstractTable
     protected function provideTableData(): GuiTableDataTransfer
     {
         $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
-        $productTableDataTransfer = $this->productOfferGuiPageFacade->getProductTableData($productTableCriteriaTransfer);
 
-        return $this->mapProductTableDataTransferToTableDataTransfer($productTableDataTransfer, new GuiTableDataTransfer());
+        return $this->productTableDataProvider->getProductTableData($productTableCriteriaTransfer);
     }
 
     /**
@@ -89,21 +91,9 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
-        $guiTableConfigurationTransfer->setAllowedFilters($this->getAllowedFilterNames());
         $guiTableConfigurationTransfer->setDataUrl(static::DATA_URL);
 
         return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getAllowedFilterNames(): array
-    {
-        return [
-            HasOffersProductTableFilterDataProvider::FILTER_NAME,
-            IsActiveProductTableFilterDataProvider::FILTER_NAME,
-        ];
     }
 
     /**
@@ -120,7 +110,7 @@ class ProductTable extends AbstractTable
                 ->setType('text')
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -129,7 +119,7 @@ class ProductTable extends AbstractTable
                 ->setType('image')
                 ->setSortable(false)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -138,7 +128,7 @@ class ProductTable extends AbstractTable
                 ->setType('text')
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -147,7 +137,8 @@ class ProductTable extends AbstractTable
                 ->setType('text')
                 ->setSortable(false)
                 ->setHideable(false)
-                ->setMultiple(true)
+                ->setMultiRenderMode(true)
+                ->setMultiRenderModeLimit(2)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -156,7 +147,7 @@ class ProductTable extends AbstractTable
                 ->setType('text')
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -164,9 +155,9 @@ class ProductTable extends AbstractTable
                 ->setTitle('Valid From')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(false)
+                ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -174,9 +165,9 @@ class ProductTable extends AbstractTable
                 ->setTitle('Valid To')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(false)
+                ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
@@ -184,7 +175,7 @@ class ProductTable extends AbstractTable
                 ->setTitle('Offers')
                 ->setType('text')
                 ->setSortable(true)
-                ->setMultiple(false)
+                ->setMultiRenderMode(false)
         );
 
         return $guiTableConfigurationTransfer;
@@ -227,45 +218,6 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
-     * @param \Generated\Shared\Transfer\GuiTableDataTransfer $guiTableDataTransfer
-     *
-     * @throws \Spryker\Zed\ProductOfferGuiPage\Exception\InvalidPaginationDataException
-     *
-     * @return \Generated\Shared\Transfer\GuiTableDataTransfer
-     */
-    protected function mapProductTableDataTransferToTableDataTransfer(
-        ProductTableDataTransfer $productTableDataTransfer,
-        GuiTableDataTransfer $guiTableDataTransfer
-    ): GuiTableDataTransfer {
-        $tableRowsData = [];
-
-        foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
-            $tableRowsData[] = [
-                static::COL_KEY_NAME => $this->buildNameColumnData($productTableRowDataTransfer),
-                static::COL_KEY_SKU => $productTableRowDataTransfer->getSku(),
-                static::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
-                static::COL_KEY_STORES => $this->buildStoresColumnData($productTableRowDataTransfer),
-                static::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount() ?? 0,
-                static::COL_KEY_STATUS => $productTableRowDataTransfer->getIsActive(),
-                static::COL_KEY_VALID_FROM => $productTableRowDataTransfer->getValidFrom(),
-                static::COL_KEY_VALID_TO => $productTableRowDataTransfer->getValidTo(),
-            ];
-        }
-
-        $paginationTransfer = $productTableDataTransfer->getPagination();
-
-        if (!$paginationTransfer) {
-            throw new InvalidPaginationDataException('Pagination data is not present.');
-        }
-
-        return $guiTableDataTransfer->setData($tableRowsData)
-            ->setPage($paginationTransfer->getPage())
-            ->setSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
-    }
-
-    /**
      * TODO: url needs to be adjusted once the create offer part is ready.
      *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
@@ -278,8 +230,8 @@ class ProductTable extends AbstractTable
             ->setId('create-offer')
             ->setTitle('Create Offer')
             ->setType('form-overlay')
-            ->setUrl('https://path-to-create-offer-action/${row.sku}')
-            ->setIcon('icon-name');
+            ->addTypeOption('url', 'https://path-to-create-offer-action/${row.sku}')
+            ->addTypeOption('icon', 'icon-name');
 
         $guiTableConfigurationTransfer->addRowAction($guiTableRowActionTransfer);
 
@@ -296,47 +248,5 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 
         return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return string[]|string
-     */
-    protected function buildStoresColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer)
-    {
-        $productConcreteStores = explode(',', $productTableRowDataTransfer->getStores());
-
-        if (count($productConcreteStores) === 1) {
-            return $productConcreteStores[0];
-        }
-
-        return $productConcreteStores;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function buildNameColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
-    {
-        $productConcreteName = $productTableRowDataTransfer->getName();
-
-        if (!$productConcreteName) {
-            return null;
-        }
-
-        $extendedProductConcreteNameParts = [$productConcreteName];
-
-        foreach ($productTableRowDataTransfer->getAttributes() as $productConcreteAttribute) {
-            if (!$productConcreteAttribute) {
-                continue;
-            }
-
-            $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
-        }
-
-        return implode(', ', $extendedProductConcreteNameParts);
     }
 }

@@ -77,7 +77,7 @@ class CartCodesRestApiFactory extends AbstractFactory
      */
     public function createDiscountMapper(): DiscountMapperInterface
     {
-        return new DiscountMapper();
+        return new DiscountMapper($this->getDiscountMapperPlugins());
     }
 
     /**
@@ -108,5 +108,13 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function getCartsRestApiResource(): CartCodesRestApiToCartsRestApiResourceInterface
     {
         return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::RESOURCE_CARTS_REST_API);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[]
+     */
+    public function getDiscountMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::PLUGINS_DISCOUNT_MAPPER);
     }
 }

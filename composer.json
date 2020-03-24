@@ -64,6 +64,7 @@
     "spryker/cart-code": "*",
     "spryker/cart-code-extension": "*",
     "spryker/cart-codes-rest-api": "*",
+    "spryker/cart-codes-rest-api-extension": "*",
     "spryker/cart-currency-connector": "*",
     "spryker/cart-extension": "*",
     "spryker/cart-note": "*",

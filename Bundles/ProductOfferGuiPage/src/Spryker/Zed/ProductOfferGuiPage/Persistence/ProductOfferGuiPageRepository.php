@@ -11,12 +11,19 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableRowDataTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
@@ -37,19 +44,12 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     {
         $productConcreteMapper = $this->getFactory()->createProductTableDataMapper();
 
-        $productConcreteQuery = $this->buildBaseQuery($productTableCriteriaTransfer);
+        $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer);
         $productConcreteQuery = $this->applySearch($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addFilters($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
-        if (!$productTableCriteriaTransfer->getPagination()) {
-            return $productConcreteMapper->mapProductTableDataArrayToTableDataTransfer(
-                $productConcreteQuery->find()->getData(),
-                new ProductTableDataTransfer()
-            );
-        }
-
-        $paginationTransfer = $productTableCriteriaTransfer->getPagination();
+        $paginationTransfer = $productTableCriteriaTransfer->requirePagination()->getPagination();
         $propelPager = $this->getPagerForQuery($productConcreteQuery, $paginationTransfer);
         $paginationTransfer = $this->hydratePaginationTransfer($paginationTransfer, $propelPager);
 
@@ -64,19 +64,44 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
 
     /**
      * @module ProductOffer
+     * @module ProductImage
      *
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function buildBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
+    protected function buildProductTableBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $localeId = $productTableCriteriaTransfer->requireLocale()
-            ->getLocale()
-            ->requireIdLocale()
-            ->getIdLocale();
+        $localeId = $productTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
+        $merchantId = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser()->requireIdMerchant()->getIdMerchant();
 
+        $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $localeId);
+        $productConcreteQuery->leftJoinSpyProductValidity()
+            ->addAsColumn(ProductTableRowDataTransfer::SKU, SpyProductTableMap::COL_SKU)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
+            ->addAsColumn(ProductTableRowDataTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
+            ->addAsColumn(ProductTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
+            ->addAsColumn(ProductTableRowDataTransfer::IMAGE, sprintf('(%s)', $this->createProductImagesSubquery($localeId)))
+            ->addAsColumn(ProductTableRowDataTransfer::OFFERS_COUNT, sprintf('(%s)', $this->createProductOffersCountSubquery($merchantId)))
+            ->addAsColumn(ProductTableRowDataTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
+            ->addAsColumn(ProductTableRowDataTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
+            ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param int $localeId
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addLocalizedAttributesToProductTableQuery(SpyProductQuery $productConcreteQuery, int $localeId): SpyProductQuery
+    {
         $productConcreteQuery->joinSpyProductLocalizedAttributes()
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
@@ -85,33 +110,80 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
             )
             ->joinSpyProductAbstract()
             ->useSpyProductAbstractQuery()
-                ->joinSpyProductAbstractStore()
-                ->useSpyProductAbstractStoreQuery()
-                    ->joinSpyStore()
-                ->endUse()
-            ->endUse()
-            ->leftJoinSpyProductValidity()
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductTableRowDataTransfer::ID_PRODUCT)
-            ->withColumn(SpyProductTableMap::COL_SKU, ProductTableRowDataTransfer::SKU)
-            ->withColumn(SpyProductTableMap::COL_ATTRIBUTES, ProductTableRowDataTransfer::ATTRIBUTES)
-            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, ProductTableRowDataTransfer::IS_ACTIVE)
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductTableRowDataTransfer::NAME)
-            ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, ProductTableRowDataTransfer::VALID_FROM)
-            ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, ProductTableRowDataTransfer::VALID_TO)
-            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME), ProductTableRowDataTransfer::STORES)
-            ->select([
-                ProductTableRowDataTransfer::ID_PRODUCT,
-                ProductTableRowDataTransfer::SKU,
-                ProductTableRowDataTransfer::ATTRIBUTES,
-                ProductTableRowDataTransfer::IS_ACTIVE,
-                ProductTableRowDataTransfer::NAME,
-                ProductTableRowDataTransfer::VALID_FROM,
-                ProductTableRowDataTransfer::VALID_TO,
-                ProductTableRowDataTransfer::STORES,
-            ])
-            ->groupByIdProduct();
+            ->joinSpyProductAbstractLocalizedAttributes()
+            ->addJoinCondition(
+                'SpyProductAbstractLocalizedAttributes',
+                sprintf('%s = ?', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE),
+                $localeId
+            )
+            ->endUse();
 
         return $productConcreteQuery;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createProductStoresSubquery(): string
+    {
+        $productStoresSubquery = SpyStoreQuery::create()
+            ->joinSpyProductAbstractStore()
+            ->useSpyProductAbstractStoreQuery()
+            ->joinSpyProductAbstract()
+            ->endUse()
+            ->addAsColumn('stores', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME))
+            ->where(sprintf('%s = %s', SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT));
+        $params = [];
+
+        return $productStoresSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param int $localeId
+     *
+     * @return string
+     */
+    protected function createProductImagesSubquery(int $localeId): string
+    {
+        $productImagesSubquery = SpyProductImageQuery::create()
+            ->joinSpyProductImageSetToProductImage()
+            ->useSpyProductImageSetToProductImageQuery()
+            ->joinSpyProductImageSet()
+            ->endUse()
+            ->where(sprintf(
+                '%1$s = %2$s AND (%3$s = %4$d OR %3$s IS NULL)',
+                SpyProductImageSetTableMap::COL_FK_PRODUCT,
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyProductImageSetTableMap::COL_FK_LOCALE,
+                $localeId
+            ))
+            ->addSelectColumn(SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL)
+            ->orderBy(SpyProductImageSetTableMap::COL_FK_LOCALE)
+            ->limit(1);
+        $params = [];
+
+        return $productImagesSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param int $merchantId
+     *
+     * @return string
+     */
+    protected function createProductOffersCountSubquery(int $merchantId): string
+    {
+        $productOffersSubquery = SpyProductOfferQuery::create()
+            ->addAsColumn('offers_count', 'COUNT(*)')
+            ->where(sprintf(
+                '%s = %s AND %s = %s',
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                SpyProductOfferTableMap::COL_FK_MERCHANT,
+                $merchantId
+            ));
+        $params = [];
+
+        return $productOffersSubquery->createSelectSql($params);
     }
 
     /**
@@ -129,7 +201,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         }
 
         foreach ($productTableCriteriaTransfer->getOrderBy() as $field => $direction) {
-            $sortField = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$field] ?? null;
+            $sortField = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$field] ?? $field;
 
             if (!$sortField) {
                 continue;
@@ -250,30 +322,15 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     protected function addHasOffersFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers() ?? null;
-        $merchantUserTransfer = $productTableCriteriaTransfer->getMerchantUser();
 
-        if ($productConcreteHasOffers === null || !$merchantUserTransfer) {
+        if ($productConcreteHasOffers === null) {
             return $productConcreteQuery;
         }
 
-        $productConcreteQuery->addJoin(
-            [
-                    SpyProductTableMap::COL_SKU,
-                    SpyProductOfferTableMap::COL_FK_MERCHANT,
-                ],
-            [
-                    SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                    $merchantUserTransfer->getIdMerchant(),
-                ],
-            Criteria::LEFT_JOIN
-        )
-            ->having(
-                sprintf(
-                    '(COUNT(%s) %s 0) = FALSE',
-                    SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                    $productConcreteHasOffers ? '>' : '='
-                )
-            );
+        $merchantUserId = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser()->requireIdMerchant()->getIdMerchant();
+        $productConcreteQuery->where(
+            sprintf('(%s) > 0', $this->createProductOffersCountSubquery($merchantUserId))
+        );
 
         return $productConcreteQuery;
     }
