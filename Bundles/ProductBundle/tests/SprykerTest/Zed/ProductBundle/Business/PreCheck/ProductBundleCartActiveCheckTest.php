@@ -106,15 +106,10 @@ class ProductBundleCartActiveCheckTest extends Unit
     {
         $productBundleReaderMock = $this->getMockBuilder(ProductBundleReaderInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods([
-                'getProductForBundleTransfersByProductConcreteSkus',
-                'findBundledProductsByIdProductConcrete',
-                'assignBundledProductsToProductConcrete',
-            ])
             ->getMock();
 
         $productBundleReaderMock->method('getProductForBundleTransfersByProductConcreteSkus')
-            ->willReturn([$this->createProductForBundleTransfer($sku)]);
+            ->willReturn([$sku => [$this->createProductForBundleTransfer($sku)]]);
 
         return $productBundleReaderMock;
     }

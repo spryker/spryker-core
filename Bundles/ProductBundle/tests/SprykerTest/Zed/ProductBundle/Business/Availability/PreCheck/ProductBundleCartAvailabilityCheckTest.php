@@ -7,9 +7,11 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
+use Generated\Shared\DataBuilder\ProductForBundleBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
@@ -182,6 +184,25 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      */
     protected function createProductBundleReaderMock(): ProductBundleReaderInterface
     {
-        return $this->getMockBuilder(ProductBundleReaderInterface::class)->getMock();
+        $mock = $this->getMockBuilder(ProductBundleReaderInterface::class)
+            ->getMock();
+        $mock->method('getProductForBundleTransfersByProductConcreteSkus')
+            ->willReturn([
+                $this->fixtures['bundle-sku'] => [
+                    $this->createProductForBundleTransfer(['sku' => $this->fixtures['bundle-sku']]),
+                ],
+            ]);
+
+        return $mock;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer
+     */
+    protected function createProductForBundleTransfer(array $seed): ProductForBundleTransfer
+    {
+        return (new ProductForBundleBuilder($seed))->build();
     }
 }

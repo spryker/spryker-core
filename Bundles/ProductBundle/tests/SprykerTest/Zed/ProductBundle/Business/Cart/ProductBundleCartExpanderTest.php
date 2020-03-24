@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -261,10 +262,28 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer
+     */
+    protected function createProductForBundleTransfer(): ProductForBundleTransfer
+    {
+        return (new ProductForBundleTransfer())
+            ->setSku($this->fixtures['bundledProductSku'])
+            ->setQuantity($this->fixtures['bundledProductQuantity'])
+            ->setIsActive(true);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
      */
     protected function createProductBundleReaderMock(): ProductBundleReaderInterface
     {
-        return $this->getMockBuilder(ProductBundleReaderInterface::class)->getMock();
+        $productBundleReaderMock = $this->getMockBuilder(ProductBundleReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $productBundleReaderMock->method('getProductForBundleTransfersByProductConcreteSkus')
+            ->willReturn([$this->fixtures['bundledProductSku'] => [$this->createProductForBundleTransfer()]]);
+
+        return $productBundleReaderMock;
     }
 }

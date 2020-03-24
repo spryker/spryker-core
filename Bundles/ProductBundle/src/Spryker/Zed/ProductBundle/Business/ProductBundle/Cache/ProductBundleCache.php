@@ -26,7 +26,7 @@ class ProductBundleCache implements ProductBundleCacheInterface
     public function cacheProductForBundleTransfersBySku(array $productForBundleTransfers): void
     {
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
-            static::$groupedBySkuProductForBundleTransfers[$productForBundleTransfer->getSku()][] = $productForBundleTransfer;
+            static::$groupedBySkuProductForBundleTransfers[$productForBundleTransfer->getBundleSku()][] = $productForBundleTransfer;
         }
     }
 
