@@ -59,6 +59,14 @@
         <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
     </transfer>
 
+    <transfer name="ProductOfferTableCriteria">
+        <property name="searchTerm" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="merchantUser" type="MerchantUser"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
+    </transfer>
+
     <transfer name="ProductTableData">
         <property name="rows" type="ProductTableRowData[]" singular="row"/>
         <property name="pagination" type="Pagination"/>
@@ -75,6 +83,26 @@
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferTableData">
+        <property name="rows" type="ProductOfferTableRowData[]" singular="row"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductOfferTableRowData">
+        <property name="offerReference" type="string"/>
+        <property name="merchantSku" type="string"/>
+        <property name="image" type="string"/>
+        <property name="approvalStatus" type="string"/>
+        <property name="productConcreteName" type="string"/>
+        <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
+        <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
+        <property name="stores" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="Pagination">

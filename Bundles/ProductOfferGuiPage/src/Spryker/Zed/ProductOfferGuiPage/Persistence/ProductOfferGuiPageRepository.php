@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferTableDataTransfer;
+use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableRowDataTransfer;
@@ -19,12 +22,16 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
+use Orm\Zed\ProductOfferValidity\Persistence\Map\SpyProductOfferValidityTableMap;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -333,5 +340,122 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         );
 
         return $productConcreteQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTableDataTransfer
+     */
+    public function getProductOfferTableData(ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer): ProductOfferTableDataTransfer
+    {
+        $localeId = $productOfferTableCriteriaTransfer->getLocale()->getIdLocale();
+        $merchantId = $productOfferTableCriteriaTransfer->getMerchantUser()->getIdMerchant();
+
+        $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $localeId);
+        $productOfferQuery = $this->joinProductAbstractLocalizedAttributesToProductOfferQuery($productOfferQuery, $localeId);
+        $productOfferQuery->leftJoinSpyProductOfferValidity()
+            ->addAsColumn(ProductOfferTableRowDataTransfer::OFFER_REFERENCE, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::MERCHANT_SKU, SpyProductOfferTableMap::COL_MERCHANT_SKU)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::IMAGE, sprintf('(%s)', $this->createProductImagesSubquery($localeId)))
+            ->addAsColumn(ProductOfferTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
+            ->addAsColumn(ProductOfferTableRowDataTransfer::APPROVAL_STATUS, SpyProductOfferTableMap::COL_APPROVAL_STATUS)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::VALID_FROM, SpyProductOfferValidityTableMap::COL_VALID_FROM)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::VALID_TO, SpyProductOfferValidityTableMap::COL_VALID_TO)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::CREATED_AT, SpyProductOfferTableMap::COL_CREATED_AT)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::UPDATED_AT, SpyProductOfferTableMap::COL_UPDATED_AT)
+            ->filterByFkMerchant($merchantId)
+            ->select([
+                ProductOfferTableRowDataTransfer::OFFER_REFERENCE,
+                ProductOfferTableRowDataTransfer::MERCHANT_SKU,
+                ProductOfferTableRowDataTransfer::IMAGE,
+                ProductOfferTableRowDataTransfer::STORES,
+                ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_NAME,
+                ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES,
+                ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES,
+                ProductOfferTableRowDataTransfer::VALID_FROM,
+                ProductOfferTableRowDataTransfer::VALID_TO,
+                ProductOfferTableRowDataTransfer::CREATED_AT,
+                ProductOfferTableRowDataTransfer::UPDATED_AT,
+            ]);
+
+        $paginationTransfer = $productOfferTableCriteriaTransfer->requirePagination()->getPagination();
+        $propelPager = $this->getPagerForQuery($productOfferQuery, $paginationTransfer);
+        $paginationTransfer = $this->hydratePaginationTransfer($paginationTransfer, $propelPager);
+
+        $productOfferTableDataTransfer = $this->getFactory()
+            ->createProductOfferTableDataMapper()
+            ->mapProductOfferTableDataArrayToTableDataTransfer(
+                $propelPager->getResults()->getData(),
+                new ProductOfferTableDataTransfer()
+            );
+        $productOfferTableDataTransfer->setPagination($paginationTransfer);
+
+        return $productOfferTableDataTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createProductOfferStoresSubquery(): string
+    {
+        $storesSubquery = SpyProductOfferStoreQuery::create()
+            ->joinSpyStore()
+            ->addAsColumn('stores', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME))
+            ->where(sprintf(
+                '%s = %s',
+                SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
+                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER
+            ));
+        $params = [];
+
+        return $storesSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param int $localeId
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function joinProductAbstractLocalizedAttributesToProductOfferQuery(SpyProductOfferQuery $productOfferQuery, int $localeId): SpyProductOfferQuery
+    {
+        $productAbstractLocalizedAttributesJoinName = 'productAbstractLocalizedAttributes';
+        $productAbstractJoin = new Join(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
+        $productAbstractLocalizedAttributesJoin = new Join(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::INNER_JOIN);
+        $productOfferQuery->addJoinObject($productAbstractJoin, 'productAbstract')
+            ->addJoinObject($productAbstractLocalizedAttributesJoin, $productAbstractLocalizedAttributesJoinName)
+            ->addJoinCondition(
+                $productAbstractLocalizedAttributesJoinName,
+                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeId)
+            );
+
+        return $productOfferQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param int $localeId
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function joinProductLocalizedAttributesToProductOfferQuery(SpyProductOfferQuery $productOfferQuery, int $localeId): SpyProductOfferQuery
+    {
+        $productLocalizedAttributesJoinName = 'productLocalizedAttributes';
+        $productJoin = new Join(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN);
+        $productLocalizedAttributesJoin = new Join(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN);
+
+        $productOfferQuery->addJoinObject($productJoin, 'product')
+            ->addJoinObject($productLocalizedAttributesJoin, $productLocalizedAttributesJoinName)
+            ->addJoinCondition(
+                $productLocalizedAttributesJoinName,
+                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeId)
+            );
+
+        return $productOfferQuery;
     }
 }

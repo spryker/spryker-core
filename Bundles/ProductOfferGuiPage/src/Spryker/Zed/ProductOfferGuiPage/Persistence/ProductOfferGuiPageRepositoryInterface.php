@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableDataTransfer;
 
@@ -18,4 +20,11 @@ interface ProductOfferGuiPageRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductTableDataTransfer
      */
     public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTableDataTransfer
+     */
+    public function getProductOfferTableData(ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer): ProductOfferTableDataTransfer;
 }

@@ -8,6 +8,12 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilder;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProvider;
@@ -56,6 +62,39 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function createProductTableDataProvider(): ProductTableDataProviderInterface
     {
         return new ProductTableDataProvider(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable
+     */
+    public function createProductOfferTable(): AbstractTable
+    {
+        return new ProductOfferTable(
+            $this->getUtilEncodingService(),
+            $this->createProductOfferTableDataProvider(),
+            $this->createProductOfferTableCriteriaBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface
+     */
+    public function createProductOfferTableCriteriaBuilder(): ProductOfferTableCriteriaBuilderInterface
+    {
+        return new ProductOfferTableCriteriaBuilder(
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface
+     */
+    public function createProductOfferTableDataProvider(): ProductOfferTableDataProviderInterface
+    {
+        return new ProductOfferTableDataProvider(
             $this->getRepository()
         );
     }

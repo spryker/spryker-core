@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferGuiPage;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeBridge;
@@ -23,6 +24,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
+    public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,6 +48,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addProductConcretePropelQuery($container);
+        $container = $this->addProductOfferPropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -108,6 +111,20 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_CONCRETE, function () {
             return SpyProductQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, function () {
+            return SpyProductOfferQuery::create();
         });
 
         return $container;
