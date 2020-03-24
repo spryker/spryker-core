@@ -79,13 +79,13 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
         }
 
         $merchantOpeningHoursStorageTransferWithTranslatedNotes = $this->merchantOpeningHoursTranslator
-            ->getMerchantOpeningHoursTransferWithTranslatedNotes(
-                reset($merchantOpeningHoursStorageTransfers),
+            ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
+                $merchantOpeningHoursStorageTransfers,
                 $restRequest->getMetadata()->getLocale()
             );
 
         return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResponse(
-            $merchantOpeningHoursStorageTransferWithTranslatedNotes,
+            reset($merchantOpeningHoursStorageTransferWithTranslatedNotes),
             $merchantReference
         );
     }

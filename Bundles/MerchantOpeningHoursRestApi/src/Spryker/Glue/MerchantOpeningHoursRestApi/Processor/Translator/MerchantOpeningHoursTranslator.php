@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator;
 
-use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientInterface;
 
 class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorInterface
@@ -26,26 +25,28 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    public function getMerchantOpeningHoursTransferWithTranslatedNotes(
-        MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
-        string $localeName
-    ): MerchantOpeningHoursStorageTransfer {
+    public function getMerchantOpeningHoursTransfersWithTranslatedNotes(array $merchantOpeningHoursStorageTransfers, string $localeName): array
+    {
         $scheduleNotes = [];
-        $dateScheduleTransfers = $merchantOpeningHoursStorageTransfer->getDateSchedule();
-        foreach ($dateScheduleTransfers as $dateScheduleTransfer) {
-            $scheduleNotes[] = $dateScheduleTransfer->getNote();
+        foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
+            foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
+                $scheduleNotes[] = $dateScheduleTransfer->getNote();
+            }
         }
 
         $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNotes, $localeName);
-        foreach ($dateScheduleTransfers as $dateScheduleTransfer) {
-            $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+
+        foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
+            foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
+                $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+            }
         }
 
-        return $merchantOpeningHoursStorageTransfer;
+        return $merchantOpeningHoursStorageTransfers;
     }
 }

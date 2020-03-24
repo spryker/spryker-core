@@ -70,10 +70,11 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
 
         $merchantOpeningHoursStorageTransfers = $this->flipIdsToMerchantReference($merchantOpeningHoursStorageTransfers, $merchantIds);
 
-        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->getMerchantOpeningHoursStorageTransfersWithTranslatedNotes(
-            $merchantOpeningHoursStorageTransfers,
-            $restRequest->getMetadata()->getLocale()
-        );
+        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
+            ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
+                $merchantOpeningHoursStorageTransfers,
+                $restRequest->getMetadata()->getLocale()
+            );
 
         foreach ($resources as $resource) {
             $merchantOpeningHoursStorageTransferWithTranslatedNotes = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resource->getId()];
@@ -114,26 +115,6 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
         }
 
         return $merchantIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
-     * @param string $locale
-     *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
-     */
-    protected function getMerchantOpeningHoursStorageTransfersWithTranslatedNotes(array $merchantOpeningHoursStorageTransfers, string $locale): array
-    {
-        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = [];
-        foreach ($merchantOpeningHoursStorageTransfers as $merchantReference => $merchantOpeningHourStorageTransfers) {
-            $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$merchantReference] = $this->merchantOpeningHoursTranslator
-                ->getMerchantOpeningHoursTransferWithTranslatedNotes(
-                    $merchantOpeningHourStorageTransfers,
-                    $locale
-                );
-        }
-
-        return $merchantOpeningHoursStorageTransfersWithTranslatedNotes;
     }
 
     /**
