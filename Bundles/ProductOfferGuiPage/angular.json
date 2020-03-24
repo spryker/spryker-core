@@ -17,7 +17,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "../../../../../public/Zed/assets/js/mp-product-offer",
+            "outputPath": "dist",
             "index": "src/Spryker/Zed/ProductOfferGuiPage/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/ProductOfferGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
