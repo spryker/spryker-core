@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation;
 
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductRelationDataImport\Business\Exception\DuplicatedQuerySetDataException;
@@ -43,6 +44,7 @@ class QuerySetValidatorStep implements DataImportStepInterface
         $querySetDecoded = $this->utilEncodingService->decodeJson($querySet, true);
         $productRelationEntities = SpyProductRelationQuery::create()
             ->filterByFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
+            ->filterByProductRelationKey($dataSet[ProductRelationDataSetInterface::COL_PRODUCT_RELATION_KEY], Criteria::NOT_EQUAL)
             ->useSpyProductRelationTypeQuery()
                 ->filterByKey($dataSet[ProductRelationDataSetInterface::COL_RELATION_TYPE])
             ->endUse()
