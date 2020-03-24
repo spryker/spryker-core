@@ -9,12 +9,15 @@ namespace Spryker\Zed\Product\Business\Product\Touch;
 
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Shared\Product\ProductConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 abstract class AbstractProductTouch
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
@@ -80,12 +83,9 @@ abstract class AbstractProductTouch
      */
     public function touchProductAbstractActive($idProductAbstract)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-
-        $this->productQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductAbstract): void {
+            $this->executeTouchProductAbstractActiveTransaction($idProductAbstract);
+        });
     }
 
     /**
@@ -95,12 +95,9 @@ abstract class AbstractProductTouch
      */
     public function touchProductAbstractInactive($idProductAbstract)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-
-        $this->productQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductAbstract): void {
+            $this->executeTouchProductAbstractInactiveTransaction($idProductAbstract);
+        });
     }
 
     /**
@@ -110,12 +107,9 @@ abstract class AbstractProductTouch
      */
     public function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-
-        $this->productQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductAbstract): void {
+            $this->executeTouchProductAbstractDeletedTransaction($idProductAbstract);
+        });
     }
 
     /**
@@ -146,5 +140,38 @@ abstract class AbstractProductTouch
     public function touchProductConcreteDeleted($idProductConcrete)
     {
         $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function executeTouchProductAbstractActiveTransaction(int $idProductAbstract): void
+    {
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function executeTouchProductAbstractInactiveTransaction(int $idProductAbstract): void
+    {
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function executeTouchProductAbstractDeletedTransaction(int $idProductAbstract): void
+    {
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
     }
 }
