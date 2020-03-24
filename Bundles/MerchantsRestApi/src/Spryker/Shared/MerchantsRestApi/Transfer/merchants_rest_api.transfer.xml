@@ -14,6 +14,20 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="RestMerchantAddressesAttributes">
+        <property name="addresses" type="RestMerchantAddress[]" singular="addresses"/>
+    </transfer>
+
+    <transfer name="RestMerchantAddress">
+        <property name="countryName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
+    </transfer>
+
     <transfer name="LegalInformation">
         <property name="terms" type="string"/>
         <property name="cancellationPolicy" type="string"/>
@@ -40,7 +54,7 @@
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="addressCollection" type="MerchantStorageProfileAddress"/>
+        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="addressCollection"/>
     </transfer>
 
     <transfer name="MerchantStorageProfileAddress">
@@ -55,6 +69,7 @@
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

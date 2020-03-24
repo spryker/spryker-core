@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer;
 use Generated\Shared\Transfer\MerchantStorageProfileTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
@@ -19,10 +20,24 @@ class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApi
      */
     public function findByMerchantReference(array $merchantReferences): array
     {
+        $merchantStorageProfileAddressTransfer1 = (new MerchantStorageProfileAddressTransfer())
+            ->setAddress1('address1')
+            ->setAddress2('address2')
+            ->setCity('City')
+            ->setCountryName('CountryName');
+
+        $merchantStorageProfileAddressTransfer2 = (new MerchantStorageProfileAddressTransfer())
+            ->setAddress1('address3')
+            ->setAddress2('address4')
+            ->setCity('City2')
+            ->setCountryName('CountryName2');
+
         $merchantStorageProfile = (new MerchantStorageProfileTransfer())
             ->setMerchantUrl('url-test')
             ->setPublicEmail('email-test')
-            ->setTermsConditionsGlossaryKey('TermsConditionsGlossaryKey');
+            ->setTermsConditionsGlossaryKey('TermsConditionsGlossaryKey')
+            ->addAddressCollection($merchantStorageProfileAddressTransfer1)
+            ->addAddressCollection($merchantStorageProfileAddressTransfer2);
 
         return [
             (new MerchantStorageTransfer())
