@@ -66,12 +66,12 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
      * @param string $urlPrefix
      *
      * @return string
      */
-    protected function getUrlWithPrefix(string $url, string $urlPrefix): string
+    protected function getUrlWithPrefix(?string $url, string $urlPrefix): string
     {
         $url = preg_replace('#^/#', '', $url);
 
@@ -79,12 +79,12 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
      * @param string $urlPrefix
      *
      * @return bool
      */
-    protected function hasUrlPrefix(string $url, string $urlPrefix): bool
+    protected function hasUrlPrefix(?string $url, string $urlPrefix): bool
     {
         return preg_match('#^' . $urlPrefix . '#i', $url) > 0;
     }

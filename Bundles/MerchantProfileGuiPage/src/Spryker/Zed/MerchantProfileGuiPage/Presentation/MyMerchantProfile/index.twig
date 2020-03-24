@@ -274,7 +274,7 @@
                     <div class="mp-profile__row">
                         <div class="mp-profile__col mp-profile__col--online-left">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Store Profile URL' | trans }} *">
-                                {% for urlForm in onlineProfileTab.urlCollection.children %}
+                                {% for urlForm in onlineProfileTab.urlCollection %}
                                     <spy-form-item
                                         error="{{ urlForm.children.url.vars.errors[0].message | default | trans }}"
                                         no-label="true"
@@ -283,7 +283,7 @@
                                         <spy-input
                                             control
                                             attrs=""
-                                            outer-prefix="{{ urlForm.children.url.vars.label | trans }}"
+                                            outer-prefix="{{ urlForm.vars.data.urlPrefix | trans }}"
                                             spy-id="{{ urlForm.children.url.vars.id }}"
                                             required="{{ urlForm.children.url.vars.required | boolToStr }}"
                                             name="{{ urlForm.children.url.vars.full_name }}"

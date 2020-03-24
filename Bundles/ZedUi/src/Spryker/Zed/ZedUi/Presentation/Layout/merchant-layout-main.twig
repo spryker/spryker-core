@@ -7,6 +7,8 @@
         <mp-merchant-layout-main navigation-config="{{ navigationConfig }}">
             <mp-header name="header"></mp-header>
 
+            {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+
             {% block content %}{% endblock %}
         </mp-merchant-layout-main>
     {% endif %}
