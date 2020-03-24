@@ -310,7 +310,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderWithMerchants(): void
+    public function testExpandOrderWithMerchantReferencess(): void
     {
         // Arrange
         $itemTransfer = (new ItemTransfer())->setMerchantReference(static::TEST_MERCHANT_REFERENCE);
@@ -319,10 +319,10 @@ class MerchantSalesOrderFacadeTest extends Unit
         // Act
         $orderTransfer = $this->tester
             ->getFacade()
-            ->expandOrderWithMerchants($orderTransfer);
+            ->expandOrderWithMerchantReferences($orderTransfer);
 
         // Assert
-        $this->assertCount($orderTransfer->getItems()->count(), $orderTransfer->getMerchantReferences());
+        $this->assertCount(1, $orderTransfer->getMerchantReferences());
         $this->assertSame($itemTransfer->getMerchantReference(), $orderTransfer->getMerchantReferences()[0]);
     }
 

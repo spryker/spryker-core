@@ -84,7 +84,7 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification:
-     * - Expands order with merchant references of order items.
+     * - Expands order with merchant references from order items.
      *
      * @api
      *
@@ -92,5 +92,5 @@ interface MerchantSalesOrderFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandOrderWithMerchants(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer;
 }

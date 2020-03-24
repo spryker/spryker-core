@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\Order;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -16,5 +16,5 @@ interface OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandOrderWithMerchants(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer;
 }

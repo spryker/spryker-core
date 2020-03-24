@@ -15,11 +15,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
  * @method \Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface getFacade()
  */
-class MerchantReferenceOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
+class MerchantReferencesOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     *   - Expands order with merchant references of order items.
+     *   - Expands order with merchant references from order items.
      *
      * @api
      *
@@ -27,8 +27,8 @@ class MerchantReferenceOrderExpanderPlugin extends AbstractPlugin implements Ord
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrate(OrderTransfer $orderTransfer)
+    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->expandOrderWithMerchants($orderTransfer);
+        return $this->getFacade()->expandOrderWithMerchantReferences($orderTransfer);
     }
 }

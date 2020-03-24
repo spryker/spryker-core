@@ -94,10 +94,10 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandOrderWithMerchants(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createOrderExpander()
-            ->expandOrderWithMerchants($orderTransfer);
+            ->expandOrderWithMerchantReferences($orderTransfer);
     }
 }
