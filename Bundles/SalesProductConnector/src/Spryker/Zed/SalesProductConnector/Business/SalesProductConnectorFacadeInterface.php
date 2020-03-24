@@ -69,6 +69,8 @@ interface SalesProductConnectorFacadeInterface
     /**
      * Specification:
      * - Expands OrderTransfers with metadata information.
+     * - Requires OrderTransfer::idSalesOrder to be set.
+     * - Requires ItemTransfer::fkSalesOrder at OrderTransfer::items to be set.
      *
      * @api
      *

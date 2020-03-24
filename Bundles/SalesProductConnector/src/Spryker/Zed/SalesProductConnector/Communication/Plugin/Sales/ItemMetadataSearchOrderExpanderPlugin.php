@@ -13,6 +13,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterf
 /**
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
 class ItemMetadataSearchOrderExpanderPlugin extends AbstractPlugin implements SearchOrderExpanderPluginInterface
 {

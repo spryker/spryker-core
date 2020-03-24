@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesProductConnector\Dependency\QueryContainer\ProductToSalesProductConnectorQueryContainerBridge;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
+ */
 class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';

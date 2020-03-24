@@ -65,6 +65,8 @@ class OrderExpander implements OrderExpanderInterface
         $groupedItemTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer->requireFkSalesOrder();
+
             $groupedItemTransfers[$itemTransfer->getFkSalesOrder()][] = $itemTransfer;
         }
 
@@ -80,6 +82,8 @@ class OrderExpander implements OrderExpanderInterface
     protected function updateItemsForOrders(array $orderTransfers, array $groupedItemTransfers): array
     {
         foreach ($orderTransfers as $orderTransfer) {
+            $orderTransfer->requireIdSalesOrder();
+
             $orderTransfer->getItems()->exchangeArray(
                 $groupedItemTransfers[$orderTransfer->getIdSalesOrder()]
             );
