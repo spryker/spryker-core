@@ -89,4 +89,8 @@
         <property name="idCompany" type="int"/>
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
 </transfers>

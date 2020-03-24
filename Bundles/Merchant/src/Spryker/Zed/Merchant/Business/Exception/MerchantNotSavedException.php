@@ -14,12 +14,12 @@ use Throwable;
 class MerchantNotSavedException extends Exception
 {
     /**
-     * @var \ArrayObject
+     * @var \ArrayObject|\Generated\Shared\Transfer\MerchantErrorTransfer[]
      */
     protected $merchantErrorTransfers;
 
     /**
-     * @param \ArrayObject $merchantErrorTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantErrorTransfer[] $merchantErrorTransfers
      * @param string $message
      * @param int $code
      * @param \Throwable|null $previous
@@ -36,7 +36,7 @@ class MerchantNotSavedException extends Exception
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantErrorTransfer[]
      */
     public function getErrors(): ArrayObject
     {
