@@ -13,11 +13,14 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\ProductRelationDataImport\Business\Hook\ProductRelationAfterImportHook;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationTypeWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationWriterStep;
+use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\QuerySetValidatorStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\SkuToIdProductAbstractStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\ProductRelationKeyToIdProductRelationStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\ProductRelationStoreWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\StoreNameToIdStoreStep;
+use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelationStore\StoreValidatorStep;
 use Spryker\Zed\ProductRelationDataImport\Dependency\Facade\ProductRelationDataImportToProductRelationFacadeInterface;
+use Spryker\Zed\ProductRelationDataImport\Dependency\Service\ProductRelationDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportDependencyProvider;
 
 /**
@@ -36,6 +39,7 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker
             ->addStep($this->createSkuToIdProductAbstractStep())
             ->addStep($this->createProductRelationTypeWriterStep())
+            ->addStep($this->createQuerySetValidatorStep())
             ->addStep($this->createProductRelationWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -55,11 +59,20 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker
             ->addStep($this->createProductRelationKeyToIdProductRelationStep())
             ->addStep($this->createStoreNameToIdStoreStep())
+            ->addStep($this->createStoreValidatorStep())
             ->addStep($this->createProductRelationStoreWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createStoreValidatorStep(): DataImportStepInterface
+    {
+        return new StoreValidatorStep();
     }
 
     /**
@@ -84,6 +97,14 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductRelationWriterStep(): DataImportStepInterface
     {
         return new ProductRelationWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createQuerySetValidatorStep(): DataImportStepInterface
+    {
+        return new QuerySetValidatorStep($this->getUtilEncodingService());
     }
 
     /**
@@ -124,5 +145,13 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
     public function getProductRelationFacade(): ProductRelationDataImportToProductRelationFacadeInterface
     {
         return $this->getProvidedDependency(ProductRelationDataImportDependencyProvider::FACADE_PRODUCT_RELATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationDataImport\Dependency\Service\ProductRelationDataImportToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductRelationDataImportToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductRelationDataImportDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

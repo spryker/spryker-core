@@ -10,7 +10,8 @@
     "spryker/product": "^6.0.0",
     "spryker/product-relation": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/store": "^1.5.0"
+    "spryker/store": "^1.5.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
