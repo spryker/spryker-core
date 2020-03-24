@@ -19,6 +19,11 @@ class SharedCartByCartIdResourceRelationshipPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestSharedCartsAttributesTransfer"
+     * })
+     *
      * - Adds shared-carts resource as relationship.
      *
      * @api

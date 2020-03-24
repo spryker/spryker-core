@@ -30,22 +30,20 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInte
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaComponentBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinder;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinder;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorage;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationship;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessor;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -81,6 +79,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationG
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceBridge;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestAnnotationResourceRelationshipPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRelationshipPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithAllMethodsPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithEmptyAnnotationsPlugin;
@@ -137,9 +136,9 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
      */
-    public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
+    public function createResourceRelationshipPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return new ResourceRelationshipsPluginAnalyzer([$this->createResourceRelationshipCollectionPluginMock()]);
+        return new ResourceRelationshipsPluginAnalyzer([$this->createResourceRelationshipProcessorCollectionPluginMock()]);
     }
 
     /**
@@ -156,13 +155,13 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
      */
-    public function createResourceRelationshipCollectionPluginMock()
+    public function createResourceRelationshipProcessorCollectionPluginMock()
     {
         $pluginMock = $this->getMockBuilder(ResourceRelationshipCollectionProviderPlugin::class)
             ->setMethods(['getResourceRelationshipCollection'])
             ->getMock();
         $pluginMock->method('getResourceRelationshipCollection')
-            ->willReturn($this->createResourceRelationshipCollection());
+            ->willReturn($this->createResourceRelationshipProcessorCollection());
 
         return $pluginMock;
     }
@@ -189,7 +188,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
-    public function createResourceRelationshipCollection(): ResourceRelationshipCollectionInterface
+    public function createResourceRelationshipProcessorCollection(): ResourceRelationshipCollectionInterface
     {
         $resourceRelationshipCollection = new ResourceRelationshipCollection();
         $resourceRelationshipCollection->addRelationship(
@@ -198,7 +197,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         );
         $resourceRelationshipCollection->addRelationship(
             'test-resource-with-all-methods',
-            new TestResourceRelationshipPlugin()
+            new TestAnnotationResourceRelationshipPlugin()
         );
 
         return $resourceRelationshipCollection;
@@ -213,7 +212,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer(),
-            $this->createResourceRelationship()
+            $this->createResourceRelationshipProcessor()
         );
     }
 
@@ -227,21 +226,21 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             [$this->createResourceRoutePluginsProviderPluginMock()],
             $this->createGlueAnnotationAnalyzer(),
             $this->createInflector(),
-            $this->createPluginResourceTypeStorageProcessor()
+            $this->createResourceSchemaNameStorageProcessor()
         );
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\PluginResourceTypeStorageProcessorInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface
      */
-    protected function createPluginResourceTypeStorageProcessor(): PluginResourceTypeStorageProcessorInterface
+    protected function createResourceSchemaNameStorageProcessor(): ResourceSchemaNameStorageProcessorInterface
     {
-        return new PluginResourceTypeStorageProcessor(
-            $this->createPluginResourceTypeStorage(),
+        return new ResourceSchemaNameStorageProcessor(
+            $this->createResourceSchemaNameStorage(),
             $this->createResourceTransferAnalyzer(),
-            $this->createResourceRelationshipsPluginAnalyzer(),
+            $this->createResourceRelationshipPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
-            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()
         );
     }
 
@@ -307,37 +306,25 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceRelationshipInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface
      */
-    public function createResourceRelationship(): ResourceRelationshipInterface
+    public function createResourceRelationshipProcessor(): ResourceRelationshipProcessorInterface
     {
-        return new ResourceRelationship(
-            $this->createResourceRelationshipsPluginAnalyzer(),
+        return new ResourceRelationshipProcessor(
+            $this->createResourceRelationshipPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
-            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()
         );
     }
 
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
      */
-    public function createResourceRelationshipsPluginAnnotationAnalyzer(): ResourceRelationshipsPluginAnnotationAnalyzerInterface
+    public function createResourceRelationshipProcessorsPluginAnnotationAnalyzer(): ResourceRelationshipsPluginAnnotationAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnnotationAnalyzer(
-            $this->createResourceRelationshipPluginFinder(),
             $this->createUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinderInterface
-     */
-    public function createResourceRelationshipPluginFinder(): ResourceRelationshipPluginFinderInterface
-    {
-        return new ResourceRelationshipPluginFinder(
-            $this->createFinder(),
-            $this->createConfig()->getAnnotationPluginSourceDirectories()
         );
     }
 
@@ -428,7 +415,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     {
         return new OpenApiSpecificationSchemaComponentBuilder(
             $this->createResourceTransferAnalyzer(),
-            $this->createPluginResourceTypeStorage()
+            $this->createResourceSchemaNameStorage()
         );
     }
 
@@ -467,11 +454,11 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
      */
-    public function createPluginResourceTypeStorage(): PluginResourceTypeStorageInterface
+    public function createResourceSchemaNameStorage(): ResourceSchemaNameStorageInterface
     {
-        return new PluginResourceTypeStorage();
+        return new ResourceSchemaNameStorage();
     }
 
     /**

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Generated\Shared\Transfer\PluginAnnotationsTransfer;
+use ReflectionClass;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidAnnotationFormatException;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
 
 class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelationshipsPluginAnnotationAnalyzerInterface
@@ -26,24 +26,16 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
     protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinderInterface
-     */
-    protected $resourceRelationshipPluginFinder;
-
-    /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\ResourceRelationshipPluginFinderInterface $resourceRelationshipPluginFinder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
-        ResourceRelationshipPluginFinderInterface $resourceRelationshipPluginFinder,
         DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
     ) {
-        $this->resourceRelationshipPluginFinder = $resourceRelationshipPluginFinder;
         $this->utilEncodingService = $utilEncodingService;
     }
 
@@ -54,15 +46,12 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
      */
     public function getResourceAttributesFromResourceRelationshipPlugin(ResourceRelationshipPluginInterface $plugin): PluginAnnotationsTransfer
     {
-        $gluePluginFiles = $this->resourceRelationshipPluginFinder->getPluginFilesFromPlugin($plugin);
-
         $pluginAnnotationsTransfer = new PluginAnnotationsTransfer();
 
-        $parameters = [];
-        foreach ($gluePluginFiles as $file) {
-            $tokens = token_get_all(file_get_contents($file));
-            $parameters[] = $this->parsePhpTokens($tokens);
-        }
+        $reflectionClass = new ReflectionClass(get_class($plugin));
+
+        $tokens = token_get_all(file_get_contents($reflectionClass->getFileName()));
+        $parameters[] = $this->parsePhpTokens($tokens);
 
         if (!array_filter($parameters)) {
             return $pluginAnnotationsTransfer;

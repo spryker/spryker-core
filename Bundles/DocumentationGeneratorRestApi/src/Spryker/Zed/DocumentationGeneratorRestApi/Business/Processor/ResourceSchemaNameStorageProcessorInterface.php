@@ -9,14 +9,14 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface PluginResourceTypeStorageProcessorInterface
+interface ResourceSchemaNameStorageProcessorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
      * @return void
      */
-    public function addPluginResourceTypesToStorage(
+    public function addResourceSchemaNamesToStorage(
         ResourceRoutePluginInterface $plugin
     ): void;
 }

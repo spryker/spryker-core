@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Model;
 
-interface PluginResourceTypeStorageInterface
+interface ResourceSchemaNameStorageInterface
 {
     /**
      * @param string $resourceType

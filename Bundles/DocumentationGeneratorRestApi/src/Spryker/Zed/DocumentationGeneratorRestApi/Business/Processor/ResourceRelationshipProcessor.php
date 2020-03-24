@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Model;
+namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
@@ -13,7 +13,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelation
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface;
 
-class ResourceRelationship implements ResourceRelationshipInterface
+class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInterface
 {
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
@@ -57,13 +57,15 @@ class ResourceRelationship implements ResourceRelationshipInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
      * @param string $responseDataSchemaName
+     * @param string $responseSchemaName
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
     public function getAllSchemaDataTransfersForPlugin(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
-        string $responseDataSchemaName
+        string $responseDataSchemaName,
+        string $responseSchemaName
     ): array {
         $schemaDataTransfers = [];
         $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
@@ -71,7 +73,7 @@ class ResourceRelationship implements ResourceRelationshipInterface
         if ($resourceRelationships) {
             $schemaDataTransfers = array_merge(
                 $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName),
-                $this->createIncludedSchemaDataTransfers($responseDataSchemaName, $resourceRelationships, $transferClassName)
+                $this->createIncludedSchemaDataTransfers($responseSchemaName, $resourceRelationships, $transferClassName)
             );
         }
 

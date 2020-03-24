@@ -5,23 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Model;
+namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface ResourceRelationshipInterface
+interface ResourceRelationshipProcessorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
      * @param string $responseDataSchemaName
+     * @param string $responseSchemaName
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
     public function getAllSchemaDataTransfersForPlugin(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
-        string $responseDataSchemaName
+        string $responseDataSchemaName,
+        string $responseSchemaName
     ): array;
 
     /**

@@ -51,12 +51,12 @@ class SchemaItemsSpecificationComponent implements SchemaItemsSpecificationCompo
     }
 
     /**
-     * @param array $schemaItems
-     *
      * @return array
      */
-    protected function addOneOf(array $schemaItems = []): array
+    protected function addOneOf(): array
     {
+        $schemaItems = [];
+
         if ($this->schemaItemsComponentTransfer->getOneOf()) {
             foreach ($this->schemaItemsComponentTransfer->getOneOf() as $ref) {
                 $schemaItems[static::KEY_ONEOF][][static::KEY_REF] = $ref;

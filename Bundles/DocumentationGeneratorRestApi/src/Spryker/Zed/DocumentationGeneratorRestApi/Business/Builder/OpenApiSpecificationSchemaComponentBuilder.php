@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -40,20 +40,20 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected $resourceTransferAnalyzer;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
      */
-    protected $pluginResourceTypeStorage;
+    protected $resourceSchemaNameStorage;
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\PluginResourceTypeStorageInterface $pluginResourceTypeStorage
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
      */
     public function __construct(
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
-        PluginResourceTypeStorageInterface $pluginResourceTypeStorage
+        ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
     ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
-        $this->pluginResourceTypeStorage = $pluginResourceTypeStorage;
+        $this->resourceSchemaNameStorage = $resourceSchemaNameStorage;
     }
 
     /**
@@ -216,7 +216,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
 
         foreach ($resourceRelationships as $resourceRelationship) {
             $schemaName = $this
-                ->pluginResourceTypeStorage
+                ->resourceSchemaNameStorage
                 ->getResourceSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
             $schema->addOneOf(
                 sprintf(

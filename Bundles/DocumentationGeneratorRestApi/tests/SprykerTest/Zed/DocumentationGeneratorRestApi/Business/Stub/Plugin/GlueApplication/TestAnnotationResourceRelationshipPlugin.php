@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin;
+namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 
-class TestResourceRelationshipPlugin implements ResourceRelationshipPluginInterface
+class TestAnnotationResourceRelationshipPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
+     *     "resourceAttributesClassName": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAnnotationResourceRelationshipAttributesTransfer"
      * })
      *
      * @param array $resources

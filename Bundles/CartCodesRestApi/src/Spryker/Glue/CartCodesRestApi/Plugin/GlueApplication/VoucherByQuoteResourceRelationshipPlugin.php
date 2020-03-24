@@ -19,6 +19,11 @@ class VoucherByQuoteResourceRelationshipPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
+     *
+     * @Glue({
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
+     * })
+     *
      * - Adds vouchers resource as relationship by quote.
      *
      * @api
