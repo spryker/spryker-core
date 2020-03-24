@@ -127,30 +127,43 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
-        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
+        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
-            $storeNamesToRemove = $this->getStoreNamesList();
-            $productOfferReferenceList = [];
+            $storeNamesToRemove = [];
+
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
+                if (!$productOfferReferenceList) {
+                    $storeNamesToRemove[] = $storeName;
+
+                    continue;
+                }
                 $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList, $storeName);
-                $storeNamesToRemove = array_diff($storeNamesToRemove, [$storeName]);
             }
 
-            if ($storeNamesToRemove && $productOfferReferenceList) {
+            if ($storeNamesToRemove) {
                 $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
             }
         }
     }
 
     /**
+     * @param string[] $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return array
      */
-    protected function groupProductOfferReferencesByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
-    {
+    protected function groupProductOfferReferencesByConcreteSku(
+        array $productConcreteSkus,
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): array {
         $productOfferReferencesGroupedByConcreteSku = [];
+        foreach ($productConcreteSkus as $productConcreteSku) {
+            foreach ($this->getStoreNamesList() as $storeName) {
+                $productOfferReferencesGroupedByConcreteSku[$productConcreteSku][$storeName] = [];
+            }
+        }
+
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             if (!isset($productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()])) {
                 $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()] = [];
