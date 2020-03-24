@@ -44,7 +44,7 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->findMerchantStorageData($idMerchant);
+            ->findOne($idMerchant);
     }
 
     /**
@@ -56,10 +56,42 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function find(array $merchantIds): array
+    public function get(array $merchantIds): array
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->findMerchantStorageList($merchantIds);
+            ->get($merchantIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantStorageReader()
+            ->findOneByMerchantReference($merchantReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $merchantReferences
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function getByMerchantReferences(array $merchantReferences): array
+    {
+        return $this->getFactory()
+            ->createMerchantStorageReader()
+            ->getByMerchantReferences($merchantReferences);
     }
 }

@@ -16,12 +16,26 @@ interface MerchantStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findMerchantStorageData(int $idMerchant): ?MerchantStorageTransfer;
+    public function findOne(int $idMerchant): ?MerchantStorageTransfer;
 
     /**
      * @param int[] $merchantIds
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function findMerchantStorageList(array $merchantIds): array;
+    public function get(array $merchantIds): array;
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
+
+    /**
+     * @param string[] $merchantReferences
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function getByMerchantReferences(array $merchantReferences): array;
 }
