@@ -34,6 +34,7 @@ class ProductRelationWriterStep extends PublishAwareStep implements DataImportSt
         }
 
         $productRelationEntity
+            ->setQuerySetData($dataSet[ProductRelationDataSetInterface::COL_RULE])
             ->setIsActive($dataSet[ProductRelationDataSetInterface::COL_IS_ACTIVE] ?? false)
             ->setIsRebuildScheduled($dataSet[ProductRelationDataSetInterface::COL_IS_REBUILD_SCHEDULED] ?? false)
             ->save();
