@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi;
@@ -35,7 +35,4 @@ class MerchantOpeningHoursRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING
      */
     public const RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING = 'Merchant identifier is not specified.';
-
-    public const RESPONSE_CODE_MERCHANT_OPENING_HOURS_NOT_FOUND = '3503';
-    public const RESPONSE_DETAIL_MERCHANT_OPENING_HOURS_NOT_FOUND = 'Merchant opening hours not found.';
 }

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader;
@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\MerchantOpeningHoursRestApiConfig;
-use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface;
 
 class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
@@ -28,7 +28,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
     protected $merchantStorageClient;
 
     /**
-     * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface
      */
     protected $merchantsRestResponseBuilder;
 
@@ -40,13 +40,13 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
     /**
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
      */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
-        MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder,
+        MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder,
         MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
     ) {
         $this->merchantOpeningHoursStorageClient = $merchantOpeningHoursStorageClient;
@@ -74,9 +74,6 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
 
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
             ->getMerchantOpeningHoursByMerchantIds([$merchantStorageTransfers[0]->getIdMerchant()]);
-        if (!$merchantOpeningHoursStorageTransfers) {
-            return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursNotFoundErrorResponse();
-        }
 
         $merchantOpeningHoursStorageTransferWithTranslatedNotes = $this->merchantOpeningHoursTranslator
             ->getMerchantOpeningHoursTransfersWithTranslatedNotes(

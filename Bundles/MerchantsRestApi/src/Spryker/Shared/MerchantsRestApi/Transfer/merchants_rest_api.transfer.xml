@@ -55,6 +55,7 @@
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>
