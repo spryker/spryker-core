@@ -292,6 +292,7 @@ class Operation implements OperationInterface
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
+            ->setCustomer($originalQuoteTransfer->getCustomer())
             ->setQuoteTransfer($originalQuoteTransfer);
 
         if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
