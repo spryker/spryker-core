@@ -104,6 +104,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
      */
     public function testMerchantSkuValidationStepThrowsExceptionIfProductOfferAlreadyExistForMerchantIdAndSku(): void
     {
+        // Arrange
         $merchantSku = uniqid();
         $merchantTransfer = $this->tester->haveMerchant();
 
@@ -112,7 +113,6 @@ class MerchantProductOfferDataImportPluginTest extends Unit
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
         ]);
 
-        // Arrange
         $merchantSkuValidationStep = new MerchantSkuValidationStep();
 
         $dataSet = new DataSet([
