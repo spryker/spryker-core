@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { TableConfig } from '@spryker/table';
 
 @Component({
     selector: 'mp-product-offer',
@@ -8,6 +9,6 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
     encapsulation: ViewEncapsulation.None
 })
 export class ProductOfferComponent {
-    @Input() tableConfig = '';
+    @Input() tableConfig: TableConfig = {};
     @Input() title: string;
 }

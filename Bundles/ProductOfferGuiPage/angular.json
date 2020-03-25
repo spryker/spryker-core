@@ -24,9 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "singleBundle": true,
-            "assets": [
-              "src/Spryker/Zed/ProductOfferGuiPage/Presentation/Components/assets"
-            ],
+            "assets": [],
             "styles": [
               "src/Spryker/Zed/ProductOfferGuiPage/Presentation/Components/styles.less"
             ],
