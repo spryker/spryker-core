@@ -10,7 +10,7 @@ namespace Spryker\Zed\Kernel\Persistence;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\ClassResolver\Persistence\PersistenceFactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
@@ -89,11 +89,11 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Persistence\PersistenceFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new PersistenceFactoryResolver();
     }
 
     /**

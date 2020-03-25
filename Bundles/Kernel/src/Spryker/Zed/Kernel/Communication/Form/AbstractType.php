@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Kernel\Communication\Form;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
@@ -104,11 +104,11 @@ abstract class AbstractType extends SymfonyAbstractType
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new CommunicationFactoryResolver();
     }
 
     /**
