@@ -31,8 +31,10 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(ProductRelationStorageToStorageClientInterface $storageClient, ProductRelationStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        ProductRelationStorageToStorageClientInterface $storageClient,
+        ProductRelationStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }

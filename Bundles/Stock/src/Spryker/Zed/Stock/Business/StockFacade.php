@@ -290,7 +290,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {
@@ -302,7 +302,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping()
     {
@@ -316,7 +316,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping()
     {

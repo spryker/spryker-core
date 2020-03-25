@@ -60,7 +60,8 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
 
         $quoteResponseTransfer = $this->cartNoteZedStub->setNoteToQuote($quoteCartNoteRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
+            $quoteTransfer->fromArray($quoteResponseTransfer->getQuoteTransfer()->modifiedToArray());
+            $this->quoteClient->setQuote($quoteTransfer);
         }
 
         return $quoteResponseTransfer;
@@ -86,7 +87,8 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
             ->setCartNote($note);
         $quoteResponseTransfer = $this->cartNoteZedStub->setNoteToQuoteItem($quoteItemCartNoteRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
+            $quoteTransfer->fromArray($quoteResponseTransfer->getQuoteTransfer()->modifiedToArray());
+            $this->quoteClient->setQuote($quoteTransfer);
         }
 
         return $quoteResponseTransfer;
