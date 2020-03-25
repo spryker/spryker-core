@@ -32,7 +32,10 @@ class ShipmentServiceFactory extends AbstractServiceFactory
      */
     public function createShipmentHashGenerator(): ShipmentHashGeneratorInterface
     {
-        return new ShipmentHashGenerator($this->getCustomerService());
+        return new ShipmentHashGenerator(
+            $this->getCustomerService(),
+            $this->getConfig()
+        );
     }
 
     /**
