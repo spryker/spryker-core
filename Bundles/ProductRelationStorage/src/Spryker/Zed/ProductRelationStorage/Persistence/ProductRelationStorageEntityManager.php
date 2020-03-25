@@ -32,9 +32,11 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
             ->findOneOrCreate();
 
         $productAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray())
-            ->setStore($productAbstractRelationStorageTransfer->getStore())
-            ->setIsSendingToQueue(true)
             ->save();
+
+        $productAbstractRelationStorageEntity
+            ->setIsSendingToQueue($productAbstractRelationStorageEntity->isSynchronizationEnabled())
+            ->syncPublishedMessage();
     }
 
     /**
