@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -25,6 +26,7 @@ class CategoryAttributeCategoryNodeStoragePublishListener extends AbstractPlugin
 
     /**
      * {@inheritDoc}
+     * - Publishes changes in child and parent categories by `CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE` event.
      *
      * @api
      *
@@ -35,6 +37,10 @@ class CategoryAttributeCategoryNodeStoragePublishListener extends AbstractPlugin
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
+        if ($eventName !== CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE) {
+            return;
+        }
+
         $this->preventTransaction();
 
         $categoryNodeId = $this->getFactory()

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
