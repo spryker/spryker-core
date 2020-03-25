@@ -11,10 +11,14 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
-use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
 
 class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 {
+    /**
+     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
+     */
+    public const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
+
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL
      */
@@ -186,7 +190,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     protected function createCustomerEmailFilterQueryJoin(string $searchString): QueryJoinTransfer
     {
         $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
-            ->setMergeWithCondition(OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL)
+            ->setMergeWithCondition(static::CONDITION_GROUP_ALL)
             ->setColumn(static::COLUMN_EMAIL)
             ->setValue($searchString);
 
@@ -203,7 +207,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         $fullNameColumn = $this->getConcatenatedFullNameColumn();
 
         $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
-            ->setMergeWithCondition(OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL)
+            ->setMergeWithCondition(static::CONDITION_GROUP_ALL)
             ->setColumn($fullNameColumn)
             ->setValue($searchString);
 

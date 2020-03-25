@@ -11,6 +11,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
+ */
 class CompanySalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';

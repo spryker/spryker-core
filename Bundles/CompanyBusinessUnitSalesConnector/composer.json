@@ -16,6 +16,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyBusinessUnit\Business\Facade;
+namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
  * @group Zed
  * @group CompanyBusinessUnit
  * @group Business
- * @group Facade
+ * @group CompanyBusinessUnitFacade
  * @group GetRawCompanyBusinessUnitCollectionTest
  * Add your own group annotations below this line
  */

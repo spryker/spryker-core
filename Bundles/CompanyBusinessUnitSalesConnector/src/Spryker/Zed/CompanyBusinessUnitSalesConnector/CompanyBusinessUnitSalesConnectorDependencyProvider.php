@@ -13,6 +13,9 @@ use Spryker\Zed\CompanyBusinessUnitSalesConnector\Dependency\Facade\CompanyBusin
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
+ */
 class CompanyBusinessUnitSalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';

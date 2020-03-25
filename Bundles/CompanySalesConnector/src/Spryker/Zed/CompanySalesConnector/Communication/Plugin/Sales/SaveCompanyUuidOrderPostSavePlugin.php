@@ -14,6 +14,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 
 /**
  * @method \Spryker\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
  */
 class SaveCompanyUuidOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
 {
