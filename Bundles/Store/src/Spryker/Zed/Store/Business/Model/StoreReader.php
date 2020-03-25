@@ -200,7 +200,7 @@ class StoreReader implements StoreReaderInterface
     {
         $storeNames = array_unique($storeNames);
         $unresolvedStoreNames = $this->getNotCachesStoreNames($storeNames);
-        $resolvedStoreTransfers = $this->getStoreTransfersByStoreNames(array_diff($storeNames, $unresolvedStoreNames));
+        $resolvedStoreTransfers = $this->getStoresByStoreNamesFromCache(array_diff($storeNames, $unresolvedStoreNames));
 
         if ($unresolvedStoreNames) {
             $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
