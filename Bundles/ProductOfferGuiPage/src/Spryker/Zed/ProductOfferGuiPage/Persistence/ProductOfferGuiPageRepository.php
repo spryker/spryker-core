@@ -18,12 +18,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
@@ -126,7 +123,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductStoresSubquery(): string
     {
-        $productStoresSubquery = SpyStoreQuery::create()
+        $productStoresSubquery = $this->getFactory()->getStorePropelQuery()
             ->joinSpyProductAbstractStore()
             ->useSpyProductAbstractStoreQuery()
             ->joinSpyProductAbstract()
@@ -145,7 +142,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductImagesSubquery(int $localeId): string
     {
-        $productImagesSubquery = SpyProductImageQuery::create()
+        $productImagesSubquery = $this->getFactory()->getProductImagePropelQuery()
             ->joinSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
             ->joinSpyProductImageSet()
@@ -172,7 +169,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductOffersCountSubquery(int $merchantId): string
     {
-        $productOffersSubquery = SpyProductOfferQuery::create()
+        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery()
             ->addAsColumn('offers_count', 'COUNT(*)')
             ->where(sprintf(
                 '%s = %s AND %s = %s',

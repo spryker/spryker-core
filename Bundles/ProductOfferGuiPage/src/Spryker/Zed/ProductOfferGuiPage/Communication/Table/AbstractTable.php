@@ -103,7 +103,7 @@ abstract class AbstractTable
             static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
-            static::CONFIG_SEARCH => $guiTableConfigurationTransfer->getSearchOptions(),
+            static::CONFIG_SEARCH => $guiTableConfigurationTransfer->getSearch(),
         ];
     }
 

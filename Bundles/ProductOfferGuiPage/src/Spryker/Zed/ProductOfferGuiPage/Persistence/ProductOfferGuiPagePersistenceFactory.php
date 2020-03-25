@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\Propel\ProductTableDataMapper;
@@ -34,6 +37,30 @@ class ProductOfferGuiPagePersistenceFactory extends AbstractPersistenceFactory
     public function getProductConcretePropelQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::PROPEL_QUERY_PRODUCT_CONCRETE);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function getProductImagePropelQuery(): SpyProductImageQuery
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    public function getProductOfferPropelQuery(): SpyProductOfferQuery
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::PROPEL_QUERY_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    public function getStorePropelQuery(): SpyStoreQuery
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::PROPEL_QUERY_STORE);
     }
 
     /**

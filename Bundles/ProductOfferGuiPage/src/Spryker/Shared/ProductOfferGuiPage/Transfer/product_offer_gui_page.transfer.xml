@@ -18,7 +18,7 @@
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
-        <property name="searchOptions" type="array" associative="true" singular="searchOption"/>
+        <property name="search" type="array" associative="true" singular="searchOption"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">

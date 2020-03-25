@@ -89,7 +89,7 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addSearchToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataUrl(static::DATA_URL);
 
@@ -243,7 +243,7 @@ class ProductTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addSearchOptionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 
