@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication;
@@ -19,12 +19,11 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin extends 
 {
     /**
      * {@inheritDoc}
-     * - Adds `merchant-opening-hours` resource as a relationship by the resource id.
-     * - Identifier of passed resources should contain `merchant` reference.
+     * - Adds `merchant-opening-hours` resource as a relationship by merchant reference.
      *
      * @api
      *
-     * @param array $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void

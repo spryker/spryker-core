@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder;
@@ -16,7 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\MerchantOpeningHoursRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class MerchantOpeningHourRestResponseBuilder implements MerchantOpeningHourRestResponseBuilderInterface
+class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -91,20 +91,6 @@ class MerchantOpeningHourRestResponseBuilder implements MerchantOpeningHourRestR
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
-            );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createMerchantOpeningHoursNotFoundErrorResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_OPENING_HOURS_NOT_FOUND)
-                    ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_OPENING_HOURS_NOT_FOUND)
             );
     }
 }

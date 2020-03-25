@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Expander;
@@ -10,13 +10,13 @@ namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface;
-use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface;
 
 class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implements MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface
      */
     protected $merchantsRestResponseBuilder;
 
@@ -38,13 +38,13 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
     /**
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
      */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
-        MerchantOpeningHourRestResponseBuilderInterface $merchantsRestResponseBuilder,
+        MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder,
         MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
     ) {
         $this->merchantOpeningHoursStorageClient = $merchantOpeningHoursStorageClient;
@@ -77,13 +77,13 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
             );
 
         foreach ($resources as $resource) {
-            $merchantOpeningHoursStorageTransferWithTranslatedNotes = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resource->getId()];
-            $restPaymentMethodsResource = $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResource(
-                $merchantOpeningHoursStorageTransferWithTranslatedNotes,
+            $merchantOpeningHoursStorageTransfer = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resource->getId()];
+            $restMerchantOpeningHoursResource = $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResource(
+                $merchantOpeningHoursStorageTransfer,
                 $resource->getId()
             );
 
-            $resource->addRelationship($restPaymentMethodsResource);
+            $resource->addRelationship($restMerchantOpeningHoursResource);
         }
     }
 
@@ -119,16 +119,16 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
-     * @param array $merchantIds
+     * @param int[] $merchantIds
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
     protected function flipIdsToMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
     {
         $flippedMerchantOpeningHoursStorageTransfers = [];
-        $merchantIds = array_flip($merchantIds);
-        foreach ($merchantOpeningHoursStorageTransfers as $key => $merchantOpeningHourStorageTransfers) {
-            $flippedMerchantOpeningHoursStorageTransfers[$merchantIds[$key]] = $merchantOpeningHourStorageTransfers;
+        $merchantReferences = array_flip($merchantIds);
+        foreach ($merchantOpeningHoursStorageTransfers as $merchantId => $merchantOpeningHourStorageTransfers) {
+            $flippedMerchantOpeningHoursStorageTransfers[$merchantReferences[$merchantId]] = $merchantOpeningHourStorageTransfers;
         }
 
         return $flippedMerchantOpeningHoursStorageTransfers;
