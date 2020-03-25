@@ -19,8 +19,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipPlugin extends Abs
 {
     /**
      * {@inheritDoc}
-     * - Adds `merchant-addresses` resource as a relationship by the resource id.
-     * - Identifier of passed resources should contain `merchant` reference.
+     * - Adds `merchant-addresses` resource as a relationship by merchant reference.
      *
      * @api
      *

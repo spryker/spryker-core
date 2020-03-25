@@ -50,9 +50,6 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
 
         foreach ($resources as $resource) {
             $merchantStorageTransfer = $merchantStorageTransfers[$resource->getId()];
-            if (empty($merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection())) {
-                continue;
-            }
             $restMerchantAddressesResource = $this->merchantAddressesRestResponseBuilder->createMerchantAddressesRestResource(
                 $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection()->getArrayCopy(),
                 $resource->getId()
