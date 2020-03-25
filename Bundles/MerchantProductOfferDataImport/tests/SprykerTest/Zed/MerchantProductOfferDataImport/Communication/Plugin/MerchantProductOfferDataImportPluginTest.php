@@ -11,6 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantSkuValidationStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\MerchantProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig;
 
@@ -67,5 +72,59 @@ class MerchantProductOfferDataImportPluginTest extends Unit
 
         // Assert
         $this->assertSame(MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER, $dataImportPlugin->getImportType());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMerchantSkuValidationTestDoesNotThrowExceptionIfMerchantSkuIsEmpty(): void
+    {
+        // Arrange
+        $merchantSkuValidationStep = new MerchantSkuValidationStep();
+
+        $dataSet = new DataSet([
+            MerchantProductOfferDataSetInterface::MERCHANT_SKU => '',
+            MerchantProductOfferDataSetInterface::ID_MERCHANT => uniqid(),
+            MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE => uniqid(),
+        ]);
+
+        // Act
+        try {
+            $merchantSkuValidationStep->execute($dataSet);
+        } catch (EntityNotFoundException $exception) {
+            $this->fail($exception->getMessage());
+        }
+
+        // Assert
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMerchantSkuValidationTestThrowsExceptionIfProductOfferAlreadyExistForMerchantIdAndSku(): void
+    {
+        $merchantSku = uniqid();
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_SKU => $merchantSku,
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        // Arrange
+        $merchantSkuValidationStep = new MerchantSkuValidationStep();
+
+        $dataSet = new DataSet([
+            MerchantProductOfferDataSetInterface::MERCHANT_SKU => $merchantSku,
+            MerchantProductOfferDataSetInterface::ID_MERCHANT => $productOfferTransfer->getFkMerchant(),
+            MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE => uniqid(),
+        ]);
+
+        // Assert
+        $this->expectException(EntityNotFoundException::class);
+
+        // Act
+        $merchantSkuValidationStep->execute($dataSet);
     }
 }
