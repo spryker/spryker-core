@@ -34,7 +34,8 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
 
         $result = [];
         foreach ($merchantReferences as $merchantReference) {
-            $result[] = (new MerchantStorageTransfer())->setMerchantReference($merchantReference);
+            $result[] = (new MerchantStorageTransfer())->setMerchantReference($merchantReference)
+                ->setName('Name of ' . $merchantReference);
         }
 
         return $result;

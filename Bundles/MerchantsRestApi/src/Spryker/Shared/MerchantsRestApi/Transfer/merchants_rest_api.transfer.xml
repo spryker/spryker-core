@@ -3,18 +3,25 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="RestOrdersAttributes">
-        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
-    </transfer>
-
     <transfer name="RestMerchantsAttributes">
-        <property name="merchantReference" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorage">
         <property name="merchantReference" type="string"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrdersAttributes">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
 </transfers>
