@@ -49,7 +49,7 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
     /**
      * @param array $data
      *
-     * @return array
+     * @return bool[]
      */
     protected function indexIsProductQuantitySplittableByProductConcreteSkus(array $data): array
     {

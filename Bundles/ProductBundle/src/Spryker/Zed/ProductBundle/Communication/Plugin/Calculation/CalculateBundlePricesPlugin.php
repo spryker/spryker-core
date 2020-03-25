@@ -28,7 +28,7 @@ class CalculateBundlePricesPlugin extends AbstractPlugin implements CalculationP
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFacade()->calculateBundlePriceForCalculableObjectTransfer($calculableObjectTransfer);
     }

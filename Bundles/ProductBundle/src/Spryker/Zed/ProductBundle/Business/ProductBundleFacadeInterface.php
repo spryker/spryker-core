@@ -147,7 +147,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates CalculableObjectTransfer::bundleItems prices.
+     *  - Calculates {@link \Generated\Shared\Transfer\CalculableObjectTransfer::$bundleItems} prices.
      *
      * @api
      *

@@ -33,7 +33,7 @@ class ItemExpander implements ItemExpanderInterface
      */
     public function expandCartChangeWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $productConcreteSkus = $this->getProductSkusFromCartChangeTransfer($cartChangeTransfer);
+        $productConcreteSkus = $this->getSkusFromCartChangeTransfer($cartChangeTransfer);
         $indexedIsQuantitySplittableData = $this
             ->salesQuantityRepository
             ->getIsProductQuantitySplittableByProductConcreteSkus($productConcreteSkus);
@@ -50,7 +50,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return string[]
      */
-    protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    protected function getSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
         $skus = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {

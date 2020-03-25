@@ -99,8 +99,8 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreById($idStore)
     {
-        if ($this->storeCache->hasStoreTransferByStoreId($idStore)) {
-            return $this->storeCache->getStoreTransferByStoreId($idStore);
+        if ($this->storeCache->hasStoreByStoreId($idStore)) {
+            return $this->storeCache->getStoreByStoreId($idStore);
         }
 
          $storeEntity = $this->storeQueryContainer
@@ -115,7 +115,7 @@ class StoreReader implements StoreReaderInterface
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
-        $this->storeCache->cacheStoreTransfer($storeTransfer);
+        $this->storeCache->cacheStore($storeTransfer);
 
         return $storeTransfer;
     }
@@ -129,8 +129,8 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreByName($storeName)
     {
-        if ($this->storeCache->hasStoreTransferByStoreName($storeName)) {
-            return $this->storeCache->getStoreTransferByStoreName($storeName);
+        if ($this->storeCache->hasStoreByStoreName($storeName)) {
+            return $this->storeCache->getStoreByStoreName($storeName);
         }
 
         $storeEntity = $this->storeQueryContainer
@@ -145,7 +145,7 @@ class StoreReader implements StoreReaderInterface
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
-        $this->storeCache->cacheStoreTransfer($storeTransfer);
+        $this->storeCache->cacheStore($storeTransfer);
 
         return $storeTransfer;
     }
@@ -157,8 +157,8 @@ class StoreReader implements StoreReaderInterface
      */
     public function findStoreByName(string $storeName): ?StoreTransfer
     {
-        if ($this->storeCache->hasStoreTransferByStoreName($storeName)) {
-            return $this->storeCache->getStoreTransferByStoreName($storeName);
+        if ($this->storeCache->hasStoreByStoreName($storeName)) {
+            return $this->storeCache->getStoreByStoreName($storeName);
         }
 
         if (!$this->storeRepository->storeExists($storeName)) {
@@ -199,28 +199,67 @@ class StoreReader implements StoreReaderInterface
     public function getStoreTransfersByStoreNames(array $storeNames): array
     {
         $storeNames = array_unique($storeNames);
-        $unresolvedStoreNames = [];
-        $storeTransfersFromCache = [];
-
-        foreach ($storeNames as $storeName) {
-            if (!$this->storeCache->hasStoreTransferByStoreName($storeName)) {
-                $unresolvedStoreNames[] = $storeName;
-
-                continue;
-            }
-
-            $storeTransfersFromCache[] = $this->storeCache->getStoreTransferByStoreName($storeName);
-        }
+        $unresolvedStoreNames = $this->getNotCachesStoreNames($storeNames);
+        $resolvedStoreTransfers = $this->getStoreTransfersByStoreNames(array_diff($storeNames, $unresolvedStoreNames));
 
         if ($unresolvedStoreNames) {
             $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
-
-            foreach ($storeTransfers as $storeTransfer) {
-                $this->storeCache->cacheStoreTransfer($storeTransfer);
-                $storeTransfersFromCache[] = $storeTransfer;
-            }
+            $this->cacheStoreTransfers($storeTransfers);
+            $resolvedStoreTransfers = array_merge($resolvedStoreTransfers, $storeTransfers);
         }
 
-        return $storeTransfersFromCache;
+        return $resolvedStoreTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     *
+     * @return void
+     */
+    protected function cacheStoreTransfers(array $storeTransfers): void
+    {
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->storeCache->cacheStore($storeTransfer);
+        }
+    }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return string[]
+     */
+    protected function getNotCachesStoreNames(array $storeNames): array
+    {
+        $unresolvedStoreNames = [];
+
+        foreach ($storeNames as $storeName) {
+            if ($this->storeCache->hasStoreByStoreName($storeName)) {
+                continue;
+            }
+
+            $unresolvedStoreNames[] = $storeName;
+        }
+
+        return $unresolvedStoreNames;
+    }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function getStoresByStoreNamesFromCache(array $storeNames): array
+    {
+        $resolvedStoreTransfers = [];
+
+        foreach ($storeNames as $storeName) {
+            if (!$this->storeCache->hasStoreByStoreName($storeName)) {
+                continue;
+            }
+
+            $resolvedStoreTransfers[] = $this->storeCache->getStoreByStoreName($storeName);
+        }
+
+        return $resolvedStoreTransfers;
     }
 }

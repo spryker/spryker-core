@@ -101,7 +101,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $cartChangeItems = new ArrayObject();
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
-        $productConcreteSkus = $this->getProductCocnreteSkusFromCartChangeTransfer($cartChangeTransfer);
+        $productConcreteSkus = $this->getProductConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
         $productForBundleTransfers = $this->productBundleReader->getProductForBundleTransfersByProductConcreteSkus($productConcreteSkus);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
@@ -513,7 +513,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      *
      * @return string[]
      */
-    protected function getProductCocnreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
         $productConcreteSkus = [];
 

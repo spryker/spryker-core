@@ -28,7 +28,7 @@ class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements Cal
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFacade()->calculateProductOptionTaxRateForCalculableObject($calculableObjectTransfer);
     }

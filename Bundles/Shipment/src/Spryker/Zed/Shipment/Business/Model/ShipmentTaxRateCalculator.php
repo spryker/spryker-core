@@ -153,7 +153,10 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
          * @var string[]|null $taxSet
          */
         $taxSet = $this->shipmentQueryContainer
-            ->queryTaxSetByIdShipmentMethodAndCountryIso2Code($shipmentTransfer->getMethod()->getIdShipmentMethod(), $countryIso2Code)
+            ->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
+                $shipmentTransfer->requireMethod()->getMethod()->getIdShipmentMethod(),
+                $countryIso2Code
+            )
             ->findOne();
 
         return $taxSet;

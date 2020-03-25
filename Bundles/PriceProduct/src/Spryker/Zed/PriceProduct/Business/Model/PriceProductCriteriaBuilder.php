@@ -91,7 +91,6 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         return (new PriceProductCriteriaTransfer())
             ->setSku($priceProductFilterTransfer->getSku())
             ->setQuantity($priceProductFilterTransfer->getQuantity())
-            ->setProductOfferReference($priceProductFilterTransfer->getProductOfferReference())
             ->setPriceDimension(
                 $priceProductFilterTransfer->getPriceDimension()
             )

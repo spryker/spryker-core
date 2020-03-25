@@ -12,37 +12,37 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface StoreCacheInterface
 {
     /**
-     * @param int $storeId
+     * @param int $idStore
      *
      * @return bool
      */
-    public function hasStoreTransferByStoreId(int $storeId): bool;
+    public function hasStoreByStoreId(int $idStore): bool;
 
     /**
      * @param string $storeName
      *
      * @return bool
      */
-    public function hasStoreTransferByStoreName(string $storeName): bool;
+    public function hasStoreByStoreName(string $storeName): bool;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function cacheStoreTransfer(StoreTransfer $storeTransfer): void;
+    public function cacheStore(StoreTransfer $storeTransfer): void;
 
     /**
-     * @param int $storeId
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreTransferByStoreId(int $storeId): StoreTransfer;
+    public function getStoreByStoreId(int $idStore): StoreTransfer;
 
     /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreTransferByStoreName(string $storeName): StoreTransfer;
+    public function getStoreByStoreName(string $storeName): StoreTransfer;
 }
