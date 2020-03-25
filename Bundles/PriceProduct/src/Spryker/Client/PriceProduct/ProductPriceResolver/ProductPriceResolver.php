@@ -45,6 +45,16 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $quoteClient;
 
     /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected static $currencyTransfer;
+
+    /**
+     * @var string|null
+     */
+    protected static $currentPriceMode;
+
+    /**
      * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
     protected $priceProductService;
@@ -189,10 +199,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected function buildPriceProductFilterWithCurrentValues(
         ?PriceProductFilterTransfer $priceProductFilterTransfer = null
     ): PriceProductFilterTransfer {
-        $currencyTransfer = $this->currencyClient->getCurrent();
-        $priceMode = $this->priceClient->getCurrentPriceMode();
+        $currencyTransfer = $this->getCurrencyTransfer();
+        $priceMode = $this->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
-        $quote = $this->quoteClient->getQuote();
+
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         $builtPriceProductFilterTransfer = new PriceProductFilterTransfer();
 
@@ -208,9 +219,33 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setCurrency($currencyTransfer)
             ->setCurrencyIsoCode($currencyTransfer->getCode())
             ->setPriceTypeName($priceTypeName)
-            ->setQuote($quote);
+            ->setQuote($quoteTransfer);
 
         return $builtPriceProductFilterTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(): CurrencyTransfer
+    {
+        if (static::$currencyTransfer === null) {
+            static::$currencyTransfer = $this->currencyClient->getCurrent();
+        }
+
+        return static::$currencyTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentPriceMode(): string
+    {
+        if (static::$currentPriceMode === null) {
+            static::$currentPriceMode = $this->priceClient->getCurrentPriceMode();
+        }
+
+        return static::$currentPriceMode;
     }
 
     /**
