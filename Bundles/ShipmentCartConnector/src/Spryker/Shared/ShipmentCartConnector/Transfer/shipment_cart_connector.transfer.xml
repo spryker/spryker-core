@@ -83,6 +83,7 @@
 
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">

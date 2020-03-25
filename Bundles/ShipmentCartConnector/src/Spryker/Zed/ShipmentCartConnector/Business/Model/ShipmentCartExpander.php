@@ -91,21 +91,59 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      */
     protected function isShipmentExpenseUpdateNeeded(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$quoteTransfer->getShipment()) {
+        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShipment()->getMethod()) {
             return false;
         }
 
         $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
 
-        if ($this->isCurrencyChanged($quoteTransfer)) {
+        if ($this->isCurrencyChanged($quoteTransfer) || $shipmentMethodTransfer->getSourcePrice()) {
             return true;
         }
 
-        if ($shipmentMethodTransfer && $shipmentMethodTransfer->getSourcePrice()) {
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isQuoteShipmentExpenseSourcePriceSet($quoteTransfer)) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteShipmentExpenseSourcePriceSet(QuoteTransfer $quoteTransfer): bool
+    {
+        $expenseTransfer = $this->findExpenseByShipment($quoteTransfer);
+
+        if (!$expenseTransfer) {
+            return false;
+        }
+
+        $expenseShipmentMethod = $expenseTransfer->getShipment()->getMethod();
+
+        return $expenseShipmentMethod->getSourcePrice() !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findExpenseByShipment(QuoteTransfer $quoteTransfer): ?ExpenseTransfer
+    {
+        $shipmentTransfer = $quoteTransfer->getShipment();
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+
+            if ($expenseShipmentTransfer && $expenseShipmentTransfer->getShipmentSelection() === $shipmentTransfer->getShipmentSelection()) {
+                return $expenseTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
