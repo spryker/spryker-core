@@ -7,6 +7,8 @@ ProductOfferGuiPage modules provides components for product offers management.
 
 ```
 composer require spryker/product-offer-gui-page
+npm install
+npm run build
 ```
 
 ## Documentation
