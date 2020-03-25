@@ -30,6 +30,11 @@ class OrderExpander implements OrderExpanderInterface
     public function expandOrdersWithMetadata(array $orderTransfers): array
     {
         $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
+
+        if (!$itemTransfers) {
+            return $orderTransfers;
+        }
+
         $itemTransfers = $this->itemMetadataExpander->expandOrderItemsWithMetadata($itemTransfers);
         $itemTransfers = $this->groupItemTransfersByIdSalesOrder($itemTransfers);
 
