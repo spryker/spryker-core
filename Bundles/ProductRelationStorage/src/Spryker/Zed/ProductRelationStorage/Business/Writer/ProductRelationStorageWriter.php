@@ -146,7 +146,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     public function unpublish(array $productAbstractIds)
     {
-        $this->productRelationStorageEntityManager->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
+        $this->productRelationStorageEntityManager->deleteProductAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -156,9 +156,6 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function writeCollection(array $productAbstractIds): void
     {
-        $this->productRelationStorageEntityManager
-            ->deleteProductAbstractRelationStorageEntitiesByProductAbstractIds($productAbstractIds);
-
         $productRelationTransfers = $this->productRelationFacade
             ->getProductRelationsByProductAbstractIds($productAbstractIds);
 
@@ -176,9 +173,31 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected function storeData(array $productRelations)
     {
         foreach ($productRelations as $idProductAbstract => $productRelationTransfersByStore) {
+            $this->deleteEmptyRows($idProductAbstract, $productRelationTransfersByStore);
             foreach ($productRelationTransfersByStore as $store => $productRelationTransfers) {
                 $this->storeDataSet($idProductAbstract, $store, $productRelationTransfers);
             }
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param array $productRelationTransfersByStore
+     *
+     * @return void
+     */
+    protected function deleteEmptyRows(
+        int $idProductAbstract,
+        array $productRelationTransfersByStore
+    ): void {
+        $storesFromStorage = $this->productRelationStorageRepository
+            ->getStoresByIdProductAbstractFromStorage($idProductAbstract);
+        $storesFromProductRelations = array_keys($productRelationTransfersByStore);
+        $storesDiff = array_diff($storesFromStorage, $storesFromProductRelations);
+
+        if ($storesDiff !== []) {
+            $this->productRelationStorageEntityManager
+                ->deleteProductAbstractRelationStorageEntitiesByProductAbstractIdAndStores($idProductAbstract, $storesDiff);
         }
     }
 

@@ -73,6 +73,23 @@ class ProductRelationStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getStoresByIdProductAbstractFromStorage(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createSpyProductAbstractRelationStorageQuery()
+            ->select([
+                SpyProductAbstractRelationStorageTableMap::COL_STORE,
+            ])
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param int $offset
      * @param int $limit
      *

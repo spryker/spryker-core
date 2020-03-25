@@ -32,11 +32,26 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
             ->findOneOrCreate();
 
         $productAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray())
+            ->setData($productAbstractRelationStorageTransfer->toArray())
             ->save();
+    }
 
-        $productAbstractRelationStorageEntity
-            ->setIsSendingToQueue($productAbstractRelationStorageEntity->isSynchronizationEnabled())
-            ->syncPublishedMessage();
+    /**
+     * @param int $productAbstractId
+     * @param string[] $stores
+     *
+     * @return void
+     */
+    public function deleteProductAbstractRelationStorageEntitiesByProductAbstractIdAndStores(
+        int $productAbstractId,
+        array $stores
+    ): void {
+        $this->getFactory()
+            ->createSpyProductAbstractRelationStorageQuery()
+            ->filterByFkProductAbstract($productAbstractId)
+            ->filterByStore_In($stores)
+            ->find()
+            ->delete();
     }
 
     /**
@@ -44,7 +59,7 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
      *
      * @return void
      */
-    public function deleteProductAbstractRelationStorageEntitiesByProductAbstractIds(
+    public function deleteProductAbstractStorageEntitiesByProductAbstractIds(
         array $productAbstractIds
     ): void {
         $this->getFactory()

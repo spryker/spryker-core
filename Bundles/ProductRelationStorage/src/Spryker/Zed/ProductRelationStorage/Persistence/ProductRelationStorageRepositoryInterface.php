@@ -25,4 +25,11 @@ interface ProductRelationStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function findProductRelationStorageDataTransferByIds(FilterTransfer $filterTransfer, array $ids): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getStoresByIdProductAbstractFromStorage(int $idProductAbstract): array;
 }

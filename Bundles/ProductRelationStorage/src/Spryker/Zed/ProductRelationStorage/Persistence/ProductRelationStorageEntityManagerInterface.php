@@ -26,11 +26,22 @@ interface ProductRelationStorageEntityManagerInterface
     ): void;
 
     /**
+     * @param int $productAbstractId
+     * @param string[] $stores
+     *
+     * @return void
+     */
+    public function deleteProductAbstractRelationStorageEntitiesByProductAbstractIdAndStores(
+        int $productAbstractId,
+        array $stores
+    ): void;
+
+    /**
      * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function deleteProductAbstractRelationStorageEntitiesByProductAbstractIds(
+    public function deleteProductAbstractStorageEntitiesByProductAbstractIds(
         array $productAbstractIds
     ): void;
 }
