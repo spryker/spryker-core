@@ -109,11 +109,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerEmailFilterQueryJoin($filterFieldTransfer->getValue())
-        );
-
-        $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerNameFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue())
         );
 
         return $queryJoinCollectionTransfer;
@@ -187,23 +183,9 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
-    protected function createCustomerEmailFilterQueryJoin(string $searchString): QueryJoinTransfer
+    protected function createCustomerFilterQueryJoin(string $searchString): QueryJoinTransfer
     {
-        $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
-            ->setMergeWithCondition(static::CONDITION_GROUP_ALL)
-            ->setColumn(static::COLUMN_EMAIL)
-            ->setValue($searchString);
-
-        return (new QueryJoinTransfer())->addQueryWhereCondition($queryWhereConditionTransfer);
-    }
-
-    /**
-     * @param string $searchString
-     *
-     * @return \Generated\Shared\Transfer\QueryJoinTransfer
-     */
-    protected function createCustomerNameFilterQueryJoin(string $searchString): QueryJoinTransfer
-    {
+        $queryJoinTransfer = new QueryJoinTransfer();
         $fullNameColumn = $this->getConcatenatedFullNameColumn();
 
         $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
@@ -211,8 +193,16 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
             ->setColumn($fullNameColumn)
             ->setValue($searchString);
 
-        return (new QueryJoinTransfer())->setWithColumns([static::COLUMN_FULL_NAME => $fullNameColumn])
-            ->addQueryWhereCondition($queryWhereConditionTransfer);
+        $queryJoinTransfer->addQueryWhereCondition($queryWhereConditionTransfer);
+
+        $queryWhereConditionTransfer = (new QueryWhereConditionTransfer())
+            ->setMergeWithCondition(static::CONDITION_GROUP_ALL)
+            ->setColumn(static::COLUMN_EMAIL)
+            ->setValue($searchString);
+
+        $queryJoinTransfer->addQueryWhereCondition($queryWhereConditionTransfer);
+
+        return $queryJoinTransfer->setWithColumns([static::COLUMN_FULL_NAME => $fullNameColumn]);
     }
 
     /**

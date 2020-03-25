@@ -15,8 +15,13 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/company": "*",
+    "spryker/company-role": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
     "spryker/code-sniffer": "*",
     "spryker/oms": "*",
+    "spryker/permission": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
