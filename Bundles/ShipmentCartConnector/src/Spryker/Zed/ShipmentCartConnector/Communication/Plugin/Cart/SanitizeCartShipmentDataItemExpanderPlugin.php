@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
  */
-class CartShipmentDataSanitizeItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class SanitizeCartShipmentDataItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
