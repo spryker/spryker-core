@@ -26,7 +26,7 @@ class CategoryAttributeCategoryNodeStoragePublishListener extends AbstractPlugin
 
     /**
      * {@inheritDoc}
-     * - Publishes changes in child and parent categories by `CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE` event.
+     * - Publishes changes in child and parent category nodes by `CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE` event.
      *
      * @api
      *
