@@ -77,7 +77,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantSkuValidationTestDoesNotThrowExceptionIfMerchantSkuIsEmpty(): void
+    public function testMerchantSkuValidationStepDoesNotThrowExceptionIfMerchantSkuIsEmpty(): void
     {
         // Arrange
         $merchantSkuValidationStep = new MerchantSkuValidationStep();
@@ -102,7 +102,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantSkuValidationTestThrowsExceptionIfProductOfferAlreadyExistForMerchantIdAndSku(): void
+    public function testMerchantSkuValidationStepThrowsExceptionIfProductOfferAlreadyExistForMerchantIdAndSku(): void
     {
         $merchantSku = uniqid();
         $merchantTransfer = $this->tester->haveMerchant();
