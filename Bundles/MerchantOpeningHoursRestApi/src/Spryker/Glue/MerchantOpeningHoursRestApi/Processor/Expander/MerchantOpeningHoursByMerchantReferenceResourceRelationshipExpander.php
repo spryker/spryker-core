@@ -64,11 +64,11 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
         $merchantReferences = $this->getMerchantReferences($resources);
         $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
 
-        $merchantIds = $this->getMerchantIds($merchantStorageTransfers);
+        $merchantIdsIndexedByReference = $this->getMerchantIdsIndexedByReference($merchantStorageTransfers);
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
-            ->getMerchantOpeningHoursByMerchantIds($merchantIds);
+            ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
 
-        $merchantOpeningHoursStorageTransfers = $this->flipIdsToMerchantReferences($merchantOpeningHoursStorageTransfers, $merchantIds);
+        $merchantOpeningHoursStorageTransfers = $this->indexCollectionByMerchantReferences($merchantOpeningHoursStorageTransfers, $merchantIdsIndexedByReference);
 
         $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
             ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
@@ -77,10 +77,15 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
             );
 
         foreach ($resources as $resource) {
-            $merchantOpeningHoursStorageTransfer = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resource->getId()];
+            $resourceId = $resource->getId();
+            if (!$resourceId) {
+                continue;
+            }
+
+            $merchantOpeningHoursStorageTransfer = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resourceId];
             $restMerchantOpeningHoursResource = $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResource(
                 $merchantOpeningHoursStorageTransfer,
-                $resource->getId()
+                $resourceId
             );
 
             $resource->addRelationship($restMerchantOpeningHoursResource);
@@ -96,7 +101,12 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
     {
         $references = [];
         foreach ($resources as $resource) {
-            $references[] = $resource->getId();
+            $resourceId = $resource->getId();
+            if (!$resourceId) {
+                continue;
+            }
+
+            $references[] = $resourceId;
         }
 
         return $references;
@@ -107,14 +117,14 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      *
      * @return int[]
      */
-    protected function getMerchantIds(array $merchantStorageTransfers): array
+    protected function getMerchantIdsIndexedByReference(array $merchantStorageTransfers): array
     {
-        $merchantIds = [];
+        $merchantIdsIndexedByReference = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantIds[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();
+            $merchantIdsIndexedByReference[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();
         }
 
-        return $merchantIds;
+        return $merchantIdsIndexedByReference;
     }
 
     /**
@@ -123,12 +133,12 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    protected function flipIdsToMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
+    protected function indexCollectionByMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
     {
         $flippedMerchantOpeningHoursStorageTransfers = [];
-        $merchantReferences = array_flip($merchantIds);
+        $merchantReferencesIndexedById = array_flip($merchantIds);
         foreach ($merchantOpeningHoursStorageTransfers as $merchantId => $merchantOpeningHourStorageTransfers) {
-            $flippedMerchantOpeningHoursStorageTransfers[$merchantReferences[$merchantId]] = $merchantOpeningHourStorageTransfers;
+            $flippedMerchantOpeningHoursStorageTransfers[$merchantReferencesIndexedById[$merchantId]] = $merchantOpeningHourStorageTransfers;
         }
 
         return $flippedMerchantOpeningHoursStorageTransfers;
