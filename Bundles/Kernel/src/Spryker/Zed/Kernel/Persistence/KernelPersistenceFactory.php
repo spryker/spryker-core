@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
+/**
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ */
 class KernelPersistenceFactory extends AbstractPersistenceFactory
 {
 }
