@@ -5,9 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/gui": "^3.0.0",
+    "spryker/gui": "^3.30.1",
     "spryker/kernel": "^3.30.0",
-    "spryker/merchant-gui-extension": "^1.0.0",
+    "spryker/merchant-gui-extension": "^1.1.0",
     "spryker/merchant-user": "^0.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/user": "^3.3.0",
