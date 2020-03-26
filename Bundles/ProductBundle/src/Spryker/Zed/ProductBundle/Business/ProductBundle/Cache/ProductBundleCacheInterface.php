@@ -29,4 +29,9 @@ interface ProductBundleCacheInterface
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function getProductForBundleTransfersBySku(string $sku): array;
+
+    /**
+     * @return void
+     */
+    public function cleanCache(): void;
 }

@@ -55,4 +55,12 @@ class ProductBundleCache implements ProductBundleCacheInterface
 
         return static::$groupedBySkuProductForBundleTransfers[$sku];
     }
+
+    /**
+     * @return void
+     */
+    public function cleanCache(): void
+    {
+        static::$groupedBySkuProductForBundleTransfers = [];
+    }
 }
