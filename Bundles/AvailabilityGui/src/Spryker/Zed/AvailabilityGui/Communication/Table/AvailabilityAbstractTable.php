@@ -11,6 +11,8 @@ use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
@@ -49,6 +51,11 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $idStore;
 
     /**
+     * @var int
+     */
+    protected $idLocale;
+
+    /**
      * @param \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface $availabilityHelper
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param int $idStore
@@ -63,9 +70,10 @@ class AvailabilityAbstractTable extends AbstractTable
         $this->availabilityHelper = $availabilityHelper;
         $this->storeFacade = $storeFacade;
         $this->idStore = $idStore;
+        $this->idLocale = $idLocale;
 
         $this->queryProductAbstractAvailability = $this->availabilityHelper
-            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore);
+            ->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated($idLocale, $idStore);
     }
 
     /**
@@ -125,16 +133,24 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $result = [];
 
-        $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
+        /** @var \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities */
+        $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
+        $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
+        $productAbstractEntities = $this->availabilityHelper
+            ->getProductAbstractEntitiesWithStockByProductAbstractIds(
+                $productAbstractIds,
+                $this->idLocale,
+                $this->idStore
+            );
 
-        foreach ($queryResult as $productAbstractEntity) {
+        foreach ($productAbstractEntities as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
-                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
+                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::PRODUCT_NAME),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
                 AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
@@ -145,6 +161,33 @@ class AvailabilityAbstractTable extends AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIds(ObjectCollection $productAbstractEntities): array
+    {
+        $productAbstractIds = [];
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractIds[] = $productAbstractEntity->getIdProductAbstract();
+        }
+
+        return $productAbstractIds;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return int
+     */
+    protected function countTotal(ModelCriteria $query): int
+    {
+        return $this->availabilityHelper
+            ->queryAvailabilityAbstractByIdStore($this->idStore)
+            ->count();
     }
 
     /**

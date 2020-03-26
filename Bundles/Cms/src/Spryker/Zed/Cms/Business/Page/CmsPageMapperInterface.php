@@ -18,7 +18,7 @@ interface CmsPageMapperInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return array
+     * @return string[]
      */
     public function mapCmsPageUrlLocale(SpyCmsPage $cmsPageEntity): array;
 

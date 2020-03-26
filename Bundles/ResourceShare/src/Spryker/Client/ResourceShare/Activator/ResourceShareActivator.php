@@ -87,7 +87,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
@@ -108,7 +108,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */

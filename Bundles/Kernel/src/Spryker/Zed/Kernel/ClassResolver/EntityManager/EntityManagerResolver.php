@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class EntityManagerResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sEntityManager';
+    protected const RESOLVABLE_TYPE = 'ZedEntityManager';
 
     /**
      * @param object|string $callerClass
@@ -22,50 +22,13 @@ class EntityManagerResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $class */
-            $class = $this->getResolvedClassInstance();
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $resolved */
+        $resolved = parent::doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new EntityManagerNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    protected function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
-    }
-
-    /**
-     * @param string $namespace
-     * @param string|null $store
-     *
-     * @return string
-     */
-    protected function buildClassName($namespace, $store = null)
-    {
-        $searchAndReplace = [
-            self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_STORE => $store,
-        ];
-
-        $className = str_replace(
-            array_keys($searchAndReplace),
-            array_values($searchAndReplace),
-            $this->getClassPattern()
-        );
-
-        return $className;
     }
 }

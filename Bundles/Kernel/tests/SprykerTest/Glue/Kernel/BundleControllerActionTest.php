@@ -54,12 +54,12 @@ class BundleControllerActionTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(BundleControllerAction::class)
-            ->setMethods(['getBundleNameResolver'])
+            ->setMethods(['getModuleNameResolver'])
             ->setConstructorArgs([$bundle, $controller, $action])
             ->getMock();
 
         $mock
-            ->method('getBundleNameResolver')
+            ->method('getModuleNameResolver')
             ->will($this->returnValue($this->getModuleNameResolverMock($storeName)));
 
         return $mock;

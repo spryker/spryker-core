@@ -13,9 +13,9 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Testify\Config\TestifyConfig;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Business\BusinessFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Testify\Locator\TestifyConfigurator;
 
 class BundleProxy extends KernelBundleProxy
@@ -104,12 +104,9 @@ class BundleProxy extends KernelBundleProxy
      */
     protected function getFactory(AbstractFacade $facade)
     {
-        $factoryResolver = new FactoryResolver();
+        $factoryResolver = new BusinessFactoryResolver();
 
-        /** @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory */
-        $factory = $factoryResolver->resolve($facade);
-
-        return $factory;
+        return $factoryResolver->resolve($facade);
     }
 
     /**
