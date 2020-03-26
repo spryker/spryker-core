@@ -21,7 +21,7 @@ class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlu
      * {@inheritDoc}
      *
      * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\PromotionItemTransfer"
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestPromotionalItemsAttributesTransfer"
      * })
      *
      * - Adds `promotional-items` resource as relationship.

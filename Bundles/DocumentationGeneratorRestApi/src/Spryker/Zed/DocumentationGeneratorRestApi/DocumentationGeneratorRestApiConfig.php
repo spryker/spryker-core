@@ -101,19 +101,6 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @return array
-     */
-    public function getAnnotationPluginSourceDirectories(): array
-    {
-        return array_merge(
-            $this->getCoreAnnotationPluginSourceDirectoryPatterns(),
-            $this->getProjectAnnotationPluginSourceDirectoryPatterns()
-        );
-    }
-
-    /**
      * @return string[]
      */
     protected function getCoreAnnotationSourceDirectoryPatterns(): array

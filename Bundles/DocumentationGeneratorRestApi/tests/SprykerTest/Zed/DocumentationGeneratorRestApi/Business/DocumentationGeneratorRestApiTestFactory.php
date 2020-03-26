@@ -136,7 +136,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface
      */
-    public function createResourceRelationshipPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
+    public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnalyzer([$this->createResourceRelationshipProcessorCollectionPluginMock()]);
     }
@@ -238,7 +238,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new ResourceSchemaNameStorageProcessor(
             $this->createResourceSchemaNameStorage(),
             $this->createResourceTransferAnalyzer(),
-            $this->createResourceRelationshipPluginAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
             $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()
         );
@@ -311,7 +311,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createResourceRelationshipProcessor(): ResourceRelationshipProcessorInterface
     {
         return new ResourceRelationshipProcessor(
-            $this->createResourceRelationshipPluginAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()

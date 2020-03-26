@@ -85,49 +85,21 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
      */
     protected function addResourceSchemaNameToStorage(ResourceRoutePluginInterface $plugin, PathAnnotationsTransfer $pathAnnotationsTransfer): void
     {
-        $this->addResourceSchemaNameToStorageGetResourceByIdPath($plugin, $pathAnnotationsTransfer->getGetResourceById());
-        $this->addResourceSchemaNameToStorageGetResourceCollectionPath($plugin, $pathAnnotationsTransfer->getGetCollection());
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    protected function addResourceSchemaNameToStorageGetResourceByIdPath(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer): void
-    {
-        if (!$annotationTransfer) {
-            return;
+        if ($pathAnnotationsTransfer->getGetResourceById()) {
+            $this->addResponseResourceDataSchemaNameToStorage($plugin, $pathAnnotationsTransfer->getGetResourceById());
         }
-
-        $this->addResponseResourceDataSchemaNameToStorage($plugin, $annotationTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
-     *
-     * @return void
-     */
-    protected function addResourceSchemaNameToStorageGetResourceCollectionPath(
-        ResourceRoutePluginInterface $plugin,
-        ?AnnotationTransfer $annotationTransfer
-    ): void {
-        if (!$annotationTransfer) {
-            return;
+        if ($pathAnnotationsTransfer->getGetCollection()) {
+            $this->addResponseCollectionDataSchemaNameToStorage($plugin, $pathAnnotationsTransfer->getGetCollection());
         }
-
-        $this->addResponseCollectionDataSchemaNameToStorage($plugin, $annotationTransfer);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
      *
      * @return void
      */
-    protected function addResponseResourceDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer)
+    protected function addResponseResourceDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, AnnotationTransfer $annotationTransfer)
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
@@ -138,11 +110,11 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
      *
      * @return void
      */
-    protected function addResponseCollectionDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer)
+    protected function addResponseCollectionDataSchemaNameToStorage(ResourceRoutePluginInterface $plugin, AnnotationTransfer $annotationTransfer)
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
@@ -152,17 +124,13 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
+     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
      *
      * @return string
      */
-    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
+    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, AnnotationTransfer $annotationTransfer): string
     {
-        $transferClassName = $annotationTransfer && $annotationTransfer->getResponseAttributesClassName()
-            ? $annotationTransfer->getResponseAttributesClassName()
-            : $plugin->getResourceAttributesClassName();
-
-        return $transferClassName;
+        return $annotationTransfer->getResponseAttributesClassName() ?: $plugin->getResourceAttributesClassName();
     }
 
     /**

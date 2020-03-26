@@ -21,7 +21,7 @@ class CartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin implemen
      * {@inheritDoc}
      *
      * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCartsAttributesTransfer"
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
      * })
      *
      * - Adds items resource as relationship by quote.

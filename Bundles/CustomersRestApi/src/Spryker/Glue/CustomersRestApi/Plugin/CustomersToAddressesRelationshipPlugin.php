@@ -21,7 +21,7 @@ class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements R
      * {@inheritDoc}
      *
      * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCustomersResponseAttributesTransfer"
+     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestAddressAttributesTransfer"
      * })
      *
      * @api

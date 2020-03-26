@@ -33,9 +33,8 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(
-        DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService
-    ) {
+    public function __construct(DocumentationGeneratorRestApiToUtilEncodingServiceInterface $utilEncodingService)
+    {
         $this->utilEncodingService = $utilEncodingService;
     }
 

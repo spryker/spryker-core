@@ -55,24 +55,24 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface
      */
-    protected $resourceRelationship;
+    protected $resourceRelationshipProcessor;
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface $schemaBuilder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface $schemaRenderer
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface $resourceRelationship
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface $resourceRelationshipProcessor
      */
     public function __construct(
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
         SchemaBuilderInterface $schemaBuilder,
         SchemaRendererInterface $schemaRenderer,
-        ResourceRelationshipProcessorInterface $resourceRelationship
+        ResourceRelationshipProcessorInterface $resourceRelationshipProcessor
     ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->schemaBuilder = $schemaBuilder;
         $this->schemaRenderer = $schemaRenderer;
-        $this->resourceRelationship = $resourceRelationship;
+        $this->resourceRelationshipProcessor = $resourceRelationshipProcessor;
 
         $this->addDefaultSchemas();
     }
@@ -136,7 +136,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
-        $this->addResourceAttributesSchemaFromPligun($plugin);
+        $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
         $this->addAllRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
@@ -160,7 +160,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
-        $this->addResourceAttributesSchemaFromPligun($plugin);
+        $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
         $this->addAllRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
@@ -171,9 +171,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      *
      * @return void
      */
-    protected function addResourceAttributesSchemaFromPligun(ResourceRoutePluginInterface $plugin): void
+    protected function addAttributesSchemasFromResourceRelationshipAnnotations(ResourceRoutePluginInterface $plugin): void
     {
-        $resourceAttributesClassNames = $this->resourceRelationship->getResourceAttributesClassNamesFromPlugin($plugin);
+        $resourceAttributesClassNames = $this->resourceRelationshipProcessor->getResourceAttributesClassNamesFromPlugin($plugin);
 
         if (!$resourceAttributesClassNames) {
             return;
@@ -350,13 +350,15 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         string $responseSchemaName
     ): void {
         $relationshipSchemaDataTransfers = $this
-            ->resourceRelationship
+            ->resourceRelationshipProcessor
             ->getAllSchemaDataTransfersForPlugin($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
 
-        if ($relationshipSchemaDataTransfers) {
-            foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
-                $this->addSchemaData($relationshipSchemaDataTransfer);
-            }
+        if (!$relationshipSchemaDataTransfers) {
+            return;
+        }
+
+        foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
+            $this->addSchemaData($relationshipSchemaDataTransfer);
         }
     }
 }

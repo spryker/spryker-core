@@ -13,10 +13,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 class TestResourceRelationshipPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
-     * })
-     *
      * @param array $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

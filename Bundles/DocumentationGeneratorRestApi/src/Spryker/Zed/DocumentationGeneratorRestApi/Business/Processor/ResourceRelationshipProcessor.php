@@ -90,16 +90,18 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
         $resourceAttributesClassNames = [];
         $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
-        if ($resourceRelationships) {
-            foreach ($resourceRelationships as $resourceRelationship) {
-                $pluginAnnotationsTransfer = $this
-                    ->resourceRelationshipsPluginAnnotationAnalyzer
-                    ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationship);
-                $resourceAttributesClassName = $pluginAnnotationsTransfer->getResourceAttributesClassName();
+        if (!$resourceRelationships) {
+            return $resourceAttributesClassNames;
+        }
 
-                if ($resourceAttributesClassName) {
-                    $resourceAttributesClassNames[] = $resourceAttributesClassName;
-                }
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $pluginAnnotationsTransfer = $this
+                ->resourceRelationshipsPluginAnnotationAnalyzer
+                ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationship);
+            $resourceAttributesClassName = $pluginAnnotationsTransfer->getResourceAttributesClassName();
+
+            if ($resourceAttributesClassName) {
+                $resourceAttributesClassNames[] = $resourceAttributesClassName;
             }
         }
 
