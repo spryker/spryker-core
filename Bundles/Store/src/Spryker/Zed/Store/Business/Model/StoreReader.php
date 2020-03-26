@@ -199,13 +199,13 @@ class StoreReader implements StoreReaderInterface
     public function getStoreTransfersByStoreNames(array $storeNames): array
     {
         $storeNames = array_unique($storeNames);
-        $unresolvedStoreNames = $this->getNotCachesStoreNames($storeNames);
+        $unresolvedStoreNames = $this->getNotCachedStoreNames($storeNames);
         $resolvedStoreTransfers = $this->getStoresByStoreNamesFromCache(array_diff($storeNames, $unresolvedStoreNames));
 
         if ($unresolvedStoreNames) {
-            $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
-            $this->cacheStoreTransfers($storeTransfers);
+            $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($unresolvedStoreNames);
             $resolvedStoreTransfers = array_merge($resolvedStoreTransfers, $storeTransfers);
+            $this->cacheStoreTransfers($storeTransfers);
         }
 
         return $resolvedStoreTransfers;
@@ -228,7 +228,7 @@ class StoreReader implements StoreReaderInterface
      *
      * @return string[]
      */
-    protected function getNotCachesStoreNames(array $storeNames): array
+    protected function getNotCachedStoreNames(array $storeNames): array
     {
         $unresolvedStoreNames = [];
 
