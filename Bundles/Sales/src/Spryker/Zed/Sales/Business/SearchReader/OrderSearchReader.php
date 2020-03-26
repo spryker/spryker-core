@@ -24,15 +24,25 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $orderSearchQueryExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     */
+    protected $searchOrderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[] $orderSearchQueryExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
+        array $searchOrderExpanderPlugins,
         array $orderSearchQueryExpanderPlugins
-    ) {
+    )
+    {
         $this->salesRepository = $salesRepository;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
         $this->orderSearchQueryExpanderPlugins = $orderSearchQueryExpanderPlugins;
+
     }
 
     /**
@@ -44,7 +54,15 @@ class OrderSearchReader implements OrderSearchReaderInterface
     {
         $orderListTransfer = $this->executeOrderSearchQueryExpanderPlugins($orderListTransfer);
 
-        return $this->salesRepository->searchOrders($orderListTransfer);
+        $orderListTransfer = $this->salesRepository->searchOrders($orderListTransfer);
+
+        $orderTransfers = $this->executeOrderExpanderPlugins(
+            $orderListTransfer->getOrders()->getArrayCopy()
+        );
+
+        $orderListTransfer->getOrders()->exchangeArray($orderTransfers);
+
+        return $orderListTransfer;
     }
 
     /**
@@ -67,5 +85,19 @@ class OrderSearchReader implements OrderSearchReaderInterface
         }
 
         return $orderListTransfer->setQueryJoins($queryJoinCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    protected function executeOrderExpanderPlugins(array $orderTransfers): array
+    {
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
+        }
+
+        return $orderTransfers;
     }
 }
