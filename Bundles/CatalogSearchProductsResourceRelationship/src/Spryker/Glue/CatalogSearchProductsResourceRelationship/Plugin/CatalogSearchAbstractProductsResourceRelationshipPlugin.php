@@ -19,7 +19,6 @@ class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     *
      * - Adds `abstract-products` as a relationship.
      *
      * @api
