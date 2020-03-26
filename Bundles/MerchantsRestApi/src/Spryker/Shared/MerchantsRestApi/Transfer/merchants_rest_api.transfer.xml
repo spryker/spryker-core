@@ -15,7 +15,7 @@
     </transfer>
 
     <transfer name="RestMerchantAddressesAttributes">
-        <property name="addresses" type="RestMerchantAddress[]" singular="addresses"/>
+        <property name="addresses" type="RestMerchantAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="RestMerchantAddress">
@@ -54,7 +54,7 @@
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="addressCollection"/>
+        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantStorageProfileAddress">

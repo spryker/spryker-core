@@ -54,9 +54,15 @@ class MerchantAddressesReader implements MerchantAddressesReaderInterface
             return $this->merchantsAddressesRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
-        $merchantAddresses = $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection()->getArrayCopy();
+        $merchantStorageProfileAddressTransfers = $merchantStorageTransfer
+            ->getMerchantStorageProfile()
+            ->getAddressCollection()
+            ->getArrayCopy();
 
-        return $this->merchantsAddressesRestResponseBuilder->createMerchantAddressesRestResponse($merchantAddresses, $merchantReference);
+        return $this->merchantsAddressesRestResponseBuilder->createMerchantAddressesRestResponse(
+            $merchantStorageProfileAddressTransfers,
+            $merchantReference
+        );
     }
 
     /**

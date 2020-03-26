@@ -46,7 +46,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
         $merchantReferences = $this->getMerchantReferences($resources);
         $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
 
-        $merchantStorageTransfers = $this->setMerchantReferenceKeyToMerchantStorageTransfers($merchantStorageTransfers);
+        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
 
         foreach ($resources as $resource) {
             $resourceId = $resource->getId();
@@ -89,7 +89,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    protected function setMerchantReferenceKeyToMerchantStorageTransfers(array $merchantStorageTransfers): array
+    protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
     {
         $merchantStorageTransfersWithMerchantReferenceKey = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {

@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\RestMerchantAddressTransfer;
 class MerchantAddressesMapper implements MerchantAddressesMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantAddressesStorageTransfers
+     * @param \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
      * @param \Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer $restMerchantAddressesAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer
      */
-    public function mapMerchantAddressesStorageTransferToRestMerchantAddressesAttributesTransfer(
-        array $merchantAddressesStorageTransfers,
+    public function mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
+        array $merchantStorageProfileAddressTransfers,
         RestMerchantAddressesAttributesTransfer $restMerchantAddressesAttributesTransfer
     ): RestMerchantAddressesAttributesTransfer {
-        foreach ($merchantAddressesStorageTransfers as $merchantAddressesStorageTransfer) {
-            $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray($merchantAddressesStorageTransfer->toArray());
-            $restMerchantAddressesAttributesTransfer->addAddresses($restMerchantAddressTransfer);
+        foreach ($merchantStorageProfileAddressTransfers as $merchantStorageProfileAddressTransfer) {
+            $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray($merchantStorageProfileAddressTransfer->toArray());
+            $restMerchantAddressesAttributesTransfer->addAddress($restMerchantAddressTransfer);
         }
 
         return $restMerchantAddressesAttributesTransfer;

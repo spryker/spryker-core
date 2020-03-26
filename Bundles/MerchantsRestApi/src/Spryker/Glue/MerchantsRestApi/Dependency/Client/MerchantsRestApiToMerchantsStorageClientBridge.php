@@ -36,8 +36,8 @@ class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApi
             ->setMerchantUrl('url-test')
             ->setPublicEmail('email-test')
             ->setTermsConditionsGlossaryKey('TermsConditionsGlossaryKey')
-            ->addAddressCollection($merchantStorageProfileAddressTransfer1)
-            ->addAddressCollection($merchantStorageProfileAddressTransfer2);
+            ->addAddress($merchantStorageProfileAddressTransfer1)
+            ->addAddress($merchantStorageProfileAddressTransfer2);
 
         return [
             (new MerchantStorageTransfer())
