@@ -18,9 +18,9 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
     /**
      * @param int $categoryNodeId
      *
-     * @return int
+     * @return int|null
      */
-    public function getParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): int
+    public function findParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): ?int
     {
         return $this->getFactory()
             ->createSpyCategoryNodeQuery()

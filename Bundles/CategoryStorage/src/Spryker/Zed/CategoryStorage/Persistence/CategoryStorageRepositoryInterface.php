@@ -12,9 +12,9 @@ interface CategoryStorageRepositoryInterface
     /**
      * @param int $categoryNodeId
      *
-     * @return int
+     * @return int|null
      */
-    public function getParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): int;
+    public function findParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): ?int;
 
     /**
      * @param int $categoryNodeId

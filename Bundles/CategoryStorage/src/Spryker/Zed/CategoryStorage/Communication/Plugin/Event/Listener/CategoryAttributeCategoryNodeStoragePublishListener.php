@@ -46,11 +46,34 @@ class CategoryAttributeCategoryNodeStoragePublishListener extends AbstractPlugin
         $categoryNodeId = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY)[0];
+
         $categoryNodeIdsToPublish = array_merge(
-            [$this->getRepository()->getParentCategoryNodeIdByCategoryNodeId($categoryNodeId)],
+            $this->getParentCategoryNodeIds([], $categoryNodeId),
             $this->getRepository()->getCategoryNodeIdsByParentCategoryNodeId($categoryNodeId)
         );
 
         $this->getFacade()->publish($categoryNodeIdsToPublish);
+    }
+
+    /**
+     * @param int[] $parentCategoryNodeIds
+     * @param int $categoryNodeId
+     *
+     * @return int[]
+     */
+    public function getParentCategoryNodeIds(array $parentCategoryNodeIds, int $categoryNodeId): array
+    {
+        if (!$categoryNodeId) {
+            return $parentCategoryNodeIds;
+        }
+
+        $parentCategoryNodeId = $this->getRepository()->findParentCategoryNodeIdByCategoryNodeId($categoryNodeId);
+        if (!$parentCategoryNodeId) {
+            return $parentCategoryNodeIds;
+        }
+
+        $parentCategoryNodeIds[] = $parentCategoryNodeId;
+
+        return $this->getParentCategoryNodeIds($parentCategoryNodeIds, $parentCategoryNodeId);
     }
 }
