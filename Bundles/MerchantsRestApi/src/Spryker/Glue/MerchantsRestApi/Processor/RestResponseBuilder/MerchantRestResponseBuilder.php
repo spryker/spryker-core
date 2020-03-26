@@ -75,7 +75,8 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
      */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addError(
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_BAD_REQUEST)
