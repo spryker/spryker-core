@@ -37,12 +37,10 @@ class OrderSearchReader implements OrderSearchReaderInterface
         SalesRepositoryInterface $salesRepository,
         array $searchOrderExpanderPlugins,
         array $orderSearchQueryExpanderPlugins
-    )
-    {
+    ) {
         $this->salesRepository = $salesRepository;
         $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
         $this->orderSearchQueryExpanderPlugins = $orderSearchQueryExpanderPlugins;
-
     }
 
     /**
@@ -56,7 +54,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
 
         $orderListTransfer = $this->salesRepository->searchOrders($orderListTransfer);
 
-        $orderTransfers = $this->executeOrderExpanderPlugins(
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins(
             $orderListTransfer->getOrders()->getArrayCopy()
         );
 
@@ -92,7 +90,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function executeOrderExpanderPlugins(array $orderTransfers): array
+    protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {
         foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
             $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
