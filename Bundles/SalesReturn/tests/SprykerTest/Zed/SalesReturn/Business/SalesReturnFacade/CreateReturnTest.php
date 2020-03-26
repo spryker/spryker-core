@@ -9,11 +9,13 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
+use Pyz\Zed\Sales\SalesDependencyProvider;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\CheckReturnableStateOrderItemExpanderPlugin;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 /**
@@ -71,6 +73,10 @@ class CreateReturnTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
+
+        $this->tester->setDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER, [
+            new CheckReturnableStateOrderItemExpanderPlugin(),
+        ]);
     }
 
     /**
@@ -88,7 +94,7 @@ class CreateReturnTest extends Unit
 
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -96,7 +102,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         $returnTransfer = $returnResponseTransfer->getReturn();
         $returnItemTransfer = $returnTransfer->getReturnItems()->getIterator()->current();
@@ -136,7 +142,7 @@ class CreateReturnTest extends Unit
 
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -144,7 +150,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertTrue($returnResponseTransfer->getIsSuccessful());
@@ -174,7 +180,7 @@ class CreateReturnTest extends Unit
         $secondReturnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($secondItemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($customerTransfer)
             ->setStore($firstOrderTransfer->getStore())
             ->addReturnItem($firstReturnItemTransfer)
@@ -183,7 +189,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         $returnTransfer = $returnResponseTransfer->getReturn();
 
@@ -213,7 +219,7 @@ class CreateReturnTest extends Unit
         $secondReturnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($secondItemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($firstOrderTransfer->getCustomer())
             ->setStore($firstOrderTransfer->getStore())
             ->addReturnItem($firstReturnItemTransfer)
@@ -222,7 +228,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
@@ -246,7 +252,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setUuid($itemTransfer->getUuid()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -254,7 +260,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertTrue($returnResponseTransfer->getIsSuccessful());
@@ -274,7 +280,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer)
@@ -283,7 +289,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
@@ -304,7 +310,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem(new ItemTransfer());
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -312,7 +318,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
@@ -336,7 +342,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore(static::FAKE_STORE_NAME)
             ->addReturnItem($returnItemTransfer);
@@ -344,7 +350,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
@@ -377,7 +383,7 @@ class CreateReturnTest extends Unit
         $secondReturnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($secondItemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($customerTransfer)
             ->setStore($firstOrderTransfer->getStore())
             ->addReturnItem($firstReturnItemTransfer)
@@ -386,7 +392,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertTrue($returnResponseTransfer->getIsSuccessful());
@@ -406,7 +412,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -414,7 +420,7 @@ class CreateReturnTest extends Unit
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
 
         // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
@@ -432,7 +438,7 @@ class CreateReturnTest extends Unit
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->setReturnItems(new ArrayObject());
@@ -443,7 +449,7 @@ class CreateReturnTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
     }
 
     /**
@@ -460,7 +466,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore(null)
             ->addReturnItem($returnItemTransfer);
@@ -471,7 +477,7 @@ class CreateReturnTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
     }
 
     /**
@@ -488,7 +494,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer(null)
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -499,7 +505,7 @@ class CreateReturnTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
     }
 
     /**
@@ -516,7 +522,7 @@ class CreateReturnTest extends Unit
         $returnItemTransfer = (new ReturnItemTransfer())
             ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer(new CustomerTransfer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
@@ -527,7 +533,7 @@ class CreateReturnTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->createReturn($createReturnRequestTransfer);
+            ->createReturn($returnCreateRequestTransfer);
     }
 
     /**

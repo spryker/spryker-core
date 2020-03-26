@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\SalesReturn\Business\Writer;
 
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 interface ReturnWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer;
+    public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
 }

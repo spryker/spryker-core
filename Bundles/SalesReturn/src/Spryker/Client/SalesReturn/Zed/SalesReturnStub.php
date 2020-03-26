@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\SalesReturn\Zed;
 
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
@@ -71,16 +71,16 @@ class SalesReturnStub implements SalesReturnStubInterface
     /**
      * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::createReturnAction()
      *
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
+    public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer */
         $returnResponseTransfer = $this->zedRequestClient->call(
             '/sales-return/gateway/create-return',
-            $createReturnRequestTransfer
+            $returnCreateRequestTransfer
         );
 
         return $returnResponseTransfer;

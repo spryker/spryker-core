@@ -45,7 +45,7 @@ class ReturnableItemReader implements ReturnableItemReaderInterface
      */
     public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer
     {
-        $returnableItemFilterTransfer->requireCustomerReference();
+        $returnableItemFilterTransfer->requireCustomerReferences();
         $orderItemFilterTransfer = $this->createOrderItemFilter($returnableItemFilterTransfer);
 
         $itemTransfers = $this->salesFacade

@@ -68,10 +68,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     ): ItemTransfer {
         $itemTransfer
             ->setProductOptions($orderItemWithProductOptions->getProductOptions())
-            ->setSumProductOptionPriceAggregation($orderItemWithProductOptions->getSumProductOptionPriceAggregation())
-            ->setUnitProductOptionPriceAggregation(
-                (int)round($orderItemWithProductOptions->getSumProductOptionPriceAggregation() / $itemTransfer->getQuantity())
-            );
+            ->setSumProductOptionPriceAggregation($orderItemWithProductOptions->getSumProductOptionPriceAggregation());
+
+        $itemTransfer = $this->deriveProductOptionUnitPriceAggregation($itemTransfer);
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionValueTransfer = $productOptionValueTransfers[$productOptionTransfer->getSku()] ?? null;
@@ -154,6 +153,22 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         }
 
         return array_unique($productOptionSkus);
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function deriveProductOptionUnitPriceAggregation(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemTransfer->setUnitProductOptionPriceAggregation(
+            (int)round($itemTransfer->getSumProductOptionPriceAggregation() / $itemTransfer->getQuantity())
+        );
+
+        return $itemTransfer;
     }
 
     /**

@@ -8,14 +8,12 @@
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface;
-use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class ReturnReasonReader implements ReturnReasonReaderInterface
 {
@@ -25,9 +23,9 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     protected $salesReturnClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $restResponseBuilder;
 
     /**
      * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface
@@ -36,16 +34,16 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
 
     /**
      * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface $restResponseBuilder
      * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface $returnReasonResourceMapper
      */
     public function __construct(
         SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient,
-        RestResourceBuilderInterface $restResourceBuilder,
+        RestResponseBuilderInterface $restResponseBuilder,
         ReturnReasonResourceMapperInterface $returnReasonResourceMapper
     ) {
         $this->salesReturnClient = $salesReturnClient;
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->restResponseBuilder = $restResponseBuilder;
         $this->returnReasonResourceMapper = $returnReasonResourceMapper;
     }
 
@@ -65,43 +63,11 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
                 $restRequest->getMetadata()->getLocale()
             );
 
-        return $this->createRestResponse(
+        return $this->restResponseBuilder->createReturnReasonListRestResponse(
             $returnReasonFilterTransfer,
             $restReturnReasonsAttributesTransfers,
             $returnReasonCollectionTransfer->getPagination()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     * @param \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[] $restReturnReasonsAttributesTransfers
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createRestResponse(
-        ReturnReasonFilterTransfer $returnReasonFilterTransfer,
-        array $restReturnReasonsAttributesTransfers,
-        PaginationTransfer $paginationTransfer
-    ): RestResponseInterface {
-        $restResponse = $this
-            ->restResourceBuilder
-            ->createRestResponse(
-                $paginationTransfer->getNbResults(),
-                $returnReasonFilterTransfer->getFilter()->getLimit() ?? 0
-            );
-
-        foreach ($restReturnReasonsAttributesTransfers as $restReturnReasonsAttributesTransfer) {
-            $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    SalesReturnsRestApiConfig::RESOURCE_RETURN_REASONS,
-                    null,
-                    $restReturnReasonsAttributesTransfer
-                )
-            );
-        }
-
-        return $restResponse;
     }
 
     /**

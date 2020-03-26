@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesReturn\Business\Validator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
@@ -43,24 +43,24 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function validateReturnRequest(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): ReturnResponseTransfer {
-        if (!$this->isOrderItemsRelatedToCustomer($createReturnRequestTransfer, $itemTransfers)) {
+        if ($returnCreateRequestTransfer->getReturnItems()->count() !== $itemTransfers->count()) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR);
         }
 
-        if (!$this->isOrderItemsInReturnableStates($itemTransfers)) {
+        if (!$this->isOrderItemsReturnable($itemTransfers)) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR);
         }
 
-        if (!$this->storeFacade->findStoreByName($createReturnRequestTransfer->getStore())) {
+        if (!$this->storeFacade->findStoreByName($returnCreateRequestTransfer->getStore())) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 
@@ -69,16 +69,16 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool
      */
     protected function isOrderItemsRelatedToCustomer(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): bool {
-        return $itemTransfers->count() === $createReturnRequestTransfer->getReturnItems()->count();
+        return $itemTransfers->count() === $returnCreateRequestTransfer->getReturnItems()->count();
     }
 
     /**
@@ -86,17 +86,10 @@ class ReturnValidator implements ReturnValidatorInterface
      *
      * @return bool
      */
-    public function isOrderItemsInReturnableStates(ArrayObject $itemTransfers): bool
+    public function isOrderItemsReturnable(ArrayObject $itemTransfers): bool
     {
-        $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
-
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer
-                ->requireState()
-                ->getState()
-                    ->requireName();
-
-            if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
+            if (!$itemTransfer->getIsReturnable()) {
                 return false;
             }
         }

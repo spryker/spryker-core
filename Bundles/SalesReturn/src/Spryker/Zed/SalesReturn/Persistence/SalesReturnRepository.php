@@ -100,7 +100,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
             return $this->getFactory()
                 ->createReturnMapper()
-                ->mapReturnEntityCollectionToReturnCollection($salesReturnQuery->find())
+                ->mapReturnEntityCollectionToReturnCollectionTransfer($salesReturnQuery->find())
                 ->setPagination($paginationTransfer);
         }
 
@@ -109,7 +109,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         return $this->getFactory()
             ->createReturnMapper()
-            ->mapReturnEntityCollectionToReturnCollection($propelModelPager->getQuery()->find())
+            ->mapReturnEntityCollectionToReturnCollectionTransfer($propelModelPager->getQuery()->find())
             ->setPagination($paginationTransfer);
     }
 

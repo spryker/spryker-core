@@ -53,7 +53,7 @@ class ReturnMapper
      *
      * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
      */
-    public function mapReturnEntityCollectionToReturnCollection(ObjectCollection $salesReturnEntities): ReturnCollectionTransfer
+    public function mapReturnEntityCollectionToReturnCollectionTransfer(ObjectCollection $salesReturnEntities): ReturnCollectionTransfer
     {
         $returnCollectionTransfer = new ReturnCollectionTransfer();
 

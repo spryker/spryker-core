@@ -8,19 +8,19 @@
 namespace Spryker\Zed\SalesReturn\Business\Validator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 interface ReturnValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function validateReturnRequest(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): ReturnResponseTransfer;
 }

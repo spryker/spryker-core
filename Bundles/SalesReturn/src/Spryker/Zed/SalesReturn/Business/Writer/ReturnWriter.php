@@ -8,9 +8,9 @@
 namespace Spryker\Zed\SalesReturn\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
@@ -74,41 +74,41 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
+    public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer
     {
-        $this->assertReturnRequirements($createReturnRequestTransfer);
+        $this->assertReturnRequirements($returnCreateRequestTransfer);
 
-        if (!$this->checkReturnItemRequirements($createReturnRequestTransfer)) {
+        if (!$this->checkReturnItemRequirements($returnCreateRequestTransfer)) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR);
         }
 
-        $itemTransfers = $this->getOrderItems($createReturnRequestTransfer);
-        $returnResponseTransfer = $this->returnValidator->validateReturnRequest($createReturnRequestTransfer, $itemTransfers);
+        $itemTransfers = $this->getOrderItems($returnCreateRequestTransfer);
+        $returnResponseTransfer = $this->returnValidator->validateReturnRequest($returnCreateRequestTransfer, $itemTransfers);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
             return $returnResponseTransfer;
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($createReturnRequestTransfer, $itemTransfers) {
-            return $this->executeCreateReturnTransaction($createReturnRequestTransfer, $itemTransfers);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($returnCreateRequestTransfer, $itemTransfers) {
+            return $this->executeCreateReturnTransaction($returnCreateRequestTransfer, $itemTransfers);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     protected function executeCreateReturnTransaction(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): ReturnResponseTransfer {
-        $returnTransfer = $this->createReturnTransfer($createReturnRequestTransfer);
+        $returnTransfer = $this->createReturnTransfer($returnCreateRequestTransfer);
         $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $itemTransfers);
 
         $this->omsEventTriggerer->triggerOrderItemsReturnEvent($returnTransfer);
@@ -119,16 +119,16 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    protected function createReturnTransfer(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnTransfer
+    protected function createReturnTransfer(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnTransfer
     {
         $returnTransfer = (new ReturnTransfer())
-            ->setStore($createReturnRequestTransfer->getStore())
-            ->setCustomerReference($createReturnRequestTransfer->getCustomer()->getCustomerReference())
-            ->setReturnItems($createReturnRequestTransfer->getReturnItems());
+            ->setStore($returnCreateRequestTransfer->getStore())
+            ->setCustomerReference($returnCreateRequestTransfer->getCustomer()->getCustomerReference())
+            ->setReturnItems($returnCreateRequestTransfer->getReturnItems());
 
         $returnReference = $this->returnReferenceGenerator->generateReturnReference($returnTransfer);
 
@@ -145,7 +145,7 @@ class ReturnWriter implements ReturnWriterInterface
      */
     protected function createReturnItemTransfers(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer
     {
-        $returnTransfer = $this->expandReturnItemsBeforeCreate($returnTransfer, $itemTransfers);
+        $returnTransfer = $this->mapReturnItemsBeforeCreate($returnTransfer, $itemTransfers);
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $this->salesReturnEntityManager->createReturnItem($returnItemTransfer);
@@ -155,13 +155,13 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return void
      */
-    protected function assertReturnRequirements(CreateReturnRequestTransfer $createReturnRequestTransfer): void
+    protected function assertReturnRequirements(ReturnCreateRequestTransfer $returnCreateRequestTransfer): void
     {
-        $createReturnRequestTransfer
+        $returnCreateRequestTransfer
             ->requireReturnItems()
             ->requireStore()
             ->requireCustomer()
@@ -170,13 +170,13 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return bool
      */
-    protected function checkReturnItemRequirements(CreateReturnRequestTransfer $createReturnRequestTransfer): bool
+    protected function checkReturnItemRequirements(ReturnCreateRequestTransfer $returnCreateRequestTransfer): bool
     {
-        foreach ($createReturnRequestTransfer->getReturnItems() as $returnItemTransfer) {
+        foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
             $returnItemTransfer->requireOrderItem();
             $itemTransfer = $returnItemTransfer->getOrderItem();
 
@@ -209,7 +209,7 @@ class ReturnWriter implements ReturnWriterInterface
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function expandReturnItemsBeforeCreate(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer
+    public function mapReturnItemsBeforeCreate(ReturnTransfer $returnTransfer, ArrayObject $itemTransfers): ReturnTransfer
     {
         $returnTransfer->requireIdSalesReturn();
 
@@ -261,14 +261,14 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getOrderItems(CreateReturnRequestTransfer $createReturnRequestTransfer): ArrayObject
+    protected function getOrderItems(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ArrayObject
     {
-        $orderItemFilterTransfer = $this->mapCreateReturnRequestTransferToOrderItemFilterTransfer(
-            $createReturnRequestTransfer,
+        $orderItemFilterTransfer = $this->mapReturnCreateRequestTransferToOrderItemFilterTransfer(
+            $returnCreateRequestTransfer,
             new OrderItemFilterTransfer()
         );
 
@@ -276,20 +276,20 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OrderItemFilterTransfer
      */
-    protected function mapCreateReturnRequestTransferToOrderItemFilterTransfer(
-        CreateReturnRequestTransfer $createReturnRequestTransfer,
+    protected function mapReturnCreateRequestTransferToOrderItemFilterTransfer(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         OrderItemFilterTransfer $orderItemFilterTransfer
     ): OrderItemFilterTransfer {
-        $orderItemFilterTransfer->setCustomerReference(
-            $createReturnRequestTransfer->getCustomer()->getCustomerReference()
+        $orderItemFilterTransfer->addCustomerReference(
+            $returnCreateRequestTransfer->getCustomer()->getCustomerReference()
         );
 
-        foreach ($createReturnRequestTransfer->getReturnItems() as $returnItemTransfer) {
+        foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
             $itemTransfer = $returnItemTransfer->getOrderItem();
 
             if ($itemTransfer->getUuid()) {

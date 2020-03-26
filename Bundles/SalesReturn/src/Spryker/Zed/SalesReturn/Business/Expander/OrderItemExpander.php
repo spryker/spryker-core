@@ -34,7 +34,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
     public function expandOrderItemsWithIsReturnable(array $itemTransfers): array
     {
         foreach ($itemTransfers as $itemTransfer) {
-            if ($this->isOrderItemOutdated($itemTransfer)) {
+            if ($this->isOrderItemPassedReturnableNumberOfDays($itemTransfer)) {
                 $itemTransfer->setIsReturnable(false);
             }
         }
@@ -70,7 +70,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return bool
      */
-    protected function isOrderItemOutdated(ItemTransfer $itemTransfer): bool
+    protected function isOrderItemPassedReturnableNumberOfDays(ItemTransfer $itemTransfer): bool
     {
         if (!$itemTransfer->getCreatedAt()) {
             return true;

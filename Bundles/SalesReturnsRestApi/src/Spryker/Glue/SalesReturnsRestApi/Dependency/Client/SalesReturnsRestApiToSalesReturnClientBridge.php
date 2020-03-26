@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
@@ -42,13 +42,13 @@ class SalesReturnsRestApiToSalesReturnClientBridge implements SalesReturnsRestAp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CreateReturnRequestTransfer $createReturnRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(CreateReturnRequestTransfer $createReturnRequestTransfer): ReturnResponseTransfer
+    public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer
     {
-        return $this->salesReturnClient->createReturn($createReturnRequestTransfer);
+        return $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
     }
 
     /**

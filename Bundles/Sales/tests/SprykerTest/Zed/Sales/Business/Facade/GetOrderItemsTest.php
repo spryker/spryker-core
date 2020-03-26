@@ -88,7 +88,7 @@ class GetOrderItemsTest extends Test
         $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
 
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference());
+            ->addCustomerReference($customerTransfer->getCustomerReference());
 
         // Act
         $itemTransfers = $this->tester
@@ -112,7 +112,7 @@ class GetOrderItemsTest extends Test
         $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
 
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->addCustomerReference($customerTransfer->getCustomerReference())
             ->setFilter((new FilterTransfer())->setLimit(1));
 
         // Act

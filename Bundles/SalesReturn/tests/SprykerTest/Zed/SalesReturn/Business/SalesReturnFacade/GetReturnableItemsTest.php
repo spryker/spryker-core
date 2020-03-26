@@ -65,7 +65,7 @@ class GetReturnableItemsTest extends Unit
         $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::DELIVERED_STATE_NAME);
 
         $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->addCustomerReference($customerTransfer->getCustomerReference())
             ->addOrderReference($firstOrderTransfer->getOrderReference())
             ->addOrderReference($secondOrderTransfer->getOrderReference());
 
@@ -90,7 +90,7 @@ class GetReturnableItemsTest extends Unit
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::FAKE_STATE_NAME);
 
         $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference($orderTransfer->getCustomer()->getCustomerReference())
+            ->addCustomerReference($orderTransfer->getCustomer()->getCustomerReference())
             ->addOrderReference($orderTransfer->getOrderReference());
 
         // Act
@@ -114,7 +114,7 @@ class GetReturnableItemsTest extends Unit
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference(static::FAKE_CUSTOMER_REFERENCE)
+            ->addCustomerReference(static::FAKE_CUSTOMER_REFERENCE)
             ->addOrderReference($orderTransfer->getOrderReference());
 
         // Act
@@ -138,7 +138,7 @@ class GetReturnableItemsTest extends Unit
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         $returnableItemFilterTransfer = (new ReturnableItemFilterTransfer())
-            ->setCustomerReference($orderTransfer->getCustomer()->getCustomerReference())
+            ->addCustomerReference($orderTransfer->getCustomer()->getCustomerReference())
             ->addOrderReference(static::FAKE_ORDER_REFERENCE);
 
         // Act

@@ -10,11 +10,11 @@ namespace SprykerTest\Zed\SalesReturn;
 use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CreateReturnRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -89,7 +89,7 @@ class SalesReturnBusinessTester extends Actor
         $this->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
         $this->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
-        $createReturnRequestTransfer = (new CreateReturnRequestTransfer())
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($customerTransfer ?? $orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->addReturnItem((new ReturnItemTransfer())->setOrderItem($firstItemTransfer))
@@ -98,7 +98,7 @@ class SalesReturnBusinessTester extends Actor
         return $this->getLocator()
             ->salesReturn()
             ->facade()
-            ->createReturn($createReturnRequestTransfer)
+            ->createReturn($returnCreateRequestTransfer)
             ->getReturn();
     }
 
