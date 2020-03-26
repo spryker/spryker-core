@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
 
-    <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
+    <table name="spy_customer" idMethod="native">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
@@ -40,7 +40,7 @@
         <id-method-parameter value="spy_customer_pk_seq"/>
     </table>
 
-    <table name="spy_customer_address" idMethod="native" phpName="SpyCustomerAddress">
+    <table name="spy_customer_address" idMethod="native">
         <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>

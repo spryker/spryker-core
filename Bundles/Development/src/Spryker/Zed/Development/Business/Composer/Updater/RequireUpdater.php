@@ -21,7 +21,7 @@ class RequireUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $composerJson = $this->requirePhpVersion($composerJson);
 

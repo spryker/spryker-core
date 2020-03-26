@@ -116,9 +116,9 @@ class QueueReaderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Queue\QueueClientInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQueueClientMock()
+    protected function createQueueClientMock(): DataImportToQueueClientInterface
     {
         $queueClientMock = $this->createMock(DataImportToQueueClientInterface::class);
         $queueClientMock->method('receiveMessages')

@@ -226,7 +226,7 @@ class MailBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
      */
-    protected function getGlossaryFacadeMock()
+    protected function getGlossaryFacadeMock(): MailToGlossaryInterface
     {
         $glossaryFacadeMock = $this->getMockBuilder(MailToGlossaryInterface::class)->setMethods(['hasTranslation', 'translate'])->getMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);

@@ -25,4 +25,36 @@ interface ConfigurableBundleStorageClientInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds configurable bundle template within Storage with a given uuid.
+     * - Returns ConfigurableBundleTemplateStorageTransfer if found, null otherwise.
+     *
+     * @api
+     *
+     * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    public function findConfigurableBundleTemplateStorageByUuid(
+        string $configurableBundleTemplateUuid,
+        string $localeName
+    ): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds product concrete Storage records by skus and locale.
+     * - Expands results with product images data.
+     * - Returns array of ProductViewTransfer indexed by sku.
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }

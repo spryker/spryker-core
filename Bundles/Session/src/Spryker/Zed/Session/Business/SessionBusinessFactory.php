@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
+use Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Session\Business\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
 use Spryker\Zed\Session\SessionDependencyProvider;
 
@@ -199,5 +201,23 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         return $this
             ->createSessionHandlerFactory()
             ->createRedisLockKeyGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface
+     */
+    public function createSessionHealthChecker(): HealthCheckInterface
+    {
+        return new SessionHealthCheck(
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSessionClient()
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
     }
 }

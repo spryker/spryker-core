@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\Kernel;
 
-use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -34,9 +34,9 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $filter;
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
+     * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver|null
      */
-    protected $bundleNameResolver;
+    protected $moduleNameResolver;
 
     /**
      * @param string $bundle
@@ -78,21 +78,21 @@ class BundleControllerAction implements BundleControllerActionInterface
     public function getBundle()
     {
         $bundleName = $this->filter($this->bundle);
-        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
+        $bundleName = $this->getModuleNameResolver()->resolve($bundleName);
 
         return $bundleName;
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolver()
+    protected function getModuleNameResolver()
     {
-        if (!$this->bundleNameResolver) {
-            $this->bundleNameResolver = new BundleNameResolver();
+        if (!$this->moduleNameResolver) {
+            $this->moduleNameResolver = new ModuleNameResolver();
         }
 
-        return $this->bundleNameResolver;
+        return $this->moduleNameResolver;
     }
 
     /**

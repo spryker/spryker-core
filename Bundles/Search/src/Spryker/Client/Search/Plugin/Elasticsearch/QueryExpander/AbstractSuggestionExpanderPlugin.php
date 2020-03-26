@@ -15,6 +15,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\MissingSuggestionQueryException;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\AbstractSuggestionExpanderPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface

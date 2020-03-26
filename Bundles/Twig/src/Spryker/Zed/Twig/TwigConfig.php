@@ -20,6 +20,8 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 class TwigConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getBundlesDirectory()
@@ -28,7 +30,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getTemplatePaths()
     {
@@ -40,9 +44,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addProjectTemplatePaths(array $paths)
     {
@@ -58,9 +62,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      *
-     * @return array
+     * @return string[]
      */
     protected function addCoreTemplatePaths(array $paths)
     {
@@ -76,7 +80,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getProjectNamespaces(): array
     {
@@ -84,7 +90,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getCoreNamespaces(): array
     {
@@ -100,6 +108,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCacheFilePath()
@@ -108,6 +118,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCacheFilePathForYves()
@@ -116,6 +128,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isPathCacheEnabled()
@@ -124,7 +138,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getZedDirectoryPathPatterns()
     {
@@ -132,9 +148,11 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Please use `getZedDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getZedDirectoryPathPattern()
     {
@@ -147,7 +165,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getYvesDirectoryPathPatterns()
     {
@@ -155,9 +175,11 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Please use `getYvesDirectoryPathPatterns()` instead.
      *
-     * @return array
+     * @return string[]
      */
     public function getYvesDirectoryPathPattern()
     {
@@ -178,6 +200,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -186,6 +210,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTwigOptions(): array
@@ -194,6 +220,8 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFormTemplateDirectories(): array

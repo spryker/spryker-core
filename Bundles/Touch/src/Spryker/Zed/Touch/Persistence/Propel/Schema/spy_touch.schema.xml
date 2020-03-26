@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Touch\Persistence" package="src.Orm.Zed.Touch.Persistence">
 
-    <table name="spy_touch" phpName="SpyTouch" identifierQuoting="true">
+    <table name="spy_touch" identifierQuoting="true">
         <column name="id_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="item_type" type="VARCHAR" size="255" required="true"/>
         <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true"/>
@@ -29,7 +29,7 @@
         </behavior>
     </table>
 
-    <table name="spy_touch_storage" phpName="SpyTouchStorage" identifierQuoting="true">
+    <table name="spy_touch_storage" identifierQuoting="true">
         <column name="id_touch_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>
@@ -57,7 +57,7 @@
         </foreign-key>
     </table>
 
-    <table name="spy_touch_search" phpName="SpyTouchSearch" identifierQuoting="true">
+    <table name="spy_touch_search" identifierQuoting="true">
         <column name="id_touch_search" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -87,17 +86,21 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        $storeTransfer = $quoteTransfer->requireStore()
+            ->getStore()
+                ->requireName();
+
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setPaymentProviders($this->getPaymentProviders())
+            ->setPaymentProviders($this->paymentFacade->getAvailablePaymentProvidersForStore($storeTransfer->getName()))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
-                ->setIsSuccess(true)
-                ->setCheckoutData($checkoutDataTransfer);
+            ->setIsSuccess(true)
+            ->setCheckoutData($checkoutDataTransfer);
     }
 
     /**
@@ -117,14 +120,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
 
         return $shipmentMethodsTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    protected function getPaymentProviders(): PaymentProviderCollectionTransfer
-    {
-        return $this->paymentFacade->getAvailablePaymentProviders();
     }
 
     /**

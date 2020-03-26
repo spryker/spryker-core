@@ -26,16 +26,16 @@ class OfferHydrator implements OfferHydratorInterface
     }
 
     /**
-     * @param \ArrayObject $offers
+     * @param \ArrayObject|\Generated\Shared\Transfer\OfferTransfer[] $offerTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\OfferTransfer[]
      */
-    public function hydrateQuoteWithCustomer(ArrayObject $offers): ArrayObject
+    public function hydrateQuoteWithCustomer(ArrayObject $offerTransfers): ArrayObject
     {
-        foreach ($offers as $offer) {
-            $offer->getQuote()->setCustomer($this->customerClient->getCustomer());
+        foreach ($offerTransfers as $offerTransfer) {
+            $offerTransfer->getQuote()->setCustomer($this->customerClient->getCustomer());
         }
 
-        return $offers;
+        return $offerTransfers;
     }
 }

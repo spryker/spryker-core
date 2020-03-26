@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Elastica\Aggregation\AbstractTermsAggregation;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\AbstractTermsFacetAggregation` instead.
+ */
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
     public const AGGREGATION_PARAM_SIZE = 'size';

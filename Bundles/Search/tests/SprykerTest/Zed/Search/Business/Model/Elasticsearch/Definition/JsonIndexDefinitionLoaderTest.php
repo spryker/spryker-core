@@ -326,7 +326,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
         array $stores,
         SearchToUtilEncodingInterface $utilEncodingMock,
         string $suffix = ''
-    ) {
+    ): JsonIndexDefinitionLoader {
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
             ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores])
             ->setMethods(['getIndexNameSuffix'])
@@ -357,7 +357,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getUtilEncodingMock()
+    protected function getUtilEncodingMock(): SearchToUtilEncodingInterface
     {
         $utilEncodingMock = $this->getMockBuilder(SearchToUtilEncodingInterface::class)
             ->disableOriginalConstructor()

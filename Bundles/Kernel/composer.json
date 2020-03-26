@@ -21,14 +21,16 @@
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
-    "spryker/testify": "^3.3.0"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Kernel\\Helper\\": "tests/SprykerTest/Shared/Kernel/_support/Helper/",
+      "SprykerTest\\Zed\\Kernel\\Helper\\": "tests/SprykerTest/Zed/Kernel/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -38,6 +40,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

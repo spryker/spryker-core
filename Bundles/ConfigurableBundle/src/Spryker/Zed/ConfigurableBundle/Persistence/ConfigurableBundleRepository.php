@@ -188,8 +188,10 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery,
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): SpyConfigurableBundleTemplateSlotQuery {
-        if ($configurableBundleTemplateSlotFilterTransfer->getProductList()
-            && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()) {
+        if (
+            $configurableBundleTemplateSlotFilterTransfer->getProductList()
+            && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
+        ) {
             $configurableBundleTemplateSlotQuery->filterByFkProductList(
                 $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
             );
@@ -230,11 +232,12 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
                 ->joinWithSpyProductImage()
                 ->orderBySortOrder(Criteria::ASC)
                 ->orderByIdProductImageSetToProductImage(Criteria::ASC)
-            ->endUse()
-            ->filterByFkLocale(null, Criteria::ISNULL);
+            ->endUse();
 
         if ($localeIds) {
-            $productImageSetQuery->_or()
+            $productImageSetQuery
+                ->filterByFkLocale(null, Criteria::ISNULL)
+                ->_or()
                 ->filterByFkLocale_In($localeIds);
         }
 

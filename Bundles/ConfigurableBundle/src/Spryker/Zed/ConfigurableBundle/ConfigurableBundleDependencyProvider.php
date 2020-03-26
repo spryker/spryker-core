@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle;
 
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeBridge;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeBridge;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeBridge;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeBridge;
@@ -23,8 +24,10 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_EVENT = 'FACADE_EVENT';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const PROPEL_QUERY_PRODUCT_IMAGE_SET = 'PROPEL_QUERY_PRODUCT_IMAGE_SET';
@@ -40,6 +43,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductListFacade($container);
+        $container = $this->addEventFacade($container);
         $container = $this->addProductImageFacade($container);
         $container = $this->addUtilTextService($container);
 
@@ -114,6 +118,22 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
         $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ConfigurableBundleToProductListFacadeBridge(
                 $container->getLocator()->productList()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new ConfigurableBundleToEventFacadeBridge(
+                $container->getLocator()->event()->facade()
             );
         });
 

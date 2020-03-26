@@ -13,18 +13,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PaymentConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getPaymentStatemachineMappings()
     {
         return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING);
-    }
-
-    /**
-     * @return array
-     */
-    public function getSalesPaymentMethodTypes(): array
-    {
-        return [];
     }
 }

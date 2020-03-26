@@ -303,7 +303,8 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected function addUniqueColumnNames(array $uniqueFieldToModuleNameMap, array $requiredColumnNames, array $uniqueColumnNames, string $module): array
     {
         foreach ($uniqueColumnNames as $uniqueColumnName) {
-            if (isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module &&
+            if (
+                isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module &&
                 in_array($module . '.' . $uniqueColumnName, $requiredColumnNames)
             ) {
                 throw new PropelSchemaParserException(sprintf('Unique column "%s" was already found in the module "%s".', $uniqueColumnName, $uniqueFieldToModuleNameMap[$uniqueColumnName]));

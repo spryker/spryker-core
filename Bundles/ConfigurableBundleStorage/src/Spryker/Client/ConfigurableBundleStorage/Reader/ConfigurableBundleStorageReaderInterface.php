@@ -18,4 +18,15 @@ interface ConfigurableBundleStorageReaderInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    public function findConfigurableBundleTemplateStorageByUuid(
+        string $configurableBundleTemplateUuid,
+        string $localeName
+    ): ?ConfigurableBundleTemplateStorageTransfer;
 }

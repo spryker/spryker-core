@@ -60,4 +60,20 @@ interface SalesConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Splits configurable bundles by configurable bundle quantity.
+     * - Applied for configurable bundles when configurable bundle quantity is more than 1.
+     * - Duplicates items for each split configurable bundle.
+     * - Adjusts items and product options quantity per split.
+     * - Alters groupkey for each split configurable bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
 }

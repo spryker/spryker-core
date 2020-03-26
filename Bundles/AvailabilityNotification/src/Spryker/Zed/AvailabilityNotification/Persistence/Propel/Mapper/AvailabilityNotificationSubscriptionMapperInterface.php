@@ -18,12 +18,14 @@ interface AvailabilityNotificationSubscriptionMapperInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function mapAvailabilityNotificationSubscriptionTransfer(SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntityTransfer): AvailabilityNotificationSubscriptionTransfer;
+    public function mapAvailabilityNotificationSubscriptionTransfer(
+        SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntityTransfer
+    ): AvailabilityNotificationSubscriptionTransfer;
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $availabilityNotificationSubscriptionEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function mapAvailabilityNotificationSubscriptionTransferCollection(ObjectCollection $availabilityNotificationSubscriptionEntities): array;
 }

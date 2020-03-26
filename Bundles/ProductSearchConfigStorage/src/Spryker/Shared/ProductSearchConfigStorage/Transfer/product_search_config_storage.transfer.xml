@@ -24,4 +24,7 @@
     <transfer name="SynchronizationData">
     </transfer>
 
+    <transfer name="SortConfig">
+    </transfer>
+
 </transfers>

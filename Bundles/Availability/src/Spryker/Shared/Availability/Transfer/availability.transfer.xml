@@ -71,4 +71,7 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="ProductAvailabilityCriteria">
+    </transfer>
+
 </transfers>

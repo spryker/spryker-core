@@ -128,6 +128,85 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testAddCartCodeAddsGiftCardToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithoutGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getGiftCards());
+        $this->assertEquals(
+            $this->tester::GIFT_CARD_CODE,
+            $resultQuoteTransfer->getGiftCards()[0]->getCode()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeCantAddGiftCardToQuoteWithGiftCardAlreadyAddedToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(1, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCartCodeRemovesGiftCardFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->removeCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearCartCodesRemovesGiftCardsFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->clearCartCodes($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOperationResponseMessageReturnsMessageTransfer(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $messageTransfer = $this->getFacade()->findOperationResponseMessage($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertNotNull($messageTransfer);
+    }
+
+    /**
      * @return array
      */
     protected function getDataWithOnlyGiftCardItems(): array

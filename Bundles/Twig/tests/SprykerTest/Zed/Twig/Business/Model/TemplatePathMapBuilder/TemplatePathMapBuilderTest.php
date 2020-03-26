@@ -56,7 +56,7 @@ class TemplatePathMapBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface
      */
-    protected function getTemplateNameBuilderMock()
+    protected function getTemplateNameBuilderMock(): TemplateNameBuilderInterface
     {
         $mockBuilder = $this->getMockBuilder(TemplateNameBuilderInterface::class)
             ->setMethods(['buildTemplateName']);

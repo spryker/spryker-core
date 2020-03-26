@@ -28,6 +28,7 @@
     </transfer>
 
     <transfer name="ShoppingList">
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>

@@ -15,6 +15,10 @@ use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 
 class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReaderInterface
 {
+    protected const MAPPING_TYPE_UUID = 'uuid';
+    protected const MAPPING_DELIMITER = ':';
+    protected const MAPPING_DATA_KEY_ID = 'id';
+
     /**
      * @var \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface
      */
@@ -53,8 +57,40 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
+        return $this->findStorageData((string)$idConfigurableBundleTemplate, $localeName);
+    }
+
+    /**
+     * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    public function findConfigurableBundleTemplateStorageByUuid(
+        string $configurableBundleTemplateUuid,
+        string $localeName
+    ): ?ConfigurableBundleTemplateStorageTransfer {
+        $mappingData = $this->storageClient->get(
+            $this->generateKey(static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid)
+        );
+
+        if (!$mappingData) {
+            return null;
+        }
+
+        return $this->findStorageData($mappingData[static::MAPPING_DATA_KEY_ID], $localeName);
+    }
+
+    /**
+     * @param string $key
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    protected function findStorageData(string $key, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
+    {
         $configurableBundleTemplateStorageTransferData = $this->storageClient->get(
-            $this->generateKey($idConfigurableBundleTemplate)
+            $this->generateKey($key)
         );
 
         if (!$configurableBundleTemplateStorageTransferData) {
@@ -79,14 +115,14 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param string $reference
      *
      * @return string
      */
-    protected function generateKey(int $idConfigurableBundleTemplate): string
+    protected function generateKey(string $reference): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference((string)$idConfigurableBundleTemplate);
+            ->setReference($reference);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ConfigurableBundleStorageConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME)

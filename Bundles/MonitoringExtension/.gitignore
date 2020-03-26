@@ -1,19 +1,36 @@
-# IDEs
-/.idea
-/.project
-/nbproject
-/.buildpath
-/.settings
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
 *.sublime-*
+
+# OS
+.DS_Store
 *.AppleDouble
 *.AppleDB
 *.AppleDesktop
 
-# OS
-.DS_Store
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
 
-/vendor
-/composer.lock
+# tooling
+vendor/
+composer.lock
+.phpunit.result.cache
 
-/tests/_output/*
-!/tests/_output/.gitkeep
+# built client resources
+src/*/Zed/*/Static/Public
+src/*/Zed/*/Static/Assets/sprite
+
+# Propel classes
+src/*/Zed/*/Persistence/Propel/Base/*
+src/*/Zed/*/Persistence/Propel/Map/*
+
+# tests
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep

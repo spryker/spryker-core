@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 class ProductPageSearchToProductBridge implements ProductPageSearchToProductInterface
@@ -83,5 +84,15 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
     {
         return $this->productFacade->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->productFacade->getRawProductConcreteTransfersByFilter($filterTransfer);
     }
 }

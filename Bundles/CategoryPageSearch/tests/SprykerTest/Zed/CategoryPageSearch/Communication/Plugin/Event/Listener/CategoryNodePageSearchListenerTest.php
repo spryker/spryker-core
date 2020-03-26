@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchUnpublishListener;
@@ -25,9 +24,6 @@ use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryN
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchUnpublishListener;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchBridge;
-use SprykerTest\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactoryMock;
-use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -41,9 +37,21 @@ use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
  * @group Listener
  * @group CategoryNodePageSearchListenerTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchCommunicationTester $tester
  */
 class CategoryNodePageSearchListenerTest extends Unit
 {
+    /**
+     * @return void
+     */
+    protected function _setUp(): void
+    {
+        parent::_setUp();
+
+        $this->tester->mockConfigMethod('isSendingToQueue', false);
+    }
+
     /**
      * @return void
      */
@@ -55,7 +63,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Act
         $categoryPageSearchListener = new CategoryNodeSearchListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -79,7 +87,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Act
         $categoryNodeSearchPublishListener = new CategoryNodeSearchPublishListener();
-        $categoryNodeSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeSearchPublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -101,7 +109,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         // Prepare
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
         $categoryNodeSearchUnpublishListener = new CategoryNodeSearchUnpublishListener();
-        $categoryNodeSearchUnpublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeSearchUnpublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -125,7 +133,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -150,7 +158,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryNodeCategoryTemplateSearchPublishListener = new CategoryNodeCategoryTemplateSearchPublishListener();
-        $categoryNodeCategoryTemplateSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryTemplateSearchPublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -174,7 +182,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryPageSearchListener = new CategoryNodeCategoryTemplateSearchUnpublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -199,7 +207,7 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         // Act
         $categoryPageSearchListener = new CategoryNodeCategoryPageSearchListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -222,7 +230,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryNodeCategoryPageSearchPublishListener = new CategoryNodeCategoryPageSearchPublishListener();
-        $categoryNodeCategoryPageSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryPageSearchPublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -246,7 +254,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryNodeCategoryPageSearchUnpublishListener = new CategoryNodeCategoryPageSearchUnpublishListener();
-        $categoryNodeCategoryPageSearchUnpublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryPageSearchUnpublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -270,7 +278,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -297,7 +305,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryNodeCategoryAttributeSearchPublishListener = new CategoryNodeCategoryAttributeSearchPublishListener();
-        $categoryNodeCategoryAttributeSearchPublishListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryNodeCategoryAttributeSearchPublishListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -323,7 +331,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
 
         $categoryPageSearchListener = new CategoryNodeCategoryAttributeSearchUnpublishListener();
-        $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
+        $categoryPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -337,22 +345,6 @@ class CategoryNodePageSearchListenerTest extends Unit
         // Assert
         $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
         $this->assertLessThan($beforeCount, $afterCount);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade
-     */
-    protected function getCategoryPageSearchFacade(): CategoryPageSearchFacade
-    {
-        $categoryPageSearchToSearchBridgeMock = $this->getMockBuilder(CategoryPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
-        $categoryPageSearchToSearchBridgeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
-        $factory = new CategoryPageSearchBusinessFactoryMock($categoryPageSearchToSearchBridgeMock);
-        $factory->setConfig(new CategoryPageSearchConfigMock());
-
-        $facade = new CategoryPageSearchFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
     }
 
     /**

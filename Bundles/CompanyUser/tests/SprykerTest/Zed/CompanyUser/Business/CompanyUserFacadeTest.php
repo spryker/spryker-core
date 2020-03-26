@@ -591,4 +591,26 @@ class CompanyUserFacadeTest extends Test
         // Assert
         $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
+
+    /**
+     * @return void
+     */
+    public function testRawCompanyUsersByCriteriaShouldReturnTransfer(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
+            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
+        ]))->build();
+
+        // Act
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertNotEmpty($foundCompanyUserTransfer);
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+    }
 }

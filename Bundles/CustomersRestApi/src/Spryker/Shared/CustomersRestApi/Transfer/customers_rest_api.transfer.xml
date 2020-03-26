@@ -131,6 +131,7 @@
         <property name="defaultBillingAddress" type="string"/>
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
+        <property name="gender" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">

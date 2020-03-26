@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Category\Persistence;
+namespace SprykerTest\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
@@ -16,8 +16,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Category
  * @group Persistence

@@ -17,6 +17,7 @@
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int"/>
         <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
+        <property name="productDiscontinued" type="ProductDiscontinued"/>
     </transfer>
 
     <transfer name="TabItem">

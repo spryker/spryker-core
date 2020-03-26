@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\SalesConfigurableBundle\Business\SalesConfigurableBund
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
 use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
+use Generated\Shared\DataBuilder\ConfiguredBundleItemBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
@@ -491,6 +493,67 @@ class SalesConfigurableBundleFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider transformConfigurableBundleItemDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $itemQuantity
+     *
+     * @return void
+     */
+    public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemQuantity): void
+    {
+        //Act
+        $itemCollectionTransfer = $this->tester->getFacade()->transformConfiguredBundleOrderItems(
+            (new OrderTransfer())->addItem($itemTransfer)
+        );
+
+        //Assert
+        $this->assertCount($itemQuantity, $itemCollectionTransfer->getItems());
+    }
+
+    /**
+     * @return array
+     */
+    public function transformConfigurableBundleItemDataProvider(): array
+    {
+        return [
+            [$this->createConfigurableBundleItem(10, 1, 10), 1],
+            [$this->createConfigurableBundleItem(8, 1, 8), 1],
+            [$this->createConfigurableBundleItem(20, 2, 10), 2],
+            [$this->createConfigurableBundleItem(20, 4, 5), 4],
+        ];
+    }
+
+    /**
+     * @param int $quantity
+     * @param int $configurableBundleQuantity
+     * @param int $quantityPerSlot
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createConfigurableBundleItem(
+        int $quantity = 1,
+        int $configurableBundleQuantity = 1,
+        int $quantityPerSlot = 1
+    ): ItemTransfer {
+        $configuredBundleTransfer = (new ConfiguredBundleBuilder())
+            ->build()
+            ->setQuantity($configurableBundleQuantity);
+
+        $configuredBundleItemTransfer = (new ConfiguredBundleItemBuilder())
+            ->build()
+            ->setQuantityPerSlot($quantityPerSlot);
+
+        $itemTransfer = (new ItemBuilder())
+            ->build()
+            ->setConfiguredBundle($configuredBundleTransfer)
+            ->setConfiguredBundleItem($configuredBundleItemTransfer)
+            ->setQuantity($quantity);
+
+        return $itemTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getFakeQuoteWithConfiguredBundleItems(): QuoteTransfer
@@ -574,8 +637,10 @@ class SalesConfigurableBundleFacadeTest extends Unit
     protected function translateTemplateNamesForQuote(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
-                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()) {
+            if (
+                !$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
+                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()
+            ) {
                 continue;
             }
 

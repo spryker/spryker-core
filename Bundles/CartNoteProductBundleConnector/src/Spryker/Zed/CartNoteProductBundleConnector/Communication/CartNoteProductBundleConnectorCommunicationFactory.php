@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartNoteProductBundleConnector\Communication;
 
 use Spryker\Zed\CartNoteProductBundleConnector\CartNoteProductBundleConnectorDependencyProvider;
+use Spryker\Zed\CartNoteProductBundleConnector\Dependency\Facade\CartNoteProductBundleConnectorToProductBundleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CartNoteProductBundleConnectorCommunicationFactory extends AbstractCommunicationFactory
@@ -15,7 +16,7 @@ class CartNoteProductBundleConnectorCommunicationFactory extends AbstractCommuni
     /**
      * @return \Spryker\Zed\CartNoteProductBundleConnector\Dependency\Facade\CartNoteProductBundleConnectorToProductBundleFacadeInterface
      */
-    public function getProductBundleFacade()
+    public function getProductBundleFacade(): CartNoteProductBundleConnectorToProductBundleFacadeInterface
     {
         return $this->getProvidedDependency(CartNoteProductBundleConnectorDependencyProvider::FACADE_PRODUCT_BUNDLE);
     }

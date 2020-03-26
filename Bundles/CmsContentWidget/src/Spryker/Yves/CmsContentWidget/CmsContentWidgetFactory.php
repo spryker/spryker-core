@@ -10,6 +10,9 @@ namespace Spryker\Yves\CmsContentWidget;
 use Spryker\Yves\CmsContentWidget\Twig\TwigCmsContentRenderer;
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Yves\CmsContentWidget\CmsContentWidgetConfig getConfig()
+ */
 class CmsContentWidgetFactory extends AbstractFactory
 {
     /**
@@ -17,7 +20,7 @@ class CmsContentWidgetFactory extends AbstractFactory
      */
     public function createTwigContentRenderer()
     {
-        return new TwigCmsContentRenderer($this->getTwigEnvironment());
+        return new TwigCmsContentRenderer($this->getTwigEnvironment(), $this->getConfig());
     }
 
     /**

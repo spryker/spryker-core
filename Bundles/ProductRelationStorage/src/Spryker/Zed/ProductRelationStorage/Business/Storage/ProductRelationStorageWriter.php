@@ -33,6 +33,8 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected $repository;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -174,8 +176,11 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations, ?SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $productRelations,
+        ?SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null
+    ) {
         if ($spyProductAbstractRelationStorageEntity === null) {
             $spyProductAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();
         }
@@ -203,7 +208,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
      * @param array $productRelations
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductRelationStorageTransfer[]
      */
     protected function getProductRelationStorageTransfers(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations)
     {

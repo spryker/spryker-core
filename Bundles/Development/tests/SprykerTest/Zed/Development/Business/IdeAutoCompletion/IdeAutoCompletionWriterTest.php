@@ -146,7 +146,7 @@ class IdeAutoCompletionWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\DevelopmentConfig
      */
-    protected function getDevelopmentConfigMock()
+    protected function getDevelopmentConfigMock(): DevelopmentConfig
     {
         $configMock = $this
             ->getMockBuilder(DevelopmentConfig::class)

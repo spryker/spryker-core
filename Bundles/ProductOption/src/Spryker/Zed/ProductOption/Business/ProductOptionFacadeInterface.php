@@ -82,15 +82,17 @@ interface ProductOptionFacadeInterface
      * Specification:
      * - Reads product option from persistence.
      * - Net and gross unit prices are calculated using current store, and current currency.
+     * - If currency code not provided it will use default store currency.
      * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
      *
      * @api
      *
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue);
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * Specification:
@@ -235,6 +237,8 @@ interface ProductOptionFacadeInterface
      * - Retrieves product options by provided product option IDs.
      * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
      * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
+     * - Sets ProductOptionTransfer::unitPrice based on ProductOptionCriteriaTransfer::currencyIsoCode and ProductOptionCriteriaTransfer::priceMode properties.
+     * - Uses default store currency and price mode if not specified.
      *
      * @api
      *
@@ -242,7 +246,9 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer;
 
     /**
      * Specification:

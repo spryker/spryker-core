@@ -5,6 +5,7 @@
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="Mail">

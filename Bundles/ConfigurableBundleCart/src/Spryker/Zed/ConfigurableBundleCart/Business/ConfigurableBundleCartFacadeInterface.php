@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleCartFacadeInterface
@@ -53,4 +55,46 @@ interface ConfigurableBundleCartFacadeInterface
      * @return bool
      */
     public function checkConfiguredBundleQuantityInQuote(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Applicable to items which have configured bundle properties.
+     * - Updates configured bundle item quantity per slot.
+     * - Returns modified CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Applicable to items which have configured bundle properties.
+     * - Sets group key for each item with ItemTransfer::getConfiguredBundle property filled.
+     * - Returns modified CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Applicable to items which have configured bundle properties.
+     * - Checks configurable bundle template slot combinations.
+     * - Sets error message in case wrong combination of slots.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkConfiguredBundleTemplateSlotCombination(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

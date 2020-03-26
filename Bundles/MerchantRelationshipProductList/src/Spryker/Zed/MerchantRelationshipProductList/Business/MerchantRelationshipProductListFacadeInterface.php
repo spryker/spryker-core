@@ -94,4 +94,20 @@ interface MerchantRelationshipProductListFacadeInterface
      * @return int[]
      */
     public function getMerchantRelationshipIdsByProductListId(int $idProductList): array;
+
+    /**
+     * Specification:
+     * - Finds product lists by merchant relationship.
+     * - MerchantRelationshipTransfer has to contain MerchantRelationship ID as the required field.
+     * - Removes merchant relationship from product lists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void;
 }

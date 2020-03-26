@@ -1,6 +1,6 @@
 # SalesReclamationGui Module
 [![Build Status](https://travis-ci.org/spryker/sales-reclamation-gui.svg)](https://travis-ci.org/spryker/sales-reclamation-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/sales-reclamation-gui/badge.svg)](https://coveralls.io/github/spryker/sales-reclamation-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 SalesReclamationGui is a user interface module to manage sales reclamations in the Zed Administration Interface.
 

@@ -65,8 +65,13 @@ class SessionHandlerMysql implements SessionHandlerInterface
      * @param string|null $password
      * @param int $lifetime
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
-    {
+    public function __construct(
+        SessionToMonitoringServiceInterface $monitoringService,
+        $hosts = ['127.0.0.1:3306'],
+        $user = null,
+        $password = null,
+        $lifetime = 600
+    ) {
         $host = $hosts[0];
         if (strpos($host, ':')) {
             $parts = explode(':', $host);

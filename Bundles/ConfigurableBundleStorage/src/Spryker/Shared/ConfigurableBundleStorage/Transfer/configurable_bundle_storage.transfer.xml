@@ -99,4 +99,11 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

@@ -25,6 +25,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedFileOutputDirectory(): string
@@ -33,6 +35,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedFilePrefix(): string
@@ -41,6 +45,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationVersionInfo(): string
@@ -49,6 +55,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationTitleInfo(): string
@@ -57,6 +65,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationLicenceNameInfo(): string
@@ -65,6 +75,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRestApplicationDomain(): string
@@ -73,6 +85,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAnnotationSourceDirectories(): array
@@ -84,7 +98,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getCoreAnnotationSourceDirectoryPatterns(): array
     {
@@ -104,6 +118,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isRestApiDocumentationGeneratorEnabled(): bool

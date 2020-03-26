@@ -28,6 +28,8 @@ class CustomerConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostYves()
@@ -36,6 +38,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return string
@@ -46,6 +50,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return string
@@ -56,6 +62,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getCustomerReferenceDefaults()
@@ -82,7 +90,9 @@ class CustomerConfig extends AbstractBundleConfig
      *    'sales' => '/sales/customer/customer-orders',
      * ]
      *
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getCustomerDetailExternalBlocksUrls()
     {
@@ -90,6 +100,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMinLength(): int
@@ -98,6 +110,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMaxLength(): int

@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\MerchantProfileStorage\Communication\MerchantProfileStorageCommunicationFactory getFactory()
@@ -18,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class MerchantProfileStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
      * {@inheritDoc}
      * - Handles merchant profile delete events.
@@ -34,8 +31,7 @@ class MerchantProfileStorageUnpublishListener extends AbstractPlugin implements 
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $merchantProfileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileIds): void {
-            $this->getFacade()->unpublish($merchantProfileIds);
-        });
+
+        $this->getFacade()->unpublish($merchantProfileIds);
     }
 }

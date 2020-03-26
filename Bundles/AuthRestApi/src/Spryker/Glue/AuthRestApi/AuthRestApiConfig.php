@@ -41,6 +41,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return string
@@ -51,6 +53,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return string

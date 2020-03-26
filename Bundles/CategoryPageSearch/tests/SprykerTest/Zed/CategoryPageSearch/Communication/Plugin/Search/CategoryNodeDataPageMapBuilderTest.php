@@ -26,6 +26,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
  * @group Listener
  * @group CategoryNodeDataPageMapBuilderTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchCommunicationTester $tester
  */
 class CategoryNodeDataPageMapBuilderTest extends Unit
 {

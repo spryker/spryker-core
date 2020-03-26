@@ -44,10 +44,14 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         );
 
         $merchantProfileTransfer->setMerchantName($merchantProfileEntity->getSpyMerchant()->getName());
+        $merchantProfileTransfer->setMerchantReference($merchantProfileEntity->getSpyMerchant()->getMerchantReference());
 
         $urlTransfers = new ArrayObject();
         foreach ($merchantProfileEntity->getSpyUrls() as $urlEntity) {
-            $urlTransfers->append((new UrlTransfer())->fromArray($urlEntity->toArray(), true));
+            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            $urlTransfer->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
+
+            $urlTransfers->append($urlTransfer);
         }
 
         $merchantProfileTransfer->setUrlCollection($urlTransfers);

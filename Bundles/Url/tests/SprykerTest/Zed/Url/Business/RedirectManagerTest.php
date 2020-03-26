@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Url\Business;
+namespace SprykerTest\Zed\Url\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedirectTransfer;
@@ -21,8 +21,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Url
  * @group Business

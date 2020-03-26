@@ -225,7 +225,9 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+    public function getShareDetailCollectionByShareDetailCriteria(
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): ShareDetailCollectionTransfer;
 
     /**
      * Specification:
@@ -315,4 +317,18 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Does nothing if QuoteTransfer::$customer is a quote owner.
+     * - Checks if quote is default for provided QuoteTransfer::$customer::$companyUser.
+     * - Adds info message if the quote was not default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultSharedQuoteChangedMessage(QuoteTransfer $quoteTransfer): void;
 }

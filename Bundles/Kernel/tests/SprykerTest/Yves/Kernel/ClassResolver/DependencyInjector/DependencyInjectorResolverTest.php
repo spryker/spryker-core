@@ -8,8 +8,6 @@
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
-use ReflectionClass;
-use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -75,11 +73,6 @@ class DependencyInjectorResolverTest extends Unit
     {
         parent::tearDown();
 
-        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
-        $reflectionProperty = $reflectionResolver->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
-
         $this->deleteCreatedFiles();
     }
 
@@ -88,7 +81,7 @@ class DependencyInjectorResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): DependencyInjectorResolver
     {
         $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
 

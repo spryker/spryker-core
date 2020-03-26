@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SynchronizationConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @param string $queueName
      *
      * @return int
@@ -37,6 +39,8 @@ class SynchronizationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSyncStorageQueueMessageChunkSize()
@@ -45,6 +49,8 @@ class SynchronizationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSyncSearchQueueMessageChunkSize()
@@ -53,6 +59,8 @@ class SynchronizationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSyncExportChunkSize()

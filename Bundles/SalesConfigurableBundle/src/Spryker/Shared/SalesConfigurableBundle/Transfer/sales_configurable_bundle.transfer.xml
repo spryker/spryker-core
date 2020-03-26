@@ -8,6 +8,13 @@
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="idProductOptionValue" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Order">
@@ -23,6 +30,7 @@
 
     <transfer name="ConfiguredBundleItem">
         <property name="slot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="quantityPerSlot" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">

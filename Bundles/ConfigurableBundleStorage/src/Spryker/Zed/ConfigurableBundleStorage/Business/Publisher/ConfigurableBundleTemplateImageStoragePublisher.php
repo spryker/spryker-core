@@ -16,6 +16,7 @@ use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateI
 use Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface;
 use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface;
 
@@ -47,24 +48,32 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     protected $configurableBundleStorageConfig;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeInterface
+     */
+    protected $productImageFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
      * @param \Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface $configurableBundleReader
      * @param \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig $configurableBundleStorageConfig
+     * @param \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeInterface $productImageFacade
      */
     public function __construct(
         ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository,
         ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager,
         ConfigurableBundleReaderInterface $configurableBundleReader,
         ConfigurableBundleStorageToLocaleFacadeInterface $localeFacade,
-        ConfigurableBundleStorageConfig $configurableBundleStorageConfig
+        ConfigurableBundleStorageConfig $configurableBundleStorageConfig,
+        ConfigurableBundleStorageToProductImageFacadeInterface $productImageFacade
     ) {
         $this->configurableBundleStorageRepository = $configurableBundleStorageRepository;
         $this->configurableBundleStorageEntityManager = $configurableBundleStorageEntityManager;
         $this->configurableBundleReader = $configurableBundleReader;
         $this->configurableBundleStorageConfig = $configurableBundleStorageConfig;
         $this->localeFacade = $localeFacade;
+        $this->productImageFacade = $productImageFacade;
     }
 
     /**
@@ -86,7 +95,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
         $localeTransfers = $this->localeFacade->getLocaleCollection();
 
         foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
-            if (!$configurableBundleTemplateTransfer->getIsActive()) {
+            if (!$configurableBundleTemplateTransfer->getIsActive() || !$configurableBundleTemplateTransfer->getProductImageSets()->count()) {
                 continue;
             }
 
@@ -114,25 +123,18 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     ): array {
         $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
 
-        $localizedProductImageSetTransfers = $this->mapProductImageSetsByLocaleName($configurableBundleTemplateTransfer->getProductImageSets());
-        $defaultProductImageSetTransfers = $this->getDefaultProductImageSets($configurableBundleTemplateTransfer->getProductImageSets());
-
         foreach ($localeTransfers as $localeName => $localeTransfer) {
-            if (!isset($localizedProductImageSetTransfers[$localeName]) && !$defaultProductImageSetTransfers) {
-                continue;
-            }
-
             $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
                 ?? new SpyConfigurableBundleTemplateImageStorage();
 
-            $productImageSetTransfers = $this->combineProductImageSetsByName(
-                $localizedProductImageSetTransfers[$localeName] ?? [],
-                $defaultProductImageSetTransfers
+            $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
+                $configurableBundleTemplateTransfer->getProductImageSets(),
+                $localeName
             );
 
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,
-                $productImageSetTransfers,
+                $productImageSetTransfers->getArrayCopy(),
                 $configurableBundleTemplateTransfer,
                 $configurableBundleTemplateImageStorageEntity
             );
@@ -214,35 +216,6 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $localizedProductImageSetTransfers
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $defaultProductImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function combineProductImageSetsByName(array $localizedProductImageSetTransfers, array $defaultProductImageSetTransfers): array
-    {
-        $combinedProductImageSetTransfers = $this->getProductImageSetsIndexedByName($localizedProductImageSetTransfers) + $this->getProductImageSetsIndexedByName($defaultProductImageSetTransfers);
-
-        return array_values($combinedProductImageSetTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getProductImageSetsIndexedByName(array $productImageSetTransfers): array
-    {
-        $indexedProductImageSetTransfers = [];
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $indexedProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
-        }
-
-        return $indexedProductImageSetTransfers;
-    }
-
-    /**
      * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
      *
      * @return void
@@ -254,41 +227,5 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
                 $this->configurableBundleStorageEntityManager->deleteConfigurableBundleTemplateImageStorageEntity($configurableBundleTemplateImageStorageEntity);
             }
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[][]
-     */
-    protected function mapProductImageSetsByLocaleName(ArrayObject $productImageSetTransfers): array
-    {
-        $localizedProductImageSetTransfers = [];
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            if ($productImageSetTransfer->getLocale()) {
-                $localizedProductImageSetTransfers[$productImageSetTransfer->getLocale()->getLocaleName()][] = $productImageSetTransfer;
-            }
-        }
-
-        return $localizedProductImageSetTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getDefaultProductImageSets(ArrayObject $productImageSetTransfers): array
-    {
-        $defaultProductImageSetTransfers = [];
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            if (!$productImageSetTransfer->getLocale()) {
-                $defaultProductImageSetTransfers[] = $productImageSetTransfer;
-            }
-        }
-
-        return $defaultProductImageSetTransfers;
     }
 }

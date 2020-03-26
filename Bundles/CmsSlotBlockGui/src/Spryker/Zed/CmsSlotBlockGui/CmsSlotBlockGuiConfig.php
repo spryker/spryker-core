@@ -15,6 +15,8 @@ class CmsSlotBlockGuiConfig extends AbstractBundleConfig
     protected const MAX_CMS_BLOCKS_IN_BLOCK_SELECTOR = 500;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxNumberBlocksAssignedToSlot(): int
@@ -23,6 +25,8 @@ class CmsSlotBlockGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxCmsBlocksInBlockSelector(): int

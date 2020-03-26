@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
+use PHPUnit\Framework\Assert;
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductListPage;
 use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
@@ -47,6 +48,7 @@ class ProductManagementProductEditCest
      */
     public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
+        Assert::markTestSkipped('Re-enable when GLUE-9675 is done');
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 

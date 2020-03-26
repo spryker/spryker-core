@@ -13,15 +13,19 @@ use Elastica\Query\Terms;
 use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getFactory()
  */
-class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
+class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    protected const SOURCE_IDENTIFIER = 'product-review';
+
     /**
      * @var \Elastica\Query
      */
@@ -31,6 +35,11 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
      * @var \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
      */
     protected $bulkProductReviewSearchRequestTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
@@ -47,6 +56,38 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
     public function getSearchQuery(): Query
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines context for bulk product review search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets context for bulk product review search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -93,5 +134,24 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $productReviewTypeFilter;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

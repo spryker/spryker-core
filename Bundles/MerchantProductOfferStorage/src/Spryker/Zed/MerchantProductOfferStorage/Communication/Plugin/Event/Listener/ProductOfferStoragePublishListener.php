@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
@@ -19,9 +17,12 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class ProductOfferStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
+     * {@inheritDoc}
+     * - Writes product offer data to storage by provided product offer reference events.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
@@ -29,13 +30,6 @@ class ProductOfferStoragePublishListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $productOfferReferences = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
-
-        if (!$productOfferReferences) {
-            return;
-        }
-        $this->getFacade()->publishProductOfferStorage($productOfferReferences);
+        $this->getFacade()->writeProductOfferStorageCollectionByProductOfferReferenceEvents($transfers);
     }
 }

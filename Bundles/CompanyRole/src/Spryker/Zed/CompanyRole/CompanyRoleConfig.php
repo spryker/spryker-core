@@ -17,6 +17,8 @@ class CompanyRoleConfig extends AbstractBundleConfig
     protected const DEFAULT_ADMIN_ROLE_NAME = 'Administrator';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultAdminRoleName(): string
@@ -25,6 +27,8 @@ class CompanyRoleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAdminRolePermissionKeys(): array
@@ -33,6 +37,8 @@ class CompanyRoleConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
      */
     public function getPredefinedCompanyRoles(): array

@@ -60,7 +60,7 @@ class ShipmentCarrierDecisionRulePlugin extends AbstractPlugin implements Decisi
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {
@@ -74,7 +74,7 @@ class ShipmentCarrierDecisionRulePlugin extends AbstractPlugin implements Decisi
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getQueryStringValueOptions()
     {

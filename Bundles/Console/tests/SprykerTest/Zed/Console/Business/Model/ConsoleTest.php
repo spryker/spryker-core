@@ -118,7 +118,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCommunicationFactoryMock()
+    private function getCommunicationFactoryMock(): AbstractCommunicationFactory
     {
         return $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock();
     }
@@ -126,7 +126,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getQueryContainerMock()
+    private function getQueryContainerMock(): AbstractQueryContainer
     {
         return $this->getMockBuilder(AbstractQueryContainer::class)->disableOriginalConstructor()->getMock();
     }
@@ -142,7 +142,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPreRunPluginMock()
+    private function getPreRunPluginMock(): ConsolePreRunHookPluginInterface
     {
         $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->setMethods(['preRun'])->getMock();
         $mock->expects($this->once())->method('preRun');
@@ -153,7 +153,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPostRunPluginMock()
+    private function getPostRunPluginMock(): ConsolePostRunHookPluginInterface
     {
         $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->setMethods(['postRun'])->getMock();
         $mock->expects($this->once())->method('postRun');

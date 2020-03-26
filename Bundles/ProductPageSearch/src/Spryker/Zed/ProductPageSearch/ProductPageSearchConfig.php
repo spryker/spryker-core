@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductPageSearchConfig extends AbstractBundleConfig
 {
+    public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
+
     /**
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,6 +26,8 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getProductPageSynchronizationPoolName(): ?string

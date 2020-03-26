@@ -77,7 +77,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
-    private function getDatabaseCreatorMock()
+    private function getDatabaseCreatorMock(): DatabaseCreatorInterface
     {
         $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(self::TEST_ENGINE);

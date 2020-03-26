@@ -25,6 +25,9 @@
     </transfer>
 
     <transfer name="StorageProductImage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
     </transfer>
 
 </transfers>

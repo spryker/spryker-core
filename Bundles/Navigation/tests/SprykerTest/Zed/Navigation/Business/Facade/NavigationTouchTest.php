@@ -115,8 +115,11 @@ class NavigationTouchTest extends Unit
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    protected function createNavigationNodeLocalizedAttributesTransfer(int $idLocale, string $nodeTitle, string $externalUrl): NavigationNodeLocalizedAttributesTransfer
-    {
+    protected function createNavigationNodeLocalizedAttributesTransfer(
+        int $idLocale,
+        string $nodeTitle,
+        string $externalUrl
+    ): NavigationNodeLocalizedAttributesTransfer {
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer
             ->setFkLocale($idLocale)
@@ -149,8 +152,12 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes
      */
-    protected function createNavigationNodeLocalizedAttributes(string $title, int $idUrl, int $idNavigationNode, int $idLocale): SpyNavigationNodeLocalizedAttributes
-    {
+    protected function createNavigationNodeLocalizedAttributes(
+        string $title,
+        int $idUrl,
+        int $idNavigationNode,
+        int $idLocale
+    ): SpyNavigationNodeLocalizedAttributes {
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity
             ->setFkNavigationNode($idNavigationNode)

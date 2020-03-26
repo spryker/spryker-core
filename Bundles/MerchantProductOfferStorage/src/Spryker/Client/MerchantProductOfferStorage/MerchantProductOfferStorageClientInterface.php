@@ -8,35 +8,52 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 interface MerchantProductOfferStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves content by key through a storage client dependency.
+     * - Retrieves content according provided criteria through a storage client dependency.
      * - Returns the product offer collection.
      *
      * @api
      *
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer;
+    public function getProductOfferStorageCollection(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer;
 
     /**
      * Specification:
-     * - Checks selected attribute.
+     * - Retrieves product offer references according provided criteria.
+     * - Returns null if product offer references does not exist.
      * - Validates checked product offer reference attribute.
      * - Resolves default product offer reference by plugin.
      * - Returns the product offer reference.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string|null
      */
-    public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string;
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
+
+    /**
+     * Specification:
+     * - Finds a product offer within Storage by reference.
+     * - Returns null if product offer was not found.
+     *
+     * @api
+     *
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
 }

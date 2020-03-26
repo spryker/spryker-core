@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Offer\Persistence" package="src.Orm.Zed.Offer.Persistence">
 
-    <table name="spy_offer" phpName="SpyOffer">
+    <table name="spy_offer">
         <column name="id_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
         <column name="quote_data" type="LONGVARCHAR" required="true"/>

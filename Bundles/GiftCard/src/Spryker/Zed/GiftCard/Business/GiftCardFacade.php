@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -318,5 +319,72 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         return $this->getFactory()
             ->createShipmentGroupSanitizer()
             ->sanitizeShipmentGroupCollection($shipmentGroupCollection);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeAdder()
+            ->addCartCode($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeRemover()
+            ->removeCartCode($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeClearer()
+            ->clearCartCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    {
+        return $this->getFactory()
+            ->createGiftCardCartCodeOperationMessageFinder()
+            ->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

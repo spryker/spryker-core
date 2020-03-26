@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformer;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
@@ -41,6 +43,14 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface
+     */
+    public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
+    {
+        return new ConfigurableBundleItemTransformer();
     }
 
     /**

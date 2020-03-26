@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface SearchConfigInterface
 {
     /**

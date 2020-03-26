@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsPageSearch\Business;
 
 use Spryker\Zed\CmsPageSearch\Business\Search\CmsPageSearchWriter;
+use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapper;
+use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface;
 use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -25,11 +27,19 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
         return new CmsPageSearchWriter(
             $this->getQueryContainer(),
             $this->getCmsFacade(),
-            $this->getSearchFacade(),
+            $this->createCmsPageSearchDataMapper(),
             $this->getUtilEncoding(),
             $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface
+     */
+    public function createCmsPageSearchDataMapper(): CmsPageSearchDataMapperInterface
+    {
+        return new CmsPageSearchDataMapper();
     }
 
     /**
@@ -54,13 +64,5 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface
-     */
-    protected function getSearchFacade()
-    {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_SEARCH);
     }
 }

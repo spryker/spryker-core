@@ -4,7 +4,7 @@
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\ConfigurableBundle\Persistence" package="src.Orm.Zed.ConfigurableBundle.Persistence"
 >
-    <table name="spy_configurable_bundle_template" phpName="SpyConfigurableBundleTemplate">
+    <table name="spy_configurable_bundle_template">
         <column name="id_configurable_bundle_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
@@ -27,7 +27,7 @@
         <id-method-parameter value="spy_configurable_bundle_template_pk_seq"/>
     </table>
 
-    <table name="spy_configurable_bundle_template_slot" phpName="SpyConfigurableBundleTemplateSlot">
+    <table name="spy_configurable_bundle_template_slot">
         <column name="id_configurable_bundle_template_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>

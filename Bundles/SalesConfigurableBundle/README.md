@@ -1,6 +1,6 @@
 # SalesConfigurableBundle Module
 [![Build Status](https://travis-ci.org/spryker/sales-configurable-bundle.svg)](https://travis-ci.org/spryker/sales-configurable-bundle)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/sales-configurable-bundle/badge.svg)](https://coveralls.io/github/spryker/sales-configurable-bundle)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 SalesConfigurableBundle module provides ability to manage configured bundles.
 

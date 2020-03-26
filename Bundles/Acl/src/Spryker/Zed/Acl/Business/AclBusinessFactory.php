@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReader;
+use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
@@ -18,6 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
@@ -26,9 +31,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
      */
     public function createGroupModel()
     {
-        return new Group(
-            $this->getQueryContainer()
-        );
+        return new Group($this->getQueryContainer());
     }
 
     /**
@@ -57,6 +60,25 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface
+     */
+    public function createNavigationItemFilter(): NavigationItemFilterInterface
+    {
+        return new NavigationItemFilter(
+            $this->createRuleModel(),
+            $this->getUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface
+     */
+    public function createAclConfigReader(): AclConfigReaderInterface
+    {
+        return new AclConfigReader($this->getConfig());
+    }
+
+    /**
      * @return \Spryker\Zed\Acl\Business\Model\RuleValidator
      */
     public function createRuleValidatorHelper()
@@ -74,7 +96,8 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createRoleModel(),
             $this->createRuleModel(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
-            $this->getConfig()
+            $this->createAclConfigReader(),
+            $this->getAclInstallerPlugins()
         );
     }
 
@@ -84,5 +107,13 @@ class AclBusinessFactory extends AbstractBusinessFactory
     public function getUserFacade()
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     */
+    public function getAclInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::ACL_INSTALLER_PLUGINS);
     }
 }

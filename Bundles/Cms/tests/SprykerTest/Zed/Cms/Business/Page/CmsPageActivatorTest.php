@@ -85,8 +85,7 @@ class CmsPageActivatorTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToTouchFacadeInterface $touchFacadeMock = null,
         ?TemplateReaderInterface $templateReader = null
-    ) {
-
+    ): CmsPageActivator {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }

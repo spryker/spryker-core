@@ -108,6 +108,7 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="customerReference" type="string"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
     <transfer name="AssignGuestQuoteRequest">

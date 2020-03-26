@@ -22,4 +22,9 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="HealthCheckServiceResponse">
+        <property name="status" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>

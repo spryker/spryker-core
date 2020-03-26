@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\FacetResultFormatterPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin

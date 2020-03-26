@@ -17,10 +17,13 @@ use ReflectionClass;
 use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ConfigHelper extends Module
 {
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
+    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
+    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var array
@@ -28,9 +31,9 @@ class ConfigHelper extends Module
     protected $configCache;
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @var \Spryker\Shared\Kernel\AbstractBundleConfig[]
      */
-    protected $configStub;
+    protected $configStubs = [];
 
     /**
      * @var array
@@ -38,9 +41,9 @@ class ConfigHelper extends Module
     protected $mockedConfigMethods = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @var \Spryker\Shared\Kernel\AbstractSharedConfig[]
      */
-    protected $sharedConfigStub;
+    protected $sharedConfigStubs = [];
 
     /**
      * @var array
@@ -100,97 +103,165 @@ class ConfigHelper extends Module
     /**
      * @param string $methodName
      * @param mixed $return
+     * @param string|null $moduleName
      *
      * @throws \Exception
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    public function mockConfigMethod(string $methodName, $return): ?AbstractBundleConfig
+    public function mockConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractBundleConfig
     {
-        $className = $this->getConfigClassName();
+        $moduleName = $this->getModuleName($moduleName);
+        $className = $this->getConfigClassName($moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
         }
 
-        $this->mockedConfigMethods[$methodName] = $return;
-        $this->configStub = Stub::make($className, $this->mockedConfigMethods);
+        if (!isset($this->mockedConfigMethods[$moduleName])) {
+            $this->mockedConfigMethods[$moduleName] = [];
+        }
 
-        return $this->configStub;
+        $this->mockedConfigMethods[$moduleName][$methodName] = $return;
+
+        /** @var \Spryker\Shared\Kernel\AbstractBundleConfig $configStub */
+        $configStub = Stub::make($className, $this->mockedConfigMethods[$moduleName]);
+        $this->configStubs[$moduleName] = $configStub;
+
+        return $this->configStubs[$moduleName];
+    }
+
+    /**
+     * @param string|null $moduleName
+     *
+     * @return string
+     */
+    protected function getModuleName(?string $moduleName = null): string
+    {
+        if ($moduleName) {
+            return $moduleName;
+        }
+
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
+        return $namespaceParts[static::MODULE_NAME_POSITION];
     }
 
     /**
      * @param string $methodName
      * @param mixed $return
+     * @param string|null $moduleName
      *
      * @throws \Exception
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    public function mockSharedConfigMethod(string $methodName, $return): ?AbstractBundleConfig
+    public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractSharedConfig
     {
-        $className = $this->getSharedConfigClassName();
+        $moduleName = $this->getModuleName($moduleName);
+        $className = $this->getSharedConfigClassName($moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
         }
 
-        $this->mockedSharedConfigMethods[$methodName] = $return;
-        $this->sharedConfigStub = Stub::make($className, $this->mockedSharedConfigMethods);
+        if (!isset($this->mockedSharedConfigMethods[$moduleName])) {
+            $this->mockedSharedConfigMethods[$moduleName] = [];
+        }
 
-        return $this->sharedConfigStub;
+        $this->mockedSharedConfigMethods[$moduleName][$methodName] = $return;
+
+        /** @var \Spryker\Shared\Kernel\AbstractSharedConfig $sharedConfigStub */
+        $sharedConfigStub = Stub::make($className, $this->mockedSharedConfigMethods[$moduleName]);
+        $this->sharedConfigStubs[$moduleName] = $sharedConfigStub;
+
+        return $this->sharedConfigStubs[$moduleName];
     }
 
     /**
+     * @param string|null $moduleName
+     *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getModuleConfig(): AbstractBundleConfig
+    public function getModuleConfig(?string $moduleName = null): AbstractBundleConfig
     {
-        if ($this->configStub !== null) {
-            $this->configStub = $this->injectSharedConfig($this->configStub);
+        $moduleName = $this->getModuleName($moduleName);
 
-            return $this->configStub;
+        if (isset($this->configStubs[$moduleName])) {
+            $this->configStubs[$moduleName] = $this->injectSharedConfig($this->configStubs[$moduleName], $moduleName);
+
+            return $this->configStubs[$moduleName];
         }
 
-        $moduleConfig = $this->createConfig();
-        $moduleConfig = $this->injectSharedConfig($moduleConfig);
+        $moduleConfig = $this->createConfig($moduleName);
+        $moduleConfig = $this->injectSharedConfig($moduleConfig, $moduleName);
 
         return $moduleConfig;
     }
 
     /**
+     * @param string|null $moduleName
+     *
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
+     */
+    public function getSharedModuleConfig(?string $moduleName = null): ?AbstractSharedConfig
+    {
+        $moduleName = $this->getModuleName($moduleName);
+
+        if (isset($this->sharedConfigStubs[$moduleName])) {
+            return $this->sharedConfigStubs[$moduleName];
+        }
+
+        $sharedConfig = $this->createSharedConfig($moduleName);
+
+        return $sharedConfig;
+    }
+
+    /**
+     * @param string $moduleName
+     *
      * @return \Spryker\Yves\Kernel\AbstractBundleConfig|\Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Glue\Kernel\AbstractBundleConfig|\Spryker\Client\Kernel\AbstractBundleConfig
      */
-    protected function createConfig()
+    protected function createConfig(string $moduleName)
     {
-        $moduleConfigClassName = $this->getConfigClassName();
+        $moduleConfigClassName = $this->getConfigClassName($moduleName);
 
         return new $moduleConfigClassName();
     }
 
     /**
+     * @param string $moduleName
+     *
      * @return string
      */
-    protected function getConfigClassName(): string
+    protected function getConfigClassName(string $moduleName): string
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        $classNameCandidate = sprintf(static::CONFIG_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
+        return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $moduleConfig
+     * @param string $moduleName
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig): AbstractBundleConfig
+    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig, string $moduleName): AbstractBundleConfig
     {
         if (!method_exists($moduleConfig, 'setSharedConfig')) {
             return $moduleConfig;
         }
 
-        $sharedConfig = $this->getSharedConfig();
+        $sharedConfig = $this->getSharedConfig($moduleName);
         if ($sharedConfig === null) {
             return $moduleConfig;
         }
@@ -201,23 +272,27 @@ class ConfigHelper extends Module
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @param string $moduleName
+     *
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    protected function getSharedConfig(): ?AbstractBundleConfig
+    protected function getSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
-        if ($this->sharedConfigStub !== null) {
-            return $this->sharedConfigStub;
+        if (isset($this->sharedConfigStubs[$moduleName])) {
+            return $this->sharedConfigStubs[$moduleName];
         }
 
-        return $this->createSharedConfig();
+        return $this->createSharedConfig($moduleName);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @param string $moduleName
+     *
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    protected function createSharedConfig(): ?AbstractBundleConfig
+    protected function createSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
-        $sharedConfigClassName = $this->getSharedConfigClassName();
+        $sharedConfigClassName = $this->getSharedConfigClassName($moduleName);
         if (!class_exists($sharedConfigClassName)) {
             return null;
         }
@@ -226,14 +301,22 @@ class ConfigHelper extends Module
     }
 
     /**
+     * @param string $moduleName
+     *
      * @return string
      */
-    protected function getSharedConfigClassName(): string
+    protected function getSharedConfigClassName(string $moduleName): string
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\Shared\%2$s\%2$sConfig', rtrim($namespaceParts[0], 'Test'), $namespaceParts[2]);
+        $classNameCandidate = sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
+        return sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**
@@ -256,10 +339,10 @@ class ConfigHelper extends Module
      */
     public function _before(TestInterface $test): void
     {
-        $this->configStub = null;
+        $this->configStubs = [];
         $this->mockedConfigMethods = [];
 
-        $this->sharedConfigStub = null;
+        $this->sharedConfigStubs = [];
         $this->mockedSharedConfigMethods = [];
     }
 
@@ -271,6 +354,10 @@ class ConfigHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->resetConfig();
+        $this->configStubs = [];
+        $this->mockedConfigMethods = [];
+        $this->sharedConfigStubs = [];
+        $this->mockedSharedConfigMethods = [];
     }
 
     /**

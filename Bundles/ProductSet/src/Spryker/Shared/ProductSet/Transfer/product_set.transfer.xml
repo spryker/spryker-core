@@ -68,4 +68,8 @@
         <property name="fkResourceProductSet" type="int"/>
     </transfer>
 
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
 </transfers>

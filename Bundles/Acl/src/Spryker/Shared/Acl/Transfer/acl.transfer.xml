@@ -18,6 +18,8 @@
         <property name="name" type="string"/>
         <property name="idGroup" type="int"/>
         <property name="rules" type="string"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
     </transfer>
 
     <transfer name="Roles">
@@ -40,6 +42,21 @@
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
+        <property name="aclGroups" type="Group[]" singular="aclGroup"/>
+    </transfer>
+
+    <transfer name="GroupCriteria">
+        <property name="idAclGroup" type="int"/>
+    </transfer>
+
+    <transfer name="NavigationItem">
+        <property name="module" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationItemCollection">
+        <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
     </transfer>
 
 </transfers>

@@ -11,6 +11,7 @@ build:
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
+        - Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/*
         - Bundles/*/src/Spryker/Zed/*/*Factory.php
         - Bundles/Transfer/tests/_data/test_files/*
 

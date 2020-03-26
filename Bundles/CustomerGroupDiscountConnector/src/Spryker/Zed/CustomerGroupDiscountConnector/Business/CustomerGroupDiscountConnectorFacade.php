@@ -33,7 +33,6 @@ class CustomerGroupDiscountConnectorFacade extends AbstractFacade implements Cus
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createCustomerGroupDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);

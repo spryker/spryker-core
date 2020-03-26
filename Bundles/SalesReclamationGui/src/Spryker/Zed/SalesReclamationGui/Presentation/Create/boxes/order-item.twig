@@ -24,7 +24,7 @@
         {{ 'Sku' | trans }}: {{ orderItem.Sku }}
     </div>
 
-    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
+    {% if (orderItem.metadata.superAttributes | default([])) | length > 0 %}
     <div class="variant-details">
         <h3>{{ 'Variant Details' | trans }}</h3>
         {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0,2) %}

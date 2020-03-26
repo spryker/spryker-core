@@ -12,7 +12,7 @@ use ArrayObject;
 class ReclamationItemEventsFinder implements ReclamationItemEventsFinderInterface
 {
     /**
-     * @param \ArrayObject $reclamationItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
      * @param string[][] $eventsGroupedByItem
      *
      * @return string[]
@@ -33,7 +33,7 @@ class ReclamationItemEventsFinder implements ReclamationItemEventsFinderInterfac
     }
 
     /**
-     * @param \ArrayObject $reclamationItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
      *
      * @return int[]
      */

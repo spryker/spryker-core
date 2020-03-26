@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 
 interface PropelFacadeInterface
@@ -200,4 +201,15 @@ interface PropelFacadeInterface
      * @return void
      */
     public function dropDatabaseTables(): void;
+
+    /**
+     * Specification:
+     * - Executes health check for the database.
+     * - Checks that connection has been established.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer;
 }

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryConnectorQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
@@ -30,6 +32,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -48,6 +52,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -63,6 +69,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -87,6 +95,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -101,6 +111,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -116,6 +128,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
@@ -127,6 +141,8 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $positionName

@@ -71,8 +71,13 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
      */
     protected function extractPermissionsFromOauthToken(OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer): ?PermissionCollectionTransfer
     {
+        $oauthUserIdDecoded = $this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true);
+        if (!$oauthUserIdDecoded) {
+            return null;
+        }
+
         $customerIdentifier = (new CustomerIdentifierTransfer())
-            ->fromArray($this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
+            ->fromArray($oauthUserIdDecoded, true);
 
         return $customerIdentifier->getPermissions();
     }

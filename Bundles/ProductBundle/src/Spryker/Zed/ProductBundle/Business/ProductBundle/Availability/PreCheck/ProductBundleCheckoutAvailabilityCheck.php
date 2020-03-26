@@ -45,7 +45,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {
@@ -86,7 +86,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     }
 
     /**
-     * @param \ArrayObject $currentCartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $currentCartItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -124,6 +124,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if (!isset($uniqueBundledItems[$bundleItemTransfer->getSku()])) {
                 $uniqueBundledItems[$bundleItemTransfer->getSku()] = $bundleItemTransfer;
+
                 continue;
             }
         }
@@ -142,8 +143,10 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $processedErrorMessages = [];
 
         foreach ($availabilityErrorMessages as $availabilityErrorMessage) {
-            if (!$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
-            || $this->isAvailabilityErrorMessage($availabilityErrorMessage)) {
+            if (
+                !$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
+                || $this->isAvailabilityErrorMessage($availabilityErrorMessage)
+            ) {
                 $processedErrorMessages[] = $availabilityErrorMessage;
             }
         }
@@ -218,7 +221,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     }
 
     /**
-     * @param \ArrayObject $currentCartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $currentCartItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $productBundleEntity
      *

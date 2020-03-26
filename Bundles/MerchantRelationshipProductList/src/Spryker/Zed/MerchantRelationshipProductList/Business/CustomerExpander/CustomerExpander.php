@@ -39,7 +39,8 @@ class CustomerExpander implements CustomerExpanderInterface
     {
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
-        if ($companyUserTransfer
+        if (
+            $companyUserTransfer
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getIdCompanyBusinessUnit()
         ) {
@@ -68,6 +69,7 @@ class CustomerExpander implements CustomerExpanderInterface
         foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
             if ($productListTransfer->getType() === static::TYPE_WHITELIST) {
                 $customerTransfer->getCustomerProductListCollection()->addWhitelistId($productListTransfer->getIdProductList());
+
                 continue;
             }
 

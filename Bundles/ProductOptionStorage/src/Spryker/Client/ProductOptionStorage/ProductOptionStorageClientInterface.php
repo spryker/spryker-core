@@ -34,4 +34,16 @@ interface ProductOptionStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptionsForCurrentStore($idAbstractProduct);
+
+    /**
+     * Specification:
+     * - Returns an array of ProductAbstractOptionStorageTransfer indexed by idProductAbstract.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function getBulkProductOptions(array $productAbstractIds): array;
 }

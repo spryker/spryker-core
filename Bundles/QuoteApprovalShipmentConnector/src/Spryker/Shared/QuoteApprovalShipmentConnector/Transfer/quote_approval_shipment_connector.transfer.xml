@@ -38,4 +38,7 @@
         <property name="shipment" type="Shipment"/>
     </transfer>
 
+    <transfer name="QuoteApproval">
+    </transfer>
+
 </transfers>

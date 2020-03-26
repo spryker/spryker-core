@@ -51,7 +51,8 @@ class OutdatedValidator implements OutdatedValidatorInterface
      */
     protected function isOutdated(array $newEntry, array $existingEntry)
     {
-        if (!empty($existingEntry) &&
+        if (
+            !empty($existingEntry) &&
             array_key_exists(static::MESSAGE_TIMESTAMP, $existingEntry) &&
             $existingEntry[static::MESSAGE_TIMESTAMP] > $newEntry[static::MESSAGE_TIMESTAMP]
         ) {

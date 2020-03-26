@@ -100,8 +100,10 @@ class MerchantRelationshipThresholdDataProvider
 
         $merchantRelationshipSalesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($idMerchantRelationship, $storeTransfer, $currencyTransfer);
         foreach ($merchantRelationshipSalesOrderThresholdTransfers as $merchantRelationshipSalesOrderThresholdTransfer) {
-            if ($this->globalThresholdDataProviderResolver
-                ->hasMerchantRelationshipThresholdDataProviderByStrategyGroup($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
+            if (
+                $this->globalThresholdDataProviderResolver
+                ->hasMerchantRelationshipThresholdDataProviderByStrategyGroup($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
+            ) {
                 $data = $this->globalThresholdDataProviderResolver
                     ->resolveMerchantRelationshipThresholdDataProviderByStrategyGroup($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
                     ->mapSalesOrderThresholdValueTransferToFormData($merchantRelationshipSalesOrderThresholdTransfer, $data);

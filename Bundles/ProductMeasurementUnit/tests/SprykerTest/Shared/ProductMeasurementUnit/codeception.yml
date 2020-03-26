@@ -1,5 +1,4 @@
 namespace: SprykerTest\Shared\ProductMeasurementUnit
-actor: Tester
 paths:
     tests: .
     data: ../../../_data

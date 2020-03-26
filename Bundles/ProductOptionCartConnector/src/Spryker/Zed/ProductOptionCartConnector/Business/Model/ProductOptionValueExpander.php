@@ -34,8 +34,10 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
      */
-    public function __construct(ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade, ProductOptionCartConnectorToPriceFacadeInterface $priceFacade)
-    {
+    public function __construct(
+        ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade,
+        ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
+    ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->priceFacade = $priceFacade;
     }
@@ -48,8 +50,10 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     public function expandProductOptions(CartChangeTransfer $changeTransfer)
     {
         $priceMode = $changeTransfer->getQuote()->getPriceMode();
+        $currencyCode = $changeTransfer->getQuote()->getCurrency()->getCode();
+
         foreach ($changeTransfer->getItems() as $itemTransfer) {
-            $this->expandProductOptionTransfers($itemTransfer, $priceMode);
+            $this->expandProductOptionTransfers($itemTransfer, $priceMode, $currencyCode);
         }
 
         return $changeTransfer;
@@ -58,18 +62,20 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
+     * @param string $currencyCode
      *
      * @return void
      */
-    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, $priceMode)
+    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer, string $priceMode, string $currencyCode): void
     {
         $productOptions = $itemTransfer->getProductOptions();
 
         foreach ($productOptions as &$productOptionTransfer) {
             $productOptionTransfer->requireIdProductOptionValue();
 
-            $productOptionTransfer = $this->productOptionFacade->getProductOptionValue(
-                $productOptionTransfer->getIdProductOptionValue()
+            $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
+                $productOptionTransfer->getIdProductOptionValue(),
+                $currencyCode
             );
 
             $this->sanitizePrices($productOptionTransfer, $priceMode);

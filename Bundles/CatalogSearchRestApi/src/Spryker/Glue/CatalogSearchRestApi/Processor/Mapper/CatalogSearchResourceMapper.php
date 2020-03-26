@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
@@ -26,19 +27,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     protected const SEARCH_KEY_PRODUCTS = 'products';
 
     /**
-     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
-     */
-    protected $currencyClient;
-
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
-     */
-    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
-    {
-        $this->currencyClient = $currencyClient;
-    }
-
-    /**
      * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin::NAME
      */
     protected const NAME = 'facets';
@@ -47,6 +35,24 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultFormatterPlugin::NAME
      */
     protected const SORT_NAME = 'sort';
+
+    /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected $currencyClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected static $currencyTransfer;
+
+    /**
+     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
+     */
+    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
+    {
+        $this->currencyClient = $currencyClient;
+    }
 
     /**
      * @param array $restSearchResponse
@@ -105,13 +111,16 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(array $facets, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
-    {
+    protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(
+        array $facets,
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+    ): RestCatalogSearchAttributesTransfer {
         foreach ($facets as $facet) {
             if ($facet instanceof FacetSearchResultTransfer) {
                 $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);
                 $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
                 $restSearchAttributesTransfer->addValueFacet($valueFacet);
+
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {
@@ -179,7 +188,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
         $restPriceProductTransfer->setCurrency(
             (new RestCurrencyTransfer())->fromArray(
-                $this->currencyClient->getCurrent()->toArray(),
+                $this->getCurrencyTransfer()->toArray(),
                 true
             )
         );
@@ -193,5 +202,17 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         }
 
         return $restPriceProductTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(): CurrencyTransfer
+    {
+        if (!static::$currencyTransfer) {
+            static::$currencyTransfer = $this->currencyClient->getCurrent();
+        }
+
+        return static::$currencyTransfer;
     }
 }
