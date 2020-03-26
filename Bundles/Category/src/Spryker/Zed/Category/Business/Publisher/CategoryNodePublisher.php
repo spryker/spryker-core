@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Category\Business\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
@@ -61,8 +60,8 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
     }
 
     /**
-     * @param int[]|int $parentCategoryNodeIds
-     * @param int|array $categoryNodeId
+     * @param int $categoryNodeId
+     * @param int[] $parentCategoryNodeIds
      *
      * @return int[]
      */
