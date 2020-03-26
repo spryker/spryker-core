@@ -495,7 +495,7 @@
                                                 name="{{ onlineProfileTab.fk_country.vars.full_name }}"
                                                 value="{{ onlineProfileTab.fk_country.vars.data }}"
                                                 required="{{ onlineProfileTab.fk_country.vars.required | boolToStr }}"
-                                                disabled="{{ onlineProfileTab.fk_country.vars.disabled }}"
+                                                disabled="{{ onlineProfileTab.fk_country.vars.disabled | boolToStr }}"
                                             ></spy-select>
                                         </spy-form-item>
                                     </div>
@@ -751,7 +751,7 @@
                                             <spy-toggle
                                                 control
                                                 name="{{ onlineProfileTab.is_active.vars.full_name }}"
-                                                value="{{ onlineProfileTab.is_active.vars.value }}"
+                                                value="{{ onlineProfileTab.is_active.vars.checked | boolToStr }}"
                                                 required="{{ onlineProfileTab.is_active.vars.required | boolToStr }}"
                                             ></spy-toggle>
                                         </spy-form-item>
