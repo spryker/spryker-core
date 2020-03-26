@@ -9,6 +9,7 @@ namespace Spryker\Service\Shipment\ShipmentHash;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
+use Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceInterface;
 use Spryker\Service\Shipment\ShipmentConfig;
 
 class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
@@ -26,15 +27,23 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
     protected $shipmentConfig;
 
     /**
+     * @var \Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface $customerService
      * @param \Spryker\Service\Shipment\ShipmentConfig $shipmentConfig
+     * @param \Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ShipmentToCustomerServiceInterface $customerService,
-        ShipmentConfig $shipmentConfig
+        ShipmentConfig $shipmentConfig,
+        ShipmentToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->customerService = $customerService;
         $this->shipmentConfig = $shipmentConfig;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -101,6 +110,6 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
             $shipmentAdditionalKeyData[$field] = $shipmentData[$field];
         }
 
-        return json_encode($shipmentAdditionalKeyData);
+        return $this->utilEncodingService->encodeJson($shipmentAdditionalKeyData);
     }
 }

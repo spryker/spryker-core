@@ -9,6 +9,7 @@ namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
+use Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouper;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGenerator;
@@ -34,7 +35,8 @@ class ShipmentServiceFactory extends AbstractServiceFactory
     {
         return new ShipmentHashGenerator(
             $this->getCustomerService(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -44,5 +46,13 @@ class ShipmentServiceFactory extends AbstractServiceFactory
     public function getCustomerService(): ShipmentToCustomerServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ShipmentToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
