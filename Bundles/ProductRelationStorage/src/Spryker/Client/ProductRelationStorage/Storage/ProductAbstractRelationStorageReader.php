@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig as SharedProductRelationStorageConfig;
 
 class ProductAbstractRelationStorageReader implements ProductAbstractRelationStorageReaderInterface
@@ -26,6 +27,11 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
      * @var \Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
 
     /**
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface $storageClient
@@ -110,8 +116,18 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
         $synchronizationDataTransfer
             ->setReference((string)$idProductAbstract);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 }

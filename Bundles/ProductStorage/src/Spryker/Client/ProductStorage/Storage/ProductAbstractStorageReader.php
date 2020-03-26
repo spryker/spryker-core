@@ -14,6 +14,7 @@ use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchroniza
 use Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
@@ -68,6 +69,16 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @var array
      */
     protected static $productsAbstractDataCache = [];
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
+     * @var string|null
+     */
+    protected static $storeName;
 
     /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
@@ -324,11 +335,33 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         $synchronizationDataTransfer
             ->setReference($reference)
             ->setLocale($locale)
-            ->setStore($this->store->getStoreName());
+            ->setStore($this->getStoreName());
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        if (static::$storeName === null) {
+            static::$storeName = Store::getInstance()->getStoreName();
+        }
+
+        return static::$storeName;
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**

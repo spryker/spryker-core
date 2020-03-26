@@ -20,6 +20,9 @@ use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
 
+/**
+ * TODO Changes in this class can be removed when https://github.com/spryker/spryker/pull/6924/files got released.
+ */
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
     protected const PRICE_KEY_SEPARATOR = '-';
@@ -45,6 +48,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $quoteClient;
 
     /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @var \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected static $currencyTransfer;
@@ -53,11 +61,6 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      * @var string|null
      */
     protected static $currentPriceMode;
-
-    /**
-     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
-     */
-    protected $priceProductService;
 
     /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
