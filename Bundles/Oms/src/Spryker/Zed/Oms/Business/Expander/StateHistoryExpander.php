@@ -56,8 +56,7 @@ class StateHistoryExpander implements StateHistoryExpanderInterface
      */
     protected function updateLatestOrderItemState(ItemTransfer $itemTransfer): ItemTransfer
     {
-        $itemStateTransfers = $itemTransfer->getStateHistory();
-        $latestOrderItemState = end($itemStateTransfers);
+        $latestOrderItemState = $itemTransfer->getStateHistory()->getIterator()->current();
 
         if ($latestOrderItemState && $itemTransfer->getState()) {
             $itemTransfer->getState()->setCreatedAt($latestOrderItemState->getCreatedAt());

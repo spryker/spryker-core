@@ -13,6 +13,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -116,7 +117,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->filterByFkSalesOrderItem_In($salesOrderItemIds)
             ->leftJoinWithState()
             ->leftJoinOrderItem()
-            ->groupByFkSalesOrderItem();
+            ->groupByFkSalesOrderItem()
+            ->orderByIdOmsOrderItemStateHistory(Criteria::DESC);
 
         return $this->getFactory()
             ->createOrderItemMapper()
