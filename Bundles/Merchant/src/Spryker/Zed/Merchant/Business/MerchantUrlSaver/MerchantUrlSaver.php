@@ -37,7 +37,7 @@ class MerchantUrlSaver implements MerchantUrlSaverInterface
         $urlTransferCollection = new ArrayObject();
         foreach ($merchantTransfer->getUrlCollection() as $merchantUrlTransfer) {
             $urlTransfer = new UrlTransfer();
-            $urlTransfer->fromArray($merchantUrlTransfer->toArray(), false);
+            $urlTransfer->fromArray($merchantUrlTransfer->modifiedToArray(), false);
             $urlTransfer->setFkResourceMerchant($merchantTransfer->getIdMerchant());
 
             $urlTransfer = $this->saveMerchantUrl($urlTransfer);

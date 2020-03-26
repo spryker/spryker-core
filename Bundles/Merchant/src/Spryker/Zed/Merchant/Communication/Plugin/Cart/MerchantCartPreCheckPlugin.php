@@ -23,8 +23,8 @@ class MerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckP
 {
     protected const MESSAGE_TYPE_ERROR = 'error';
 
-    protected const GLOSSARY_KEY_INACTIVE_MERCHANT_PROFILE = 'merchant_profile.message.inactive';
-    protected const GLOSSARY_KEY_REMOVED_MERCHANT_PROFILE = 'merchant_profile.message.removed';
+    protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
+    protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
 
     protected const GLOSSARY_PARAM_SKU = '%sku%';
     protected const GLOSSARY_PARAM_MERCHANT_NAME = '%merchant_name%';
@@ -57,14 +57,14 @@ class MerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckP
             if (!$merchantTransfer) {
                 $messageTransfers[] = (new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
-                    ->setValue(static::GLOSSARY_KEY_REMOVED_MERCHANT_PROFILE)
+                    ->setValue(static::GLOSSARY_KEY_REMOVED_MERCHANT)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
             }
 
             if (!$merchantTransfer->getIsActive()) {
                 $messageTransfers[] = (new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
-                    ->setValue(static::GLOSSARY_KEY_INACTIVE_MERCHANT_PROFILE)
+                    ->setValue(static::GLOSSARY_KEY_INACTIVE_MERCHANT)
                     ->setParameters([
                         static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku(),
                         static::GLOSSARY_PARAM_MERCHANT_NAME => $merchantTransfer->getName(),

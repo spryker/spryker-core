@@ -42,7 +42,7 @@ class MerchantDataImportCommunicationTester extends Actor
      */
     public function deleteMerchantByReferences(array $references): void
     {
-        $this->getMerchantQuery()->filterByMerchantReference_In($references);
+        $this->getMerchantQuery()->filterByMerchantReference_In($references)->delete();
     }
 
     /**

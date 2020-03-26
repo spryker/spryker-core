@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet;
 
-interface MerchantDataSetInterface
+interface MerchantProfileDataSetInterface
 {
     public const ID_MERCHANT = 'id_merchant';
     public const MERCHANT_KEY = 'merchant_key';

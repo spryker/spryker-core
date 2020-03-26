@@ -51,7 +51,7 @@ class MerchantGuiConfig extends AbstractBundleConfig
      */
     public const STATUS_DENIED = 'denied';
 
-    protected const PREFIX_MERCHANT_PROFILE_URL = 'merchant';
+    protected const PREFIX_MERCHANT_URL = 'merchant';
 
     /**
      * @api
@@ -60,6 +60,6 @@ class MerchantGuiConfig extends AbstractBundleConfig
      */
     public function getMerchantUrlPrefix(): string
     {
-        return static::PREFIX_MERCHANT_PROFILE_URL;
+        return static::PREFIX_MERCHANT_URL;
     }
 }

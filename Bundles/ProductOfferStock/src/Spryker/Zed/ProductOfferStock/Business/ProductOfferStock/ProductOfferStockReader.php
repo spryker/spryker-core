@@ -46,8 +46,9 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         if (!$productOfferStockTransfer) {
             throw new ProductOfferNotFoundException(
                 sprintf(
-                    'Product offer stock with product reference: %s, not found',
-                    $productOfferStockRequestTransfer->getProductOfferReference()
+                    'Product offer stock with product reference: %s, %s not found',
+                    $productOfferStockRequestTransfer->getProductOfferReference(),
+                    $productOfferStockRequestTransfer->getStore()->getName()
                 )
             );
         }

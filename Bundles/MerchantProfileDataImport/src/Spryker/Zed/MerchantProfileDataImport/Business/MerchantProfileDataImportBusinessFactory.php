@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\CountryIsoCodeToIdCountryStep;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\MerchantKeyToIdMerchantProfileStep;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\MerchantProfileAddressWriterStep;
-use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\MerchantProfileWriterStep;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\Step\MerchantKeyToIdMerchantStep;
 
@@ -36,13 +36,13 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createMerchantKeyToIdMerchantStep())
             ->addStep($this->createLocalizedAttributesExtractorStep([
-                MerchantDataSetInterface::DESCRIPTION_GLOSSARY_KEY,
-                MerchantDataSetInterface::BANNER_URL_GLOSSARY_KEY,
-                MerchantDataSetInterface::DELIVERY_TIME_GLOSSARY,
-                MerchantDataSetInterface::TERMS_CONDITIONS_GLOSSARY_KEY,
-                MerchantDataSetInterface::CANCELLATION_POLICY_GLOSSARY_KEY,
-                MerchantDataSetInterface::IMPRINT_GLOSSARY_KEY,
-                MerchantDataSetInterface::DATA_PRIVACY_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::DESCRIPTION_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::BANNER_URL_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::DELIVERY_TIME_GLOSSARY,
+                MerchantProfileDataSetInterface::TERMS_CONDITIONS_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::CANCELLATION_POLICY_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::IMPRINT_GLOSSARY_KEY,
+                MerchantProfileDataSetInterface::DATA_PRIVACY_GLOSSARY_KEY,
             ]))
             ->addStep($this->createMerchantProfileWriterStep());
 

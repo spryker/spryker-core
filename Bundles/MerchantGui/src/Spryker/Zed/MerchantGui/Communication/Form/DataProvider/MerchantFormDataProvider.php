@@ -64,7 +64,7 @@ class MerchantFormDataProvider
             $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
         }
 
-        $merchantTransfer = $this->addInitialUrlCollection($merchantTransfer);
+        $merchantTransfer = $this->setInitialUrlCollection($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -74,7 +74,7 @@ class MerchantFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function addInitialUrlCollection(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function setInitialUrlCollection(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantUrlCollection = $merchantTransfer->getUrlCollection();
 
@@ -83,7 +83,7 @@ class MerchantFormDataProvider
 
         foreach ($availableLocaleTransfers as $localeTransfer) {
             $urlCollection->append(
-                $this->addUrlPrefixToUrlTransfer($merchantUrlCollection, $localeTransfer)
+                $this->setUrlPrefixToUrlTransfer($merchantUrlCollection, $localeTransfer)
             );
         }
         $merchantTransfer->setUrlCollection($urlCollection);
@@ -97,7 +97,7 @@ class MerchantFormDataProvider
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function addUrlPrefixToUrlTransfer($merchantUrlCollection, LocaleTransfer $localeTransfer): UrlTransfer
+    protected function setUrlPrefixToUrlTransfer($merchantUrlCollection, LocaleTransfer $localeTransfer): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         foreach ($merchantUrlCollection as $urlTransfer) {

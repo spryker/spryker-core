@@ -17,8 +17,9 @@ use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
  */
 class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_URL = 'url facade';
+    public const FACADE_URL = 'FACADE_URL';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
     /**
      * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE or PLUGINS_MERCHANT_POST_UPDATE instead.
      */

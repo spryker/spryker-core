@@ -17,38 +17,72 @@ class MerchantMapper implements MerchantMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $spyMerchant
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
      */
     public function mapMerchantTransferToMerchantEntity(
         MerchantTransfer $merchantTransfer,
-        SpyMerchant $spyMerchant
+        SpyMerchant $merchantEntity
     ): SpyMerchant {
-        $spyMerchant->fromArray(
+        $merchantEntity->fromArray(
             $merchantTransfer->modifiedToArray(false)
         );
 
-        return $spyMerchant;
+        return $merchantEntity;
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $spyMerchant
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function mapMerchantEntityToMerchantTransfer(
-        SpyMerchant $spyMerchant,
+        SpyMerchant $merchantEntity,
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer {
         $merchantTransfer = $merchantTransfer->fromArray(
-            $spyMerchant->toArray(),
+            $merchantEntity->toArray(),
             true
         );
 
+        $this->mapUrlCollectionToMerchantTransfer($merchantEntity, $merchantTransfer);
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntityCollection
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function mapMerchantCollectionToMerchantCollectionTransfer(
+        $merchantEntityCollection,
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer {
+        $merchants = new ArrayObject();
+
+        foreach ($merchantEntityCollection as $merchantEntity) {
+            $merchants->append($this->mapMerchantEntityToMerchantTransfer($merchantEntity, new MerchantTransfer()));
+        }
+
+        $merchantCollectionTransfer->setMerchants($merchants);
+
+        return $merchantCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function mapUrlCollectionToMerchantTransfer(SpyMerchant $merchantEntity, MerchantTransfer $merchantTransfer)
+    {
         $urlTransfers = new ArrayObject();
-        foreach ($spyMerchant->getSpyUrls() as $urlEntity) {
+        foreach ($merchantEntity->getSpyUrls() as $urlEntity) {
             $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
             $urlTransfer->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
 
@@ -58,26 +92,5 @@ class MerchantMapper implements MerchantMapperInterface
         $merchantTransfer->setUrlCollection($urlTransfers);
 
         return $merchantTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $collection
-     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function mapMerchantCollectionToMerchantCollectionTransfer(
-        $collection,
-        MerchantCollectionTransfer $merchantCollectionTransfer
-    ): MerchantCollectionTransfer {
-        $merchants = new ArrayObject();
-
-        foreach ($collection as $merchantEntity) {
-            $merchants->append($this->mapMerchantEntityToMerchantTransfer($merchantEntity, new MerchantTransfer()));
-        }
-
-        $merchantCollectionTransfer->setMerchants($merchants);
-
-        return $merchantCollectionTransfer;
     }
 }

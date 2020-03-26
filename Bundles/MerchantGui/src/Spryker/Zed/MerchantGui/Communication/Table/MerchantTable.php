@@ -197,7 +197,7 @@ class MerchantTable extends AbstractTable
                 MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
                 MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
-                MerchantTableConstants::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_NAME]),
+                MerchantTableConstants::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
             ], $this->executeDataExpanderPlugins($item));
             $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
