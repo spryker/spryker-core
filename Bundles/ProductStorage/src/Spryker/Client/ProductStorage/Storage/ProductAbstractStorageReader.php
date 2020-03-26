@@ -346,7 +346,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected function getStoreName(): string
     {
         if (static::$storeName === null) {
-            static::$storeName = Store::getInstance()->getStoreName();
+            static::$storeName = $this->store->getStoreName();
         }
 
         return static::$storeName;
