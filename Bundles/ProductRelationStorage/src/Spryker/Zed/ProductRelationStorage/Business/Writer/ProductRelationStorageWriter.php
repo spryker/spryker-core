@@ -162,6 +162,12 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
         $productRelations = $this->productRelationStorageGrouper
             ->groupProductRelationsByProductAbstractAndStore($productRelationTransfers);
 
+        if ($productRelations === []) {
+            $this->productRelationStorageEntityManager->deleteProductAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
+
+            return;
+        }
+
         $this->storeData($productRelations);
     }
 
