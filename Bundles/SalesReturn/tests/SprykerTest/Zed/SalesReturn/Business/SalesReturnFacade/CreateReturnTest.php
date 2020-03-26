@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use Pyz\Zed\Sales\SalesDependencyProvider;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\CheckReturnableStateOrderItemExpanderPlugin;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
