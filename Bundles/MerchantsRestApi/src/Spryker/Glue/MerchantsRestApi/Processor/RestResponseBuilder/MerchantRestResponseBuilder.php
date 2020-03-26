@@ -44,25 +44,6 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer): RestResourceInterface
-    {
-        $restMerchantsAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
-            $merchantStorageTransfer,
-            new RestMerchantsAttributesTransfer()
-        );
-
-        return $this->restResourceBuilder->createRestResource(
-            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-            $merchantStorageTransfer->getMerchantReference(),
-            $restMerchantsAttributesTransfer
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createMerchantsRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface
@@ -77,7 +58,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantNotFoundError(): RestResponseInterface
+    public function createMerchantNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
             ->createRestResponse()
@@ -101,5 +82,24 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer): RestResourceInterface
+    {
+        $restMerchantsAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
+            $merchantStorageTransfer,
+            new RestMerchantsAttributesTransfer()
+        );
+
+        return $this->restResourceBuilder->createRestResource(
+            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+            $merchantStorageTransfer->getMerchantReference(),
+            $restMerchantsAttributesTransfer
+        );
     }
 }

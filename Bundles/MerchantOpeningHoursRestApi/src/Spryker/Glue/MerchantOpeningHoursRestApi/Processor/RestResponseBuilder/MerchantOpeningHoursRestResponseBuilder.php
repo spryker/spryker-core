@@ -68,7 +68,7 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantNotFoundError(): RestResponseInterface
+    public function createMerchantNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
             ->createRestResponse()

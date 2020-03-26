@@ -69,7 +69,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
 
         $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference([$merchantReference]);
         if (!$merchantStorageTransfers) {
-            return $this->merchantsRestResponseBuilder->createMerchantNotFoundError();
+            return $this->merchantsRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
