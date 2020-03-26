@@ -33,9 +33,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CompanyBusinessUnitSalesConnectorTester extends Actor
+class CompanyBusinessUnitSalesConnectorBusinessTester extends Actor
 {
-    use _generated\CompanyBusinessUnitSalesConnectorTesterActions;
+    use _generated\CompanyBusinessUnitSalesConnectorBusinessTesterActions;
 
     /**
      * @param string $permissionKey

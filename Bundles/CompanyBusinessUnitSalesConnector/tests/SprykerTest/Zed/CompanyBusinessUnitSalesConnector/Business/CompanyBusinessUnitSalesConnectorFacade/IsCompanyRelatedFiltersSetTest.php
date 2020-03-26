@@ -33,7 +33,7 @@ class IsCompanyRelatedFiltersSetTest extends Unit
     protected const UUID_SAMPLE = 'uuid-sample';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorTester
+     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
      */
     protected $tester;
 

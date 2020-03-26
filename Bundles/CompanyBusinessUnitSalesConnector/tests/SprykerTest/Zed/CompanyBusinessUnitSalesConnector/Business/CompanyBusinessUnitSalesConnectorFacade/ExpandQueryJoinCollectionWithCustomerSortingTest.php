@@ -42,7 +42,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
     protected const COLUMN_FULL_NAME_EXPRESSION = 'CONCAT(first_name,\' \', last_name)';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorTester
+     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
      */
     protected $tester;
 

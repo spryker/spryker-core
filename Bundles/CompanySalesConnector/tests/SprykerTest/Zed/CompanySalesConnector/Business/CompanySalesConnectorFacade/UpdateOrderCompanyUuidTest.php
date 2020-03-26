@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacade;
+namespace SprykerTest\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacade;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -15,19 +15,19 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  *
  * @group SprykerTest
  * @group Zed
- * @group CompanyBusinessUnitSalesConnector
+ * @group CompanySalesConnector
  * @group Business
- * @group CompanyBusinessUnitSalesConnectorFacade
- * @group UpdateOrderCompanyBusinessUnitUuidTest
+ * @group CompanySalesConnectorFacade
+ * @group UpdateOrderCompanyUuidTest
  * Add your own group annotations below this line
  */
-class UpdateOrderCompanyBusinessUnitUuidTest extends Unit
+class UpdateOrderCompanyUuidTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
-    protected const COMPANY_BUSINESS_UNIT_UUID = 'uuid-sample';
+    protected const COMPANY_UUID = 'uuid-sample';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
+     * @var \SprykerTest\Zed\CompanySalesConnector\CompanySalesConnectorBusinessTester
      */
     protected $tester;
 
@@ -44,14 +44,14 @@ class UpdateOrderCompanyBusinessUnitUuidTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateOrderCompanyBusinessUnitUuidUpdatesUuid(): void
+    public function testUpdateOrderCompanyUuidUpdatesUuid(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->createQuoteWithCompanyUser(static::COMPANY_BUSINESS_UNIT_UUID);
+        $quoteTransfer = $this->tester->createQuoteWithCompanyUser(static::COMPANY_UUID);
         $saveOrderTransfer = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
 
         // Act
-        $this->tester->getFacade()->updateOrderCompanyBusinessUnitUuid($saveOrderTransfer, $quoteTransfer);
+        $this->tester->getFacade()->updateOrderCompanyUuid($saveOrderTransfer, $quoteTransfer);
 
         $orderTransfer = $this->tester->getLocator()
             ->sales()
@@ -59,16 +59,16 @@ class UpdateOrderCompanyBusinessUnitUuidTest extends Unit
             ->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Assert
-        $this->assertSame(static::COMPANY_BUSINESS_UNIT_UUID, $orderTransfer->getCompanyBusinessUnitUuid());
+        $this->assertSame(static::COMPANY_UUID, $orderTransfer->getCompanyUuid());
     }
 
     /**
      * @return void
      */
-    public function testUpdateOrderCompanyBusinessUnitUuidThrowsExceptionForMissingIdSalesOrder(): void
+    public function testUpdateOrderCompanyUuidThrowsExceptionForMissingIdSalesOrder(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->createQuoteWithCompanyUser(static::COMPANY_BUSINESS_UNIT_UUID);
+        $quoteTransfer = $this->tester->createQuoteWithCompanyUser(static::COMPANY_UUID);
         $saveOrderTransfer = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME);
         $saveOrderTransfer->setIdSalesOrder(null);
 
@@ -76,6 +76,6 @@ class UpdateOrderCompanyBusinessUnitUuidTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateOrderCompanyBusinessUnitUuid($saveOrderTransfer, $quoteTransfer);
+        $this->tester->getFacade()->updateOrderCompanyUuid($saveOrderTransfer, $quoteTransfer);
     }
 }

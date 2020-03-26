@@ -44,7 +44,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
     protected const SEARCH_STRING = 'sample';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorTester
+     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
      */
     protected $tester;
 

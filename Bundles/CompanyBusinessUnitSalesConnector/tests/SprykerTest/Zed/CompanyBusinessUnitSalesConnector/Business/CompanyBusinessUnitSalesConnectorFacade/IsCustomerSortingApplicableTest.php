@@ -33,7 +33,7 @@ class IsCustomerSortingApplicableTest extends Unit
     protected const ORDER_BY_STRING = 'field::direction';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorTester
+     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
      */
     protected $tester;
 

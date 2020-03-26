@@ -5,40 +5,40 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacade;
+namespace SprykerTest\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group CompanyBusinessUnitSalesConnector
+ * @group CompanySalesConnector
  * @group Business
- * @group CompanyBusinessUnitSalesConnectorFacade
- * @group ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest
+ * @group CompanySalesConnectorFacade
+ * @group ExpandQueryJoinCollectionWithCompanyFilterTest
  * Add your own group annotations below this line
  */
-class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
+class ExpandQueryJoinCollectionWithCompanyFilterTest extends Unit
 {
     /**
-     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
+     * @uses OrderSearchQueryExpander::COLUMN_COMPANY_UUID
      */
-    protected const COLUMN_COMPANY_BUSINESS_UNIT_UUID = 'company_business_unit_uuid';
+    protected const COLUMN_COMPANY_UUID = 'company_uuid';
 
     /**
-     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     * @uses OrderSearchQueryExpander::COMPARISON_EQUAL
      */
     protected const COMPARISON_EQUAL = '=';
 
-    protected const COMPANY_BUSINESS_UNIT_UUID = 'uuid-sample';
+    protected const UUID_SAMPLE = 'uuid-sample';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
+     * @var \SprykerTest\Zed\CompanySalesConnector\CompanySalesConnectorBusinessTester
      */
     protected $tester;
 
@@ -51,11 +51,11 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
-            ->setValue(static::COMPANY_BUSINESS_UNIT_UUID);
+            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY)
+            ->setValue(static::UUID_SAMPLE);
 
         // Act
-        $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
+        $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyFilter(
             [$filterFieldTransfer],
             $queryJoinCollectionTransfer
         );
@@ -75,8 +75,8 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
          */
         $queryWhereConditionTransfer = $queryJoinTransfer->getQueryWhereConditions()->getIterator()->current();
 
-        $this->assertSame(static::COMPANY_BUSINESS_UNIT_UUID, $queryWhereConditionTransfer->getValue());
-        $this->assertSame(static::COLUMN_COMPANY_BUSINESS_UNIT_UUID, $queryWhereConditionTransfer->getColumn());
+        $this->assertSame(static::UUID_SAMPLE, $queryWhereConditionTransfer->getValue());
+        $this->assertSame(static::COLUMN_COMPANY_UUID, $queryWhereConditionTransfer->getColumn());
         $this->assertSame(static::COMPARISON_EQUAL, $queryWhereConditionTransfer->getComparison());
     }
 
@@ -90,14 +90,13 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
 
         $filterFieldTransfer = (new FilterFieldTransfer())
             ->setType('fake')
-            ->setValue(static::COMPANY_BUSINESS_UNIT_UUID);
+            ->setValue(static::UUID_SAMPLE);
 
         // Act
-        $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
+        $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyFilter(
             [$filterFieldTransfer],
             $queryJoinCollectionTransfer
         );
-
         // Assert
         $this->assertCount(0, $queryJoinCollectionTransfer->getQueryJoins());
     }

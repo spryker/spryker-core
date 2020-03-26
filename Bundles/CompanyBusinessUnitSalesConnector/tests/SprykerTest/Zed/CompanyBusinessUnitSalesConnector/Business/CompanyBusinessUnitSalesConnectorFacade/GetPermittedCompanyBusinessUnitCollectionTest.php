@@ -30,7 +30,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 class GetPermittedCompanyBusinessUnitCollectionTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorTester
+     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
      */
     protected $tester;
 
