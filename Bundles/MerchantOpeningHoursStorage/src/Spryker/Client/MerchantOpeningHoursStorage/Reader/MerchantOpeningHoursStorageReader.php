@@ -91,9 +91,14 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
 
         $merchantOpeningHoursStorageTransfers = [];
         foreach ($merchantOpeningHoursStorageData as $storageKey => $merchantOpeningHoursStorageDatum) {
+            $merchantOpeningHoursStorageData = $this->utilEncodingService->decodeJson($merchantOpeningHoursStorageDatum, true);
+            if (!is_array($merchantOpeningHoursStorageData)) {
+                continue;
+            }
+
             $merchantOpeningHoursStorageTransfers[$this->getIdMerchant($storageKey)] = $this->merchantOpeningHoursMapper
                 ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer(
-                    $this->utilEncodingService->decodeJson($merchantOpeningHoursStorageDatum, true) ?? [],
+                    $merchantOpeningHoursStorageData,
                     new MerchantOpeningHoursStorageTransfer()
                 );
         }
