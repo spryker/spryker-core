@@ -33,6 +33,8 @@ class CompanySalesConnectorDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
+     * @module Sales
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

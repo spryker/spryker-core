@@ -14,7 +14,7 @@ interface CompanyBusinessUnitSalesConnectorEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function updateOrder(OrderTransfer $orderTransfer): void;
+    public function updateOrder(OrderTransfer $orderTransfer): OrderTransfer;
 }
