@@ -51,7 +51,7 @@ class MerchantAddressesReader implements MerchantAddressesReaderInterface
 
         $merchantStorageTransfer = $this->merchantStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
         if (!$merchantStorageTransfer) {
-            return $this->merchantsAddressesRestResponseBuilder->createMerchantNotFoundError();
+            return $this->merchantsAddressesRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
         $merchantAddresses = $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection()->getArrayCopy();

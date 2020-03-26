@@ -49,10 +49,15 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
         $merchantStorageTransfers = $this->setMerchantReferenceKeyToMerchantStorageTransfers($merchantStorageTransfers);
 
         foreach ($resources as $resource) {
-            $merchantStorageTransfer = $merchantStorageTransfers[$resource->getId()];
+            $resourceId = $resource->getId();
+            if (!$resourceId) {
+                continue;
+            }
+
+            $merchantStorageTransfer = $merchantStorageTransfers[$resourceId];
             $restMerchantAddressesResource = $this->merchantAddressesRestResponseBuilder->createMerchantAddressesRestResource(
                 $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection()->getArrayCopy(),
-                $resource->getId()
+                $resourceId
             );
 
             $resource->addRelationship($restMerchantAddressesResource);
@@ -68,7 +73,12 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
     {
         $references = [];
         foreach ($resources as $resource) {
-            $references[] = $resource->getId();
+            $resourceId = $resource->getId();
+            if (!$resourceId) {
+                continue;
+            }
+
+            $references[] = $resourceId;
         }
 
         return $references;
@@ -83,8 +93,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
     {
         $merchantStorageTransfersWithMerchantReferenceKey = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantReference = $merchantStorageTransfer->getMerchantReference();
-            $merchantStorageTransfersWithMerchantReferenceKey[$merchantReference] = $merchantStorageTransfer;
+            $merchantStorageTransfersWithMerchantReferenceKey[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer;
         }
 
         return $merchantStorageTransfersWithMerchantReferenceKey;
