@@ -49,7 +49,7 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
             $this->prepareIdShipmentMethod($shipmentTransfer),
             $this->prepareShippingAddressKey($shipmentTransfer),
             $shipmentTransfer->getRequestedDeliveryDate(),
-            $this->getAdditionalShipmentHash($shipmentTransfer)
+            $this->getShipmentAdditionalKeyData($shipmentTransfer)
         ));
     }
 
@@ -88,19 +88,19 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
      *
      * @return string
      */
-    public function getAdditionalShipmentHash(ShipmentTransfer $shipmentTransfer): string
+    public function getShipmentAdditionalKeyData(ShipmentTransfer $shipmentTransfer): string
     {
         $shipmentAdditionalKeyData = [];
         $shipmentData = $shipmentTransfer->toArray(false, true);
 
         foreach ($this->shipmentConfig->getShipmentHashFields() as $field) {
-            if (!isset($shipmentData[$field]) || $shipmentData[$field] === '') {
+            if (empty($shipmentData[$field])) {
                 continue;
             }
 
             $shipmentAdditionalKeyData[$field] = $shipmentData[$field];
         }
 
-        return md5(json_encode($shipmentAdditionalKeyData));
+        return json_encode($shipmentAdditionalKeyData);
     }
 }
