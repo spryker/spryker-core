@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryAttributeCategoryNodeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStorageUnpublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStoragePublishListener;
@@ -55,9 +54,9 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
         $this->addCategoryNodeDeleteParentListener($eventCollection);
         $this->addCategoryCreateListener($eventCollection);
         $this->addCategoryUpdateListener($eventCollection);
-        $this->addCategoryAttributeUpdateForNodeListener($eventCollection);
         $this->addCategoryDeleteListener($eventCollection);
         $this->addCategoryAttributeUpdateListener($eventCollection);
+        $this->addCategoryAttributeUpdateForNodeListener($eventCollection);
         $this->addCategoryAttributeCreateListener($eventCollection);
         $this->addCategoryAttributeDeleteListener($eventCollection);
         $this->addCategoryTemplateCreateListener($eventCollection);
@@ -212,16 +211,6 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      *
      * @return void
      */
-    protected function addCategoryAttributeUpdateForNodeListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryAttributeCategoryNodeStoragePublishListener());
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
     protected function addCategoryDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryNodeCategoryStorageUnpublishListener());
@@ -235,6 +224,16 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addCategoryAttributeUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeCategoryAttributeStoragePublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCategoryAttributeUpdateForNodeListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeStoragePublishListener());
     }
 
     /**

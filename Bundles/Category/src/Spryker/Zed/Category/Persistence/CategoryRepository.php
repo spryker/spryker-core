@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -193,5 +194,35 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $spyCategoryEntity,
             new CategoryTransfer()
         );
+    }
+
+    /**
+     * @param int $categoryNodeId
+     *
+     * @return int|null
+     */
+    public function findParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): ?int
+    {
+        return $this->getFactory()
+            ->createSpyCategoryNodeQuery()
+            ->filterByIdCategoryNode($categoryNodeId)
+            ->select(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
+            ->find()
+            ->getFirst();
+    }
+
+    /**
+     * @param int $categoryNodeId
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByParentCategoryNodeId(int $categoryNodeId): array
+    {
+        return $this->getFactory()
+            ->createSpyCategoryNodeQuery()
+            ->filterByFkParentCategoryNode($categoryNodeId)
+            ->select(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
+            ->find()
+            ->getData();
     }
 }

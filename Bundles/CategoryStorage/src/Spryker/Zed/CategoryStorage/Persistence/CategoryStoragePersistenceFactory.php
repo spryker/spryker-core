@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
@@ -16,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -34,14 +32,6 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createSpyCategoryNodeStorageQuery()
     {
         return SpyCategoryNodeStorageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function createSpyCategoryNodeQuery(): SpyCategoryNodeQuery
-    {
-        return SpyCategoryNodeQuery::create();
     }
 
     /**
