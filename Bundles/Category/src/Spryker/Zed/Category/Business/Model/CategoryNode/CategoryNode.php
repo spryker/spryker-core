@@ -187,7 +187,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
 
-        $this->triggerBulkCategoryNodePublishEvents($categoryNodeTransfer);
+        $this->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer);
     }
 
     /**
@@ -195,11 +195,11 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
      *
      * @return void
      */
-    protected function triggerBulkCategoryNodePublishEvents(NodeTransfer $nodeTransfer): void
+    protected function triggerBulkCategoryNodePublishEvent(NodeTransfer $nodeTransfer): void
     {
         $categoryNodeId = $nodeTransfer->getIdCategoryNode();
         $categoryNodeIdsToTrigger = array_merge(
-            $this->getParentCategoryNodeIds([], $categoryNodeId),
+            $this->getParentCategoryNodeIds($categoryNodeId),
             $this->categoryRepository->getCategoryNodeIdsByParentCategoryNodeId($categoryNodeId)
         );
 
@@ -220,7 +220,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
      *
      * @return int[]
      */
-    protected function getParentCategoryNodeIds(array $parentCategoryNodeIds, int $categoryNodeId): array
+    protected function getParentCategoryNodeIds(int $categoryNodeId, array $parentCategoryNodeIds = []): array
     {
         if (!$categoryNodeId) {
             return $parentCategoryNodeIds;
@@ -233,7 +233,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $parentCategoryNodeIds[] = $parentCategoryNodeId;
 
-        return $this->getParentCategoryNodeIds($parentCategoryNodeIds, $parentCategoryNodeId);
+        return $this->getParentCategoryNodeIds($parentCategoryNodeId, $parentCategoryNodeIds);
     }
 
     /**
