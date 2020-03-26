@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
  */
 class AutoloaderCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
