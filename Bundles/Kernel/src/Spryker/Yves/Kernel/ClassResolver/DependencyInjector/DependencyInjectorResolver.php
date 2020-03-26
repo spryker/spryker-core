@@ -17,6 +17,8 @@ class DependencyInjectorResolver extends AbstractClassResolver
     public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
     public const KEY_FROM_BUNDLE = '%fromBundle%';
 
+    protected const RESOLVABLE_TYPE = 'YvesDependencyInjector';
+
     /**
      * @var string
      */
@@ -32,7 +34,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $dependencyInjectorCollection = $this->getDependencyInjectorCollection();
 
         $this->setCallerClass($callerClass);
-        $injectToBundle = $this->getClassInfo()->getBundle();
+        $injectToBundle = $this->getClassInfo()->getModule();
         $injectFromBundles = $this->getInjectorBundles($injectToBundle);
 
         foreach ($injectFromBundles as $injectFromBundle) {
@@ -84,7 +86,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             self::KEY_FROM_BUNDLE => $this->fromBundle,
             self::KEY_STORE => $store,
         ];
