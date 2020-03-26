@@ -197,7 +197,6 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         $eventBehaviorFacade = $this->getMockBuilder(MerchantProductOfferStorageToEventBehaviorFacadeInterface::class)->getMock();
         $eventBehaviorFacade->method('getEventTransfersAdditionalValues')->willReturn([$productOfferTransfer->getConcreteSku()]);
 
-
         $productOfferStorageWriter = new ProductConcreteOffersStorageWriter(
             $eventBehaviorFacade,
             $merchantProductOfferStorageEntityManager,
