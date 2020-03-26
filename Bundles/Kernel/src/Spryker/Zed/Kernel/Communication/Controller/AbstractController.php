@@ -10,8 +10,8 @@ namespace Spryker\Zed\Kernel\Communication\Controller;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException;
 use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
@@ -94,11 +94,11 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new CommunicationFactoryResolver();
     }
 
     /**

@@ -41,14 +41,13 @@ class MerchantAdminMerchantPostUpdatePlugin extends AbstractPlugin implements Me
     }
 
     /**
-     * @param \ArrayObject $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantErrorTransfer[]
      */
     protected function convertMessageTransfersToMerchantErrorTransfers(ArrayObject $messageTransfers): ArrayObject
     {
         $result = new ArrayObject();
-        /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
         foreach ($messageTransfers as $messageTransfer) {
             $result[] = (new MerchantErrorTransfer())->setMessage($messageTransfer->getMessage());
         }

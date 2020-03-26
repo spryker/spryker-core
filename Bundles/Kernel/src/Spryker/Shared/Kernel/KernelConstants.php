@@ -36,6 +36,24 @@ interface KernelConstants
 
     /**
      * Specification:
+     * - When enabled the ClassResolver tries to use a pre-build cache for resolvable class names.
+     * - Run cache builder and enable this to improve performance.
+     *
+     * @api
+     */
+    public const RESOLVABLE_CLASS_NAMES_CACHE_ENABLED = 'KERNEL:RESOLVABLE_CLASS_NAMES_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - When enabled the ClassResolver caches resolved class instances.
+     * - Enable this to improve performance.
+     *
+     * @api
+     */
+    public const RESOLVED_INSTANCE_CACHE_ENABLED = 'KERNEL:RESOLVED_INSTANCE_CACHE_ENABLED';
+
+    /**
+     * Specification:
      * - Defines a set of whitelist domains, that every external URL is checked against, before redirect.
      *
      * @api
@@ -60,4 +78,12 @@ interface KernelConstants
      * @api
      */
     public const ENABLE_CONTAINER_OVERRIDING = 'KERNEL:ENABLE_CONTAINER_OVERRIDING';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    public const DIRECTORY_PERMISSION = 'KERNEL:DIRECTORY_PERMISSION';
 }

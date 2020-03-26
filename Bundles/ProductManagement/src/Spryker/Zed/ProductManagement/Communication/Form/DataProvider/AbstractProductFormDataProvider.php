@@ -463,7 +463,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */
@@ -576,7 +576,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */
