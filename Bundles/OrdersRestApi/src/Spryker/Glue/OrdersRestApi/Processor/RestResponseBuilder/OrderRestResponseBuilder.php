@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
@@ -25,17 +25,17 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
     protected $orderResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderResourceMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderResourceMapper = $orderResourceMapper;

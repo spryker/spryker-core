@@ -17,6 +17,7 @@ use Spryker\Glue\Kernel\Container;
 class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_CARTS_REST_API = 'RESOURCE_CARTS_REST_API';
+    public const PLUGINS_DISCOUNT_MAPPER = 'PLUGINS_DISCOUNT_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +28,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCartsRestApiResource($container);
+        $container = $this->addDiscountMapperPlugins($container);
 
         return $container;
     }
@@ -45,5 +47,27 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addDiscountMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_MAPPER, function () {
+            return $this->getDiscountMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[]
+     */
+    protected function getDiscountMapperPlugins(): array
+    {
+        return [];
     }
 }
