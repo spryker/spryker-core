@@ -20,9 +20,6 @@ use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
 
-/**
- * TODO Changes in this class can be removed when https://github.com/spryker/spryker/pull/6924/files got released.
- */
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
     protected const PRICE_KEY_SEPARATOR = '-';
