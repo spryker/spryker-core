@@ -30,7 +30,7 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     protected static $currentStoreName;
 
     /**
-     * @var SynchronizationKeyGeneratorPluginInterface[]
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
      */
     protected static $storageKeyBuilders = [];
 
