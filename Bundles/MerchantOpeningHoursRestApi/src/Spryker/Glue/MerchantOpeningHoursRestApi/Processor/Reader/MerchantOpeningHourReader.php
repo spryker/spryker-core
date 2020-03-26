@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
@@ -75,14 +76,17 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
             ->getMerchantOpeningHoursByMerchantIds([$merchantStorageTransfers[0]->getIdMerchant()]);
 
-        $merchantOpeningHoursStorageTransferWithTranslatedNotes = $this->merchantOpeningHoursTranslator
+        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
             ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
                 $merchantOpeningHoursStorageTransfers,
                 $restRequest->getMetadata()->getLocale()
             );
 
+        $merchantOpeningHoursStorageTransferWithTranslatedNotes = reset($merchantOpeningHoursStorageTransfersWithTranslatedNotes)
+            ?: new MerchantOpeningHoursStorageTransfer();
+
         return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResponse(
-            reset($merchantOpeningHoursStorageTransferWithTranslatedNotes),
+            $merchantOpeningHoursStorageTransferWithTranslatedNotes,
             $merchantReference
         );
     }
