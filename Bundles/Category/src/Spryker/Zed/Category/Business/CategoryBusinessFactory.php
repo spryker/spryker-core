@@ -27,6 +27,8 @@ use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutor;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
+use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher;
+use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
@@ -156,8 +158,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryTransferGenerator(),
             $this->createCategoryToucher(),
             $this->createCategoryTree(),
-            $this->getRepository(),
-            $this->getEventFacade()
+            $this->createCategoryNodePublisherInterface()
         );
     }
 
@@ -225,6 +226,17 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface
+     */
+    protected function createCategoryNodePublisherInterface(): CategoryNodePublisherInterface
+    {
+        return new CategoryNodePublisher(
+            $this->getRepository(),
+            $this->getEventFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected function getRelationDeletePluginStack()
@@ -286,7 +298,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
      */
     protected function getEventFacade()
     {

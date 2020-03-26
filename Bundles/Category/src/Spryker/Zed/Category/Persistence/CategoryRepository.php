@@ -205,10 +205,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         return $this->getFactory()
             ->createSpyCategoryNodeQuery()
-            ->filterByIdCategoryNode($categoryNodeId)
             ->select(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
-            ->find()
-            ->getFirst();
+            ->findOneByIdCategoryNode($categoryNodeId);
     }
 
     /**

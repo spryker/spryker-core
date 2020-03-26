@@ -9,7 +9,7 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-interface CategoryToEventInterface
+interface CategoryToEventFacadeInterface
 {
     /**
      * @param string $eventName

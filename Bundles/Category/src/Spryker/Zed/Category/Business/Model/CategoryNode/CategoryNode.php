@@ -8,18 +8,15 @@
 namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
+use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
-use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterface
 {
@@ -49,14 +46,9 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
     protected $categoryTree;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     * @var \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface
      */
-    protected $categoryRepository;
-
-    /**
-     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
-     */
-    protected $eventFacade;
+    protected $categoryNodePublisher;
 
     /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
@@ -64,8 +56,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface $eventFacade
+     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
      */
     public function __construct(
         ClosureTableWriterInterface $closureTableWriter,
@@ -73,16 +64,14 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         TransferGeneratorInterface $transferGenerator,
         CategoryToucherInterface $categoryToucher,
         CategoryTreeInterface $categoryTree,
-        CategoryRepositoryInterface $categoryRepository,
-        CategoryToEventInterface $eventFacade
+        CategoryNodePublisherInterface $categoryNodePublisher
     ) {
         $this->closureTableWriter = $closureTableWriter;
         $this->queryContainer = $queryContainer;
         $this->transferGenerator = $transferGenerator;
         $this->categoryToucher = $categoryToucher;
         $this->categoryTree = $categoryTree;
-        $this->categoryRepository = $categoryRepository;
-        $this->eventFacade = $eventFacade;
+        $this->categoryNodePublisher = $categoryNodePublisher;
     }
 
     /**
@@ -139,6 +128,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->closureTableWriter->create($categoryNodeTransfer);
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -186,54 +176,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
-
-        $this->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
-    protected function triggerBulkCategoryNodePublishEvent(NodeTransfer $nodeTransfer): void
-    {
-        $categoryNodeId = $nodeTransfer->getIdCategoryNode();
-        $categoryNodeIdsToTrigger = array_merge(
-            $this->getParentCategoryNodeIds($categoryNodeId),
-            $this->categoryRepository->getCategoryNodeIdsByParentCategoryNodeId($categoryNodeId)
-        );
-
-        $eventTransfers = [];
-        foreach ($categoryNodeIdsToTrigger as $categoryNodeId) {
-            $eventTransfers[] = (new EventEntityTransfer())
-                ->setName(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE)
-                ->setId($categoryNodeId)
-                ->setEvent(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE);
-        }
-
-        $this->eventFacade->triggerBulk(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, $eventTransfers);
-    }
-
-    /**
-     * @param int[] $parentCategoryNodeIds
-     * @param int $categoryNodeId
-     *
-     * @return int[]
-     */
-    protected function getParentCategoryNodeIds(int $categoryNodeId, array $parentCategoryNodeIds = []): array
-    {
-        if (!$categoryNodeId) {
-            return $parentCategoryNodeIds;
-        }
-
-        $parentCategoryNodeId = $this->categoryRepository->findParentCategoryNodeIdByCategoryNodeId($categoryNodeId);
-        if (!$parentCategoryNodeId) {
-            return $parentCategoryNodeIds;
-        }
-
-        $parentCategoryNodeIds[] = $parentCategoryNodeId;
-
-        return $this->getParentCategoryNodeIds($parentCategoryNodeId, $parentCategoryNodeIds);
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -349,6 +292,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         }
 
         $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**

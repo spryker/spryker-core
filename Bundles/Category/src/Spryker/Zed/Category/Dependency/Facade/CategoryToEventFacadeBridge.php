@@ -9,7 +9,7 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-class CategoryToEventBridge implements CategoryToEventInterface
+class CategoryToEventFacadeBridge implements CategoryToEventFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Event\Business\EventFacadeInterface
