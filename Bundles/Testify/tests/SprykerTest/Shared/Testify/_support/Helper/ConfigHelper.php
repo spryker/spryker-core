@@ -17,6 +17,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ConfigHelper extends Module
 {
@@ -40,7 +41,7 @@ class ConfigHelper extends Module
     protected $mockedConfigMethods = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig[]
+     * @var \Spryker\Shared\Kernel\AbstractSharedConfig[]
      */
     protected $sharedConfigStubs = [];
 
@@ -154,9 +155,9 @@ class ConfigHelper extends Module
      *
      * @throws \Exception
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractBundleConfig
+    public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractSharedConfig
     {
         $moduleName = $this->getModuleName($moduleName);
         $className = $this->getSharedConfigClassName($moduleName);
@@ -169,7 +170,7 @@ class ConfigHelper extends Module
             $this->mockedSharedConfigMethods[$moduleName] = [];
         }
 
-        $this->mockedSharedConfigMethods[$methodName] = $return;
+        $this->mockedSharedConfigMethods[$moduleName][$methodName] = $return;
 
         /** @var \Spryker\Shared\Kernel\AbstractSharedConfig $sharedConfigStub */
         $sharedConfigStub = Stub::make($className, $this->mockedSharedConfigMethods[$moduleName]);
@@ -197,6 +198,24 @@ class ConfigHelper extends Module
         $moduleConfig = $this->injectSharedConfig($moduleConfig, $moduleName);
 
         return $moduleConfig;
+    }
+
+    /**
+     * @param string|null $moduleName
+     *
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
+     */
+    public function getSharedModuleConfig(?string $moduleName = null): ?AbstractSharedConfig
+    {
+        $moduleName = $this->getModuleName($moduleName);
+
+        if (isset($this->sharedConfigStubs[$moduleName])) {
+            return $this->sharedConfigStubs[$moduleName];
+        }
+
+        $sharedConfig = $this->createSharedConfig($moduleName);
+
+        return $sharedConfig;
     }
 
     /**
@@ -255,9 +274,9 @@ class ConfigHelper extends Module
     /**
      * @param string $moduleName
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    protected function getSharedConfig(string $moduleName): ?AbstractBundleConfig
+    protected function getSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
         if (isset($this->sharedConfigStubs[$moduleName])) {
             return $this->sharedConfigStubs[$moduleName];
@@ -269,9 +288,9 @@ class ConfigHelper extends Module
     /**
      * @param string $moduleName
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
-    protected function createSharedConfig(string $moduleName): ?AbstractBundleConfig
+    protected function createSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
         $sharedConfigClassName = $this->getSharedConfigClassName($moduleName);
         if (!class_exists($sharedConfigClassName)) {

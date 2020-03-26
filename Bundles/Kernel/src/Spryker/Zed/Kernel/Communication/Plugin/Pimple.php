@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
  */
 class Pimple extends AbstractPlugin
 {
