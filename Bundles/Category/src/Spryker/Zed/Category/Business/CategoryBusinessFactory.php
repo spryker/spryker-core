@@ -158,7 +158,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryTransferGenerator(),
             $this->createCategoryToucher(),
             $this->createCategoryTree(),
-            $this->createCategoryNodePublisherInterface()
+            $this->createCategoryNodePublisher()
         );
     }
 

@@ -292,7 +292,6 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         }
 
         $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
