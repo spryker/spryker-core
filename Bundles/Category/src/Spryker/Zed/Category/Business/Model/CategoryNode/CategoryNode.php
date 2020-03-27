@@ -292,7 +292,6 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         }
 
         $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
@@ -314,6 +313,8 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         } while ($childrenMoved > 0);
 
         $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeEntity->getIdCategoryNode());
+
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
 
         $categoryNodeEntity->delete();
