@@ -29,7 +29,9 @@ class CreateMerchantUserController extends AbstractController
     {
         $idMerchant = $this->castId($request->get(static::PARAM_MERCHANT_ID));
 
-        $merchantUserForm = $this->getFactory()->getMerchantUserCreateForm()->handleRequest($request);
+        $merchantUserForm = $this->getFactory()
+            ->getMerchantUserCreateForm(new UserTransfer())
+            ->handleRequest($request);
 
         if ($merchantUserForm->isSubmitted() && $merchantUserForm->isValid()) {
             return $this->createMerchantUser($idMerchant, $merchantUserForm);

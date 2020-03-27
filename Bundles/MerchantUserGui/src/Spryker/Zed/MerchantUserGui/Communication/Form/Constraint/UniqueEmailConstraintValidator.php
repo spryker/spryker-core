@@ -32,10 +32,14 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
         }
 
         $userTransfer = $constraint->getUserFacade()->getUserByUsername($email);
+        if ($userTransfer == null) {
+            return;
+        }
+
         /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
         $formDataUserTransfer = $this->context->getRoot()->getData();
 
-        if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
+        if (!$formDataUserTransfer->getIdUser() || $userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
             $this->context->buildViolation($constraint->getMessage())
                 ->setParameter('{{ username }}', $email)
                 ->addViolation();
