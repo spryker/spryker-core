@@ -17,6 +17,7 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryRepository;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -145,6 +146,14 @@ class CategoryNodeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\Category\Persistence\CategoryRepository
+     */
+    protected function createCategoryRepository(): CategoryRepository
+    {
+        return new CategoryRepository();
+    }
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucher $categoryToucher
      *
      * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode
@@ -182,6 +191,7 @@ class CategoryNodeTest extends Unit
         $factoryMock->setContainer($container);
 
         $factoryMock->setQueryContainer($this->createCategoryQueryContainer());
+        $factoryMock->setRepository($this->createCategoryRepository());
 
         return $factoryMock;
     }
