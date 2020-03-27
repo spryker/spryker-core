@@ -56,7 +56,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
 
             $merchantStorageTransfer = $merchantStorageTransfers[$resourceId];
             $restMerchantAddressesResource = $this->merchantAddressesRestResponseBuilder->createMerchantAddressesRestResource(
-                $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection()->getArrayCopy(),
+                $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection(),
                 $resourceId
             );
 

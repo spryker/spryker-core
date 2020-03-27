@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -41,12 +42,12 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createMerchantAddressesRestResource(array $merchantStorageProfileAddressTransfers, string $merchantReference): RestResourceInterface
+    public function createMerchantAddressesRestResource(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResourceInterface
     {
         $restMerchantsAttributesTransfer = $this->merchantsAddressesResourceMapper
             ->mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
@@ -62,12 +63,12 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantAddressesRestResponse(array $merchantStorageProfileAddressTransfers, string $merchantReference): RestResponseInterface
+    public function createMerchantAddressesRestResponse(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResponseInterface
     {
         $merchantsRestResource = $this->createMerchantAddressesRestResource($merchantStorageProfileAddressTransfers, $merchantReference);
 
