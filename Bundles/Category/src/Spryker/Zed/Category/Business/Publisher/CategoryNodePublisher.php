@@ -74,12 +74,9 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
     {
         $eventTransfers = [];
         foreach ($categoryNodeIdsToTrigger as $idCategoryNode) {
-            $eventTransfers[] = (new EventEntityTransfer())
-                ->setName(CategoryEvents::CATEGORY_NODE_PUBLISH)
-                ->setId($idCategoryNode)
-                ->setEvent(CategoryEvents::CATEGORY_NODE_PUBLISH);
+            $eventTransfers[] = (new EventEntityTransfer())->setId($idCategoryNode);
         }
 
-        $this->eventFacade->triggerBulk(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, $eventTransfers);
+        $this->eventFacade->triggerBulk(CategoryEvents::CATEGORY_NODE_PUBLISH, $eventTransfers);
     }
 }
