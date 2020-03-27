@@ -40,9 +40,9 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return void
+     * @return int
      */
-    public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
+    public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int
     {
         $merchantOmsTriggerRequestTransfer
             ->requireMerchantOrderItems()
@@ -53,20 +53,23 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         $stateMachineProcessTransfer = $this->stateMachineProcessReader
             ->resolveMerchantStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchant());
 
+        $transitionCount = 0;
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $this->stateMachineFacade->triggerForNewStateMachineItem(
+            $transitionCount += $this->stateMachineFacade->triggerForNewStateMachineItem(
                 $stateMachineProcessTransfer,
                 $merchantOrderItemTransfer->getIdMerchantOrderItem()
             );
         }
+
+        return $transitionCount;
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return void
+     * @return int
      */
-    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
+    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int
     {
         $merchantOmsTriggerRequestTransfer
             ->requireMerchantOrderItems()
@@ -78,10 +81,12 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             $stateMachineItemTransfers[] = $this->createStateMachineItem($merchantOrderItemTransfer);
         }
 
-        $this->stateMachineFacade->triggerEventForItems(
+        $transitionCount = $this->stateMachineFacade->triggerEventForItems(
             $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
             $stateMachineItemTransfers
         );
+
+        return $transitionCount ?? 0;
     }
 
     /**
