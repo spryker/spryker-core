@@ -1112,4 +1112,18 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()->getProductUrls($productUrlCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->getRepository()->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
 }
