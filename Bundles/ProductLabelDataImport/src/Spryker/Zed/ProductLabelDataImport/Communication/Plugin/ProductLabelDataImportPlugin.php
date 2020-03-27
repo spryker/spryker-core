@@ -31,7 +31,7 @@ class ProductLabelDataImportPlugin extends AbstractPlugin implements DataImportP
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->importProductLabels($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductLabel($dataImporterConfigurationTransfer);
     }
 
     /**

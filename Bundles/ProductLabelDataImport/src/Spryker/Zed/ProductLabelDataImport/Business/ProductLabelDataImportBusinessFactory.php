@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductLabelDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
-use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelAttributeWriteStep;
+use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelAttributeWriterStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelProductAbstractWriterStep;
-use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelWriteStep;
+use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelWriterStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\SkusToProductAbstractIdsStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabelStore\ProductLabelNameToIdProductLabelStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabelStore\ProductLabelStoreWriteStep;
@@ -75,7 +75,7 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createProductLabelWriterStep(): DataImportStepInterface
     {
-        return new ProductLabelWriteStep();
+        return new ProductLabelWriterStep();
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createProductLabelAttributeWriteStep(): DataImportStepInterface
     {
-        return new ProductLabelAttributeWriteStep();
+        return new ProductLabelAttributeWriterStep();
     }
 
     /**

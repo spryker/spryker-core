@@ -5,11 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelStorage\Business\Storage;
+namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage;
+use Spryker\ProductLabelStorage\src\Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelProductAbstractMapper;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface;
+use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface;
 
 class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
 {
@@ -24,53 +27,77 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
      * @var bool
      */
     protected $isSendingToQueue = true;
+    /**
+     * @var ProductLabelStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+    /**
+     * @var ProductLabelStorageRepositoryInterface
+     */
+    protected $productLabelStorageRepository;
+    /**
+     * @var ProductLabelProductAbstractMapper
+     */
+    protected $productLabelProductAbstractMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param ProductLabelStorageToEventBehaviorFacadeInterface $productLabelStorageToEventBehaviorFacade
+     * @param ProductLabelStorageRepositoryInterface $productLabelStorageRepository
+     * @param ProductLabelProductAbstractMapper $productLabelProductAbstractMapper
      */
-    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
+    public function __construct(
+        ProductLabelStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue,
+        ProductLabelStorageToEventBehaviorFacadeInterface $productLabelStorageToEventBehaviorFacade,
+        ProductLabelStorageRepositoryInterface $productLabelStorageRepository,
+        ProductLabelProductAbstractMapper $productLabelProductAbstractMapper
+    )
     {
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->eventBehaviorFacade = $productLabelStorageToEventBehaviorFacade;
+        $this->productLabelStorageRepository = $productLabelStorageRepository;
+        $this->productLabelProductAbstractMapper = $productLabelProductAbstractMapper;
     }
 
     /**
+     * @deprecated
+     *
      * @param array $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $productLabels = $this->findProductLabelAbstractEntities($productAbstractIds);
-        $groupedLabelsByProductAbstractId = [];
-        foreach ($productLabels as $productLabel) {
-            $groupedLabelsByProductAbstractId[$productLabel['fk_product_abstract']][] = $productLabel['fk_product_label'];
-        }
+        $uniqueProductAbstractIds = $this->productLabelStorageRepository
+            ->getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds($productAbstractIds);
 
-        $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $groupedLabelsByProductAbstractId = $this->prepareGroupedLabelsByProductAbstractId($productAbstractIds);
+
         $spyProductAbstractLabelStorageEntities = $this->findProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
 
-        $foundProductAbstractIds = [];
-        foreach ($spyProductAbstractLocalizedAttributeEntities as $spyProductAbstractLocalizedAttributeEntity) {
-            $foundProductAbstractIds[] = $spyProductAbstractLocalizedAttributeEntity->getFkProductAbstract();
-        }
-
-        $uniqueProductAbstractIds = array_unique($foundProductAbstractIds);
         $this->storeData($uniqueProductAbstractIds, $spyProductAbstractLabelStorageEntities, $groupedLabelsByProductAbstractId);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $eventTransfers
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds)
+    public function writeProductLabelStorageCollectionByProductAbstractEvents(array $eventTransfers): void
     {
+        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        $uniqueProductAbstractIds = $this->productLabelStorageRepository
+            ->getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds($productAbstractIds);
+
+        $groupedLabelsByProductAbstractId = $this->getGroupedProductLabelIdsByProductAbstractIds($productAbstractIds);
+
         $spyProductAbstractLabelStorageEntities = $this->findProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductAbstractLabelStorageEntities as $spyProductAbstractLabelStorageEntity) {
-            $spyProductAbstractLabelStorageEntity->delete();
-        }
+
+        $this->storeData($uniqueProductAbstractIds, $spyProductAbstractLabelStorageEntities, $groupedLabelsByProductAbstractId);
     }
 
     /**
@@ -127,21 +154,38 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     * @return int[][]
      */
-    protected function findProductLabelAbstractEntities(array $productAbstractIds)
+    protected function getGroupedProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->queryContainer->queryProductLabelProductAbstractByProductAbstractIds($productAbstractIds)->find()->getData();
+        $productLabelProductAbstractTransferCollection = $this->productLabelStorageRepository
+            ->getProductLabelProductAbstractTransferCollectionByProductAbstractIds($productAbstractIds);
+
+        return $this->productLabelProductAbstractMapper
+            ->mapProductLabelProductAbstractTransferCollectionToProductLabelIdsGroupedByProductAbstractIds(
+                $productLabelProductAbstractTransferCollection
+            );
+    }
+
+    /**
+     * @param array $productAbstractIds
+     */
+    public function deleteStorageData(array $productAbstractIds): void
+    {
+        $spyProductAbstractLabelStorageEntities = $this->findProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
+        foreach ($spyProductAbstractLabelStorageEntities as $spyProductAbstractLabelStorageEntity) {
+            $spyProductAbstractLabelStorageEntity->delete();
+        }
     }
 
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
      */
-    protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
+    protected function findProductLabelAbstractEntities(array $productAbstractIds)
     {
-        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductLabelProductAbstractByProductAbstractIds($productAbstractIds)->find()->getData();
     }
 
     /**

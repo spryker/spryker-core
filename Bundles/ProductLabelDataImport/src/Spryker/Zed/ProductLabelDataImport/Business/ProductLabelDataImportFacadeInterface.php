@@ -22,7 +22,7 @@ interface ProductLabelDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductLabels(
+    public function importProductLabel(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer;
 

@@ -36,7 +36,7 @@ class ProductLabelDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsProductRelations(): void
+    public function testImportImportsProductLabel(): void
     {
         //Arrange
         $this->tester->haveProductAbstract([
@@ -64,7 +64,7 @@ class ProductLabelDataImportPluginTest extends Unit
             static::EXPECTED_IMPORT_COUNT,
             $dataImporterReportTransfer->getImportedDataSetCount(),
             sprintf(
-                'Imported number of product relations is %s expected %s.',
+                'Imported number of product labels is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
                 static::EXPECTED_IMPORT_COUNT
             )

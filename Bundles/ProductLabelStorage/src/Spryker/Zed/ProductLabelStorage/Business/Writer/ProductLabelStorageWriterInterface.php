@@ -5,11 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelStorage\Business\Storage;
+namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 interface ProductLabelStorageWriterInterface
 {
     /**
+     * @deprecated
+     *
      * @param array $productAbstractIds
      *
      * @return void
@@ -17,6 +19,8 @@ interface ProductLabelStorageWriterInterface
     public function publish(array $productAbstractIds);
 
     /**
+     * @deprecated
+     *
      * @param array $productAbstractIds
      *
      * @return void

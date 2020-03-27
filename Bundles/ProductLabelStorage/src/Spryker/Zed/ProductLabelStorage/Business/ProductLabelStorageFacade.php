@@ -31,11 +31,38 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
+     * @param array $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelEvents(array $eventTransfers): void
+    {
+        $this->getFactory()->createProductLabelDictionaryStorageWriter()
+            ->writeProductLabelDictionaryStorageCollectionByProductLabelEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function unpublishLabelDictionary()
     {
         $this->getFactory()->createProductLabelDictionaryStorageWriter()->unpublish();
+    }
+
+    /**
+     * @param array $eventTransfers
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteCollectionByProductLabelEvents(array $eventTransfers): void
+    {
+        $this->getFactory();
     }
 
     /**

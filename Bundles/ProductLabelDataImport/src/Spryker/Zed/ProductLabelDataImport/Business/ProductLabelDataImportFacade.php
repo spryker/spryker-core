@@ -25,7 +25,7 @@ class ProductLabelDataImportFacade extends AbstractFacade implements ProductLabe
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductLabels(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importProductLabel(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
             ->getProductLabelImporter()

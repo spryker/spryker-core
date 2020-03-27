@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelStorage\Business\Storage;
+namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 use ArrayObject;
 use DateTime;
@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface;
 
 class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStorageWriterInterface
@@ -31,16 +32,29 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $isSendingToQueue = true;
 
     /**
+     * @var ProductLabelStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param ProductLabelStorageToEventBehaviorFacadeInterface $productLabelStorageToEventBehaviorFacade
      */
-    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
+    public function __construct(
+        ProductLabelStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue,
+        ProductLabelStorageToEventBehaviorFacadeInterface $productLabelStorageToEventBehaviorFacade
+    )
     {
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->eventBehaviorFacade = $productLabelStorageToEventBehaviorFacade;
     }
 
     /**
+     * @deprecated
+     *
      * @return void
      */
     public function publish()
@@ -64,11 +78,14 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
+     * @param array $eventTransfers
+     *
      * @return void
      */
-    public function unpublish()
+    public function writeProductLabelDictionaryStorageCollectionByProductLabelEvents(array $eventTransfers): void
     {
-        $this->deleteStorageData();
+        $productLabelIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        // TODO: Should be implemented in next one story.
     }
 
     /**

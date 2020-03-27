@@ -14,9 +14,9 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
 
-class ProductLabelWriteStep extends PublishAwareStep implements DataImportStepInterface
+class ProductLabelWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    public const COL_MAX_POSITION = 'max_position';
+    public const DEFAULT_PRIORITY = 0;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -33,7 +33,8 @@ class ProductLabelWriteStep extends PublishAwareStep implements DataImportStepIn
             ->setIsActive($dataSet[ProductLabelDataSetInterface::COL_IS_ACTIVE])
             ->setIsDynamic($dataSet[ProductLabelDataSetInterface::COL_IS_DYNAMIC])
             ->setIsExclusive($dataSet[ProductLabelDataSetInterface::COL_IS_EXCLUSIVE])
-            ->setFrontEndReference($dataSet[ProductLabelDataSetInterface::COL_FRONT_END_REFERENCE]);
+            ->setFrontEndReference($dataSet[ProductLabelDataSetInterface::COL_FRONT_END_REFERENCE])
+            ->setPosition($dataSet[ProductLabelDataSetInterface::COL_PRIORITY] ?? static::DEFAULT_PRIORITY);
 
         if ($dataSet[ProductLabelDataSetInterface::COL_VALID_FROM]) {
             $productLabelEntity->setValidFrom($dataSet[ProductLabelDataSetInterface::COL_VALID_FROM]);
@@ -43,30 +44,10 @@ class ProductLabelWriteStep extends PublishAwareStep implements DataImportStepIn
             $productLabelEntity->setValidTo($dataSet[ProductLabelDataSetInterface::COL_VALID_TO]);
         }
 
-        if ($productLabelEntity->isNew()) {
-            $productLabelEntity->setPosition($this->getPosition());
-        }
-
         if ($productLabelEntity->isNew() || $productLabelEntity->isModified()) {
             $productLabelEntity->save();
         }
 
         $dataSet[ProductLabelDataSetInterface::COL_ID_PRODUCT_LABEL] = $productLabelEntity->getIdProductLabel();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getPosition(): int
-    {
-        return SpyProductLabelQuery::create()
-                ->withColumn(
-                    sprintf('MAX(%s)', SpyProductLabelTableMap::COL_POSITION),
-                    static::COL_MAX_POSITION
-                )
-                ->select([
-                    static::COL_MAX_POSITION,
-                ])
-                ->findOne() + 1;
     }
 }

@@ -14,6 +14,7 @@ class ProductLabelDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_PRODUCT_LABEL = 'product-label';
     public const IMPORT_TYPE_PRODUCT_LABEL_STORE = 'product-label-store';
+    public const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -55,7 +56,7 @@ class ProductLabelDataImportConfig extends DataImportConfig
     protected function getModuleRoot(): string
     {
         return realpath(
-            dirname(__DIR__, 4)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
         ) . DIRECTORY_SEPARATOR;
     }
 }

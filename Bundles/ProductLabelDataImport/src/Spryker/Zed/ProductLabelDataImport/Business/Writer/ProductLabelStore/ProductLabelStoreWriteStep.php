@@ -28,5 +28,7 @@ class ProductLabelStoreWriteStep extends PublishAwareStep implements DataImportS
             ->findOneOrCreate();
 
         $productLabelStoreEntity->save();
+
+        $this->addPublishEvents('', $productLabelStoreEntity->getIdProductLabelStore());
     }
 }

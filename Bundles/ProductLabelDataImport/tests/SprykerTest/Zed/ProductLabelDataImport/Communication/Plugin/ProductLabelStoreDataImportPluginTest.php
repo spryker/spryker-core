@@ -40,7 +40,7 @@ class ProductLabelStoreDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsProductRelations(): void
+    public function testImportImportsProductLabelStore(): void
     {
         //Arrange
         $this->tester->haveStore([StoreTransfer::NAME => 'DE']);

@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductLabelStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriter;
-use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriter;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriter;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelStorageWriter;
+use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
@@ -18,24 +19,34 @@ use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriter;
 class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriterInterface
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface
      */
     public function createProductLabelDictionaryStorageWriter()
     {
         return new ProductLabelDictionaryStorageWriter(
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->getEventBehaviorFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriterInterface
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelStorageWriterInterface
      */
     public function createProductLabelStorageWriter()
     {
         return new ProductLabelStorageWriter(
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->getEventBehaviorFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }
