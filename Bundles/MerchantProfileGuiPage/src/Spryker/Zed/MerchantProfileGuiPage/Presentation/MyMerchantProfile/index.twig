@@ -484,18 +484,14 @@
                                             error="{{ onlineProfileTab.fk_country.vars.errors[0].message | default | trans }}"
                                         >
                                             {{ onlineProfileTab.fk_country.vars.label | trans}}
-
-                                            {% set countrySelectOptions = [{
-                                                label: onlineProfileTab.fk_country.vars.placeholder | trans,
-                                                value: ''
-                                            }] | merge(onlineProfileTab.fk_country.vars.choices) %}
                                             <spy-select
                                                 control
-                                                options="{{ countrySelectOptions | json_encode() }}"
+                                                options="{{ onlineProfileTab.fk_country.vars.choices | json_encode() }}"
                                                 name="{{ onlineProfileTab.fk_country.vars.full_name }}"
                                                 value="{{ onlineProfileTab.fk_country.vars.data }}"
                                                 required="{{ onlineProfileTab.fk_country.vars.required | boolToStr }}"
                                                 disabled="{{ onlineProfileTab.fk_country.vars.disabled | boolToStr }}"
+                                                placeholder="{{ onlineProfileTab.fk_country.vars.placeholder | trans }}"
                                             ></spy-select>
                                         </spy-form-item>
                                     </div>
