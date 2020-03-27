@@ -39,4 +39,17 @@ interface ShipmentCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateShipment(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     * - Clears shipment method data from quote and items in case of item add or remove action.
+     * - Clears shipment expenses in case of item add or remove action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function clearShipmentMethod(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

@@ -43,6 +43,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
     ];
 
     /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     */
+    protected const OPERATION_ADD = 'add';
+
+    /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     */
+    protected const OPERATION_REMOVE = 'remove';
+
+    /**
      * @var \SprykerTest\Zed\ShipmentCartConnector\ShipmentCartConnectorBusinessTester
      */
     protected $tester;
@@ -247,6 +257,113 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearItemLevelShipmentOnAddOperation(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
+
+        // Assert
+        $this->assertEmpty($itemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearItemLevelShipmentOnRemoveOperation(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_REMOVE);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
+
+        // Assert
+        $this->assertEmpty($itemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearShipmentExpenses(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $this->assertEmpty($cartChangeTransfer->getQuote()->getExpenses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldNotClearItemLevelShipment(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $itemTransfer = $cartChangeTransfer->getQuote()->getItems()->getIterator()->current();
+        $this->assertNotEmpty($itemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearShipmentMethodShouldClearQuoteLevelShipment(): void
+    {
+        // Arrange
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+        $cartChangeTransfer = $this->createCartChangeTransferWithQuoteLevelShipment($shipmentMethodTransfer, $storeTransfer);
+        $cartChangeTransfer->setOperation(static::OPERATION_ADD);
+
+        // Act
+        $cartChangeTransfer = $shipmentCartConnectorFacade->clearShipmentMethod($cartChangeTransfer);
+
+        // Assert
+        $this->assertEmpty($cartChangeTransfer->getQuote()->getShipment()->getMethod());
     }
 
     /**

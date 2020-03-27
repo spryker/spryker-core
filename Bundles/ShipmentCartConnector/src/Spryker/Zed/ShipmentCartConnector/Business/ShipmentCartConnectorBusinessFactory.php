@@ -16,6 +16,8 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as Shi
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
+use Spryker\Zed\ShipmentCartConnector\Business\Sanitizer\ShipmentSanitizer;
+use Spryker\Zed\ShipmentCartConnector\Business\Sanitizer\ShipmentSanitizerInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolver;
@@ -147,5 +149,13 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createSourcePriceCalculator(): ShipmentMethodPriceCalculatorInterface
     {
         return new ShipmentMethodPriceCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Sanitizer\ShipmentSanitizerInterface
+     */
+    public function createShipmentSanitizer(): ShipmentSanitizerInterface
+    {
+        return new ShipmentSanitizer();
     }
 }
