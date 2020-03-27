@@ -140,7 +140,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
         $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
-        $this->addIncludeSchemas($plugin, $transferClassName, $responseDataSchemaName);
+        $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
     }
@@ -165,7 +165,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
         $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
-        $this->addIncludeSchemas($plugin, $transferClassName, $responseDataSchemaName);
+        $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
     }
@@ -389,14 +389,14 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
-     * @param string $responseDataSchemaName
+     * @param string $responseSchemaName
      *
      * @return void
      */
     protected function addIncludeSchemas(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
-        string $responseDataSchemaName
+        string $responseSchemaName
     ): void {
         $resourceRelationships = $this
             ->resourceRelationshipProcessor
@@ -409,7 +409,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData(
             $this
                 ->resourceRelationshipProcessor
-                ->getIncludeBaseSchemaForPlugin($plugin, $transferClassName, $responseDataSchemaName)
+                ->getIncludeBaseSchemaForPlugin($plugin, $transferClassName, $responseSchemaName)
         );
 
         $this->addIncludeSchemaData(
