@@ -95,12 +95,4 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     {
         return new CategoryMapper();
     }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function createSpyCategoryNodeQuery(): SpyCategoryNodeQuery
-    {
-        return SpyCategoryNodeQuery::create();
-    }
 }
