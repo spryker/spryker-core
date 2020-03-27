@@ -9,7 +9,9 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\SchemaComponentTransfer;
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsComponentTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
@@ -137,7 +139,8 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
-        $this->addAllRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
+        $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+        $this->addIncludeSchemas($plugin, $transferClassName, $responseDataSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
     }
@@ -161,7 +164,8 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
-        $this->addAllRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
+        $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
+        $this->addIncludeSchemas($plugin, $transferClassName, $responseDataSchemaName);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $responseSchemaName);
     }
@@ -288,6 +292,28 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SchemaDataTransfer $schemaData
+     *
+     * @return void
+     */
+    protected function addIncludeSchemaData(SchemaDataTransfer $schemaData): void
+    {
+        $renderData = $this->schemaRenderer->render($schemaData);
+        foreach ($renderData as $key => $item) {
+            if (!isset($this->schemas[$key])) {
+                $this->schemas = array_replace_recursive($this->schemas, $renderData);
+
+                continue;
+            }
+            $oneOfs = array_merge(
+                $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF],
+                $item[SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF]
+            );
+            $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF] = array_unique($oneOfs, SORT_REGULAR);
+        }
+    }
+
+    /**
      * @param string $transferClassName
      *
      * @return bool
@@ -339,19 +365,17 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
      * @param string $responseDataSchemaName
-     * @param string $responseSchemaName
      *
      * @return void
      */
-    protected function addAllRelationshipSchemas(
+    protected function addRelationshipSchemas(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
-        string $responseDataSchemaName,
-        string $responseSchemaName
+        string $responseDataSchemaName
     ): void {
         $relationshipSchemaDataTransfers = $this
             ->resourceRelationshipProcessor
-            ->getAllSchemaDataTransfersForPlugin($plugin, $transferClassName, $responseDataSchemaName, $responseSchemaName);
+            ->getRelationshipSchemaDataTransfersForPlugin($plugin, $transferClassName, $responseDataSchemaName);
 
         if (!$relationshipSchemaDataTransfers) {
             return;
@@ -360,5 +384,38 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
             $this->addSchemaData($relationshipSchemaDataTransfer);
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseDataSchemaName
+     *
+     * @return void
+     */
+    protected function addIncludeSchemas(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseDataSchemaName
+    ): void {
+        $resourceRelationships = $this
+            ->resourceRelationshipProcessor
+            ->getResourceRelationshipsForResourceRoutePlugin($plugin);
+
+        if (!$resourceRelationships) {
+            return;
+        }
+
+        $this->addSchemaData(
+            $this
+                ->resourceRelationshipProcessor
+                ->getIncludeBaseSchemaForPlugin($plugin, $transferClassName, $responseDataSchemaName)
+        );
+
+        $this->addIncludeSchemaData(
+            $this
+                ->resourceRelationshipProcessor
+                ->getIncludeDataSchemaForPlugin($plugin, $transferClassName, $resourceRelationships)
+        );
     }
 }

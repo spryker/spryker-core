@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
+use Generated\Shared\Transfer\SchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
@@ -57,27 +58,55 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
      * @param string $responseDataSchemaName
-     * @param string $responseSchemaName
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer[]
      */
-    public function getAllSchemaDataTransfersForPlugin(
+    public function getRelationshipSchemaDataTransfersForPlugin(
         ResourceRoutePluginInterface $plugin,
         string $transferClassName,
-        string $responseDataSchemaName,
-        string $responseSchemaName
+        string $responseDataSchemaName
     ): array {
-        $schemaDataTransfers = [];
         $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
-        if ($resourceRelationships) {
-            $schemaDataTransfers = array_merge(
-                $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName),
-                $this->createIncludedSchemaDataTransfers($responseSchemaName, $resourceRelationships, $transferClassName)
-            );
+        if (!$resourceRelationships) {
+            return [];
         }
 
-        return $schemaDataTransfers;
+        return $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function getIncludeDataSchemaForPlugin(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        array $resourceRelationships
+    ): SchemaDataTransfer {
+        $includedSchemaName = $this->resourceTransferAnalyzer->createIncludedSchemaNameFromTransferClassName($transferClassName);
+
+        return $this->schemaBuilder->createIncludedDataSchema($includedSchemaName, $resourceRelationships);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param string $transferClassName
+     * @param string $responseSchemaName
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function getIncludeBaseSchemaForPlugin(
+        ResourceRoutePluginInterface $plugin,
+        string $transferClassName,
+        string $responseSchemaName
+    ): SchemaDataTransfer {
+        $includedSchemaName = $this->resourceTransferAnalyzer->createIncludedSchemaNameFromTransferClassName($transferClassName);
+
+        return $this->schemaBuilder->createIncludedBaseSchema($responseSchemaName, $includedSchemaName);
     }
 
     /**
@@ -113,7 +142,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
      */
-    protected function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
+    public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {
         return $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
     }
