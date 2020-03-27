@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -197,30 +197,30 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int $categoryNodeId
-     *
-     * @return int|null
-     */
-    public function findParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): ?int
-    {
-        return $this->getFactory()
-            ->createSpyCategoryNodeQuery()
-            ->select(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
-            ->findOneByIdCategoryNode($categoryNodeId);
-    }
-
-    /**
-     * @param int $categoryNodeId
+     * @param int $idCategoryNode
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByParentCategoryNodeId(int $categoryNodeId): array
+    public function getChildCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array
     {
         return $this->getFactory()
-            ->createSpyCategoryNodeQuery()
-            ->filterByFkParentCategoryNode($categoryNodeId)
-            ->select(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
-            ->find()
+            ->createCategoryClosureTableQuery()
+            ->select(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT)
+            ->findByFkCategoryNode($idCategoryNode)
+            ->getData();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getParentCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array
+    {
+        return $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->select(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE)
+            ->findByFkCategoryNodeDescendant($idCategoryNode)
             ->getData();
     }
 }

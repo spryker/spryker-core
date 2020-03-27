@@ -43,9 +43,11 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
      */
     public function triggerBulkCategoryNodePublishEvent(int $idCategoryNode): void
     {
-        $categoryNodeIdsToTrigger = array_merge(
-            $this->getParentCategoryNodeIds($idCategoryNode),
-            array_unique($this->getChildCategoryNodeIds($idCategoryNode))
+        $categoryNodeIdsToTrigger = array_unique(
+            array_merge(
+                $this->categoryRepository->getChildCategoryNodeIdsByCategoryNodeId($idCategoryNode),
+                $this->categoryRepository->getPArentCategoryNodeIdsByCategoryNodeId($idCategoryNode)
+            )
         );
 
         $eventTransfers = [];
@@ -57,52 +59,5 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
         }
 
         $this->eventFacade->triggerBulk(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, $eventTransfers);
-    }
-
-    /**
-     * @param int $categoryNodeId
-     * @param int[] $parentCategoryNodeIds
-     *
-     * @return int[]
-     */
-    protected function getParentCategoryNodeIds(int $categoryNodeId, array $parentCategoryNodeIds = []): array
-    {
-        if (!$categoryNodeId) {
-            return $parentCategoryNodeIds;
-        }
-
-        $parentCategoryNodeId = $this->categoryRepository->findParentCategoryNodeIdByCategoryNodeId($categoryNodeId);
-        if (!$parentCategoryNodeId) {
-            return $parentCategoryNodeIds;
-        }
-
-        $parentCategoryNodeIds[] = $parentCategoryNodeId;
-
-        return $this->getParentCategoryNodeIds($parentCategoryNodeId, $parentCategoryNodeIds);
-    }
-
-    /**
-     * @param int $categoryNodeId
-     * @param int[] $childCategoryNodeIds
-     *
-     * @return int[]
-     */
-    protected function getChildCategoryNodeIds(int $categoryNodeId, array $childCategoryNodeIds = []): array
-    {
-        if (!$categoryNodeId) {
-            return $childCategoryNodeIds;
-        }
-
-        $childCategoryNodeIdsToAdd = $this->categoryRepository->getCategoryNodeIdsByParentCategoryNodeId($categoryNodeId);
-        if (!$childCategoryNodeIdsToAdd) {
-            return $childCategoryNodeIds;
-        }
-
-        $childCategoryNodeIds = array_merge($childCategoryNodeIds, $childCategoryNodeIdsToAdd);
-        foreach ($childCategoryNodeIdsToAdd as $childCategoryNodeIdToAdd) {
-            return $this->getChildCategoryNodeIds($childCategoryNodeIdToAdd, $childCategoryNodeIds);
-        }
-
-        return $childCategoryNodeIds;
     }
 }

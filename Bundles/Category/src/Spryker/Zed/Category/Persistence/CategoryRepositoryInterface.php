@@ -52,16 +52,16 @@ interface CategoryRepositoryInterface
     public function findCategoryById(int $idCategory): ?CategoryTransfer;
 
     /**
-     * @param int $categoryNodeId
-     *
-     * @return int|null
-     */
-    public function findParentCategoryNodeIdByCategoryNodeId(int $categoryNodeId): ?int;
-
-    /**
-     * @param int $categoryNodeId
+     * @param int $idCategoryNode
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByParentCategoryNodeId(int $categoryNodeId): array;
+    public function getChildCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getParentCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
 }
