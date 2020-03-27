@@ -38,7 +38,12 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Glue\\%bundle%%store%\\ClassResolver\\%bundle%DependencyProvider';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Glue\\KernelDE\\ClassResolver\\KernelDependencyProvider';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Glue\\%bundle%%codeBucket%\\ClassResolver\\%bundle%DependencyProvider';
 
     /**
      * @var string

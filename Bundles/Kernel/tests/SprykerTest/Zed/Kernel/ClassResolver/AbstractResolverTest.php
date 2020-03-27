@@ -42,6 +42,11 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @var string
      */
+    protected $codeBucketClass;
+
+    /**
+     * @var string
+     */
     protected $classPattern;
 
     /**
@@ -144,6 +149,23 @@ abstract class AbstractResolverTest extends Unit
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->storeClass, $resolved);
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveMustReturnCodeBucketClass(): void
+    {
+        $this->createClass($this->projectClass);
+        $this->createClass($this->codeBucketClass);
+        $this->createClass($this->storeClass);
+
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['CodeBucketNamespace']);
+
+        $resolved = $resolverMock->resolve($this->className);
+        $this->assertInstanceOf($this->codeBucketClass, $resolved);
     }
 
     /**

@@ -13,20 +13,20 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
     public const KEY_NAMESPACE = '%namespace%';
     public const KEY_BUNDLE = '%bundle%';
-    public const KEY_STORE = '%store%';
+    public const KEY_CODE_BUCKET = '%codeBucket%';
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_STORE => $store,
+            static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
         $className = str_replace(

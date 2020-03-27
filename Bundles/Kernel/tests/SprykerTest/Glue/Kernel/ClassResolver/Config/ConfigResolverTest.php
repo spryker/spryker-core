@@ -43,7 +43,12 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Glue\\%bundle%%store%\\ClassResolver\\%bundle%Config';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Glue\\KernelDE\\ClassResolver\\KernelConfig';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Glue\\%bundle%%codeBucket%\\ClassResolver\\%bundle%Config';
 
     /**
      * @var string

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Transfer\Business\EntityTransfer\Definition;
 
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
+use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 use Spryker\Zed\Transfer\Dependency\Service\TransferToUtilGlobServiceInterface;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
@@ -25,13 +26,23 @@ class EntityTransferDefinitionFinder implements FinderInterface
     protected $globService;
 
     /**
+     * @var \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface
+     */
+    protected $propelFacade;
+
+    /**
      * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
      * @param \Spryker\Zed\Transfer\Dependency\Service\TransferToUtilGlobServiceInterface $globService
+     * @param \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface $propelFacade
      */
-    public function __construct(TransferConfig $transferConfig, TransferToUtilGlobServiceInterface $globService)
-    {
+    public function __construct(
+        TransferConfig $transferConfig,
+        TransferToUtilGlobServiceInterface $globService,
+        TransferToPropelFacadeInterface $propelFacade
+    ) {
         $this->transferConfig = $transferConfig;
         $this->globService = $globService;
+        $this->propelFacade = $propelFacade;
     }
 
     /**

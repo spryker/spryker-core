@@ -43,7 +43,12 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\%bundle%Config';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Zed\\KernelDE\\ClassResolver\\KernelConfig';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Zed\\%bundle%%codeBucket%\\ClassResolver\\%bundle%Config';
 
     /**
      * @var string

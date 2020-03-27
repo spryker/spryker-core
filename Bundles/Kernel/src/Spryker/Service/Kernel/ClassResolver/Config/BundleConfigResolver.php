@@ -42,7 +42,7 @@ class BundleConfigResolver extends AbstractClassResolver
             self::CLASS_NAME_PATTERN,
             self::KEY_NAMESPACE,
             self::KEY_BUNDLE,
-            self::KEY_STORE
+            static::KEY_CODE_BUCKET
         );
     }
 }

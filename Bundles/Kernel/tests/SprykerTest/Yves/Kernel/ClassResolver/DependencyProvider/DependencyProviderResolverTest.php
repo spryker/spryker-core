@@ -38,7 +38,12 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Yves\\%bundle%%store%\\ClassResolver\\%bundle%DependencyProvider';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Yves\\KernelDE\\ClassResolver\\KernelDependencyProvider';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Yves\\%bundle%%codeBucket%\\ClassResolver\\%bundle%DependencyProvider';
 
     /**
      * @var string

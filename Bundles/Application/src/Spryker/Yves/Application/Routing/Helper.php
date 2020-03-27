@@ -51,7 +51,7 @@ class Helper
         }
         [$namespace, $application, $bundle, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
-        $bundle = str_replace(Store::getInstance()->getStoreName(), '', $bundle);
+        $bundle = str_replace(APPLICATION_CODE_BUCKET, '', $bundle);
 
         $utilTextService = new UtilTextService();
         $controller = $utilTextService->camelCaseToSeparator(str_replace('Controller', '', $controllerName));

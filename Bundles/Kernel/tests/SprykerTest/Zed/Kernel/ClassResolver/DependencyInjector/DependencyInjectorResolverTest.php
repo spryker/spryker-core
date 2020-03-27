@@ -61,7 +61,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%codeBucket%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -197,7 +197,7 @@ class DependencyInjectorResolverTest extends Unit
     public function testGetClassPattern(): void
     {
         $dependencyInjectorResolver = new DependencyInjectorResolver();
-        $this->assertSame('\%namespace%\Zed\%fromBundle%%store%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
+        $this->assertSame('\%namespace%\Zed\%fromBundle%%codeBucket%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
     }
 
     /**

@@ -9,13 +9,12 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractClassResolver
 {
     public const KEY_NAMESPACE = '%namespace%';
     public const KEY_BUNDLE = '%bundle%';
-    public const KEY_STORE = '%store%';
+    public const KEY_CODE_BUCKET = '%codeBucket%';
 
     /**
      * @var string
@@ -39,11 +38,11 @@ abstract class AbstractClassResolver
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    abstract protected function buildClassName($namespace, $store = null);
+    abstract protected function buildClassName($namespace, $codeBucket = null);
 
     /**
      * @param object|string $callerClass
@@ -165,9 +164,12 @@ abstract class AbstractClassResolver
      */
     private function addProjectClassNames(array $classNames)
     {
-        $storeName = Store::getInstance()->getStoreName();
+        $codeBucket = APPLICATION_CODE_BUCKET;
         foreach ($this->getProjectNamespaces() as $namespace) {
-            $classNames[] = $this->buildClassName($namespace, $storeName);
+            if ($codeBucket !== '') {
+                $classNames[] = $this->buildClassName($namespace, $codeBucket);
+            }
+
             $classNames[] = $this->buildClassName($namespace);
         }
 

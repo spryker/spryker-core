@@ -43,7 +43,12 @@ class QueryContainerResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\%bundle%QueryContainer';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Zed\\KernelDE\\ClassResolver\\KernelQueryContainer';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Zed\\%bundle%%codeBucket%\\ClassResolver\\%bundle%QueryContainer';
 
     /**
      * @var string

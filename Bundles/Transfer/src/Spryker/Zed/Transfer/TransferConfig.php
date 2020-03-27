@@ -138,6 +138,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      *
      * @return string[]
