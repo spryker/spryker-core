@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanySalesConnector\Persistence;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -25,8 +24,17 @@ class CompanySalesConnectorEntityManager extends AbstractEntityManager implement
     {
         $orderTransfer->requireIdSalesOrder();
 
-        $salesOrderEntity = new SpySalesOrder();
-        $salesOrderEntity->fromArray($orderTransfer->toArray());
+        $salesOrderEntity = $this->getFactory()
+            ->getSalesOrderPropelQuery()
+            ->findOneByIdSalesOrder($orderTransfer->getIdSalesOrder());
+
+        if (!$salesOrderEntity) {
+            return $orderTransfer;
+        }
+
+        $salesOrderEntity->fromArray(
+            $orderTransfer->modifiedToArray()
+        );
 
         $salesOrderEntity->save();
 

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
  */
 class CompanySalesConnectorPersistenceFactory extends AbstractPersistenceFactory

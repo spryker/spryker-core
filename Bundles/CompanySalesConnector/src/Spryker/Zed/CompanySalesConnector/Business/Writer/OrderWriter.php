@@ -7,32 +7,23 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business\Writer;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface;
-use Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorRepositoryInterface;
 
 class OrderWriter implements OrderWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorRepositoryInterface
-     */
-    protected $companySalesConnectorRepository;
-
     /**
      * @var \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface
      */
     protected $companySalesConnectorEntityManager;
 
     /**
-     * @param \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorRepositoryInterface $companySalesConnectorRepository
      * @param \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface $companySalesConnectorEntityManager
      */
-    public function __construct(
-        CompanySalesConnectorRepositoryInterface $companySalesConnectorRepository,
-        CompanySalesConnectorEntityManagerInterface $companySalesConnectorEntityManager
-    ) {
-        $this->companySalesConnectorRepository = $companySalesConnectorRepository;
+    public function __construct(CompanySalesConnectorEntityManagerInterface $companySalesConnectorEntityManager)
+    {
         $this->companySalesConnectorEntityManager = $companySalesConnectorEntityManager;
     }
 
@@ -52,15 +43,9 @@ class OrderWriter implements OrderWriterInterface
             return;
         }
 
-        $orderTransfer = $this->companySalesConnectorRepository->findOrderByIdSalesOrder(
-            $saveOrderTransfer->getIdSalesOrder()
-        );
-
-        if (!$orderTransfer) {
-            return;
-        }
-
-        $orderTransfer->setCompanyUuid($companyUuid);
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setCompanyUuid($companyUuid);
 
         $this->companySalesConnectorEntityManager->updateOrder($orderTransfer);
     }

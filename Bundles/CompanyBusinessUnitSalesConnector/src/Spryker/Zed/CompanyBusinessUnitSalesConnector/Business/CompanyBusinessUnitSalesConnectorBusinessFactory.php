@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Persistence\CompanyBusinessUnitSalesConnectorEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Persistence\CompanyBusinessUnitSalesConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
  */
 class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessFactory
@@ -33,7 +32,6 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
     public function createOrderWriter(): OrderWriterInterface
     {
         return new OrderWriter(
-            $this->getRepository(),
             $this->getEntityManager()
         );
     }

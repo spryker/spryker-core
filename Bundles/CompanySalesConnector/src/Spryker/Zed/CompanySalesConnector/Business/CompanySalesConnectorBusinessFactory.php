@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
  */
 class CompanySalesConnectorBusinessFactory extends AbstractBusinessFactory
@@ -28,7 +27,6 @@ class CompanySalesConnectorBusinessFactory extends AbstractBusinessFactory
     public function createOrderWriter(): OrderWriterInterface
     {
         return new OrderWriter(
-            $this->getRepository(),
             $this->getEntityManager()
         );
     }
