@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -158,6 +159,23 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createProductItemTaxRateCalculatorStrategyResolver()
             ->resolve($quoteTransfer->getItems())
             ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateProductOptionTaxRateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        return $this->getFactory()
+            ->createProductItemTaxRateCalculatorStrategyResolver()
+            ->resolve($calculableObjectTransfer->getItems())
+            ->recalculateForCalculableObject($calculableObjectTransfer);
     }
 
     /**
