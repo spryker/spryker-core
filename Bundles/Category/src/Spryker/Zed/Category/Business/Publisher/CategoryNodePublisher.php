@@ -41,7 +41,19 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
      *
      * @return void
      */
-    public function triggerBulkCategoryNodePublishEvent(int $idCategoryNode): void
+    public function triggerBulkCategoryNodePublishEventForCreate(int $idCategoryNode): void
+    {
+        $categoryNodeIdsToTrigger = array_unique($this->categoryRepository->getParentCategoryNodeIdsByCategoryNodeId($idCategoryNode));
+
+        $this->triggerBulk($categoryNodeIdsToTrigger);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function triggerBulkCategoryNodePublishEventForUpdate(int $idCategoryNode): void
     {
         $categoryNodeIdsToTrigger = array_unique(
             array_merge(
@@ -50,6 +62,16 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
             )
         );
 
+        $this->triggerBulk($categoryNodeIdsToTrigger);
+    }
+
+    /**
+     * @param int[] $categoryNodeIdsToTrigger
+     *
+     * @return void
+     */
+    protected function triggerBulk(array $categoryNodeIdsToTrigger): void
+    {
         $eventTransfers = [];
         foreach ($categoryNodeIdsToTrigger as $idCategoryNode) {
             $eventTransfers[] = (new EventEntityTransfer())

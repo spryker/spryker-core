@@ -14,5 +14,12 @@ interface CategoryNodePublisherInterface
      *
      * @return void
      */
-    public function triggerBulkCategoryNodePublishEvent(int $idCategoryNode): void;
+    public function triggerBulkCategoryNodePublishEventForCreate(int $idCategoryNode): void;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function triggerBulkCategoryNodePublishEventForUpdate(int $idCategoryNode): void;
 }

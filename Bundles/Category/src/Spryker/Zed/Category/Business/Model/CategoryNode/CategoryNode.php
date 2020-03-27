@@ -128,7 +128,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->closureTableWriter->create($categoryNodeTransfer);
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -176,7 +176,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -292,7 +292,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         }
 
         $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEvent($categoryNodeEntity->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
