@@ -21,6 +21,7 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Category\Persistence\CategoryRepository;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -190,9 +191,9 @@ class CategoryNodeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryRepository
+     * @return \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
-    protected function createCategoryRepository(): CategoryRepository
+    protected function createCategoryRepository(): CategoryRepositoryInterface
     {
         return new CategoryRepository();
     }
