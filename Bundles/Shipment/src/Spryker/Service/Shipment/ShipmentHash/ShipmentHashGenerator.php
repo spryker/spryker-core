@@ -102,14 +102,14 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
         $shipmentAdditionalKeyData = [];
         $shipmentData = $shipmentTransfer->toArray(false, true);
 
-        foreach ($this->shipmentConfig->getShipmentHashFields() as $field) {
-            if (empty($shipmentData[$field])) {
+        foreach ($this->shipmentConfig->getShipmentHashFields() as $fieldName) {
+            if (empty($shipmentData[$fieldName])) {
                 continue;
             }
 
-            $shipmentAdditionalKeyData[$field] = $shipmentData[$field];
+            $shipmentAdditionalKeyData[$fieldName] = $shipmentData[$fieldName];
         }
 
-        return $this->utilEncodingService->encodeJson($shipmentAdditionalKeyData);
+        return md5($this->utilEncodingService->encodeJson($shipmentAdditionalKeyData));
     }
 }

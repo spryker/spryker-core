@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 class ShipmentConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns array of field names for generation of hash for shipment.
+     *
      * @api
      *
      * @return array
