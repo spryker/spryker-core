@@ -102,7 +102,6 @@
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.contact_person_role.vars.id }}"
-                                        required="{{ businessInfoTab.contact_person_role.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.contact_person_role.vars.full_name }}"
                                         value="{{ businessInfoTab.contact_person_role.vars.value }}"
                                         placeholder="{{ businessInfoTab.contact_person_role.vars.attr.placeholder | default | trans }}"
@@ -122,20 +121,19 @@
                                         name="{{ businessInfoTab.contact_person_title.vars.full_name }}"
                                         options="{{ businessInfoTab.contact_person_title.vars.choices | json_encode() }}"
                                         value="{{ businessInfoTab.contact_person_title.vars.data }}"
-                                        required="{{ businessInfoTab.contact_person_title.vars.required | boolToStr }}"
                                     ></spy-select>
                                 </spy-form-item>
 
                                 <spy-form-item
                                     for="{{ businessInfoTab.contact_person_first_name.vars.id }}"
                                     error="{{ businessInfoTab.contact_person_first_name.vars.errors[0].message | default | trans }}"
+                                    required="{{ businessInfoTab.contact_person_first_name.vars.required | boolToStr }}"
                                 >
                                     {{ businessInfoTab.contact_person_first_name.vars.label | trans}}
                                     <spy-input
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.contact_person_first_name.vars.id }}"
-                                        required="{{ businessInfoTab.contact_person_first_name.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.contact_person_first_name.vars.full_name }}"
                                         value="{{ businessInfoTab.contact_person_first_name.vars.value }}"
                                         placeholder="{{ businessInfoTab.contact_person_first_name.vars.attr.placeholder | default | trans }}"
@@ -148,13 +146,13 @@
                                 <spy-form-item
                                     for="{{ businessInfoTab.contact_person_last_name.vars.id }}"
                                     error="{{ businessInfoTab.contact_person_last_name.vars.errors[0].message | default | trans }}"
+                                    required="{{ businessInfoTab.contact_person_last_name.vars.required | boolToStr }}"
                                 >
                                     {{ businessInfoTab.contact_person_last_name.vars.label | trans}}
                                     <spy-input
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.contact_person_last_name.vars.id }}"
-                                        required="{{ businessInfoTab.contact_person_last_name.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.contact_person_last_name.vars.full_name }}"
                                         value="{{ businessInfoTab.contact_person_last_name.vars.value }}"
                                         placeholder="{{ businessInfoTab.contact_person_last_name.vars.attr.placeholder | default | trans }}"
@@ -173,7 +171,6 @@
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.email.vars.id }}"
-                                        required="{{ businessInfoTab.email.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.email.vars.full_name }}"
                                         value="{{ businessInfoTab.email.vars.value }}"
                                         placeholder="{{ businessInfoTab.email.vars.attr.placeholder | default | trans }}"
@@ -193,7 +190,6 @@
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.contact_person_phone.vars.id }}"
-                                        required="{{ businessInfoTab.contact_person_phone.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.contact_person_phone.vars.full_name }}"
                                         value="{{ businessInfoTab.contact_person_phone.vars.value }}"
                                         placeholder="{{ businessInfoTab.contact_person_phone.vars.attr.placeholder | default | trans }}"
@@ -209,13 +205,13 @@
                                 <spy-form-item
                                     for="{{ businessInfoTab.name.vars.id }}"
                                     error="{{ businessInfoTab.name.vars.errors[0].message | default | trans }}"
+                                    required="{{ businessInfoTab.name.vars.required | boolToStr }}"
                                 >
                                     {{ businessInfoTab.name.vars.label | trans}}
                                     <spy-input
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.name.vars.id }}"
-                                        required="{{ businessInfoTab.name.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.name.vars.full_name }}"
                                         value="{{ businessInfoTab.name.vars.value }}"
                                         placeholder="{{ businessInfoTab.name.vars.attr.placeholder | default | trans }}"
@@ -234,7 +230,6 @@
                                         control
                                         attrs=""
                                         spy-id="{{ businessInfoTab.registration_number.vars.id }}"
-                                        required="{{ businessInfoTab.registration_number.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.registration_number.vars.full_name }}"
                                         value="{{ businessInfoTab.registration_number.vars.value }}"
                                         placeholder="{{ businessInfoTab.registration_number.vars.attr.placeholder | default | trans }}"
@@ -257,7 +252,6 @@
                                         control
                                         attrs="{{ referenceAttrs }}"
                                         spy-id="{{ businessInfoTab.registration_number.vars.id }}"
-                                        required="{{ businessInfoTab.merchant_reference.vars.required | boolToStr }}"
                                         name="{{ businessInfoTab.merchant_reference.vars.full_name }}"
                                         value="{{ businessInfoTab.merchant_reference.vars.value }}"
                                         placeholder="{{ businessInfoTab.merchant_reference.vars.attr.placeholder | default | trans }}"
@@ -285,7 +279,6 @@
                                             attrs=""
                                             outer-prefix="{{ urlForm.vars.data.urlPrefix | trans }}"
                                             spy-id="{{ urlForm.children.url.vars.id }}"
-                                            required="{{ urlForm.children.url.vars.required | boolToStr }}"
                                             name="{{ urlForm.children.url.vars.full_name }}"
                                             value="{{ urlForm.children.url.vars.value }}"
                                             placeholder="{{ urlForm.children.url.vars.attr.placeholder | default | trans }}"
@@ -317,7 +310,6 @@
                                                 spyId="{{ descriptionGlossaryKey.vars.id }}"
                                                 name="{{ descriptionGlossaryKey.vars.full_name }}"
                                                 value="{{ descriptionGlossaryKey.vars.value }}"
-                                                required="{{ descriptionGlossaryKey.vars.required | boolToStr }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -333,7 +325,6 @@
                                         control
                                         attrs=""
                                         spy-id="{{ onlineProfileTab.logo_url.vars.id }}"
-                                        required="{{ onlineProfileTab.logo_url.vars.required | boolToStr }}"
                                         name="{{ onlineProfileTab.logo_url.vars.full_name }}"
                                         value="{{ onlineProfileTab.logo_url.vars.value }}"
                                         placeholder="{{ onlineProfileTab.logo_url.vars.attr.placeholder | default | trans }}"
@@ -365,13 +356,13 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ bannerUrlGlossaryKey.vars.id }}"
-                                                required="{{ bannerUrlGlossaryKey.vars.required | boolToStr }}"
                                                 name="{{ bannerUrlGlossaryKey.vars.full_name }}"
                                                 value="{{ bannerUrlGlossaryKey.vars.value }}"
                                                 placeholder="{{ bannerUrlGlossaryKey.vars.attr.placeholder | default | trans }}"
                                                 type="text"
                                                 cloak
                                             >
+                                            </spy-input>
                                         </spy-form-item>
                                     </spy-collapsible>
                                 {% endfor %}
@@ -388,7 +379,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.address1.vars.id }}"
-                                                required="{{ onlineProfileTab.address1.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.address1.vars.full_name }}"
                                                 value="{{ onlineProfileTab.address1.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.address1.vars.attr.placeholder | default | trans }}"
@@ -408,7 +398,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.address2.vars.id }}"
-                                                required="{{ onlineProfileTab.address2.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.address2.vars.full_name }}"
                                                 value="{{ onlineProfileTab.address2.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.address2.vars.attr.placeholder | default | trans }}"
@@ -428,7 +417,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.zip_code.vars.id }}"
-                                                required="{{ onlineProfileTab.zip_code.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.zip_code.vars.full_name }}"
                                                 value="{{ onlineProfileTab.zip_code.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.zip_code.vars.attr.placeholder | default | trans }}"
@@ -448,7 +436,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.address3.vars.id }}"
-                                                required="{{ onlineProfileTab.address3.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.address3.vars.full_name }}"
                                                 value="{{ onlineProfileTab.address3.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.address3.vars.attr.placeholder | default | trans }}"
@@ -468,7 +455,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.city.vars.id }}"
-                                                required="{{ onlineProfileTab.city.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.city.vars.full_name }}"
                                                 value="{{ onlineProfileTab.city.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.city.vars.attr.placeholder | default | trans }}"
@@ -489,7 +475,6 @@
                                                 options="{{ onlineProfileTab.fk_country.vars.choices | json_encode() }}"
                                                 name="{{ onlineProfileTab.fk_country.vars.full_name }}"
                                                 value="{{ onlineProfileTab.fk_country.vars.data }}"
-                                                required="{{ onlineProfileTab.fk_country.vars.required | boolToStr }}"
                                                 disabled="{{ onlineProfileTab.fk_country.vars.disabled | boolToStr }}"
                                                 placeholder="{{ onlineProfileTab.fk_country.vars.placeholder | trans }}"
                                             ></spy-select>
@@ -505,7 +490,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.latitude.vars.id }}"
-                                                required="{{ onlineProfileTab.latitude.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.latitude.vars.full_name }}"
                                                 value="{{ onlineProfileTab.latitude.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.latitude.vars.attr.placeholder | default | trans }}"
@@ -525,7 +509,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.longitude.vars.id }}"
-                                                required="{{ onlineProfileTab.longitude.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.longitude.vars.full_name }}"
                                                 value="{{ onlineProfileTab.longitude.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.longitude.vars.attr.placeholder | default | trans }}"
@@ -545,7 +528,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.public_phone.vars.id }}"
-                                                required="{{ onlineProfileTab.public_phone.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.public_phone.vars.full_name }}"
                                                 value="{{ onlineProfileTab.public_phone.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.public_phone.vars.attr.placeholder | default | trans }}"
@@ -565,7 +547,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.fax_number.vars.id }}"
-                                                required="{{ onlineProfileTab.fax_number.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.fax_number.vars.full_name }}"
                                                 value="{{ onlineProfileTab.fax_number.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.fax_number.vars.attr.placeholder | default | trans }}"
@@ -585,7 +566,6 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ onlineProfileTab.public_email.vars.id }}"
-                                                required="{{ onlineProfileTab.public_email.vars.required | boolToStr }}"
                                                 name="{{ onlineProfileTab.public_email.vars.full_name }}"
                                                 value="{{ onlineProfileTab.public_email.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.public_email.vars.attr.placeholder | default | trans }}"
@@ -616,13 +596,13 @@
                                                 control
                                                 attrs=""
                                                 spy-id="{{ deliveryTimeGlossaryKey.vars.id }}"
-                                                required="{{ deliveryTimeGlossaryKey.vars.required | boolToStr }}"
                                                 name="{{ deliveryTimeGlossaryKey.vars.full_name }}"
                                                 value="{{ deliveryTimeGlossaryKey.vars.value }}"
                                                 placeholder="{{ deliveryTimeGlossaryKey.vars.attr.placeholder | default | trans }}"
                                                 type="text"
                                                 cloak
                                             >
+                                            </spy-input>
                                         </spy-form-item>
                                     </spy-collapsible>
                                 {% endfor %}
@@ -647,7 +627,6 @@
                                                 spy-id="{{ termsConditionsGlossaryKey.vars.id }}"
                                                 name="{{ termsConditionsGlossaryKey.vars.full_name }}"
                                                 value="{{ termsConditionsGlossaryKey.vars.value }}"
-                                                required="{{ termsConditionsGlossaryKey.vars.required | boolToStr }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -673,7 +652,6 @@
                                                 spy-id="{{ cancellationPolicyGlossaryKey.vars.id }}"
                                                 name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"
                                                 value="{{ cancellationPolicyGlossaryKey.vars.value }}"
-                                                required="{{ cancellationPolicyGlossaryKey.vars.required | boolToStr }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -699,7 +677,6 @@
                                                 spy-id="{{ imprintGlossaryKey.vars.id }}"
                                                 name="{{ imprintGlossaryKey.vars.full_name }}"
                                                 value="{{ imprintGlossaryKey.vars.value }}"
-                                                required="{{ imprintGlossaryKey.vars.required | boolToStr }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -725,7 +702,6 @@
                                                 spy-id="{{ dataPrivacyGlossaryKey.vars.id }}"
                                                 name="{{ dataPrivacyGlossaryKey.vars.full_name }}"
                                                 value="{{ dataPrivacyGlossaryKey.vars.value }}"
-                                                required="{{ dataPrivacyGlossaryKey.vars.required | boolToStr }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -748,7 +724,6 @@
                                                 control
                                                 name="{{ onlineProfileTab.is_active.vars.full_name }}"
                                                 value="{{ onlineProfileTab.is_active.vars.checked | boolToStr }}"
-                                                required="{{ onlineProfileTab.is_active.vars.required | boolToStr }}"
                                             ></spy-toggle>
                                         </spy-form-item>
                                     </div>
