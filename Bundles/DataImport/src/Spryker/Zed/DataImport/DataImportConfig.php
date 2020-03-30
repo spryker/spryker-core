@@ -20,6 +20,8 @@ class DataImportConfig extends AbstractBundleConfig
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
     public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
+    public const DEFAULT_CONFIG_PATH = null;
+
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
 

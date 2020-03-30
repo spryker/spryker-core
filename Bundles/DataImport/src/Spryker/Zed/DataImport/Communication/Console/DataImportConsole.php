@@ -126,8 +126,9 @@ class DataImportConsole extends Console
             return static::CODE_ERROR;
         }
 
-        if ($input->hasParameterOption('--' . static::OPTION_CONFIG)) {
-            return $this->executeByConfig($input);
+        $configPath = $this->getConfigPath($input);
+        if ($configPath !== null) {
+            return $this->executeByConfig($input, $configPath);
         }
 
         $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
@@ -155,14 +156,15 @@ class DataImportConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string $configPath
      *
      * @return int
      */
-    protected function executeByConfig(InputInterface $input): int
+    protected function executeByConfig(InputInterface $input, string $configPath): int
     {
         $dataImportConfigurationTransfers = $this->getFactory()
             ->createDataImportConfigurationYamlParser()
-            ->parseConfigurationFile($input->getOption(static::OPTION_CONFIG));
+            ->parseConfigurationFile($configPath);
 
         $this->info(sprintf('<fg=white>Start configured import</>'));
 
@@ -379,5 +381,20 @@ class DataImportConsole extends Console
         $dataImporterConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         return $dataImporterConfigurationTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return string|null
+     */
+    protected function getConfigPath(InputInterface $input): ?string
+    {
+        $configPath = DataImportConfig::DEFAULT_CONFIG_PATH;
+        if ($input->hasParameterOption('--' . static::OPTION_CONFIG)) {
+            $configPath = $input->getOption(static::OPTION_CONFIG);
+        }
+
+        return $configPath;
     }
 }
