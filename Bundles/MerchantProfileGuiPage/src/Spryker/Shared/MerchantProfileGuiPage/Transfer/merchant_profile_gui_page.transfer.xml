@@ -119,6 +119,7 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
 </transfers>
