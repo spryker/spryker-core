@@ -31,7 +31,7 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface
      */
-    protected $merchantsRestResponseBuilder;
+    protected $merchantOpeningHoursRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface
@@ -41,18 +41,18 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
     /**
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantOpeningHoursRestResponseBuilder
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
      */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
-        MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder,
+        MerchantOpeningHoursRestResponseBuilderInterface $merchantOpeningHoursRestResponseBuilder,
         MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
     ) {
         $this->merchantOpeningHoursStorageClient = $merchantOpeningHoursStorageClient;
         $this->merchantStorageClient = $merchantStorageClient;
-        $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
+        $this->merchantOpeningHoursRestResponseBuilder = $merchantOpeningHoursRestResponseBuilder;
         $this->merchantOpeningHoursTranslator = $merchantOpeningHoursTranslator;
     }
 
@@ -63,14 +63,16 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
      */
     public function getMerchantOpeningHours(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantReference = $this->findMerchantIdentifier($restRequest);
-        if (!$merchantReference) {
-            return $this->merchantsRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
+        $merchantResource = $restRequest->findParentResourceByType(MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANTS);
+
+        if (!$merchantResource || !$merchantResource->getId()) {
+            return $this->merchantOpeningHoursRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
+        $merchantReference = $merchantResource->getId();
 
         $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference([$merchantReference]);
         if (!$merchantStorageTransfers) {
-            return $this->merchantsRestResponseBuilder->createMerchantNotFoundErrorResponse();
+            return $this->merchantOpeningHoursRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
@@ -85,24 +87,9 @@ class MerchantOpeningHourReader implements MerchantOpeningHourReaderInterface
         $merchantOpeningHoursStorageTransferWithTranslatedNotes = reset($merchantOpeningHoursStorageTransfersWithTranslatedNotes)
             ?: new MerchantOpeningHoursStorageTransfer();
 
-        return $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResponse(
+        return $this->merchantOpeningHoursRestResponseBuilder->createMerchantOpeningHoursRestResponse(
             $merchantOpeningHoursStorageTransferWithTranslatedNotes,
             $merchantReference
         );
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string|null
-     */
-    protected function findMerchantIdentifier(RestRequestInterface $restRequest): ?string
-    {
-        $merchantResource = $restRequest->findParentResourceByType(MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANTS);
-        if ($merchantResource) {
-            return $merchantResource->getId();
-        }
-
-        return null;
     }
 }

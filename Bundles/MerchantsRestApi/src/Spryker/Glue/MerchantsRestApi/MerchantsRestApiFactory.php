@@ -39,7 +39,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantResourceMapper()
+            $this->createMerchantMapper()
         );
     }
 
@@ -54,7 +54,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface
      */
-    public function createMerchantResourceMapper(): MerchantMapperInterface
+    public function createMerchantMapper(): MerchantMapperInterface
     {
         return new MerchantMapper();
     }

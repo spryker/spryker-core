@@ -27,7 +27,7 @@ class MerchantOpeningHoursResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Merchant identifier is not specified.",
-     *              "404": "Merchant opening hours not found."
+     *              "404": "Merchant not found."
      *          }
      *     }
      * })
