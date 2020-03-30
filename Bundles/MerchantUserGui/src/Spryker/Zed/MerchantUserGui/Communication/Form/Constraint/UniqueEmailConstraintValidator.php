@@ -31,18 +31,30 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
             return;
         }
 
-        $userTransfer = $constraint->getUserFacade()->getUserByUsername($email);
-        if ($userTransfer == null) {
+        /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
+        $formDataUserTransfer = $this->context->getRoot()->getData();
+        if (!$formDataUserTransfer->getIdUser()) {
+            $this->addViolation($constraint, $email);
+
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\UserTransfer $formDataUserTransfer */
-        $formDataUserTransfer = $this->context->getRoot()->getData();
-
-        if (!$formDataUserTransfer->getIdUser() || $userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
-            $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ username }}', $email)
-                ->addViolation();
+        $userTransfer = $constraint->getUserFacade()->getUserByUsername($email);
+        if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
+            $this->addViolation($constraint, $email);
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint $constraint
+     * @param string $email
+     *
+     * @return void
+     */
+    protected function addViolation(Constraint $constraint, string $email): void
+    {
+        $this->context->buildViolation($constraint->getMessage())
+            ->setParameter('{{ username }}', $email)
+            ->addViolation();
     }
 }
