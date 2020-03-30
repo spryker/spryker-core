@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Business\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
@@ -50,18 +51,43 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2Codes = $this->getCountryIso2Codes($quoteTransfer->getItems());
-        $idProductOptionValues = $this->getIdProductOptionValues($quoteTransfer->getItems());
+        $itemTransfers = $this->recalculateForItemTransfers($quoteTransfer->getItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        $itemTransfers = $this->recalculateForItemTransfers($calculableObjectTransfer->getItems());
+        $calculableObjectTransfer->setItems($itemTransfers);
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function recalculateForItemTransfers(ArrayObject $itemTransfers): ArrayObject
+    {
+        $countryIso2Codes = $this->getCountryIso2Codes($itemTransfers);
+        $idProductOptionValues = $this->getIdProductOptionValues($itemTransfers);
 
         $taxRates = $this->findTaxRatesByIdOptionValuesAndCountryIso2Codes($idProductOptionValues, $countryIso2Codes);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $this->setProductOptionTaxRate(
                 $itemTransfer,
                 $taxRates,
                 $this->getShippingCountryIso2CodeByItem($itemTransfer)
             );
         }
+
+        return $itemTransfers;
     }
 
     /**
