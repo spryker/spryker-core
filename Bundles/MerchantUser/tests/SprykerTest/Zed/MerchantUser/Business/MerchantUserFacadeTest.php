@@ -230,19 +230,21 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentUserReturnsMerchantUserTransfer(): void
+    public function testGetCurrentMerchantUserReturnsCorrectMerchantUser(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
 
-        $userTransfer = new UserTransfer();
-        $this->userFacadeMock->expects($this->once())->method('getCurrentUser')->willReturn($userTransfer);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+        $this->userFacadeMock->method('getCurrentUser')->willReturn($userTransfer);
 
         // Act
-        $currentUserTransfer = $this->tester->getFacade()->getCurrentUser();
+        $currentMerchantUserTransfer = $this->tester->getFacade()->getCurrentMerchantUser();
 
         // Assert
-        $this->assertSame($userTransfer, $currentUserTransfer);
+        $this->assertEquals($merchantUserTransfer, $currentMerchantUserTransfer);
     }
 
     /**

@@ -17,5 +17,7 @@ interface MerchantOrderTotalsCreatorInterface
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer;
+    public function createMerchantOrderTotals(
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer;
 }

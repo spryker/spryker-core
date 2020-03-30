@@ -209,7 +209,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageTransfer
-     * @param \ArrayObject $localizedAttributes
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void

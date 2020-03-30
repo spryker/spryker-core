@@ -108,4 +108,14 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->getProductUrls($productUrlCriteriaFilterTransfer);
     }
+
+    /**
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
 }

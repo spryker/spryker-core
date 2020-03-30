@@ -44,3 +44,4 @@ profile.status.message,"<p>This means that your store is availiable online and p
                                                 <p>So make sure it looks good!</p>"
 Banner URL,Banner URL
 "The Profile was saved successfully.","The Profile was saved successfully."
+select.default.placeholder,Select
