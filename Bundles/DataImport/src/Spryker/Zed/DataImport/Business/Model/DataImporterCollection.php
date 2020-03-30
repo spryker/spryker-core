@@ -302,7 +302,7 @@ class DataImporterCollection implements
 
         if (!$dataImporters) {
             throw new InvalidImportGroupException(
-                sprintf('No data importers found for the import group %s. Make the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())
+                sprintf('No data importers found for the import group %s. Make sure the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())
             );
         }
 

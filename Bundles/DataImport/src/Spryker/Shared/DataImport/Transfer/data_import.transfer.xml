@@ -71,6 +71,12 @@
         <property name="queueName" type="string"/>
     </transfer>
 
+    <transfer name="DataImportConfiguration">
+        <property name="dataEntity" type="string"/>
+        <property name="source" type="string"/>
+        <property name="test" type="string"/>
+    </transfer>
+
     <transfer name="EventEntity">
     </transfer>
 

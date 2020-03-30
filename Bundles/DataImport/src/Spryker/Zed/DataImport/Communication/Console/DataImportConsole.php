@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Communication\Console;
 
 use Exception;
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -59,6 +60,9 @@ class DataImportConsole extends Console
     public const OPTION_IMPORT_GROUP = 'group';
     public const OPTION_IMPORT_GROUP_SHORT = 'g';
 
+    public const OPTION_CONFIG = 'config';
+    public const OPTION_CONFIG_SHORT = 'c';
+
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
      */
@@ -81,6 +85,7 @@ class DataImportConsole extends Console
         $this->addOption(static::OPTION_CSV_ESCAPE, static::OPTION_CSV_ESCAPE_SHORT, InputOption::VALUE_REQUIRED, 'Sets the csv escape.');
         $this->addOption(static::OPTION_CSV_HAS_HEADER, static::OPTION_CSV_HAS_HEADER_SHORT, InputOption::VALUE_REQUIRED, 'Set this option to 0 (zero) to disable that the first row of the csv file is a used as keys for the data sets.', true);
         $this->addOption(static::OPTION_IMPORT_GROUP, static::OPTION_IMPORT_GROUP_SHORT, InputOption::VALUE_REQUIRED, 'Defines the import group. Import group determines a specific subset of data importers to be used.', DataImportConfig::IMPORT_GROUP_FULL);
+        $this->addOption(static::OPTION_CONFIG, static::OPTION_CONFIG_SHORT, InputOption::VALUE_REQUIRED, 'Defines the import configuration .yml file.');
 
         if ($this->isAddedAsNamedDataImportCommand()) {
             $importerType = $this->getImporterType();
@@ -115,6 +120,16 @@ class DataImportConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if ($this->checkContradictoryInputParameters($input)) {
+            $this->error('Config can not be used when an importer is specified');
+
+            return static::CODE_ERROR;
+        }
+
+        if ($input->hasParameterOption('--' . static::OPTION_CONFIG)) {
+            return $this->executeByConfig($input);
+        }
+
         $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
 
         if (!$this->checkImportTypeAndGroupConfiguration($dataImporterConfigurationTransfer)) {
@@ -126,22 +141,70 @@ class DataImportConsole extends Console
         }
 
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
-        $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
+
+        $dataImporterReportTransfer = $this->executeImport($dataImporterConfigurationTransfer);
+
+        $this->info('<fg=white;options=bold>Overall Import status: </>' . $this->getImportStatusByDataImportReportStatus($dataImporterReportTransfer));
+
+        if ($dataImporterReportTransfer->getIsSuccess()) {
+            return static::CODE_SUCCESS;
+        }
+
+        return static::CODE_ERROR;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return int
+     */
+    protected function executeByConfig(InputInterface $input): int
+    {
+        $dataImportConfigurationTransfers = $this->getFactory()
+            ->createDataImportConfigurationYamlParser()
+            ->parseConfigurationFile($input->getOption(static::OPTION_CONFIG));
+
+        $this->info(sprintf('<fg=white>Start configured import</>'));
+
+        $returnExitCode = static::CODE_SUCCESS;
+        foreach ($dataImportConfigurationTransfers as $dataImportConfigurationTransfer) {
+            $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
+            $dataImporterConfigurationTransfer = $this->mapDataImportConfigTransferToDataImporterConfigTransfer(
+                $dataImportConfigurationTransfer,
+                $dataImporterConfigurationTransfer
+            );
+
+            $dataImporterReportTransfer = $this->executeImport($dataImporterConfigurationTransfer);
+
+            if (!$dataImporterReportTransfer->getIsSuccess()) {
+                $returnExitCode = static::CODE_ERROR;
+            }
+        }
+
+        $importStatus = $returnExitCode === static::CODE_SUCCESS ? $this->getImportStatusSuccess() : $this->getImportStatusFailed();
+        $this->info('<fg=white;options=bold>Overall Import status: </>' . $importStatus);
+
+        return $returnExitCode;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    protected function executeImport(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
+    {
+        $dataImporterReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
         /** @var \Generated\Shared\Transfer\DataImporterReportTransfer[]|null $dataImporterReports */
-        $dataImporterReports = $dataImportReportTransfer->getDataImporterReports();
+        $dataImporterReports = $dataImporterReportTransfer->getDataImporterReports();
         if ($dataImporterReports) {
             $this->printDataImporterReports($dataImporterReports);
         }
 
         $this->info('<fg=green>---------------------------------</>');
-        $this->info('<fg=white;options=bold>Overall Import status: </>' . $this->getImportStatus($dataImportReportTransfer));
 
-        if ($dataImportReportTransfer->getIsSuccess()) {
-            return static::CODE_SUCCESS;
-        }
-
-        return static::CODE_ERROR;
+        return $dataImporterReportTransfer;
     }
 
     /**
@@ -170,12 +233,28 @@ class DataImportConsole extends Console
      *
      * @return string
      */
-    protected function getImportStatus(DataImporterReportTransfer $dataImportReportTransfer)
+    protected function getImportStatusByDataImportReportStatus(DataImporterReportTransfer $dataImportReportTransfer): string
     {
         if ($dataImportReportTransfer->getIsSuccess()) {
-            return '<fg=green>Successful</>';
+            return $this->getImportStatusSuccess();
         }
 
+        return $this->getImportStatusFailed();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getImportStatusSuccess(): string
+    {
+        return '<fg=green>Successful</>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getImportStatusFailed(): string
+    {
         return '<fg=red>Failed</>';
     }
 
@@ -211,7 +290,7 @@ class DataImportConsole extends Console
             $dataImporterReport->getExpectedImportableDataSetCount(),
             $dataImporterReport->getImportedDataSetCount(),
             $dataImporterReport->getImportTime(),
-            $this->getImportStatus($dataImporterReport)
+            $this->getImportStatusByDataImportReportStatus($dataImporterReport)
         ));
     }
 
@@ -271,5 +350,34 @@ class DataImportConsole extends Console
     {
         return $dataImporterConfigurationTransfer->getImportType() === static::DEFAULT_IMPORTER_TYPE
             || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return bool
+     */
+    protected function checkContradictoryInputParameters(InputInterface $input): bool
+    {
+        return $input->getArgument(static::ARGUMENT_IMPORTER) && $input->hasParameterOption('--' . static::OPTION_CONFIG);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    protected function mapDataImportConfigTransferToDataImporterConfigTransfer(
+        DataImportConfigurationTransfer $dataImportConfigurationTransfer,
+        DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+    ): DataImporterConfigurationTransfer {
+        $dataImporterReaderConfigurationTransfer = $dataImporterConfigurationTransfer->getReaderConfiguration() ?? new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName($dataImportConfigurationTransfer->getSource());
+
+        $dataImporterConfigurationTransfer->setImportType($dataImportConfigurationTransfer->getDataEntity());
+        $dataImporterConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        return $dataImporterConfigurationTransfer;
     }
 }
