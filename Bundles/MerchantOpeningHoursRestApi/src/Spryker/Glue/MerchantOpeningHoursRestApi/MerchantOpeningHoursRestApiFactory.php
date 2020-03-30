@@ -13,6 +13,8 @@ use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHo
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Expander\MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Expander\MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpanderInterface;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapper;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader\MerchantOpeningHourReader;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader\MerchantOpeningHourReaderInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilder;
@@ -43,7 +45,10 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
      */
     public function createMerchantOpeningHoursRestResponseBuilder(): MerchantOpeningHoursRestResponseBuilderInterface
     {
-        return new MerchantOpeningHoursRestResponseBuilder($this->getResourceBuilder());
+        return new MerchantOpeningHoursRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createMerchantOpeningHoursMapper()
+        );
     }
 
     /**
@@ -65,6 +70,14 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
             $this->createMerchantOpeningHoursRestResponseBuilder(),
             $this->createMerchantOpeningHoursTranslator()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface
+     */
+    public function createMerchantOpeningHoursMapper(): MerchantOpeningHoursMapperInterface
+    {
+        return new MerchantOpeningHoursMapper();
     }
 
     /**

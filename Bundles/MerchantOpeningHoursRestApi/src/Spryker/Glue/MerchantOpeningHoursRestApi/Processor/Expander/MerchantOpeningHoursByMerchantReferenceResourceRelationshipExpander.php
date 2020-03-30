@@ -18,7 +18,7 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface
      */
-    protected $merchantsRestResponseBuilder;
+    protected $merchantOpeningHoursRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface
@@ -38,18 +38,18 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
     /**
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder
+     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantOpeningHoursRestResponseBuilder
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
      */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
-        MerchantOpeningHoursRestResponseBuilderInterface $merchantsRestResponseBuilder,
+        MerchantOpeningHoursRestResponseBuilderInterface $merchantOpeningHoursRestResponseBuilder,
         MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
     ) {
         $this->merchantOpeningHoursStorageClient = $merchantOpeningHoursStorageClient;
         $this->merchantStorageClient = $merchantStorageClient;
-        $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
+        $this->merchantOpeningHoursRestResponseBuilder = $merchantOpeningHoursRestResponseBuilder;
         $this->merchantOpeningHoursTranslator = $merchantOpeningHoursTranslator;
     }
 
@@ -61,35 +61,64 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $merchantReferences = $this->getMerchantReferences($resources);
-        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+        $merchantStorageTransfers = $this->getMerchantStorageTransfers($resources);
 
-        $merchantIdsIndexedByReference = $this->getMerchantIdsIndexedByReference($merchantStorageTransfers);
-        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
-            ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
-
-        $merchantOpeningHoursStorageTransfers = $this->indexCollectionByMerchantReferences($merchantOpeningHoursStorageTransfers, $merchantIdsIndexedByReference);
-
-        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
-            ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
-                $merchantOpeningHoursStorageTransfers,
-                $restRequest->getMetadata()->getLocale()
-            );
+        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->getTranslatedMerchantOpeningHoursStorageTransfers(
+            $merchantStorageTransfers,
+            $restRequest
+        );
 
         foreach ($resources as $resource) {
             $resourceId = $resource->getId();
-            if (!$resourceId) {
+            if (!$resourceId || !isset($merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resourceId])) {
                 continue;
             }
 
             $merchantOpeningHoursStorageTransfer = $merchantOpeningHoursStorageTransfersWithTranslatedNotes[$resourceId];
-            $restMerchantOpeningHoursResource = $this->merchantsRestResponseBuilder->createMerchantOpeningHoursRestResource(
+            $restMerchantOpeningHoursResource = $this->merchantOpeningHoursRestResponseBuilder->createMerchantOpeningHoursRestResource(
                 $merchantOpeningHoursStorageTransfer,
                 $resourceId
             );
 
             $resource->addRelationship($restMerchantOpeningHoursResource);
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    protected function getMerchantStorageTransfers(array $resources): array
+    {
+        $merchantReferences = $this->getMerchantReferences($resources);
+
+        return $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    protected function getTranslatedMerchantOpeningHoursStorageTransfers(array $merchantStorageTransfers, RestRequestInterface $restRequest): array
+    {
+        $merchantIdsIndexedByReference = $this->getMerchantIdsIndexedByReference($merchantStorageTransfers);
+
+        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
+            ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
+
+        $indexedMerchantOpeningHoursStorageTransfers = $this->indexCollectionByMerchantReferences(
+            $merchantOpeningHoursStorageTransfers,
+            $merchantIdsIndexedByReference
+        );
+
+        return $this->merchantOpeningHoursTranslator
+            ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
+                $indexedMerchantOpeningHoursStorageTransfers,
+                $restRequest->getMetadata()->getLocale()
+            );
     }
 
     /**

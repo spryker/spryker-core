@@ -27,18 +27,18 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface
      */
-    protected $merchantsResourceMapper;
+    protected $merchantMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface $merchantsResourceMapper
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface $merchantMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        MerchantMapperInterface $merchantsResourceMapper
+        MerchantMapperInterface $merchantMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->merchantsResourceMapper = $merchantsResourceMapper;
+        $this->merchantMapper = $merchantMapper;
     }
 
     /**
@@ -92,7 +92,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
      */
     protected function createMerchantsRestResource(MerchantStorageTransfer $merchantStorageTransfer): RestResourceInterface
     {
-        $restMerchantsAttributesTransfer = $this->merchantsResourceMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
+        $restMerchantsAttributesTransfer = $this->merchantMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
             $merchantStorageTransfer,
             new RestMerchantsAttributesTransfer()
         );

@@ -32,6 +32,20 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
      */
     public function getMerchantOpeningHoursTransfersWithTranslatedNotes(array $merchantOpeningHoursStorageTransfers, string $localeName): array
     {
+        $scheduleNotes = $this->getScheduleNotes($merchantOpeningHoursStorageTransfers);
+
+        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNotes, $localeName);
+
+        return $this->updateDateScheduleTransfers($merchantOpeningHoursStorageTransfers, $translatedNotes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     *
+     * @return string[]
+     */
+    protected function getScheduleNotes(array $merchantOpeningHoursStorageTransfers): array
+    {
         $scheduleNotes = [];
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
@@ -39,8 +53,17 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
             }
         }
 
-        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNotes, $localeName);
+        return $scheduleNotes;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param string[] $translatedNotes
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    protected function updateDateScheduleTransfers(array $merchantOpeningHoursStorageTransfers, array $translatedNotes): array
+    {
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
                 $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
