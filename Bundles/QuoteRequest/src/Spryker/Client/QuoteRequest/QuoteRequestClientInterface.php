@@ -237,7 +237,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Returns true if quote request reference is set and quote request version reference is empty, false otherwise.
+     * - Returns true if quote request version is editable.
      *
      * @api
      *
@@ -249,7 +249,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Returns true if request reference is empty and custom shipment price is set, false otherwise.
+     * - Returns true if shipment price can be changed for provided quote request version.
      *
      * @api
      *
