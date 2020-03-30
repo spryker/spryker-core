@@ -23,7 +23,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
     public const FACADE_URL = 'FACADE_URL';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER';
+    public const PLUGINS_MERCHANT_FORM_EXPANDER = 'PLUGINS_MERCHANT_FORM_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_DATA_EXPANDER = 'PLUGINS_MERCHANT_TABLE_DATA_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER = 'PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER = 'PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER';
@@ -88,7 +88,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantFormExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER, function () {
+        $container->set(static::PLUGINS_MERCHANT_FORM_EXPANDER, function () {
             return $this->getMerchantFormExpanderPlugins();
         });
 

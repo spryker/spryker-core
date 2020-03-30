@@ -134,9 +134,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
 
         $urlEntity->setUrl($url);
 
-        if ($urlEntity->isNew() || $urlEntity->isModified()) {
-            $urlEntity->save();
-        }
+        $urlEntity->save();
 
         $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
     }

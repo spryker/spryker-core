@@ -117,7 +117,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getMerchantFormExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER);
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_FORM_EXPANDER);
     }
 
     /**
