@@ -58,7 +58,7 @@ class TargetDirectoryResolver
      *
      * @throws \InvalidArgumentException
      *
-     * @return array
+     * @return string[]
      */
     private function getOptions(string $application): array
     {

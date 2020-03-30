@@ -266,7 +266,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes Yves Ide autocompletion files
+     * - Removes Yves IDE autocompletion files
      *
      * @api
      *
@@ -283,7 +283,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes Zed Ide autocompletion files
+     * - Removes Zed IDE autocompletion files
      *
      * @api
      *
@@ -300,7 +300,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes Client Ide autocompletion files
+     * - Removes Client IDE autocompletion files
      *
      * @api
      *
@@ -317,7 +317,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes Service Ide autocompletion files
+     * - Removes Service IDE autocompletion files
      *
      * @api
      *
@@ -334,7 +334,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes Glue Ide autocompletion files
+     * - Removes Glue IDE autocompletion files
      *
      * @api
      *
