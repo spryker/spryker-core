@@ -90,7 +90,7 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => static::LABEL_FK_COUNTRY,
-            'placeholder' => 'Select one',
+            'placeholder' => 'select.default.placeholder',
             'required' => false,
             'choices' => array_flip($choices),
         ]);
