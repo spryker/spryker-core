@@ -41,49 +41,35 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
-     * @return string[]
+     * @return string
      */
     public function clearCache()
     {
         return $this->clear(
-            $this->config->getCachePath(),
-            $this->config->getAllowedStores()
+            $this->config->getCachePath()
         );
     }
 
     /**
-     * @return string[]
+     * @return string
      */
     public function clearAutoLoaderCache()
     {
         return $this->clear(
-            $this->config->getAutoloaderCachePath(),
-            $this->config->getAllowedStores()
+            $this->config->getAutoloaderCachePath()
         );
     }
 
     /**
-     * @param string $directoryPattern
-     * @param string[] $stores
+     * @param string $directory
      *
-     * @return string[]
+     * @return string
      */
-    protected function clear($directoryPattern, array $stores)
+    protected function clear($directory)
     {
-        $emptiedDirectories = [];
+        $this->clearDirectory($directory);
 
-        foreach ($stores as $store) {
-            $directory = $this->getDirectoryPathFromPattern($directoryPattern, $store);
-
-            if (!$this->fileSystem->exists($directory)) {
-                continue;
-            }
-
-            $this->clearDirectory($directory);
-            $emptiedDirectories[] = $directory;
-        }
-
-        return $emptiedDirectories;
+        return $directory;
     }
 
     /**

@@ -31,22 +31,14 @@ class AutoloaderCacheDelete
     /**
      * Deletes all cache files for all stores
      *
-     * @return string[]
+     * @return string
      */
     public function deleteAllFiles()
     {
         $rootDirectory = $this->config->getAutoloaderCachePath();
-        $stores = $this->config->getAllowedStores();
-        $dirs = [];
-        foreach ($stores as $store) {
-            $directory = str_replace('{STORE}', $store, $rootDirectory);
-            if (is_dir($directory)) {
-                $dirs[] = $directory;
-            }
-        }
         $filesystem = new Filesystem();
-        $filesystem->remove($dirs);
+        $filesystem->remove($rootDirectory);
 
-        return $dirs;
+        return $rootDirectory;
     }
 }

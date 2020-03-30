@@ -29,9 +29,19 @@ class CacheConfig extends AbstractBundleConfig
      *
      * @return string
      */
+    public function getCodeBucketCachePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/data/cache';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
     public function getAutoloaderCachePath()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/autoloader';
+        return APPLICATION_ROOT_DIR . '/data/autoloader';
     }
 
     /**

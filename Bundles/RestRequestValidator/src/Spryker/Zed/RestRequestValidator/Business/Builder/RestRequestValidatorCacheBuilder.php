@@ -63,4 +63,16 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
             $this->restRequestValidatorCacheSaver->save($config, $storeName);
         }
     }
+
+    /**
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function buildCacheForCodeBucket(string $codeBucket): void
+    {
+        $config = $this->restRequestValidatorCacheCollector->collect($codeBucket);
+        $config = $this->restRequestValidatorSchemaMerger->merge($config);
+        $this->restRequestValidatorCacheSaver->saveCacheForCodeBucket($config, $codeBucket);
+    }
 }
