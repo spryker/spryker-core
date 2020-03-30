@@ -135,7 +135,7 @@ interface CategoryFacadeInterface
      *  - Touches created category-node entities active (via TouchFacade)
      *  - Touches navigation (via TouchFacade)
      *  - Touches created url entities active (via TouchFacade)
-     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and nodes
+     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
      *
      * @api
      *
