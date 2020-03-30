@@ -31,4 +31,22 @@ class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements Mercha
                 ->setMerchantStorageProfile($merchantStorageProfile),
         ];
     }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    {
+        $merchantStorageProfile = (new MerchantStorageProfileTransfer())
+            ->setMerchantUrl('url-test')
+            ->setPublicEmail('email-test');
+
+        return (new MerchantStorageTransfer())
+                ->setIdMerchant(1)
+                ->setMerchantReference('MER000006')
+                ->setName('Kudu Merchant')
+                ->setMerchantStorageProfile($merchantStorageProfile);
+    }
 }
