@@ -228,7 +228,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface
      */
-    protected function createCategoryNodePublisher(): CategoryNodePublisherInterface
+    public function createCategoryNodePublisher(): CategoryNodePublisherInterface
     {
         return new CategoryNodePublisher(
             $this->getRepository(),
