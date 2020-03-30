@@ -10,6 +10,8 @@ namespace Spryker\Zed\Acl\Business;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\Acl\AclConfigReader;
 use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
@@ -54,6 +56,17 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createRuleValidatorHelper(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Business\Filter\NavigationItemFilterInterface
+     */
+    public function createNavigationItemFilter(): NavigationItemFilterInterface
+    {
+        return new NavigationItemFilter(
+            $this->createRuleModel(),
+            $this->getUserFacade()
         );
     }
 

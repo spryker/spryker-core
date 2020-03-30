@@ -11,8 +11,10 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceRelationshipExpander;
 use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceRelationshipExpanderInterface;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapper;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapper;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapper;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReader;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilder;
@@ -32,11 +34,22 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
-    public function createOrderResourceMapper(): OrderResourceMapperInterface
+    public function createOrderMapper(): OrderMapperInterface
     {
-        return new OrderResourceMapper($this->getRestOrderItemsAttributesMapperPlugins());
+        return new OrderMapper(
+            $this->createOrderShipmentMapper(),
+            $this->getRestOrderItemsAttributesMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface
+     */
+    public function createOrderShipmentMapper(): OrderShipmentMapperInterface
+    {
+        return new OrderShipmentMapper();
     }
 
     /**
@@ -46,7 +59,7 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createOrderResourceMapper()
+            $this->createOrderMapper()
         );
     }
 

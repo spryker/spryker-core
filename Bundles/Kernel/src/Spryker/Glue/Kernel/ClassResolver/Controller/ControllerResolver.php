@@ -8,7 +8,6 @@
 namespace Spryker\Glue\Kernel\ClassResolver\Controller;
 
 use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
-use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
 class ControllerResolver extends AbstractControllerResolver
 {
@@ -27,7 +26,7 @@ class ControllerResolver extends AbstractControllerResolver
      *
      * @return \Spryker\Glue\Kernel\Controller\AbstractController
      */
-    public function resolve(BundleControllerActionInterface $bundleControllerAction)
+    public function resolve($bundleControllerAction)
     {
         /** @var \Spryker\Glue\Kernel\Controller\AbstractController $controller */
         $controller = parent::resolve($bundleControllerAction);
