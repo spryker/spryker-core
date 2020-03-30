@@ -52,28 +52,19 @@ class EntityTransferDefinitionFinder implements FinderInterface
     {
         $finder = new Finder();
 
-        $existingSourceDirectories = $this->getExistingSourceDirectories();
-        if (empty($existingSourceDirectories)) {
-            return [];
-        }
+        $propelSchemaPath = $this->getPropelSchemaPath();
 
-        $finder->in($existingSourceDirectories)->name($this->transferConfig->getEntityFileNamePattern())->depth('< 1');
+        $finder->in($propelSchemaPath)->name($this->transferConfig->getEntityFileNamePattern())->depth('< 1');
 
         return iterator_to_array($finder->getIterator());
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    protected function getExistingSourceDirectories()
+    protected function getPropelSchemaPath(): string
     {
-        $existingDirectories = [];
-
-        foreach ($this->transferConfig->getEntitiesSourceDirectories() as $sourceDirectory) {
-            $existingDirectories = array_merge($existingDirectories, $this->glob($sourceDirectory));
-        }
-
-        return $existingDirectories;
+        return $this->propelFacade->getSchemaDirectory();
     }
 
     /**

@@ -1,19 +1,10 @@
 {
-  "name": "spryker/transfer",
+  "name": "spryker/store-storage",
   "type": "library",
-  "description": "Transfer module",
+  "description": "StoreStorage module",
   "license": "proprietary",
   "require": {
-    "fzaninotto/faker": "^1.6",
-    "php": ">=7.2",
-    "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.42.0",
-    "spryker/log": "^3.0.0",
-    "spryker/propel": "^3.20.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0",
-    "spryker/util-glob": "^1.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/kernel": "^3.40.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -21,8 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Transfer\\Helper\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
@@ -38,7 +28,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
