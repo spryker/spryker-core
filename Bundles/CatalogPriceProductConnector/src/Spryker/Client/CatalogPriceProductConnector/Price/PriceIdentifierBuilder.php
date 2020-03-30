@@ -29,6 +29,21 @@ class PriceIdentifierBuilder implements PriceIdentifierBuilderInterface
     protected $priceProductClient;
 
     /**
+     * @var string|null
+     */
+    protected static $priceTypeDefaultName;
+
+    /**
+     * @var string|null
+     */
+    protected static $currencyIsoCode;
+
+    /**
+     * @var string|null
+     */
+    protected static $currentPriceMode;
+
+    /**
      * @param \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceClientInterface $priceClient
      * @param \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductClientInterface $priceProductClient
@@ -48,11 +63,47 @@ class PriceIdentifierBuilder implements PriceIdentifierBuilderInterface
      */
     public function buildIdentifierForCurrentCurrency()
     {
-        $priceType = $this->priceProductClient->getPriceTypeDefaultName();
-        $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
-        $priceMode = $this->priceClient->getCurrentPriceMode();
+        $priceType = $this->getPriceTypeDefaultName();
+        $currencyIsoCode = $this->getCurrencyIsoCode();
+        $priceMode = $this->getCurrentPriceMode();
 
         return $this->buildIdentifierFor($priceType, $currencyIsoCode, $priceMode);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPriceTypeDefaultName(): string
+    {
+        if (!static::$priceTypeDefaultName) {
+            static::$priceTypeDefaultName = $this->priceProductClient->getPriceTypeDefaultName();
+        }
+
+        return static::$priceTypeDefaultName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrencyIsoCode(): string
+    {
+        if (!static::$currencyIsoCode) {
+            static::$currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
+        }
+
+        return static::$currencyIsoCode;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentPriceMode(): string
+    {
+        if (!static::$currentPriceMode) {
+            static::$currentPriceMode = $this->priceClient->getCurrentPriceMode();
+        }
+
+        return static::$currentPriceMode;
     }
 
     /**

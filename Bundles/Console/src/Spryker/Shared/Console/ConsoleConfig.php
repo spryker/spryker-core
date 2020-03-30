@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Console;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class ConsoleConfig extends AbstractBundleConfig
+class ConsoleConfig extends AbstractSharedConfig
 {
     /**
      * @api

@@ -251,7 +251,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
      */
     protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {

@@ -94,6 +94,9 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestErrorCollectionTransfer $restErrorCollectionTransfer
     ): RestErrorCollectionTransfer {
+        if (!$this->config->isPaymentProviderMethodToStateMachineMappingEnabled()) {
+            return $restErrorCollectionTransfer;
+        }
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
         foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
             if (!isset($paymentProviderMethodToStateMachineMapping[$restPaymentTransfer->getPaymentProviderName()][$restPaymentTransfer->getPaymentMethodName()])) {
