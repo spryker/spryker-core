@@ -257,6 +257,7 @@
     "spryker/doctrine-inflector": "*",
     "spryker/documentation-generator-rest-api": "*",
     "spryker/documentation-generator-rest-api-extension": "*",
+    "spryker/dummy-marketplace-payment": "*",
     "spryker/dummy-payment": "*",
     "spryker/egulias": "*",
     "spryker/elastica": "*",
