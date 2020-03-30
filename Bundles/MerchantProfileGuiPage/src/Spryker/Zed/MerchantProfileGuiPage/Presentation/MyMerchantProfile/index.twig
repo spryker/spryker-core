@@ -1,5 +1,9 @@
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
 
+{% block headTitle %}
+    {{ 'Profile' | trans }}
+{% endblock %}
+
 {% set merchantProfileForm = form.children.merchantProfile %}
 {% set addressCollection = merchantProfileForm.children.addressCollection %}
 
