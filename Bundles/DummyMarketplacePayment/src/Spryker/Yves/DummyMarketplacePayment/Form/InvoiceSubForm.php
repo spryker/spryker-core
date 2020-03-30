@@ -15,6 +15,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentFactory getFactory()
@@ -100,7 +101,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                     'placeholder' => 'customer.birth_date',
                 ],
                 'constraints' => [
-                    $this->getFactory()->createNotBlankConstraint(),
+                    new NotBlank(['groups' => $this->getPropertyPath()]),
                     $this->getFactory()->createDateOfBirthValueConstraint(),
                 ],
             ]
