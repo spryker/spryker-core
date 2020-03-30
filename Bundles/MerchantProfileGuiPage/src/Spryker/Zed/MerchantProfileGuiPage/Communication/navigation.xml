@@ -5,7 +5,7 @@
         <title>Profile</title>
         <icon>profile</icon>
         <bundle>merchant-profile-gui-page</bundle>
-        <controller>my-merchant-profile</controller>
+        <controller>profile</controller>
         <action>index</action>
     </merchant-profile-gui-page>
 </config>

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
  */
-class MyMerchantProfileController extends AbstractController
+class ProfileController extends AbstractController
 {
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile was saved successfully.';
 
