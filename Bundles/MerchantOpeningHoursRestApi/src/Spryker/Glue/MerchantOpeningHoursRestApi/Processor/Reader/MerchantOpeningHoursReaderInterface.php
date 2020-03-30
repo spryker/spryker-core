@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface MerchantOpeningHourReaderInterface
+interface MerchantOpeningHoursReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

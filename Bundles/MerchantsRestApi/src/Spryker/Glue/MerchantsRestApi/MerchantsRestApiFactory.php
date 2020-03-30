@@ -32,7 +32,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface
      */
-    public function createMerchantsReader(): MerchantReaderInterface
+    public function createMerchantReader(): MerchantReaderInterface
     {
         return new MerchantReader(
             $this->getMerchantStorageClient(),
