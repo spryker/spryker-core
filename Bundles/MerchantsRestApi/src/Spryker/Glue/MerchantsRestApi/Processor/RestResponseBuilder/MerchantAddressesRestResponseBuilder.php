@@ -10,6 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 use ArrayObject;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -55,11 +56,18 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
                 new RestMerchantAddressesAttributesTransfer()
             );
 
-        return $this->restResourceBuilder->createRestResource(
+        $restResource = $this->restResourceBuilder->createRestResource(
             MerchantsRestApiConfig::RESOURCE_MERCHANT_ADDRESSES,
             $merchantReference,
             $restMerchantsAttributesTransfer
         );
+
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getMerchantAddressesResourceSelfLink($merchantReference)
+        );
+
+        return $restResource;
     }
 
     /**
@@ -104,5 +112,20 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return string
+     */
+    protected function getMerchantAddressesResourceSelfLink(string $merchantReference): string
+    {
+        return sprintf(
+            '%s/%s/%s',
+            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+            $merchantReference,
+            MerchantsRestApiConfig::RESOURCE_MERCHANT_ADDRESSES
+        );
     }
 }

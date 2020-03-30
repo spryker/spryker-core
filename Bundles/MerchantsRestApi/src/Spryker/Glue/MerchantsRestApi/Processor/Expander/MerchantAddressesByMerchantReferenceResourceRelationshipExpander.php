@@ -50,7 +50,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
 
         foreach ($resources as $resource) {
             $resourceId = $resource->getId();
-            if (!$resourceId) {
+            if (!$resourceId || !isset($merchantStorageTransfers[$resourceId])) {
                 continue;
             }
 

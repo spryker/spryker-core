@@ -44,8 +44,8 @@ class MerchantAddressesReader implements MerchantAddressesReaderInterface
      */
     public function getMerchantAddresses(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantReference = $this->findMerchantIdentifier($restRequest);
-        if (!$merchantReference) {
+        $merchantResource = $restRequest->findParentResourceByType(MerchantsRestApiConfig::RESOURCE_MERCHANTS);
+        if (!$merchantResource || !$merchantResource->getId()) {
             return $this->merchantsAddressesRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
@@ -60,22 +60,7 @@ class MerchantAddressesReader implements MerchantAddressesReaderInterface
 
         return $this->merchantsAddressesRestResponseBuilder->createMerchantAddressesRestResponse(
             $merchantStorageProfileAddressTransfers,
-            $merchantReference
+            $merchantResource->getId()
         );
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string|null
-     */
-    protected function findMerchantIdentifier(RestRequestInterface $restRequest): ?string
-    {
-        $merchantResource = $restRequest->findParentResourceByType(MerchantsRestApiConfig::RESOURCE_MERCHANTS);
-        if ($merchantResource) {
-            return $merchantResource->getId();
-        }
-
-        return null;
     }
 }

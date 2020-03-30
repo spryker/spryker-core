@@ -26,10 +26,9 @@ class MerchantAddressesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "400": "Unprocessable entity.",
+     *              "400": "Merchant identifier is not specified.",
      *              "404": "Merchant not found."
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestMerchantAddressesAttributesTransfer"
      *     }
      * })
      *

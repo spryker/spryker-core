@@ -80,7 +80,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantAddressesRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantAddressesResourceMapper()
+            $this->createMerchantAddressesMapper()
         );
     }
 
@@ -103,7 +103,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface
      */
-    public function createMerchantAddressesResourceMapper(): MerchantAddressesMapperInterface
+    public function createMerchantAddressesMapper(): MerchantAddressesMapperInterface
     {
         return new MerchantAddressesMapper();
     }
