@@ -34,8 +34,7 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
      */
-    public function __construct
-    (
+    public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
     ) {
@@ -56,9 +55,11 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
         $restResource = $this->restResourceBuilder->createRestResource(
             MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANT_OPENING_HOURS,
             $merchantReference,
-            (new RestMerchantOpeningHoursAttributesTransfer())->fromArray($merchantOpeningHoursStorageTransfer->toArray(), true)
+            $this->merchantOpeningHoursMapper->mapMerchantOpeningHoursStorageTransferToRestMerchantOpeningHoursAttributesTransfer(
+                $merchantOpeningHoursStorageTransfer,
+                new RestMerchantOpeningHoursAttributesTransfer()
+            )
         );
-        $this->merchantOpeningHoursMapper->map
 
         $restResource->addLink(
             RestLinkInterface::LINK_SELF,
@@ -83,6 +84,14 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
         return $this->restResourceBuilder
             ->createRestResponse()
             ->addResource($merchantsRestResource);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyMerchantOpeningHoursRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
     }
 
     /**

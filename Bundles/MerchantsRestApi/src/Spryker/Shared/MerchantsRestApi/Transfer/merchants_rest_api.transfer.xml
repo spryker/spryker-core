@@ -10,11 +10,11 @@
         <property name="description" type="string"/>
         <property name="deliveryTime" type="string"/>
         <property name="merchantPageUrl" type="string"/>
-        <property name="legalInformation" type="LegalInformation"/>
+        <property name="legalInformation" type="RestLegalInformation"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
-    <transfer name="LegalInformation">
+    <transfer name="RestLegalInformation">
         <property name="terms" type="string"/>
         <property name="cancellationPolicy" type="string"/>
         <property name="imprint" type="string"/>

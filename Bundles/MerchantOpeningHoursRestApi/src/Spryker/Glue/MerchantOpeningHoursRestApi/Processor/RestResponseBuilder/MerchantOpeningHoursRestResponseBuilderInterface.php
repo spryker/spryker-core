@@ -43,5 +43,10 @@ interface MerchantOpeningHoursRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createEmptyMerchantOpeningHoursRestResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface;
 }

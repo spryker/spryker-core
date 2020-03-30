@@ -72,11 +72,10 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
         );
     }
 
-
     /**
-     * @return \Spryker\Glue\MerchantOpeninghoursRestApi\Processor\Mapper\MerchantOpeninghoursMapperInterface
+     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface
      */
-    public function createMerchantOpeningHoursMapper(): MerchantOpeninghoursMapperInterface
+    public function createMerchantOpeningHoursMapper(): MerchantOpeningHoursMapperInterface
     {
         return new MerchantOpeningHoursMapper();
     }

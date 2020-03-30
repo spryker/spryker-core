@@ -7,9 +7,10 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\LegalInformationTransfer;
 use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
+use Generated\Shared\Transfer\RestDateScheduleTransfer;
 use Generated\Shared\Transfer\RestMerchantOpeningHoursAttributesTransfer;
+use Generated\Shared\Transfer\RestWeekdayScheduleTransfer;
 
 class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
 {
@@ -23,24 +24,16 @@ class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
         MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
         RestMerchantOpeningHoursAttributesTransfer $restMerchantOpeningHoursAttributesTransfer
     ): RestMerchantOpeningHoursAttributesTransfer {
+        foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
+            $restDateScheduleTransfer = (new RestDateScheduleTransfer())->fromArray($dateScheduleTransfer->toArray(), true);
+            $restMerchantOpeningHoursAttributesTransfer->addRestDateSchedule($restDateScheduleTransfer);
+        }
 
+        foreach ($merchantOpeningHoursStorageTransfer->getWeekdaySchedule() as $weekdayScheduleTransfer) {
+            $restWeekdayScheduleTransfer = (new RestWeekdayScheduleTransfer())->fromArray($weekdayScheduleTransfer->toArray(), true);
+            $restMerchantOpeningHoursAttributesTransfer->addRestWeekdaySchedule($restWeekdayScheduleTransfer);
+        }
 
-//        $restDateScheduleTransfer = (new RestDateScheduleTransfer())->fromArray($merchantOpeningHoursStorageTransfer->getDateSchedule());
-//        $restMerchantOpeningHoursAttributesTransfer->setRestDateSchedule()
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
-
-        $legalInformationTransfer = (new LegalInformationTransfer())
-            ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
-            ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacyGlossaryKey())
-            ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
-            ->setTerms($merchantStorageProfileTransfer->getTermsConditionsGlossaryKey());
-
-        return $restMerchantsAttributesTransfer->fromArray($merchantStorageProfileTransfer->toArray(), true)
-            ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
-            ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
-            ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
-            ->setMerchantPageUrl($merchantStorageProfileTransfer->getMerchantUrl())
-            ->setLegalInformation($legalInformationTransfer)
-            ->setMerchantName($merchantStorageTransfer->getName());
+        return $restMerchantOpeningHoursAttributesTransfer;
     }
 }
