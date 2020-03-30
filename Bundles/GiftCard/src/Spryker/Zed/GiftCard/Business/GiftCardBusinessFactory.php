@@ -52,6 +52,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardBusinessFactory extends AbstractBusinessFactory
 {
@@ -63,7 +64,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardReader(
             $this->getQueryContainer(),
             $this->createGiftCardActualValueHydrator(),
-            $this->getEncodingService()
+            $this->getEncodingService(),
+            $this->getRepository()
         );
     }
 
