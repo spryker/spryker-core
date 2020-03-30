@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantDataImport\Business\Model;
 
-use Generated\Shared\Transfer\EventEntityTransfer;
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -32,11 +30,6 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         MerchantDataSetInterface::STATUS,
         MerchantDataSetInterface::EMAIL,
     ];
-
-    /**
-     * @var \Generated\Shared\Transfer\EventEntityTransfer[]
-     */
-    protected $entityEventTransfers = [];
 
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
@@ -76,19 +69,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         $merchantEntity = $this->saveGlossaryKeyAttributes($merchantEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
         $merchantEntity->save();
 
-        $this->addPublishEvent($merchantEntity);
-    }
-
-    /**
-     * @return void
-     */
-    public function afterExecute(): void
-    {
-        foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(MerchantEvents::MERCHANT_PUBLISH, $entityEventTransfer);
-        }
-
-        $this->entityEventTransfers = [];
+        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantEntity->getIdMerchant());
     }
 
     /**
@@ -157,25 +138,6 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
             $urlEntity->save();
         }
 
-        $eventEntityTransfer = new EventEntityTransfer();
-        $eventEntityTransfer->setId($urlEntity->getIdUrl());
-
-        $this->eventFacade->trigger(UrlEvents::URL_PUBLISH, $eventEntityTransfer);
-    }
-
-    /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
-     *
-     * @return void
-     */
-    protected function addPublishEvent(SpyMerchant $merchantEntity): void
-    {
-        $eventEntityTransfer = new EventEntityTransfer();
-        $eventEntityTransfer->setId($merchantEntity->getIdMerchant());
-        $eventEntityTransfer->setAdditionalValues([
-            SpyMerchantTableMap::COL_MERCHANT_REFERENCE => $merchantEntity->getMerchantReference(),
-        ]);
-
-        $this->entityEventTransfers[] = $eventEntityTransfer;
+        $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
     }
 }

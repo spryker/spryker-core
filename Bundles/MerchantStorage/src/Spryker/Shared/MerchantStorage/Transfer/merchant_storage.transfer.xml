@@ -9,7 +9,7 @@
         <property name="name" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
-        <property name="merchantStorageProfile" type="MerchantStorageProfile"/>
+        <property name="merchantProfile" type="MerchantStorageProfile"/>
     </transfer>
 
     <transfer name="MerchantStorageProfile">

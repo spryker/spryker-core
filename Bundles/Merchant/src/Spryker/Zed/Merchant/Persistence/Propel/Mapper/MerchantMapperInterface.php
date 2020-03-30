@@ -36,13 +36,13 @@ interface MerchantMapperInterface
     ): MerchantTransfer;
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $collection
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntities
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function mapMerchantCollectionToMerchantCollectionTransfer(
-        $collection,
+        $merchantEntities,
         MerchantCollectionTransfer $merchantCollectionTransfer
     ): MerchantCollectionTransfer;
 }

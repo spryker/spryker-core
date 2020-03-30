@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantStorage\Mapper;
@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
-use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface;
+use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 
 class UrlStorageMerchantMapper implements UrlStorageMerchantMapperInterface
 {
     /**
-     * @var \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface
+     * @var \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -27,11 +27,11 @@ class UrlStorageMerchantMapper implements UrlStorageMerchantMapperInterface
     protected $storageClient;
 
     /**
-     * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface $storageClient
      */
     public function __construct(
-        MerchantStorageConnectorToSynchronizationServiceInterface $synchronizationService,
+        MerchantStorageToSynchronizationServiceInterface $synchronizationService,
         MerchantStorageToStorageClientInterface $storageClient
     ) {
         $this->synchronizationService = $synchronizationService;

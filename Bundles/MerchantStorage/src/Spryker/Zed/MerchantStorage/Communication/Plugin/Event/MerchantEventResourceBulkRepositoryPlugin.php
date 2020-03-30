@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Event;
@@ -47,7 +47,7 @@ class MerchantEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $merchantCriteriaFilterTransfer = $this->createMerchantCriteriaFilterTransfer($filterTransfer);
+        $merchantCriteriaFilterTransfer = (new MerchantCriteriaFilterTransfer())->setFilter($filterTransfer);
         $merchantCollectionTransfer = $this->getFactory()
             ->getMerchantFacade()
             ->get($merchantCriteriaFilterTransfer);
@@ -91,15 +91,5 @@ class MerchantEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
             ->setOrderBy(SpyMerchantTableMap::COL_ID_MERCHANT)
             ->setOffset($offset)
             ->setLimit($limit);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer
-     */
-    protected function createMerchantCriteriaFilterTransfer(FilterTransfer $filterTransfer): MerchantCriteriaFilterTransfer
-    {
-        return (new MerchantCriteriaFilterTransfer())->setFilter($filterTransfer);
     }
 }

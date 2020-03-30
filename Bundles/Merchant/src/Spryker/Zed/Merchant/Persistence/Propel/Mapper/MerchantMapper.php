@@ -53,18 +53,18 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntityCollection
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntities
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function mapMerchantCollectionToMerchantCollectionTransfer(
-        $merchantEntityCollection,
+        $merchantEntities,
         MerchantCollectionTransfer $merchantCollectionTransfer
     ): MerchantCollectionTransfer {
         $merchants = new ArrayObject();
 
-        foreach ($merchantEntityCollection as $merchantEntity) {
+        foreach ($merchantEntities as $merchantEntity) {
             $merchants->append($this->mapMerchantEntityToMerchantTransfer($merchantEntity, new MerchantTransfer()));
         }
 

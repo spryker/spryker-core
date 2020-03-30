@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantStorage\Storage;
@@ -10,7 +10,7 @@ namespace Spryker\Client\MerchantStorage\Storage;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
-use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface;
+use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
@@ -26,7 +26,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     protected $merchantStorageMapper;
 
     /**
-     * @var \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface
+     * @var \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -42,13 +42,13 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
 
     /**
      * @param \Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface $merchantStorageMapper
-     * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         MerchantStorageMapperInterface $merchantStorageMapper,
-        MerchantStorageConnectorToSynchronizationServiceInterface $synchronizationService,
+        MerchantStorageToSynchronizationServiceInterface $synchronizationService,
         MerchantStorageToStorageClientInterface $storageClient,
         MerchantStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
@@ -67,7 +67,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     {
         $merchantKey = $this->generateKey((string)$idMerchant);
         $merchantData = $this->storageClient->get($merchantKey);
-        if (empty($merchantData)) {
+        if (!$merchantData) {
             return null;
         }
 
@@ -81,7 +81,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      */
     public function get(array $merchantIds): array
     {
-        $merchantDataCollection = [];
+        $merchantStorageTransfers = [];
 
         $merchantKeys = array_map(function ($idMerchant) {
             return $this->generateKey((string)$idMerchant);
@@ -93,12 +93,12 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
             if ($merchantData === null) {
                 continue;
             }
-            $merchantDataCollection[] = $this->merchantStorageMapper->mapMerchantStorageDataToMerchantStorageTransfer(
+            $merchantStorageTransfers[] = $this->merchantStorageMapper->mapMerchantStorageDataToMerchantStorageTransfer(
                 $this->utilEncodingService->decodeJson($merchantData, true)
             );
         }
 
-        return $merchantDataCollection;
+        return $merchantStorageTransfers;
     }
 
     /**

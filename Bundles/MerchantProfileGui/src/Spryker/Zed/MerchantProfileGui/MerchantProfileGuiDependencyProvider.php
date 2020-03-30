@@ -18,7 +18,6 @@ use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleF
  */
 class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';

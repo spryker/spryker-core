@@ -22,8 +22,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductOfferStorageRepository extends AbstractRepository implements MerchantProductOfferStorageRepositoryInterface
 {
-    protected const CONCRETE_SKU = 'concreteSku';
-
     /**
      * @param int[] $merchantIds
      *
@@ -33,14 +31,13 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery
-            ->innerJoinSpyMerchant()
-            ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
-            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN));
+            ->useSpyMerchantQuery()
+                ->filterByIdMerchant_In($merchantIds)
+            ->endUse();
 
         return $productOfferPropelQuery
-            ->select(static::CONCRETE_SKU)
+            ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
             ->distinct()
-            ->withColumn(SpyProductOfferTableMap::COL_CONCRETE_SKU, static::CONCRETE_SKU)
             ->find()
             ->getData();
     }
@@ -64,7 +61,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferStorageMapper = $this->getFactory()->createProductOfferStorageMapper();
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
-            $productOfferTransfer->setStores($productOfferStorageMapper->getStoresByProductOfferEntity($productOfferEntity));
+            $productOfferTransfer->setStores($productOfferStorageMapper->mapStoresByProductOfferEntity($productOfferEntity));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }

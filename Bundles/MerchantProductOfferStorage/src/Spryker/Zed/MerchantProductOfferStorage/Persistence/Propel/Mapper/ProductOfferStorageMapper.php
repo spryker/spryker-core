@@ -50,7 +50,7 @@ class ProductOfferStorageMapper
         );
 
         $productOfferTransfer = $productOfferTransfer->setMerchantReference($productOfferEntity->getSpyMerchant()->getMerchantReference());
-        $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
+        $productOfferTransfer->setStores($this->mapStoresByProductOfferEntity($productOfferEntity));
 
         return $productOfferTransfer;
     }
@@ -60,7 +60,7 @@ class ProductOfferStorageMapper
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
      */
-    public function getStoresByProductOfferEntity(SpyProductOffer $productOfferEntity): ArrayObject
+    public function mapStoresByProductOfferEntity(SpyProductOffer $productOfferEntity): ArrayObject
     {
         $storeTransfers = [];
         foreach ($productOfferEntity->getSpyStores() as $storeEntity) {

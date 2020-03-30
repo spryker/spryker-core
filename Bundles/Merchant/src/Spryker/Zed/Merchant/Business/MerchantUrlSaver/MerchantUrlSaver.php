@@ -54,7 +54,7 @@ class MerchantUrlSaver implements MerchantUrlSaverInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveMerchantUrl(UrlTransfer $urlTransfer): UrlTransfer
+    protected function saveMerchantUrl(UrlTransfer $urlTransfer): UrlTransfer
     {
         if ($urlTransfer->getIdUrl() === null) {
             return $this->urlFacade->createUrl($urlTransfer);

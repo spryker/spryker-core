@@ -2,18 +2,18 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantStorage\Business\Writer;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantStorageProfileTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface;
+use Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface;
 
 class MerchantStorageWriter implements MerchantStorageWriterInterface
 {
@@ -33,18 +33,26 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     protected $merchantStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface
+     */
+    protected $merchantStorageRepository;
+
+    /**
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface $merchantStorageEntityManager
+     * @param \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface $merchantStorageRepository
      */
     public function __construct(
         MerchantStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantStorageToMerchantFacadeInterface $merchantFacade,
-        MerchantStorageEntityManagerInterface $merchantStorageEntityManager
+        MerchantStorageEntityManagerInterface $merchantStorageEntityManager,
+        MerchantStorageRepositoryInterface $merchantStorageRepository
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantFacade = $merchantFacade;
         $this->merchantStorageEntityManager = $merchantStorageEntityManager;
+        $this->merchantStorageRepository = $merchantStorageRepository;
     }
 
     /**
@@ -64,14 +72,13 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param string[] $merchantIds
+     * @param int[] $merchantIds
      *
      * @return void
      */
     protected function writeCollectionByMerchantIds(array $merchantIds): void
     {
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setMerchantIds($merchantIds);
+        $merchantCriteriaFilterTransfer = (new MerchantCriteriaFilterTransfer())->setMerchantIds($merchantIds);
 
         $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaFilterTransfer);
 
@@ -100,9 +107,6 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     protected function mapMerchantTransferToStorageTransfer(MerchantTransfer $merchantTransfer): MerchantStorageTransfer
     {
         $merchantStorageTransfer = (new MerchantStorageTransfer())->fromArray($merchantTransfer->modifiedToArray(), true);
-        $merchantStorageProfileTransfer = (new MerchantStorageProfileTransfer())->fromArray($merchantTransfer->getMerchantProfile()->modifiedToArray(), true);
-
-        $merchantStorageTransfer->setMerchantStorageProfile($merchantStorageProfileTransfer);
 
         return $merchantStorageTransfer;
     }

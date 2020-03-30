@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\MerchantStorage\Communication\Plugin\Event\Listener;
@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
-use Spryker\Zed\Merchant\MerchantDependencyProvider;
-use Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileExpanderPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantStoragePublishListener;
 
 /**
@@ -49,10 +47,6 @@ class MerchantStorageListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
-
-        $this->tester->setDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER, [
-            new MerchantProfileExpanderPlugin(),
-        ]);
     }
 
     /**
@@ -61,18 +55,18 @@ class MerchantStorageListenerTest extends Unit
     public function testMerchantPublishStorageListenerStoreData(): void
     {
         // Arrange
-        $merchantProfileTransfer = $this->tester->haveMerchantProfile($this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]));
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
 
         // Act
         $merchantStoragePublishListener = new MerchantStoragePublishListener();
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($merchantProfileTransfer->getFkMerchant()),
+            (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
         ];
 
         $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         // Assert
-        $merchantStorageEntity = $this->tester->findMerchantStorageEntityByIdMerchant($merchantProfileTransfer->getFkMerchant());
+        $merchantStorageEntity = $this->tester->findMerchantStorageEntityByIdMerchant($merchantTransfer->getIdMerchant());
 
         $this->assertNotNull($merchantStorageEntity);
         $this->assertArrayHasKey('id_merchant', $merchantStorageEntity->getData());
@@ -87,12 +81,9 @@ class MerchantStorageListenerTest extends Unit
         $merchantTransfer1 = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
         $merchantTransfer2 = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
 
-        $merchantProfileTransfer1 = $this->tester->haveMerchantProfile($merchantTransfer1);
-        $merchantProfileTransfer2 = $this->tester->haveMerchantProfile($merchantTransfer2);
-
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($merchantProfileTransfer1->getFkMerchant()),
-            (new EventEntityTransfer())->setId($merchantProfileTransfer2->getFkMerchant()),
+            (new EventEntityTransfer())->setId($merchantTransfer1->getIdMerchant()),
+            (new EventEntityTransfer())->setId($merchantTransfer2->getIdMerchant()),
         ];
 
         $merchantStoragePublishListener = new MerchantStoragePublishListener();

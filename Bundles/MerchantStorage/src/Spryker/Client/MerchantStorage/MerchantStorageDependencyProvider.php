@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantStorage;
@@ -10,7 +10,7 @@ namespace Spryker\Client\MerchantStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientBridge;
-use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceBridge;
+use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceBridge;
 
 class MerchantStorageDependencyProvider extends AbstractDependencyProvider
@@ -42,7 +42,7 @@ class MerchantStorageDependencyProvider extends AbstractDependencyProvider
     protected function addSynchronizationService(Container $container): Container
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
-            return new MerchantStorageConnectorToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+            return new MerchantStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         });
 
         return $container;

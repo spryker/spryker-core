@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Merchant\Business\MerchantUrlSaver;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 
 interface MerchantUrlSaverInterface
 {
@@ -20,11 +19,4 @@ interface MerchantUrlSaverInterface
     public function saveMerchantUrls(
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function saveMerchantUrl(UrlTransfer $urlTransfer): UrlTransfer;
 }

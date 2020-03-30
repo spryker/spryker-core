@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantStorage\Dependency\Facade;
@@ -27,7 +27,7 @@ class MerchantStorageToEventBehaviorFacadeBridge implements MerchantStorageToEve
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array
+    public function getEventTransferIds(array $eventTransfers)
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }

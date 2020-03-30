@@ -2,14 +2,14 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
-use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface;
+use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapper;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface;
@@ -53,9 +53,9 @@ class MerchantStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageConnectorToSynchronizationServiceInterface
+     * @return \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService(): MerchantStorageConnectorToSynchronizationServiceInterface
+    public function getSynchronizationService(): MerchantStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(MerchantStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
