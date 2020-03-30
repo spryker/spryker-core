@@ -11,8 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReader;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReaderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
@@ -22,11 +22,11 @@ use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResp
 class MerchantsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantsReaderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface
      */
-    public function createMerchantsReader(): MerchantsReaderInterface
+    public function createMerchantReader(): MerchantReaderInterface
     {
-        return new MerchantsReader(
+        return new MerchantReader(
             $this->getMerchantStorageClient(),
             $this->createMerchantsRestResponseBuilder()
         );
