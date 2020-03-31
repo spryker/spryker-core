@@ -20,6 +20,7 @@ use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface;
 use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \Spryker\Zed\SessionRedis\SessionRedisConfig getConfig()
@@ -121,6 +122,14 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig()->getLockingRetryDelayMicroseconds(),
             $this->getConfig()->getLockingLockTtlMilliseconds()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(SessionRedisDependencyProvider::REQUEST_STACK);
     }
 
     /**
