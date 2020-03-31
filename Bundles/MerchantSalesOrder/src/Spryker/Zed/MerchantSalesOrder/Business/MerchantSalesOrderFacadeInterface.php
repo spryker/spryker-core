@@ -32,6 +32,7 @@ interface MerchantSalesOrderFacadeInterface
      * - Creates a new merchant order item for each order item with merchant reference and assign it to a merchant order accordingly.
      * - Creates a new merchant order totals and assign it to a merchant order accordingly.
      * - Returns a collection of merchant orders filled with merchant order items and merchant order totals.
+     * - Executes MerchantOrderPostCreatePluginInterface plugin stack.
      *
      * @api
      *
