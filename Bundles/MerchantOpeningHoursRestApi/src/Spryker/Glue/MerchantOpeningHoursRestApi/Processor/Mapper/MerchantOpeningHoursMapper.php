@@ -26,12 +26,12 @@ class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
     ): RestMerchantOpeningHoursAttributesTransfer {
         foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
             $restDateScheduleTransfer = (new RestDateScheduleTransfer())->fromArray($dateScheduleTransfer->toArray(), true);
-            $restMerchantOpeningHoursAttributesTransfer->addRestDateSchedule($restDateScheduleTransfer);
+            $restMerchantOpeningHoursAttributesTransfer->addDateSchedule($restDateScheduleTransfer);
         }
 
         foreach ($merchantOpeningHoursStorageTransfer->getWeekdaySchedule() as $weekdayScheduleTransfer) {
             $restWeekdayScheduleTransfer = (new RestWeekdayScheduleTransfer())->fromArray($weekdayScheduleTransfer->toArray(), true);
-            $restMerchantOpeningHoursAttributesTransfer->addRestWeekdaySchedule($restWeekdayScheduleTransfer);
+            $restMerchantOpeningHoursAttributesTransfer->addWeekdaySchedule($restWeekdayScheduleTransfer);
         }
 
         return $restMerchantOpeningHoursAttributesTransfer;

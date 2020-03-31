@@ -9,6 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientBridge;
 
 /**
@@ -17,6 +18,7 @@ use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsS
 class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +29,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
         $container = $this->addMerchantStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -41,6 +44,22 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantsRestApiToMerchantsStorageClientBridge(
                 //TODO
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new MerchantsRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 
