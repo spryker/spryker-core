@@ -717,7 +717,9 @@
                             <spy-card class="mp-profile__card" cloak title="{{ 'Online Status' | trans }}">
                                 <div class="mp-profile__status">
                                     <div>
-                                        <h3 class="mp-profile__status-title">Your Store is online.</h3>
+                                        <h3 class="{{ onlineProfileTab.is_active.vars.checked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
+                                            {{ onlineProfileTab.is_active.vars.checked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
+                                        </h3>
                                     </div>
                                     <div>
                                         <spy-form-item
@@ -733,7 +735,9 @@
                                         </spy-form-item>
                                     </div>
                                     <div>
-                                        {{ 'profile.status.message' | trans | raw }}
+                                        {{ onlineProfileTab.is_active.vars.checked ?
+                                            'profile.status.message.online' | trans | raw :
+                                            'profile.status.message.offline' | trans | raw }}
                                     </div>
                                 </div>
                             </spy-card>
