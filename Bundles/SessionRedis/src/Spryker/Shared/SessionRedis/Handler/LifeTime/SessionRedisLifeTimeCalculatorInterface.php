@@ -12,5 +12,5 @@ interface SessionRedisLifeTimeCalculatorInterface
     /**
      * @return int
      */
-    public function getZedSessionLifeTime(): int;
+    public function getSessionLifeTime(): int;
 }

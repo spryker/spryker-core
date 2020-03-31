@@ -118,7 +118,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     {
         return $this->redisClient->setex(
             $this->keyBuilder->buildSessionKey($sessionId),
-            $this->sessionRedisLifeTimeCalculator->getZedSessionLifeTime(),
+            $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
             $data
         );
     }

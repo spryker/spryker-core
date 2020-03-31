@@ -10,6 +10,8 @@ namespace Spryker\Yves\SessionRedis;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
@@ -60,11 +62,19 @@ class SessionRedisFactory extends AbstractFactory
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),
-            $this->getConfig()->getSessionLifetime(),
+            $this->createSessionRedisLifeTimeCalculator(),
             $this->getConfig()->getLockingTimeoutMilliseconds(),
             $this->getConfig()->getLockingRetryDelayMicroseconds(),
             $this->getConfig()->getLockingLockTtlMilliseconds()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface
+     */
+    public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
+    {
+        return new SessionRedisLifeTimeCalculator($this->getConfig()->getSessionLifetime());
     }
 
     /**
