@@ -11,10 +11,10 @@
     "spryker/locale": "^3.0.0",
     "spryker/merchant": "^2.1.0",
     "spryker/merchant-profile": "^0.1.4",
-    "spryker/merchant-user": "^0.2.1",
+    "spryker/merchant-user": "^0.3.1",
     "spryker/symfony": "^3.0.0",
     "spryker/url": "^3.0.0",
-    "spryker/zed-ui": "^0.1.0"
+    "spryker/zed-ui": "^0.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
