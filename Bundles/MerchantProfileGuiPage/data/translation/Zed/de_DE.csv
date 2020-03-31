@@ -28,8 +28,6 @@ Number,Nummer
 "Online Status","Online Status"
 Phone,Telefonnummer
 Profile,Profil
-"store.state.online",Your Store is online.
-"store.state.offline",Your Store is offline.
 "profile.status.message.online","<p>This means that your store is availiable online and people can see it.</p>
                                                 <br>
                                                 <p>So make sure it looks good!</p>"
@@ -42,6 +40,8 @@ Banner URL,Banner-URL
 Role,Rolle
 select.default.placeholder,Select
 "Store Profile URL","Profil-URL speichern"
+"store.state.online",Your Store is online.
+"store.state.offline",Your Store is offline.
 Street,Straße
 "Terms and Conditions",AGB
 "The Profile was saved successfully.","Das Profil wurde erfolgreich gespeichert."
