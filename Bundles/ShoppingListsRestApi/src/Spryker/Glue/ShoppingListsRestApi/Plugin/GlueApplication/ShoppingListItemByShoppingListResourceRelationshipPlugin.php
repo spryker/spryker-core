@@ -13,17 +13,16 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiFactory getFactory()
  */
 class ShoppingListItemByShoppingListResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
-     * })
-     *
      * - Adds `shopping-list-items` resource as relationship by shopping list.
      * - Requires ShoppingListTransfer be provided in resource payload.
      *

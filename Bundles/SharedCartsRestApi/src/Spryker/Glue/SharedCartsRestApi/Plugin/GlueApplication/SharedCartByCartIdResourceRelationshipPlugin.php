@@ -13,17 +13,16 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestSharedCartsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiFactory getFactory()
  */
 class SharedCartByCartIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestSharedCartsAttributesTransfer"
-     * })
-     *
      * - Adds shared-carts resource as relationship.
      *
      * @api

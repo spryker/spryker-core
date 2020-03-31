@@ -13,17 +13,16 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
 class CartRuleByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
-     * })
-     *
      * - Adds cart-rules resource as relationship by quote.
      *
      * @api

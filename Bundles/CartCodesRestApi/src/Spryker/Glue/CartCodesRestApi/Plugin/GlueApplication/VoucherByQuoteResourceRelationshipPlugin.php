@@ -13,17 +13,16 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
 class VoucherByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestDiscountsAttributesTransfer"
-     * })
-     *
      * - Adds vouchers resource as relationship by quote.
      *
      * @api

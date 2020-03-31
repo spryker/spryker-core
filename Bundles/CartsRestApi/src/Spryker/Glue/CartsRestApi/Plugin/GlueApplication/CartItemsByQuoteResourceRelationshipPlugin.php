@@ -13,17 +13,16 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
-     * })
-     *
      * - Adds items resource as relationship by quote.
      * - Requires QuoteTransfer be provided in resource payload.
      *

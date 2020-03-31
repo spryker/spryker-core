@@ -10,13 +10,14 @@ namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\Glu
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 
+/**
+ * @Glue({
+ *     "resourceAttributesClassName": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAnnotationResourceRelationshipAttributesTransfer"
+ * })
+ */
 class TestAnnotationResourceRelationshipPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * @Glue({
-     *     "resourceAttributesClassName": "SprykerTest\\Zed\\DocumentationGeneratorRestApi\\Business\\Stub\\RestTestAnnotationResourceRelationshipAttributesTransfer"
-     * })
-     *
      * @param array $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

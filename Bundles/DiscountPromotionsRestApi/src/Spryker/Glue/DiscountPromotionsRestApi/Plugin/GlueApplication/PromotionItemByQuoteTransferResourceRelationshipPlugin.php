@@ -13,17 +13,16 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestPromotionalItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory getFactory()
  */
 class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * @Glue({
-     *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestPromotionalItemsAttributesTransfer"
-     * })
-     *
      * - Adds `promotional-items` resource as relationship.
      * - Will add relationship only in case `QuoteTransfer` is provided as parent resource payload.
      * - Builds `promotional-items` resources from each `QuoteTransfer.promotionItems`.
