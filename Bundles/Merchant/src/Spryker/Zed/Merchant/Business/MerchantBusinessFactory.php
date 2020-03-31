@@ -39,7 +39,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->getMerchantPostSavePlugins(),
             $this->getMerchantPostCreatePlugins(),
             $this->createMerchantUrlSaver()
         );
@@ -54,7 +53,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
-            $this->getMerchantPostSavePlugins(),
             $this->getMerchantPostUpdatePlugins(),
             $this->createMerchantUrlSaver()
         );
@@ -97,16 +95,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): MerchantToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::SERVICE_UTIL_TEXT);
-    }
-
-    /**
-     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
-     *
-     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    public function getMerchantPostSavePlugins(): array
-    {
-        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_SAVE);
     }
 
     /**

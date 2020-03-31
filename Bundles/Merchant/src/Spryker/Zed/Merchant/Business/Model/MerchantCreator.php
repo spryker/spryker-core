@@ -35,11 +35,6 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantPostCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    protected $merchantPostSavePlugins;
-
-    /**
      * @var \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface
      */
     protected $merchantUrlSaver;
@@ -47,21 +42,18 @@ class MerchantCreator implements MerchantCreatorInterface
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[] $merchantPostCreatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantConfig $merchantConfig,
-        array $merchantPostSavePlugins,
         array $merchantPostCreatePlugins,
         MerchantUrlSaverInterface $merchantUrlSaver
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostCreatePlugins = $merchantPostCreatePlugins;
-        $this->merchantPostSavePlugins = $merchantPostSavePlugins;
         $this->merchantUrlSaver = $merchantUrlSaver;
     }
 
@@ -132,10 +124,6 @@ class MerchantCreator implements MerchantCreatorInterface
             if (!$merchantResponseTransfer->getIsSuccess()) {
                 throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
             }
-        }
-
-        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
-            $merchantTransfer = $merchantPostSavePlugin->execute($merchantTransfer);
         }
 
         return $merchantTransfer;

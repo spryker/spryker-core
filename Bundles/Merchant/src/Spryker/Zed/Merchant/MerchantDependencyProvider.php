@@ -20,10 +20,6 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_URL = 'FACADE_URL';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
-    /**
-     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_POST_CREATE or PLUGINS_MERCHANT_POST_UPDATE instead.
-     */
-    public const PLUGINS_MERCHANT_POST_SAVE = 'PLUGINS_MERCHANT_POST_SAVE';
     public const PLUGINS_MERCHANT_POST_CREATE = 'PLUGINS_MERCHANT_POST_CREATE';
     public const PLUGINS_MERCHANT_POST_UPDATE = 'PLUGINS_MERCHANT_POST_UPDATE';
     public const PLUGINS_MERCHANT_EXPANDER = 'PLUGINS_MERCHANT_EXPANDER';
@@ -36,7 +32,6 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilTextService($container);
-        $container = $this->addMerchantPostSavePlugins($container);
         $container = $this->addMerchantPostCreatePlugins($container);
         $container = $this->addMerchantPostUpdatePlugins($container);
         $container = $this->addMerchantExpanderPlugins($container);
@@ -82,22 +77,6 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_MERCHANT_POST_UPDATE, function () {
             return $this->getMerchantPostUpdatePlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Use \Spryker\Zed\Merchant\MerchantDependencyProvider::addMerchantPostCreatePlugins() or addMerchantPostUpdatePlugins() instead.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantPostSavePlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_MERCHANT_POST_SAVE, function () {
-            return $this->getMerchantPostSavePlugins();
         });
 
         return $container;

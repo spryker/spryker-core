@@ -46,11 +46,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantPostUpdatePlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    protected $merchantPostSavePlugins;
-
-    /**
      * @var \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface
      */
     protected $merchantUrlSaver;
@@ -59,7 +54,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      */
@@ -67,7 +61,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
         MerchantStatusValidatorInterface $merchantStatusValidator,
-        array $merchantPostSavePlugins,
         array $merchantPostUpdatePlugins,
         MerchantUrlSaverInterface $merchantUrlSaver
     ) {
@@ -75,7 +68,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
         $this->merchantRepository = $merchantRepository;
         $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantPostUpdatePlugins = $merchantPostUpdatePlugins;
-        $this->merchantPostSavePlugins = $merchantPostSavePlugins;
         $this->merchantUrlSaver = $merchantUrlSaver;
     }
 
@@ -153,10 +145,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
             if (!$merchantResponseTransfer->getIsSuccess()) {
                 throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
             }
-        }
-
-        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
-            $merchantTransfer = $merchantPostSavePlugin->execute($merchantTransfer);
         }
 
         return $merchantTransfer;
