@@ -28,11 +28,10 @@ Number,Nummer
 "Online Status","Online Status"
 Phone,Telefonnummer
 Profile,Profil
-"profile.status.message.online","<p>This means that your store is availiable online and people can see it.</p>
+profile.status.message.online,"<p>This means that your store is availiable online and people can see it.</p>
                                                 <br>
                                                 <p>So make sure it looks good!</p>"
-"profile.status.message.offline","<p>This means that your store is not availiable online and noone can see it.</p>"
-Banner URL,Banner-URL
+profile.status.message.offline,"<p>This means that your store is not availiable online and noone can see it.</p>"
 "Public Email",Kontakt-E-Mail-Adresse
 "Public Phone",Kontakt-Telefonnummer
 "Registration number",Registrierungsnummer
@@ -40,8 +39,8 @@ Banner URL,Banner-URL
 Role,Rolle
 select.default.placeholder,Select
 "Store Profile URL","Profil-URL speichern"
-"store.state.online",Your Store is online.
-"store.state.offline",Your Store is offline.
+store.state.online,"Your Store is online."
+store.state.offline,"Your Store is offline."
 Street,Straße
 "Terms and Conditions",AGB
 "The Profile was saved successfully.","Das Profil wurde erfolgreich gespeichert."
