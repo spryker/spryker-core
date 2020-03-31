@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -39,6 +40,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return int
      */
     public function getTotalCount()
@@ -53,6 +56,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return array
      */
@@ -389,5 +394,31 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function installSources(LoggerInterface $messenger): void
     {
         $this->getFactory()->createSearchSourceInstaller($messenger)->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacyMode(): bool
+    {
+        return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
     }
 }

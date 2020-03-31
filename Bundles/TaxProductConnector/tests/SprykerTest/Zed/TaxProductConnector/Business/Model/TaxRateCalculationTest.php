@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
@@ -70,7 +71,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
      */
-    protected function createProductItemTaxRateCalculator()
+    protected function createProductItemTaxRateCalculator(): ProductItemTaxRateCalculator
     {
         return $this->getMockBuilder(ProductItemTaxRateCalculator::class)
             ->setMethods(['findTaxRatesByAllIdProductAbstractsAndCountryIso2Code'])
@@ -82,9 +83,9 @@ class TaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
+     * @return \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createTaxFacadeMock()
+    protected function createTaxFacadeMock(): TaxProductConnectorToTaxInterface
     {
         $taxDefaultMock = $this->getMockBuilder(TaxProductConnectorToTaxInterface::class)
             ->getMock();
@@ -105,7 +106,7 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): TaxProductConnectorQueryContainerInterface
     {
         return $this->getMockBuilder(TaxProductConnectorQueryContainer::class)
             ->disableOriginalConstructor()

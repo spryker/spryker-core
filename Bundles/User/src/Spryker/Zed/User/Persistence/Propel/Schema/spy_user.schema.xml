@@ -6,7 +6,7 @@
           namespace="Orm\Zed\User\Persistence"
           package="src.Orm.Zed.User.Persistence">
 
-    <table name="spy_user" idMethod="native" phpName="SpyUser">
+    <table name="spy_user" idMethod="native">
         <column name="id_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="first_name" required="true" size="45" type="VARCHAR"/>
         <column name="last_name" required="true" size="255" type="VARCHAR"/>

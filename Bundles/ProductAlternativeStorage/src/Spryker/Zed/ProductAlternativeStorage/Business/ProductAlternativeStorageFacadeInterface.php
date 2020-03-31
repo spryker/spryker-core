@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductAlternativeStorageFacadeInterface
 {
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Publishes alternatives for given products.
      *
      * @api
      *
@@ -22,7 +25,7 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Publish replacements for abstract product
+     *  - Publishes replacements for abstract product
      *
      * @api
      *
@@ -34,7 +37,7 @@ interface ProductAlternativeStorageFacadeInterface
 
     /**
      * Specification:
-     *  - Publish replacements for concrete product
+     *  - Publishes replacements for concrete product
      *
      * @api
      *
@@ -43,4 +46,38 @@ interface ProductAlternativeStorageFacadeInterface
      * @return void
      */
     public function publishConcreteReplacements(array $productIds): void;
+
+    /**
+     * Specification:
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productAlternativeStorageIds.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productAlternativeStorageIds = []
+    ): array;
+
+    /**
+     * Specification:
+     * - Returns an array of SynchronizationDataTransfer filtered by provided productReplacementForStorageIds.
+     * - Uses FilterTransfer for pagination
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productReplacementForStorageIds = []
+    ): array;
 }

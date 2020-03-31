@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 
 /**
@@ -74,8 +75,9 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInProjectModule(): void
     {
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
         $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/Development/';
+        $pathToApplicationRoot = rtrim(APPLICATION_ROOT_DIR) . '/src/Pyz/Zed/Development/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
 
         $codeStyleSnifferMock->checkCodeStyle('Development', $options);
@@ -140,7 +142,7 @@ class CodeStyleSnifferTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options)
+    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options): CodeStyleSniffer
     {
         $developmentConfig = $this->tester->createDevelopmentConfig();
         $codingStandard = $developmentConfig->getCodingStandard();

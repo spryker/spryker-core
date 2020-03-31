@@ -13,6 +13,7 @@ use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -206,6 +207,9 @@ class OrderStateMachine implements OrderStateMachineInterface
             $this->logSourceState($groupedOrderItems, $log);
 
             $processedOrderItems = $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
+            if ($processedOrderItems === null) {
+                continue;
+            }
             $sourceStateBuffer = $this->updateStateByEvent($eventId, $processedOrderItems, $sourceStateBuffer, $log);
             $this->saveOrderItems($processedOrderItems, $log, $processes, $sourceStateBuffer);
             $allProcessedOrderItems = array_merge($allProcessedOrderItems, $processedOrderItems);
@@ -369,6 +373,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
+
                     throw $e;
                 }
 
@@ -482,6 +487,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         if ($command instanceof CommandByItemInterface) {
             return self::BY_ITEM;
         }
+
         throw new LogicException('Unknown type of command: ' . get_class($command));
     }
 
@@ -497,9 +503,9 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
-     * @throws \Exception
+     * @throws \LogicException
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|null
      */
     protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
@@ -517,6 +523,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             if (!$event->hasCommand()) {
                 $processedOrderItems[] = $orderItemEntity;
+
                 continue;
             }
 
@@ -547,8 +554,10 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                 $log->saveAll();
 
-                if ($type !== self::BY_ITEM) {
-                    throw $e;
+                ErrorLogger::getInstance()->log($e);
+
+                if ($type === static::BY_ORDER) {
+                    return null; // intercept the processing of a grouped order items for the current order state
                 }
             }
         }
@@ -687,7 +696,8 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $this->reservation->updateReservationQuantity($orderItem->getSku());
             }
 
-            if ($sourceState !== $targetState->getName()
+            if (
+                $sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
                 $event = $targetState->getOnEnterEvent();

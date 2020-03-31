@@ -321,7 +321,7 @@ class ComparatorOperatorsTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface
      */
-    protected function createComparatorMock()
+    protected function createComparatorMock(): ComparatorInterface
     {
         return $this->getMockBuilder(ComparatorInterface::class)->getMock();
     }

@@ -98,7 +98,8 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE
+            if (
+                $expenseTransfer->getType() === ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE
                 && $expenseTransfer->getShipment() !== null
                 && $expenseShipmentKey === $itemShipmentKey
             ) {

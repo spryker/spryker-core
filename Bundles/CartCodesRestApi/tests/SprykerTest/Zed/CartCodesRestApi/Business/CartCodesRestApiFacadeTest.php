@@ -10,13 +10,13 @@ namespace SprykerTest\Zed\CartCodesRestApi\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCode\Business\CartCodeFacade;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeBridge;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 
 /**
@@ -189,9 +189,9 @@ class CartCodesRestApiFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface
+     * @return \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockCartsRestApiFacade(): MockObject
+    protected function createMockCartsRestApiFacade(): CartCodesRestApiToCartsRestApiFacadeInterface
     {
         $mockCartsRestApiFacade = $this->getMockBuilder(CartCodesRestApiToCartsRestApiFacadeBridge::class)
             ->disableOriginalConstructor()
@@ -212,8 +212,9 @@ class CartCodesRestApiFacadeTest extends Test
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory
      */
-    protected function createMockCartCodesRestApiBusinessFactory(CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade): MockObject
-    {
+    protected function createMockCartCodesRestApiBusinessFactory(
+        CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade
+    ): CartCodesRestApiBusinessFactory {
         $mockCartCodesRestApiBusinessFactory = $this->getMockBuilder(CartCodesRestApiBusinessFactory::class)
             ->setMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
             ->getMock();

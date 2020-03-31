@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
+use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
 use Twig\Environment;
 
 /**
@@ -62,7 +63,7 @@ class TwigRendererTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
      */
-    protected function getTwigEnvironmentMock()
+    protected function getTwigEnvironmentMock(): MailToRendererInterface
     {
         $twigEnvironmentMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->setMethods(['render', 'getExtension'])->getMock();
         $twigEnvironmentMock->expects($this->at(0))->method('getExtension')->with('translator')->willReturn(new TwigTranslatorPlugin());

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -80,14 +81,15 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @api
      *
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue)
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null)
     {
         return $this->getFactory()
             ->createProductOptionValueReader()
-            ->getProductOption($idProductOptionValue);
+            ->getProductOption($idProductOptionValue, $currencyCode);
     }
 
     /**
@@ -157,6 +159,23 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createProductItemTaxRateCalculatorStrategyResolver()
             ->resolve($quoteTransfer->getItems())
             ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateProductOptionTaxRateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        return $this->getFactory()
+            ->createProductItemTaxRateCalculatorStrategyResolver()
+            ->resolve($calculableObjectTransfer->getItems())
+            ->recalculateForCalculableObject($calculableObjectTransfer);
     }
 
     /**
@@ -243,6 +262,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
@@ -265,8 +286,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
-    {
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer {
         return $this->getFactory()
             ->createProductOptionValueReader()
             ->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);

@@ -59,7 +59,7 @@ class AccessControlEventDispatcherPlugin extends AbstractPlugin implements Event
         $controller = $request->attributes->get('controller');
         $action = $request->attributes->get('action');
 
-        if ($aclFacade->isIgnorable($module, $controller, $action)) {
+        if (!$event->isMasterRequest() || $aclFacade->isIgnorable($module, $controller, $action)) {
             return $event;
         }
 

@@ -22,6 +22,7 @@ Edit,Edit
 "Edit Delivery Method: %s","Edit Delivery Method: %s"
 Enabled?,Enabled?
 "Is this delivery method active?","Is this delivery method active?"
+"List of delivery methods","List of delivery methods"
 "List Shipment Methods","List Shipment Methods"
 "Method Name",Name
 Name,Name

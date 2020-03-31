@@ -12,10 +12,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit\Framework\MockObject\MockObject;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 
 /**
@@ -61,36 +57,9 @@ class ProductBundlePriceCalculationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation
      */
-    protected function createProductPriceCalculationMock()
+    protected function createProductPriceCalculationMock(): ProductBundlePriceCalculation
     {
         return new ProductBundlePriceCalculation();
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundlePriceCalculationMock
-     *
-     * @return void
-     */
-    protected function setupFindOrderItemsByIdSalesOrder(MockObject $productBundlePriceCalculationMock): void
-    {
-        $salesOrderItems = new ObjectCollection();
-
-        $salesOrderItemEntity = new SpySalesOrderItem();
-        $salesOrderItemEntity->setIdSalesOrderItem(1);
-        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
-        $salesOrderItemBundleEntity->setIdSalesOrderItemBundle(1);
-        $salesOrderItemEntity->setSalesOrderItemBundle($salesOrderItemBundleEntity);
-        $salesOrderItems->append($salesOrderItemEntity);
-
-        $salesOrderItemEntity = new SpySalesOrderItem();
-        $salesOrderItemEntity->setIdSalesOrderItem(2);
-        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
-        $salesOrderItemBundleEntity->setIdSalesOrderItemBundle(1);
-        $salesOrderItemEntity->setSalesOrderItemBundle($salesOrderItemBundleEntity);
-        $salesOrderItems->append($salesOrderItemEntity);
-
-        $productBundlePriceCalculationMock->method('findOrderItemsByIdSalesOrder')
-            ->willReturn($salesOrderItems);
     }
 
     /**
@@ -120,7 +89,7 @@ class ProductBundlePriceCalculationTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function createBundledItems(): ArrayObject
     {

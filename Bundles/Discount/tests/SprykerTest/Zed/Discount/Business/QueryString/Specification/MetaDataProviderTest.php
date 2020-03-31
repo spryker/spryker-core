@@ -171,8 +171,11 @@ class MetaDataProviderTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
-    protected function createMetaDataProvider(?DecisionRulePluginInterface $decisionRulePluginMock = null, ?ComparatorOperators $comparatorOperators = null, ?LogicalComparators $logicalComparatorsMock = null): MetaDataProvider
-    {
+    protected function createMetaDataProvider(
+        ?DecisionRulePluginInterface $decisionRulePluginMock = null,
+        ?ComparatorOperators $comparatorOperators = null,
+        ?LogicalComparators $logicalComparatorsMock = null
+    ): MetaDataProvider {
         if (!isset($decisionRulePluginMock)) {
             $decisionRulePluginMock = $this->createDecisionRulePluginMock();
         }
@@ -197,7 +200,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
-    protected function createDecisionRulePluginMock()
+    protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {
         return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
@@ -205,7 +208,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperators
     {
         return $this->getMockBuilder(ComparatorOperators::class)
             ->disableOriginalConstructor()
@@ -215,7 +218,7 @@ class MetaDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createLogicalComparatorsMock()
+    protected function createLogicalComparatorsMock(): LogicalComparators
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }

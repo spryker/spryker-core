@@ -11,7 +11,6 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Generated\Shared\Search\PageIndexMap;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\StoreQueryExpanderPlugin;
 
 /**
@@ -73,7 +72,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStoreQueryExpanderPluginMock(): MockObject
+    protected function createStoreQueryExpanderPluginMock(): StoreQueryExpanderPlugin
     {
         /** @var \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject $queryExpander */
         $queryExpander = $this->getMockBuilder(StoreQueryExpanderPlugin::class)

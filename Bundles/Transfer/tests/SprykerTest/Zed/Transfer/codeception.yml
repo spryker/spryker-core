@@ -1,6 +1,4 @@
 namespace: SprykerTest\Zed\Transfer
-actor: Tester
-
 paths:
     tests: .
     data: ../../../_data
@@ -18,10 +16,10 @@ suites:
         class_name: TransferBusinessTester
         modules:
             enabled:
-                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper

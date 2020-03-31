@@ -263,8 +263,10 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtraction(int $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
-    {
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
@@ -297,8 +299,10 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
-    {
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
+        array $productAbstractIds,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
@@ -339,7 +343,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductTransfers = $this->priceProductRepository
             ->getProductAbstractPricesByConcreteSkusAndCriteria($concreteSkus, $priceProductCriteriaTransfer);
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
         return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
     }

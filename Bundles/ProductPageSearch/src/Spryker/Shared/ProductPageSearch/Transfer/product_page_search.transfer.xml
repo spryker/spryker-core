@@ -139,6 +139,7 @@
     </transfer>
 
     <transfer name="PriceProductCriteria">
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="ProductImageFilter">
@@ -187,5 +188,9 @@
         <property name="orderBy" type="string"/>
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
     </transfer>
 </transfers>

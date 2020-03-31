@@ -83,7 +83,7 @@ class BundleGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Twig\Environment
      */
-    protected function createTwigEnvironmentMock()
+    protected function createTwigEnvironmentMock(): Environment
     {
         return $this
             ->getMockBuilder(Environment::class)

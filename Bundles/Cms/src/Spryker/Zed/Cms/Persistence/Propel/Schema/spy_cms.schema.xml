@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
 
-    <table name="spy_cms_template" phpName="SpyCmsTemplate">
+    <table name="spy_cms_template">
         <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="template_name" type="VARCHAR" size="255" required="true"/>
         <column name="template_path" type="VARCHAR" size="255" required="true"/>
@@ -14,7 +14,7 @@
         <id-method-parameter value="spy_cms_template_pk_seq"/>
     </table>
 
-    <table name="spy_cms_page" phpName="SpyCmsPage">
+    <table name="spy_cms_page">
         <column name="id_cms_page" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_template" type="INTEGER" required="true"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
@@ -49,7 +49,7 @@
         <id-method-parameter value="spy_cms_page_localized_attributes_pk_seq"/>
     </table>
 
-    <table name="spy_cms_glossary_key_mapping" phpName="SpyCmsGlossaryKeyMapping">
+    <table name="spy_cms_glossary_key_mapping">
         <column name="id_cms_glossary_key_mapping" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_page" type="INTEGER" required="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>

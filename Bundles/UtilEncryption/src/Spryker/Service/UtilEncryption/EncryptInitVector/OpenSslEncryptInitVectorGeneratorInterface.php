@@ -15,4 +15,11 @@ interface OpenSslEncryptInitVectorGeneratorInterface
      * @return string
      */
     public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
+
+    /**
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 }

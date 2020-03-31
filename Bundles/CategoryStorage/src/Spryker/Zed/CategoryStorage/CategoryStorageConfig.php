@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CategoryStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool
@@ -22,6 +24,8 @@ class CategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getCategoryTreeSynchronizationPoolName(): ?string
@@ -30,6 +34,8 @@ class CategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getCategoryNodeSynchronizationPoolName(): ?string

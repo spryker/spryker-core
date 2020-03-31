@@ -112,4 +112,21 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     {
         return $this->getRepository()->getMerchantRelationshipIdsByProductListId($idProductList);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $this->getFactory()
+            ->createProductListWriter()
+            ->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
+    }
 }

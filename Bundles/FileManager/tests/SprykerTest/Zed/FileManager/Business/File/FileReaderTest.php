@@ -31,7 +31,7 @@ class FileReaderTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileContentMock()
+    protected function createFileContentMock(): FileContentInterface
     {
         return $this->getMockBuilder(FileContentInterface::class)->getMock();
     }
@@ -39,7 +39,7 @@ class FileReaderTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileManagerRepositoryMock()
+    protected function createFileManagerRepositoryMock(): FileManagerRepositoryInterface
     {
         return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }

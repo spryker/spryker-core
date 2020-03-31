@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -136,7 +137,9 @@ interface SalesFacadeInterface
     public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
 
     /**
-     * Returns a list of of orders for the given customer id and (optional) filters.
+     * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Aggregates order totals calls -> SalesAggregator
      *
      * @api
      *
@@ -163,6 +166,22 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getPaginatedCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
+
+    /**
+     * Specification:
+     * - Returns a transfer with the filtered list of orders for the given customer.
+     * - Uses OrderListRequestTransfer::$filter to pull params for offset-based pagination strategy.
+     * - OrderListRequestTransfer::customerReference must be set.
+     * - Hydrates OrderTransfer with data from persistence by idSaleOrder.
+     * - Updates the total number of orders for the customer to the pagination transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 
     /**
      * Specification:
@@ -299,6 +318,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `SalesFacadeInterface::getUniqueItemsFromOrder() instead`.
+     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -316,4 +337,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
+
+    /**
+     * Specification:
+     * - Extracts unique items.
+     * - Returns a collection of items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
 }

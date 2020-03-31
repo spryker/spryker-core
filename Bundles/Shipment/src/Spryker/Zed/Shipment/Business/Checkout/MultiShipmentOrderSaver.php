@@ -45,21 +45,29 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     protected $expenseSanitizer;
 
     /**
+     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     */
+    protected $shipmentExpenseExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[] $shipmentExpenseExpanderPlugins
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
         ShipmentToSalesFacadeInterface $salesFacade,
         ShipmentServiceInterface $shipmentService,
-        ExpenseSanitizerInterface $expenseSanitizer
+        ExpenseSanitizerInterface $expenseSanitizer,
+        array $shipmentExpenseExpanderPlugins
     ) {
         $this->entityManager = $entityManager;
         $this->salesFacade = $salesFacade;
         $this->shipmentService = $shipmentService;
         $this->expenseSanitizer = $expenseSanitizer;
+        $this->shipmentExpenseExpanderPlugins = $shipmentExpenseExpanderPlugins;
     }
 
     /**
@@ -143,7 +151,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
         if ($expenseTransfer !== null) {
-            $expenseTransfer = $this->saveShipmentExpenseToOrder($expenseTransfer, $orderTransfer, $saveOrderTransfer);
+            $expenseTransfer = $this->saveShipmentExpense($expenseTransfer, $saveOrderTransfer, $shipmentGroupTransfer);
+            $orderTransfer->addExpense($expenseTransfer);
+            $saveOrderTransfer->addOrderExpense($expenseTransfer);
         }
 
         /**
@@ -204,28 +214,39 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function saveShipmentExpenseToOrder(
+    protected function saveShipmentExpense(
         ExpenseTransfer $expenseTransfer,
-        OrderTransfer $orderTransfer,
-        SaveOrderTransfer $saveOrderTransfer
+        SaveOrderTransfer $saveOrderTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer
     ): ExpenseTransfer {
         $expenseTransfer = $this->expenseSanitizer->sanitizeExpenseSumValues($expenseTransfer);
+        $expenseTransfer = $this->executeShipmentExpenseExpanderPlugins($expenseTransfer, $shipmentGroupTransfer);
 
-        if ($expenseTransfer->getIdSalesExpense() !== null) {
+        if ($expenseTransfer->getIdSalesExpense()) {
             return $this->salesFacade->updateSalesExpense($expenseTransfer);
         }
 
         $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
-        $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        return $this->salesFacade->createSalesExpense($expenseTransfer);
+    }
 
-        $orderTransfer->addExpense($expenseTransfer);
-        $saveOrderTransfer->addOrderExpense($expenseTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function executeShipmentExpenseExpanderPlugins(ExpenseTransfer $expenseTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): ExpenseTransfer
+    {
+        foreach ($this->shipmentExpenseExpanderPlugins as $shipmentExpenseExpanderPlugin) {
+            $expenseTransfer = $shipmentExpenseExpanderPlugin->expand($expenseTransfer, $shipmentGroupTransfer);
+        }
 
         return $expenseTransfer;
     }

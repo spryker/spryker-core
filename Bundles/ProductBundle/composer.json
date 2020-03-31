@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/availability": "^9.0.0",
+    "spryker/calculation-extension": "^1.1.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
@@ -18,6 +19,7 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
+    "spryker/sales-extension": "^1.5.0",
     "spryker/shopping-list-extension": "^1.0.0",
     "spryker/stock": "^8.0.0",
     "spryker/store": "^1.5.0",

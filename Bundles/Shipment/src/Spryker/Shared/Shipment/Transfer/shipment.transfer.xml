@@ -189,6 +189,8 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
     </transfer>
 
     <transfer name="Mail">
@@ -224,6 +226,12 @@
         <property name="idEntity" type="int"/>
         <property name="idStores" type="int[]" singular="idStores"/>
         <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="Message">
     </transfer>
 
 </transfers>

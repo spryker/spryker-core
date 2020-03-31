@@ -44,7 +44,7 @@ class IndexDefinitionReaderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\SplFileInfo
      */
-    protected function getFileMock()
+    protected function getFileMock(): SplFileInfo
     {
         $splFileInfoMockBuilder = $this->getMockBuilder(SplFileInfo::class)->setMethods(['getContents'])->disableOriginalConstructor();
         $splFileInfoMock = $splFileInfoMockBuilder->getMock();

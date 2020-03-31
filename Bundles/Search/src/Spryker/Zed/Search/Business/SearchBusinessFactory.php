@@ -13,6 +13,8 @@ use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeChecker;
+use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
@@ -20,6 +22,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefiniti
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\SearchHealthCheck;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
@@ -327,5 +331,27 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface
+     */
+    public function createSearchHealthChecker(): HealthCheckInterface
+    {
+        return new SearchHealthCheck(
+            $this->getSearchClient()
+        );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface
+     */
+    public function createSearchLegacyModeChecker(): SearchLegacyModeCheckerInterface
+    {
+        return new SearchLegacyModeChecker(
+            $this->getSourceInstallerPlugins()
+        );
     }
 }

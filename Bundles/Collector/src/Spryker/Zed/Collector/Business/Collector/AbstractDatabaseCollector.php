@@ -139,8 +139,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      *
      * @return int
      */
-    protected function exportBatch($batch, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
-    {
+    protected function exportBatch(
+        $batch,
+        LocaleTransfer $locale,
+        TouchUpdaterSet $touchUpdaterSet,
+        WriterInterface $storeWriter,
+        TouchUpdaterInterface $touchUpdater
+    ) {
         $batchSize = count($batch);
         if ($batchSize === 0) {
             return 0;

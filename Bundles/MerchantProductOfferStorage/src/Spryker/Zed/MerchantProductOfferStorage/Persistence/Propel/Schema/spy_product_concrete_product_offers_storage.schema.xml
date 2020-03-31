@@ -7,7 +7,7 @@
           package="src.Orm.Zed.MerchantProductOfferStorage.Persistence">
 
 
-    <table name="spy_product_concrete_product_offers_storage" phpName="SpyProductConcreteProductOffersStorage" identifierQuoting="true">
+    <table name="spy_product_concrete_product_offers_storage" identifierQuoting="true">
         <column name="id_product_concrete_product_offers_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
 
@@ -21,6 +21,7 @@
             <parameter name="resource" value="product_concrete_product_offers"/>
             <parameter name="key_suffix_column" value="concrete_sku"/>
             <parameter name="queue_group" value="sync.storage.merchant_product_offer"/>
+            <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

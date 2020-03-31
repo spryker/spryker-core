@@ -124,7 +124,7 @@ class DrawerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
-    private function getConditionMock()
+    private function getConditionMock(): ConditionInterface
     {
         return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
@@ -132,7 +132,7 @@ class DrawerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
-    private function getCommandMock()
+    private function getCommandMock(): CommandInterface
     {
         return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
@@ -140,7 +140,7 @@ class DrawerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Graph\GraphInterface
      */
-    private function getGraphMock()
+    private function getGraphMock(): GraphInterface
     {
         return $this->getMockBuilder(GraphInterface::class)->getMock();
     }
@@ -148,7 +148,7 @@ class DrawerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
-    private function getOmsToUtilTextServiceMock()
+    private function getOmsToUtilTextServiceMock(): OmsToUtilTextInterface
     {
         return $this->getMockBuilder(OmsToUtilTextInterface::class)->getMock();
     }

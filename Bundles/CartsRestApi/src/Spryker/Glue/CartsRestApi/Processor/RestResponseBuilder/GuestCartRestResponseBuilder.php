@@ -7,15 +7,46 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
+class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
+     */
+    protected $cartMapper;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface
+     */
+    protected $itemResponseBuilder;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface $itemResponseBuilder
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        CartMapperInterface $cartMapper,
+        ItemResponseBuilderInterface $itemResponseBuilder
+    ) {
+        $this->restResourceBuilder = $restResourceBuilder;
+        $this->cartMapper = $cartMapper;
+        $this->itemResponseBuilder = $itemResponseBuilder;
+    }
+
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -32,59 +63,45 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
      */
     public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface
     {
-        $cartResource = $this->restResourceBuilder->createRestResource(
+        $guestCartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
             $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
-        $cartResource->setPayload($quoteTransfer);
+        $guestCartResource->setPayload($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $cartResource->addRelationship(
-                $this->createGuestCartItemResource(
+            $guestCartResource->addRelationship(
+                $this->itemResponseBuilder->createGuestCartItemResource(
+                    $guestCartResource,
                     $itemTransfer,
-                    $cartResource->getId(),
                     $localeName
                 )
             );
         }
 
-        return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);
+        return $this->createEmptyGuestCartRestResponse()->addResource($guestCartResource);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $cartResourceId
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createGuestCartItemResource(
-        ItemTransfer $itemTransfer,
-        string $cartResourceId,
-        string $localeName
-    ): RestResourceInterface {
-        $itemResource = $this->restResourceBuilder->createRestResource(
-            CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-            $itemTransfer->getGroupKey(),
-            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer(
-                $itemTransfer,
-                $localeName
-            )
-        );
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $itemResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            sprintf(
-                '%s/%s/%s/%s',
-                CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-                $cartResourceId,
-                CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-                $itemTransfer->getGroupKey()
-            )
-        );
+        foreach ($errors as $quoteErrorTransfer) {
+            $restResponse->addError(
+                $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                    $quoteErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
+            );
+        }
 
-        return $itemResource;
+        return $restResponse;
     }
 }

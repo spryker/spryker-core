@@ -23,6 +23,8 @@
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="TaxSetCollection">
@@ -47,6 +49,7 @@
     <transfer name="ShipmentGroup">
         <property name="shipment" type="Shipment"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="hash" type="string"/>
     </transfer>
 
     <transfer name="ShipmentCarrier">
@@ -64,6 +67,7 @@
         <property name="fkCustomer" type="int"/>
         <property name="idSalesOrder" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
     </transfer>
 
     <transfer name="Address">
@@ -130,5 +134,17 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductBundleGroup">
+        <property name="isBundle" type="bool"/>
+        <property name="bundleItem" type="Item"/>
+        <property name="groupItems" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="TaxRate">
+    </transfer>
+
+    <transfer name="MoneyValue">
     </transfer>
 </transfers>

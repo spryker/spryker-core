@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
@@ -783,7 +784,10 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer;
 
     /**
      * Specification:
@@ -924,7 +928,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete transfers according to given filter.
+     * - Retrieves product concrete transfers according to given filter.
      *
      * @api
      *
@@ -933,4 +937,44 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete transfers according to given filter.
+     * - Maps only data from `spy_product` table without any joined data for performance reasons.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves url records from Persistence.
+     * - Filters by criteria from ProductUrlCriteriaFilterTransfer.
+     * - Returns array of UrlTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract transfer by sku.
+     * - Doesn't populate it with additional data.
+     *
+     * @api
+     *
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

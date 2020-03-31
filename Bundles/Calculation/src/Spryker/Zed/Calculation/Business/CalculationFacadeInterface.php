@@ -23,7 +23,7 @@ interface CalculationFacadeInterface
      *  - Maps Quote to CalculableObject
      *  - Run all calculator plugins
      *  - Maps CalculableObject to Quote
-     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins if `$executeQuotePlugins` is true.
      *  - Return the updated quote
      *
      * @api
@@ -31,10 +31,11 @@ interface CalculationFacadeInterface
      * @see CalculationConfig::getCalculatorStack
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $executeQuotePlugins
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer);
+    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true);
 
     /**
      * Specification:

@@ -87,6 +87,25 @@ class ProductListWriter implements ProductListWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $merchantRelationshipTransfer->requireIdMerchantRelationship();
+
+        $productListCollectionTransfer = $this->merchantRelationshipProductListRepository
+            ->findProductListCollectionByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
+
+        $this->cleanUpProductLists(
+            $productListCollectionTransfer,
+            $merchantRelationshipTransfer->getProductListIds()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      * @param array $productListIds
      *

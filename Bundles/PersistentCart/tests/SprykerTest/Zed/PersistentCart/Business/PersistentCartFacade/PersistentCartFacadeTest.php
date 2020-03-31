@@ -247,7 +247,7 @@ class PersistentCartFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface
      */
-    protected function createCartPreCheckPluginInterfaceMock()
+    protected function createCartPreCheckPluginInterfaceMock(): CartPreCheckPluginInterface
     {
         $cartPreCheckPluginInterfaceMock = $this
             ->getMockBuilder(CartPreCheckPluginInterface::class)
@@ -267,7 +267,7 @@ class PersistentCartFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface
      */
-    protected function createCartRemovalPreCheckPluginInterfaceMock()
+    protected function createCartRemovalPreCheckPluginInterfaceMock(): CartRemovalPreCheckPluginInterface
     {
         $cartPreCheckPluginInterfaceMock = $this
             ->getMockBuilder(CartRemovalPreCheckPluginInterface::class)

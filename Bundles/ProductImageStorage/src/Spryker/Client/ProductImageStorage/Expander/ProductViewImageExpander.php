@@ -28,8 +28,10 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
      * @param \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader
      * @param \Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface $productConcreteImageInheritanceResolverInterface
      */
-    public function __construct(ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader, ProductConcreteImageInheritanceResolverInterface $productConcreteImageInheritanceResolverInterface)
-    {
+    public function __construct(
+        ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader,
+        ProductConcreteImageInheritanceResolverInterface $productConcreteImageInheritanceResolverInterface
+    ) {
         $this->productAbstractImageSetReader = $productAbstractImageSetReader;
         $this->productConcreteImageInheritanceResolverInterface = $productConcreteImageInheritanceResolverInterface;
     }
@@ -41,8 +43,11 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewImageData(ProductViewTransfer $productViewTransfer, $locale, $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME)
-    {
+    public function expandProductViewImageData(
+        ProductViewTransfer $productViewTransfer,
+        $locale,
+        $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME
+    ) {
         $images = $this->getImages($productViewTransfer, $locale, $imageSetName);
 
         if ($images) {

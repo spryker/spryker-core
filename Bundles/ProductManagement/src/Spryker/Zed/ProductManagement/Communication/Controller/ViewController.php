@@ -234,6 +234,7 @@ class ViewController extends AddController
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
                     $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+
                     continue;
                 }
 
@@ -288,7 +289,7 @@ class ViewController extends AddController
     {
         $url = $baseUrl;
 
-        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
+        if (preg_match("#^/(?!/)[\w/-]*\.[A-Za-z]{3,4}$#", $url) === 1) {
             $url = $imageUrlPrefix . $url;
         }
 

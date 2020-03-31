@@ -67,7 +67,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     protected function parseCliRequestData(Request $request)
     {
         foreach ($request->server->get('argv') as $argument) {
-            preg_match_all('/--(.*)=(.*)/', $argument, $matches);
+            preg_match_all('/^--([\w-]*)=([\w-]*)$/', $argument, $matches);
 
             if ($matches[0]) {
                 $key = $matches[1][0];

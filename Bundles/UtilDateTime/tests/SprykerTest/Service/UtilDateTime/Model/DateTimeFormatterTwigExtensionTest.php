@@ -109,7 +109,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected function getUtilDateTimeServiceMock()
+    protected function getUtilDateTimeServiceMock(): UtilDateTimeServiceInterface
     {
         $utilDateTimeServiceMock = $this->getMockBuilder(UtilDateTimeServiceInterface::class)->getMock();
 

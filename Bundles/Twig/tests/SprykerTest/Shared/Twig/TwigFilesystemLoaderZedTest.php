@@ -90,7 +90,7 @@ class TwigFilesystemLoaderZedTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
      */
-    protected function getFilesystemLoaderForSplitBundleConverterTest()
+    protected function getFilesystemLoaderForSplitBundleConverterTest(): TwigFilesystemLoader
     {
         $mockBuilder = $this->getMockBuilder(TwigFilesystemLoader::class)
             ->setMethods(['isPathInSplit'])

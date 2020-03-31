@@ -41,7 +41,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
 
         return $this->getFactory()
             ->getProductFacade()
-            ->getProductConcretesByFilter($filterTransfer);
+            ->getRawProductConcreteTransfersByFilter($filterTransfer);
     }
 
     /**

@@ -116,7 +116,7 @@ class DecisionRuleProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
-    protected function createDecisionRulePluginMock()
+    protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {
         return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
@@ -124,7 +124,7 @@ class DecisionRuleProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

@@ -62,7 +62,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory
      */
-    protected function getFactoryMock()
+    protected function getFactoryMock(): ConcreteFactory
     {
         $dependencyResolverMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
         $container = new Container([self::TEST_KEY => self::TEST_VALUE]);

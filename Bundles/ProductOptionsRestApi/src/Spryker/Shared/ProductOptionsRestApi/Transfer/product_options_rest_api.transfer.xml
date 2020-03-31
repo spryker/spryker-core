@@ -43,7 +43,7 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="productOptions" type="RestCartItemsProductOption[]" singular="productOption"/>
+        <property name="productOptions" type="RestCartItemsProductOption[]" singular="productOption" restRequestParameter="yes"/>
         <property name="sku" type="string" restRequestParameter="required"/>
     </transfer>
 

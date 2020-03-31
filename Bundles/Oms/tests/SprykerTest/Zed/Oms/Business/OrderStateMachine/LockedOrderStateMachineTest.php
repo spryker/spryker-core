@@ -278,7 +278,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStateMachineMock()
+    protected function createStateMachineMock(): OrderStateMachineInterface
     {
         $this->stateMachineMock = $this->getMockForAbstractClass(
             OrderStateMachineInterface::class,
@@ -296,7 +296,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createTriggerLockerMock()
+    protected function createTriggerLockerMock(): TriggerLocker
     {
         $this->triggerLockerMock = $this->getMockBuilder(TriggerLocker::class)
             ->setMethods(['createStateMachineLockEntity'])
@@ -309,7 +309,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Persistence\OmsQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createOmsQueryContainerMock()
+    protected function createOmsQueryContainerMock(): OmsQueryContainer
     {
         $this->omsQueryContainerMock = $this->getMockBuilder(OmsQueryContainer::class)
             ->setMethods(['queryLockItemsByIdentifier'])
@@ -321,7 +321,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createOmsQueryMock()
+    protected function createOmsQueryMock(): SpyOmsStateMachineLockQuery
     {
         $this->omsQueryMock = $this->getMockBuilder(SpyOmsStateMachineLockQuery::class)->setMethods(['count', 'delete'])->getMock();
 
@@ -331,7 +331,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createOmsStateMachineLockEntityMock()
+    protected function createOmsStateMachineLockEntityMock(): SpyOmsStateMachineLock
     {
         $this->omsStateMachineLockMock = $this->getMockBuilder(SpyOmsStateMachineLock::class)
             ->setMethods(['setIdentifier', 'setExpires', 'save'])

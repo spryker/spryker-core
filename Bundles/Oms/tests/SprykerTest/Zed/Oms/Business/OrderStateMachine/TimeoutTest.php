@@ -12,6 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
 
 /**
  * Auto-generated group annotations
@@ -87,7 +88,7 @@ class TimeoutTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
-    protected function createOrderStateMachine()
+    protected function createOrderStateMachine(): OrderStateMachine
     {
         return $this->getMockBuilder(OrderStateMachine::class)
             ->disableOriginalConstructor()
@@ -100,7 +101,7 @@ class TimeoutTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
-    private function createOmsTimeoutMock()
+    private function createOmsTimeoutMock(): TimeoutInterface
     {
         return $this->getMockBuilder(Timeout::class)
             ->disableOriginalConstructor()

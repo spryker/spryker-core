@@ -120,9 +120,9 @@ class ReadQuoteCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
      */
-    protected function getQuoteFacadeMock()
+    protected function getQuoteFacadeMock(): MultiCartToQuoteFacadeBridge
     {
         $quoteCollectionTransfer = $this->getQuotesCollectionTransfer();
         $mock = $this
@@ -134,9 +134,9 @@ class ReadQuoteCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge
      */
-    protected function getEmptyQuoteFacadeMock()
+    protected function getEmptyQuoteFacadeMock(): MultiCartToQuoteFacadeBridge
     {
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
         $mock = $this

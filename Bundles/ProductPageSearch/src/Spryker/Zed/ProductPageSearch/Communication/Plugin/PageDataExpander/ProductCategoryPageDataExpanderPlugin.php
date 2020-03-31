@@ -37,6 +37,8 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     protected static $categoryName;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData

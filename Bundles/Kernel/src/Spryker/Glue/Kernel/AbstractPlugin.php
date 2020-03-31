@@ -30,6 +30,18 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
     private $config;
 
     /**
+     * @param \Spryker\Glue\Kernel\AbstractFactory $factory
+     *
+     * @return $this
+     */
+    public function setFactory(AbstractFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Glue\Kernel\AbstractFactory
      */
     protected function getFactory()
@@ -49,7 +61,7 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
         $calledClass = $this->getFactoryResolver()->setCallerClass($this);
         $classInfo = $calledClass->getClassInfo();
 
-        return $classInfo->getBundle();
+        return $classInfo->getModule();
     }
 
     /**

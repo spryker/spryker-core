@@ -59,7 +59,7 @@ class SessionHandlerRedisLockingTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
      */
-    private function getRedisClientMock(?string $returnValue)
+    private function getRedisClientMock(?string $returnValue): Client
     {
         $redisClientMock = $this
             ->getMockBuilder(Client::class)
@@ -77,7 +77,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
      */
-    private function getRedisSpinLockLockerMock()
+    private function getRedisSpinLockLockerMock(): RedisSpinLockLocker
     {
         $lockerMock = $this
             ->getMockBuilder(RedisSpinLockLocker::class)

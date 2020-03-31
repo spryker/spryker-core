@@ -46,4 +46,26 @@ interface ProductMapperInterface
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
+        SpyProduct $productEntity,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransferWithoutRelations(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer;
 }

@@ -47,7 +47,8 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
+        if (
+            in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
             || !$this->isVoucherCodeApplied($quoteTransfer, $code)
         ) {
             return null;

@@ -151,8 +151,10 @@ class AttributeTranslator implements AttributeTranslatorInterface
      *
      * @return void
      */
-    protected function saveAttributeValueTranslation($idProductManagementAttributeValue, ProductManagementAttributeValueTranslationTransfer $localizedAttributeValueTransfer)
-    {
+    protected function saveAttributeValueTranslation(
+        $idProductManagementAttributeValue,
+        ProductManagementAttributeValueTranslationTransfer $localizedAttributeValueTransfer
+    ) {
         $translation = trim($localizedAttributeValueTransfer->getTranslation());
 
         if ($translation === '') {

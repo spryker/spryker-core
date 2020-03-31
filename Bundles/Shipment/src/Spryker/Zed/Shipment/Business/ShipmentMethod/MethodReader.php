@@ -286,7 +286,8 @@ class MethodReader implements MethodReaderInterface
         return $this->transformShipmentMethod(
             $quoteTransfer,
             $shipmentMethodTransfer,
-            $storeCurrencyPrice
+            $storeCurrencyPrice,
+            $shipmentGroupTransfer
         );
     }
 

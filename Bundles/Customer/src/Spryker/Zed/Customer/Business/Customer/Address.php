@@ -278,7 +278,7 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getFormattedAddressArray(AddressTransfer $addressTransfer)
     {
@@ -558,6 +558,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -591,6 +592,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 

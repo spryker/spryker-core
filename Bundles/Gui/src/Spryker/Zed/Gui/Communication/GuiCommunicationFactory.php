@@ -10,6 +10,8 @@ namespace Spryker\Zed\Gui\Communication;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormTypeExtensionInterface;
@@ -41,5 +43,21 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     public function createNoValidateFormTypeExtension(): FormTypeExtensionInterface
     {
         return new NoValidateTypeExtension();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeExtensionInterface
+     */
+    public function createSanitizeXssTypeExtension(): FormTypeExtensionInterface
+    {
+        return new SanitizeXssTypeExtension($this->getUtilSanitizeXssService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
+     */
+    public function getUtilSanitizeXssService(): GuiToUtilSanitizeXssServiceInterface
+    {
+        return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 }
