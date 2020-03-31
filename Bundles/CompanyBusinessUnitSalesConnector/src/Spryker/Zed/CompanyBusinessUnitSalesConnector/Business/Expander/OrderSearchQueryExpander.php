@@ -150,6 +150,17 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      * @param string $type
      *
+     * @return bool
+     */
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
+    {
+        return $this->extractFilterFieldByType($filterFieldTransfers, $type) !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
      * @return \Generated\Shared\Transfer\FilterFieldTransfer|null
      */
     protected function extractFilterFieldByType(array $filterFieldTransfers, string $type): ?FilterFieldTransfer

@@ -45,13 +45,14 @@ interface CompanySalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if filtering by company could be applied, false otherwise.
+     * - Returns true if filter with specific type set, false otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
      *
      * @return bool
      */
-    public function isCompanyFilterApplicable(array $filterFieldTransfers): bool;
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool;
 }

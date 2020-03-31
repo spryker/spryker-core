@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanySalesConnector\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -22,6 +21,6 @@ class CompanySalesConnectorPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getSalesOrderPropelQuery(): SpySalesOrderQuery
     {
-        return $this->getProvidedDependency(CompanySalesConnectorDependencyProvider::PROPEL_QUERY_SALES_ORDER);
+        return SpySalesOrderQuery::create();
     }
 }

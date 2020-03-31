@@ -7,44 +7,11 @@
 
 namespace Spryker\Zed\CompanySalesConnector;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
  */
 class CompanySalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-
-        $container = $this->addSalesOrderPropelQuery($container);
-
-        return $container;
-    }
-
-    /**
-     * @module Sales
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesOrderPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_SALES_ORDER, $container->factory(function () {
-            return SpySalesOrderQuery::create();
-        }));
-
-        return $container;
-    }
 }

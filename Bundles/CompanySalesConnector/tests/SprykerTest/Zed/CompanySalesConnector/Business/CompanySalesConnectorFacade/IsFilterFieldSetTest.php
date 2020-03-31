@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CompanySalesConnector\Business\CompanySalesConnectorFa
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
-use Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander;
 
 /**
  * Auto-generated group annotations
@@ -19,13 +18,12 @@ use Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander
  * @group CompanySalesConnector
  * @group Business
  * @group CompanySalesConnectorFacade
- * @group IsCompanyFilterApplicableTest
+ * @group IsFilterFieldSetTest
  * Add your own group annotations below this line
  */
-class IsCompanyFilterApplicableTest extends Unit
+class IsFilterFieldSetTest extends Unit
 {
-    protected const UUID_SAMPLE = 'uuid-sample';
-    protected const SEARCH_STRING = 'sample';
+    protected const SAMPLE_TYPE = 'sample';
 
     /**
      * @var \SprykerTest\Zed\CompanySalesConnector\CompanySalesConnectorBusinessTester
@@ -35,17 +33,14 @@ class IsCompanyFilterApplicableTest extends Unit
     /**
      * @return void
      */
-    public function testIsCompanyFilterApplicableReturnsTrue(): void
+    public function testIsFilterFieldSetReturnsTrue(): void
     {
         // Arrange
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY)
-            ->setValue(static::UUID_SAMPLE);
+            ->setType(static::SAMPLE_TYPE);
 
         // Act
-        $isApplicable = $this->tester->getFacade()->isCompanyFilterApplicable([
-            $filterFieldTransfer,
-        ]);
+        $isApplicable = $this->tester->getFacade()->isFilterFieldSet([$filterFieldTransfer], static::SAMPLE_TYPE);
 
         // Assert
         $this->assertTrue($isApplicable);
@@ -54,15 +49,14 @@ class IsCompanyFilterApplicableTest extends Unit
     /**
      * @return void
      */
-    public function testIsCompanyFilterApplicableReturnsFalse(): void
+    public function testIsFilterFieldSetReturnsFalse(): void
     {
         // Arrange
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType('fake')
-            ->setValue(static::UUID_SAMPLE);
+            ->setType(static::SAMPLE_TYPE);
 
         // Act
-        $isApplicable = $this->tester->getFacade()->isCompanyFilterApplicable([$filterFieldTransfer]);
+        $isApplicable = $this->tester->getFacade()->isFilterFieldSet([$filterFieldTransfer], 'fake');
 
         // Assert
         $this->assertFalse($isApplicable);

@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
-use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -46,23 +42,6 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getPermittedCompanyBusinessUnitCollection(
-        CompanyUserTransfer $companyUserTransfer
-    ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitReader()
-            ->getPermittedCompanyBusinessUnitCollection($companyUserTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
@@ -75,22 +54,6 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
         return $this->getFactory()
             ->createOrderSearchQueryExpander()
             ->expandQueryJoinCollectionWithCompanyBusinessUnitFilter($filterFieldTransfers, $queryJoinCollectionTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool
-    {
-        return $this->getFactory()
-            ->createFilterFieldChecker()
-            ->isCompanyBusinessUnitFilterApplicable($filterFieldTransfers);
     }
 
     /**
@@ -118,55 +81,6 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool
-    {
-        return $this->getFactory()
-            ->createFilterFieldChecker()
-            ->isCustomerFilterApplicable($filterFieldTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
-     */
-    public function isCompanyRelatedFiltersSet(
-        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
-    ): FilterFieldCheckResponseTransfer {
-        return $this->getFactory()
-            ->createFilterFieldChecker()
-            ->isCompanyRelatedFiltersSet($filterFieldCheckRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCustomerSortingApplicable(array $filterFieldTransfers): bool
-    {
-        return $this->getFactory()
-            ->createFilterFieldChecker()
-            ->isCustomerSortingApplicable($filterFieldTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -178,5 +92,22 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
         return $this->getFactory()
             ->createOrderSearchQueryExpander()
             ->expandQueryJoinCollectionWithCustomerSorting($filterFieldTransfers, $queryJoinCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
+    {
+        return $this->getFactory()
+            ->createOrderSearchQueryExpander()
+            ->isFilterFieldSet($filterFieldTransfers, $type);
     }
 }

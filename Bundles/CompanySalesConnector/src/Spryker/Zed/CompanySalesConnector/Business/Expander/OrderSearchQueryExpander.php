@@ -36,7 +36,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
-        $filterFieldTransfer = $this->extractCompanyFilterField($filterFieldTransfers);
+        $filterFieldTransfer = $this->extractFilterFieldByType($filterFieldTransfers, static::FILTER_FIELD_TYPE_COMPANY);
 
         if (!$filterFieldTransfer) {
             return $queryJoinCollectionTransfer;
@@ -49,13 +49,25 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
+    {
+        return $this->extractFilterFieldByType($filterFieldTransfers, $type) !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
      *
      * @return \Generated\Shared\Transfer\FilterFieldTransfer|null
      */
-    protected function extractCompanyFilterField(array $filterFieldTransfers): ?FilterFieldTransfer
+    protected function extractFilterFieldByType(array $filterFieldTransfers, string $type): ?FilterFieldTransfer
     {
         foreach ($filterFieldTransfers as $filterFieldTransfer) {
-            if ($filterFieldTransfer->getType() === static::FILTER_FIELD_TYPE_COMPANY) {
+            if ($filterFieldTransfer->getType() === $type) {
                 return $filterFieldTransfer;
             }
         }

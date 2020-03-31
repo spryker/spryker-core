@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
-use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -36,21 +32,6 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Returns company business units allowed for order history filtering.
-     * - Uses company user permissions for filtering.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getPermittedCompanyBusinessUnitCollection(
-        CompanyUserTransfer $companyUserTransfer
-    ): CompanyBusinessUnitCollectionTransfer;
-
-    /**
-     * Specification:
      * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfer to filter by company business unit.
      *
      * @api
@@ -64,18 +45,6 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Returns true if filtering by company business unit could be applied, false otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCompanyBusinessUnitFilterApplicable(array $filterFieldTransfers): bool;
 
     /**
      * Specification:
@@ -95,44 +64,6 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if filtering by customer name and email could be applied, false otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCustomerFilterApplicable(array $filterFieldTransfers): bool;
-
-    /**
-     * Specification:
-     * - Checks if company related filters were set.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
-     */
-    public function isCompanyRelatedFiltersSet(
-        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
-    ): FilterFieldCheckResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns true if sorting by customer name or email could be applied.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     *
-     * @return bool
-     */
-    public function isCustomerSortingApplicable(array $filterFieldTransfers): bool;
-
-    /**
-     * Specification:
      * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to sort by customer name or email.
      *
      * @api
@@ -146,4 +77,17 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if filter with specific type set, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool;
 }

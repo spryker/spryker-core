@@ -116,6 +116,25 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CompanyBusinessUnit\Communication\Controller\GatewayController::getRawCompanyBusinessUnitCollectionAction()
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getRawCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer */
+        $companyBusinessUnitCollectionTransfer = $this->zedRequestClient->call(
+            '/company-business-unit/gateway/get-raw-company-business-unit-collection',
+            $companyBusinessUnitCriteriaFilterTransfer
+        );
+
+        return $companyBusinessUnitCollectionTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
