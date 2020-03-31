@@ -13,6 +13,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantUserGui\Communication\Controller\DeleteMerchantUserController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\EditMerchantUserController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\IndexController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\MerchantUserStatusController;
@@ -41,6 +42,12 @@ class MerchantUserTable extends AbstractTable
             'class' => 'label-danger',
             'status_change_action_title' => 'Deny Access',
             'status_change_action_class' => 'btn-remove',
+        ],
+        SpyUserTableMap::COL_STATUS_DELETED => [
+            'title' => 'Deleted',
+            'class' => 'label-default',
+            'status_change_action_title' => 'Delete',
+            'status_change_action_class' => 'btn-delete',
         ],
     ];
 
@@ -167,6 +174,17 @@ class MerchantUserTable extends AbstractTable
         );
 
         $buttons[] = $this->buildAvailableStatusButton($item);
+
+        $buttons[] = $this->generateRemoveButton(
+            Url::generate(
+                '/merchant-user-gui/delete-merchant-user/confirm-delete',
+                [
+                    DeleteMerchantUserController::PARAM_ID_MERCHANT_USER =>
+                        $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
+                ]
+            ),
+            'Delete'
+        );
 
         return $buttons;
     }

@@ -41,4 +41,22 @@ class MerchantUserGuiToUserFacadeBridge implements MerchantUserGuiToUserFacadeIn
     {
         return $this->userFacade->getUserByUsername($username);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser()
+    {
+        return $this->userFacade->getCurrentUser();
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function removeUser($idUser)
+    {
+        return $this->userFacade->removeUser($idUser);
+    }
 }

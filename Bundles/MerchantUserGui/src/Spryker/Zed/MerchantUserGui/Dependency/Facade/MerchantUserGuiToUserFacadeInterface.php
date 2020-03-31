@@ -22,4 +22,18 @@ interface MerchantUserGuiToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser();
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function removeUser($idUser);
 }

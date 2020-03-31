@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint;
 use Spryker\Zed\MerchantUserGui\Communication\Form\DataProvider\MerchantUserUpdateFormDataProvider;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserCreateForm;
+use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserDeleteConfirmForm;
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
 use Spryker\Zed\MerchantUserGui\Communication\Table\MerchantUserTable;
 use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface;
@@ -56,6 +57,14 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
         return new UniqueEmailConstraint(
             [UniqueEmailConstraint::OPTION_USER_FACADE => $this->getUserFacade()]
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMerchantUserDeleteConfirmForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantUserDeleteConfirmForm::class);
     }
 
     /**
