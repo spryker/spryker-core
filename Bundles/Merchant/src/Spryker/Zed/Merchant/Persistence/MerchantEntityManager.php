@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Merchant\Persistence;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -38,5 +40,34 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
             ->mapMerchantEntityToMerchantTransfer($spyMerchant, $merchantTransfer);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void
+    {
+        (new SpyMerchantStore())
+            ->setFkStore($storeTransfer->getIdStore())
+            ->setFkMerchant($merchantTransfer->getIdMerchant())
+            ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void
+    {
+        $this->getFactory()
+            ->createMerchantStoreQuery()
+            ->filterByFkMerchant($merchantTransfer->getIdMerchant())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->delete();
     }
 }

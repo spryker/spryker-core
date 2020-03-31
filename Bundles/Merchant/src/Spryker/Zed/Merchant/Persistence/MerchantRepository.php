@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -127,5 +129,36 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         }
 
         return $query->find();
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getMerchantStoresByIdMerchant(int $idMerchant): StoreRelationTransfer
+    {
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdEntity($idMerchant);
+
+        $merchantStoreEntities = $this->getFactory()
+            ->createMerchantStoreQuery()
+            ->joinWithSpyStore()
+            ->filterByFkMerchant($idMerchant)
+            ->find();
+
+        if (!$merchantStoreEntities->count()) {
+            return $storeRelationTransfer;
+        }
+
+        $storeTransfers = $this->getFactory()
+            ->createMerchantStoreMapper()
+            ->mapMerchantStoreEntitiesToStoreTransferCollection($merchantStoreEntities, (new ArrayObject()));
+
+        $storeRelationTransfer = $this->getFactory()
+            ->createMerchantStoreMapper()
+            ->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
+
+        return $storeRelationTransfer;
     }
 }

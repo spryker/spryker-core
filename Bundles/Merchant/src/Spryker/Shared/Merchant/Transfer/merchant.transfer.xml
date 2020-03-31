@@ -11,6 +11,7 @@
         <property name="email" type="string"/>
         <property name="status" type="string"/>
         <property name="merchantReference" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
@@ -53,6 +54,16 @@
     <transfer name="MerchantCollection">
         <property name="merchants" type="Merchant[]" singular="merchants"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
 </transfers>

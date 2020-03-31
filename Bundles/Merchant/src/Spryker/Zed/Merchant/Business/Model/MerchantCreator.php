@@ -94,6 +94,9 @@ class MerchantCreator implements MerchantCreatorInterface
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        foreach ($merchantTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+            $this->merchantEntityManager->createMerchantStore($merchantTransfer, $storeTransfer);
+        }
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 
         return $merchantTransfer;

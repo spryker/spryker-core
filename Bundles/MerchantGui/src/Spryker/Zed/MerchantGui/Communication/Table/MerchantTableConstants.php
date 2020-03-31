@@ -15,4 +15,5 @@ interface MerchantTableConstants
     public const COL_NAME = SpyMerchantTableMap::COL_NAME;
     public const COL_STATUS = SpyMerchantTableMap::COL_STATUS;
     public const COL_ACTIONS = 'actions';
+    public const COL_STORE = 'store_relation';
 }

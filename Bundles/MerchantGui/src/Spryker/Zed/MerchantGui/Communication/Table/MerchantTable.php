@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -28,6 +29,8 @@ class MerchantTable extends AbstractTable
         MerchantGuiConfig::STATUS_APPROVED => 'btn-create',
         MerchantGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
+
+    protected const STORE_CLASS_LABEL = 'label-info';
 
     /**
      * @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
@@ -101,6 +104,7 @@ class MerchantTable extends AbstractTable
         $config->setRawColumns([
             MerchantTableConstants::COL_ACTIONS,
             MerchantTableConstants::COL_STATUS,
+            MerchantTableConstants::COL_STORE,
         ]);
         $config->setDefaultSortField(MerchantTableConstants::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
@@ -155,6 +159,7 @@ class MerchantTable extends AbstractTable
             MerchantTableConstants::COL_ID_MERCHANT => 'Merchant Id',
             MerchantTableConstants::COL_NAME => 'Name',
             MerchantTableConstants::COL_STATUS => 'Status',
+            MerchantTableConstants::COL_STORE => 'Stores',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
@@ -193,6 +198,7 @@ class MerchantTable extends AbstractTable
                 MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
                 MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
+                MerchantTableConstants::COL_STORE => $this->createStoresLabel($item),
             ], $this->executeDataExpanderPlugins($item));
             $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
@@ -298,5 +304,25 @@ class MerchantTable extends AbstractTable
         }
 
         return $this->generateLabel($currentStatus, static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]);
+    }
+
+    /**
+     * @param array $merchant
+     *
+     * @return string
+     */
+    protected function createStoresLabel(array $merchant): string
+    {
+        $merchantCriteriaFilterTransfer = (new MerchantCriteriaFilterTransfer())
+            ->setIdMerchant($merchant[SpyMerchantTableMap::COL_ID_MERCHANT]);
+
+        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+
+        $storeLabels = [];
+        foreach ($merchantTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+            $storeLabels[] = $this->generateLabel($storeTransfer->getName(), static::STORE_CLASS_LABEL);
+        }
+
+        return implode(" ", $storeLabels);
     }
 }

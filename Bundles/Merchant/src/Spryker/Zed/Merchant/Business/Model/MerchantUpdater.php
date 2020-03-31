@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
@@ -124,9 +125,43 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        $this->updateMerchantStores($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function updateMerchantStores(MerchantTransfer $merchantTransfer): void
+    {
+        $currentStoreRelationTransfer = $this->merchantRepository->getMerchantStoresByIdMerchant($merchantTransfer->getIdMerchant());
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
+
+        if (count($currentStoreRelationTransfer->getIdStores()) === 0) {
+            foreach ($merchantTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                $this->merchantEntityManager->createMerchantStore($merchantTransfer, $storeTransfer);
+            }
+
+            return;
+        }
+
+        $currentStoreIds = $currentStoreRelationTransfer->getIdStores();
+        $requestedStoreIds = $storeRelationTransfer->getIdStores();
+
+        $storeIdsToCreate = array_diff($requestedStoreIds, $currentStoreIds);
+        $storesIdsToDelete = array_diff($currentStoreIds, $requestedStoreIds);
+
+        foreach ($storeIdsToCreate as $idStore) {
+            $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+        }
+
+        foreach ($storesIdsToDelete as $idStore) {
+            $this->merchantEntityManager->deleteMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+        }
     }
 
     /**
