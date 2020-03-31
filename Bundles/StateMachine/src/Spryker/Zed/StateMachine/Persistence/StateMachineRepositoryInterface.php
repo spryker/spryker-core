@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\StateMachine\Persistence;
 
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface StateMachineRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer;
+    public function findStateMachineProcess(StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer;
 }

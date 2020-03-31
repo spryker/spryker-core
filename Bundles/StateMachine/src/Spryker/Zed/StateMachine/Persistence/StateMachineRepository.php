@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Persistence;
 
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,11 +18,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class StateMachineRepository extends AbstractRepository implements StateMachineRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer
+    public function findStateMachineProcess(StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer
     {
         $stateMachineProcessQuery = $this->getFactory()->createStateMachineProcessQuery();
         $stateMachineProcessQuery = $this->applyStateMachineProcessFilters($stateMachineProcessQuery, $stateMachineProcessCriteriaFilterTransfer);
@@ -43,13 +43,13 @@ class StateMachineRepository extends AbstractRepository implements StateMachineR
 
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery $stateMachineProcessQuery
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery
      */
     protected function applyStateMachineProcessFilters(
         SpyStateMachineProcessQuery $stateMachineProcessQuery,
-        StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+        StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer
     ): SpyStateMachineProcessQuery {
         if ($stateMachineProcessCriteriaFilterTransfer->getIdStateMachineProcess() !== null) {
             $stateMachineProcessQuery->filterByIdStateMachineProcess($stateMachineProcessCriteriaFilterTransfer->getIdStateMachineProcess());

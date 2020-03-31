@@ -8,7 +8,7 @@
 namespace Spryker\Zed\StateMachine\Business;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -313,12 +313,13 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer
-    {
-        return $this->getRepository()->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+    public function findStateMachineProcess(
+        StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
+    ): ?StateMachineProcessTransfer {
+        return $this->getRepository()->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
     }
 }

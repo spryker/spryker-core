@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantOms\Business\StateMachineProcess;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
@@ -81,7 +81,8 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
         }
 
         return $this->stateMachineFacade->findStateMachineProcess(
-            (new StateMachineProcessCriteriaFilterTransfer())->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess())
+            (new StateMachineProcessCriteriaTransfer())
+                ->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess())
         );
     }
 }

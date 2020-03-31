@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachineFacadeInterface
@@ -48,12 +48,13 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(StateMachineProcessCriteriaFilterTransfer $stateMachineProcessCriteriaFilterTransfer): StateMachineProcessTransfer
-    {
-        return $this->stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+    public function findStateMachineProcess(
+        StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
+    ): ?StateMachineProcessTransfer {
+        return $this->stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
     }
 }
