@@ -8,9 +8,11 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -38,11 +40,20 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected $resourceTransferAnalyzer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
      */
-    public function __construct(ResourceTransferAnalyzerInterface $resourceTransferAnalyzer)
-    {
+    protected $resourceSchemaNameStorage;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+     */
+    public function __construct(
+        ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
+        ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+    ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+        $this->resourceSchemaNameStorage = $resourceSchemaNameStorage;
     }
 
     /**
@@ -192,6 +203,30 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($metadataValue[static::KEY_TYPE]);
 
         return $this->createObjectSchemaTypeTransfer($metadataKey, $schemaName, $metadataValue);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaItemsTransfer
+     */
+    public function createItemsTransfer(array $resourceRelationships): SchemaItemsTransfer
+    {
+        $schema = new SchemaItemsTransfer();
+
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $schemaName = $this
+                ->resourceSchemaNameStorage
+                ->getResourceSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
+            $schema->addOneOf(
+                sprintf(
+                    static::PATTERN_SCHEMA_REFERENCE,
+                    $schemaName
+                )
+            );
+        }
+
+        return $schema;
     }
 
     /**
