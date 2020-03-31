@@ -481,7 +481,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
      */
     protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {

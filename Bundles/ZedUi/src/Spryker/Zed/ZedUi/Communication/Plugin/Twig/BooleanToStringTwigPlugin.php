@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 use Twig\TwigFilter;
 
+/**
+ * @method \Spryker\Zed\ZedUi\Communication\ZedUiCommunicationFactory getFactory()
+ */
 class BooleanToStringTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     protected const FILTER_NAME_BOOL_TO_STR = 'boolToStr';

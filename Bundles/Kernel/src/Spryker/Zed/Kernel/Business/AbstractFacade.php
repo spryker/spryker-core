@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\ClassResolver\Business\BusinessFactoryResolver;
 use Spryker\Zed\Kernel\EntityManagerResolverAwareTrait;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 
@@ -61,10 +61,10 @@ abstract class AbstractFacade
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Business\BusinessFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new BusinessFactoryResolver();
     }
 }

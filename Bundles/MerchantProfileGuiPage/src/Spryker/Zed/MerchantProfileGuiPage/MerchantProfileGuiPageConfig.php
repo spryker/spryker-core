@@ -21,6 +21,8 @@ class MerchantProfileGuiPageConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSalutationChoices(): array
@@ -29,6 +31,8 @@ class MerchantProfileGuiPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantUrlPrefix(): string

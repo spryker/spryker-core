@@ -7,12 +7,24 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
 {
     /**
      * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface
      */
     protected $customerClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected static $customerTransfer;
+
+    /**
+     * @var bool
+     */
+    protected static $customerTransferLoaded = false;
 
     /**
      * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface $customerClient
@@ -27,8 +39,9 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
      */
     public function findCurrentCustomerCompanyBusinessUnitId(): ?int
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-        if (!$customerTransfer) {
+        $customerTransfer = $this->getCustomerTransfer();
+
+        if ($customerTransfer === null) {
             return null;
         }
 
@@ -43,5 +56,18 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
         }
 
         return $companyBusinessUnit->getIdCompanyBusinessUnit();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerTransfer(): ?CustomerTransfer
+    {
+        if (static::$customerTransferLoaded === false) {
+            static::$customerTransfer = $this->customerClient->getCustomer();
+            static::$customerTransferLoaded = true;
+        }
+
+        return static::$customerTransfer;
     }
 }

@@ -271,7 +271,7 @@ class MerchantProfileFormType extends AbstractType
             'choices' => array_flip($choices),
             'required' => false,
             'label' => static::LABEL_CONTACT_PERSON_TITLE,
-            'placeholder' => 'Select one',
+            'placeholder' => 'select.default.placeholder',
 
         ]);
 

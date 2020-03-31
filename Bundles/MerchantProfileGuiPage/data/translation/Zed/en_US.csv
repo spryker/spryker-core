@@ -47,3 +47,4 @@ profile.status.message.online,"<p>This means that your store is availiable onlin
 profile.status.message.offline,"<p>This means that your store is not availiable online and noone can see it.</p>"
 Banner URL,Banner URL
 "The Profile was saved successfully.","The Profile was saved successfully."
+select.default.placeholder,Select
