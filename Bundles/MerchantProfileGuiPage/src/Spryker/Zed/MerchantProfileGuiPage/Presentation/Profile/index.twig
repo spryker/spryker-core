@@ -735,7 +735,9 @@
                                         </spy-form-item>
                                     </div>
                                     <div>
-                                        {{ onlineProfileTab.is_active.vars.checked ? 'profile.status.message.online' | trans | raw :  'profile.status.message.offline' | trans | raw}}
+                                        {{ onlineProfileTab.is_active.vars.checked ?
+                                            'profile.status.message.online' | trans | raw :
+                                            'profile.status.message.offline' | trans | raw }}
                                     </div>
                                 </div>
                             </spy-card>
