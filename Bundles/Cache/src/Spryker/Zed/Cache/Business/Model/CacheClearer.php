@@ -46,7 +46,17 @@ class CacheClearer implements CacheClearerInterface
     public function clearCache()
     {
         return $this->clear(
-            $this->config->getCachePath()
+            $this->config->getStoreCachePath()
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function clearCodeBucketCache(): string
+    {
+        return $this->clear(
+            $this->config->getCodeBucketCachePath()
         );
     }
 
@@ -90,7 +100,9 @@ class CacheClearer implements CacheClearerInterface
      */
     protected function clearDirectory($directory)
     {
-        $this->fileSystem->remove($this->findFiles($directory));
+        if ($this->fileSystem->exists($directory)) {
+            $this->fileSystem->remove($this->findFiles($directory));
+        }
     }
 
     /**

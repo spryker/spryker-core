@@ -39,7 +39,21 @@ class EmptyAllCachesConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->emptyCache($output);
+        $this->emptyCodeBucketCache($output);
         $this->emptyAutoLoadCache($output);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function emptyCodeBucketCache(OutputInterface $output): void
+    {
+        $emptiedDirectories = $this->getFacade()->emptyCodeBucketCache();
+
+        $this->info('Removed cache files', true);
+        $output->writeln($emptiedDirectories);
     }
 
     /**
@@ -52,7 +66,7 @@ class EmptyAllCachesConsole extends Console
         $emptiedDirectories = $this->getFacade()->emptyCache();
 
         $this->info('Removed cache files', true);
-        $this->printEmptiedDirectories($emptiedDirectories, $output);
+        $output->writeln($emptiedDirectories);
     }
 
     /**
@@ -65,7 +79,7 @@ class EmptyAllCachesConsole extends Console
         $emptiedDirectories = $this->getFacade()->emptyAutoLoaderCache();
 
         $this->info('Removed auto-load cache files', true);
-        $this->printEmptiedDirectories($emptiedDirectories, $output);
+        $output->writeln($emptiedDirectories);
     }
 
     /**
