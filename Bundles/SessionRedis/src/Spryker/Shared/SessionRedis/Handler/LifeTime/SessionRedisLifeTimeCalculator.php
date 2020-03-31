@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\SessionRedis\Handler\LifeTime;
 
+use Generated\Shared\Transfer\HttpRequestTransfer;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorInterface
 {
     /**
@@ -15,11 +18,28 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
     protected $defaultSessionLifeTime;
 
     /**
-     * @param int $defaultSessionLifeTime
+     * @var \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
      */
-    public function __construct(int $defaultSessionLifeTime)
-    {
+    protected $sessionRedisLifeTimeCalculatorPlugins;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @param int $defaultSessionLifeTime
+     * @param \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[] $sessionRedisLifeTimeCalculatorPlugins
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     */
+    public function __construct(
+        int $defaultSessionLifeTime,
+        array $sessionRedisLifeTimeCalculatorPlugins,
+        RequestStack $requestStack
+    ) {
         $this->defaultSessionLifeTime = $defaultSessionLifeTime;
+        $this->sessionRedisLifeTimeCalculatorPlugins = $sessionRedisLifeTimeCalculatorPlugins;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -27,6 +47,31 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
      */
     public function getSessionLifeTime(): int
     {
+        if (!$this->requestStack->getCurrentRequest()) {
+            return $this->defaultSessionLifeTime;
+        }
+
+        $httpRequestTransfer = $this->createHttpRequestTransfer();
+        foreach ($this->sessionRedisLifeTimeCalculatorPlugins as $sessionRedisLifeTimeCalculatorPlugin) {
+            if ($sessionRedisLifeTimeCalculatorPlugin->isApplicable($httpRequestTransfer)) {
+                return $sessionRedisLifeTimeCalculatorPlugin->getLifeTime($httpRequestTransfer);
+            }
+        }
+
         return $this->defaultSessionLifeTime;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\HttpRequestTransfer
+     */
+    protected function createHttpRequestTransfer(): HttpRequestTransfer
+    {
+        $httpRequestTransfer = new HttpRequestTransfer();
+
+        foreach ($this->requestStack->getCurrentRequest()->headers->keys() as $key) {
+            $httpRequestTransfer->addHeader($key, $this->requestStack->getCurrentRequest()->headers->get($key));
+        }
+
+        return $httpRequestTransfer;
     }
 }

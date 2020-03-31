@@ -131,7 +131,11 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
     {
-        return new SessionRedisLifeTimeCalculator($this->getConfig()->getZedSessionLifeTime());
+        return new SessionRedisLifeTimeCalculator(
+            $this->getConfig()->getZedSessionLifeTime(),
+            $this->getSessionRedisLifeTimeCalculatorPlugins(),
+            $this->getRequestStack()
+        );
     }
 
     /**
@@ -156,5 +160,13 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function getRedisClient(): SessionRedisToRedisClientInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::CLIENT_SESSION_REDIS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     */
+    public function getSessionRedisLifeTimeCalculatorPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionRedisDependencyProvider::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR);
     }
 }
