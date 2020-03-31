@@ -24,7 +24,7 @@
     "spryker/url-storage": "*"
   },
   "suggest": {
-    "spryker/event": "ADD SUGGEST DESCRIPTION",
+    "spryker/event": "To use event behavior.",
     "spryker/url-storage": "To use shop route plugin."
   },
   "autoload": {

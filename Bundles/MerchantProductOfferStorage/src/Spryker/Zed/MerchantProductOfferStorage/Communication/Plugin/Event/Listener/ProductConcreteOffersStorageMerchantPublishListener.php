@@ -19,7 +19,7 @@ class ProductConcreteOffersStorageMerchantPublishListener extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Writes product concrete product offer data to storage by provided product sku events.
+     * - Writes product concrete product offer data to storage by provided merchant events.
      *
      * @api
      *

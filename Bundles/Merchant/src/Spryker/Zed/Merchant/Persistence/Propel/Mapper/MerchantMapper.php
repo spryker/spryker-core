@@ -75,15 +75,15 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[] $spyUrlEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function mapUrlCollectionToMerchantTransfer(ObjectCollection $spyUrlEntities, MerchantTransfer $merchantTransfer)
+    protected function mapUrlCollectionToMerchantTransfer(ObjectCollection $urlEntities, MerchantTransfer $merchantTransfer)
     {
         $urlTransfers = new ArrayObject();
-        foreach ($spyUrlEntities as $urlEntity) {
+        foreach ($urlEntities as $urlEntity) {
             $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
             $urlTransfer->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
 

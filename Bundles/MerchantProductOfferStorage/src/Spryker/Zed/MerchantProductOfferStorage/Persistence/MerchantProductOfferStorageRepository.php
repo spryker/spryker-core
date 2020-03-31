@@ -61,7 +61,6 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferStorageMapper = $this->getFactory()->createProductOfferStorageMapper();
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
-            $productOfferTransfer->setStores($productOfferStorageMapper->mapStoresByProductOfferEntity($productOfferEntity));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
@@ -95,20 +94,17 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaFilterTransfer->getIsActiveMerchant());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null || $productOfferCriteriaFilterTransfer->getConcreteSkus()) {
+        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN
             );
-            if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
-                $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct());
-            }
-            if ($productOfferCriteriaFilterTransfer->getConcreteSkus()) {
-                $productOfferQuery->addAnd(
-                    $productOfferQuery->getNewCriterion(SpyProductTableMap::COL_SKU, $productOfferCriteriaFilterTransfer->getConcreteSkus(), Criteria::IN)
-                );
-            }
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getConcreteSkus()) {
+            $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilterTransfer->getConcreteSkus());
         }
 
         return $productOfferQuery;

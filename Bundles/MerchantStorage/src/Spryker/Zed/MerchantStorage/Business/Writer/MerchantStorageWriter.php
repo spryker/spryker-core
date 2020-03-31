@@ -92,7 +92,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
             }
 
             $this->merchantStorageEntityManager->saveMerchantStorage(
-                $this->mapMerchantTransferToStorageTransfer($merchantTransfer)
+                $this->mapMerchantTransferToStorageTransfer($merchantTransfer, (new MerchantStorageTransfer()))
             );
         }
 
@@ -101,12 +101,15 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
-    protected function mapMerchantTransferToStorageTransfer(MerchantTransfer $merchantTransfer): MerchantStorageTransfer
-    {
-        $merchantStorageTransfer = (new MerchantStorageTransfer())->fromArray($merchantTransfer->modifiedToArray(), true);
+    protected function mapMerchantTransferToStorageTransfer(
+        MerchantTransfer $merchantTransfer,
+        MerchantStorageTransfer $merchantStorageTransfer
+    ): MerchantStorageTransfer {
+        $merchantStorageTransfer = $merchantStorageTransfer->fromArray($merchantTransfer->modifiedToArray(), true);
 
         return $merchantStorageTransfer;
     }
