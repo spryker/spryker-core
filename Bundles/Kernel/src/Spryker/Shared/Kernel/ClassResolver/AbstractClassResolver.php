@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderPhp;

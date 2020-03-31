@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Propel;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;

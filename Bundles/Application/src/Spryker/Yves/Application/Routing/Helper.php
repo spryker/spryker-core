@@ -10,7 +10,6 @@ namespace Spryker\Yves\Application\Routing;
 use LogicException;
 use Silex\Application;
 use Spryker\Service\UtilText\UtilTextService;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @deprecated Will be removed without replacement.

@@ -45,9 +45,9 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
