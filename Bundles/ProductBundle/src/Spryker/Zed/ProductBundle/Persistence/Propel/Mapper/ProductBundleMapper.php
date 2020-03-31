@@ -30,7 +30,8 @@ class ProductBundleMapper
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
                 ->setIdProductBundle($productBundleEntity->getFkProduct())
-                ->setQuantity($productBundleEntity->getQuantity());
+                ->setQuantity($productBundleEntity->getQuantity())
+                ->setBundleSku($productBundleEntity->getSpyProductRelatedByFkProduct()->getSku());
         }
 
         return $productForBundleTransfers;
