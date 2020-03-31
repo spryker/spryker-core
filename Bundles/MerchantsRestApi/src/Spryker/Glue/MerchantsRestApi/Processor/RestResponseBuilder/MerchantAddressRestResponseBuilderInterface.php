@@ -11,7 +11,7 @@ use ArrayObject;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface MerchantAddressesRestResponseBuilderInterface
+interface MerchantAddressRestResponseBuilderInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantAddressesStorageTransfers

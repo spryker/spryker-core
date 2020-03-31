@@ -9,14 +9,14 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface;
 
-class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implements MerchantAddressesByMerchantReferenceResourceRelationshipExpanderInterface
+class MerchantAddressByMerchantReferenceResourceRelationshipExpander implements MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface
      */
-    protected $merchantAddressesRestResponseBuilder;
+    protected $merchantAddressRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface
@@ -25,14 +25,14 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
 
     /**
      * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilderInterface $merchantAddressesRestResponseBuilder
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface $merchantAddressRestResponseBuilder
      */
     public function __construct(
         MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
-        MerchantAddressesRestResponseBuilderInterface $merchantAddressesRestResponseBuilder
+        MerchantAddressRestResponseBuilderInterface $merchantAddressRestResponseBuilder
     ) {
         $this->merchantStorageClient = $merchantStorageClient;
-        $this->merchantAddressesRestResponseBuilder = $merchantAddressesRestResponseBuilder;
+        $this->merchantAddressRestResponseBuilder = $merchantAddressRestResponseBuilder;
     }
 
     /**
@@ -55,7 +55,7 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipExpander implement
             }
 
             $merchantStorageTransfer = $merchantStorageTransfers[$resourceId];
-            $restMerchantAddressesResource = $this->merchantAddressesRestResponseBuilder->createMerchantAddressesRestResource(
+            $restMerchantAddressesResource = $this->merchantAddressRestResponseBuilder->createMerchantAddressesRestResource(
                 $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection(),
                 $resourceId
             );

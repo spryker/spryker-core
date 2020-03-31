@@ -15,10 +15,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestResponseBuilderInterface
+class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -26,20 +26,20 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapperInterface
      */
-    protected $merchantsAddressesResourceMapper;
+    protected $merchantsAddressResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface $merchantsAddressesResourceMapper
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapperInterface $merchantsAddressResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        MerchantAddressesMapperInterface $merchantsAddressesResourceMapper
+        MerchantAddressMapperInterface $merchantsAddressResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->merchantsAddressesResourceMapper = $merchantsAddressesResourceMapper;
+        $this->merchantsAddressResourceMapper = $merchantsAddressResourceMapper;
     }
 
     /**
@@ -50,7 +50,7 @@ class MerchantAddressesRestResponseBuilder implements MerchantAddressesRestRespo
      */
     public function createMerchantAddressesRestResource(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResourceInterface
     {
-        $restMerchantsAttributesTransfer = $this->merchantsAddressesResourceMapper
+        $restMerchantsAttributesTransfer = $this->merchantsAddressResourceMapper
             ->mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
                 $merchantStorageProfileAddressTransfers,
                 new RestMerchantAddressesAttributesTransfer()

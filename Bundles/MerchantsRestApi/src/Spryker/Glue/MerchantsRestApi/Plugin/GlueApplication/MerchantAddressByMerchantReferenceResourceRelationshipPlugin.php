@@ -15,7 +15,7 @@ use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiFactory getFactory()
  */
-class MerchantAddressesByMerchantReferenceResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class MerchantAddressByMerchantReferenceResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,12 +31,12 @@ class MerchantAddressesByMerchantReferenceResourceRelationshipPlugin extends Abs
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createMerchantAddressesByMerchantReferenceResourceRelationshipExpander()
+            ->createMerchantAddressByMerchantReferenceResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

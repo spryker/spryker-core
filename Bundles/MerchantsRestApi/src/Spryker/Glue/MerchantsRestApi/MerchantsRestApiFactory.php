@@ -10,18 +10,18 @@ namespace Spryker\Glue\MerchantsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressesByMerchantReferenceResourceRelationshipExpander;
-use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressesByMerchantReferenceResourceRelationshipExpanderInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapper;
-use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressByMerchantReferenceResourceRelationshipExpander;
+use Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapper;
+use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapperInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapper;
 use Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantMapperInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressesReader;
-use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressesReaderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReader;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReaderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilder;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilder;
+use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 
@@ -43,13 +43,13 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressesReaderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReaderInterface
      */
-    public function createMerchantAddressesReader(): MerchantAddressesReaderInterface
+    public function createMerchantAddressReader(): MerchantAddressReaderInterface
     {
-        return new MerchantAddressesReader(
+        return new MerchantAddressReader(
             $this->getMerchantStorageClient(),
-            $this->createMerchantAddressesRestResponseBuilder()
+            $this->createMerchantAddressRestResponseBuilder()
         );
     }
 
@@ -65,24 +65,24 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressesByMerchantReferenceResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Expander\MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
      */
-    public function createMerchantAddressesByMerchantReferenceResourceRelationshipExpander(): MerchantAddressesByMerchantReferenceResourceRelationshipExpanderInterface
+    public function createMerchantAddressByMerchantReferenceResourceRelationshipExpander(): MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
     {
-        return new MerchantAddressesByMerchantReferenceResourceRelationshipExpander(
+        return new MerchantAddressByMerchantReferenceResourceRelationshipExpander(
             $this->getMerchantStorageClient(),
-            $this->createMerchantAddressesRestResponseBuilder()
+            $this->createMerchantAddressRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressesRestResponseBuilderInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface
      */
-    public function createMerchantAddressesRestResponseBuilder(): MerchantAddressesRestResponseBuilderInterface
+    public function createMerchantAddressRestResponseBuilder(): MerchantAddressRestResponseBuilderInterface
     {
-        return new MerchantAddressesRestResponseBuilder(
+        return new MerchantAddressRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantAddressesMapper()
+            $this->createMerchantAddressMapper()
         );
     }
 
@@ -103,11 +103,11 @@ class MerchantsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressesMapperInterface
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Mapper\MerchantAddressMapperInterface
      */
-    public function createMerchantAddressesMapper(): MerchantAddressesMapperInterface
+    public function createMerchantAddressMapper(): MerchantAddressMapperInterface
     {
-        return new MerchantAddressesMapper();
+        return new MerchantAddressMapper();
     }
 
     /**

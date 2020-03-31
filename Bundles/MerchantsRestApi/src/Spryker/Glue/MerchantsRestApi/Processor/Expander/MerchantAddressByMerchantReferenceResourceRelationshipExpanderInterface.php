@@ -9,7 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface MerchantAddressesByMerchantReferenceResourceRelationshipExpanderInterface
+interface MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

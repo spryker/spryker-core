@@ -39,7 +39,7 @@ class MerchantAddressesResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createMerchantAddressesReader()
+            ->createMerchantAddressReader()
             ->getMerchantAddresses($restRequest);
     }
 }

@@ -9,8 +9,9 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer;
+use Generated\Shared\Transfer\RestMerchantAddressTransfer;
 
-interface MerchantAddressesMapperInterface
+class MerchantAddressMapper implements MerchantAddressMapperInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
@@ -21,5 +22,12 @@ interface MerchantAddressesMapperInterface
     public function mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
         ArrayObject $merchantStorageProfileAddressTransfers,
         RestMerchantAddressesAttributesTransfer $restMerchantAddressesAttributesTransfer
-    ): RestMerchantAddressesAttributesTransfer;
+    ): RestMerchantAddressesAttributesTransfer {
+        foreach ($merchantStorageProfileAddressTransfers as $merchantStorageProfileAddressTransfer) {
+            $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray($merchantStorageProfileAddressTransfer->toArray());
+            $restMerchantAddressesAttributesTransfer->addAddress($restMerchantAddressTransfer);
+        }
+
+        return $restMerchantAddressesAttributesTransfer;
+    }
 }
