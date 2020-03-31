@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 interface MerchantToUrlFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer Deprecated: This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
-     * @param string|null $resourceType Deprecated: This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
-     * @param int|null $idResource Deprecated: This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param string|null $resourceType
+     * @param int|null $idResource
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
