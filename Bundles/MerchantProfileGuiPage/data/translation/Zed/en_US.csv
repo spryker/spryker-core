@@ -1,47 +1,49 @@
-"Company Name","Company Name"
-"Registration number","Registration Number"
-Email,Email
-Role,Role
-Title,Title
-"First Name","First Name"
-"Last Name","Last Name"
-Phone,Phone
-"Banner URL","Banner URL"
-"Logo URL","Logo URL"
-"Public Email","Public Email"
-"Public Phone","Public Phone"
-Description,Description
-"Banner url","Banner url"
-"Average Delivery Time","Average Delivery Time"
-"Terms and Conditions","Terms and Conditions"
-"Cancellation Policy","Cancellation Policy"
-Imprint,Imprint
-"Data Privacy","Data Privacy"
-"Is Active","Is Active"
-City,City
-"Zip Code","Zip Code"
-Country,Country
-Street,Street
-Number,Number
+"About the store","About the store"
 "Addition to address","Addition to Address"
+"Average Delivery Time","Average Delivery Time"
+"Banner URL","Banner URL"
+"Banner url","Banner url"
+"Business Info","Business Info"
+"Cancellation Policy","Cancellation Policy"
+City,City
+"Company Name","Company Name"
+"Contact Details & Address","Contact Details & Address"
+"Contact Person Details","Contact Person Details"
+Country,Country
+"Data Privacy","Data Privacy"
+Description,Description
+Email,Email
 "Fax number","Fax Number"
+"First Name","First Name"
+Imprint,Imprint
+"Is Active","Is Active"
+"Last Name","Last Name"
 Latitude,Latitude
+"Logo URL","Logo URL"
 Longitude,Longitude
+"Merchant Company Details","Merchant Company Details"
 "Merchant Reference","Merchant reference"
+Number,Number
+"Online Profile","Online Profile"
+"Online Status","Online Status"
+Phone,Phone
 Profile,Profile
-Store Profile URL,Store Profile URL
-About the store,About the store
-Visual assets,Visual assets
-Contact Details & Address,Contact Details & Address
-Return Policy,Return Policy
-Online Status,Online Status
-Contact Person Details,Contact Person Details
-Merchant Company Details,Merchant Company Details
-Business Info,Business Info
-Online Profile,Online Profile
-profile.status.message,"<p>This means that your store is availiable online and people can see it.</p>
+profile.status.message.online,"<p>This means that your store is availiable online and people can see it.</p>
                                                 <br>
                                                 <p>So make sure it looks good!</p>"
-Banner URL,Banner URL
-"The Profile was saved successfully.","The Profile was saved successfully."
+profile.status.message.offline,"<p>This means that your store is not availiable online and noone can see it.</p>"
+"Public Email","Public Email"
+"Public Phone","Public Phone"
+"Registration number","Registration Number"
+"Return Policy","Return Policy"
+Role,Role
 select.default.placeholder,Select
+"Store Profile URL","Store Profile URL"
+store.state.online,"Your Store is online."
+store.state.offline,"Your Store is offline."
+Street,Street
+"Terms and Conditions","Terms and Conditions"
+"The Profile was saved successfully.","The Profile was saved successfully."
+Title,Title
+"Visual assets","Visual assets"
+"Zip Code","Zip Code"
