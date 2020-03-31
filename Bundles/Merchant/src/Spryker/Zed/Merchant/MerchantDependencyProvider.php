@@ -113,16 +113,6 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use MerchantDependencyProvider::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
-     *
-     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    protected function getMerchantPostSavePlugins(): array
-    {
-        return [];
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[]
      */
     protected function getMerchantExpanderPlugins(): array

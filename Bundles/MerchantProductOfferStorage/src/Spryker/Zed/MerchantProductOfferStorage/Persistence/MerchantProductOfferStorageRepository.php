@@ -52,7 +52,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
-            ->joinSpyMerchant();
+            ->joinWithSpyMerchant();
 
         $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);
 
