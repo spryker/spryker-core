@@ -11,8 +11,9 @@ $(document).ready(function () {
     var imagePreview = document.getElementById('preview');
 
     new ImageZoom(imagePreview, {
-        width: 400,
-        zoomWidth: 500,
+        width: 200,
+        height: 400,
+        zoomWidth: 350,
         offset: {
             vertical: 0,
             horizontal: 10
