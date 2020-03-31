@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 
 class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipOrderResourceExpanderInterface
 {
+    protected const RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES = 'merchantReferences';
+
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface
      */
@@ -41,17 +43,12 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
         }
 
         $merchantsResources = $this->merchantReader->getMerchantsResources($merchantReferences);
-        $merchantsResources = $this->indexMerchantResourcesById($merchantsResources);
 
         foreach ($resources as $orderResource) {
-            $merchantReferences = $orderResource->getAttributes()->offsetGet(RestOrdersAttributesTransfer::MERCHANT_REFERENCES);
-            foreach ($merchantReferences as $merchantReference) {
-                if (!isset($merchantsResources[$merchantReference])) {
-                    continue;
-                }
-
-                $orderResource->addRelationship($merchantsResources[$merchantReference]);
-            }
+            $orderResource = $this->addMerchantRelationships(
+                $orderResource,
+                $merchantsResources
+            );
         }
     }
 
@@ -81,12 +78,45 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
         $merchantReferences = [];
 
         foreach ($resources as $orderResource) {
-            $merchantReferences = array_merge(
-                $merchantReferences,
-                $orderResource->getAttributes()->offsetGet(RestOrdersAttributesTransfer::MERCHANT_REFERENCES)
-            );
+            $orderAttributes = $orderResource->getAttributes();
+
+            if ($orderAttributes && $orderAttributes->offsetExists(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)) {
+                $merchantReferences = array_merge(
+                    $merchantReferences,
+                    $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)
+                );
+            }
         }
 
         return array_unique($merchantReferences);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderResource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $merchantsResources
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function addMerchantRelationships(
+        RestResourceInterface $orderResource,
+        array $merchantsResources
+    ): RestResourceInterface {
+        $orderAttributes = $orderResource->getAttributes();
+
+        if ($orderAttributes && $orderAttributes->offsetExists(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)) {
+            /** @var string[] $merchantReferences */
+            $merchantReferences = $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES);
+            $merchantsResources = $this->indexMerchantResourcesById($merchantsResources);
+
+            foreach ($merchantReferences as $merchantReference) {
+                if (!isset($merchantsResources[$merchantReference])) {
+                    continue;
+                }
+
+                $orderResource->addRelationship($merchantsResources[$merchantReference]);
+            }
+        }
+
+        return $orderResource;
     }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantsRestApi\Plugin;
+namespace Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;

@@ -9,7 +9,6 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
@@ -73,9 +72,6 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
             MerchantsRestApiConfig::RESOURCE_MERCHANTS,
             $idRestResource,
             $restMerchantsAttributesTransfer
-        )->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($idRestResource)
         );
     }
 
