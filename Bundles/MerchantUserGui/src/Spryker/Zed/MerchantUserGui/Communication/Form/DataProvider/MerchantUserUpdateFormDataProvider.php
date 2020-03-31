@@ -25,6 +25,11 @@ class MerchantUserUpdateFormDataProvider
     protected const USER_STATUS_ACTIVE = 'active';
 
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     */
+    protected const USER_STATUS_DELETED = 'deleted';
+
+    /**
      * @var \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface
      */
     protected $merchantUserFacade;
@@ -69,6 +74,7 @@ class MerchantUserUpdateFormDataProvider
         return [
             static::USER_STATUS_ACTIVE => static::USER_STATUS_ACTIVE,
             static::USER_STATUS_BLOCKED => static::USER_STATUS_BLOCKED,
+            static::USER_STATUS_DELETED => static::USER_STATUS_DELETED,
         ];
     }
 }

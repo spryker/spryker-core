@@ -22,8 +22,8 @@ class DeleteMerchantUserController extends AbstractController
     public const PARAM_ID_MERCHANT_USER = 'id-merchant-user';
 
     protected const MESSAGE_MERCHANT_USER_DELETE_ERROR = 'Merchant user was not deleted.';
-    protected const MESSAGE_INCORRECT_MERCHANT_USER_ID = 'Merchant user id is incorrect.';
-    protected const HEADER_REFERER = 'referer';
+    protected const MESSAGE_INCORRECT_MERCHANT_USER_ID = 'Merchant user ID is incorrect.';
+    protected const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +47,7 @@ class DeleteMerchantUserController extends AbstractController
         if (!$merchantUserTransfer) {
             $this->addErrorMessage(static::MESSAGE_INCORRECT_MERCHANT_USER_ID);
 
-            return $this->redirectResponseExternal($request->headers->get(static::HEADER_REFERER));
+            return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
         }
 
         $redirectUrl = $this->getRedirectUrl($merchantUserTransfer);
@@ -86,7 +86,7 @@ class DeleteMerchantUserController extends AbstractController
         if (!$merchantUserTransfer) {
             $this->addErrorMessage(static::MESSAGE_INCORRECT_MERCHANT_USER_ID);
 
-            return $this->redirectResponseExternal($request->headers->get(static::HEADER_REFERER));
+            return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
         }
 
         $redirectUrl = $this->getRedirectUrl($merchantUserTransfer);
@@ -107,15 +107,15 @@ class DeleteMerchantUserController extends AbstractController
     }
 
     /**
-     * @param int $idMerchantUser
+     * @param int $idUser
      *
      * @return bool
      */
-    protected function isCurrentUser(int $idMerchantUser): bool
+    protected function isCurrentUser(int $idUser): bool
     {
-        $currentUser = $this->getFactory()->getUserFacade()->getCurrentUser();
+        $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
 
-        return $currentUser->getIdUser() === $idMerchantUser;
+        return $currentUserTransfer->getIdUser() === $idUser;
     }
 
     /**

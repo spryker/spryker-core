@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -33,7 +34,7 @@ class MerchantUserDeleteConfirmForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAction('/merchant-user-gui/delete-merchant-user/delete');
-        $builder->setMethod('DELETE');
+        $builder->setMethod(Request::METHOD_DELETE);
     }
 
     /**
