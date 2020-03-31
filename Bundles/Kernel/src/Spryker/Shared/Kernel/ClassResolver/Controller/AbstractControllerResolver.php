@@ -29,7 +29,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
      *
      * @return object
      */
-    public function resolve(BundleControllerActionInterface $bundleControllerAction)
+    public function resolve($bundleControllerAction)
     {
         $this->bundleControllerAction = $bundleControllerAction;
 

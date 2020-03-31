@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sDependencyProvider';
+    protected const RESOLVABLE_TYPE = 'ServiceDependencyProvider';
 
     /**
      * @param object|string $callerClass
@@ -22,12 +22,11 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Service\Kernel\AbstractBundleDependencyProvider $class */
-            $class = $this->getResolvedClassInstance();
+        /** @var \Spryker\Service\Kernel\AbstractBundleDependencyProvider $resolved */
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new DependencyProviderNotFoundException($this->getClassInfo());

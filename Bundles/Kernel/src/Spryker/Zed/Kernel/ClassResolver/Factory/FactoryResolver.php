@@ -9,9 +9,16 @@ namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Kernel\ClassResolver\Business\BusinessFactoryResolver} instead.
+ * @deprecated Use {@link \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver} instead.
+ * @deprecated Use {@link \Spryker\Zed\Kernel\ClassResolver\Persistence\PersistenceFactoryResolver} instead.
+ */
 class FactoryResolver extends AbstractClassResolver
 {
     public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%4$s\\%3$s\\%2$s%3$sFactory';
+
+    protected const RESOLVABLE_TYPE = 'ZedFactory';
 
     /**
      * @param object|string $callerClass
@@ -22,9 +29,10 @@ class FactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+        $resolved = parent::doResolve($callerClass);
+
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());
@@ -54,7 +62,7 @@ class FactoryResolver extends AbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             self::KEY_LAYER => $this->getClassInfo()->getLayer(),
             static::KEY_CODE_BUCKET => $codeBucket,
         ];

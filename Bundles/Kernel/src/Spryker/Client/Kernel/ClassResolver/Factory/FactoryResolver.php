@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\%2$sFactory';
+    protected const RESOLVABLE_TYPE = 'ClientFactory';
 
     /**
      * @param object|string $callerClass
@@ -22,12 +22,11 @@ class FactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Client\Kernel\AbstractFactory $class */
-            $class = $this->getResolvedClassInstance();
+        /** @var \Spryker\Client\Kernel\AbstractFactory $resolved */
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());

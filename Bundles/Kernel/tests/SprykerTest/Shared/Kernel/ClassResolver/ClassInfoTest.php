@@ -26,13 +26,13 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleStripsStoreNameFromBundleName(): void
+    public function testGetBundleStripsStoreNameFromModuleName(): void
     {
         $classInfo = $this->getClassInfo('TEST');
 
         $classInfo->setClass('\\ProjectNamespace\\Zed\CartTEST\\Business\\CartFacade');
 
-        $this->assertSame('Cart', $classInfo->getBundle());
+        $this->assertSame('Cart', $classInfo->getModule());
     }
 
     /**
@@ -44,11 +44,11 @@ class ClassInfoTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
-            ->setMethods(['getBundleNameResolver'])
+            ->setMethods(['getModuleNameResolver'])
             ->getMock();
 
         $mock
-            ->method('getBundleNameResolver')
+            ->method('getModuleNameResolver')
             ->will($this->returnValue($this->getModuleNameResolverMock($codeBucket)));
 
         return $mock;

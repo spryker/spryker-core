@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\%2$sConfig';
+    protected const RESOLVABLE_TYPE = 'GlueConfig';
 
     /**
      * @param object|string $callerClass
@@ -22,12 +22,11 @@ class BundleConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Glue\Kernel\AbstractBundleConfig $class */
-            $class = $this->getResolvedClassInstance();
+        /** @var \Spryker\Glue\Kernel\AbstractBundleConfig $resolved */
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new BundleConfigNotFoundException($this->getClassInfo());

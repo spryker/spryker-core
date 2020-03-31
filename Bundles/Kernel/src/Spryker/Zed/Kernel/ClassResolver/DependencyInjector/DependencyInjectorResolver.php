@@ -32,7 +32,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $dependencyInjectorCollection = $this->getDependencyInjectorCollection();
 
         $this->setCallerClass($callerClass);
-        $injectToBundle = $this->getClassInfo()->getBundle();
+        $injectToBundle = $this->getClassInfo()->getModule();
         $injectFromBundles = $this->getInjectorBundles($injectToBundle);
 
         foreach ($injectFromBundles as $injectFromBundle) {
@@ -84,7 +84,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             self::KEY_FROM_BUNDLE => $this->fromBundle,
             static::KEY_CODE_BUCKET => $codeBucket,
         ];

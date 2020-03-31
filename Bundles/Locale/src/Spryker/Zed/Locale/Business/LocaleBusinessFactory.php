@@ -9,8 +9,12 @@ namespace Spryker\Zed\Locale\Business;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Locale\Business\Cache\LocaleCache;
+use Spryker\Zed\Locale\Business\Cache\LocaleCacheInterface;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
+use Spryker\Zed\Locale\Business\Reader\LocaleReader;
+use Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface;
 use Spryker\Zed\Locale\LocaleDependencyProvider;
 
 /**
@@ -59,5 +63,21 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     public function getStore(): Store
     {
         return $this->getProvidedDependency(LocaleDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface
+     */
+    public function createLocaleReader(): LocaleReaderInterface
+    {
+        return new LocaleReader($this->getRepository(), $this->createLocaleCache());
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\Cache\LocaleCacheInterface
+     */
+    public function createLocaleCache(): LocaleCacheInterface
+    {
+        return new LocaleCache();
     }
 }

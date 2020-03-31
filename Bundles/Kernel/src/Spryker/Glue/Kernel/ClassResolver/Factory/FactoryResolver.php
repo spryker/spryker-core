@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\%2$sFactory';
+    protected const RESOLVABLE_TYPE = 'GlueFactory';
 
     /**
      * @param object|string $callerClass
@@ -22,13 +22,11 @@ class FactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
+        /** @var \Spryker\Glue\Kernel\AbstractFactory $resolved */
+        $resolved = $this->doResolve($callerClass);
 
-            /** @var \Spryker\Glue\Kernel\AbstractFactory $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());

@@ -8,19 +8,10 @@
 namespace Spryker\Shared\Kernel\ClassResolver\Config;
 
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
-/**
- * @method \Spryker\Shared\Kernel\AbstractSharedConfig getResolvedClassInstance()
- */
 class SharedConfigResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Shared\\%2$s%3$s\\%2$sConfig';
-
-    /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    protected $classInfo;
+    protected const RESOLVABLE_TYPE = 'SharedConfig';
 
     /**
      * @param object|string $callerClass
@@ -87,12 +78,10 @@ class SharedConfigResolver extends AbstractClassResolver
             static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
-        $className = str_replace(
+        return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
             $this->getClassPattern()
         );
-
-        return $className;
     }
 }

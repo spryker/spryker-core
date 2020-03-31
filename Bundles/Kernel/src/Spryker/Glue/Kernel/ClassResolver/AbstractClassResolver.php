@@ -21,16 +21,14 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
-        $className = str_replace(
+        return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
             $this->getClassPattern()
         );
-
-        return $className;
     }
 }
