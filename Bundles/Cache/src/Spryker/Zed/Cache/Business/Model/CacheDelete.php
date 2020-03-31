@@ -31,14 +31,22 @@ class CacheDelete
     /**
      * Deletes all cache files for all stores
      *
-     * @return string
+     * @return string[]
      */
     public function deleteAllFiles()
     {
-        $rootDirectory = $this->config->getCodeBucketCachePath();
+        $rootDirectory = $this->config->getCachePath();
+        $stores = $this->config->getAllowedStores();
+        $directories = [];
+        foreach ($stores as $store) {
+            $directory = str_replace('{STORE}', $store, $rootDirectory);
+            if (is_dir($directory)) {
+                $directories[] = $directory;
+            }
+        }
         $filesystem = new Filesystem();
-        $filesystem->remove($rootDirectory);
+        $filesystem->remove($directories);
 
-        return $rootDirectory;
+        return $directories;
     }
 }

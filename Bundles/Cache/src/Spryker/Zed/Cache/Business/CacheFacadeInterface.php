@@ -14,7 +14,7 @@ interface CacheFacadeInterface
      *
      * @deprecated Use emptyCache() instead
      *
-     * @return string
+     * @return string[]
      */
     public function deleteAllFiles();
 
@@ -24,7 +24,7 @@ interface CacheFacadeInterface
      *
      * @api
      *
-     * @return string
+     * @return string[]
      */
     public function emptyCache();
 
@@ -53,7 +53,7 @@ interface CacheFacadeInterface
      *
      * @api
      *
-     * @return string
+     * @return string[]
      */
     public function emptyAutoLoaderCache();
 }

@@ -81,17 +81,4 @@ class EmptyAllCachesConsole extends Console
         $this->info('Removed auto-load cache files', true);
         $output->writeln($emptiedDirectories);
     }
-
-    /**
-     * @param string[] $directories
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    protected function printEmptiedDirectories(array $directories, OutputInterface $output)
-    {
-        foreach ($directories as $directory) {
-            $output->writeln($directory, OutputInterface::VERBOSITY_NORMAL);
-        }
-    }
 }

@@ -41,12 +41,13 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     public function clearCache()
     {
         return $this->clear(
-            $this->config->getStoreCachePath()
+            $this->config->getCachePath(),
+            $this->config->getAllowedStores()
         );
     }
 
@@ -55,31 +56,46 @@ class CacheClearer implements CacheClearerInterface
      */
     public function clearCodeBucketCache(): string
     {
-        return $this->clear(
-            $this->config->getCodeBucketCachePath()
-        );
+        $directory = $this->config->getCodeBucketCachePath();
+
+        $this->clearDirectory($directory);
+
+        return $directory;
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     public function clearAutoLoaderCache()
     {
         return $this->clear(
-            $this->config->getAutoloaderCachePath()
+            $this->config->getAutoloaderCachePath(),
+            $this->config->getAllowedStores()
         );
     }
 
     /**
-     * @param string $directory
+     * @param string $directoryPattern
+     * @param string[] $stores
      *
-     * @return string
+     * @return string[]
      */
-    protected function clear($directory)
+    protected function clear($directoryPattern, array $stores)
     {
-        $this->clearDirectory($directory);
+        $emptiedDirectories = [];
 
-        return $directory;
+        foreach ($stores as $store) {
+            $directory = $this->getDirectoryPathFromPattern($directoryPattern, $store);
+
+            if (!$this->fileSystem->exists($directory)) {
+                continue;
+            }
+
+            $this->clearDirectory($directory);
+            $emptiedDirectories[] = $directory;
+        }
+
+        return $emptiedDirectories;
     }
 
     /**
@@ -100,9 +116,7 @@ class CacheClearer implements CacheClearerInterface
      */
     protected function clearDirectory($directory)
     {
-        if ($this->fileSystem->exists($directory)) {
-            $this->fileSystem->remove($this->findFiles($directory));
-        }
+        $this->fileSystem->remove($this->findFiles($directory));
     }
 
     /**

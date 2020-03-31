@@ -22,46 +22,14 @@ class SharedConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+        /** @var \Spryker\Shared\Kernel\AbstractSharedConfig $resolved */
+        $resolved = $this->doResolve($callerClass);
+
+        if ($resolved !== null) {
+            return $resolved;
         }
 
-        throw new SharedConfigNotFoundException($this->classInfo);
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            static::KEY_CODE_BUCKET
-        );
-    }
-
-    /**
-     * @param object|string $callerClass
-     *
-     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
-     */
-    public function setCallerClass($callerClass)
-    {
-        $this->classInfo = new ClassInfo();
-        $this->classInfo->setClass($callerClass);
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    public function getClassInfo()
-    {
-        return $this->classInfo;
+        throw new SharedConfigNotFoundException($this->getClassInfo());
     }
 
     /**
@@ -74,7 +42,7 @@ class SharedConfigResolver extends AbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
