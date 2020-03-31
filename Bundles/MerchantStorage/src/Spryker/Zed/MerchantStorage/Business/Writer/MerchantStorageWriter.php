@@ -92,7 +92,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
             }
 
             $this->merchantStorageEntityManager->saveMerchantStorage(
-                $this->mapMerchantTransferToStorageTransfer($merchantTransfer, (new MerchantStorageTransfer()))
+                $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer())
             );
         }
 

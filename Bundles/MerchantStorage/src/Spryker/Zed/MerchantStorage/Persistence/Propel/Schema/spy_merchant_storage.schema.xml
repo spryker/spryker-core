@@ -7,7 +7,7 @@
 
     <table name="spy_merchant_storage" identifierQuoting="true">
         <column name="id_merchant_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_merchant" required="true" type="INTEGER" size="255"/>
+        <column name="id_merchant" required="true" type="INTEGER"/>
 
         <index name="spy_merchant_storage-id_merchant">
             <index-column name="id_merchant"/>
