@@ -11,6 +11,7 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductRelationDataImport\Business\Hook\ProductRelationAfterImportHook;
+use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductAndRelationTypeAndStoreValidatorStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationTypeWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\ProductRelationWriterStep;
 use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\QuerySetValidatorStep;
@@ -40,6 +41,7 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
             ->addStep($this->createSkuToIdProductAbstractStep())
             ->addStep($this->createProductRelationTypeWriterStep())
             ->addStep($this->createQuerySetValidatorStep())
+            ->addStep($this->createProductAndRelationTypeAndStoreValidatorStep())
             ->addStep($this->createProductRelationWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -81,6 +83,14 @@ class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductRelationAfterImportHook(): DataImporterAfterImportInterface
     {
         return new ProductRelationAfterImportHook($this->getProductRelationFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createProductAndRelationTypeAndStoreValidatorStep(): DataImportStepInterface
+    {
+        return new ProductAndRelationTypeAndStoreValidatorStep();
     }
 
     /**
