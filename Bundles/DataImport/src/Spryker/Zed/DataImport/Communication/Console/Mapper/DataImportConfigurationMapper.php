@@ -12,33 +12,15 @@ use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 class DataImportConfigurationMapper implements DataImportConfigurationMapperInterface
 {
     /**
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer[] $dataImportConfigurationTransfers
-     *
-     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer[]
-     */
-    public function mapDataImportConfigurationDataToDataImportConfigurationTransfers(array $data, array $dataImportConfigurationTransfers): array
-    {
-        foreach ($data as $datum) {
-            $dataImportConfigurationTransfers[] = $this->mapDataImportConfigurationDatumToDataImportConfigurationTransfer(
-                $datum,
-                new DataImportConfigurationTransfer()
-            );
-        }
-
-        return $dataImportConfigurationTransfers;
-    }
-
-    /**
-     * @param array $datum
+     * @param array $dataImportConfigurationData
      * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer
      */
-    protected function mapDataImportConfigurationDatumToDataImportConfigurationTransfer(
-        array $datum,
+    public function mapDataImportConfigurationDataToDataImportConfigurationTransfer(
+        array $dataImportConfigurationData,
         DataImportConfigurationTransfer $dataImportConfigurationTransfer
     ): DataImportConfigurationTransfer {
-        return $dataImportConfigurationTransfer->fromArray($datum, true);
+        return $dataImportConfigurationTransfer->fromArray($dataImportConfigurationData, true);
     }
 }

@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\DataImport\Communication\Console\Mapper;
 
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
+
 interface DataImportConfigurationMapperInterface
 {
     /**
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer[] $dataImportConfigurationTransfers
+     * @param array $dataImportConfigurationData
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer
      */
-    public function mapDataImportConfigurationDataToDataImportConfigurationTransfers(array $data, array $dataImportConfigurationTransfers): array;
+    public function mapDataImportConfigurationDataToDataImportConfigurationTransfer(
+        array $dataImportConfigurationData,
+        DataImportConfigurationTransfer $dataImportConfigurationTransfer
+    ): DataImportConfigurationTransfer;
 }

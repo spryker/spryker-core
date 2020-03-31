@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DataImport\Communication;
 
+use Spryker\Zed\DataImport\Communication\Console\Executor\DataImportExecutor;
+use Spryker\Zed\DataImport\Communication\Console\Executor\DataImportExecutorInterface;
 use Spryker\Zed\DataImport\Communication\Console\Mapper\DataImportConfigurationMapper;
 use Spryker\Zed\DataImport\Communication\Console\Mapper\DataImportConfigurationMapperInterface;
 use Spryker\Zed\DataImport\Communication\Console\Parser\DataImportConfigurationParserInterface;
@@ -38,6 +40,17 @@ class DataImportCommunicationFactory extends AbstractCommunicationFactory
     public function createDataImportConfigurationMapper(): DataImportConfigurationMapperInterface
     {
         return new DataImportConfigurationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Communication\Console\Executor\DataImportExecutorInterface
+     */
+    public function createDataImportExecutor(): DataImportExecutorInterface
+    {
+        return new DataImportExecutor(
+            $this->createDataImportConfigurationYamlParser(),
+            $this->getFacade()
+        );
     }
 
     /**

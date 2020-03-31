@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\DataImport\Communication\Console\Parser;
 
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
+
 interface DataImportConfigurationParserInterface
 {
     /**
      * @param string $filename
      *
-     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer
      */
-    public function parseConfigurationFile(string $filename): array;
+    public function parseConfigurationFile(string $filename): DataImportConfigurationTransfer;
 }

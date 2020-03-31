@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Communication\Console\Parser;
 
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 use Spryker\Zed\DataImport\Communication\Console\Mapper\DataImportConfigurationMapperInterface;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceInterface;
 
@@ -39,19 +40,16 @@ class DataImportConfigurationYamlParser implements DataImportConfigurationParser
     /**
      * @param string $filename
      *
-     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer
      */
-    public function parseConfigurationFile(string $filename): array
+    public function parseConfigurationFile(string $filename): DataImportConfigurationTransfer
     {
         $yamlBatchIterator = $this->utilDataReader->getYamlBatchIterator($filename);
         $configData = $yamlBatchIterator->current();
-        if (!isset($configData[static::CONFIGURATION_KEY_ACTIONS])) {
-            return [];
-        }
 
-        return $this->dataImportConfigurationMapper->mapDataImportConfigurationDataToDataImportConfigurationTransfers(
-            $configData[static::CONFIGURATION_KEY_ACTIONS],
-            []
+        return $this->dataImportConfigurationMapper->mapDataImportConfigurationDataToDataImportConfigurationTransfer(
+            $configData,
+            new DataImportConfigurationTransfer()
         );
     }
 }
