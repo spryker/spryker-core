@@ -28,7 +28,7 @@
         "@spryker/form-item": "^0.1.0-next.11",
         "@spryker/icon": "^0.1.0-next.6",
         "@spryker/input": "^0.1.0-next.11",
-        "@spryker/select": "^0.1.0-next.12",
+        "@spryker/select": "^0.1.0-next.13",
         "@spryker/label": "^0.1.0-next.0",
         "@spryker/styles": "^0.1.0-next.33",
         "@spryker/tabs": "0.1.0-next.1",
