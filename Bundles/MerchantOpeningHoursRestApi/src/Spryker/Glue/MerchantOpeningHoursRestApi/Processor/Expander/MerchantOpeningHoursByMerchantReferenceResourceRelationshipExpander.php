@@ -61,7 +61,7 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $merchantStorageTransfers = $this->getMerchantStorageTransfers($resources);
+        $merchantStorageTransfers = $this->getMerchantIdsIndexedByReference($resources);
 
         $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->getTranslatedMerchantOpeningHoursStorageTransfers(
             $merchantStorageTransfers,
@@ -87,25 +87,30 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return int[]
      */
-    protected function getMerchantStorageTransfers(array $resources): array
+    protected function getMerchantIdsIndexedByReference(array $resources): array
     {
         $merchantReferences = $this->getMerchantReferences($resources);
 
-        return $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+
+        $merchantIdsIndexedByReference = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantIdsIndexedByReference[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();
+        }
+
+        return $merchantIdsIndexedByReference;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param int[] $merchantIdsIndexedByReference
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    protected function getTranslatedMerchantOpeningHoursStorageTransfers(array $merchantStorageTransfers, RestRequestInterface $restRequest): array
+    protected function getTranslatedMerchantOpeningHoursStorageTransfers(array $merchantIdsIndexedByReference, RestRequestInterface $restRequest): array
     {
-        $merchantIdsIndexedByReference = $this->getMerchantIdsIndexedByReference($merchantStorageTransfers);
-
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
             ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
 
@@ -139,21 +144,6 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
         }
 
         return $references;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
-     *
-     * @return int[]
-     */
-    protected function getMerchantIdsIndexedByReference(array $merchantStorageTransfers): array
-    {
-        $merchantIdsIndexedByReference = [];
-        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantIdsIndexedByReference[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();
-        }
-
-        return $merchantIdsIndexedByReference;
     }
 
     /**
