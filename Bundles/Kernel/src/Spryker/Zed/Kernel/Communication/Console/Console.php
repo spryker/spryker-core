@@ -9,8 +9,8 @@ namespace Spryker\Zed\Kernel\Communication\Console;
 
 use RuntimeException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -140,11 +140,11 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new CommunicationFactoryResolver();
     }
 
     /**

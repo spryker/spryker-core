@@ -88,10 +88,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      */
     public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
     {
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->fromArray($priceProductFilterTransfer->toArray(), true);
-
-        return $priceProductCriteriaTransfer
+        return (new PriceProductCriteriaTransfer())
+            ->setSku($priceProductFilterTransfer->getSku())
+            ->setQuantity($priceProductFilterTransfer->getQuantity())
             ->setPriceDimension(
                 $priceProductFilterTransfer->getPriceDimension()
             )

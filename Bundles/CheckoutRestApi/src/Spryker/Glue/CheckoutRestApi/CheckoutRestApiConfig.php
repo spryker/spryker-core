@@ -135,4 +135,24 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     {
         return static::IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED;
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isShipmentMethodsMappedToAttributes(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isPaymentProvidersMappedToAttributes(): bool
+    {
+        return true;
+    }
 }
