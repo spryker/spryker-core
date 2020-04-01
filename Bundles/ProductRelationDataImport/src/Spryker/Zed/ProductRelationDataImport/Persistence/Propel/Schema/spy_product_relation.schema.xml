@@ -6,24 +6,6 @@
         <unique name="spy_product-relation-unique-product-relation-key">
             <unique-column name="product_relation_key"/>
         </unique>
-
-        <foreign-key name="spy_product-relation-fk_product_abstract" foreignTable="spy_product_abstract">
-            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
-        </foreign-key>
-
-        <foreign-key name="spy_product-relation-type-fk_product_abstract" foreignTable="spy_product_relation_type">
-            <reference local="fk_product_relation_type" foreign="id_product_relation_type"/>
-        </foreign-key>
-
-        <unique name="spy_product-relation-unique-fk_product_abstract-query_set_data">
-            <unique-column name="fk_product_abstract"/>
-            <unique-column name="fk_product_relation_type"/>
-            <unique-column name="query_set_data"/>
-        </unique>
-
-        <behavior name="timestampable"/>
-
-        <id-method-parameter value="spy_product_relation_pk_seq"/>
     </table>
 
 </database>
