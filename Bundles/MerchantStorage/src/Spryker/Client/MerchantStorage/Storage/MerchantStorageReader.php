@@ -111,7 +111,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
         $merchantKey = $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $merchantReference);
         $merchantDataMapId = $this->storageClient->get($merchantKey);
 
-        if (!empty($merchantDataMapId[static::KEY_ID_MERCHANT])) {
+        if (!isset($merchantDataMapId[static::KEY_ID_MERCHANT])) {
             return null;
         }
 
