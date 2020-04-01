@@ -754,7 +754,7 @@
 {% endblock %}
 
 {% block footerJs %}
-    {{ parent() }}
     <script src="{{ assetsPath('js/mp-profile/main-es2015.js') }}" type="module"></script>
     <script src="{{ assetsPath('js/mp-profile/main-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
 {% endblock %}
