@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business\Checker;
 
-use Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
 
 class FilterFieldChecker implements FilterFieldCheckerInterface
 {
@@ -19,7 +19,7 @@ class FilterFieldChecker implements FilterFieldCheckerInterface
     public function isCompanyFilterApplicable(array $filterFieldTransfers): bool
     {
         foreach ($filterFieldTransfers as $filterFieldTransfer) {
-            if ($filterFieldTransfer->getType() === OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY) {
+            if ($filterFieldTransfer->getType() === CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY) {
                 return true;
             }
         }

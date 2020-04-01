@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 
 class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 {
@@ -18,15 +19,6 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
      */
     public const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
-
-    /**
-     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL
-     */
-    public const FILTER_FIELD_TYPE_ALL = 'all';
-
-    public const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
-
-    public const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
 
     public const MAPPED_ORDER_BY_FILTERS = [
         'customerName' => self::COLUMN_FULL_NAME,
@@ -77,7 +69,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            static::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
         );
 
         if (!$filterFieldTransfer) {
@@ -101,7 +93,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            static::FILTER_FIELD_TYPE_ALL
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL
         );
 
         if (!$filterFieldTransfer) {
@@ -127,7 +119,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            static::FILTER_FIELD_TYPE_ORDER_BY
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY
         );
 
         if (!$filterFieldTransfer) {

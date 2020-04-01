@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusi
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -51,7 +51,7 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
+            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT)
             ->setValue(static::COMPANY_BUSINESS_UNIT_UUID);
 
         // Act

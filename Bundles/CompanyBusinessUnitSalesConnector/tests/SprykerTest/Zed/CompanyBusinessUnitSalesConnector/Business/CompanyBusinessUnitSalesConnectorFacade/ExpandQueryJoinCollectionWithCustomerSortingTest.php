@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -55,7 +55,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_ORDER_BY)
+            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY)
             ->setValue('customerEmail::ASC');
 
         // Act
@@ -81,7 +81,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_ORDER_BY)
+            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY)
             ->setValue('customerName::DESC');
 
         // Act
@@ -107,7 +107,7 @@ class ExpandQueryJoinCollectionWithCustomerSortingTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_ORDER_BY)
+            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY)
             ->setValue('sample::ASC');
 
         // Act

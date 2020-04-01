@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -57,7 +58,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(OrderSearchQueryExpander::FILTER_FIELD_TYPE_ALL)
+            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL)
             ->setValue(static::SEARCH_STRING);
 
         // Act

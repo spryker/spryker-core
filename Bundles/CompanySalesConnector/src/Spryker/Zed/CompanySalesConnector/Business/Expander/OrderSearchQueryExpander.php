@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
+use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
 
 class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 {
-    public const FILTER_FIELD_TYPE_COMPANY = 'company';
-
     /**
      * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
      */
@@ -36,7 +35,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
-        $filterFieldTransfer = $this->extractFilterFieldByType($filterFieldTransfers, static::FILTER_FIELD_TYPE_COMPANY);
+        $filterFieldTransfer = $this->extractFilterFieldByType($filterFieldTransfers, CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY);
 
         if (!$filterFieldTransfer) {
             return $queryJoinCollectionTransfer;

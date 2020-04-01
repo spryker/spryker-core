@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface;
 
@@ -32,7 +32,7 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
     {
         return $this->getFacade()->isFilterFieldSet(
             $filterFieldTransfers,
-            OrderSearchQueryExpander::FILTER_FIELD_TYPE_ALL
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL
         );
     }
 

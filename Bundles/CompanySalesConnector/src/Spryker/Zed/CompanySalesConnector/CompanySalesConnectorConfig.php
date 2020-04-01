@@ -11,4 +11,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanySalesConnectorConfig extends AbstractBundleConfig
 {
+    public const FILTER_FIELD_TYPE_COMPANY = 'company';
 }
