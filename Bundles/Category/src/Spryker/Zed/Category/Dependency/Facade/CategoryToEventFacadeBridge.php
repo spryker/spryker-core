@@ -9,7 +9,7 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-class CategoryToEventBridge implements CategoryToEventInterface
+class CategoryToEventFacadeBridge implements CategoryToEventFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Event\Business\EventFacadeInterface
@@ -33,5 +33,16 @@ class CategoryToEventBridge implements CategoryToEventInterface
     public function trigger($eventName, TransferInterface $transfer)
     {
         $this->eventFacade->trigger($eventName, $transfer);
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $transfers): void
+    {
+        $this->eventFacade->triggerBulk($eventName, $transfers);
     }
 }
