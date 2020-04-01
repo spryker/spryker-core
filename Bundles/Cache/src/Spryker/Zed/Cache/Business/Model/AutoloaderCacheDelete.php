@@ -31,7 +31,7 @@ class AutoloaderCacheDelete
     /**
      * Deletes all cache files for all stores
      *
-     * @return array
+     * @return string[]
      */
     public function deleteAllFiles()
     {

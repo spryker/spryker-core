@@ -10,6 +10,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/storage": "^3.8.0",
+    "spryker/storage-redis": "^1.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

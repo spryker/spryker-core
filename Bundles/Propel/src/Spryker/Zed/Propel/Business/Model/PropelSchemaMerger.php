@@ -331,7 +331,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\SimpleXMLElement[]
      */
     private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {

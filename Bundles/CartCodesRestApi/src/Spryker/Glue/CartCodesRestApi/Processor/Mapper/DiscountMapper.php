@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 class DiscountMapper implements DiscountMapperInterface
 {
     /**
+     * @var \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[]
+     */
+    protected $discountMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[] $discountMapperPlugins
+     */
+    public function __construct(array $discountMapperPlugins)
+    {
+        $this->discountMapperPlugins = $discountMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
      *
@@ -22,9 +35,18 @@ class DiscountMapper implements DiscountMapperInterface
         DiscountTransfer $discountTransfer,
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer {
-        return $restDiscountsAttributesTransfer
+        $restDiscountsAttributesTransfer
             ->fromArray($discountTransfer->toArray(), true)
             ->setCode($discountTransfer->getVoucherCode())
             ->setExpirationDateTime($discountTransfer->getValidTo());
+
+        foreach ($this->discountMapperPlugins as $discountMapperPlugin) {
+            $restDiscountsAttributesTransfer = $discountMapperPlugin->mapDiscountTransferToRestDiscountsAttributesTransfer(
+                $discountTransfer,
+                $restDiscountsAttributesTransfer
+            );
+        }
+
+        return $restDiscountsAttributesTransfer;
     }
 }
