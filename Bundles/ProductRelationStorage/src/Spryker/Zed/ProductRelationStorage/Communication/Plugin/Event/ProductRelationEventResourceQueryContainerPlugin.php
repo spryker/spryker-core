@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 
 /**
- * @deprecated Use ProductRelationPublisherTriggerPlugin instead.
+ * @deprecated Use \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationPublisherTriggerPlugin instead.
  *
  * @see \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationPublisherTriggerPlugin
  *

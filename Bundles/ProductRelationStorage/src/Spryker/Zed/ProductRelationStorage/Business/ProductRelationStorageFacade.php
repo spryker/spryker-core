@@ -22,7 +22,15 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents() instead.
+     *
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents()
      *
      * @param array $productAbstractIds
      *
@@ -38,7 +46,15 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents(),
+     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents() instead.
+     *
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents()
+     * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents()
      *
      * @param array $productAbstractIds
      *

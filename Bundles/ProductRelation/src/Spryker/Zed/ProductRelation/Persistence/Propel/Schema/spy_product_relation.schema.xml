@@ -17,10 +17,6 @@
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
         <column name="is_rebuild_scheduled" required="true" defaultValue="false" type="BOOLEAN"/>
         <column name="query_set_data" type="LONGVARCHAR" required="false"/>
-        <column name="product_relation_key" type="VARCHAR" required="true"/>
-        <unique name="spy_product-relation-unique-product-relation-key">
-            <unique-column name="product_relation_key"/>
-        </unique>
 
         <foreign-key name="spy_product-relation-fk_product_abstract" foreignTable="spy_product_abstract">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
