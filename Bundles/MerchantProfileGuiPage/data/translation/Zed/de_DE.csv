@@ -1,5 +1,5 @@
 "About the store","Ihr Shop"
-"Addition to address","Adresszusatz"
+"Addition to address",Adresszusatz
 "Average Delivery Time","Durchschnittliche Lieferzeit"
 "Banner URL","Banner URL"
 "Business Info",Geschäftsinformationen
@@ -41,7 +41,7 @@ profile.status.message.offline,"<p><br>Dies bedeutet, dass ihr Shop nicht online
 "Return Policy",Rücknahmebedingungen
 Role,Position
 select.default.placeholder,Auswählen
-"Store Profile URL","Shopprofil-URL"
+"Store Profile URL",Shopprofil-URL
 store.state.online,"Ihr Shop ist online."
 store.state.offline,"Ihr Shop ist offline."
 Street,Straße
