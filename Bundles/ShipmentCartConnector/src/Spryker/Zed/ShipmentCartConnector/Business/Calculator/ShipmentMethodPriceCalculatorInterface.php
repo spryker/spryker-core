@@ -18,5 +18,5 @@ interface ShipmentMethodPriceCalculatorInterface
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    public function calculateSourcePrices(MoneyValueTransfer $moneyValueTransfer, ShipmentMethodTransfer $shipmentMethodTransfer): MoneyValueTransfer;
+    public function applySourcePrices(MoneyValueTransfer $moneyValueTransfer, ShipmentMethodTransfer $shipmentMethodTransfer): MoneyValueTransfer;
 }

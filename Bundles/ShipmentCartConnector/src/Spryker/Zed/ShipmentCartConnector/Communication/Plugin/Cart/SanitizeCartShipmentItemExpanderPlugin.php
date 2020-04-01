@@ -15,11 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
  */
-class SanitizeCartShipmentDataItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class SanitizeCartShipmentItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Clears shipment method data from quote and items in case of item add or remove action.
+     * - Clears shipment method from quote and items in case of item add or remove action.
      * - Clears shipment expenses in case of item add or remove action.
      *
      * @api

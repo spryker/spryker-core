@@ -451,7 +451,6 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Calculates shipment total using expenses.
-     * - Requires CalculableObjectTransfer::totals to be set.
      *
      * @api
      *

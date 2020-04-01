@@ -186,7 +186,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            $moneyValueTransfer = $this->shipmentMethodPriceCalculator->calculateSourcePrices($moneyValueTransfer, $shipmentMethodTransfer);
+            $moneyValueTransfer = $this->shipmentMethodPriceCalculator->applySourcePrices($moneyValueTransfer, $shipmentMethodTransfer);
 
             if ($priceMode === $netModeIdentifier) {
                 $shipmentExpenseTransfer->setUnitGrossPrice(0);

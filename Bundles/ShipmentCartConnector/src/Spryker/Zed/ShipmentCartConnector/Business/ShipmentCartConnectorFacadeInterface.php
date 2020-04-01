@@ -42,7 +42,7 @@ interface ShipmentCartConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Clears shipment method data from quote and items in case of item add or remove action.
+     * - Clears shipment method from quote and items in case of item add or remove action.
      * - Clears shipment expenses in case of item add or remove action.
      *
      * @api

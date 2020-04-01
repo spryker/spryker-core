@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Shipment\ShipmentConfig as SharedShipmentConfig;
 
 class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
@@ -20,9 +21,11 @@ class ShipmentTotalCalculator implements ShipmentTotalCalculatorInterface
      */
     public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $calculableObjectTransfer->requireTotals();
-
         $shipmentTotal = $this->getShipmentTotalSumPrice($calculableObjectTransfer->getExpenses());
+
+        if ($calculableObjectTransfer->getTotals() === null) {
+            $calculableObjectTransfer->setTotals(new TotalsTransfer());
+        }
 
         $calculableObjectTransfer
             ->getTotals()
