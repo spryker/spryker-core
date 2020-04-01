@@ -344,6 +344,7 @@
     </transfer>
 
     <transfer name="CalculatedDiscount">
+        <property name="idDiscount" type="int"/>
     </transfer>
 
     <transfer name="QueryJoin">

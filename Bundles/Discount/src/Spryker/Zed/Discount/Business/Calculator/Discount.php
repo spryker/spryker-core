@@ -279,11 +279,6 @@ class Discount implements DiscountInterface
         try {
             $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
 
-            $discountApplicableItems = $this->filterDiscountApplicableItems(
-                $quoteTransfer,
-                $discountEntity->getIdDiscount()
-            );
-
             $minimumItemAmount = $discountEntity->getMinimumItemAmount();
             $matchedProductAmount = 0;
 

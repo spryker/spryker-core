@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
@@ -76,6 +77,11 @@ class SynchronizationFacadeTest extends Unit
     protected const PARAM_PROJECT = 'PROJECT';
 
     protected const PROJECT_SUITE = 'suite';
+
+    /**
+     * @var \SprykerTest\Zed\Synchronization\SynchronizationBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface
@@ -362,6 +368,8 @@ class SynchronizationFacadeTest extends Unit
         if (!$this->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
+
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
 
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
