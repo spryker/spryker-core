@@ -46,8 +46,8 @@ class QuoteMapper implements QuoteMapperInterface
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
-        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer), true);
+        $quoteData = array_merge($quoteEntityTransfer->modifiedToArray(), $this->decodeQuoteData($quoteEntityTransfer));
+        $quoteTransfer->fromArray($quoteData, true);
         $storeTransfer = new StoreTransfer();
         $storeTransfer->fromArray($quoteEntityTransfer->getSpyStore()->modifiedToArray(), true);
         $quoteTransfer->setStore($storeTransfer);

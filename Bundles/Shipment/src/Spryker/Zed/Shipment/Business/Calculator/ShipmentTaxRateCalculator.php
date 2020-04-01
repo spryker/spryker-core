@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -67,7 +69,32 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($quoteTransfer->getItems(), $quoteTransfer->getExpenses());
+        $quoteTransfer->setExpenses($expenseTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculateByCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getExpenses());
+        $calculableObjectTransfer->setExpenses($expenseTransfers);
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function recalculateByItemTransfersAndExpenseTransfers(ArrayObject $itemTransfers, ArrayObject $expenseTransfers): ArrayObject
+    {
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($itemTransfers);
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
             if ($shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getMethod() === null) {
@@ -78,25 +105,27 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
             $shipmentGroupTransfer = $this->setTaxRateForShipmentGroupItems($shipmentGroupTransfer, $taxSetTransfer);
 
-            $expenseTransfer = $this->findQuoteExpenseByShipment($quoteTransfer, $shipmentGroupTransfer->getShipment());
+            $expenseTransfer = $this->findQuoteExpenseByShipment($expenseTransfers, $shipmentGroupTransfer->getShipment());
             if ($expenseTransfer !== null) {
                 $expenseTransfer->setTaxRate($taxSetTransfer->getEffectiveRate());
             }
         }
+
+        return $expenseTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer|null
      */
     protected function findQuoteExpenseByShipment(
-        QuoteTransfer $quoteTransfer,
+        ArrayObject $expenseTransfers,
         ShipmentTransfer $shipmentTransfer
     ): ?ExpenseTransfer {
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+        foreach ($expenseTransfers as $expenseTransfer) {
             if (!$expenseTransfer->getShipment()) {
                 continue;
             }
