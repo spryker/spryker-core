@@ -123,8 +123,11 @@ class GraphController extends AbstractController
             return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
         }
 
+        $stateMachine = $request->query->get(self::URL_PARAM_STATE_MACHINE);
+
         return $this->viewResponse([
             'processName' => $processName,
+            'stateMachineName' => $stateMachine,
         ]);
     }
 

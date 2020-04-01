@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "spryker-zed-statemachine",
+  "version": "1.0.0",
+  "dependencies": {
+    "js-image-zoom": "^0.7.0"
+  }
+}
