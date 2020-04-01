@@ -115,9 +115,9 @@ class AuthConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getSystemUserRedisSessionLifeTime(): int
+    public function getSystemUserSessionRedisLifeTime(): int
     {
-        return $this->get(AuthConstants::SYSTEM_USER_REDIS_SESSION_LIFE_TIME, AuthConstants::DAY_IN_SECONDS);
+        return $this->get(AuthConstants::SYSTEM_USER_SESSION_REDIS_LIFE_TIME, AuthConstants::DAY_IN_SECONDS);
     }
 
     /**

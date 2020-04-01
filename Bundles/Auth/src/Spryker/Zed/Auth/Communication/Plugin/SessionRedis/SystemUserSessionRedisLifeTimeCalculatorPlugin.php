@@ -47,6 +47,6 @@ class SystemUserSessionRedisLifeTimeCalculatorPlugin extends AbstractPlugin impl
      */
     public function getLifeTime(HttpRequestTransfer $httpRequestTransfer): int
     {
-        return $this->getConfig()->getSystemUserRedisSessionLifeTime();
+        return $this->getConfig()->getSystemUserSessionRedisLifeTime();
     }
 }
