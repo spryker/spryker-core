@@ -61,15 +61,17 @@ class MerchantProfileFormType extends AbstractType
     protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
     protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
-    protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
+    protected const LABEL_CONTACT_PERSON_PHONE = 'Phone Number';
     protected const LABEL_LOGO_URL = 'Logo URL';
     protected const LABEL_URL = 'Profile URL';
-    protected const LABEL_PUBLIC_EMAIL = 'Public Email';
-    protected const LABEL_PUBLIC_PHONE = 'Public Phone';
+    protected const LABEL_PUBLIC_EMAIL = 'Email';
+    protected const LABEL_PUBLIC_PHONE = 'Phone Number';
     protected const LABEL_IS_ACTIVE = 'Is Active';
     protected const LABEL_LATITUDE = 'Latitude';
     protected const LABEL_LONGITUDE = 'Longitude';
     protected const LABEL_FAX_NUMBER = 'Fax number';
+
+    protected const PLACEHOLDER_LOGO_URL = 'Provide a logo URL';
 
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
@@ -388,6 +390,9 @@ class MerchantProfileFormType extends AbstractType
             'label' => static::LABEL_LOGO_URL,
             'required' => false,
             'constraints' => $this->getUrlFieldConstraints(),
+            'attr' => [
+                'placeholder' => static::PLACEHOLDER_LOGO_URL,
+            ],
         ]);
 
         return $this;

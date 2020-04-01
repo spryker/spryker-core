@@ -190,7 +190,7 @@
                                     error="{{ businessInfoTab.contact_person_phone.vars.errors[0].message | default | trans }}"
                                     no-spaces="true"
                                 >
-                                    {{ businessInfoTab.contact_person_phone.vars.label | trans}}
+                                    {{ businessInfoTab.contact_person_phone.vars.label | trans }}
                                     <spy-input
                                         control
                                         attrs=""
@@ -315,6 +315,7 @@
                                                 spyId="{{ descriptionGlossaryKey.vars.id }}"
                                                 name="{{ descriptionGlossaryKey.vars.full_name }}"
                                                 value="{{ descriptionGlossaryKey.vars.value }}"
+                                                placeholder="{{ descriptionGlossaryKey.vars.attr.placeholder | default | trans }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -487,25 +488,6 @@
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
                                         <spy-form-item
-                                            for="{{ onlineProfileTab.latitude.vars.id }}"
-                                            error="{{ onlineProfileTab.latitude.vars.errors[0].message | default | trans }}"
-                                        >
-                                            {{ onlineProfileTab.latitude.vars.label | trans}}
-                                            <spy-input
-                                                control
-                                                attrs=""
-                                                spy-id="{{ onlineProfileTab.latitude.vars.id }}"
-                                                name="{{ onlineProfileTab.latitude.vars.full_name }}"
-                                                value="{{ onlineProfileTab.latitude.vars.value }}"
-                                                placeholder="{{ onlineProfileTab.latitude.vars.attr.placeholder | default | trans }}"
-                                                type="text"
-                                                cloak
-                                            >
-                                            </spy-input>
-                                        </spy-form-item>
-                                    </div>
-                                    <div class="mp-profile__col mp-profile__col--half">
-                                        <spy-form-item
                                             for="{{ onlineProfileTab.longitude.vars.id }}"
                                             error="{{ onlineProfileTab.longitude.vars.errors[0].message | default | trans }}"
                                         >
@@ -517,6 +499,25 @@
                                                 name="{{ onlineProfileTab.longitude.vars.full_name }}"
                                                 value="{{ onlineProfileTab.longitude.vars.value }}"
                                                 placeholder="{{ onlineProfileTab.longitude.vars.attr.placeholder | default | trans }}"
+                                                type="text"
+                                                cloak
+                                            >
+                                            </spy-input>
+                                        </spy-form-item>
+                                    </div>
+                                    <div class="mp-profile__col mp-profile__col--half">
+                                        <spy-form-item
+                                            for="{{ onlineProfileTab.latitude.vars.id }}"
+                                            error="{{ onlineProfileTab.latitude.vars.errors[0].message | default | trans }}"
+                                        >
+                                            {{ onlineProfileTab.latitude.vars.label | trans}}
+                                            <spy-input
+                                                control
+                                                attrs=""
+                                                spy-id="{{ onlineProfileTab.latitude.vars.id }}"
+                                                name="{{ onlineProfileTab.latitude.vars.full_name }}"
+                                                value="{{ onlineProfileTab.latitude.vars.value }}"
+                                                placeholder="{{ onlineProfileTab.latitude.vars.attr.placeholder | default | trans }}"
                                                 type="text"
                                                 cloak
                                             >
@@ -632,6 +633,7 @@
                                                 spy-id="{{ termsConditionsGlossaryKey.vars.id }}"
                                                 name="{{ termsConditionsGlossaryKey.vars.full_name }}"
                                                 value="{{ termsConditionsGlossaryKey.vars.value }}"
+                                                placeholder="{{ termsConditionsGlossaryKey.vars.attr.placeholder | default | trans }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -657,6 +659,7 @@
                                                 spy-id="{{ cancellationPolicyGlossaryKey.vars.id }}"
                                                 name="{{ cancellationPolicyGlossaryKey.vars.full_name }}"
                                                 value="{{ cancellationPolicyGlossaryKey.vars.value }}"
+                                                placeholder="{{ cancellationPolicyGlossaryKey.vars.attr.placeholder | default | trans }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -682,6 +685,7 @@
                                                 spy-id="{{ imprintGlossaryKey.vars.id }}"
                                                 name="{{ imprintGlossaryKey.vars.full_name }}"
                                                 value="{{ imprintGlossaryKey.vars.value }}"
+                                                placeholder="{{ imprintGlossaryKey.vars.attr.placeholder | default | trans }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>
@@ -707,6 +711,7 @@
                                                 spy-id="{{ dataPrivacyGlossaryKey.vars.id }}"
                                                 name="{{ dataPrivacyGlossaryKey.vars.full_name }}"
                                                 value="{{ dataPrivacyGlossaryKey.vars.value }}"
+                                                placeholder="{{ dataPrivacyGlossaryKey.vars.attr.placeholder | default | trans }}"
                                             ></spy-textarea>
                                         </spy-form-item>
                                     </spy-collapsible>

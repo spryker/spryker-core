@@ -34,6 +34,14 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     protected const LABEL_IMPRINT_GLOSSARY = 'Imprint';
     protected const LABEL_DATA_PRIVACY_GLOSSARY = 'Data Privacy';
 
+    protected const PLACEHOLDER_DESCRIPTION_GLOSSARY = 'Tell us about your store';
+    protected const PLACEHOLDER_BANNER_URL_GLOSSARY = 'Provide a banner URL';
+    protected const PLACEHOLDER_DELIVERY_TIME_GLOSSARY = 'Provide Average Delivery Time';
+    protected const PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY = 'Provide Terms & Conditions';
+    protected const PLACEHOLDERL_CANCELLATION_POLICY_GLOSSARY = 'Provide Return Policy';
+    protected const PLACEHOLDERL_IMPRINT_GLOSSARY = 'Provide Imprint';
+    protected const PLACEHOLDER_DATA_PRIVACY_GLOSSARY = 'Provide Data Privacy';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -60,6 +68,9 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     {
         $builder->add(static::FIELD_DESCRIPTION_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_DESCRIPTION_GLOSSARY,
+            'attr' => [
+                'placeholder' => static::PLACEHOLDER_DESCRIPTION_GLOSSARY,
+            ],
             'required' => false,
         ]);
 
@@ -75,6 +86,9 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     {
         $builder->add(static::FIELD_BANNER_URL_GLOSSARY, TextType::class, [
             'label' => static::LABEL_BANNER_URL_GLOSSARY,
+            'attr' => [
+                'placeholder' => static::PLACEHOLDER_BANNER_URL_GLOSSARY,
+            ],
             'required' => false,
         ]);
 
@@ -90,6 +104,9 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     {
         $builder->add(static::FIELD_DELIVERY_TIME_GLOSSARY, TextType::class, [
             'label' => static::LABEL_DELIVERY_TIME_GLOSSARY,
+            'attr' => [
+                'placeholder' => static::PLACEHOLDER_DELIVERY_TIME_GLOSSARY,
+            ],
             'required' => false,
         ]);
 
@@ -108,6 +125,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
+                'placeholder' => static::PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY,
             ],
         ]);
 
@@ -126,6 +144,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
+                'placeholder' => static::PLACEHOLDERL_CANCELLATION_POLICY_GLOSSARY,
             ],
         ]);
 
@@ -144,6 +163,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
+                'placeholder' => static::PLACEHOLDERL_IMPRINT_GLOSSARY,
             ],
         ]);
 
@@ -162,6 +182,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
+                'placeholder' => static::PLACEHOLDER_DATA_PRIVACY_GLOSSARY,
             ],
         ]);
 
