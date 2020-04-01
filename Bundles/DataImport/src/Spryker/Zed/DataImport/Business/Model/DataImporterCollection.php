@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
+use Spryker\Zed\DataImport\Business\Exception\DataImporterNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidImportGroupException;
 use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface;
@@ -131,6 +132,8 @@ class DataImporterCollection implements
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImporterNotFoundException
+     *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
@@ -142,6 +145,10 @@ class DataImporterCollection implements
         $this->beforeImport();
 
         if ($importType !== $this->getImportType()) {
+            if (!isset($dataImporters[$importType])) {
+                throw new DataImporterNotFoundException(sprintf('Data importer not found for "%s" importer type.', $importType));
+            }
+
             $this->executeDataImporter(
                 $dataImporters[$importType],
                 $dataImporterReportTransfer,

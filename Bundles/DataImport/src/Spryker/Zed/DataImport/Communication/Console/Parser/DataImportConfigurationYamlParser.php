@@ -47,9 +47,41 @@ class DataImportConfigurationYamlParser implements DataImportConfigurationParser
         $yamlBatchIterator = $this->utilDataReader->getYamlBatchIterator($filename);
         $configData = $yamlBatchIterator->current();
 
-        return $this->dataImportConfigurationMapper->mapDataImportConfigurationDataToDataImportConfigurationTransfer(
+        $dataImportConfigurationTransfer = $this->dataImportConfigurationMapper->mapDataImportConfigurationDataToDataImportConfigurationTransfer(
             $configData,
             new DataImportConfigurationTransfer()
         );
+
+        return $this->formatDataImportConfigurationTransfer($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer
+     */
+    protected function formatDataImportConfigurationTransfer(DataImportConfigurationTransfer $dataImportConfigurationTransfer): DataImportConfigurationTransfer
+    {
+        foreach ($dataImportConfigurationTransfer->getActions() as $dataImportConfigurationActionTransfer) {
+            if ($dataImportConfigurationActionTransfer->getSource()) {
+                $dataImportConfigurationActionTransfer->setSource($this->resolveSourcePath($dataImportConfigurationActionTransfer->getSource()));
+            }
+        }
+
+        return $dataImportConfigurationTransfer;
+    }
+
+    /**
+     * @param string $sourcePath
+     *
+     * @return string
+     */
+    protected function resolveSourcePath(string $sourcePath): string
+    {
+        if (strpos($sourcePath, '/') === 0) {
+            return $sourcePath;
+        }
+
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $sourcePath;
     }
 }

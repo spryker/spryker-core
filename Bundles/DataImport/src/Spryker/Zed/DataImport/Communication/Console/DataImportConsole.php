@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Communication\Console;
 
 use Exception;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -87,7 +86,6 @@ class DataImportConsole extends Console
         $this->addOption(static::OPTION_CSV_ESCAPE, static::OPTION_CSV_ESCAPE_SHORT, InputOption::VALUE_REQUIRED, 'Sets the csv escape.');
         $this->addOption(static::OPTION_CSV_HAS_HEADER, static::OPTION_CSV_HAS_HEADER_SHORT, InputOption::VALUE_REQUIRED, 'Set this option to 0 (zero) to disable that the first row of the csv file is a used as keys for the data sets.', true);
         $this->addOption(static::OPTION_IMPORT_GROUP, static::OPTION_IMPORT_GROUP_SHORT, InputOption::VALUE_REQUIRED, 'Defines the import group. Import group determines a specific subset of data importers to be used.', DataImportConfig::IMPORT_GROUP_FULL);
-        //TODO ask Jeremy if it should be relative comparing to the project root or to script
         $this->addOption(static::OPTION_CONFIG, static::OPTION_CONFIG_SHORT, InputOption::VALUE_REQUIRED, 'Defines the relative path of the data import configuration .yml file.');
 
         if ($this->isAddedAsNamedDataImportCommand()) {
@@ -134,16 +132,39 @@ class DataImportConsole extends Console
         $importerType = $this->getImporterType($input);
         $configPath = $this->getYamlConfigPath($input);
         if ($configPath !== null) {
-            $this->info(sprintf('<fg=white>Starting import with %s configuration file.</>', $configPath));
-            $dataImporterReportTransfer = $this->getFactory()
-                ->createDataImportExecutor()
-                ->executeByConfigAndImporterType($input, $configPath, $importerType);
-
-            $this->printOverallDataImporterReport($dataImporterReportTransfer);
-
-            return $this->getExitCodeByDataImporterReportTransfer($dataImporterReportTransfer);
+            return $this->executeByConfigAndImporterType($input, $configPath, $importerType);
         }
 
+        return $this->executeByImportType($input, $importerType);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string|null $configPath
+     * @param string $importerType
+     *
+     * @return int
+     */
+    protected function executeByConfigAndImporterType(InputInterface $input, ?string $configPath, string $importerType): int
+    {
+        $this->info(sprintf('<fg=white>Starting import with %s configuration file.</>', $configPath));
+        $dataImporterReportTransfer = $this->getFactory()
+            ->createDataImportExecutor()
+            ->executeByConfigAndImporterType($input, $configPath, $importerType);
+
+        $this->printOverallDataImporterReport($dataImporterReportTransfer);
+
+        return $this->getExitCodeByDataImporterReportTransfer($dataImporterReportTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string $importerType
+     *
+     * @return int
+     */
+    protected function executeByImportType(InputInterface $input, string $importerType): int
+    {
         $this->warning(sprintf(
             'Using a data import without config specified is deprecated. ' .
             'Please, define default configuration yaml file in %s or pass it with --config option',
@@ -167,6 +188,14 @@ class DataImportConsole extends Console
      */
     protected function printOverallDataImporterReport(DataImporterReportTransfer $dataImporterReportTransfer): void
     {
+        $dataImporterReportMessageTransfers = $dataImporterReportTransfer->getMessages();
+        if ($dataImporterReportMessageTransfers->count()) {
+            $this->info('<fg=green>---------------------------------</>');
+            foreach ($dataImporterReportMessageTransfers as $dataImporterReportMessageTransfer) {
+                $this->info($dataImporterReportMessageTransfer->getMessage());
+            }
+        }
+
         $dataImporterReports = $dataImporterReportTransfer->getDataImporterReports();
         if ($dataImporterReports->count()) {
             $this->printDataImporterReports($dataImporterReports);
@@ -184,25 +213,6 @@ class DataImportConsole extends Console
     protected function getExitCodeByDataImporterReportTransfer(DataImporterReportTransfer $dataImporterReportTransfer): int
     {
         return $dataImporterReportTransfer->getIsSuccess() ? static::CODE_SUCCESS : static::CODE_ERROR;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
-    protected function executeImport(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
-    {
-        $dataImporterReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
-
-        $dataImporterReports = $dataImporterReportTransfer->getDataImporterReports();
-        if ($dataImporterReports->count()) {
-            $this->printDataImporterReports($dataImporterReports);
-        }
-
-        $this->info('<fg=green>---------------------------------</>');
-
-        return $dataImporterReportTransfer;
     }
 
     /**
@@ -259,7 +269,13 @@ class DataImportConsole extends Console
      */
     private function printDataImporterReport(DataImporterReportTransfer $dataImporterReport)
     {
+        $source = '';
+        if ($dataImporterReport->getSource()) {
+            $source = sprintf('Import source: <fg=green>%s</>' . PHP_EOL, $dataImporterReport->getSource());
+        }
+
         $messageTemplate = PHP_EOL . '<fg=white>'
+            . '%s'
             . 'Importer type: <fg=green>%s</>' . PHP_EOL
             . 'Importable DataSets: <fg=green>%s</>' . PHP_EOL
             . 'Imported DataSets: <fg=green>%s</>' . PHP_EOL
@@ -268,6 +284,7 @@ class DataImportConsole extends Console
 
         $this->info(sprintf(
             $messageTemplate,
+            $source,
             $dataImporterReport->getImportType(),
             $dataImporterReport->getExpectedImportableDataSetCount(),
             $dataImporterReport->getImportedDataSetCount(),
@@ -298,11 +315,10 @@ class DataImportConsole extends Console
      */
     protected function getYamlConfigPath(InputInterface $input): ?string
     {
-        $configPath = $this->getConfig()->getYamlConfigPath();
         if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('--' . static::OPTION_CONFIG_SHORT)) {
-            $configPath = $input->getOption(static::OPTION_CONFIG);
+            return $input->getOption(static::OPTION_CONFIG);
         }
 
-        return $configPath;
+        return $this->getConfig()->getYamlConfigPath();
     }
 }

@@ -48,6 +48,7 @@
         <property name="importedDataSetCount" type="int"/>
         <property name="importTime" type="float"/>
         <property name="importType" type="string"/>
+        <property name="source" type="string"/>
     </transfer>
 
     <transfer name="DataImporterReportMessage">

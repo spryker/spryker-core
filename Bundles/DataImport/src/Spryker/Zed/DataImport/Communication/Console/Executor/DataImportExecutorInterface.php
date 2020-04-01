@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputInterface;
 interface DataImportExecutorInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Communication\Console\Executor\DataImportExecutorInterface::executeByConfigAndImporterType()} instead.
+     *
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param string $importerType
      *

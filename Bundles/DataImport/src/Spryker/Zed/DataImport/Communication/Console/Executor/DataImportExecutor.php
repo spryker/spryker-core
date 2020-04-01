@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportMessageTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImportFacadeInterface;
 use Spryker\Zed\DataImport\Communication\Console\DataImportConsole;
@@ -40,6 +41,8 @@ class DataImportExecutor implements DataImportExecutorInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Communication\Console\Executor\DataImportExecutor::executeByConfigAndImporterType()} instead.
+     *
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param string $importerType
      *
@@ -49,7 +52,7 @@ class DataImportExecutor implements DataImportExecutorInterface
     {
         $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input, $importerType);
 
-        return $this->executeImport($dataImporterConfigurationTransfer);
+        return $this->dataImportFacade->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -62,28 +65,33 @@ class DataImportExecutor implements DataImportExecutorInterface
     public function executeByConfigAndImporterType(InputInterface $input, string $configPath, ?string $importerType): DataImporterReportTransfer
     {
         $dataImportConfigurationTransfer = $this->dataImportConfigurationParser->parseConfigurationFile($configPath);
-        if ($importerType && $importerType !== DataImportConsole::DEFAULT_IMPORTER_TYPE) {
-            $dataImportConfigurationTransfer->setActions(
-                $this->filterDataImportConfigurationActionTransfersByImporterType($dataImportConfigurationTransfer->getActions(), $importerType)
+
+        if ($this->isImporterTypeSpecified($importerType)) {
+            $filteredDataImportConfigurationActionTransfers = $this->filterDataImportConfigurationActionTransfersByImporterType(
+                $dataImportConfigurationTransfer->getActions(),
+                $importerType
             );
+            $dataImportConfigurationTransfer->setActions($filteredDataImportConfigurationActionTransfers);
         }
 
         $overallDataImporterReportTransfer = (new DataImporterReportTransfer())
             ->setIsSuccess(true)
             ->setImportedDataSetCount(0);
 
+        if (!$dataImportConfigurationTransfer->getActions()->count()) {
+            $messageTransfer = new DataImporterReportMessageTransfer();
+            $messageTransfer->setMessage(sprintf('Requested import type "%s" was not found in %s.', $importerType, $configPath));
+
+            return $overallDataImporterReportTransfer->addMessage($messageTransfer);
+        }
+
         foreach ($dataImportConfigurationTransfer->getActions() as $dataImportConfigurationActionTransfer) {
             $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input, $dataImportConfigurationActionTransfer->getDataEntity());
             $dataImporterConfigurationTransfer->getReaderConfiguration()->setFileName($dataImportConfigurationActionTransfer->getSource());
-            $dataImporterReportTransfer = $this->executeImport($dataImporterConfigurationTransfer);
 
-            $overallDataImporterReportTransfer->addDataImporterReport($dataImporterReportTransfer);
-            $overallDataImporterReportTransfer->setImportedDataSetCount(
-                $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount()
-            );
-            if (!$dataImporterReportTransfer->getIsSuccess()) {
-                $overallDataImporterReportTransfer->setIsSuccess(false);
-            }
+            $dataImporterReportTransfer = $this->dataImportFacade->importByAction($dataImportConfigurationActionTransfer, $dataImporterConfigurationTransfer);
+
+            $overallDataImporterReportTransfer = $this->addDataImporterReportTransferToOverallReport($dataImporterReportTransfer, $overallDataImporterReportTransfer);
         }
 
         return $overallDataImporterReportTransfer;
@@ -133,16 +141,6 @@ class DataImportExecutor implements DataImportExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
-    protected function executeImport(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
-    {
-        return $this->dataImportFacade->import($dataImporterConfigurationTransfer);
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\DataImportConfigurationActionTransfer[] $dataImportConfigurationActionTransfers
      * @param string $importerType
      *
@@ -160,5 +158,39 @@ class DataImportExecutor implements DataImportExecutorInterface
         );
 
         return new ArrayObject($filteredDataImportConfigurationActionTransfers);
+    }
+
+    /**
+     * @param string|null $importerType
+     *
+     * @return bool
+     */
+    protected function isImporterTypeSpecified(?string $importerType): bool
+    {
+        return $importerType && $importerType !== DataImportConsole::DEFAULT_IMPORTER_TYPE;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $overallDataImporterReportTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    protected function addDataImporterReportTransferToOverallReport(
+        DataImporterReportTransfer $dataImporterReportTransfer,
+        DataImporterReportTransfer $overallDataImporterReportTransfer
+    ): DataImporterReportTransfer {
+        foreach ($dataImporterReportTransfer->getDataImporterReports() as $innerDataImporterReportTransfer) {
+            $overallDataImporterReportTransfer->addDataImporterReport($innerDataImporterReportTransfer);
+        }
+        $overallDataImporterReportTransfer->setImportedDataSetCount(
+            $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount()
+        );
+
+        if (!$dataImporterReportTransfer->getIsSuccess()) {
+            $overallDataImporterReportTransfer->setIsSuccess(false);
+        }
+
+        return $overallDataImporterReportTransfer;
     }
 }
