@@ -53,7 +53,7 @@ class ProductAndRelationTypeAndStoreValidatorStep implements DataImportStepInter
             ->find()
             ->getData();
 
-        if (array_diff($currentProductRelationEntityStores, $storesForFkProductAbstractAndRelationKey) !== []) {
+        if (array_intersect($currentProductRelationEntityStores, $storesForFkProductAbstractAndRelationKey) !== []) {
             throw new DuplicatedStoresException('Impossible assign product relation to the given store');
         }
     }
