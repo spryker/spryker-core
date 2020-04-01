@@ -580,6 +580,7 @@
     "spryker/session-extension": "*",
     "spryker/session-file": "*",
     "spryker/session-redis": "*",
+    "spryker/session-redis-extension": "*",
     "spryker/setup": "*",
     "spryker/setup-frontend": "*",
     "spryker/shared-cart": "*",
