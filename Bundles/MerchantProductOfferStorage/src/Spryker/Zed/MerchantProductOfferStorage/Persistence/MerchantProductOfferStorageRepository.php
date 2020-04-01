@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Persistence;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -22,6 +23,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductOfferStorageRepository extends AbstractRepository implements MerchantProductOfferStorageRepositoryInterface
 {
     /**
+     * @param int[] $merchantIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByMerchantIds(array $merchantIds): array
+    {
+        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferPropelQuery
+            ->useSpyMerchantQuery()
+                ->filterByIdMerchant_In($merchantIds)
+            ->endUse();
+
+        return $productOfferPropelQuery
+            ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
+            ->distinct()
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -31,10 +52,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
-            ->joinWithSpyMerchant()
-            ->useSpyProductOfferStoreQuery()
-                ->joinWithSpyStore()
-            ->endUse();
+            ->joinWithSpyMerchant();
 
         $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);
 
@@ -72,13 +90,21 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
         }
 
+        if ($productOfferCriteriaFilterTransfer->getIsActiveMerchant() !== null) {
+            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaFilterTransfer->getIsActiveMerchant());
+        }
+
         if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN
             );
-            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, true);
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct());
+        }
+
+        if ($productOfferCriteriaFilterTransfer->getConcreteSkus()) {
+            $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilterTransfer->getConcreteSkus());
         }
 
         return $productOfferQuery;

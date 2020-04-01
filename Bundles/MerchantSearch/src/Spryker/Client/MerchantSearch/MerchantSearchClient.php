@@ -27,6 +27,6 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
     {
         return $this->getFactory()
             ->createMerchantSearchStub()
-            ->getActiveMerchants(new MerchantCriteriaFilterTransfer());
+            ->getActiveMerchants((new MerchantCriteriaFilterTransfer())->setIsActive(true));
     }
 }

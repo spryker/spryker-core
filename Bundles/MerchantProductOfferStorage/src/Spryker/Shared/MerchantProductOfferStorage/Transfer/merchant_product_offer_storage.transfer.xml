@@ -19,6 +19,7 @@
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
         <property name="isActive" type="bool"/>
+        <property name="isActiveMerchant" type="bool"/>
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="productOfferReference" type="string"/>

@@ -30,8 +30,8 @@ class MerchantOpeningHoursStorageToMerchantFacadeBridge implements MerchantOpeni
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->get($merchantCriteriaFilterTransfer);
     }
 }

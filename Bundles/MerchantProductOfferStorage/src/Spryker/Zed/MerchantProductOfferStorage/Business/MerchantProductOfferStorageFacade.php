@@ -25,6 +25,22 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
+    public function writeProductConcreteProductOffersStorageCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageWriter()
+            ->writeCollectionByMerchantEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
     public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void
     {
         $this->getFactory()

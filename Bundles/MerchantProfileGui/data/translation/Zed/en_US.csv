@@ -14,13 +14,6 @@ Description,Description
 "Cancellation Policy","Cancellation Policy"
 Imprint,Imprint
 "Data Privacy","Data Privacy"
-"Is Active","Is Active"
-active,Active
-inactive,Inactive
-Activate,Activate
-Deactivate,Deactivate
-merchant_profile.activated,"Merchant Profile successfully activated."
-merchant_profile.deactivated,"Merchant Profile successfully deactivated."
 "Contact Person","Contact Person"
 "Merchant Profile","Merchant Profile"
 "Legal Information","Legal Information"

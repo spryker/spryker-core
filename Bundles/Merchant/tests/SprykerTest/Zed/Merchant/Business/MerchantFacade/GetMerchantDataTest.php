@@ -85,7 +85,7 @@ class GetMerchantDataTest extends Unit
 
         // Act
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->get($merchantCriteriaFilterTransfer);
 
         // Arrange
         $paginationTransfer = new PaginationTransfer();
@@ -94,7 +94,7 @@ class GetMerchantDataTest extends Unit
         $merchantCriteriaFilterTransfer->setPagination($paginationTransfer);
 
         // Act
-        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->get($merchantCriteriaFilterTransfer);
 
         // Arrange
         $paginationTransfer = new FilterTransfer();
@@ -103,13 +103,13 @@ class GetMerchantDataTest extends Unit
         $merchantCriteriaFilterTransfer->setFilter($paginationTransfer);
 
         // Act
-        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->get($merchantCriteriaFilterTransfer);
 
         // Arrange
         $merchantCriteriaFilterTransfer->getFilter()->setOrderDirection('ASC');
 
         // Act
-        $merchantCollectionOrderByNameDescTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionOrderByNameDescTransfer = $this->tester->getFacade()->get($merchantCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(2, $merchantCollectionWithoutCriteriaTransfer->getMerchants());

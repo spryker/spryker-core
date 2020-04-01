@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantUrlCollection\MerchantUrlCollectionFormType;
+use Spryker\Zed\MerchantGui\Communication\Form\Transformer\MerchantUrlCollectionDataTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,12 +39,16 @@ class MerchantCreateForm extends AbstractType
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
     protected const FIELD_EMAIL = 'email';
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
+    protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_STORE_RELATION = 'storeRelation';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
+    protected const LABEL_URL = 'Merchant URL';
+    protected const LABEL_IS_ACTIVE = 'Is Active';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -75,9 +84,11 @@ class MerchantCreateForm extends AbstractType
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
             ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID])
+            ->addIsActiveField($builder)
+            ->addUrlCollectionField($builder)
             ->addStoreRelationForm($builder);
 
-        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
+        $this->executeMerchantFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -88,6 +99,22 @@ class MerchantCreateForm extends AbstractType
     protected function addIdMerchantField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_MERCHANT, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
+                'label' => static::LABEL_IS_ACTIVE,
+                'required' => false,
+            ]);
 
         return $this;
     }
@@ -189,6 +216,31 @@ class MerchantCreateForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUrlCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
+            'entry_type' => MerchantUrlCollectionFormType::class,
+            'allow_add' => true,
+            'label' => static::LABEL_URL,
+            'required' => true,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => UrlTransfer::class,
+            ],
+        ]);
+
+        $builder->get(static::FIELD_URL_COLLECTION)
+            ->addModelTransformer(new MerchantUrlCollectionDataTransformer());
+
+        return $this;
+    }
+
+    /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
     protected function getTextFieldConstraints(): array
@@ -252,9 +304,9 @@ class MerchantCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    protected function executeMerchantFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getFactory()->getMerchantProfileFormExpanderPlugins() as $formExpanderPlugin) {
+        foreach ($this->getFactory()->getMerchantFormExpanderPlugins() as $formExpanderPlugin) {
             $builder = $formExpanderPlugin->expand($builder, $options);
         }
 

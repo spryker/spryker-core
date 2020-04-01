@@ -12,7 +12,8 @@
         <column name="registration_number" type="VARCHAR" size="255"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" size="64" type="VARCHAR"/>
-        <column name="merchant_reference" size="255" type="VARCHAR"/>
+        <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
+        <column name="is_active" default="false" type="BOOLEAN"/>
 
         <unique name="spy_merchant-unique-email">
             <unique-column name="email"/>

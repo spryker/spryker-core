@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantDataImport;
 
 use Codeception\Actor;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
  * Inherited Methods
@@ -35,11 +36,21 @@ class MerchantDataImportCommunicationTester extends Actor
     */
 
     /**
+     * @param string[] $references
+     *
+     * @return void
+     */
+    public function deleteMerchantByReferences(array $references): void
+    {
+        $this->getMerchantQuery()->filterByMerchantReference_In($references)->delete();
+    }
+
+    /**
      * @return void
      */
     public function truncateMerchantRelations(): void
     {
-        $this->truncateTableRelations($this->getMerchantQuery());
+        $this->truncateTableRelations($this->getMerchantQuery(), ['\\' . SpyUrlQuery::class]);
     }
 
     /**

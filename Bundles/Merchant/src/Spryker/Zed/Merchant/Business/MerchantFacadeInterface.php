@@ -79,7 +79,7 @@ interface MerchantFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer;
+    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer;
 
     /**
      * Specification:

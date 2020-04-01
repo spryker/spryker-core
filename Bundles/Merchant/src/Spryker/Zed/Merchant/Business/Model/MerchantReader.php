@@ -42,9 +42,9 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        $merchantCollectionTransfer = $this->merchantRepository->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaFilterTransfer);
         $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
 
         return $merchantCollectionTransfer;

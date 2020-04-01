@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaver;
+use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantCreator;
 use Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
@@ -18,6 +20,7 @@ use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
@@ -36,8 +39,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->getMerchantPostSavePlugins(),
-            $this->getMerchantPostCreatePlugins()
+            $this->getMerchantPostCreatePlugins(),
+            $this->createMerchantUrlSaver()
         );
     }
 
@@ -50,8 +53,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
-            $this->getMerchantPostSavePlugins(),
-            $this->getMerchantPostUpdatePlugins()
+            $this->getMerchantPostUpdatePlugins(),
+            $this->createMerchantUrlSaver()
         );
     }
 
@@ -95,16 +98,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
-     *
-     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    public function getMerchantPostSavePlugins(): array
-    {
-        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_SAVE);
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface[]
      */
     public function getMerchantPostCreatePlugins(): array
@@ -126,5 +119,23 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function getMerchantExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface
+     */
+    public function getUrlFacade(): MerchantToUrlFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface
+     */
+    public function createMerchantUrlSaver(): MerchantUrlSaverInterface
+    {
+        return new MerchantUrlSaver(
+            $this->getUrlFacade()
+        );
     }
 }

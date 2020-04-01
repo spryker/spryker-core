@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSearch\Business\MerchantReader;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface;
@@ -34,15 +33,6 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getActiveMerchants(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        $merchantCollectionTransfer = $this->merchantFacade->find($merchantCriteriaFilterTransfer);
-
-        $activeMerchantTransfers = [];
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            if (!$merchantTransfer->getMerchantProfile() || $merchantTransfer->getMerchantProfile()->getIsActive()) {
-                $activeMerchantTransfers[] = $merchantTransfer;
-            }
-        }
-
-        return $merchantCollectionTransfer->setMerchants(new ArrayObject($activeMerchantTransfers));
+        return $this->merchantFacade->get($merchantCriteriaFilterTransfer);
     }
 }

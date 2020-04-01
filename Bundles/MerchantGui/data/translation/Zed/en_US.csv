@@ -12,6 +12,13 @@
 Save,Save
 approved,Approved
 denied,Denied
+"Is Active","Is Active"
+active,Active
+inactive,Inactive
+Activate,Activate
+Deactivate,Deactivate
+merchant.activated,"Merchant Profile successfully activated."
+merchant.deactivated,"Merchant Profile successfully deactivated."
 approved_button,"Approve Access"
 denied_button,"Deny Access"
 E-Mail,E-Mail
