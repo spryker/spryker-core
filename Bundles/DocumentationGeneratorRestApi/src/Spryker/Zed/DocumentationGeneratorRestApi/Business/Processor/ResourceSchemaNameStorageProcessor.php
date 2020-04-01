@@ -91,6 +91,8 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
         if ($pathAnnotationsTransfer->getGetCollection()) {
             $this->addResponseCollectionDataSchemaNameToStorage($plugin, $pathAnnotationsTransfer->getGetCollection());
         }
+
+        $this->addResourceRelationshipsToStorage($plugin);
     }
 
     /**
@@ -104,8 +106,6 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
         $this->resourceSchemaNameStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
-
-        $this->addResourceRelationshipsToStorage($plugin);
     }
 
     /**
@@ -119,7 +119,6 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
         $this->resourceSchemaNameStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
-        $this->addResourceRelationshipsToStorage($plugin);
     }
 
     /**

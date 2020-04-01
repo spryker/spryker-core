@@ -218,6 +218,11 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
             $schemaName = $this
                 ->resourceSchemaNameStorage
                 ->getResourceSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
+
+            if (!$schemaName) {
+                continue;
+            }
+
             $schema->addOneOf(
                 sprintf(
                     static::PATTERN_SCHEMA_REFERENCE,
