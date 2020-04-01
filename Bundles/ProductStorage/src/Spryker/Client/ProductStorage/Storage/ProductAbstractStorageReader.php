@@ -508,8 +508,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         if (!$productAbstractIds) {
             return $cachedProductAbstractStorageData;
         }
+        $storeName = $this->storeClient->getCurrentStore()->getName();
 
-        $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName);
+        $productAbstractStorageData = $this->getBulkProductAbstractStorageData($productAbstractIds, $localeName, $storeName);
 
         return $cachedProductAbstractStorageData + $productAbstractStorageData;
     }
@@ -542,11 +543,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param array $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return array
      */
-    protected function getBulkProductAbstractStorageData(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    protected function getBulkProductAbstractStorageData(array $productAbstractIds, string $localeName, string $storeName): array
     {
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
             return $this->getBulkProductAbstractStorageDataForCollectorCompatibilityMode($productAbstractIds, $localeName);
@@ -561,11 +562,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return string[]
      */
-    protected function generateStorageKeys(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    protected function generateStorageKeys(array $productAbstractIds, string $localeName, string $storeName): array
     {
         $storageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {

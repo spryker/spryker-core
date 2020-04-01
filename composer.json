@@ -503,6 +503,8 @@
     "spryker/product-quantity-storage": "*",
     "spryker/product-relation": "*",
     "spryker/product-relation-collector": "*",
+    "spryker/product-relation-data-import": "*",
+    "spryker/product-relation-gui": "*",
     "spryker/product-relation-storage": "*",
     "spryker/product-resource-alias-storage": "*",
     "spryker/product-review": "*",

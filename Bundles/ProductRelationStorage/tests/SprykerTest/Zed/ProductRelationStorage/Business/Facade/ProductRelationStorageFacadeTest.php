@@ -16,7 +16,6 @@ use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTab
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationStoreTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
-use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -199,17 +198,12 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->productRelationStorageFacade->writeCollectionByProductRelationProductAbstractEvents($eventTransfers);
 
         // Assert
-        $productAbstractRelationStorageData = SpyProductAbstractRelationStorageQuery::create()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->filterByStore(static::STORE_NAME)
-            ->findOne()
-            ->getData();
-        $productAbstractIds = $productAbstractRelationStorageData['product_relations'][0]['product_abstract_ids'];
-
-        $this->assertSame(
-            $productAbstractIds,
-            [],
-            'Product abstract relation storage record should not contain related products'
+        $this->assertFalse(
+            $this->tester->isProductAbstractRelationStorageRecordExists(
+                $productRelationTransfer->getFkProductAbstract(),
+                static::STORE_NAME
+            ),
+            'Product abstract relation storage record should exists'
         );
     }
 
