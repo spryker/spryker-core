@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\MerchantOms\Business\StateMachineProcess;
 
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface StateMachineProcessReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $merchantReference
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
-    public function resolveMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer;
+    public function resolveMerchantStateMachineProcess(string $merchantReference): StateMachineProcessTransfer;
 }

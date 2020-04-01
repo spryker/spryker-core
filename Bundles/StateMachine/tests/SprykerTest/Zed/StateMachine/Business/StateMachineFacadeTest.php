@@ -698,14 +698,14 @@ class StateMachineFacadeTest extends Unit
     {
         // Arrange
         $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
-        $stateMachineProcessCriteriaFilterTransfer = (new StateMachineProcessCriteriaTransfer())
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
             ->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         // Act
-        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
 
         // Assert
         $this->assertNotNull($stateMachineProcessTransfer);
@@ -718,13 +718,13 @@ class StateMachineFacadeTest extends Unit
     public function testFindStateMachineProcessReturnsNullWithIncorrectFilter(): void
     {
         // Arrange
-        $stateMachineProcessCriteriaFilterTransfer = (new StateMachineProcessCriteriaTransfer())
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
             ->setIdStateMachineProcess(static::TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID);
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         // Act
-        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaFilterTransfer);
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
 
         // Assert
         $this->assertNull($stateMachineProcessTransfer);

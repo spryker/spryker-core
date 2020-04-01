@@ -25,4 +25,20 @@ class MerchantOmsCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(MerchantOmsDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     */
+    public function getStateMachineConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     */
+    public function getStateMachineCommandPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_PLUGINS_STATE_MACHINE_COMMAND);
+    }
 }

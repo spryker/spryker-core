@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
-        <property name="merchant" type="Merchant"/>
+        <property name="merchantReference" type="string"/>
         <property name="merchantOmsEventName" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>

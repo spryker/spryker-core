@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 interface StateMachineRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
      */
-    public function findStateMachineProcess(StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaFilterTransfer): ?StateMachineProcessTransfer;
+    public function findStateMachineProcess(StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer): ?StateMachineProcessTransfer;
 }

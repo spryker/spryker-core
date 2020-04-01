@@ -48,36 +48,22 @@ class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
     public function update(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer
     {
         $merchantOrderItemTransfer->requireIdMerchantOrderItem();
-        $merchantOrderItemResponseTransfer = (new MerchantOrderItemResponseTransfer())->setIsSuccessful(true);
         $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
             ->setIdMerchantOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
 
         $existingMerchantOrderItemTransfer = $this->merchantSalesOrderRepository->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
 
         if (!$existingMerchantOrderItemTransfer) {
-            return $this->addErrorMessage($merchantOrderItemResponseTransfer, static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND);
+            return (new MerchantOrderItemResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage((new MessageTransfer())->setMessage(static::MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND));
         }
 
         $existingMerchantOrderItemTransfer->fromArray($merchantOrderItemTransfer->modifiedToArray(), true);
         $merchantOrderItemTransfer = $this->merchantSalesOrderEntityManager->updateMerchantOrderItem($existingMerchantOrderItemTransfer);
 
-        $merchantOrderItemResponseTransfer->setMerchantOrderItem($merchantOrderItemTransfer);
-
-        return $merchantOrderItemResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
-     */
-    protected function addErrorMessage(
-        MerchantOrderItemResponseTransfer $merchantOrderItemResponseTransfer,
-        string $message
-    ): MerchantOrderItemResponseTransfer {
-        return $merchantOrderItemResponseTransfer
-            ->setIsSuccessful(false)
-            ->addMessage((new MessageTransfer())->setMessage($message));
+        return (new MerchantOrderItemResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setMerchantOrderItem($merchantOrderItemTransfer);
     }
 }
