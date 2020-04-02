@@ -56,4 +56,15 @@ interface MerchantUserFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
     public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer;
+
+    /**
+     * Specification:
+     * - Returns Merchant user for current logged in user.
+     * - Throws MerchantUserNotFoundException exception if no Merchant users exist for current logged in user.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function getCurrentMerchantUser(): MerchantUserTransfer;
 }

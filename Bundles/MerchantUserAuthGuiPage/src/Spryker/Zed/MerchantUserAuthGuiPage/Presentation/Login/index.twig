@@ -9,7 +9,7 @@
         {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 
         {% for error in form.vars.errors %}
-            <spy-alert type="error">{{ error.message | trans }}</spy-alert>
+            <spy-notification type="error">{{ error.message | trans }}</spy-notification>
         {% endfor %}
 
         <form action="{{ form.vars.action }}" name="{{ form.vars.name }}" method="{{ form.vars.method }}" novalidate>
@@ -20,7 +20,7 @@
                         control
                         spy-id="{{ formField.vars.id }}"
                         attrs=""
-                        required="{{ formField.vars.required }}"
+                        required="{{ formField.vars.required | boolToStr }}"
                         name="{{ formField.vars.full_name }}"
                         value="{{ formField.vars.value }}"
                         type="{{ formField.vars.block_prefixes[2] }}"
@@ -38,7 +38,7 @@
 {% endblock %}
 
 {% block footerJs %}
-    {{ parent() }}
     <script src="{{ assetsPath('js/mp-login/main-es2015.js') }}" type="module"></script>
     <script src="{{ assetsPath('js/mp-login/main-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
 {% endblock %}
