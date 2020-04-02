@@ -36,6 +36,6 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
      */
     public function getUtilEncodingService(): OauthRevokeToUtilEncodingServiceInterface
     {
-        $this->getProvidedDependency(OauthRevokeDependencyProvider::SERVICE_UTIL_ENCODING);
+        return $this->getProvidedDependency(OauthRevokeDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

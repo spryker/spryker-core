@@ -10,7 +10,7 @@ namespace Spryker\Zed\OauthRevoke\Persistence;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 

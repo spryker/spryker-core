@@ -56,6 +56,8 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @api
      *
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
      * @return void
      */
     public function revokeRefreshTokens(ArrayObject $oauthRefreshTokenTransfers)
@@ -63,6 +65,15 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
         // TODO: Implement revokeRefreshTokens() method.
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return bool
+     */
     public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer)
     {
         return $this->getRepository()->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
@@ -73,20 +84,12 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @api
      *
+     * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
+     *
      * @return void
      */
     public function saveRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void
     {
         $this->getFactory()->createOauthRefreshTokenCreator()->saveRefreshToken($refreshTokenEntity);
     }
-
-//    protected function getCustomerReference(?string $userIdentifier): ?string
-//    {
-////        $encodedUserIdentifier = $this->utilEncodingService
-////            ->decodeJson($userIdentifier);
-//
-//        $encodedUserIdentifier = json_decode($userIdentifier);
-//
-//        return $encodedUserIdentifier->customer_reference ?? null;
-//    }
 }

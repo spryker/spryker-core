@@ -9,7 +9,7 @@ namespace Spryker\Zed\OauthRevoke\Persistence;
 
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -55,10 +55,10 @@ class OauthRevokeRepository extends AbstractRepository implements OauthRevokeRep
     }
 
     /**
-     * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery
+     * @param \Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
-     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
+     * @return \Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery
      */
     protected function applyRefreshTokenFilters(
         SpyOauthRefreshTokenQuery $oauthRefreshTokenQuery,
