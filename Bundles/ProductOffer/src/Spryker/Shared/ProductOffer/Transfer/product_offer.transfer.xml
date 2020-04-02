@@ -34,7 +34,7 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
-    <transfer name="ProductOfferError">
+    <transfer name="MessageTransfer">
         <property name="message" type="string"/>
     </transfer>
 
@@ -45,6 +45,7 @@
     <transfer name="ProductOfferCriteriaFilter">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="idStore" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
@@ -74,5 +75,10 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 </transfers>

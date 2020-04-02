@@ -8,8 +8,13 @@
 namespace Spryker\Zed\ProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilter;
+use Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilterInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOffer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\ProductOffer\ProductOfferWriterInterface;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
+use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
@@ -27,5 +32,33 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilterInterface
+     */
+    public function createInactiveOfferItemsFilter(): InactiveOfferItemsFilterInterface
+    {
+        return new InactiveOfferItemsFilter(
+            $this->getRepository(),
+            $this->getStoreFacade(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): ProductOfferToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductOfferToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferDependencyProvider::FACADE_STORE);
     }
 }
