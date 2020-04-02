@@ -98,13 +98,18 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     ): ArrayObject {
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
             if (array_key_exists($restNavigationNodeTransfer->getUrl(), $urlStorageTransfers)) {
-                $restNavigationNodeTransfer->setResourceId(
-                    $this->findResourceIdByNodeType($urlStorageTransfers[$restNavigationNodeTransfer->getUrl()], $restNavigationNodeTransfer->getNodeType())
+                $resourceId = $this->findResourceIdByNodeType(
+                    $urlStorageTransfers[$restNavigationNodeTransfer->getUrl()],
+                    $restNavigationNodeTransfer->getNodeType()
                 );
+                $restNavigationNodeTransfer->setResourceId($resourceId);
             }
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
-                $navigationNodeChildren = $this->mapUrlStorageTransfersToRestNavigationNodeTransfers($urlStorageTransfers, $restNavigationNodeTransfer->getChildren());
+                $navigationNodeChildren = $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
+                    $urlStorageTransfers,
+                    $restNavigationNodeTransfer->getChildren()
+                );
                 $restNavigationNodeTransfer->setChildren($navigationNodeChildren);
             }
         }
