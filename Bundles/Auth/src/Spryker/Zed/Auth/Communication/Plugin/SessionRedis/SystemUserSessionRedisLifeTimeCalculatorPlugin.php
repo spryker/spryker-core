@@ -21,7 +21,7 @@ class SystemUserSessionRedisLifeTimeCalculatorPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     *  - Returns true if auth token exists in headers and it belongs to system users.
+     *  - Returns true if auth token exists in `HttpRequestTransfer.headers` and it belongs to the system user.
      *
      * @api
      *

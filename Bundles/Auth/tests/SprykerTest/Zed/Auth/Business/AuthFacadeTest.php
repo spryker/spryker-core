@@ -168,6 +168,21 @@ class AuthFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testIsSystemUserRequestReturnsFalseWithNoToken(): void
+    {
+        // Arrange
+        $httpRequestTransfer = new HttpRequestTransfer();
+
+        // Act
+        $isSystemUserRequest = $this->authFacade->isSystemUserRequest($httpRequestTransfer);
+
+        // Assert
+        $this->assertFalse($isSystemUserRequest);
+    }
+
+    /**
      * @return \Orm\Zed\User\Persistence\SpyUser
      */
     protected function createTestUser(): SpyUser
