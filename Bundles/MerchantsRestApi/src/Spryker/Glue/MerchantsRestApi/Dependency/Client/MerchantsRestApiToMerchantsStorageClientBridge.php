@@ -47,4 +47,23 @@ class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApi
                 ->setMerchantStorageProfile($merchantStorageProfile),
         ];
     }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    {
+        $merchantStorageProfile = (new MerchantStorageProfileTransfer())
+            ->setMerchantUrl('url-test')
+            ->setPublicEmail('email-test')
+            ->setDescriptionGlossaryKey('merchant.description_glossary_key.1');
+
+        return (new MerchantStorageTransfer())
+            ->setIdMerchant(1)
+            ->setMerchantReference('MER000006')
+            ->setName('Kudu Merchant')
+            ->setMerchantStorageProfile($merchantStorageProfile);
+    }
 }
