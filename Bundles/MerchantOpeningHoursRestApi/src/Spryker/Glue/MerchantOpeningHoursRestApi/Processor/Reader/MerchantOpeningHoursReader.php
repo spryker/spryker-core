@@ -81,17 +81,94 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
             return $this->merchantOpeningHoursRestResponseBuilder->createEmptyMerchantOpeningHoursRestResponse();
         }
 
-        $merchantOpeningHoursStorageTransfersWithTranslatedNotes = $this->merchantOpeningHoursTranslator
-            ->getMerchantOpeningHoursTransfersWithTranslatedNotes(
+        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursTranslator
+            ->translateMerchantOpeningHoursTransfers(
                 $merchantOpeningHoursStorageTransfers,
                 $restRequest->getMetadata()->getLocale()
             );
 
-        $merchantOpeningHoursStorageTransferWithTranslatedNotes = reset($merchantOpeningHoursStorageTransfersWithTranslatedNotes);
-
         return $this->merchantOpeningHoursRestResponseBuilder->createMerchantOpeningHoursRestResponse(
-            $merchantOpeningHoursStorageTransferWithTranslatedNotes,
+            reset($merchantOpeningHoursStorageTransfers),
             $merchantReference
         );
+    }
+
+    /**
+     * @param string[] $merchantReferences
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getMerchantOpeningHoursResources(array $merchantReferences, RestRequestInterface $restRequest): array
+    {
+        $merchantIdsIndexedByReference = $this->getMerchantIdsIndexedByReference($merchantReferences);
+
+        $merchantOpeningHoursStorageTransfers = $this->getTranslatedMerchantOpeningHoursStorageTransfers(
+            $merchantIdsIndexedByReference,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        return $this->merchantOpeningHoursRestResponseBuilder
+            ->createMerchantOpeningHoursRestResources($merchantOpeningHoursStorageTransfers);
+    }
+
+    /**
+     * @param string[] $merchantReferences
+     *
+     * @return int[]
+     */
+    protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
+    {
+        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+
+        $merchantIdsIndexedByReference = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantIdsIndexedByReference[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();
+        }
+
+        return $merchantIdsIndexedByReference;
+    }
+
+    /**
+     * @param int[] $merchantIdsIndexedByReference
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    protected function getTranslatedMerchantOpeningHoursStorageTransfers(
+        array $merchantIdsIndexedByReference,
+        string $localeName
+    ): array {
+        $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
+            ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
+
+        if (!array_filter($merchantOpeningHoursStorageTransfers)) {
+            return [];
+        }
+
+        $indexedMerchantOpeningHoursStorageTransfers = $this->indexCollectionByMerchantReferences(
+            $merchantOpeningHoursStorageTransfers,
+            $merchantIdsIndexedByReference
+        );
+
+        return $this->merchantOpeningHoursTranslator
+            ->translateMerchantOpeningHoursTransfers($indexedMerchantOpeningHoursStorageTransfers, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    protected function indexCollectionByMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
+    {
+        $flippedMerchantOpeningHoursStorageTransfers = [];
+        $merchantReferencesIndexedById = array_flip($merchantIds);
+        foreach ($merchantOpeningHoursStorageTransfers as $merchantId => $merchantOpeningHourStorageTransfers) {
+            $flippedMerchantOpeningHoursStorageTransfers[$merchantReferencesIndexedById[$merchantId]] = $merchantOpeningHourStorageTransfers;
+        }
+
+        return $flippedMerchantOpeningHoursStorageTransfers;
     }
 }

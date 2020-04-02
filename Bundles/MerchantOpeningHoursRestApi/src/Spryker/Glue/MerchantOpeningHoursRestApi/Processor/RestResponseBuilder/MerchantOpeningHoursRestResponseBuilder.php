@@ -43,30 +43,21 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createMerchantOpeningHoursRestResource(
-        MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
-        string $merchantReference
-    ): RestResourceInterface {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANT_OPENING_HOURS,
-            $merchantReference,
-            $this->merchantOpeningHoursMapper->mapMerchantOpeningHoursStorageTransferToRestMerchantOpeningHoursAttributesTransfer(
+    public function createMerchantOpeningHoursRestResources(array $merchantOpeningHoursStorageTransfers): array
+    {
+        $merchantOpeningHoursRestResources = [];
+        foreach ($merchantOpeningHoursStorageTransfers as $merchantReference => $merchantOpeningHoursStorageTransfer) {
+            $merchantOpeningHoursRestResources[$merchantReference] = $this->createMerchantOpeningHoursRestResource(
                 $merchantOpeningHoursStorageTransfer,
-                new RestMerchantOpeningHoursAttributesTransfer()
-            )
-        );
+                $merchantReference
+            );
+        }
 
-        $restResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->getMerchantsOpeningHoursResourceSelfLink($merchantReference)
-        );
-
-        return $restResource;
+        return $merchantOpeningHoursRestResources;
     }
 
     /**
@@ -121,6 +112,33 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
                     ->setCode(MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
+     * @param string $merchantReference
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createMerchantOpeningHoursRestResource(
+        MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
+        string $merchantReference
+    ): RestResourceInterface {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANT_OPENING_HOURS,
+            $merchantReference,
+            $this->merchantOpeningHoursMapper->mapMerchantOpeningHoursStorageTransferToRestMerchantOpeningHoursAttributesTransfer(
+                $merchantOpeningHoursStorageTransfer,
+                new RestMerchantOpeningHoursAttributesTransfer()
+            )
+        );
+
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getMerchantsOpeningHoursResourceSelfLink($merchantReference)
+        );
+
+        return $restResource;
     }
 
     /**

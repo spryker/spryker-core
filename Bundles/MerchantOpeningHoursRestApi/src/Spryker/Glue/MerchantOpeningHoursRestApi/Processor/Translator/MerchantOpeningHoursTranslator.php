@@ -30,7 +30,7 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    public function getMerchantOpeningHoursTransfersWithTranslatedNotes(array $merchantOpeningHoursStorageTransfers, string $localeName): array
+    public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array
     {
         $scheduleNotes = $this->getScheduleNotes($merchantOpeningHoursStorageTransfers);
 
@@ -53,7 +53,7 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
             }
         }
 
-        return $scheduleNotes;
+        return array_unique(array_filter($scheduleNotes));
     }
 
     /**

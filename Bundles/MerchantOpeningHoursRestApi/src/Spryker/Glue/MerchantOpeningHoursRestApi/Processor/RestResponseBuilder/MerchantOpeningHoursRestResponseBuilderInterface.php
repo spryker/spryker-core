@@ -8,21 +8,16 @@
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface MerchantOpeningHoursRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createMerchantOpeningHoursRestResource(
-        MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
-        string $merchantReference
-    ): RestResourceInterface;
+    public function createMerchantOpeningHoursRestResources(array $merchantOpeningHoursStorageTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer

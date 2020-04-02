@@ -64,12 +64,7 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
      */
     public function createMerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander(): MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpanderInterface
     {
-        return new MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander(
-            $this->getMerchantOpeningHoursStorageClient(),
-            $this->getMerchantStorageClient(),
-            $this->createMerchantOpeningHoursRestResponseBuilder(),
-            $this->createMerchantOpeningHoursTranslator()
-        );
+        return new MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander($this->createMerchantOpeningHoursReader());
     }
 
     /**

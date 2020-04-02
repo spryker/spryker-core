@@ -15,5 +15,5 @@ interface MerchantOpeningHoursTranslatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
      */
-    public function getMerchantOpeningHoursTransfersWithTranslatedNotes(array $merchantOpeningHoursStorageTransfers, string $localeName): array;
+    public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array;
 }
