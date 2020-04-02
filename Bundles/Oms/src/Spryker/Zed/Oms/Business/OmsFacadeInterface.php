@@ -622,7 +622,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     * - Expands order with OMS states from order items.
+     * - Expands order with OMS unique states from order items.
      *
      * @api
      *
