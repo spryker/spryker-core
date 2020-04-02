@@ -24,6 +24,8 @@ class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements P
     public const FIELD_CREATED = 'created';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale

@@ -143,7 +143,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return array
      */
@@ -177,7 +177,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param array $productConcretePageSearchTransfers
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
      *
      * @return void
      */

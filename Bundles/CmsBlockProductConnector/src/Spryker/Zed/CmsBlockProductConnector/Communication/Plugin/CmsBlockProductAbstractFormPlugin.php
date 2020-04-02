@@ -20,6 +20,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlockFormPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -18,7 +18,9 @@ interface MerchantRelationshipThresholdDataProviderResolverInterface
      *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface
      */
-    public function resolveMerchantRelationshipThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyGroupDataProviderInterface;
+    public function resolveMerchantRelationshipThresholdDataProviderByStrategyGroup(
+        string $salesOrderThresholdTypeGroup
+    ): ThresholdStrategyGroupDataProviderInterface;
 
     /**
      * @param string $salesOrderThresholdTypeGroup

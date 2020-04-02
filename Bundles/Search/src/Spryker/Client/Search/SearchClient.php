@@ -17,9 +17,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class SearchClient extends AbstractClient implements SearchClientInterface
 {
     /**
-     * Specification:
-     * - Connects to Elasticsearch client if possible
-     * - Throws exception if connection fails
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,11 +34,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * Specification:
-     * - Expands the base search query with multiple query expanders
-     * - All expanders use the same search configuration provided by this client
-     * - The expanders use the given parameters to adapt to the request
-     * - Returns the expanded query
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,10 +54,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * Specification:
-     * - Runs the search query based on the search configuration provided by this client
-     * - If there's no result formatter given then the raw search result will be returned
-     * - The formatted search result will be an associative array where the keys are the name and the values are the formatted results
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,10 +73,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * Specification:
-     * - Returns a statically cached instance (for performance reasons) of the search configuration
-     * - The result is the union of the hard-coded and the dynamic configurations
-     * - Dynamic configuration is provided by \Spryker\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins()
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,9 +87,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * Specification:
-     * - Runs a simple full text search for the given search string
-     * - Returns the raw result set ordered by relevance
+     * {@inheritDoc}
      *
      * @api
      *

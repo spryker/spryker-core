@@ -663,7 +663,7 @@ abstract class AbstractTable
 
         $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
-        $this->total = $query->count();
+        $this->total = $this->countTotal($query);
         $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
         $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
@@ -714,6 +714,16 @@ abstract class AbstractTable
         }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return int
+     */
+    protected function countTotal(ModelCriteria $query): int
+    {
+        return $query->count();
     }
 
     /**

@@ -15,6 +15,8 @@ class ProductAlternativeDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_ALTERNATIVE = 'product-alternative';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductAlternativeDataImporterConfiguration(): DataImporterConfigurationTransfer

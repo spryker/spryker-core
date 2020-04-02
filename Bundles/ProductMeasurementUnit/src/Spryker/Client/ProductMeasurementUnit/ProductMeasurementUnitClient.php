@@ -26,8 +26,10 @@ class ProductMeasurementUnitClient extends AbstractClient implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
-    {
+    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(
+        PersistentCartChangeTransfer $cartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitExpander()
             ->expandSingleItemQuantitySalesUnitForPersistentCartChange($cartChangeTransfer, $params);

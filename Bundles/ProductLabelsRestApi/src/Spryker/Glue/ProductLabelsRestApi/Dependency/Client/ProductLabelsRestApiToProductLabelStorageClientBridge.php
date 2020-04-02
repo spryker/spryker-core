@@ -25,33 +25,41 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
     /**
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName): array
+    public function findLabels(array $idProductLabels, $localeName, string $storeName): array
     {
-        return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName);
+        return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName, $storeName);
     }
 
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName): array
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName): array
     {
-        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+        return $this->productLabelStorageClient
+            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
     }
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
-    {
-        return $this->productLabelStorageClient->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName);
+    public function getProductLabelsByProductAbstractIds(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
+        return $this->productLabelStorageClient
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName, $storeName);
     }
 }

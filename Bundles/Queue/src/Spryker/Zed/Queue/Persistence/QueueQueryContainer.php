@@ -17,6 +17,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $serverId
@@ -34,6 +36,8 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $processIds
@@ -48,6 +52,8 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $serverId
@@ -63,6 +69,8 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery

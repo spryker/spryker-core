@@ -22,11 +22,16 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName)
+    public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null)
     {
+        if (!$storeName) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createRelatedProductReader()
             ->findRelatedProducts($idProductAbstract, $localeName);
@@ -44,6 +49,10 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
+        if (!$quoteTransfer->getStore()) {
+            trigger_error('Pass the QuoteTransfer.Store parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createUpSellingProductReader()
             ->findUpSellingProducts($quoteTransfer, $localeName);
@@ -55,11 +64,16 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @api
      *
      * @param int $idProductAbstract
+     * @param string|null $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array
     {
+        if (!$storeName) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createRelatedProductReader()
             ->findRelatedAbstractProductIds($idProductAbstract);
@@ -76,6 +90,10 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {
+        if (!$quoteTransfer->getStore()) {
+            trigger_error('Pass the QuoteTransfer.Store parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createUpSellingProductReader()
             ->findUpSellingAbstractProductIds($quoteTransfer);

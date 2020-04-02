@@ -247,6 +247,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     */
+    public function getShipmentExpenseExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS_SHIPMENT_EXPENSE_EXPANDER);
+    }
+
+    /**
      * @deprecated Use createCheckoutMultiShipmentOrderSaver() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
@@ -269,7 +277,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getSalesFacade(),
             $this->getShipmentService(),
-            $this->createExpenseSanitizer()
+            $this->createExpenseSanitizer(),
+            $this->getShipmentExpenseExpanderPlugins()
         );
     }
 
@@ -543,7 +552,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array[]
+     * @return array
      */
     public function getShipmentMethodPlugins(): array
     {

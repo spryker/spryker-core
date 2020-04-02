@@ -244,8 +244,10 @@ class CustomersRestApiBusinessTester extends Actor
      *
      * @return void
      */
-    public function assertShippingAddressMappingWithItemLevelShippingAddresses(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
-    {
+    public function assertShippingAddressMappingWithItemLevelShippingAddresses(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $actualQuote
+    ): void {
         $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
 
         foreach ($actualQuote->getItems() as $itemTransfer) {
