@@ -74,6 +74,8 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @api
      *
+     * @deprecated Use `ShoppingListProductOptionConnectorFacade::expandShoppingListItemCollectionWithProductOptions()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -83,6 +85,22 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
         return $this->getFactory()
             ->createShoppingListItemExpander()
             ->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollectionWithProductOptions(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemExpander()
+            ->expandShoppingListItemCollectionWithProductOptions($shoppingListItemCollectionTransfer);
     }
 
     /**

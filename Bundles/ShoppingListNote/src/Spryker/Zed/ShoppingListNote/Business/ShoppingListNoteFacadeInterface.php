@@ -70,11 +70,25 @@ interface ShoppingListNoteFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `ShoppingListNoteFacadeInterface::expandShoppingListItemCollection()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Expands shopping list item collection with item notes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

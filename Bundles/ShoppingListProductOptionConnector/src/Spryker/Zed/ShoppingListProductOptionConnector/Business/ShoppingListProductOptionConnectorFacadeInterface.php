@@ -57,17 +57,33 @@ interface ShoppingListProductOptionConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Populates shopping list item with active and assigned product options from persistence.
-     * - Sets ProductOptionTransfer::unitPrice for each option based on ShoppingListItemTransfer::currencyIsoCode and ShoppingListItemTransfer::priceMode properties.
+     * - Populates shopping list item with active and assigned product options.
+     * - Sets `ProductOptionTransfer::$unitPrice` for each option based on `ShoppingListItemTransfer::$currencyIsoCode` and `ShoppingListItemTransfer::$priceMode` properties.
      * - Uses default store currency and price mode if not specified.
      *
      * @api
+     *
+     * @deprecated Use `ShoppingListProductOptionConnectorFacadeInterface::expandShoppingListItemCollectionWithProductOptions()` instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandShoppingListItemWithProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     * - Populates shopping list item collection with active and assigned product options.
+     * - Sets `ProductOptionTransfer::$unitPrice` for each option based on `ShoppingListItemTransfer::$currencyIsoCode` and `ShoppingListItemTransfer::$priceMode` properties.
+     * - Uses default store currency and price mode if not specified.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollectionWithProductOptions(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:

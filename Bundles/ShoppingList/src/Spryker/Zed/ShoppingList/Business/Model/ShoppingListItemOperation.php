@@ -285,8 +285,29 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     public function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
         $shoppingListItemTransfer = $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
+        $shoppingListItemTransfer = $this
+            ->executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer($shoppingListItemTransfer);
 
         return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
+            ->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemCollectionTransfer = $this->pluginExecutor
+            ->executeShoppingListItemCollectionExpanderPlugins($shoppingListItemCollectionTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
+        $shoppingListItemTransfer = $shoppingListItemCollectionTransfer->getItems()->getIterator()->current();
+
+        return $shoppingListItemTransfer;
     }
 
     /**

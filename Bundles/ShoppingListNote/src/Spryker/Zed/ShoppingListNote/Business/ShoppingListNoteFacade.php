@@ -86,6 +86,8 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
+     * @deprecated Use `ShoppingListNoteFacade::expandShoppingListItemCollection()` instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -93,6 +95,22 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()->createShoppingListItemExpander()->expandItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemExpander()
+            ->expandItemCollection($shoppingListItemCollectionTransfer);
     }
 
     /**

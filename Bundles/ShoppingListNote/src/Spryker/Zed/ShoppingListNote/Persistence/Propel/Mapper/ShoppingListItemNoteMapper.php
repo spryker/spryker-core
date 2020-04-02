@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
 {
@@ -40,5 +42,24 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         $shoppingListItemNoteEntity->fromArray($shoppingListItemNoteTransfer->modifiedToArray());
 
         return $shoppingListItemNoteEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     */
+    public function mapShoppingListItemEntityCollectionToCollectionTransfer(ObjectCollection $shoppingListItemEntityCollection): ArrayObject
+    {
+        $shoppingListItemNoteTransfers = new ArrayObject();
+
+        foreach ($shoppingListItemEntityCollection as $shoppingListItemNoteEntity) {
+            $shoppingListItemNoteTransfer = $this
+                ->mapShoppingListItemNoteTransfer($shoppingListItemNoteEntity, new ShoppingListItemNoteTransfer());
+
+            $shoppingListItemNoteTransfers->append($shoppingListItemNoteTransfer);
+        }
+
+        return $shoppingListItemNoteTransfers;
     }
 }
