@@ -42,6 +42,6 @@ class OrderExpander implements OrderExpanderInterface
             $itemStates[] = $itemStateTransfer->getName();
         }
 
-        return array_unique($itemStates);
+        return array_values(array_unique($itemStates));
     }
 }
