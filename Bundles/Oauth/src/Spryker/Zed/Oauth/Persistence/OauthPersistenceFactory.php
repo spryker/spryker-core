@@ -35,14 +35,6 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
         return SpyOauthAccessTokenQuery::create();
     }
 
-//    /**
-//     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
-//     */
-//    public function createRefreshTokenQuery(): SpyOauthRefreshTokenQuery
-//    {
-//        return SpyOauthRefreshTokenQuery::create();
-//    }
-
     /**
      * @return \Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery
      */
@@ -50,12 +42,4 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyOauthScopeQuery::create();
     }
-
-//    /**
-//     * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper
-//     */
-//    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapper
-//    {
-//        return new OauthRefreshTokenMapper();
-//    }
 }

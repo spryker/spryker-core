@@ -18,9 +18,13 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPlugin
 class OauthRefreshTokensRevokerPlugin extends AbstractPlugin implements OauthRefreshTokensRevokerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @inheritDoc
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
      */
     public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
     {

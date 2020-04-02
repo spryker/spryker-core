@@ -13,26 +13,6 @@ use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
-//    /**
-//     * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
-//     */
-//    protected $oauthEntityManager;
-//
-//    /**
-//     * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
-//     */
-//    protected $oauthRepository;
-//
-//    /**
-//     * @var \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
-//     */
-//    protected $utilEncodingService;
-
-    /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
-     */
-    protected $refreshTokenSaverPlugins;
-
     /**
      * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
      */
@@ -47,6 +27,11 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
      */
     protected $refreshTokenCheckerPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     */
+    protected $refreshTokenSaverPlugins;
 
     /**
      * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[] $refreshTokenRevokerPlugins
@@ -88,20 +73,6 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         foreach ($this->refreshTokenSaverPlugins as $refreshTokenSaverPlugin) {
             $refreshTokenSaverPlugin->saveRefreshToken($refreshTokenEntity);
         }
-
-//        $userIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
-//        $customerReference = $this->getCustomerReference($userIdentifier);
-//
-//        $oauthRefreshTokenTransfer = new OauthRefreshTokenTransfer();
-//        $oauthRefreshTokenTransfer
-//            ->setIdentifier($refreshTokenEntity->getIdentifier())
-//            ->setCustomerReference($customerReference)
-//            ->setUserIdentifier($userIdentifier)
-//            ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
-//            ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
-//            ->setScopes($this->utilEncodingService->encodeJson($refreshTokenEntity->getAccessToken()->getScopes()));
-//
-//        $this->oauthEntityManager->saveRefreshToken($oauthRefreshTokenTransfer);
     }
 
     /**
@@ -116,15 +87,6 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         foreach ($this->refreshTokenRevokerPlugins as $refreshTokenRevokePlugin) {
             $refreshTokenRevokePlugin->revokeRefreshToken($tokenId);
         }
-
-//        if ($this->isRefreshTokenRevoked($tokenId)) {
-//            return;
-//        }
-//
-//        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
-//            ->setIdentifier($tokenId);
-//
-//        $this->oauthEntityManager->revokeRefreshToken($oauthRefreshTokenTransfer);
     }
 
     /**
@@ -153,22 +115,5 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         foreach ($this->refreshTokenCheckerPlugins as $refreshTokenCheckerPlugin) {
             $refreshTokenCheckerPlugin->isRefreshTokenRevoked($tokenId);
         }
-//        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
-//            ->setIdentifier($tokenId);
-//
-//        return $this->oauthRepository->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
     }
-
-//    /**
-//     * @param string|null $userIdentifier
-//     *
-//     * @return string|null
-//     */
-//    protected function getCustomerReference(?string $userIdentifier): ?string
-//    {
-//        $encodedUserIdentifier = $this->utilEncodingService
-//            ->decodeJson($userIdentifier);
-//
-//        return $encodedUserIdentifier->customer_reference ?? null;
-//    }
 }

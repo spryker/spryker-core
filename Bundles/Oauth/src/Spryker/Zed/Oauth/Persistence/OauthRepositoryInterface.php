@@ -35,25 +35,4 @@ interface OauthRepositoryInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
-
-//    /**
-//     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
-//     */
-//    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
-//
-//    /**
-//     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
-//     */
-//    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
-//
-//    /**
-//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-//     *
-//     * @return bool
-//     */
-//    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 }

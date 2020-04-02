@@ -11,7 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\RevokeRefreshTokenRequestBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
 
 /**
  * Inherited Methods

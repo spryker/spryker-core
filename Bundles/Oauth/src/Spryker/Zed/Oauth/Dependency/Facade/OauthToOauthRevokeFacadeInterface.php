@@ -7,11 +7,19 @@
 
 namespace Spryker\Zed\Oauth\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 
 interface OauthToOauthRevokeFacadeInterface
 {
+    /**
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int;
+
     /**
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *

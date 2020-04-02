@@ -32,48 +32,6 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
         return $spyOauthAccessTokenEntityTransfer;
     }
 
-//    /**
-//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
-//     */
-//    public function saveRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): OauthRefreshTokenTransfer
-//    {
-//        $oauthRefreshTokenMapper = $this->getFactory()->createOauthRefreshTokenMapper();
-//        $oauthRefreshTokenEntity = $oauthRefreshTokenMapper->mapOauthRefreshTokenTransferToOauthRefreshTokenEntity($oauthRefreshTokenTransfer, new SpyOauthRefreshToken());
-//
-//        $oauthRefreshTokenEntity->save();
-//
-//        return $oauthRefreshTokenMapper->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($oauthRefreshTokenEntity, $oauthRefreshTokenTransfer);
-//    }
-
-//    /**
-//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-//     *
-//     * @return void
-//     */
-//    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
-//    {
-//        $oauthRefreshTokenTransfer->requireIdentifier();
-//        $this->getFactory()
-//            ->createRefreshTokenQuery()
-//            ->filterByIdentifier($oauthRefreshTokenTransfer->getIdentifier())
-//            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
-//    }
-//
-//    /**
-//     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
-//     *
-//     * @return void
-//     */
-//    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
-//    {
-//        $this->getFactory()
-//            ->createRefreshTokenQuery()
-//            ->filterByIdentifier_In($this->getIdentifiersFromTransfers($oauthRefreshTokenTransfers))
-//            ->update([static::COLUMN_REVOKED_AT => (new DateTime())->format('Y-m-d H:i:s')]);
-//    }
-
     /**
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
@@ -116,33 +74,4 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
             $oauthAccessTokenEntity->delete();
         }
     }
-
-//    /**
-//     * @param string $expiresAt
-//     *
-//     * @return int
-//     */
-//    public function deleteExpiredRefreshTokens(string $expiresAt): int
-//    {
-//        return $this->getFactory()
-//            ->createRefreshTokenQuery()
-//            ->filterByExpiresAt($expiresAt, Criteria::LESS_EQUAL)
-//            ->delete();
-//    }
-//
-//    /**
-//     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
-//     *
-//     * @return string[]
-//     */
-//    protected function getIdentifiersFromTransfers(ArrayObject $oauthRefreshTokenTransfers): array
-//    {
-//        $identifiers = [];
-//        foreach ($oauthRefreshTokenTransfers as $oauthRefreshTokenTransfer) {
-//            $oauthRefreshTokenTransfer->requireIdentifier();
-//            $identifiers[] = $oauthRefreshTokenTransfer->getIdentifier();
-//        }
-//
-//        return $identifiers;
-//    }
 }

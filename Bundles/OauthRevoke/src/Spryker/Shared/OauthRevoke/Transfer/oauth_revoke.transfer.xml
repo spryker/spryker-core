@@ -6,6 +6,7 @@
     <transfer name="OauthRefreshToken">
         <property name="identifier" type="string"/>
         <property name="idOauthClient" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="OauthTokenCriteriaFilter">

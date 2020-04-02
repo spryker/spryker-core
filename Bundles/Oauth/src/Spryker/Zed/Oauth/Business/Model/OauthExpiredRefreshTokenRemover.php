@@ -9,15 +9,15 @@ namespace Spryker\Zed\Oauth\Business\Model;
 
 use DateInterval;
 use DateTime;
+use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface;
 use Spryker\Zed\Oauth\OauthConfig;
-use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 
 class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemoverInterface
 {
     /**
-     * @var \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface
+     * @var \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
      */
-    protected $oauthEntityManager;
+    protected $oauthRevokeFacade;
 
     /**
      * @var \Spryker\Zed\Oauth\OauthConfig
@@ -30,16 +30,16 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     protected $presentDateTime;
 
     /**
-     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface $oauthRevokeFacade
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      * @param \DateTime $presentDateTime
      */
     public function __construct(
-        OauthEntityManagerInterface $oauthEntityManager,
+        OauthToOauthRevokeFacadeInterface $oauthRevokeFacade,
         OauthConfig $oauthConfig,
         DateTime $presentDateTime
     ) {
-        $this->oauthEntityManager = $oauthEntityManager;
+        $this->oauthRevokeFacade = $oauthRevokeFacade;
         $this->oauthConfig = $oauthConfig;
         $this->presentDateTime = $presentDateTime;
     }
@@ -51,7 +51,7 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     {
         $refreshTokenRetentionInterval = new DateInterval($this->oauthConfig->getRefreshTokenRetentionInterval());
 
-        return $this->oauthEntityManager->deleteExpiredRefreshTokens($this->getExpiresAt($refreshTokenRetentionInterval));
+        return $this->oauthRevokeFacade->deleteExpiredRefreshTokens($this->getExpiresAt($refreshTokenRetentionInterval));
     }
 
     /**

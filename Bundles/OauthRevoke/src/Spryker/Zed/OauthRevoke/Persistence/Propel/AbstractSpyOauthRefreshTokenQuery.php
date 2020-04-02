@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Persistence\Propel;
+namespace Spryker\Zed\OauthRevoke\Persistence\Propel;
 
-use Orm\Zed\Oauth\Persistence\Base\SpyOauthRefreshTokenQuery as BaseSpyOauthRefreshTokenQuery;
+use Orm\Zed\OauthRevoke\Persistence\Base\SpyOauthRefreshTokenQuery as BaseSpyOauthRefreshTokenQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_oauth_refresh_token' table.

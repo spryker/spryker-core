@@ -31,7 +31,7 @@ class OauthRevokeRepository extends AbstractRepository implements OauthRevokeRep
         $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
         $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 
-        $oauthRefreshTokenEntity = $oauthRefreshTokenQuery->findRefreshToken();
+        $oauthRefreshTokenEntity = $oauthRefreshTokenQuery->findOne();
 
         if (!$oauthRefreshTokenEntity) {
             return null;

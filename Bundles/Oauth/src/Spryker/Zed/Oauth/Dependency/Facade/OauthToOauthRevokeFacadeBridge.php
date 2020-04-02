@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 
@@ -23,6 +24,16 @@ class OauthToOauthRevokeFacadeBridge implements OauthToOauthRevokeFacadeInterfac
     public function __construct($oauthRevokeFacade)
     {
         $this->oauthRevokeFacade = $oauthRevokeFacade;
+    }
+
+    /**
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int
+    {
+        return $this->oauthRevokeFacade->deleteExpiredRefreshTokens($expiresAt);
     }
 
     /**

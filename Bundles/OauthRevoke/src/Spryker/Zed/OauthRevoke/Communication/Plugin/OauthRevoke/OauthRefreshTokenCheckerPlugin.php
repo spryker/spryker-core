@@ -18,9 +18,13 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginI
 class OauthRefreshTokenCheckerPlugin extends AbstractPlugin implements OauthRefreshTokenCheckerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @inheritDoc
+     * @param string $tokenId
+     *
+     * @return bool
      */
     public function isRefreshTokenRevoked(string $tokenId): bool
     {

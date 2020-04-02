@@ -230,7 +230,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenRevoker(
             $this->createRepositoryBuilder()->createRefreshTokenRepository(),
-            //            $this->getRepository(),
             $this->getOauthRevokeFacade(),
             $this->getUtilEncodingService(),
             $this->getConfig()
@@ -243,7 +242,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function createOauthExpiredRefreshTokenRemover(): OauthExpiredRefreshTokenRemoverInterface
     {
         return new OauthExpiredRefreshTokenRemover(
-            $this->getEntityManager(),
+            $this->getOauthRevokeFacade(),
             $this->getConfig(),
             $this->createPresentDateTime()
         );

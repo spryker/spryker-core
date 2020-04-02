@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OauthRevoke\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
@@ -20,6 +21,20 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int
+    {
+        return $this->getEntityManager()->deleteExpiredRefreshTokens($expiresAt);
+    }
+
     /**
      * {@inheritDoc}
      *

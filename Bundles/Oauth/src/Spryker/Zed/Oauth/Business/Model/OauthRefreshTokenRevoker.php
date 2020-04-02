@@ -26,10 +26,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
 
-//    /**
-//     * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
-//     */
-//    protected $oauthRepository;
     /**
      * @var \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
      */
@@ -53,13 +49,11 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
-        //        OauthRepositoryInterface $oauthRepository,
         OauthToOauthRevokeFacadeInterface $oauthRevokeFacade,
         OauthToUtilEncodingServiceInterface $utilEncodingService,
         OauthConfig $oauthConfig
     ) {
         $this->refreshTokenRepository = $refreshTokenRepository;
-//        $this->oauthRepository = $oauthRepository;
         $this->oauthRevokeFacade = $oauthRevokeFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->encryptionKey = $oauthConfig->getEncryptionKey();
@@ -90,7 +84,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setIsRevoked(false);
 
         $oauthRefreshTokenTransfer = $this->oauthRevokeFacade->findRefreshToken($oauthTokenCriteriaFilterTransfer);
-//        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
@@ -114,10 +107,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
-
-//        $oauthRefreshTokenTransfers = $this->oauthRepository
-//            ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
-//            ->getOauthRefreshTokens();
 
         $oauthRefreshTokenTransfers = $this->oauthRevokeFacade
             ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)

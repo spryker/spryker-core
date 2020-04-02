@@ -8,12 +8,22 @@
 namespace Spryker\Zed\OauthRevoke\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 
 interface OauthRevokeFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param string $expiresAt
+     *
+     * @return int
+     */
+    public function deleteExpiredRefreshTokens(string $expiresAt): int;
+
     /**
      * @api
      *
@@ -24,6 +34,8 @@ interface OauthRevokeFacadeInterface
     public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
@@ -31,6 +43,8 @@ interface OauthRevokeFacadeInterface
     public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return void
@@ -38,6 +52,8 @@ interface OauthRevokeFacadeInterface
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 
     /**
+     * @api
+     *
      * @param \ArrayObject $oauthRefreshTokenTransfers
      *
      * @return void
@@ -45,6 +61,8 @@ interface OauthRevokeFacadeInterface
     public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return bool
@@ -52,6 +70,8 @@ interface OauthRevokeFacadeInterface
     public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 
     /**
+     * @api
+     *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *
      * @return void
