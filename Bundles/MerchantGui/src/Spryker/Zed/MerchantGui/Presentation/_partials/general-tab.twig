@@ -3,3 +3,7 @@
 {{ form_row(merchantForm.registration_number) }}
 {{ form_row(merchantForm.merchant_reference) }}
 {{ form_row(merchantForm.email) }}
+
+{% if (merchantForm.stocks is defined) %}
+    {{ form_row(merchantForm.stocks) }}
+{% endif %}
