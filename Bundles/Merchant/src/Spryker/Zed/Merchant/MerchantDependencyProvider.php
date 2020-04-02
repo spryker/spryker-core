@@ -9,6 +9,7 @@ namespace Spryker\Zed\Merchant;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeBridge;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeBridge;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 
@@ -18,6 +19,7 @@ use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const PLUGINS_MERCHANT_POST_CREATE = 'PLUGINS_MERCHANT_POST_CREATE';
@@ -36,6 +38,19 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantPostUpdatePlugins($container);
         $container = $this->addMerchantExpanderPlugins($container);
         $container = $this->addUrlFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -91,6 +106,22 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_MERCHANT_EXPANDER, function () {
             return $this->getMerchantExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new MerchantToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
         });
 
         return $container;

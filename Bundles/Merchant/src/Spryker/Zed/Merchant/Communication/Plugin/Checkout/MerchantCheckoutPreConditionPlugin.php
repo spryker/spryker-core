@@ -17,15 +17,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
+ * @method \Spryker\Zed\Merchant\Communication\MerchantCommunicationFactory getFactory()
  * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
  */
 class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
-    protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
 
     protected const GLOSSARY_PARAM_SKU = '%sku%';
-    protected const GLOSSARY_PARAM_MERCHANT_NAME = '%merchant_name%';
 
     /**
      * {@inheritDoc}
@@ -51,21 +50,19 @@ class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements Check
             $merchantTransfer = $this->getFacade()->findOne(
                 (new MerchantCriteriaFilterTransfer())
                     ->setMerchantReference($itemTransfer->getMerchantReference())
+                    ->setIsActive(true)
+                    ->setStore(
+                        $this->getFactory()
+                            ->getStoreFacade()
+                            ->getCurrentStore()
+                            ->getName()
+                    )
             );
 
             if (!$merchantTransfer) {
                 $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_REMOVED_MERCHANT)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
-            }
-
-            if (!$merchantTransfer->getIsActive()) {
-                $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
-                    ->setMessage(static::GLOSSARY_KEY_INACTIVE_MERCHANT)
-                    ->setParameters([
-                        static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku(),
-                        static::GLOSSARY_PARAM_MERCHANT_NAME => $merchantTransfer->getName(),
-                    ]);
             }
         }
 

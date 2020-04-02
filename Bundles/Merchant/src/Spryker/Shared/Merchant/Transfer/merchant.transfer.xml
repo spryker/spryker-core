@@ -24,6 +24,7 @@
         <property name="filter" type="Filter"/>
         <property name="isActive" type="bool"/>
         <property name="pagination" type="Pagination"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Filter">

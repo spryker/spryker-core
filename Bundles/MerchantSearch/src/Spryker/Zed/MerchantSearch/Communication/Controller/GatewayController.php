@@ -21,9 +21,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getActiveMerchantsAction(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function getMerchantCollectionAction(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
         return $this->getFacade()
-            ->getActiveMerchants($merchantCriteriaFilterTransfer);
+            ->getMerchantCollection($merchantCriteriaFilterTransfer);
     }
 }

@@ -32,7 +32,7 @@ class MerchantMapper implements MerchantMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $spyMerchant
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
      */
@@ -62,17 +62,7 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        $storeTransfers = $this->merchantStoreMapper->mapMerchantStoreEntitiesToStoreTransferCollection(
-            $merchantEntity->getSpyMerchantStoresJoinSpyStore(),
-            (new ArrayObject())
-        );
-
-        $storeRelationTransfer = (new StoreRelationTransfer())
-            ->setIdEntity($merchantTransfer->getIdMerchant());
-
-        $storeRelationTransfer = $this->merchantStoreMapper->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
-
-        $merchantTransfer->setStoreRelation($storeRelationTransfer);
+        $merchantTransfer = $this->mapStoreEntitiesToMerchantTransfer($merchantEntity->getSpyMerchantStoresJoinSpyStore(), $merchantTransfer);
 
         $this->mapUrlCollectionToMerchantTransfer($merchantEntity->getSpyUrls(), $merchantTransfer);
 
@@ -117,6 +107,26 @@ class MerchantMapper implements MerchantMapperInterface
         }
 
         $merchantTransfer->setUrlCollection($urlTransfers);
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantStore[]|\Propel\Runtime\Collection\ObjectCollection $merchantStoreEntities
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function mapStoreEntitiesToMerchantTransfer(ObjectCollection $merchantStoreEntities, MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        $storeTransfers = $this->merchantStoreMapper->mapMerchantStoreEntitiesToStoreTransferCollection($merchantStoreEntities, (new ArrayObject()));
+
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdEntity($merchantTransfer->getIdMerchant());
+
+        $storeRelationTransfer = $this->merchantStoreMapper->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
+
+        $merchantTransfer->setStoreRelation($storeRelationTransfer);
 
         return $merchantTransfer;
     }

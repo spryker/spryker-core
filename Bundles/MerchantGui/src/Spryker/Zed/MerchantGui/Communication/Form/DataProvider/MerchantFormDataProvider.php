@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface;
@@ -62,6 +63,10 @@ class MerchantFormDataProvider
             $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
             $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
             $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+        }
+
+        if (!$merchantTransfer->getStoreRelation()) {
+            $merchantTransfer->setStoreRelation(new StoreRelationTransfer());
         }
 
         $merchantTransfer = $this->setInitialUrlCollection($merchantTransfer);

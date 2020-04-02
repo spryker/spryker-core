@@ -27,16 +27,16 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\MerchantSearch\Communication\Controller\GatewayController::getActiveMerchantsAction()
+     * @uses \Spryker\Zed\MerchantSearch\Communication\Controller\GatewayController::getMerchantCollectionAction()
      *
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getActiveMerchants(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function getMerchantCollection(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer */
-        $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get-active-merchants', $merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get-merchant-collection', $merchantCriteriaFilterTransfer);
 
         return $merchantCollectionTransfer;
     }

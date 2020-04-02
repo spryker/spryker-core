@@ -9,6 +9,7 @@ namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
@@ -94,14 +95,26 @@ class MerchantCreator implements MerchantCreatorInterface
      */
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation();
+        $urlTransfers = $merchantTransfer->getUrlCollection();
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer);
-        foreach ($merchantTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-            $this->merchantEntityManager->createMerchantStore($merchantTransfer, $storeTransfer);
-        }
+        $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer));
+        $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer->setUrlCollection($urlTransfers));
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function createMerchantStores(MerchantTransfer $merchantTransfer): void
+    {
+        foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
+            $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+        }
     }
 
     /**
