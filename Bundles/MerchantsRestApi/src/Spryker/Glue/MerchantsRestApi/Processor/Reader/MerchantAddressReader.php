@@ -49,7 +49,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
             return $this->merchantsAddressRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findByMerchantReference([$restRequest->getResource()->getId()])[0] ?? null;
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
         if (!$merchantStorageTransfer) {
             return $this->merchantsAddressRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
