@@ -29,6 +29,22 @@ interface ShoppingListProductOptionConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Operates in bulk.
+     * - Removes existing shopping list product options from persistence.
+     * - Creates new shopping list product options in persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemProductOptionsForShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
+
+    /**
+     * Specification:
      * - Removes existing shopping list product options from persistence.
      *
      * @api

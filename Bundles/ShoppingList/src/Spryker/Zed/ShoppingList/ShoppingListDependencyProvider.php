@@ -33,6 +33,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
+    public const PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE';
     public const PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE = 'PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE';
     public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
 
@@ -55,6 +56,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteItemExpanderPlugins($container);
         $container = $this->addAddItemPreCheckPlugins($container);
         $container = $this->addShoppingListItemPostSavePlugins($container);
+        $container = $this->addShoppingListItemBulkPostSavePlugins($container);
         $container = $this->addBeforeDeleteShoppingListItemPlugins($container);
         $container = $this->addItemToShoppingListItemMapperPlugins($container);
 
@@ -238,6 +240,8 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ShoppingListDependencyProvider::addShoppingListItemBulkPostSavePlugins()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -252,9 +256,33 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShoppingListItemBulkPostSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE, function () {
+            return $this->getShoppingListItemBulkPostSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `ShoppingListDependencyProvider::getShoppingListItemBulkPostSavePlugins()` instead.
+     *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
      */
     protected function getShoppingListItemPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     */
+    protected function getShoppingListItemBulkPostSavePlugins(): array
     {
         return [];
     }

@@ -21,4 +21,7 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="ShoppingListItemCollection">
+    </transfer>
+
 </transfers>

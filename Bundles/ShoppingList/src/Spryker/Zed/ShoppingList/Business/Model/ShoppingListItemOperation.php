@@ -371,4 +371,33 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
         return $shoppingListTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer, $shoppingListTransfer) {
+            $this->saveShoppingListItemsCollectionTransaction($shoppingListItemCollectionTransfer, $shoppingListTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function saveShoppingListItemsCollectionTransaction(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
+        $shoppingListItems = $this->shoppingListEntityManager->saveShoppingListItems($shoppingListItemCollectionTransfer, $shoppingListTransfer);
+        $this->pluginExecutor->executeBulkPostSavePlugins($shoppingListItemCollectionTransfer);
+    }
 }
