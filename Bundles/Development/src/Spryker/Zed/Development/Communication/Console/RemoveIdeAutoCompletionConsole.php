@@ -15,21 +15,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
-class GenerateIdeAutoCompletionConsole extends Console
+class RemoveIdeAutoCompletionConsole extends Console
 {
-    protected const OLD_COMMAND_NAME = 'dev:ide:generate-auto-completion';
-    public const COMMAND_NAME = 'dev:ide-auto-completion:generate';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:remove';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Generate IDE auto completion files.');
-        $this->setAliases([static::OLD_COMMAND_NAME]);
+        $this->setDescription('Removes IDE auto completion files.');
     }
 
     /**
@@ -38,14 +36,14 @@ class GenerateIdeAutoCompletionConsole extends Console
      *
      * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $dependingCommands = [
-            GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME,
-            GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
-            GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
-            GenerateServiceIdeAutoCompletionConsole::COMMAND_NAME,
-            GenerateGlueIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveYvesIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveZedIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveClientIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveServiceIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveGlueIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 
         foreach ($dependingCommands as $commandName) {
@@ -71,8 +69,7 @@ class GenerateIdeAutoCompletionConsole extends Console
      */
     protected function showCommandNotFoundMessage(string $commandName): void
     {
-        $message = "Can not find $commandName in your project." . PHP_EOL;
-        $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
-        $this->output->writeln("<comment>$message</comment>");
+        $this->output->writeln(sprintf('<comment>Can not find %s in your project.</comment>', $commandName));
+        $this->output->writeln('You can fix this by adding the missing command to your project ConsoleDependencyProvider.');
     }
 }

@@ -15,33 +15,33 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
-class GenerateZedIdeAutoCompletionConsole extends Console
+class RemoveZedIdeAutoCompletionConsole extends Console
 {
-    protected const OLD_COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
-    public const COMMAND_NAME = 'dev:ide-auto-completion:zed:generate';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:zed:remove';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Generate IDE auto completion files for Zed.');
-        $this->setAliases([static::OLD_COMMAND_NAME]);
+        $this->setDescription('Removes IDE auto completion files for Zed.');
     }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->generateZedIdeAutoCompletion();
+        $this->getFacade()->removeZedIdeAutoCompletion();
 
-        $this->info('Generated Zed IDE auto-completion files');
+        $this->info('Removed Zed IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

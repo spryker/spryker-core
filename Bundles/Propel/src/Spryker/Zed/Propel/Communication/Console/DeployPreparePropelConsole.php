@@ -12,24 +12,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class EntityTransferGeneratorConsole extends Console
+class DeployPreparePropelConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:entity:generate';
-    public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema definition files';
+    public const COMMAND_NAME = 'propel:deploy:prepare';
+    public const DESCRIPTION = 'Prepares Propel configuration on appserver';
 
     /**
      * @return void
      */
     protected function configure(): void
     {
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
+
         parent::configure();
-        $this
-            ->setName(static::COMMAND_NAME)
-            ->setDescription(static::COMMAND_DESCRIPTION)
-            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
     }
 
     /**
@@ -40,11 +39,18 @@ class EntityTransferGeneratorConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $transferFacade = $this->getFactory()->getTransferFacade();
-        $messenger = $this->getMessenger();
+        $dependingCommands = [
+            SchemaCopyConsole::COMMAND_NAME,
+            BuildModelConsole::COMMAND_NAME,
+        ];
 
-        $transferFacade->deleteGeneratedEntityTransferObjects();
-        $transferFacade->generateEntityTransferObjects($messenger);
+        foreach ($dependingCommands as $commandName) {
+            $exitCode = $this->runDependingCommand($commandName);
+
+            if ($this->hasError()) {
+                return $exitCode;
+            }
+        }
 
         return static::CODE_SUCCESS;
     }

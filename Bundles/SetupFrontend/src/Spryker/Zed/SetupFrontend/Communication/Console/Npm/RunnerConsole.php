@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Setup\Communication\Console\Npm;
+namespace Spryker\Zed\SetupFrontend\Communication\Console\Npm;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,14 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole } instead.
- *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class RunnerConsole extends Console
 {
-    public const COMMAND_NAME = 'application:npm';
+    public const COMMAND_NAME = 'frontend:npm:run';
 
     public const NPM_COMMAND_TPL = 'npm run %s';
 
@@ -38,7 +36,7 @@ class RunnerConsole extends Console
     public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $commands = [
         self::OPTION_TASK_BUILD_ALL => 'spy-setup all',
@@ -50,9 +48,9 @@ class RunnerConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->setDescription('This command will execute \'npm run\' with the specified task');
         $this->setHelp(<<<EOM
 This command will execute 'npm run' with a specified task.
@@ -63,29 +61,29 @@ EOM
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_ALL,
-            self::OPTION_TASK_BUILD_ALL_SHORT,
+            static::OPTION_TASK_BUILD_ALL,
+            static::OPTION_TASK_BUILD_ALL_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build all core and project resources'
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_CORE,
-            self::OPTION_TASK_BUILD_CORE_SHORT,
+            static::OPTION_TASK_BUILD_CORE,
+            static::OPTION_TASK_BUILD_CORE_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the core resources of zed'
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_ZED,
-            self::OPTION_TASK_BUILD_ZED_SHORT,
+            static::OPTION_TASK_BUILD_ZED,
+            static::OPTION_TASK_BUILD_ZED_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the project resources of zed'
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_YVES,
-            self::OPTION_TASK_BUILD_YVES_SHORT,
+            static::OPTION_TASK_BUILD_YVES,
+            static::OPTION_TASK_BUILD_YVES_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the project resources of yves'
         );
@@ -95,11 +93,10 @@ EOM
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->warning(sprintf('The console command `%s` is deprecated. Use `frontend:npm:run` instead', static::COMMAND_NAME));
         $command = $this->getCommand();
 
         return $this->runCommand($command);
@@ -108,10 +105,10 @@ EOM
     /**
      * @return string
      */
-    protected function getCommand()
+    protected function getCommand(): string
     {
         $task = $this->getNpmTask();
-        $command = sprintf(self::NPM_COMMAND_TPL, $this->commands[$task]);
+        $command = sprintf(static::NPM_COMMAND_TPL, $this->commands[$task]);
 
         return $command;
     }
@@ -119,9 +116,9 @@ EOM
     /**
      * @param string $command
      *
-     * @return int|null
+     * @return int
      */
-    protected function runCommand($command)
+    protected function runCommand($command): int
     {
         $this->info('Run command: ' . $command);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
@@ -130,19 +127,19 @@ EOM
             echo $buffer;
         });
 
-        return $process->getExitCode();
+        return $process->isSuccessful() ? Console::CODE_SUCCESS : Console::CODE_ERROR;
     }
 
     /**
      * @return string
      */
-    protected function getNpmTask()
+    protected function getNpmTask(): string
     {
         $tasks = [
-            self::OPTION_TASK_BUILD_ALL,
-            self::OPTION_TASK_BUILD_CORE,
-            self::OPTION_TASK_BUILD_ZED,
-            self::OPTION_TASK_BUILD_YVES,
+            static::OPTION_TASK_BUILD_ALL,
+            static::OPTION_TASK_BUILD_CORE,
+            static::OPTION_TASK_BUILD_ZED,
+            static::OPTION_TASK_BUILD_YVES,
         ];
 
         foreach ($tasks as $task) {
@@ -153,6 +150,6 @@ EOM
             }
         }
 
-        return self::OPTION_TASK_BUILD_ALL;
+        return static::OPTION_TASK_BUILD_ALL;
     }
 }
