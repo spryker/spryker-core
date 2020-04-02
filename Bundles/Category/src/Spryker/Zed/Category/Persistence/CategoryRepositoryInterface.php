@@ -50,4 +50,18 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getChildCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getParentCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
 }

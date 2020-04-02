@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 
-class OrderResourceMapper implements OrderResourceMapperInterface
+class OrderMapper implements OrderMapperInterface
 {
     /**
      * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
@@ -23,10 +23,19 @@ class OrderResourceMapper implements OrderResourceMapperInterface
     protected $restOrderItemsAttributesMapperPlugins;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface
+     */
+    protected $orderShipmentMapper;
+
+    /**
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderShipmentMapper
      * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
      */
-    public function __construct(array $restOrderItemsAttributesMapperPlugins)
-    {
+    public function __construct(
+        OrderShipmentMapperInterface $orderShipmentMapper,
+        array $restOrderItemsAttributesMapperPlugins
+    ) {
+        $this->orderShipmentMapper = $orderShipmentMapper;
         $this->restOrderItemsAttributesMapperPlugins = $restOrderItemsAttributesMapperPlugins;
     }
 
@@ -114,6 +123,10 @@ class OrderResourceMapper implements OrderResourceMapperInterface
 
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($countryName);
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($countryIso2Code);
+
+        $restOrderDetailsAttributesTransfer->setShipments(
+            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
+        );
 
         return $restOrderDetailsAttributesTransfer;
     }

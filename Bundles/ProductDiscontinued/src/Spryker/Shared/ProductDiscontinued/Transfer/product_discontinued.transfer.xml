@@ -44,6 +44,7 @@
 
     <transfer name="ProductDiscontinuedCriteriaFilter">
         <property name="ids" type="array" singular="ids"/>
+        <property name="skus" type="array" singular="sku"/>
     </transfer>
 
     <transfer name="CartChange">
