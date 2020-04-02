@@ -141,8 +141,9 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function executeShoppingListItemCollectionExpanderPlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function executeShoppingListItemCollectionExpanderPlugins(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         foreach ($this->itemCollectionExpanderPlugins as $itemCollectionExpanderPlugin) {
             $shoppingListItemCollectionTransfer = $itemCollectionExpanderPlugin
                 ->expandItemCollection($shoppingListItemCollectionTransfer);

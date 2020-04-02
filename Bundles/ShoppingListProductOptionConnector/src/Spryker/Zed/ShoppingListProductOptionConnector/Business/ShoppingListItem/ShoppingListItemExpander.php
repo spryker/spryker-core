@@ -62,8 +62,9 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function expandShoppingListItemCollectionWithProductOptions(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function expandShoppingListItemCollectionWithProductOptions(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         $shoppingListProductOptionCollectionTransfer = $this->shoppingListProductOptionReader
             ->getShoppingListProductOptionCollectionByShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
@@ -127,8 +128,9 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return int[][]
      */
-    protected function groupProductOptionIdsByShoppingListItemIds(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
-    {
+    protected function groupProductOptionIdsByShoppingListItemIds(
+        ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
+    ): array {
         $groupedProductOptionIdsByShoppingListItemIds = [];
         foreach ($shoppingListProductOptionCollectionTransfer->getShoppingListProductOptions() as $shoppingListProductOptionTransfer) {
             if (!isset($groupedProductOptionIdsByShoppingListItemIds[$shoppingListProductOptionTransfer->getIdShoppingListItem()])) {
@@ -208,8 +210,9 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      *
      * @return int[]
      */
-    protected function getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer(ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer): array
-    {
+    protected function getUniqueProductOptionIdsFromShoppingListProductOptionCollectionTransfer(
+        ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
+    ): array {
         $productOptionIds = [];
         foreach ($shoppingListProductOptionCollectionTransfer->getShoppingListProductOptions() as $shoppingListProductOptionTransfer) {
             $productOptionIds[] = $shoppingListProductOptionTransfer->getIdProductOptionValue();

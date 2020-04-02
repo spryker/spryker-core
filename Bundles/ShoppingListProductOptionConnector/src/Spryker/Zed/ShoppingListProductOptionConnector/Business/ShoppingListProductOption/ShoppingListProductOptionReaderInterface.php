@@ -28,5 +28,7 @@ interface ShoppingListProductOptionReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
      */
-    public function getShoppingListProductOptionCollectionByShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListProductOptionCollectionTransfer;
+    public function getShoppingListProductOptionCollectionByShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListProductOptionCollectionTransfer;
 }

@@ -96,8 +96,9 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function expandShoppingListItemCollectionWithProductOptions(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function expandShoppingListItemCollectionWithProductOptions(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->getFactory()
             ->createShoppingListItemExpander()
             ->expandShoppingListItemCollectionWithProductOptions($shoppingListItemCollectionTransfer);

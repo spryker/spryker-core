@@ -58,8 +58,9 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
      */
-    public function getShoppingListProductOptionCollectionByShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListProductOptionCollectionTransfer
-    {
+    public function getShoppingListProductOptionCollectionByShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListProductOptionCollectionTransfer {
         $shoppingListItemIds = $this->getShoppingListItemIdsFromShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
         return $this->shoppingListProductOptionRepository

@@ -296,8 +296,9 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
+    protected function executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
         $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
             ->addItem($shoppingListItemTransfer);
 

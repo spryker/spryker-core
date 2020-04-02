@@ -25,5 +25,7 @@ interface ShoppingListItemNoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
      */
-    public function getShoppingListItemNoteTransfersByShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ArrayObject;
+    public function getShoppingListItemNoteTransfersByShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ArrayObject;
 }
