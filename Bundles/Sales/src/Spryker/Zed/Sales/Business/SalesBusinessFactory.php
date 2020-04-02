@@ -364,7 +364,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderSearchReader(
             $this->getRepository(),
-            $this->getSearchOrderExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins(),
+            $this->getOrderSearchQueryExpanderPlugins()
         );
     }
 
@@ -506,5 +507,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getSearchOrderExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_SEARCH_ORDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[]
+     */
+    public function getOrderSearchQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_SEARCH_QUERY_EXPANDER);
     }
 }

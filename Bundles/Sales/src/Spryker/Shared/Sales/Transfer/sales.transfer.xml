@@ -53,9 +53,8 @@
     </transfer>
 
     <transfer name="OrderList">
-        <property name="idCustomer" type="int" deprecated="use Customer property instead."/>
+        <property name="idCustomer" type="int"/>
         <property name="customerReference" type="string"/>
-        <property name="customer" type="Customer"/>
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
@@ -354,6 +353,9 @@
         <property name="joinType" type="string"/>
         <property name="condition" type="string"/>
         <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+        <property name="withColumns" type="string[]" singular="withColumn"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="QueryJoinCollection">
@@ -364,6 +366,8 @@
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>
+        <property name="mergeWithCondition" type="string"/>
+        <property name="mergeOperator" type="string"/>
     </transfer>
 
 </transfers>

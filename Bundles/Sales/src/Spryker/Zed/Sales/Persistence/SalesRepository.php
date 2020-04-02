@@ -18,9 +18,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -74,9 +74,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->requireFormat()
-            ->requirePagination()
-            ->requireCustomer();
+        $orderListTransfer
+            ->requireFormat()
+            ->requirePagination();
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
@@ -86,11 +86,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $salesOrderQuery,
             $orderListTransfer
         );
-
-        $salesOrderQuery = $this->buildQueryFromCriteria(
-            $salesOrderQuery,
-            $orderListTransfer->getFilter()
-        )->setFormatter(ObjectFormatter::class);
 
         $salesOrderQuery = $this->preparePagination(
             $salesOrderQuery,
@@ -113,12 +108,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         SpySalesOrderQuery $salesOrderQuery,
         OrderListTransfer $orderListTransfer
     ): SpySalesOrderQuery {
-        $customerReference = $orderListTransfer->getCustomer()->getCustomerReference();
-
-        if ($customerReference) {
-            $salesOrderQuery->filterByCustomerReference($customerReference);
-        }
-
         $salesOrderQuery = $this->getFactory()
             ->createOrderSearchFilterFieldQueryBuilder()
             ->addSalesOrderQueryFilters($salesOrderQuery, $orderListTransfer);
@@ -129,6 +118,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $salesOrderQuery = $this->getFactory()
                 ->createOrderSearchQueryJoinQueryBuilder()
                 ->addSalesOrderQueryFilters($salesOrderQuery, $queryJoinCollectionTransfer);
+        }
+
+        if ($this->isSearchByAllFilterFieldSet($orderListTransfer->getFilterFields())) {
+            $salesOrderQuery->where([OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL]);
         }
 
         return $salesOrderQuery;
@@ -314,5 +307,21 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $salesOrderIds;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     *
+     * @return bool
+     */
+    protected function isSearchByAllFilterFieldSet(ArrayObject $filterFieldTransfers): bool
+    {
+        foreach ($filterFieldTransfers as $filterFieldTransfer) {
+            if ($filterFieldTransfer->getType() === OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

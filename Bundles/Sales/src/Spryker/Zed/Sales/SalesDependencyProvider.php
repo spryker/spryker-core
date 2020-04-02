@@ -44,6 +44,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ITEM_PRE_TRANSFORMER = 'PLUGINS_ITEM_PRE_TRANSFORMER';
     public const PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER = 'PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER';
     public const PLUGINS_SEARCH_ORDER_EXPANDER = 'PLUGINS_SEARCH_ORDER_EXPANDER';
+    public const PLUGINS_ORDER_SEARCH_QUERY_EXPANDER = 'PLUGINS_ORDER_SEARCH_QUERY_EXPANDER';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -74,6 +75,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addItemPreTransformerPlugins($container);
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
         $container = $this->addSearchOrderExpanderPlugins($container);
+        $container = $this->addOrderSearchQueryExpanderPlugins($container);
 
         return $container;
     }
@@ -379,11 +381,25 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderSearchQueryExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_SEARCH_QUERY_EXPANDER, function () {
+            return $this->getOrderSearchQueryExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
     {
-         return [];
+        return [];
     }
 
     /**
@@ -391,7 +407,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getOrderHydrationPlugins()
     {
-         return [];
+        return [];
     }
 
     /**
@@ -399,7 +415,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getOrderItemExpanderPreSavePlugins()
     {
-         return [];
+        return [];
     }
 
     /**
@@ -415,7 +431,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getSalesTablePlugins()
     {
-         return [];
+        return [];
     }
 
     /**
@@ -446,6 +462,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
     protected function getSearchOrderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[]
+     */
+    protected function getOrderSearchQueryExpanderPlugins(): array
     {
         return [];
     }
