@@ -64,7 +64,7 @@ class ClassInfoTest extends Unit
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
 
-        $this->assertSame('Kernel', $classInfo->getBundle());
+        $this->assertSame('Kernel', $classInfo->getModule());
     }
 
     /**

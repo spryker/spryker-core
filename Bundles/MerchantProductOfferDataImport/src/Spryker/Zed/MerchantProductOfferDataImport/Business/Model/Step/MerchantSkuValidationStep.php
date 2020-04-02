@@ -26,6 +26,11 @@ class MerchantSkuValidationStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $merchantSku = $dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU];
+
+        if (!$merchantSku) {
+            return;
+        }
+
         $fkMerchant = $dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT];
 
         /** @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery */
