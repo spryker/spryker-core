@@ -43,31 +43,21 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createMerchantAddressesRestResource(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResourceInterface
+    public function createMerchantAddressesRestResources(array $merchantStorageTransfers): array
     {
-        $restMerchantsAttributesTransfer = $this->merchantsAddressResourceMapper
-            ->mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
-                $merchantStorageProfileAddressTransfers,
-                new RestMerchantAddressesAttributesTransfer()
+        $merchantAddressRestResources = [];
+        foreach ($merchantStorageTransfers as $merchantReference => $merchantStorageTransfer) {
+            $merchantAddressRestResources[$merchantReference] = $this->createMerchantAddressesRestResource(
+                $merchantStorageTransfer->getMerchantProfile()->getAddressCollection(),
+                $merchantReference
             );
+        }
 
-        $restResource = $this->restResourceBuilder->createRestResource(
-            MerchantsRestApiConfig::RESOURCE_MERCHANT_ADDRESSES,
-            $merchantReference,
-            $restMerchantsAttributesTransfer
-        );
-
-        $restResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->getMerchantAddressesResourceSelfLink($merchantReference)
-        );
-
-        return $restResource;
+        return $merchantAddressRestResources;
     }
 
     /**
@@ -76,9 +66,14 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantAddressesRestResponse(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResponseInterface
-    {
-        $merchantsRestResource = $this->createMerchantAddressesRestResource($merchantStorageProfileAddressTransfers, $merchantReference);
+    public function createMerchantAddressesRestResponse(
+        ArrayObject $merchantStorageProfileAddressTransfers,
+        string $merchantReference
+    ): RestResponseInterface {
+        $merchantsRestResource = $this->createMerchantAddressesRestResource(
+            $merchantStorageProfileAddressTransfers,
+            $merchantReference
+        );
 
         return $this->restResourceBuilder
             ->createRestResponse()
@@ -112,6 +107,36 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param string $merchantReference
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createMerchantAddressesRestResource(
+        ArrayObject $merchantStorageProfileAddressTransfers,
+        string $merchantReference
+    ): RestResourceInterface {
+        $restMerchantsAttributesTransfer = $this->merchantsAddressResourceMapper
+            ->mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
+                $merchantStorageProfileAddressTransfers,
+                new RestMerchantAddressesAttributesTransfer()
+            );
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            MerchantsRestApiConfig::RESOURCE_MERCHANT_ADDRESSES,
+            $merchantReference,
+            $restMerchantsAttributesTransfer
+        );
+
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getMerchantAddressesResourceSelfLink($merchantReference)
+        );
+
+        return $restResource;
     }
 
     /**

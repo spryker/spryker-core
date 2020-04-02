@@ -49,7 +49,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
             return $this->merchantsAddressRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantResource->getId());
         if (!$merchantStorageTransfer) {
             return $this->merchantsAddressRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
@@ -62,5 +62,34 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
             $merchantStorageProfileAddressTransfers,
             $merchantResource->getId()
         );
+    }
+
+    /**
+     * @param string[] $merchantReferences
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getMerchantAddressResources(array $merchantReferences): array
+    {
+        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+
+        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
+
+        return $this->merchantsAddressRestResponseBuilder->createMerchantAddressesRestResources($merchantStorageTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
+    {
+        $merchantStorageTransfersWithMerchantReferenceKey = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantStorageTransfersWithMerchantReferenceKey[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer;
+        }
+
+        return $merchantStorageTransfersWithMerchantReferenceKey;
     }
 }

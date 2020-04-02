@@ -8,31 +8,21 @@
 namespace Spryker\Glue\MerchantsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
-use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReaderInterface;
 
 class MerchantAddressByMerchantReferenceResourceRelationshipExpander implements MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReaderInterface
      */
-    protected $merchantAddressRestResponseBuilder;
+    protected $merchantAddressReader;
 
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface
+     * @param \Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantAddressReaderInterface $merchantAddressReader
      */
-    protected $merchantStorageClient;
-
-    /**
-     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantAddressRestResponseBuilderInterface $merchantAddressRestResponseBuilder
-     */
-    public function __construct(
-        MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
-        MerchantAddressRestResponseBuilderInterface $merchantAddressRestResponseBuilder
-    ) {
-        $this->merchantStorageClient = $merchantStorageClient;
-        $this->merchantAddressRestResponseBuilder = $merchantAddressRestResponseBuilder;
+    public function __construct(MerchantAddressReaderInterface $merchantAddressReader)
+    {
+        $this->merchantAddressReader = $merchantAddressReader;
     }
 
     /**
@@ -44,23 +34,15 @@ class MerchantAddressByMerchantReferenceResourceRelationshipExpander implements 
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $merchantReferences = $this->getMerchantReferences($resources);
-        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
-
-        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
+        $merchantRestResources = $this->merchantAddressReader->getMerchantAddressResources($merchantReferences);
 
         foreach ($resources as $resource) {
-            $resourceId = $resource->getId();
-            if (!$resourceId || !isset($merchantStorageTransfers[$resourceId])) {
+            $merchantReference = $resource->getId();
+            if (!$merchantReference || !isset($merchantRestResources[$merchantReference])) {
                 continue;
             }
 
-            $merchantStorageTransfer = $merchantStorageTransfers[$resourceId];
-            $restMerchantAddressesResource = $this->merchantAddressRestResponseBuilder->createMerchantAddressesRestResource(
-                $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection(),
-                $resourceId
-            );
-
-            $resource->addRelationship($restMerchantAddressesResource);
+            $resource->addRelationship($merchantRestResources[$merchantReference]);
         }
     }
 
@@ -82,20 +64,5 @@ class MerchantAddressByMerchantReferenceResourceRelationshipExpander implements 
         }
 
         return $references;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
-    {
-        $merchantStorageTransfersWithMerchantReferenceKey = [];
-        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantStorageTransfersWithMerchantReferenceKey[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer;
-        }
-
-        return $merchantStorageTransfersWithMerchantReferenceKey;
     }
 }

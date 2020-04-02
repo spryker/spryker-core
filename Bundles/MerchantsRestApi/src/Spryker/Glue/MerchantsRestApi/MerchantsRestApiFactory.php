@@ -71,10 +71,7 @@ class MerchantsRestApiFactory extends AbstractFactory
      */
     public function createMerchantAddressByMerchantReferenceResourceRelationshipExpander(): MerchantAddressByMerchantReferenceResourceRelationshipExpanderInterface
     {
-        return new MerchantAddressByMerchantReferenceResourceRelationshipExpander(
-            $this->getMerchantStorageClient(),
-            $this->createMerchantAddressRestResponseBuilder()
-        );
+        return new MerchantAddressByMerchantReferenceResourceRelationshipExpander($this->createMerchantAddressReader());
     }
 
     /**

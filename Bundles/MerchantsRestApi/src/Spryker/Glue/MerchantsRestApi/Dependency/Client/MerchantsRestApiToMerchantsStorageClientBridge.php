@@ -55,10 +55,24 @@ class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApi
      */
     public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
     {
+        $merchantStorageProfileAddressTransfer1 = (new MerchantStorageProfileAddressTransfer())
+            ->setAddress1('address1')
+            ->setAddress2('address2')
+            ->setCity('City')
+            ->setCountryName('CountryName');
+
+        $merchantStorageProfileAddressTransfer2 = (new MerchantStorageProfileAddressTransfer())
+            ->setAddress1('address3')
+            ->setAddress2('address4')
+            ->setCity('City2')
+            ->setCountryName('CountryName2');
+
         $merchantStorageProfile = (new MerchantStorageProfileTransfer())
             ->setMerchantUrl('url-test')
             ->setPublicEmail('email-test')
-            ->setDescriptionGlossaryKey('merchant.description_glossary_key.1');
+            ->setDescriptionGlossaryKey('merchant.description_glossary_key.1')
+            ->addAddress($merchantStorageProfileAddressTransfer1)
+            ->addAddress($merchantStorageProfileAddressTransfer2);
 
         return (new MerchantStorageTransfer())
             ->setIdMerchant(1)
