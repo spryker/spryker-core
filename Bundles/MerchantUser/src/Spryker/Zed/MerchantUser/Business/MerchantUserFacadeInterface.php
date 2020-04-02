@@ -32,7 +32,7 @@ interface MerchantUserFacadeInterface
      * Specification:
      * - Updates MerchantUser with passed MerchantUser transfer data.
      * - Updates User when MerchantUserTransfer.user is provided.
-     * - Reset password token if a User is activated.
+     * - Resets password for a User, if the User is activated.
      * - Returns MerchantUserResponse transfer with updated MerchantUser transfer inside.
      *
      * @api
@@ -60,7 +60,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Disables MerchantUsers that related to given criteria.
+     * - Disables MerchantUsers that match the given criteria.
      *
      * @api
      *

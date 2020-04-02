@@ -41,7 +41,7 @@ class MerchantUserUpdateForm extends MerchantUserCreateForm
         parent::buildForm($builder, $options);
 
         $builder->add(static::FIELD_STATUS, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_STATUS_CHOICES]),
+            'choices' => array_flip(array_map('ucfirst', $options[static::OPTION_STATUS_CHOICES])),
             'constraints' => [
                 new NotBlank(),
             ],
