@@ -67,9 +67,10 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
     protected function createHttpRequestTransfer(): HttpRequestTransfer
     {
         $httpRequestTransfer = new HttpRequestTransfer();
+        $currentRequestHeaders = $this->requestStack->getCurrentRequest()->headers;
 
-        foreach ($this->requestStack->getCurrentRequest()->headers->keys() as $key) {
-            $httpRequestTransfer->addHeader($key, $this->requestStack->getCurrentRequest()->headers->get($key));
+        foreach ($currentRequestHeaders->keys() as $key) {
+            $httpRequestTransfer->addHeader($key, $currentRequestHeaders->get($key));
         }
 
         return $httpRequestTransfer;
