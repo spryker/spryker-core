@@ -40,10 +40,10 @@ class ReclamationMapper implements ReclamationMapperInterface
     }
 
     /**
-     * @param \ArrayObject $orderItems
-     * @param \ArrayObject $reclamationItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[]
      */
     protected function mapOrderItemsToReclamationItems(
         ArrayObject $orderItems,

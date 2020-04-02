@@ -61,7 +61,7 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
         $calledClass = $this->getFactoryResolver()->setCallerClass($this);
         $classInfo = $calledClass->getClassInfo();
 
-        return $classInfo->getBundle();
+        return $classInfo->getModule();
     }
 
     /**

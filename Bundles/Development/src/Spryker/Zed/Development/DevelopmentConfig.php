@@ -322,6 +322,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'JsonPath\\' => 'spryker/json-path',
             'JsonSchema\\' => 'spryker/json-schema',
+            'Webmozart\\Glob' => 'spryker/util-glob',
         ];
     }
 
@@ -351,6 +352,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'egulias/email-validator' => 'spryker/egulias',
             'ramsey/uuid' => 'spryker/ramsey-uuid',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
+            'webmozart/glob' => 'spryker/util-glob',
         ];
     }
 

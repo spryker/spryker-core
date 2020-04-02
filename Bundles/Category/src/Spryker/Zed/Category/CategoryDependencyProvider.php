@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category;
 
-use Spryker\Zed\Category\Dependency\Facade\CategoryToEventBridge;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
@@ -164,7 +164,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     protected function addEventFacade(Container $container)
     {
         $container[static::FACADE_EVENT] = function (Container $container) {
-            return new CategoryToEventBridge($container->getLocator()->event()->facade());
+            return new CategoryToEventFacadeBridge($container->getLocator()->event()->facade());
         };
 
         return $container;

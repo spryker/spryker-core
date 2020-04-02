@@ -120,7 +120,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\PathMethodComponentTransfer $methodComponent
-     * @param \ArrayObject $responseSchemas
+     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
      *
      * @return void
      */

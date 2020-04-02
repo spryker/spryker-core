@@ -8,6 +8,7 @@
 namespace Spryker\Client\Store\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface;
 
@@ -16,6 +17,11 @@ use Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface;
  */
 class StoreQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTransferExpanderPluginInterface
 {
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected static $currentStoreTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,8 +33,20 @@ class StoreQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTr
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setStore($this->getClient()->getCurrentStore());
+        $quoteTransfer->setStore($this->getCurrentStore());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore(): StoreTransfer
+    {
+        if (static::$currentStoreTransfer === null) {
+            static::$currentStoreTransfer = $this->getClient()->getCurrentStore();
+        }
+
+        return static::$currentStoreTransfer;
     }
 }

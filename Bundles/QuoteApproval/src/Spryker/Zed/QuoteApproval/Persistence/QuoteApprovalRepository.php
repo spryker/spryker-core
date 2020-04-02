@@ -37,9 +37,10 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
 
         $quoteApprovalTransfers = [];
 
+        $mapper = $this->getFactory()
+            ->createQuoteApprovalMapper();
         foreach ($quoteApprovalEntities as $quoteApprovalEntity) {
-            $quoteApprovalTransfers[] = $this->getFactory()
-                ->createQuoteApprovalMapper()
+            $quoteApprovalTransfers[] = $mapper
                 ->mapQuoteApprovalEntityToTransfer(
                     $quoteApprovalEntity,
                     new QuoteApprovalTransfer()
