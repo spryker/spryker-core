@@ -20,7 +20,6 @@ class FormatTypeByHeaderPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         // Implement on project level, e.g. with https://github.com/auraphp/Aura.Accept
-
         return $apiRequestTransfer;
     }
 }
