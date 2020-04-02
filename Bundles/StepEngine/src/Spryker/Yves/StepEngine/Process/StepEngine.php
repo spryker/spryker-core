@@ -35,7 +35,7 @@ class StepEngine implements StepEngineInterface
     protected $stepBreadcrumbGenerator;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]|null
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
      */
     protected $stepEnginePreRenderPlugins;
 
@@ -43,13 +43,13 @@ class StepEngine implements StepEngineInterface
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      * @param \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null $stepBreadcrumbGenerator
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]|null $stepEnginePreRenderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[] $stepEnginePreRenderPlugins
      */
     public function __construct(
         StepCollectionInterface $stepCollection,
         DataContainerInterface $dataContainer,
         ?StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null,
-        ?array $stepEnginePreRenderPlugins = null
+        array $stepEnginePreRenderPlugins = []
     ) {
         $this->stepCollection = $stepCollection;
         $this->dataContainer = $dataContainer;
@@ -217,10 +217,6 @@ class StepEngine implements StepEngineInterface
      */
     protected function executeStepEnginePreRenderPlugins(AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        if (!$this->stepEnginePreRenderPlugins) {
-            return $quoteTransfer;
-        }
-
         foreach ($this->stepEnginePreRenderPlugins as $stepEnginePreRenderPlugin) {
             $quoteTransfer = $stepEnginePreRenderPlugin->execute($quoteTransfer);
         }

@@ -110,6 +110,6 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
             $shipmentAdditionalKeyData[$fieldName] = $shipmentData[$fieldName];
         }
 
-        return md5($this->utilEncodingService->encodeJson($shipmentAdditionalKeyData));
+        return $this->utilEncodingService->encodeJson($shipmentAdditionalKeyData);
     }
 }

@@ -17,7 +17,7 @@ class ShipmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getShipmentHashFields(): array
     {
