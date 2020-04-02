@@ -134,7 +134,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return true;
         }
 
-        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isQuoteShipmentExpenseSourcePriceSet($quoteTransfer, $shipmentGroupTransfer)) {
+        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isDifferentQuoteShipmentAndExpenseShipmentPrices($quoteTransfer, $shipmentGroupTransfer)) {
             return true;
         }
 
@@ -147,7 +147,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      *
      * @return bool
      */
-    protected function isQuoteShipmentExpenseSourcePriceSet(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    protected function isDifferentQuoteShipmentAndExpenseShipmentPrices(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
         $expenseTransfer = $this->findExpenseByShipmentGroup($quoteTransfer, $shipmentGroupTransfer);
 
@@ -155,9 +155,12 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return false;
         }
 
-        $expenseShipmentMethod = $expenseTransfer->getShipment()->getMethod();
+        $shipmentStoreCurrencyPrice = $shipmentGroupTransfer
+            ->getShipment()
+            ->getMethod()
+            ->getStoreCurrencyPrice();
 
-        return $expenseShipmentMethod->getSourcePrice() !== null;
+        return $shipmentStoreCurrencyPrice !== $expenseTransfer->getSumPrice();
     }
 
     /**
