@@ -79,9 +79,11 @@ class ConsoleLogPlugin implements EventSubscriberInterface
      */
     protected function getConsoleErrorCommandName(ConsoleEvent $consoleEvent): string
     {
-        return $consoleEvent->getCommand()
-            ? $consoleEvent->getCommand()->getName()
-            : $consoleEvent->getInput()->getFirstArgument();
+        if ($consoleEvent->getCommand()) {
+            return $consoleEvent->getCommand()->getName();
+        }
+
+        return $consoleEvent->getInput()->getFirstArgument() ?: '';
     }
 
     /**
