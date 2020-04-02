@@ -421,4 +421,16 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void
+    {
+        $this->getFactory()->createElasticsearchIndexMapCleaner()->cleanDirectory();
+    }
 }

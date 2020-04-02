@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -34,18 +36,34 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected $productBundleRepository;
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
+    protected $productBundleCache;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface $productBundleCache
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleRepositoryInterface $productBundleRepository,
+        ProductBundleCacheInterface $productBundleCache
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
+        $this->productBundleRepository = $productBundleRepository;
+        $this->productBundleCache = $productBundleCache;
     }
 
     /**
@@ -126,5 +144,34 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
         return $this->availabilityFacade
             ->findOrCreateProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     */
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
+    {
+        $notCachedSkus = [];
+        foreach ($skus as $sku) {
+            if (!$this->productBundleCache->hasProductForBundleTransfersBySku($sku)) {
+                $notCachedSkus[] = $sku;
+            }
+        }
+
+        if ($notCachedSkus) {
+            $productForBundleTransfers = $this->productBundleRepository->getProductForBundleTransfersByProductConcreteSkus($notCachedSkus);
+            $this->productBundleCache->cacheProductForBundleTransfersBySku($productForBundleTransfers);
+        }
+
+        $productForBundlesBySku = [];
+        foreach ($skus as $sku) {
+            if ($this->productBundleCache->hasProductForBundleTransfersBySku($sku)) {
+                $productForBundlesBySku[$sku] = $this->productBundleCache->getProductForBundleTransfersBySku($sku);
+            }
+        }
+
+        return $productForBundlesBySku;
     }
 }

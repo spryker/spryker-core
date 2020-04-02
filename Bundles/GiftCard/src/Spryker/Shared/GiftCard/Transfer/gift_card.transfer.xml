@@ -59,9 +59,19 @@
         <property name="codePattern" type="string"/>
     </transfer>
 
+    <transfer name="GiftCardAbstractProductConfigurationForProductAbstract">
+        <property name="giftCardAbstractProductConfiguration" type="GiftCardAbstractProductConfiguration"/>
+        <property name="abstractSku" type="string"/>
+    </transfer>
+
     <transfer name="GiftCardProductConfiguration">
         <property name="idGiftCardProductConfiguration" type="int"/>
         <property name="value" type="int"/>
+    </transfer>
+
+    <transfer name="GiftCardProductConfigurationForProduct">
+        <property name="giftCardProductConfiguration" type="GiftCardProductConfiguration"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="GiftCardMetadata">
