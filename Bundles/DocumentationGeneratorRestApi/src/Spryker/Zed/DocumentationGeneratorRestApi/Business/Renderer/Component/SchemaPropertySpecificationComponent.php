@@ -79,6 +79,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     protected function addItemPropertyData(array $schemaProperty): array
     {
         if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
+            $schemaProperty[SchemaPropertyComponentTransfer::TYPE] = static::VALUE_TYPE_ARRAY;
             $schemaProperty[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
         }
         if ($this->schemaPropertyComponentTransfer->getItemsType()) {

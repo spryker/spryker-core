@@ -17,7 +17,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "../../../../../public/Zed/assets/js/mp-login",
+            "outputPath": "dist",
             "index": "",
             "main": "src/Spryker/Zed/MerchantUserAuthGuiPage/Presentation/Components/main.ts",
             "polyfills": "",
