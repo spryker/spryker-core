@@ -275,8 +275,8 @@ class DataImportConsole extends Console
         }
 
         $messageTemplate = PHP_EOL . '<fg=white>'
-            . '%s'
             . 'Importer type: <fg=green>%s</>' . PHP_EOL
+            . '%s'
             . 'Importable DataSets: <fg=green>%s</>' . PHP_EOL
             . 'Imported DataSets: <fg=green>%s</>' . PHP_EOL
             . 'Import Time Used: <fg=green>%.2f ms</>' . PHP_EOL
@@ -284,8 +284,8 @@ class DataImportConsole extends Console
 
         $this->info(sprintf(
             $messageTemplate,
-            $source,
             $dataImporterReport->getImportType(),
+            $source,
             $dataImporterReport->getExpectedImportableDataSetCount(),
             $dataImporterReport->getImportedDataSetCount(),
             $dataImporterReport->getImportTime(),
