@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceBridge;
 
 class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -22,6 +23,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -40,6 +42,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -102,6 +105,22 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new ProductOfferGuiPageToMerchantUserFacadeBridge(
                 $container->getLocator()->merchantUser()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new ProductOfferGuiPageToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
             );
         });
 

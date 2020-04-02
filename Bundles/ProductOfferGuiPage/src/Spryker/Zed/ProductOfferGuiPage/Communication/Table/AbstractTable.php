@@ -7,8 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table;
 
+use ArrayObject;
+use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Generated\Shared\Transfer\GuiTableFilterTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +44,11 @@ abstract class AbstractTable
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
 
     /**
      * @var string|null
@@ -71,10 +82,14 @@ abstract class AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
      */
-    public function __construct(ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    public function __construct(
+        ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+    ) {
         $this->utilEncodingService = $utilEncodingService;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -96,6 +111,7 @@ abstract class AbstractTable
     public function getConfiguration(): array
     {
         $guiTableConfigurationTransfer = $this->getTableConfiguration();
+        $guiTableConfigurationTransfer = $this->translateConfiguration($guiTableConfigurationTransfer);
 
         return [
             static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
@@ -293,6 +309,175 @@ abstract class AbstractTable
         }
 
         return $this->guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateConfiguration(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableConfigurationTransfer = $this->translateColumns($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateFilters($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateRowActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateSearch($guiTableConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateColumns(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
+
+        foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
+            $translatedGuiTableColumnConfigurationTransfers[] = $this->translateColumn($guiTableColumnConfigurationTransfer);
+        }
+
+        $guiTableConfigurationTransfer->setColumns($translatedGuiTableColumnConfigurationTransfers);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function translateColumn(
+        GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer
+    ): GuiTableColumnConfigurationTransfer {
+        $columnTitle = $guiTableColumnConfigurationTransfer->getTitle();
+
+        if ($columnTitle) {
+            $guiTableColumnConfigurationTransfer->setTitle($this->translate($columnTitle));
+        }
+
+        return $guiTableColumnConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateFilters(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $translatedGuiTableFilterTransfers = new ArrayObject();
+
+        foreach ($guiTableConfigurationTransfer->getFilters() as $guiTableFilterTransfer) {
+            $translatedGuiTableFilterTransfers[] = $this->translateFilter($guiTableFilterTransfer);
+        }
+
+        $guiTableConfigurationTransfer->setFilters($translatedGuiTableFilterTransfers);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableFilterTransfer $guiTableFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
+     */
+    protected function translateFilter(GuiTableFilterTransfer $guiTableFilterTransfer): GuiTableFilterTransfer
+    {
+        $filterTitle = $guiTableFilterTransfer->getTitle();
+
+        if ($filterTitle) {
+            $guiTableFilterTransfer->setTitle($this->translate($filterTitle));
+        }
+
+        $typeOptions = $guiTableFilterTransfer->getTypeOptions();
+
+        if (!isset($typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES])) {
+            return $guiTableFilterTransfer;
+        }
+
+        $optionNameValues = $typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES];
+
+        foreach ($optionNameValues as $key => $optionNameValue) {
+            if (isset($optionNameValue[ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE])) {
+                $titleTranslated = $this->translate($optionNameValue[ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE]);
+                $optionNameValues[$key][ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
+            }
+        }
+
+        $typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES] = $optionNameValues;
+        $guiTableFilterTransfer->setTypeOptions($typeOptions);
+
+        return $guiTableFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateRowActions(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $translatedGuiTableRowActionTransfers = new ArrayObject();
+
+        foreach ($guiTableConfigurationTransfer->getRowActions() as $guiTableRowActionTransfer) {
+            $translatedGuiTableRowActionTransfers[] = $this->translateRowAction($guiTableRowActionTransfer);
+        }
+
+        $guiTableConfigurationTransfer->setRowActions($translatedGuiTableRowActionTransfers);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableRowActionTransfer $guiTableRowActionTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableRowActionTransfer
+     */
+    protected function translateRowAction(GuiTableRowActionTransfer $guiTableRowActionTransfer): GuiTableRowActionTransfer
+    {
+        $rowActionTitle = $guiTableRowActionTransfer->getTitle();
+
+        if ($rowActionTitle) {
+            $guiTableRowActionTransfer->setTitle($this->translate($rowActionTitle));
+        }
+
+        return $guiTableRowActionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateSearch(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $search = $guiTableConfigurationTransfer->getSearch();
+
+        foreach ($search as $key => $searchOption) {
+            $search[$key] = $this->translate($searchOption);
+        }
+
+        $guiTableConfigurationTransfer->setSearch($search);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function translate(string $key): string
+    {
+        return $this->translatorFacade->trans($key);
     }
 
     /**
