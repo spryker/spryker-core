@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface;
+use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
-use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
 class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 {
@@ -26,10 +26,14 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
 
+//    /**
+//     * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
+//     */
+//    protected $oauthRepository;
     /**
-     * @var \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface
+     * @var \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
      */
-    protected $oauthRepository;
+    protected $oauthRevokeFacade;
 
     /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface
@@ -43,18 +47,20 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
     /**
      * @param \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
-     * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
+     * @param \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface $oauthRevokeFacade
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
-        OauthRepositoryInterface $oauthRepository,
+        //        OauthRepositoryInterface $oauthRepository,
+        OauthToOauthRevokeFacadeInterface $oauthRevokeFacade,
         OauthToUtilEncodingServiceInterface $utilEncodingService,
         OauthConfig $oauthConfig
     ) {
         $this->refreshTokenRepository = $refreshTokenRepository;
-        $this->oauthRepository = $oauthRepository;
+//        $this->oauthRepository = $oauthRepository;
+        $this->oauthRevokeFacade = $oauthRevokeFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->encryptionKey = $oauthConfig->getEncryptionKey();
     }
@@ -83,7 +89,8 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
 
-        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
+        $oauthRefreshTokenTransfer = $this->oauthRevokeFacade->findOne($oauthTokenCriteriaFilterTransfer);
+//        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)

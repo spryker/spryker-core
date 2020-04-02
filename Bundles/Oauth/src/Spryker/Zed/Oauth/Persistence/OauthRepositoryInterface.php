@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
-use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 
@@ -39,24 +36,24 @@ interface OauthRepositoryInterface
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
-     */
-    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
-     */
-    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     *
-     * @return bool
-     */
-    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+//     */
+//    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
+//
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+//     */
+//    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
+//
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+//     *
+//     * @return bool
+//     */
+//    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 }

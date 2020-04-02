@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Persistence\Propel\Mapper;
+namespace Spryker\Zed\OauthRevoke\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Propel\Runtime\Collection\Collection;
 
 class OauthRefreshTokenMapper
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken $oauthRefreshTokenEntity
+     * @param \Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken $oauthRefreshTokenEntity
      *
-     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken
+     * @return \Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken
      */
     public function mapOauthRefreshTokenTransferToOauthRefreshTokenEntity(
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer,
@@ -31,7 +31,7 @@ class OauthRefreshTokenMapper
     }
 
     /**
-     * @param \Orm\Zed\Oauth\Persistence\SpyOauthRefreshToken $oauthRefreshTokenEntity
+     * @param \Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken $oauthRefreshTokenEntity
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer

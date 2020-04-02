@@ -54,12 +54,36 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $oauthUserIdentifierFilterPlugins;
 
     /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
+     */
+    protected $oauthRefreshTokenRevokePlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[]
+     */
+    protected $oauthRefreshTokensRevokePlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
+     */
+    protected $oauthRefreshTokenCheckerPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     */
+    protected $oauthRefreshTokenSaverPlugins;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param array $userProviderPlugins
      * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[] $scopeProviderPlugins
      * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[] $oauthRefreshTokenRevokePlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[] $oauthRefreshTokensRevokePlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[] $oauthRefreshTokenCheckerPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[] $oauthRefreshTokenSaverPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
@@ -67,7 +91,11 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         OauthToUtilEncodingServiceInterface $utilEncodingService,
         array $userProviderPlugins = [],
         array $scopeProviderPlugins = [],
-        array $oauthUserIdentifierFilterPlugins = []
+        array $oauthUserIdentifierFilterPlugins = [],
+        array $oauthRefreshTokenRevokePlugins = [],
+        array $oauthRefreshTokensRevokePlugins = [],
+        array $oauthRefreshTokenCheckerPlugins = [],
+        array $oauthRefreshTokenSaverPlugins = []
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
@@ -75,6 +103,10 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         $this->userProviderPlugins = $userProviderPlugins;
         $this->scopeProviderPlugins = $scopeProviderPlugins;
         $this->oauthUserIdentifierFilterPlugins = $oauthUserIdentifierFilterPlugins;
+        $this->oauthRefreshTokenRevokePlugins = $oauthRefreshTokenRevokePlugins;
+        $this->oauthRefreshTokensRevokePlugins = $oauthRefreshTokensRevokePlugins;
+        $this->oauthRefreshTokenCheckerPlugins = $oauthRefreshTokenCheckerPlugins;
+        $this->oauthRefreshTokenSaverPlugins = $oauthRefreshTokenSaverPlugins;
     }
 
     /**
@@ -120,9 +152,10 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     public function createRefreshTokenRepository(): RefreshTokenRepositoryInterface
     {
         return new RefreshTokenRepository(
-            $this->oauthEntityManager,
-            $this->oauthRepository,
-            $this->utilEncodingService
+            $this->oauthRefreshTokenRevokePlugins,
+            $this->oauthRefreshTokensRevokePlugins,
+            $this->oauthRefreshTokenCheckerPlugins,
+            $this->oauthRefreshTokenSaverPlugins
         );
     }
 }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
-use ArrayObject;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
@@ -22,12 +20,12 @@ interface OauthEntityManagerInterface
      */
     public function saveAccessToken(SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer): SpyOauthAccessTokenEntityTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
-     */
-    public function saveRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): OauthRefreshTokenTransfer;
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer
+//     */
+//    public function saveRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): OauthRefreshTokenTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
@@ -50,24 +48,24 @@ interface OauthEntityManagerInterface
      */
     public function deleteAccessTokenByIdentifier(string $identifier): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
-     *
-     * @return void
-     */
-    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
-     *
-     * @return void
-     */
-    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
-
-    /**
-     * @param string $expiresAt
-     *
-     * @return int
-     */
-    public function deleteExpiredRefreshTokens(string $expiresAt): int;
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+//     *
+//     * @return void
+//     */
+//    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
+//
+//    /**
+//     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+//     *
+//     * @return void
+//     */
+//    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
+//
+//    /**
+//     * @param string $expiresAt
+//     *
+//     * @return int
+//     */
+//    public function deleteExpiredRefreshTokens(string $expiresAt): int;
 }

@@ -44,6 +44,7 @@ use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
+use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
@@ -155,7 +156,11 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->getUserProviderPlugins(),
             $this->getScopeProviderPlugins(),
-            $this->getOauthUserIdentifierFilterPlugins()
+            $this->getOauthUserIdentifierFilterPlugins(),
+            $this->getOauthRefreshTokenRevokerPlugins(),
+            $this->getOauthRefreshTokensRevokerPlugins(),
+            $this->getOauthRefreshTokenCheckerPlugins(),
+            $this->getOauthRefreshTokenSaverPlugins()
         );
     }
 
@@ -225,7 +230,8 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenRevoker(
             $this->createRepositoryBuilder()->createRefreshTokenRepository(),
-            $this->getRepository(),
+            //            $this->getRepository(),
+            $this->getOauthRevokeFacade(),
             $this->getUtilEncodingService(),
             $this->getConfig()
         );
@@ -299,5 +305,45 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): OauthToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(OauthDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
+     */
+    public function getOauthRevokeFacade(): OauthToOauthRevokeFacadeInterface
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::FACADE_OAUTH_REVOKE);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
+     */
+    public function getOauthRefreshTokenRevokerPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[]
+     */
+    public function getOauthRefreshTokensRevokerPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     */
+    public function getOauthRefreshTokenSaverPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
+     */
+    public function getOauthRefreshTokenCheckerPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER);
     }
 }

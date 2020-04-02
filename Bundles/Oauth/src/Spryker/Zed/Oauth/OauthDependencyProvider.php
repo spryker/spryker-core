@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oauth\Communication\Plugin\Oauth\PasswordOauthGrantTypeConfigurationProviderPlugin;
 use Spryker\Zed\Oauth\Communication\Plugin\Oauth\RefreshTokenOauthGrantTypeConfigurationProviderPlugin;
+use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeBridge;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceBridge;
 
 /**
@@ -20,10 +21,16 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    public const FACADE_OAUTH_REVOKE = 'FACADE_OAUTH_REVOKE';
+
     public const PLUGIN_USER_PROVIDER = 'PLUGIN_USER_PROVIDER';
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
     public const PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER = 'PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER';
     public const PLUGINS_OAUTH_USER_IDENTIFIER_FILTER = 'PLUGINS_OAUTH_USER_IDENTIFIER_FILTER';
+    public const PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER';
+    public const PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER';
+    public const PLUGINS_OAUTH_REFRESH_TOKEN_SAVER = 'PLUGINS_OAUTH_REFRESH_TOKEN_SAVER';
+    public const PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,10 +43,16 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addUtilEncodingService($container);
 
+        $container = $this->addOauthRevokeFacade($container);
+
         $container = $this->addUserProviderPlugins($container);
         $container = $this->addScopeProviderPlugins($container);
         $container = $this->addGrantTypeConfigurationProviderPlugins($container);
         $container = $this->addOauthUserIdentifierFilterPlugins($container);
+        $container = $this->addOauthRefreshTokenRevokerPlugins($container);
+        $container = $this->addOauthRefreshTokensRevokerPlugins($container);
+        $container = $this->addOauthRefreshTokenSaverPlugins($container);
+        $container = $this->addOauthRefreshTokenCheckerPlugins($container);
 
         return $container;
     }
@@ -54,6 +67,22 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new OauthToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRevokeFacade(Container $container): Container
+    {
+        $container[static::FACADE_OAUTH_REVOKE] = function (Container $container) {
+            return new OauthToOauthRevokeFacadeBridge(
+                $container->getLocator()->oauthRevoke()->facade()
             );
         };
 
@@ -117,6 +146,62 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRefreshTokenRevokerPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER] = function () {
+            return $this->getOauthRefreshTokenRevokerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRefreshTokensRevokerPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER] = function () {
+            return $this->getOauthRefreshTokensRevokerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRefreshTokenSaverPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER] = function () {
+            return $this->getOauthRefreshTokenSaverPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRefreshTokenCheckerPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER] = function () {
+            return $this->getOauthRefreshTokenCheckerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
      */
     protected function getUserProviderPlugins(): array
@@ -147,6 +232,38 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
      */
     protected function getOauthUserIdentifierFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
+     */
+    protected function getOauthRefreshTokenRevokerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[]
+     */
+    protected function getOauthRefreshTokensRevokerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     */
+    protected function getOauthRefreshTokenSaverPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
+     */
+    protected function getOauthRefreshTokenCheckerPlugins(): array
     {
         return [];
     }

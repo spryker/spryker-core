@@ -9,10 +9,8 @@ namespace Spryker\Zed\Oauth\Persistence;
 
 use Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
-use Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper;
 
 /**
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
@@ -37,13 +35,13 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
         return SpyOauthAccessTokenQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
-     */
-    public function createRefreshTokenQuery(): SpyOauthRefreshTokenQuery
-    {
-        return SpyOauthRefreshTokenQuery::create();
-    }
+//    /**
+//     * @return \Orm\Zed\Oauth\Persistence\SpyOauthRefreshTokenQuery
+//     */
+//    public function createRefreshTokenQuery(): SpyOauthRefreshTokenQuery
+//    {
+//        return SpyOauthRefreshTokenQuery::create();
+//    }
 
     /**
      * @return \Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery
@@ -53,11 +51,11 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
         return SpyOauthScopeQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper
-     */
-    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapper
-    {
-        return new OauthRefreshTokenMapper();
-    }
+//    /**
+//     * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthRefreshTokenMapper
+//     */
+//    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapper
+//    {
+//        return new OauthRefreshTokenMapper();
+//    }
 }
