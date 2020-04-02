@@ -70,7 +70,7 @@ class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUni
         foreach ($resources as $resource) {
             $concreteProductsRestAttributesTransfer = $resource->getAttributes();
             if (!$concreteProductsRestAttributesTransfer instanceof ConcreteProductsRestAttributesTransfer) {
-                return;
+                continue;
             }
 
             foreach ($productConcreteProductMeasurementSalesUnitTransfers as $productConcreteProductMeasurementSalesUnitTransfer) {

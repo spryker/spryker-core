@@ -137,9 +137,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
-        $mappingData = $this->storageClient->getMulti($storageKeys);
-        $mappingData = array_filter($mappingData);
-
+        $mappingData = array_filter($this->storageClient->getMulti($storageKeys));
         if (count($mappingData) === 0) {
             return [];
         }

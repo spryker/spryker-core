@@ -16,6 +16,9 @@ use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageCo
 
 class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStorageReaderInterface
 {
+    /**
+     * @uses \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::KEY_ID
+     */
     protected const KEY_ID = 'id';
 
     /**

@@ -85,6 +85,15 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
+     * @param string[] $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitsByProductSku(
+        array $productSkus
+    ): array;
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
