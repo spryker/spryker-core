@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageTransfer;
+
 interface MerchantsRestApiToMerchantsStorageClientInterface
 {
     /**
-     * @param string[] $merchantReferences
+     * @param string $merchantReference
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findByMerchantReference(array $merchantReferences): array;
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
 }

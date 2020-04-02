@@ -16,6 +16,8 @@ use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReader;
 use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilder;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslator;
+use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface;
 
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig getConfig()
@@ -29,7 +31,7 @@ class MerchantsRestApiFactory extends AbstractFactory
     {
         return new MerchantReader(
             $this->getMerchantStorageClient(),
-            $this->getGlossaryStorageClient(),
+            $this->createMerchantTranslator(),
             $this->createMerchantRestResponseBuilder()
         );
     }
@@ -59,6 +61,16 @@ class MerchantsRestApiFactory extends AbstractFactory
     public function createMerchantMapper(): MerchantMapperInterface
     {
         return new MerchantMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface
+     */
+    public function createMerchantTranslator(): MerchantTranslatorInterface
+    {
+        return new MerchantTranslator(
+            $this->getGlossaryStorageClient()
+        );
     }
 
     /**
