@@ -47,15 +47,26 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
     {
         $pluginAnnotationsTransfer = new PluginAnnotationsTransfer();
 
-        $reflectionClass = new ReflectionClass(get_class($plugin));
-
-        $parameters = $this->getParsedPhpTokens($reflectionClass->getFileName());
+        $classFileName = $this->getClassFileName($plugin);
+        $parameters = $this->getParsedPhpTokens($classFileName);
 
         if (!array_filter($parameters)) {
             return $pluginAnnotationsTransfer;
         }
 
         return $pluginAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $plugin
+     *
+     * @return string
+     */
+    protected function getClassFileName(ResourceRelationshipPluginInterface $plugin): string
+    {
+        $reflectionClass = new ReflectionClass(get_class($plugin));
+
+        return $reflectionClass->getFileName();
     }
 
     /**
