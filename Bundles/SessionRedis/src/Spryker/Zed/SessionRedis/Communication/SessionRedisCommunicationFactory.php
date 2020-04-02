@@ -132,9 +132,9 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
     {
         return new SessionRedisLifeTimeCalculator(
-            $this->getConfig()->getZedSessionLifeTime(),
+            $this->getRequestStack(),
             $this->getSessionRedisLifeTimeCalculatorPlugins(),
-            $this->getRequestStack()
+            $this->getConfig()->getZedSessionLifeTime()
         );
     }
 

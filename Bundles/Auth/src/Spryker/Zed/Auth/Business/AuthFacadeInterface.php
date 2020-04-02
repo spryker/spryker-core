@@ -82,7 +82,6 @@ interface AuthFacadeInterface
 
     /**
      * Specification:
-     *  - Requires HttpRequest.headers transfer field to be set.
      *  - Returns true if auth token exists in headers and it belongs to system users.
      *
      * @api
