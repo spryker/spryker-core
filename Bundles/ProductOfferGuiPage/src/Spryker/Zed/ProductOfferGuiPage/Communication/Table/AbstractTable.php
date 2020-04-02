@@ -111,15 +111,15 @@ abstract class AbstractTable
     public function getConfiguration(): array
     {
         $guiTableConfigurationTransfer = $this->getTableConfiguration();
-        $translatedGuiTableConfigurationTransfer = $this->translateConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateConfiguration($guiTableConfigurationTransfer);
 
         return [
-            static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($translatedGuiTableConfigurationTransfer),
-            static::CONFIG_DATA_URL => $translatedGuiTableConfigurationTransfer->getDataUrl(),
-            static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($translatedGuiTableConfigurationTransfer),
-            static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($translatedGuiTableConfigurationTransfer),
-            static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($translatedGuiTableConfigurationTransfer),
-            static::CONFIG_SEARCH => $translatedGuiTableConfigurationTransfer->getSearch(),
+            static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_DATA_URL => $guiTableConfigurationTransfer->getDataUrl(),
+            static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
+            static::CONFIG_SEARCH => $guiTableConfigurationTransfer->getSearch(),
         ];
     }
 
