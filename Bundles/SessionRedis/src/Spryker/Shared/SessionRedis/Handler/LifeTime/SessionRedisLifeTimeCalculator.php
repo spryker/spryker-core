@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorInterface
 {
     /**
-     * @var int
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    protected $defaultSessionLifeTime;
+    protected $requestStack;
 
     /**
      * @var \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
@@ -23,23 +23,23 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
     protected $sessionRedisLifeTimeCalculatorPlugins;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
+     * @var int
      */
-    protected $requestStack;
+    protected $defaultSessionLifeTime;
 
     /**
-     * @param int $defaultSessionLifeTime
-     * @param \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[] $sessionRedisLifeTimeCalculatorPlugins
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[] $sessionRedisLifeTimeCalculatorPlugins
+     * @param int $defaultSessionLifeTime
      */
     public function __construct(
-        int $defaultSessionLifeTime,
+        RequestStack $requestStack,
         array $sessionRedisLifeTimeCalculatorPlugins,
-        RequestStack $requestStack
+        int $defaultSessionLifeTime
     ) {
-        $this->defaultSessionLifeTime = $defaultSessionLifeTime;
-        $this->sessionRedisLifeTimeCalculatorPlugins = $sessionRedisLifeTimeCalculatorPlugins;
         $this->requestStack = $requestStack;
+        $this->sessionRedisLifeTimeCalculatorPlugins = $sessionRedisLifeTimeCalculatorPlugins;
+        $this->defaultSessionLifeTime = $defaultSessionLifeTime;
     }
 
     /**

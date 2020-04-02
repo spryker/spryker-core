@@ -271,18 +271,13 @@ class Auth implements AuthInterface
      */
     public function isSystemUserRequest(HttpRequestTransfer $httpRequestTransfer): bool
     {
-        $httpRequestTransfer->requireHeaders();
         $headers = $httpRequestTransfer->getHeaders();
 
         if (!isset($headers[strtolower(AuthConstants::AUTH_TOKEN)])) {
             return false;
         }
 
-        try {
-            return (bool)$this->getSystemUserByHash($headers[strtolower(AuthConstants::AUTH_TOKEN)]);
-        } catch (UserNotFoundException $exception) {
-            return false;
-        }
+        return $this->hasSystemUserByHash($headers[strtolower(AuthConstants::AUTH_TOKEN)]);
     }
 
     /**

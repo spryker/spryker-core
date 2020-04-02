@@ -21,7 +21,6 @@ class SystemUserSessionRedisLifeTimeCalculatorPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     *  - Requires HttpRequest.headers transfer field to be set.
      *  - Returns true if auth token exists in headers and it belongs to system users.
      *
      * @api

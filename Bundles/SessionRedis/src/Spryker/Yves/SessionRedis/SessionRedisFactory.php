@@ -76,9 +76,9 @@ class SessionRedisFactory extends AbstractFactory
     public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
     {
         return new SessionRedisLifeTimeCalculator(
-            $this->getConfig()->getSessionLifetime(),
+            $this->getRequestStack(),
             $this->getSessionRedisLifeTimeCalculatorPlugins(),
-            $this->getRequestStack()
+            $this->getConfig()->getSessionLifetime()
         );
     }
 
