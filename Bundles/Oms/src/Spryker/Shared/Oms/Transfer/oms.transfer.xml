@@ -20,6 +20,7 @@
         <property name="locale" type="Locale"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>

@@ -373,6 +373,7 @@
     "spryker/oms": "*",
     "spryker/oms-discount-connector": "*",
     "spryker/oms-extension": "*",
+    "spryker/oms-rest-api": "*",
     "spryker/order-custom-reference": "*",
     "spryker/order-custom-reference-gui": "*",
     "spryker/order-payments-rest-api": "*",
