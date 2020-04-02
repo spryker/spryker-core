@@ -85,7 +85,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Returns User transfer found by criteria.
+     * - Returns User transfer found by email.
      * - Returns null otherwise.
      *
      * @api
