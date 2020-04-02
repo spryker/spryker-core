@@ -213,7 +213,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
         return $this->schemaComponentBuilder
             ->createSchemaDataTransfer($schemaName)
             ->setType(static::VALUE_TYPE_ARRAY)
-            ->setItems($this->schemaComponentBuilder->createItemsTransfer($resourceRelationships));
+            ->setItems($this->schemaComponentBuilder->createRelationshipSchemaItemsTransfer($resourceRelationships));
     }
 
     /**

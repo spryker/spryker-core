@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -40,13 +40,13 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected $resourceTransferAnalyzer;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface
      */
     protected $resourceSchemaNameStorage;
 
     /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
      */
     public function __construct(
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
@@ -210,7 +210,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      *
      * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */
-    public function createItemsTransfer(array $resourceRelationships): SchemaItemsTransfer
+    public function createRelationshipSchemaItemsTransfer(array $resourceRelationships): SchemaItemsTransfer
     {
         $schema = new SchemaItemsTransfer();
 

@@ -103,5 +103,5 @@ interface SchemaComponentBuilderInterface
      *
      * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */
-    public function createItemsTransfer(array $resourceRelationships): SchemaItemsTransfer;
+    public function createRelationshipSchemaItemsTransfer(array $resourceRelationships): SchemaItemsTransfer;
 }

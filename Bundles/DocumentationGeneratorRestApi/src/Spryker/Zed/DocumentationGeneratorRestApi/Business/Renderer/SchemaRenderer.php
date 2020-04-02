@@ -63,7 +63,7 @@ class SchemaRenderer implements SchemaRendererInterface
         }
 
         if ($schemaDataTransfer->getItems()) {
-            $this->addSchemaItems($schemaComponentTransfer, $schemaDataTransfer->getItems());
+            $this->addRelationshipSchemaItems($schemaComponentTransfer, $schemaDataTransfer->getItems());
         }
         if ($schemaDataTransfer->getType()) {
             $schemaComponentTransfer->setType($schemaDataTransfer->getType());
@@ -194,7 +194,7 @@ class SchemaRenderer implements SchemaRendererInterface
      *
      * @return void
      */
-    protected function addSchemaItems(SchemaComponentTransfer $schemaComponent, SchemaItemsTransfer $items): void
+    protected function addRelationshipSchemaItems(SchemaComponentTransfer $schemaComponent, SchemaItemsTransfer $items): void
     {
         $schemaPropertyComponentTransfer = new SchemaItemsComponentTransfer();
         if ($items->getOneOf()) {

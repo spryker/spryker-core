@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Model;
+namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage;
 
 interface ResourceSchemaNameStorageInterface
 {

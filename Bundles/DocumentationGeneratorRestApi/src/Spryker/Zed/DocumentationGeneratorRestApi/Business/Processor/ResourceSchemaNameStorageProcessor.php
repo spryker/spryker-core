@@ -14,7 +14,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAn
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
 
 class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStorageProcessorInterface
 {
@@ -24,7 +24,7 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     protected $glueAnnotationsAnalyser;
 
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface
      */
     protected $resourceSchemaNameStorage;
 
@@ -44,7 +44,7 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     protected $resourceRelationshipsPluginAnnotationAnalyzer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser

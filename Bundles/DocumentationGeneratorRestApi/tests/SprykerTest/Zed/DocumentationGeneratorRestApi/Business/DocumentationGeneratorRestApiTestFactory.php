@@ -36,8 +36,6 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecific
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorage;
-use Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessor;
@@ -66,6 +64,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiDocumentationWriter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToDoctrineInflectorAdapter;
@@ -233,7 +233,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface
      */
-    protected function createResourceSchemaNameStorageProcessor(): ResourceSchemaNameStorageProcessorInterface
+    public function createResourceSchemaNameStorageProcessor(): ResourceSchemaNameStorageProcessorInterface
     {
         return new ResourceSchemaNameStorageProcessor(
             $this->createResourceSchemaNameStorage(),
@@ -247,7 +247,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface
      */
-    protected function createResourceTransferAnalyzer(): ResourceTransferAnalyzerInterface
+    public function createResourceTransferAnalyzer(): ResourceTransferAnalyzerInterface
     {
         return new ResourceTransferAnalyzer();
     }
@@ -454,7 +454,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Model\ResourceSchemaNameStorageInterface
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface
      */
     public function createResourceSchemaNameStorage(): ResourceSchemaNameStorageInterface
     {

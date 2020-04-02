@@ -49,15 +49,27 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
 
         $reflectionClass = new ReflectionClass(get_class($plugin));
 
-        $tokens = token_get_all(file_get_contents($reflectionClass->getFileName()));
-        $parameters[] = $this->parsePhpTokens($tokens);
+        $parameters = $this->getParsedPhpTokens($reflectionClass->getFileName());
 
         if (!array_filter($parameters)) {
             return $pluginAnnotationsTransfer;
         }
-        $pathAnnotationsTransfer = $pluginAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
 
-        return $pathAnnotationsTransfer;
+        return $pluginAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
+    }
+
+    /**
+     * @param string $pluginFileName
+     *
+     * @return array
+     */
+    protected function getParsedPhpTokens(string $pluginFileName): array
+    {
+        $pluginContents = file_get_contents($pluginFileName);
+
+        $tokens = token_get_all($pluginContents);
+
+        return $this->parsePhpTokens($tokens);
     }
 
     /**
@@ -75,7 +87,7 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
             }
             $annotationsParsed = $this->getDocCommentParameters($phpToken[1]);
             if ($annotationsParsed) {
-                $result = $this->getDataFromParsedAnnotations($annotationsParsed, $result);
+                $result[] = $this->getDataFromParsedAnnotations($annotationsParsed, $result);
             }
         }
 
@@ -98,7 +110,9 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
             $matchesTrimmed[] = trim($item);
         }
 
-        $matchesFiltered = array_filter($matchesTrimmed, 'strlen');
+        $matchesFiltered = array_filter($matchesTrimmed, function ($match) {
+            return (bool)strlen($match);
+        });
         if (!$matchesFiltered) {
             return null;
         }
