@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Business;
 
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -556,6 +557,23 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
         return $this->getFactory()
             ->createRuleModel()
             ->isAllowed($user, $bundle, $controller, $action);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
+     */
+    public function filterNavigationItemCollectionByAccessibility(
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): NavigationItemCollectionTransfer {
+        return $this->getFactory()
+            ->createNavigationItemFilter()
+            ->filterNavigationItemCollectionByAccessibility($navigationItemCollectionTransfer);
     }
 
     /**

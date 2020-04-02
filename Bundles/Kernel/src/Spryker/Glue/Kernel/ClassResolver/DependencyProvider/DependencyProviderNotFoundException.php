@@ -33,7 +33,7 @@ class DependencyProviderNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sDependencyProvider for your module "%1$s"',
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing DependencyProvider to your module.' . PHP_EOL;
@@ -41,7 +41,7 @@ class DependencyProviderNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %s\\Glue\\%2$s\\%2$sDependencyProvider',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         );
 
         $message .= PHP_EOL . new Backtrace();

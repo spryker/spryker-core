@@ -15,4 +15,8 @@
         <property name="action" type="string"/>
     </transfer>
 
+    <transfer name="NavigationItemCollection">
+        <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
+    </transfer>
+
 </transfers>

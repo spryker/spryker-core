@@ -100,5 +100,8 @@
         <property name="isNavigable" type="bool"/>
     </transfer>
 
-</transfers>
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
 
+</transfers>
