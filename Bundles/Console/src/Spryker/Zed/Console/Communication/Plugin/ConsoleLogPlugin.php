@@ -11,6 +11,7 @@ use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
+use Symfony\Component\Console\Event\ConsoleEvent;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -66,9 +67,21 @@ class ConsoleLogPlugin implements EventSubscriberInterface
 
         $this->getLogger()->error(sprintf(
             'CLI command "%s" exception, message "%s"',
-            $event->getCommand()->getName(),
+            $this->getConsoleErrorCommandName($event),
             $exception->getMessage()
         ), ['exception' => $exception]);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Event\ConsoleEvent $consoleEvent
+     *
+     * @return string
+     */
+    protected function getConsoleErrorCommandName(ConsoleEvent $consoleEvent): string
+    {
+        return $consoleEvent->getCommand()
+            ? $consoleEvent->getCommand()->getName()
+            : $consoleEvent->getInput()->getFirstArgument();
     }
 
     /**
