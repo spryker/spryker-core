@@ -31,7 +31,7 @@ class MerchantTranslator implements MerchantTranslatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
-    public function getTranslatedMerchantStorageTransfer(
+    public function translateMerchantStorageTransfer(
         MerchantStorageTransfer $merchantStorageTransfer,
         string $localeName
     ): MerchantStorageTransfer {

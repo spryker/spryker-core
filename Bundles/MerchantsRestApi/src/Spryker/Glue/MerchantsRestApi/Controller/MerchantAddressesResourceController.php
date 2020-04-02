@@ -28,7 +28,7 @@ class MerchantAddressesResourceController extends AbstractController
      *          "responses": {
      *              "400": "Merchant identifier is not specified.",
      *              "404": "Merchant not found."
-     *          },
+     *          }
      *     }
      * })
      *

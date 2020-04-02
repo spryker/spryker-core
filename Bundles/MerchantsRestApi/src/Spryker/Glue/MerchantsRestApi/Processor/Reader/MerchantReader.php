@@ -61,7 +61,7 @@ class MerchantReader implements MerchantReaderInterface
             return $this->merchantsRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
-        $translatedMerchantStorageTransfer = $this->merchantTranslator->getTranslatedMerchantStorageTransfer(
+        $translatedMerchantStorageTransfer = $this->merchantTranslator->translateMerchantStorageTransfer(
             $merchantStorageTransfer,
             $restRequest->getMetadata()->getLocale()
         );
