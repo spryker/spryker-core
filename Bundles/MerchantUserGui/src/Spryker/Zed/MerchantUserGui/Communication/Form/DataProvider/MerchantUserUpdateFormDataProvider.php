@@ -49,7 +49,7 @@ class MerchantUserUpdateFormDataProvider
      */
     public function getData(int $idMerchantUser): MerchantUserTransfer
     {
-        return $this->merchantUserFacade->findOne(
+        return $this->merchantUserFacade->findMerchantUser(
             (new MerchantUserCriteriaTransfer())
                 ->setIdMerchantUser($idMerchantUser)
                 ->setWithUser(true)

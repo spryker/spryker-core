@@ -3,13 +3,7 @@
 {% set widget_title = 'Create Merchant user' %}
 
 {% block action %}
-    {{ backActionButton(
-        url(
-            '/merchant-gui/edit-merchant',
-            {'id-merchant': idMerchant}
-        ) ~ '#tab-content-merchant-user',
-        'Back to Merchant Users' | trans)
-    }}
+    {{ backActionButton(backUrl, 'Back to Merchant Users' | trans) }}
 {% endblock %}
 
 {% block content %}

@@ -22,7 +22,7 @@
                 <div class="col-sm-12">
                     <a href="{{ backUrl }}" class="btn btn-back">{{ 'Back' | trans }}</a>
                     {{ form_start(merchantUserDeleteConfirmForm) }}
-                        <input type="hidden" name="id-merchant-user" value="{{ merchantUser.idMerchantUser }}" />
+                        <input type="hidden" name="merchant-user-id" value="{{ merchantUser.idMerchantUser }}" />
                         <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete' | trans }}" />
                     {{ form_end(merchantUserDeleteConfirmForm) }}
                 </div>

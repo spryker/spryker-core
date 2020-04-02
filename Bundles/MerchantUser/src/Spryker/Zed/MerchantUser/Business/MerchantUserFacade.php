@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -56,6 +57,22 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantUserDeleter()
+            ->delete($merchantUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return void
@@ -76,10 +93,26 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
+    public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
     {
         return $this->getFactory()
             ->createMerchantUserReader()
             ->findOne($merchantUserCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserTransfer $userTransfer): ?UserTransfer
+    {
+        return $this->getFactory()
+            ->createUserReader()
+            ->findOne($userTransfer);
     }
 }

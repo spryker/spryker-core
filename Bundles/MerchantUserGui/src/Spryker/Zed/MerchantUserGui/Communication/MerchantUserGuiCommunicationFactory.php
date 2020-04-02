@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserDeleteConfirmForm
 use Spryker\Zed\MerchantUserGui\Communication\Form\MerchantUserUpdateForm;
 use Spryker\Zed\MerchantUserGui\Communication\Table\MerchantUserTable;
 use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface;
-use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeInterface;
+use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeInterface;
 use Spryker\Zed\MerchantUserGui\MerchantUserGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -30,7 +30,11 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantUserTable(int $idMerchant): MerchantUserTable
     {
-        return new MerchantUserTable($this->getMerchantUserPropelQuery(), $idMerchant);
+        return new MerchantUserTable(
+            $this->getMerchantUserPropelQuery(),
+            $this->getRouterFacade(),
+            $idMerchant
+        );
     }
 
     /**
@@ -55,7 +59,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createUniqueEmailConstraint(): UniqueEmailConstraint
     {
         return new UniqueEmailConstraint(
-            [UniqueEmailConstraint::OPTION_USER_FACADE => $this->getUserFacade()]
+            [UniqueEmailConstraint::OPTION_MERCHANT_USER_FACADE => $this->getMerchantUserFacade()]
         );
     }
 
@@ -76,22 +80,22 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeInterface
+     * @return \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeInterface
      */
-    public function getUserFacade(): MerchantUserGuiToUserFacadeInterface
+    public function getRouterFacade(): MerchantUserGuiToRouterFacadeInterface
     {
-        return $this->getProvidedDependency(MerchantUserGuiDependencyProvider::FACADE_USER);
+        return $this->getProvidedDependency(MerchantUserGuiDependencyProvider::FACADE_ROUTER);
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMerchantUserCreateForm(?array $data = null, array $options = []): FormInterface
+    public function getMerchantUserCreateForm(UserTransfer $userTransfer, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MerchantUserCreateForm::class, $data, $options);
+        return $this->getFormFactory()->create(MerchantUserCreateForm::class, $userTransfer, $options);
     }
 
     /**

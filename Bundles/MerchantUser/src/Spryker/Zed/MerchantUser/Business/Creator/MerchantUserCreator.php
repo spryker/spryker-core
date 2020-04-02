@@ -31,6 +31,16 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
+     */
+    protected $userFacade;
+
+    /**
+     * @var \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
+     */
+    protected $aclGroupAdder;
+
+    /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface
      */
     protected $merchantUserEntityManager;
@@ -44,16 +54,6 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      * @var \Spryker\Zed\MerchantUser\MerchantUserConfig
      */
     protected $merchantUserConfig;
-
-    /**
-     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
-     */
-    protected $userFacade;
-
-    /**
-     * @var \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
-     */
-    protected $aclGroupAdder;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface $utilTextService
@@ -72,11 +72,11 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         MerchantUserConfig $merchantUserConfig
     ) {
         $this->utilTextService = $utilTextService;
+        $this->userFacade = $userFacade;
+        $this->aclGroupAdder = $aclGroupAdder;
         $this->merchantUserEntityManager = $merchantUserEntityManager;
         $this->merchantUserRepository = $merchantUserRepository;
         $this->merchantUserConfig = $merchantUserConfig;
-        $this->userFacade = $userFacade;
-        $this->aclGroupAdder = $aclGroupAdder;
     }
 
     /**

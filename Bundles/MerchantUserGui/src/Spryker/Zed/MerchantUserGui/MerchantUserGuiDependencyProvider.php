@@ -11,7 +11,7 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeBridge;
-use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeBridge;
+use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -20,7 +20,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_MERCHANT_USER = 'PROPEL_MERCHANT_USER_QUERY';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
-    public const FACADE_USER = 'FACADE_USER';
+    public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +33,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addMerchantUserPropelQuery($container);
         $container = $this->addMerchantUserFacade($container);
-        $container = $this->addUserFacade($container);
+        $container = $this->addRouterFacade($container);
 
         return $container;
     }
@@ -73,11 +73,11 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUserFacade(Container $container): Container
+    protected function addRouterFacade(Container $container): Container
     {
-        $container->set(static::FACADE_USER, function (Container $container) {
-            return new MerchantUserGuiToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+        $container->set(static::FACADE_ROUTER, function (Container $container) {
+            return new MerchantUserGuiToRouterFacadeBridge(
+                $container->getLocator()->router()->facade()
             );
         });
 

@@ -54,4 +54,11 @@ interface MerchantUserToUserFacadeInterface
      * @return bool
      */
     public function hasUserByUsername($username);
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function removeUser($idUser);
 }

@@ -8,14 +8,13 @@
 namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
  */
-class EditMerchantUserController extends AbstractController
+class EditMerchantUserController extends AbstractCrudMerchantUserController
 {
     public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
@@ -42,6 +41,7 @@ class EditMerchantUserController extends AbstractController
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserUpdateForm->createView(),
             'idMerchant' => $merchantUserTransfer->getIdMerchant(),
+            'backUrl' => $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant()),
         ]);
     }
 
@@ -53,12 +53,7 @@ class EditMerchantUserController extends AbstractController
      */
     protected function updateMerchant(MerchantUserTransfer $merchantUserTransfer, FormInterface $merchantUserUpdateForm)
     {
-        $redirectUrl = sprintf(
-            '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $merchantUserTransfer->getIdMerchant(),
-            '#tab-content-merchant-user'
-        );
-
+        $redirectUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
         $userTransfer = $merchantUserUpdateForm->getData();
         $merchantUserTransfer->setUser($userTransfer);
 

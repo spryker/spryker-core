@@ -9,21 +9,17 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
  */
-class DeleteMerchantUserController extends AbstractController
+class DeleteMerchantUserController extends AbstractCrudMerchantUserController
 {
-    public const PARAM_ID_MERCHANT_USER = 'id-merchant-user';
+    public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
-    protected const MESSAGE_MERCHANT_USER_DELETE_ERROR = 'Merchant user was not deleted.';
     protected const MESSAGE_INCORRECT_MERCHANT_USER_ID = 'Merchant user ID is incorrect.';
-    protected const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,36 +37,29 @@ class DeleteMerchantUserController extends AbstractController
             );
         }
 
-        $idMerchantUser = $this->castId($request->get(static::PARAM_ID_MERCHANT_USER));
+        $idMerchantUser = $this->castId($request->get(static::PARAM_MERCHANT_USER_ID));
         $merchantUserTransfer = $this->findMerchantUserTransfer($idMerchantUser);
 
         if (!$merchantUserTransfer) {
             $this->addErrorMessage(static::MESSAGE_INCORRECT_MERCHANT_USER_ID);
 
-            return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
+            return $this->redirectResponse($this->getMerchantListUrl());
         }
 
-        $redirectUrl = $this->getRedirectUrl($merchantUserTransfer);
+        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
+        $merchantUserResponseTransfer = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->delete($merchantUserTransfer);
 
-        if ($this->isCurrentUser($merchantUserTransfer->getIdUser())) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_USER_DELETE_ERROR);
+        if (!$merchantUserResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage('Merchant user was not deleted.');
 
-            return $this->redirectResponse($redirectUrl);
-        }
-
-        $userTransfer = $this->getFactory()
-            ->getUserFacade()
-            ->removeUser($merchantUserTransfer->getIdUser());
-
-        if ($userTransfer->getStatus() !== SpyUserTableMap::COL_STATUS_DELETED) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_USER_DELETE_ERROR);
-
-            return $this->redirectResponse($redirectUrl);
+            return $this->redirectResponse($merchantUserListUrl);
         }
 
         $this->addSuccessMessage('Merchant user was deleted successfully.');
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponse($merchantUserListUrl);
     }
 
     /**
@@ -80,42 +69,23 @@ class DeleteMerchantUserController extends AbstractController
      */
     public function confirmDeleteAction(Request $request)
     {
-        $idMerchantUser = $this->castId($request->get(static::PARAM_ID_MERCHANT_USER));
+        $idMerchantUser = $this->castId($request->get(static::PARAM_MERCHANT_USER_ID));
         $merchantUserTransfer = $this->findMerchantUserTransfer($idMerchantUser);
 
         if (!$merchantUserTransfer) {
             $this->addErrorMessage(static::MESSAGE_INCORRECT_MERCHANT_USER_ID);
 
-            return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
+            return $this->redirectResponse($this->getMerchantListUrl());
         }
 
-        $redirectUrl = $this->getRedirectUrl($merchantUserTransfer);
-
-        if ($this->isCurrentUser($merchantUserTransfer->getIdUser())) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_USER_DELETE_ERROR);
-
-            return $this->redirectResponse($redirectUrl);
-        }
-
+        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
         $merchantUserDeleteConfirmForm = $this->getFactory()->getMerchantUserDeleteConfirmForm();
 
         return $this->viewResponse([
             'merchantUserDeleteConfirmForm' => $merchantUserDeleteConfirmForm->createView(),
             'merchantUser' => $merchantUserTransfer,
-            'backUrl' => $redirectUrl,
+            'backUrl' => $merchantUserListUrl,
         ]);
-    }
-
-    /**
-     * @param int $idUser
-     *
-     * @return bool
-     */
-    protected function isCurrentUser(int $idUser): bool
-    {
-        $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
-
-        return $currentUserTransfer->getIdUser() === $idUser;
     }
 
     /**
@@ -131,20 +101,6 @@ class DeleteMerchantUserController extends AbstractController
 
         return $this->getFactory()
             ->getMerchantUserFacade()
-            ->findOne($merchantUserCriteriaTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     *
-     * @return string
-     */
-    protected function getRedirectUrl(MerchantUserTransfer $merchantUserTransfer): string
-    {
-        return sprintf(
-            '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $merchantUserTransfer->getIdMerchant(),
-            '#tab-content-merchant-user'
-        );
+            ->findMerchantUser($merchantUserCriteriaTransfer);
     }
 }

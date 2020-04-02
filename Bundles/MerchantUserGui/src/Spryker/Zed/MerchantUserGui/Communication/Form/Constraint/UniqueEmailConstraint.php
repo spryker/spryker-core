@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form\Constraint;
 
-use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeInterface;
+use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueEmailConstraint extends SymfonyConstraint
 {
-    public const OPTION_USER_FACADE = 'userFacade';
+    public const OPTION_MERCHANT_USER_FACADE = 'merchantUserFacade';
 
     protected const MESSAGE = 'User with email "{{ username }}" already exists.';
 
     /**
-     * @var \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeInterface
+     * @var \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface
      */
-    protected $userFacade;
+    protected $merchantUserFacade;
 
     /**
      * @return string
@@ -30,10 +30,10 @@ class UniqueEmailConstraint extends SymfonyConstraint
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToUserFacadeInterface
+     * @return \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToMerchantUserFacadeInterface
      */
-    public function getUserFacade(): MerchantUserGuiToUserFacadeInterface
+    public function getMerchantUserFacade(): MerchantUserGuiToMerchantUserFacadeInterface
     {
-        return $this->userFacade;
+        return $this->merchantUserFacade;
     }
 }

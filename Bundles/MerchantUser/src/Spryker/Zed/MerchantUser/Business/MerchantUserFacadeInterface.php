@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserFacadeInterface
 {
@@ -44,6 +45,21 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
+     * - Deletes MerchantUser by passed MerchantUser transfer data.
+     * - Sets MerchantUserResponseTransfer.isSuccessful=true if merchant user was deleted.
+     * - Sets MerchantUserResponseTransfer.isSuccessful=false if merchant user cannot be deleted.
+     * - Returns MerchantUserResponse transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
+     */
+    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+
+    /**
+     * Specification:
      * - Disables MerchantUsers that related to given criteria.
      *
      * @api
@@ -56,7 +72,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Returns MerchantUser found by criteria.
+     * - Returns MerchantUser transfer found by criteria.
      * - Returns null otherwise.
      *
      * @api
@@ -65,5 +81,18 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
+    public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
+
+    /**
+     * Specification:
+     * - Returns User transfer found by criteria.
+     * - Returns null otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserTransfer $userTransfer): ?UserTransfer;
 }

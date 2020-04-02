@@ -8,16 +8,16 @@
 namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
  */
-class MerchantUserStatusController extends AbstractController
+class MerchantUserStatusController extends AbstractCrudMerchantUserController
 {
     public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
+
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'User status can\'t be updated.';
     protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'User status has been updated.';
 
@@ -30,30 +30,32 @@ class MerchantUserStatusController extends AbstractController
     {
         $idMerchantUser = $this->castId($request->query->get(static::PARAM_MERCHANT_USER_ID));
         $newMerchantUserStatus = $request->query->get('status');
-        $redirectUrl = sprintf('%s#%s', $request->headers->get('referer'), 'tab-content-merchant-user');
 
         if (!$idMerchantUser || !$newMerchantUserStatus) {
-            return $this->getWrongParametersErrorRedirect($redirectUrl);
+            return $this->getWrongParametersErrorRedirect($this->getMerchantListUrl());
         }
 
         $merchantUserCriteriaTransfer = new MerchantUserCriteriaTransfer();
         $merchantUserCriteriaTransfer->setIdMerchantUser($idMerchantUser)->setWithUser(true);
-        $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->findOne($merchantUserCriteriaTransfer);
+        $merchantUserTransfer = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->findMerchantUser($merchantUserCriteriaTransfer);
+
         if (!$merchantUserTransfer || !$merchantUserTransfer->getUser()) {
-            return $this->getWrongParametersErrorRedirect($redirectUrl);
+            return $this->getWrongParametersErrorRedirect($this->getMerchantListUrl());
         }
 
         $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);
-
         $merchantResponseTransfer = $this->getFactory()->getMerchantUserFacade()->update($merchantUserTransfer);
+        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
 
         if (!$merchantResponseTransfer->getIsSuccessful()) {
-            return $this->getWrongParametersErrorRedirect($redirectUrl);
+            return $this->getWrongParametersErrorRedirect($merchantUserListUrl);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($redirectUrl);
+        return $this->redirectResponseExternal($merchantUserListUrl);
     }
 
     /**

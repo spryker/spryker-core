@@ -33,7 +33,12 @@ class MerchantUserDeleteConfirmForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAction('/merchant-user-gui/delete-merchant-user/delete');
+        $actionUrl = $this->getFactory()
+            ->getRouterFacade()
+            ->getRouter()
+            ->generate('merchant-user-gui:delete-merchant-user:delete');
+
+        $builder->setAction($actionUrl);
         $builder->setMethod(Request::METHOD_DELETE);
     }
 

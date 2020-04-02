@@ -9,14 +9,13 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantUserGui\Communication\MerchantUserGuiCommunicationFactory getFactory()
  */
-class CreateMerchantUserController extends AbstractController
+class CreateMerchantUserController extends AbstractCrudMerchantUserController
 {
     protected const PARAM_MERCHANT_ID = 'merchant-id';
 
@@ -29,7 +28,9 @@ class CreateMerchantUserController extends AbstractController
     {
         $idMerchant = $this->castId($request->get(static::PARAM_MERCHANT_ID));
 
-        $merchantUserForm = $this->getFactory()->getMerchantUserCreateForm()->handleRequest($request);
+        $merchantUserForm = $this->getFactory()
+            ->getMerchantUserCreateForm(new UserTransfer())
+            ->handleRequest($request);
 
         if ($merchantUserForm->isSubmitted() && $merchantUserForm->isValid()) {
             return $this->createMerchantUser($idMerchant, $merchantUserForm);
@@ -38,6 +39,7 @@ class CreateMerchantUserController extends AbstractController
         return $this->viewResponse([
             'merchantUserForm' => $merchantUserForm->createView(),
             'idMerchant' => $idMerchant,
+            'backUrl' => $this->getMerchantUserListUrl($idMerchant),
         ]);
     }
 
@@ -49,13 +51,7 @@ class CreateMerchantUserController extends AbstractController
      */
     protected function createMerchantUser(int $idMerchant, FormInterface $merchantUserForm)
     {
-        $redirectUrl = sprintf(
-            '/merchant-gui/edit-merchant?id-merchant=%s%s',
-            $idMerchant,
-            '#tab-content-merchant-user'
-        );
-
-        $userTransfer = (new UserTransfer())->fromArray($merchantUserForm->getData(), true);
+        $userTransfer = $merchantUserForm->getData();
 
         $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create(
             (new MerchantUserTransfer())->setUser($userTransfer)->setIdMerchant($idMerchant)
@@ -64,7 +60,7 @@ class CreateMerchantUserController extends AbstractController
         if ($merchantUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage('Merchant user was successfully created.');
 
-            return $this->redirectResponse($redirectUrl);
+            return $this->redirectResponse($this->getMerchantUserListUrl($idMerchant));
         }
 
         foreach ($merchantUserResponseTransfer->getErrors() as $errors) {

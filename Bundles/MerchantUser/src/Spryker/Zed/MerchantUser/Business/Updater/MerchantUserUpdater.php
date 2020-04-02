@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\Writer;
+namespace Spryker\Zed\MerchantUser\Business\Updater;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
@@ -28,9 +28,9 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
-    protected $merchantUserRepository;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
@@ -38,9 +38,9 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     protected $authFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
+     * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
      */
-    protected $userFacade;
+    protected $merchantUserRepository;
 
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade

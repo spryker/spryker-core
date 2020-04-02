@@ -69,15 +69,15 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
         SpyMerchantUserQuery $merchantUserQuery,
         MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
     ): SpyMerchantUserQuery {
-        if ($merchantUserCriteriaTransfer->getIdUser()) {
+        if ($merchantUserCriteriaTransfer->getIdUser() !== null) {
             $merchantUserQuery->filterByFkUser($merchantUserCriteriaTransfer->getIdUser());
         }
 
-        if ($merchantUserCriteriaTransfer->getIdMerchant()) {
+        if ($merchantUserCriteriaTransfer->getIdMerchant() !== null) {
             $merchantUserQuery->filterByFkMerchant($merchantUserCriteriaTransfer->getIdMerchant());
         }
 
-        if ($merchantUserCriteriaTransfer->getIdMerchantUser()) {
+        if ($merchantUserCriteriaTransfer->getIdMerchantUser() !== null) {
             $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
         }
 

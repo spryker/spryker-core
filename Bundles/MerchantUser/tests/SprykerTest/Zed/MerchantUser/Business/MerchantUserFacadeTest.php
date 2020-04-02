@@ -32,6 +32,11 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 class MerchantUserFacadeTest extends Unit
 {
     /**
+     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     */
+    protected const USER_STATUS_BLOCKED = 'blocked';
+
+    /**
      * @var \Generated\Shared\Transfer\MerchantUserTransfer
      */
     protected $merchantUserTransfer;
@@ -50,11 +55,6 @@ class MerchantUserFacadeTest extends Unit
      * @var \SprykerTest\Zed\MerchantUser\MerchantUserBusinessTester
      */
     protected $tester;
-
-    /**
-     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
-     */
-    protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
      * @return void
@@ -253,28 +253,120 @@ class MerchantUserFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider getMerchantUserPositiveScenarioDataProvider
+     *
+     * @param array $merchantUserCriteriaKeys
+     * @param bool $isUserTransferProvided
+     *
      * @return void
      */
-    public function testFind(): void
+    public function testFindMerchantUserReturnsTransferWithCorrectCriteria(
+        array $merchantUserCriteriaKeys,
+        bool $isUserTransferProvided
+    ): void {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        $merchantUserCriteriaData = [
+            MerchantUserCriteriaTransfer::ID_MERCHANT_USER => $merchantUserTransfer->getIdMerchantUser(),
+            MerchantUserCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantUserCriteriaTransfer::ID_USER => $userTransfer->getIdUser(),
+            MerchantUserCriteriaTransfer::WITH_USER => true,
+        ];
+        $merchantUserCriteriaData = array_intersect_key(
+            $merchantUserCriteriaData,
+            array_flip($merchantUserCriteriaKeys)
+        );
+
+        $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())
+            ->fromArray($merchantUserCriteriaData);
+
+        // Act
+        $foundMerchantUserTransfer = $this->tester
+            ->getFacade()
+            ->findMerchantUser($merchantUserCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(
+            $merchantUserTransfer->getIdMerchantUser(),
+            $foundMerchantUserTransfer->getIdMerchantUser()
+        );
+
+        if ($isUserTransferProvided) {
+            $this->assertInstanceOf(UserTransfer::class, $foundMerchantUserTransfer->getUser());
+        }
+    }
+
+    /**
+     * @dataProvider getMerchantUserNegativeScenarioDataProvider
+     *
+     * @param array $merchantUserCriteriaData
+     *
+     * @return void
+     */
+    public function testFindMerchantUserReturnsNullWithWrongCriteria(
+        array $merchantUserCriteriaData
+    ): void {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())
+            ->fromArray($merchantUserCriteriaData);
+
+        // Act
+        $foundMerchantUserTransfer = $this->tester
+            ->getFacade()
+            ->findMerchantUser($merchantUserCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($foundMerchantUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindUserReturnsTransferWithCorrectData(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([
             UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
         ]);
 
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::EMAIL => 'test_merchant_1@spryker.com']);
-        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
-
         // Act
-        $merchantUserTransferFromRequest = $this->tester->getFacade()->findOne(
-            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
-        );
+        $foundUserTransfer = $this->tester
+            ->getFacade()
+            ->findUser($userTransfer);
 
         // Assert
-        $this->assertSame(
-            $merchantUserTransfer->getIdMerchantUser(),
-            $merchantUserTransferFromRequest->getIdMerchantUser()
-        );
+        $this->assertSame($userTransfer->getIdUser(), $foundUserTransfer->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindUserReturnsNullWithWrongData(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
+        ]);
+        $userTransfer->setUsername('incorrect_email@spryker.com');
+
+        // Act
+        $foundUserTransfer = $this->tester
+            ->getFacade()
+            ->findUser($userTransfer);
+
+        // Assert
+        $this->assertNull($foundUserTransfer);
     }
 
     /**
@@ -313,5 +405,64 @@ class MerchantUserFacadeTest extends Unit
     {
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
         $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
+    }
+
+    /**
+     * @return array
+     */
+    public function getMerchantUserPositiveScenarioDataProvider(): array
+    {
+        return [
+            'by id merchant user' => [
+                'merchantUserCriteriaDataKeys' => [
+                    MerchantUserCriteriaTransfer::ID_MERCHANT_USER,
+                ],
+                'isUserTransferProvided' => false,
+            ],
+            'by id merchant' => [
+                'merchantUserCriteriaDataKeys' => [
+                    MerchantUserCriteriaTransfer::ID_MERCHANT,
+                ],
+                'isUserTransferProvided' => false,
+            ],
+            'by id user' => [
+                'merchantUserCriteriaDataKeys' => [
+                    MerchantUserCriteriaTransfer::ID_USER,
+                ],
+                'isUserTransferProvided' => false,
+            ],
+            'with user' => [
+                'merchantUserCriteriaDataKeys' => [
+                    MerchantUserCriteriaTransfer::ID_MERCHANT_USER,
+                    MerchantUserCriteriaTransfer::ID_USER,
+                    MerchantUserCriteriaTransfer::WITH_USER,
+                ],
+                'isUserTransferProvided' => true,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getMerchantUserNegativeScenarioDataProvider(): array
+    {
+        return [
+            'by id merchant user' => [
+                'merchantUserCriteriaData' => [
+                    MerchantUserCriteriaTransfer::ID_MERCHANT_USER => 0,
+                ],
+            ],
+            'by id merchant' => [
+                'merchantUserCriteriaData' => [
+                    MerchantUserCriteriaTransfer::ID_MERCHANT => 0,
+                ],
+            ],
+            'by id user' => [
+                'merchantUserCriteriaData' => [
+                    MerchantUserCriteriaTransfer::ID_USER => 0,
+                ],
+            ],
+        ];
     }
 }

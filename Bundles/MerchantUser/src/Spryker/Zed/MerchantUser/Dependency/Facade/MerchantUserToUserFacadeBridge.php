@@ -83,4 +83,14 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     {
         return $this->userFacade->deactivateUser($idUser);
     }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function removeUser($idUser)
+    {
+        return $this->userFacade->removeUser($idUser);
+    }
 }

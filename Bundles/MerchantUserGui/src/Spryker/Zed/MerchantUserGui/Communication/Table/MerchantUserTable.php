@@ -10,13 +10,14 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Table;
 use Orm\Zed\MerchantUser\Persistence\Map\SpyMerchantUserTableMap;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\DeleteMerchantUserController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\EditMerchantUserController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\IndexController;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\MerchantUserStatusController;
+use Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeInterface;
+use Spryker\Zed\Router\Business\Router\ChainRouter;
 
 class MerchantUserTable extends AbstractTable
 {
@@ -57,6 +58,11 @@ class MerchantUserTable extends AbstractTable
     protected $merchantUserQuery;
 
     /**
+     * @var \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeInterface
+     */
+    protected $routerFacade;
+
+    /**
      * @var string
      */
     protected $baseUrl = '/merchant-user-gui/index';
@@ -68,11 +74,16 @@ class MerchantUserTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
+     * @param \Spryker\Zed\MerchantUserGui\Dependency\Facade\MerchantUserGuiToRouterFacadeInterface $routerFacade
      * @param int $idMerchant
      */
-    public function __construct(SpyMerchantUserQuery $merchantUserQuery, int $idMerchant)
-    {
+    public function __construct(
+        SpyMerchantUserQuery $merchantUserQuery,
+        MerchantUserGuiToRouterFacadeInterface $routerFacade,
+        int $idMerchant
+    ) {
         $this->merchantUserQuery = $merchantUserQuery;
+        $this->routerFacade = $routerFacade;
         $this->idMerchant = $idMerchant;
     }
 
@@ -160,11 +171,12 @@ class MerchantUserTable extends AbstractTable
      */
     protected function createActionColumn(array $item): array
     {
+        $router = $this->routerFacade->getRouter();
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(
-                '/merchant-user-gui/edit-merchant-user',
+            $router->generate(
+                'merchant-user-gui:edit-merchant-user',
                 [
                     EditMerchantUserController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
@@ -173,13 +185,13 @@ class MerchantUserTable extends AbstractTable
             'Edit'
         );
 
-        $buttons[] = $this->buildAvailableStatusButton($item);
+        $buttons[] = $this->buildAvailableStatusButton($router, $item);
 
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(
-                '/merchant-user-gui/delete-merchant-user/confirm-delete',
+            $router->generate(
+                'merchant-user-gui:delete-merchant-user:confirm-delete',
                 [
-                    DeleteMerchantUserController::PARAM_ID_MERCHANT_USER =>
+                    DeleteMerchantUserController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                 ]
             ),
@@ -209,19 +221,20 @@ class MerchantUserTable extends AbstractTable
     }
 
     /**
+     * @param \Spryker\Zed\Router\Business\Router\ChainRouter $router
      * @param array $item
      *
      * @return string
      */
-    protected function buildAvailableStatusButton(array $item): string
+    protected function buildAvailableStatusButton(ChainRouter $router, array $item): string
     {
         $availableStatus = $item[static::MERCHANT_USER_STATUS] === SpyUserTableMap::COL_STATUS_ACTIVE
             ? SpyUserTableMap::COL_STATUS_BLOCKED
             : SpyUserTableMap::COL_STATUS_ACTIVE;
 
         return $this->generateButton(
-            Url::generate(
-                '/merchant-user-gui/merchant-user-status',
+            $router->generate(
+                'merchant-user-gui:merchant-user-status',
                 [
                     MerchantUserStatusController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],

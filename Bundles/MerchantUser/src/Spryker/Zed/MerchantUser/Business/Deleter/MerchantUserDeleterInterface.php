@@ -5,25 +5,17 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\Writer;
+namespace Spryker\Zed\MerchantUser\Business\Deleter;
 
-use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
-interface MerchantUserUpdaterInterface
+interface MerchantUserDeleterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
-     *
-     * @return void
-     */
-    public function disable(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): void;
+    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 }
