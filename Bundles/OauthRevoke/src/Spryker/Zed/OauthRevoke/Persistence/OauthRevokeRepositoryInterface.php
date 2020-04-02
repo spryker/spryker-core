@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthRevoke\Persistence;
 
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 
@@ -17,7 +18,14 @@ interface OauthRevokeRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findOne(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer

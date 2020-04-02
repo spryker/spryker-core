@@ -21,13 +21,40 @@ interface OauthRevokeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findOne(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
 
-    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 
-    public function revokeRefreshTokens(ArrayObject $oauthRefreshTokenTransfers);
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return void
+     */
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 
-    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer);
+    /**
+     * @param \ArrayObject $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
 
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return bool
+     */
+    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
+
+    /**
+     * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
+     *
+     * @return void
+     */
     public function saveRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void;
 }

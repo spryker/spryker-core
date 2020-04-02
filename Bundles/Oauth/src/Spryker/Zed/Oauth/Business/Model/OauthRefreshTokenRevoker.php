@@ -89,7 +89,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
 
-        $oauthRefreshTokenTransfer = $this->oauthRevokeFacade->findOne($oauthTokenCriteriaFilterTransfer);
+        $oauthRefreshTokenTransfer = $this->oauthRevokeFacade->findRefreshToken($oauthTokenCriteriaFilterTransfer);
 //        $oauthRefreshTokenTransfer = $this->oauthRepository->findRefreshToken($oauthTokenCriteriaFilterTransfer);
         if (!$oauthRefreshTokenTransfer) {
             return $revokeRefreshTokenResponseTransfer
@@ -115,7 +115,11 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
 
-        $oauthRefreshTokenTransfers = $this->oauthRepository
+//        $oauthRefreshTokenTransfers = $this->oauthRepository
+//            ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
+//            ->getOauthRefreshTokens();
+
+        $oauthRefreshTokenTransfers = $this->oauthRevokeFacade
             ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
             ->getOauthRefreshTokens();
 

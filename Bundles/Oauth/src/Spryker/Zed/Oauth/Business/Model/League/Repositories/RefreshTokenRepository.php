@@ -139,7 +139,6 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         foreach ($this->refreshTokensRevokerPlugins as $refreshTokensRevokerPlugin) {
             $refreshTokensRevokerPlugin->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
         }
-//        $this->oauthEntityManager->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
     }
 
     /**

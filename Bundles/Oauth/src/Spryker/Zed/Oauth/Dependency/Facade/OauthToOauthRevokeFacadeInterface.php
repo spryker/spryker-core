@@ -7,6 +7,22 @@
 
 namespace Spryker\Zed\Oauth\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
+
 interface OauthToOauthRevokeFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     */
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 }

@@ -24,7 +24,6 @@ class OauthRefreshTokensRevokerPlugin extends AbstractPlugin implements OauthRef
      */
     public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
     {
-        $this->getFacade()->revokeRefreshTokens($oauthRefreshTokenTransfers);
-//        $this->oauthEntityManager->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
+        $this->getFacade()->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
     }
 }

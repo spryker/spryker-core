@@ -18,14 +18,14 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInt
 class OauthRefreshTokenSaverPlugin extends AbstractPlugin implements OauthRefreshTokenSaverPluginInterface
 {
     /**
+     * @inheritDoc
+     *
      * @api
      *
-     * @inheritDoc
+     * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      */
     public function saveRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void
     {
-//        (RefreshTokenEntityInterface $refreshTokenEntity)
-
         $this->getFacade()->saveRefreshToken($refreshTokenEntity);
     }
 }

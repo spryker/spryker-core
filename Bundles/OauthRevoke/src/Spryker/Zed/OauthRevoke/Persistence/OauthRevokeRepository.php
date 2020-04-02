@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthRevoke\Persistence;
 
+use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
@@ -23,14 +24,14 @@ class OauthRevokeRepository extends AbstractRepository implements OauthRevokeRep
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findOne(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
     {
         $oauthTokenCriteriaFilterTransfer->requireIdentifier();
 
         $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
         $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
 
-        $oauthRefreshTokenEntity = $oauthRefreshTokenQuery->findOne();
+        $oauthRefreshTokenEntity = $oauthRefreshTokenQuery->findRefreshToken();
 
         if (!$oauthRefreshTokenEntity) {
             return null;
@@ -39,6 +40,23 @@ class OauthRevokeRepository extends AbstractRepository implements OauthRevokeRep
         return $this->getFactory()
             ->createOauthRefreshTokenMapper()
             ->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($oauthRefreshTokenEntity, new OauthRefreshTokenTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+    {
+        $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
+        $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
+
+        $oauthRefreshTokenCollection = $oauthRefreshTokenQuery->find();
+
+        return $this->getFactory()
+            ->createOauthRefreshTokenMapper()
+            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokenCollection);
     }
 
     /**

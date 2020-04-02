@@ -99,22 +99,22 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
 //            ->mapOauthRefreshTokenEntityToOauthRefreshTokenTransfer($oauthRefreshTokenEntity, new OauthRefreshTokenTransfer());
 //    }
 
-    /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
-     */
-    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
-    {
-        $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
-        $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
-
-        $oauthRefreshTokenCollection = $oauthRefreshTokenQuery->find();
-
-        return $this->getFactory()
-            ->createOauthRefreshTokenMapper()
-            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokenCollection);
-    }
+//    /**
+//     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+//     */
+//    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+//    {
+//        $oauthRefreshTokenQuery = $this->getFactory()->createRefreshTokenQuery();
+//        $oauthRefreshTokenQuery = $this->applyRefreshTokenFilters($oauthRefreshTokenQuery, $oauthTokenCriteriaFilterTransfer);
+//
+//        $oauthRefreshTokenCollection = $oauthRefreshTokenQuery->find();
+//
+//        return $this->getFactory()
+//            ->createOauthRefreshTokenMapper()
+//            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokenCollection);
+//    }
 
 //    /**
 //     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer

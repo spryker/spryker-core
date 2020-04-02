@@ -30,8 +30,18 @@ class OauthToOauthRevokeFacadeBridge implements OauthToOauthRevokeFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findOne(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
     {
-        return $this->oauthRevokeFacade->findOne($oauthTokenCriteriaFilterTransfer);
+        return $this->oauthRevokeFacade->findRefreshToken($oauthTokenCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+    {
+        return $this->oauthRevokeFacade->getRefreshTokens($oauthTokenCriteriaFilterTransfer);
     }
 }

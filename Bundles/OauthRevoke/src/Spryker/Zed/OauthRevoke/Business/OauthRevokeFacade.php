@@ -29,9 +29,23 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
      */
-    public function findOne(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
+    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
     {
-        return $this->getRepository()->findOne($oauthTokenCriteriaFilterTransfer);
+        return $this->getRepository()->findRefreshToken($oauthTokenCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer
+     */
+    public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer
+    {
+        return $this->getRepository()->getRefreshTokens($oauthTokenCriteriaFilterTransfer);
     }
 
     /**
@@ -60,9 +74,9 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @return void
      */
-    public function revokeRefreshTokens(ArrayObject $oauthRefreshTokenTransfers)
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
     {
-        // TODO: Implement revokeRefreshTokens() method.
+        $this->getEntityManager()->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
     }
 
     /**
@@ -74,7 +88,7 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @return bool
      */
-    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer)
+    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool
     {
         return $this->getRepository()->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
     }
