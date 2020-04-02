@@ -45,6 +45,8 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
+     * - Requires MerchantUserTransfer.idMerchant.
+     * - Requires MerchantUserTransfer.user.
      * - Deletes MerchantUser by passed MerchantUser transfer data.
      * - Sets MerchantUserResponseTransfer.isSuccessful=true if merchant user was deleted.
      * - Sets MerchantUserResponseTransfer.isSuccessful=false if merchant user cannot be deleted.
@@ -85,6 +87,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
+     * - Requires UserTransfer.username.
      * - Returns User transfer found by email.
      * - Returns null otherwise.
      *
