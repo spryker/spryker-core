@@ -45,9 +45,9 @@ class MerchantUserUpdateFormDataProvider
     /**
      * @param int $idMerchantUser
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function getData(int $idMerchantUser): MerchantUserTransfer
+    public function getData(int $idMerchantUser): ?MerchantUserTransfer
     {
         return $this->merchantUserFacade->findMerchantUser(
             (new MerchantUserCriteriaTransfer())

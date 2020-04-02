@@ -30,6 +30,12 @@ class EditMerchantUserController extends AbstractCrudMerchantUserController
         $dataProvider = $this->getFactory()->createMerchantUserUpdateFormDataProvider();
         $merchantUserTransfer = $dataProvider->getData($idMerchantUser);
 
+        if (!$merchantUserTransfer) {
+            $this->addErrorMessage('Merchant user ID is incorrect.');
+
+            return $this->redirectResponse($this->getMerchantListUrl());
+        }
+
         $merchantUserUpdateForm = $this->getFactory()
             ->getMerchantUserUpdateForm($merchantUserTransfer->getUser(), $dataProvider->getOptions())
             ->handleRequest($request);
