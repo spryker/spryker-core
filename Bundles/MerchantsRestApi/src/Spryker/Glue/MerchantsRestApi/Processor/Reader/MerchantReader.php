@@ -56,7 +56,7 @@ class MerchantReader implements MerchantReaderInterface
             return $this->merchantsRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId()) ?? null;
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
         if (!$merchantStorageTransfer) {
             return $this->merchantsRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }

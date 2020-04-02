@@ -66,7 +66,9 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     {
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
-                $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+                if (isset($translatedNotes[$dateScheduleTransfer->getNote()])) {
+                    $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+                }
             }
         }
 

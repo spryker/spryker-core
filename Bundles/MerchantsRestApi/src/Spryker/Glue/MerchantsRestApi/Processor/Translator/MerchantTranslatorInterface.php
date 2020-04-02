@@ -17,5 +17,8 @@ interface MerchantTranslatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
-    public function getTranslatedMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer, string $localeName): MerchantStorageTransfer;
+    public function getTranslatedMerchantStorageTransfer(
+        MerchantStorageTransfer $merchantStorageTransfer,
+        string $localeName
+    ): MerchantStorageTransfer;
 }

@@ -13,6 +13,27 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApiToMerchantsStorageClientInterface
 {
     /**
+     * @param string[] $merchantReferences
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function findByMerchantReference(array $merchantReferences): array
+    {
+        $merchantStorageProfile = (new MerchantStorageProfileTransfer())
+            ->setMerchantUrl('url-test')
+            ->setPublicEmail('email-test')
+            ->setTermsConditionsGlossaryKey('TermsConditionsGlossaryKey');
+
+        return [
+            (new MerchantStorageTransfer())
+                ->setIdMerchant(1)
+                ->setMerchantReference('MER000006')
+                ->setName('Kudu Merchant')
+                ->setMerchantStorageProfile($merchantStorageProfile),
+        ];
+    }
+
+    /**
      * @param string $merchantReference
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null

@@ -31,8 +31,10 @@ class MerchantTranslator implements MerchantTranslatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
-    public function getTranslatedMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer, string $localeName): MerchantStorageTransfer
-    {
+    public function getTranslatedMerchantStorageTransfer(
+        MerchantStorageTransfer $merchantStorageTransfer,
+        string $localeName
+    ): MerchantStorageTransfer {
         $glossaryStorageKeys = $this->getGlossaryStorageKeysFromMerchantStorageTransfer($merchantStorageTransfer);
 
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
@@ -43,21 +45,55 @@ class MerchantTranslator implements MerchantTranslatorInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getGlossaryStorageKeysFromMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer): array
     {
-        return $merchantStorageTransfer->toArray();
+        $glossaryKeys = [
+            $merchantStorageTransfer->getMerchantStorageProfile()->getBannerUrlGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getCancellationPolicyGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getDataPrivacyGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getDeliveryTimeGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getDescriptionGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getImprintGlossaryKey(),
+            $merchantStorageTransfer->getMerchantStorageProfile()->getTermsConditionsGlossaryKey(),
+        ];
+
+        return array_unique(array_filter($glossaryKeys));
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
-     * @param array $translations
+     * @param string[] $translations
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
     protected function setTranslationsToMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer, array $translations): MerchantStorageTransfer
     {
-        return $merchantStorageTransfer;
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
+
+        if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setBannerUrlGlossaryKey($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setCancellationPolicyGlossaryKey($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setDataPrivacyGlossaryKey($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setDeliveryTimeGlossaryKey($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setDescriptionGlossaryKey($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setImprintGlossaryKey($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()]);
+        }
+        if (isset($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()])) {
+            $merchantStorageProfileTransfer->setTermsConditionsGlossaryKey($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()]);
+        }
+
+        return $merchantStorageTransfer->setMerchantProfile($merchantStorageProfileTransfer);
     }
 }
