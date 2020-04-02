@@ -50,6 +50,28 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductRelation">
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="productRelationType" type="ProductRelationType"/>
+        <property name="relatedProducts" type="ProductRelationRelatedProduct[]" singular="relatedProduct"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="ProductRelationType">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductRelationRelatedProduct">
+        <property name="fkProductAbstract" type="int"/>
+        <property name="order" type="int"/>
     </transfer>
 
 </transfers>

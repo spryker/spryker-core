@@ -148,4 +148,8 @@
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>
