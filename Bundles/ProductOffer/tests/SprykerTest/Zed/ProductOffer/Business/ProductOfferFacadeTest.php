@@ -130,7 +130,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testfilterInactiveProductOfferItems(): void
+    public function testFilterInactiveProductOfferItems(): void
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
@@ -170,9 +170,9 @@ class ProductOfferFacadeTest extends Unit
         $productOfferFacade->setFactory($productOfferBusinessFactoryMock);
 
         // Act
-        $quoteTransferFiltered = $productOfferFacade->filterInactiveProductOfferItems($quoteTransfer);
+        $filteredQuoteTransfers = $productOfferFacade->filterInactiveProductOfferItems($quoteTransfer);
 
         // Assert
-        $this->assertCount(1, $quoteTransferFiltered->getItems());
+        $this->assertCount(1, $filteredQuoteTransfers->getItems());
     }
 }

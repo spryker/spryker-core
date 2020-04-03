@@ -57,10 +57,10 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
      */
     public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $offerReferences = $this->getProductOfferReferencesFromQuoteTransfer($quoteTransfer);
+        $productOfferReferences = $this->getProductOfferReferencesFromQuoteTransfer($quoteTransfer);
 
         $productOfferCollectionTransfer = (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences($offerReferences)
+            ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true)
             ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
         $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCollectionTransfer);
@@ -78,21 +78,6 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param string $offerReference
-     * @param array $indexedProductConcreteTransfers
-     *
-     * @return bool
-     */
-    protected function existOffer(string $offerReference, array $indexedProductConcreteTransfers): bool
-    {
-        if (!isset($indexedProductConcreteTransfers[$offerReference])) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
