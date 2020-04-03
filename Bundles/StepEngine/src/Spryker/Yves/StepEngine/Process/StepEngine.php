@@ -211,16 +211,16 @@ class StepEngine implements StepEngineInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeStepEnginePreRenderPlugins(AbstractTransfer $quoteTransfer): AbstractTransfer
+    protected function executeStepEnginePreRenderPlugins(AbstractTransfer $dataTransfer): AbstractTransfer
     {
         foreach ($this->stepEnginePreRenderPlugins as $stepEnginePreRenderPlugin) {
-            $quoteTransfer = $stepEnginePreRenderPlugin->execute($quoteTransfer);
+            $dataTransfer = $stepEnginePreRenderPlugin->execute($dataTransfer);
         }
 
-        return $quoteTransfer;
+        return $dataTransfer;
     }
 }
