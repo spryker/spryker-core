@@ -72,7 +72,7 @@ class DataImportConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getYamlConfigPath(): ?string
+    public function getDefaultYamlConfigPath(): ?string
     {
         return null;
     }
