@@ -63,8 +63,8 @@ class QueryContainerExporter implements ExporterInterface
      */
     public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
-        $wasPoolingEnabled = Propel::isInstancePoolingEnabled();
-        if ($wasPoolingEnabled) {
+        $isPoolingEnabled = Propel::isInstancePoolingEnabled();
+        if ($isPoolingEnabled) {
             Propel::disableInstancePooling();
         }
 
@@ -72,7 +72,7 @@ class QueryContainerExporter implements ExporterInterface
             $this->exportData($ids, $plugin);
         }
 
-        if ($wasPoolingEnabled) {
+        if ($isPoolingEnabled) {
             Propel::enableInstancePooling();
         }
     }
