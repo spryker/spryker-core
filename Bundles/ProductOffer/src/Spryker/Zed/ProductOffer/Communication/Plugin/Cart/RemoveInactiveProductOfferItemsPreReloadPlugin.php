@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
  */
-class RemoveInactiveOfferItemsPreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
+class RemoveInactiveProductOfferItemsPreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
      * {@inheritDoc}
