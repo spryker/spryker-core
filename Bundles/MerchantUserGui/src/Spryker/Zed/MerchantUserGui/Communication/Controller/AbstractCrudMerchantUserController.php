@@ -36,7 +36,7 @@ abstract class AbstractCrudMerchantUserController extends AbstractController
     /**
      * @return string
      */
-    protected function getMerchantListUrl()
+    protected function getMerchantListUrl(): string
     {
         return $this->getFactory()
             ->getRouterFacade()

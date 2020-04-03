@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -160,7 +161,10 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      */
     protected function persistUserByMerchantUser(UserTransfer $userTransfer): UserTransfer
     {
-        if (!$this->userFacade->hasUserByUsername($userTransfer->getUsername())) {
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setEmail($userTransfer->getUsername());
+        $existingUserTransfer = $this->userFacade->findUser($userCriteriaTransfer);
+
+        if (!$existingUserTransfer) {
             $userTransfer->setPassword(
                 $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH)
             )->setStatus($this->merchantUserConfig->getUserCreationStatus());
@@ -168,7 +172,6 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
             return $this->userFacade->createUser($userTransfer);
         }
 
-        $existingUserTransfer = $this->userFacade->getUserByUsername($userTransfer->getUsername());
         $existingUserTransfer->fromArray($userTransfer->modifiedToArray(), true);
 
         return $this->userFacade->updateUser($existingUserTransfer);

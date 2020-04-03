@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -105,14 +106,14 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findUser(UserTransfer $userTransfer): ?UserTransfer
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
         return $this->getFactory()
-            ->createUserReader()
-            ->findOne($userTransfer);
+            ->getUserFacade()
+            ->findUser($userCriteriaTransfer);
     }
 }

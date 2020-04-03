@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
@@ -319,6 +320,8 @@ class User implements UserInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Model\User::findUser()} instead.
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -334,6 +337,60 @@ class User implements UserInterface
         }
 
         return $this->entityToTransfer($entity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
+    {
+        if ($userCriteriaTransfer->getIdUser() !== null) {
+            return $this->findUserByIdUser($userCriteriaTransfer->getIdUser());
+        }
+
+        if ($userCriteriaTransfer->getEmail() !== null) {
+            return $this->findUserByEmail($userCriteriaTransfer->getEmail());
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserByIdUser(int $idUser): ?UserTransfer
+    {
+        $userEntity = $this->queryContainer
+            ->queryUserById($idUser)
+            ->findOne();
+
+        if (!$userEntity) {
+            return null;
+        }
+
+        return $this->entityToTransfer($userEntity);
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserByEmail(string $email): ?UserTransfer
+    {
+        $userEntity = $this->queryContainer
+            ->queryUserByUsername($email)
+            ->findOne();
+
+        if (!$userEntity) {
+            return null;
+        }
+
+        return $this->entityToTransfer($userEntity);
     }
 
     /**

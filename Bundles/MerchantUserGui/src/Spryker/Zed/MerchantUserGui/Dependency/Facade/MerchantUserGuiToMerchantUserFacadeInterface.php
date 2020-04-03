@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUserGui\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserGuiToMerchantUserFacadeInterface
@@ -43,9 +44,9 @@ interface MerchantUserGuiToMerchantUserFacadeInterface
     public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findUser(UserTransfer $userTransfer): ?UserTransfer;
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterface
@@ -25,16 +26,6 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     }
 
     /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByUsername($username)
-    {
-        return $this->userFacade->getUserByUsername($username);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -45,16 +36,6 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     }
 
     /**
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserById($idUser)
-    {
-        return $this->userFacade->getUserById($idUser);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -62,16 +43,6 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     public function updateUser(UserTransfer $user)
     {
         return $this->userFacade->updateUser($user);
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return bool
-     */
-    public function hasUserByUsername($username)
-    {
-        return $this->userFacade->hasUserByUsername($username);
     }
 
     /**
@@ -92,5 +63,15 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     public function removeUser($idUser)
     {
         return $this->userFacade->removeUser($idUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
+    {
+        return $this->userFacade->findUser($userCriteriaTransfer);
     }
 }

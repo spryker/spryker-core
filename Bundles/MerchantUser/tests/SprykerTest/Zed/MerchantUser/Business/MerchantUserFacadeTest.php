@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
@@ -70,7 +71,7 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getUserById', 'updateUser', 'createUser'])
+            ->onlyMethods(['findUser', 'updateUser', 'createUser'])
             ->getMockForAbstractClass();
     }
 
@@ -167,8 +168,9 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $this->userFacadeMock->expects($this->once())->method('getUserById')
-            ->with($userTransfer->getIdUser())
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
+        $this->userFacadeMock->expects($this->once())->method('findUser')
+            ->with($userCriteriaTransfer)
             ->willReturn($userTransfer);
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
@@ -201,8 +203,9 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $this->userFacadeMock->expects($this->once())->method('getUserById')
-            ->with($userTransfer->getIdUser())
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
+        $this->userFacadeMock->expects($this->once())->method('findUser')
+            ->with($userCriteriaTransfer)
             ->willReturn($userTransfer);
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
@@ -235,8 +238,9 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $this->userFacadeMock->expects($this->once())->method('getUserById')
-            ->with($userTransfer->getIdUser())
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
+        $this->userFacadeMock->expects($this->once())->method('findUser')
+            ->with($userCriteriaTransfer)
             ->willReturn($userTransfer);
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
@@ -255,14 +259,14 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @dataProvider getMerchantUserPositiveScenarioDataProvider
      *
-     * @param array $merchantUserCriteriaKeys
-     * @param bool $isUserTransferProvided
+     * @param string[] $merchantUserCriteriaKeys
+     * @param bool $isUserInCriteria
      *
      * @return void
      */
     public function testFindMerchantUserReturnsTransferWithCorrectCriteria(
         array $merchantUserCriteriaKeys,
-        bool $isUserTransferProvided
+        bool $isUserInCriteria
     ): void {
         // Arrange
         $userTransfer = $this->tester->haveUser([
@@ -296,7 +300,7 @@ class MerchantUserFacadeTest extends Unit
             $foundMerchantUserTransfer->getIdMerchantUser()
         );
 
-        if ($isUserTransferProvided) {
+        if ($isUserInCriteria) {
             $this->assertInstanceOf(UserTransfer::class, $foundMerchantUserTransfer->getUser());
         }
     }
@@ -328,45 +332,6 @@ class MerchantUserFacadeTest extends Unit
 
         // Assert
         $this->assertNull($foundMerchantUserTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindUserReturnsTransferWithCorrectData(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
-        ]);
-
-        // Act
-        $foundUserTransfer = $this->tester
-            ->getFacade()
-            ->findUser($userTransfer);
-
-        // Assert
-        $this->assertSame($userTransfer->getIdUser(), $foundUserTransfer->getIdUser());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindUserReturnsNullWithWrongData(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser([
-            UserTransfer::USERNAME => 'test_merchant_user@spryker.com',
-        ]);
-        $userTransfer->setUsername('incorrect_email@spryker.com');
-
-        // Act
-        $foundUserTransfer = $this->tester
-            ->getFacade()
-            ->findUser($userTransfer);
-
-        // Assert
-        $this->assertNull($foundUserTransfer);
     }
 
     /**
@@ -417,19 +382,19 @@ class MerchantUserFacadeTest extends Unit
                 'merchantUserCriteriaDataKeys' => [
                     MerchantUserCriteriaTransfer::ID_MERCHANT_USER,
                 ],
-                'isUserTransferProvided' => false,
+                'isUserInCriteria' => false,
             ],
             'by id merchant' => [
                 'merchantUserCriteriaDataKeys' => [
                     MerchantUserCriteriaTransfer::ID_MERCHANT,
                 ],
-                'isUserTransferProvided' => false,
+                'isUserInCriteria' => false,
             ],
             'by id user' => [
                 'merchantUserCriteriaDataKeys' => [
                     MerchantUserCriteriaTransfer::ID_USER,
                 ],
-                'isUserTransferProvided' => false,
+                'isUserInCriteria' => false,
             ],
             'with user' => [
                 'merchantUserCriteriaDataKeys' => [
@@ -437,7 +402,7 @@ class MerchantUserFacadeTest extends Unit
                     MerchantUserCriteriaTransfer::ID_USER,
                     MerchantUserCriteriaTransfer::WITH_USER,
                 ],
-                'isUserTransferProvided' => true,
+                'isUserInCriteria' => true,
             ],
         ];
     }

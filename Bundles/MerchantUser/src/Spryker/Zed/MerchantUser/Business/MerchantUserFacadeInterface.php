@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface MerchantUserFacadeInterface
@@ -45,12 +46,10 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Requires MerchantUserTransfer.idMerchant.
-     * - Requires MerchantUserTransfer.user.
+     * - Requires MerchantUserTransfer.user.idUser.
      * - Deletes MerchantUser by passed MerchantUser transfer data.
      * - Sets MerchantUserResponseTransfer.isSuccessful=true if merchant user was deleted.
      * - Sets MerchantUserResponseTransfer.isSuccessful=false if merchant user cannot be deleted.
-     * - Returns MerchantUserResponse transfer.
      *
      * @api
      *
@@ -87,15 +86,15 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Requires UserTransfer.username.
+     * - Requires UserCriteriaTransfer.email.
      * - Returns User transfer found by email.
      * - Returns null otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findUser(UserTransfer $userTransfer): ?UserTransfer;
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 }

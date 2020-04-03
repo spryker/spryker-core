@@ -50,4 +50,8 @@
         <property name="lastName" type="string"/>
     </transfer>
 
+    <transfer name="UserCriteria">
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

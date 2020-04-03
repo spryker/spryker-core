@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantUser\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
@@ -49,6 +50,8 @@ class MerchantUserReader implements MerchantUserReaderInterface
             return $merchantUserTransfer;
         }
 
-        return $merchantUserTransfer->setUser($this->userFacade->getUserById($merchantUserTransfer->getIdUser()));
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($merchantUserTransfer->getIdUser());
+
+        return $merchantUserTransfer->setUser($this->userFacade->findUser($userCriteriaTransfer));
     }
 }

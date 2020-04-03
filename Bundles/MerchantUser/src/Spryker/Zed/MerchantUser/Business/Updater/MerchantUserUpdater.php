@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business\Updater;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -65,16 +66,22 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         $merchantUserTransfer->requireUser();
+        $merchantUserResponseTransfer = (new MerchantUserResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setMerchantUser($merchantUserTransfer);
 
-        $originalUserTransfer = $this->userFacade->getUserById($merchantUserTransfer->getIdUser());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($merchantUserTransfer->getIdUser());
+        $originalUserTransfer = $this->userFacade->findUser($userCriteriaTransfer);
+
+        if (!$originalUserTransfer) {
+            return $merchantUserResponseTransfer->setIsSuccessful(false);
+        }
 
         $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUser());
 
         $this->resetUserPassword($originalUserTransfer, $userTransfer);
 
-        return (new MerchantUserResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setMerchantUser($merchantUserTransfer);
+        return $merchantUserResponseTransfer;
     }
 
     /**

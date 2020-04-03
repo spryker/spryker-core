@@ -33,8 +33,9 @@ class MerchantUserDeleter implements MerchantUserDeleterInterface
      */
     public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
-        $merchantUserTransfer->requireIdMerchant()
-            ->requireUser();
+        $merchantUserTransfer->requireUser()
+            ->getUser()
+                ->requireIdUser();
 
         $userTransfer = $this->userFacade->removeUser(
             $merchantUserTransfer->getUser()->getIdUser()

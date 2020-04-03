@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueEmailConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param string $email
+     * @param mixed|string $email
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -29,7 +29,7 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
         }
 
         $userTransfer = $constraint->getMerchantUserFacade()->findUser(
-            (new UserTransfer())->setUsername($email)
+            (new UserCriteriaTransfer())->setEmail($email)
         );
 
         if (!$userTransfer) {
