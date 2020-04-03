@@ -31,11 +31,12 @@ class MerchantMapper implements MerchantMapperInterface
             ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
             ->setTerms($merchantStorageProfileTransfer->getTermsConditionsGlossaryKey());
 
-        return $restMerchantsAttributesTransfer->fromArray($merchantStorageProfileTransfer->toArray(), true)
+        return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
+            ->fromArray($merchantStorageProfileTransfer->toArray(), true)
             ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
             ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
-            ->setMerchantPageUrl($merchantStorageProfileTransfer->getMerchantUrl())
+            ->setMerchantUrl($merchantStorageTransfer->getMerchantUrl())
             ->setLegalInformation($restLegalInformationTransfer)
             ->setMerchantName($merchantStorageTransfer->getName());
     }
