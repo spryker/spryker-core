@@ -328,15 +328,7 @@ class User implements UserInterface
      */
     public function findUserById(int $id): ?UserTransfer
     {
-        $entity = $this->queryContainer
-            ->queryUserById($id)
-            ->findOne();
-
-        if ($entity === null) {
-            return null;
-        }
-
-        return $this->entityToTransfer($entity);
+        return $this->findUserByIdUser($id);
     }
 
     /**
