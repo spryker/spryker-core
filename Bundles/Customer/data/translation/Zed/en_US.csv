@@ -18,6 +18,7 @@ Country,Country
 "Customer was not created.","Customer was not created."
 "Customer was not updated.","Customer was not updated."
 "Customer was updated successfully.","Customer was updated successfully."
+"Customer with id `%s` does not exist","Customer with id `%s` doesn't exist"
 "Date of birth","Date of birth"
 Delete,Delete
 "Delete account","Delete account"
@@ -40,4 +41,3 @@ View,View
 "View Customer","View Customer"
 "Zed Account Reference","Zed Account Reference"
 ZipCode,ZipCode
-"Customer with id `%s` does not exist","Customer with id `%s` doesn't exist"
