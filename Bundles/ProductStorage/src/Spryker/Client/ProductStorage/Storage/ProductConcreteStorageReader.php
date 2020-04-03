@@ -172,7 +172,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param string $mappingTypex
+     * @param string $mappingType
      * @param string[] $identifiers
      * @param string $localeName
      *
