@@ -64,7 +64,7 @@ class GiftCardFacadeTest extends Test
         ]))->build();
 
         $this->expectException(RequiredTransferPropertyException::class);
-        $this->expectExceptionMessageRegExp('/^Missing required property "value" for transfer/');
+        $this->expectExceptionMessageMatches('/^Missing required property "value" for transfer/');
         $this->getFacade()->create($giftCardTransfer);
     }
 
