@@ -170,4 +170,6 @@ abstract class AbstractPlugin
             static::$locale = $this->getApplication()->get(static::SERVICE_LOCALE);
         }
 
-        return sta
+        return static::$locale;
+    }
+}
