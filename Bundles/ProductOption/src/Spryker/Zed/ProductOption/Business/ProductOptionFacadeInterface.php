@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -147,6 +148,19 @@ interface ProductOptionFacadeInterface
      * @return void
      */
     public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Calculate tax rates for current quote level (BC) or item level shipping addresses.
+     *  - Set tax rate percentages for item product options.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateProductOptionTaxRateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
 
     /**
      * Specification:
