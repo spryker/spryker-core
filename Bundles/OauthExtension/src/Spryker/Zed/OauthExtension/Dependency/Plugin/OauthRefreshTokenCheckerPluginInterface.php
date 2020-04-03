@@ -13,6 +13,18 @@ interface OauthRefreshTokenCheckerPluginInterface
      * @api
      *
      * Specification:
+     * - Check if refresh token identifier isn't empty.
+     *
+     * @param string $tokenId
+     *
+     * @return bool
+     */
+    public function isApplicable(string $tokenId): bool;
+
+    /**
+     * @api
+     *
+     * Specification:
      * - Check if the refresh token has been revoked.
      *
      * @param string $tokenId

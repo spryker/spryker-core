@@ -7,6 +7,7 @@
         <property name="identifier" type="string"/>
         <property name="idOauthClient" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="userIdentifier" type="string"/>
     </transfer>
 
     <transfer name="OauthTokenCriteriaFilter">

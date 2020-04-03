@@ -113,7 +113,11 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     public function isRefreshTokenRevoked($tokenId)
     {
         foreach ($this->refreshTokenCheckerPlugins as $refreshTokenCheckerPlugin) {
-            $refreshTokenCheckerPlugin->isRefreshTokenRevoked($tokenId);
+            if ($refreshTokenCheckerPlugin->isApplicable($tokenId)) {
+                return $refreshTokenCheckerPlugin->isRefreshTokenRevoked($tokenId);
+            }
         }
+
+        return false;
     }
 }

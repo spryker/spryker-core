@@ -26,6 +26,20 @@ class OauthRefreshTokenCheckerPlugin extends AbstractPlugin implements OauthRefr
      *
      * @return bool
      */
+    public function isApplicable(string $tokenId): bool
+    {
+        return (bool)$tokenId;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $tokenId
+     *
+     * @return bool
+     */
     public function isRefreshTokenRevoked(string $tokenId): bool
     {
         $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())

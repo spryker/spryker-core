@@ -8,20 +8,21 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Oauth\OauthConstants;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
-use Spryker\Zed\Oauth\Business\OauthBusinessFactory;
-use Spryker\Zed\Oauth\OauthConfig;
+use Spryker\Zed\Oauth\Business\OauthFacade;
+use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeBridge;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
@@ -50,11 +51,18 @@ class OauthFacadeTest extends Unit
     protected $customerTransfer;
 
     /**
+     * @var \Spryker\Zed\Oauth\Business\OauthFacadeInterface
+     */
+    protected $oauthFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->oauthFacade = new OauthFacade();
 
         $this->customerTransfer = $this->tester->haveCustomer();
     }
@@ -69,7 +77,7 @@ class OauthFacadeTest extends Unit
         $this->setGrantTypeConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
-        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
 
         $this->assertTrue($oauthResponseTransfer->getIsValid());
     }
@@ -88,7 +96,7 @@ class OauthFacadeTest extends Unit
             ->setClientId('frontend')
             ->setClientSecret('abc1232');
 
-        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
 
         $this->assertFalse($oauthResponseTransfer->getIsValid());
     }
@@ -103,14 +111,14 @@ class OauthFacadeTest extends Unit
         $this->setGrantTypeConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
-        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
 
         $oauthAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $oauthAccessTokenValidationRequestTransfer
             ->setAccessToken($oauthResponseTransfer->getAccessToken())
             ->setType('Bearer');
 
-        $oauthAccessTokenValidationResponseTransfer = $this->getOauthFacade()
+        $oauthAccessTokenValidationResponseTransfer = $this->oauthFacade
             ->validateAccessToken($oauthAccessTokenValidationRequestTransfer);
 
         $this->assertTrue($oauthAccessTokenValidationResponseTransfer->getIsValid());
@@ -126,7 +134,7 @@ class OauthFacadeTest extends Unit
             ->setAccessToken('wrong')
             ->setType('Bearer');
 
-        $oauthAccessTokenValidationResponseTransfer = $this->getOauthFacade()
+        $oauthAccessTokenValidationResponseTransfer = $this->oauthFacade
             ->validateAccessToken($oauthAccessTokenValidationRequestTransfer);
 
         $this->assertFalse($oauthAccessTokenValidationResponseTransfer->getIsValid());
@@ -141,7 +149,7 @@ class OauthFacadeTest extends Unit
             ->setIdentifier('identifier')
             ->setDescription('test scope');
 
-        $oauthScopeTransfer = $this->getOauthFacade()->saveScope($oauthScopeTransfer);
+        $oauthScopeTransfer = $this->oauthFacade->saveScope($oauthScopeTransfer);
 
         $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
     }
@@ -158,7 +166,7 @@ class OauthFacadeTest extends Unit
             ->setIsConfidential(true)
             ->setRedirectUri('url');
 
-        $oauthClientTransfer = $this->getOauthFacade()->saveClient($oauthClientTransfer);
+        $oauthClientTransfer = $this->oauthFacade->saveClient($oauthClientTransfer);
 
         $this->assertNotEmpty($oauthClientTransfer->getIdOauthClient());
     }
@@ -175,9 +183,9 @@ class OauthFacadeTest extends Unit
             ->setIsConfidential(true)
             ->setRedirectUri('url');
 
-        $this->getOauthFacade()->saveClient($oauthClientTransfer);
+        $this->oauthFacade->saveClient($oauthClientTransfer);
 
-        $oauthClientTransfer = $this->getOauthFacade()->findClientByIdentifier($oauthClientTransfer);
+        $oauthClientTransfer = $this->oauthFacade->findClientByIdentifier($oauthClientTransfer);
 
         $this->assertNotNull($oauthClientTransfer);
     }
@@ -191,9 +199,9 @@ class OauthFacadeTest extends Unit
             ->setIdentifier('identifier')
             ->setDescription('test scope');
 
-        $this->getOauthFacade()->saveScope($oauthScopeTransfer);
+        $this->oauthFacade->saveScope($oauthScopeTransfer);
 
-        $oauthScopeTransfer = $this->getOauthFacade()->findScopeByIdentifier($oauthScopeTransfer);
+        $oauthScopeTransfer = $this->oauthFacade->findScopeByIdentifier($oauthScopeTransfer);
 
         $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
     }
@@ -205,19 +213,19 @@ class OauthFacadeTest extends Unit
     {
         $identifiers = ['identifier', 'test_identifier'];
 
-        $this->getOauthFacade()->saveScope(
+        $this->oauthFacade->saveScope(
             (new OauthScopeTransfer())
             ->setIdentifier($identifiers[0])
             ->setDescription('scope')
         );
 
-        $this->getOauthFacade()->saveScope(
+        $this->oauthFacade->saveScope(
             (new OauthScopeTransfer())
                 ->setIdentifier($identifiers[1])
                 ->setDescription('test scope')
         );
 
-        $oauthScopeTransfers = $this->getOauthFacade()->getScopesByIdentifiers($identifiers);
+        $oauthScopeTransfers = $this->oauthFacade->getScopesByIdentifiers($identifiers);
 
         foreach ($oauthScopeTransfers as $oauthScopeTransfer) {
             $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
@@ -230,6 +238,8 @@ class OauthFacadeTest extends Unit
     public function testRevokeRefreshTokenShouldSuccessWithValidToken(): void
     {
         // Arrange
+        $this->tester->deleteAllOauthRefreshTokens();
+        $this->getOauthToOauthRevokeFacadeBridgeMock();
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
         $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer);
@@ -240,7 +250,7 @@ class OauthFacadeTest extends Unit
         );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->oauthFacade->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
@@ -258,7 +268,7 @@ class OauthFacadeTest extends Unit
         );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->oauthFacade->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertFalse($revokerRefreshTokenResponseTransfer->getIsSuccessful());
@@ -275,7 +285,7 @@ class OauthFacadeTest extends Unit
         );
 
         // Act
-        $revokerRefreshTokenResponseTransfer = $this->getOauthFacade()->revokeAllRefreshTokens($revokeRefreshTokenRequestTransfer);
+        $revokerRefreshTokenResponseTransfer = $this->oauthFacade->revokeAllRefreshTokens($revokeRefreshTokenRequestTransfer);
 
         // Assert
         $this->assertTrue($revokerRefreshTokenResponseTransfer->getIsSuccessful());
@@ -287,8 +297,8 @@ class OauthFacadeTest extends Unit
     public function dependencyOfRefreshTokenRetentionIntervalToRefreshTokenCountDataProvider()
     {
         return [
-            ['P2M', 0],
-            ['PT0M', 1],
+            ['-2 month', 0],
+            ['+2 month', 1],
         ];
     }
 
@@ -304,14 +314,27 @@ class OauthFacadeTest extends Unit
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
-        $oauthConfigMock = $this->getOauthConfigMock();
-        $oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn($interval);
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
         $this->tester->haveAuthorizationToGlue($customerTransfer);
 
+        $oauthClient = new SpyOauthClient();
+        $oauthClient
+            ->setName('test')
+            ->setIdentifier('test')
+            ->save();
+
+        $expectedOauthRefreshToken = new SpyOauthRefreshToken();
+        $expectedOauthRefreshToken
+            ->setIdentifier('test')
+            ->setUserIdentifier('test')
+            ->setFkOauthClient($oauthClient->getIdentifier())
+            ->setCustomerReference('test')
+            ->setExpiresAt((new DateTime($interval))->format('Y-m-d'))
+            ->save();
+
         // Act
-        $this->getOauthFacade($oauthConfigMock)->deleteExpiredRefreshTokens();
+        $this->oauthFacade->deleteExpiredRefreshTokens();
 
         // Assert
         $this->assertEquals($matches, $this->tester->getOauthRefreshTokensCount());
@@ -398,39 +421,18 @@ class OauthFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\OauthConfig
+     * @return void
      */
-    protected function getOauthConfigMock(): OauthConfig
+    protected function getOauthToOauthRevokeFacadeBridgeMock(): void
     {
-        $oauthConfigMock = $this->createMock(OauthConfig::class);
-        $oauthConfigMock
-            ->method('getPrivateKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PRIVATE_KEY_PATH));
-        $oauthConfigMock
-            ->method('getPublicKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PUBLIC_KEY_PATH));
-        $oauthConfigMock
-            ->method('getAccessTokenTTL')->willReturn('PT8H');
-        $oauthConfigMock
-            ->method('getRefreshTokenTTL')->willReturn('P1M');
+        $oauthRefreshTokenTransfer = new OauthRefreshTokenTransfer();
+        $oauthRefreshTokenTransfer->setIdentifier('test-identifier');
 
-        return $oauthConfigMock;
-    }
+        $oauthRevokeFacade = $this->createMock(OauthToOauthRevokeFacadeBridge::class);
+        $oauthRevokeFacade
+            ->method('findRefreshToken')->willReturn($oauthRefreshTokenTransfer);
 
-    /**
-     * @param \Spryker\Zed\Oauth\OauthConfig|null $oauthConfigMock
-     *
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getOauthFacade(?OauthConfig $oauthConfigMock = null): AbstractFacade
-    {
-        if (!$oauthConfigMock) {
-            return $this->tester->getFacade();
-        }
-
-        $oauthBusinessFactory = new OauthBusinessFactory();
-        $oauthBusinessFactory->setConfig($oauthConfigMock);
-
-        return $this->tester->getFacade()
-            ->setFactory($oauthBusinessFactory);
+        $this->tester->setDependency(OauthDependencyProvider::FACADE_OAUTH_REVOKE, $oauthRevokeFacade);
     }
 
     /**
