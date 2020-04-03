@@ -359,7 +359,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves product concrete ids from Storage using specified mapping type and locale name.
-     * - Returned data is indexed by the identifiers.
+     * - Returned product IDs are indexed by the SKUs.
      *
      * @api
      *
