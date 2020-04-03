@@ -31,7 +31,6 @@ import {
         TableFiltersFeatureModule,
         TableFilterSelectModule,
         TableModule,
-        TableModule.forRoot(),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,

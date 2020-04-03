@@ -9,6 +9,6 @@ import { TableConfig, TableFeatureLocation } from '@spryker/table';
     encapsulation: ViewEncapsulation.None
 })
 export class ProductOfferTableComponent {
-    @Input() tableConfig: any;
+    @Input() config: any;
     tableLocation = TableFeatureLocation;
 }
