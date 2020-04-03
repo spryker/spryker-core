@@ -57,7 +57,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
         }
 
         $ifRequestedItemIsInQuote = $this->checkRequestedItemIsInQuote(
-            $cartItemRequestTransfer->getSku(),
+            $cartItemRequestTransfer,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
         );
 
@@ -72,19 +72,23 @@ class QuoteItemReader implements QuoteItemReaderInterface
     }
 
     /**
-     * @param string $itemSku
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return bool
      */
-    protected function checkRequestedItemIsInQuote(string $itemSku, array $items): bool
+    protected function checkRequestedItemIsInQuote(CartItemRequestTransfer $cartItemRequestTransfer, array $items): bool
     {
         if (count($items) === 0) {
             return false;
         }
 
         foreach ($items as $item) {
-            if ($item->getSku() === $itemSku) {
+            if ($cartItemRequestTransfer->getGroupKey()) {
+                return $item->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
+            }
+
+            if ($item->getSku() === $cartItemRequestTransfer->getSku()) {
                 return true;
             }
         }
