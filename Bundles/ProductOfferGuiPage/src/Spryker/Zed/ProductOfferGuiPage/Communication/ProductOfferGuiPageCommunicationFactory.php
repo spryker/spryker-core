@@ -58,7 +58,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function createProductTableDataProvider(): ProductTableDataProviderInterface
     {
         return new ProductTableDataProvider(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getTranslatorFacade()
         );
     }
 
