@@ -142,6 +142,17 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return [];
         }
 
+        return $this->getFilteredProductConcreteIds($storageKeys, $mappingData);
+    }
+
+    /**
+     * @param string[] $storageKeys
+     * @param array $mappingData
+     *
+     * @return int[]
+     */
+    protected function getFilteredProductConcreteIds(array $storageKeys, array $mappingData): array
+    {
         $identifiersByStorageKey = [];
         foreach ($storageKeys as $identifier => $storageKey) {
             $identifiersByStorageKey[static::KV_PREFIX . $storageKey] = $identifier;
@@ -161,7 +172,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param string $mappingType
+     * @param string $mappingTypex
      * @param string[] $identifiers
      * @param string $localeName
      *
