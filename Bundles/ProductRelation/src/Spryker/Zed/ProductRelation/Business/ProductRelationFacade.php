@@ -101,6 +101,50 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
+     * @deprecated Use \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation() instead.
+     *
+     * @see \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()
+     *
+     * @param int $idProductRelation
+     *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return void
+     */
+    public function activateProductRelation($idProductRelation)
+    {
+        $this->getFactory()
+            ->createProductRelationActivator()
+            ->activate($idProductRelation);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation() instead.
+     *
+     * @see \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()
+     *
+     * @param int $idProductRelation
+     *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return void
+     */
+    public function deactivateProductRelation($idProductRelation)
+    {
+        $this->getFactory()
+            ->createProductRelationActivator()
+            ->deactivate($idProductRelation);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function rebuildRelations()

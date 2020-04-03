@@ -78,6 +78,34 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
+     * - Activates product relation and touches relation collector
+     *
+     * @api
+     *
+     * @param int $idProductRelation
+     *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return void
+     */
+    public function activateProductRelation($idProductRelation);
+
+    /**
+     * Specification:
+     * - Deactivates product relation and touches relation collector
+     *
+     * @api
+     *
+     * @param int $idProductRelation
+     *
+     * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
+     *
+     * @return void
+     */
+    public function deactivateProductRelation($idProductRelation);
+
+    /**
+     * Specification:
      * - Rebuilds all active relations with selected is_rebuild_scheduled = true, reruns stored query.
      *
      * @api
