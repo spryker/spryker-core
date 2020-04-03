@@ -227,7 +227,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getHydrateOrderPlugins()
+            $this->getCustomerFacade(),
+            $this->getHydrateOrderPlugins(),
+            $this->getCustomerOrderPreCheckPlugins()
         );
     }
 
@@ -239,7 +241,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getHydrateOrderPlugins()
+            $this->getCustomerFacade(),
+            $this->getHydrateOrderPlugins(),
+            $this->getCustomerOrderPreCheckPlugins()
         );
     }
 
@@ -515,5 +519,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getOrderSearchQueryExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_SEARCH_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[]
+     */
+    public function getCustomerOrderPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_PRE_CHECK);
     }
 }

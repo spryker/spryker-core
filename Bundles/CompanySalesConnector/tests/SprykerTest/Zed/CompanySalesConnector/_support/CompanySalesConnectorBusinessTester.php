@@ -8,9 +8,12 @@
 namespace SprykerTest\Zed\CompanySalesConnector;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -46,5 +49,35 @@ class CompanySalesConnectorBusinessTester extends Actor
         $customerTransfer = (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer);
 
         return (new QuoteTransfer())->setCustomer($customerTransfer);
+    }
+
+    /**
+     * @param string $permissionKey
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function haveCompanyUserWithPermission(string $permissionKey): CompanyUserTransfer
+    {
+        $companyTransfer = $this->haveCompany();
+
+        $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission(
+            $this->getLocator()->permission()->facade()->findPermissionByKey($permissionKey)
+        );
+
+        $companyRoleTransfer = $this->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
+        ]);
+
+        $companyUserTransfer = $this->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $this->haveCustomer(),
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::COMPANY_ROLE_COLLECTION => (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer),
+        ]);
+
+        $this->assignCompanyRolesToCompanyUser($companyUserTransfer);
+
+        return $companyUserTransfer
+            ->setCompany($companyTransfer);
     }
 }

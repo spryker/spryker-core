@@ -45,6 +45,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER = 'PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER';
     public const PLUGINS_SEARCH_ORDER_EXPANDER = 'PLUGINS_SEARCH_ORDER_EXPANDER';
     public const PLUGINS_ORDER_SEARCH_QUERY_EXPANDER = 'PLUGINS_ORDER_SEARCH_QUERY_EXPANDER';
+    public const PLUGINS_CUSTOMER_ORDER_PRE_CHECK = 'PLUGINS_CUSTOMER_ORDER_PRE_CHECK';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -76,6 +77,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
         $container = $this->addSearchOrderExpanderPlugins($container);
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
+        $container = $this->addCustomerOrderPreCheckPlugins($container);
 
         return $container;
     }
@@ -395,6 +397,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerOrderPreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CUSTOMER_ORDER_PRE_CHECK, function () {
+            return $this->getCustomerOrderPreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -470,6 +486,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[]
      */
     protected function getOrderSearchQueryExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[]
+     */
+    protected function getCustomerOrderPreCheckPlugins(): array
     {
         return [];
     }
