@@ -319,6 +319,6 @@ class DataImportConsole extends Console
             return $input->getOption(static::OPTION_CONFIG);
         }
 
-        return $this->getConfig()->getYamlConfigPath();
+        return $this->getConfig()->getDefaultYamlConfigPath();
     }
 }
