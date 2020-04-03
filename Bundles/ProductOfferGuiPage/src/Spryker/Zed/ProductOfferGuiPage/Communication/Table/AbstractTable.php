@@ -29,7 +29,7 @@ abstract class AbstractTable
     protected const CONFIG_SEARCH = 'search';
 
     protected const PARAM_PAGE = 'page';
-    protected const PARAM_PAGE_SIZE = 'size';
+    protected const PARAM_PAGE_SIZE = 'pageSize';
     protected const PARAM_SORT_BY = 'sortBy';
     protected const PARAM_SORT_DIRECTION = 'sortDirection';
     protected const PARAM_SEARCH_TERM = 'search';
@@ -102,7 +102,7 @@ abstract class AbstractTable
         $this->initialize($request);
         $guiTableDataTransfer = $this->provideTableData();
 
-        return $guiTableDataTransfer->toArray();
+        return $guiTableDataTransfer->toArray(true, true);
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class AbstractTable
         $filtersData = [];
 
         foreach ($guiTableConfigurationTransfer->getFilters() as $filterTransfer) {
-            $filtersData[] = $filterTransfer->toArray();
+            $filtersData[] = $filterTransfer->toArray(true, true);
         }
 
         return $filtersData;
@@ -177,7 +177,7 @@ abstract class AbstractTable
         $rowActions = [];
 
         foreach ($guiTableConfigurationTransfer->getRowActions() as $rowActionTransfer) {
-            $rowActions[] = $rowActionTransfer->toArray();
+            $rowActions[] = $rowActionTransfer->toArray(true, true);
         }
 
         return $rowActions;

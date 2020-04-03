@@ -9,6 +9,6 @@ import { TableConfig } from '@spryker/table';
     encapsulation: ViewEncapsulation.None
 })
 export class ProductOfferComponent {
-    @Input() tableConfig: TableConfig = {};
+    @Input() tableConfig: TableConfig;
     @Input() title: string;
 }
