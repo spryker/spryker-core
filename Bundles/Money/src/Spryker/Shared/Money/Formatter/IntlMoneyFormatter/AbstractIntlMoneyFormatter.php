@@ -22,7 +22,7 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
     protected $converter;
 
     /**
-     * @var \Money\Formatter\IntlMoneyFormatter[]
+     * @var \Money\Formatter\IntlMoneyFormatter[][]
      */
     protected static $formatters = [];
 
@@ -88,14 +88,14 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
      */
     protected function getInnerFormatter($localeName)
     {
-        if (!isset(static::$formatters[$localeName])) {
-            static::$formatters[$localeName] = new InnerFormatter(
+        if (!isset(static::$formatters[static::class][$localeName])) {
+            static::$formatters[static::class][$localeName] = new InnerFormatter(
                 $this->getNumberFormatter($localeName),
                 $this->getIsoCurrencies()
             );
         }
 
-        return static::$formatters[$localeName];
+        return static::$formatters[static::class][$localeName];
     }
 
     /**

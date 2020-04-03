@@ -119,6 +119,7 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
         $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $this->tester->clearFactoryContainerCache();
 
         return $customerTransfer;
     }

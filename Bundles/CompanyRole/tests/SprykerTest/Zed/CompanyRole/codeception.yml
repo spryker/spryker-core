@@ -28,3 +28,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
+                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

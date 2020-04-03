@@ -297,6 +297,7 @@ class CmsFacadeTest extends Unit
      */
     public function testAddPlaceholderTextInsertsAndReturnsSomething(): void
     {
+        $this->tester->clearFactoryContainerCache();
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $pageMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
 
@@ -329,6 +330,7 @@ class CmsFacadeTest extends Unit
      */
     public function testTranslatePlaceholder(): void
     {
+        $this->tester->clearFactoryContainerCache();
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
         $page = new PageTransfer();
@@ -347,6 +349,7 @@ class CmsFacadeTest extends Unit
      */
     public function testCreatePageAndTouchForCustomLocale(): void
     {
+        $this->tester->clearFactoryContainerCache();
         $localeTransfer = $this->localeFacade->createLocale('ABCDE');
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
@@ -371,6 +374,7 @@ class CmsFacadeTest extends Unit
      */
     public function testCreatePageAndTouchForCurrentLocale(): void
     {
+        $this->tester->clearFactoryContainerCache();
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
         $pageTransfer = new PageTransfer();

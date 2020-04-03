@@ -24,3 +24,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Zed\ContentProductSetDataImport\Helper\ContentProductSetDataImportHelper
+                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

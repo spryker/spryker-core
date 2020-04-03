@@ -54,11 +54,6 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $databaseStrategyPreCheckPlugins;
 
     /**
-     * @var bool|null
-     */
-    protected static $isCustomerLoggedIn;
-
-    /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
@@ -102,19 +97,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
             return false;
         }
 
-        return $this->isCustomerLoggedIn();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCustomerLoggedIn(): bool
-    {
-        if (static::$isCustomerLoggedIn === null) {
-            static::$isCustomerLoggedIn = $this->customerClient->isLoggedIn();
-        }
-
-        return static::$isCustomerLoggedIn;
+        return $this->customerClient->isLoggedIn();
     }
 
     /**
