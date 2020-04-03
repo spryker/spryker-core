@@ -10,6 +10,10 @@ namespace Spryker\Zed\OauthRevoke\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OauthRevoke\Business\Creator\OauthRefreshTokenCreator;
 use Spryker\Zed\OauthRevoke\Business\Creator\OauthRefreshTokenCreatorInterface;
+use Spryker\Zed\OauthRevoke\Business\Mapper\OauthRefreshTokenMapper;
+use Spryker\Zed\OauthRevoke\Business\Mapper\OauthRefreshTokenMapperInterface;
+use Spryker\Zed\OauthRevoke\Business\Revoker\OauthRefreshTokenRevoker;
+use Spryker\Zed\OauthRevoke\Business\Revoker\OauthRefreshTokenRevokerInterface;
 use Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthRevoke\OauthRevokeDependencyProvider;
 
@@ -27,7 +31,28 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthRefreshTokenCreator(
             $this->getEntityManager(),
+            $this->createOauthRefreshTokenMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthRevoke\Business\Mapper\OauthRefreshTokenMapperInterface
+     */
+    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapperInterface
+    {
+        return new OauthRefreshTokenMapper(
             $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthRevoke\Business\Revoker\OauthRefreshTokenRevokerInterface
+     */
+    public function createOauthRefreshTokenRevoker(): OauthRefreshTokenRevokerInterface
+    {
+        return new OauthRefreshTokenRevoker(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

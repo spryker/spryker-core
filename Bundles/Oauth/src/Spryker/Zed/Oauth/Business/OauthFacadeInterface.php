@@ -128,7 +128,7 @@ interface OauthFacadeInterface
      * - Revokes refresh token by provided identifier and customer reference.
      * - Requires `refreshToken` and `customerReference` to be set on `RevokeRefreshTokenRequestTransfer` taken as parameter.
      * - Decrypts the `refreshToken`.
-     * - Looks up the the persisted refresh token record by the `identifier` and `customerReference`.
+     * - Looks up the persisted refresh token record by the `identifier` and `customerReference`.
      * - Revokes refresh token found.
      * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = true` on success.
      * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = false` when refresh token cannot be decrypted.

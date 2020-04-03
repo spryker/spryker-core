@@ -74,10 +74,7 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      */
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
     {
-        if ($this->isRefreshTokenRevoked($oauthRefreshTokenTransfer)) {
-            return;
-        }
-        $this->getEntityManager()->revokeRefreshToken($oauthRefreshTokenTransfer);
+        $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshToken($oauthRefreshTokenTransfer);
     }
 
     /**

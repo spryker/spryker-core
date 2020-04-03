@@ -13,7 +13,7 @@ interface OauthRefreshTokenRevokerPluginInterface
      * @api
      *
      * Specification:
-     * - Revoke the refresh token.
+     * - Revoke refresh token by provided token identifier.
      *
      * @param string $tokenId
      *

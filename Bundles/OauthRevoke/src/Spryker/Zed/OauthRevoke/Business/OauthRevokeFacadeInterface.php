@@ -25,6 +25,10 @@ interface OauthRevokeFacadeInterface
     public function deleteExpiredRefreshTokens(string $expiresAt): int;
 
     /**
+     * Specification:
+     * - Returns collection of refresh tokens by provided criteria which can be filtered by `customer reference`, `identifier` and `isRevoked` fields.
+     * - Returns `OauthRefreshTokenTransfer` if found, NULL otherwise.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
@@ -34,6 +38,9 @@ interface OauthRevokeFacadeInterface
     public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
 
     /**
+     * Specification:
+     * - Returns collection of refresh tokens by provided criteria which can be filtered by `customer reference`, `identifier` and `isRevoked` fields.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
@@ -43,6 +50,13 @@ interface OauthRevokeFacadeInterface
     public function getRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): OauthRefreshTokenCollectionTransfer;
 
     /**
+     * Specification:
+     * - Checks if refresh token isn't revoked yet by provided identifier.
+     * - Revokes refresh token by provided identifier.
+     * - Requires `identifier` to be set on `OauthRefreshTokenTransfer` taken as parameter.
+     * - Looks up the persisted refresh token record by the `identifier`.
+     * - Revokes refresh token found.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
@@ -52,6 +66,12 @@ interface OauthRevokeFacadeInterface
     public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 
     /**
+     * Specification:
+     * - Revokes all refresh tokens by provided identifiers.
+     * - Requires `identifier` to be set on each `OauthRefreshTokenTransfer` given from `ArrayObject` taken as parameter.
+     * - Looks up all refresh tokens by the `identifier` list.
+     * - Revokes each refresh token.
+     *
      * @api
      *
      * @param \ArrayObject $oauthRefreshTokenTransfers
@@ -61,6 +81,9 @@ interface OauthRevokeFacadeInterface
     public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void;
 
     /**
+     * Specification:
+     * - Check if the refresh token has been revoked by provided identifier.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
@@ -70,6 +93,9 @@ interface OauthRevokeFacadeInterface
     public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 
     /**
+     * Specification:
+     * - Persists a new refresh token to permanent storage.
+     *
      * @api
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
