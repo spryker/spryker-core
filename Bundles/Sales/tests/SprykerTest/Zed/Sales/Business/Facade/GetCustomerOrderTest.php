@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\Sales\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Pyz\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface;
 
 /**

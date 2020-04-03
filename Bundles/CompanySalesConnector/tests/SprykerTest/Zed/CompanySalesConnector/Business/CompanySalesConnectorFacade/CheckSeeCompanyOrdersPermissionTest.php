@@ -11,9 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Pyz\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Shared\CompanySalesConnector\Plugin\Permission\SeeCompanyOrdersPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
+use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
  * Auto-generated group annotations
