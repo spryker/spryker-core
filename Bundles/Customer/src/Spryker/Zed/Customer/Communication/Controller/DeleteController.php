@@ -41,8 +41,11 @@ class DeleteController extends AbstractController
             return $this->redirectResponse('/customer');
         }
 
+        $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
+
         return $this->viewResponse([
-            'idCustomer' => $customerTransfer->getIdCustomer(),
+            'customerDeleteForm' => $customerDeleteForm->setData($customerTransfer)
+                ->createView(),
         ]);
     }
 
@@ -53,13 +56,20 @@ class DeleteController extends AbstractController
      */
     public function confirmAction(Request $request)
     {
-        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
+        $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
+        $customerDeleteForm->handleRequest($request);
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
+        if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
+            foreach ($customerDeleteForm->getErrors(true) as $formError) {
+                /** @var \Symfony\Component\Form\FormError $formError */
+                $this->addErrorMessage($formError->getMessage(), $formError->getMessageParameters());
+            }
+
+            return $this->redirectResponse('/customer');
+        }
 
         try {
-            $this->getFacade()->anonymizeCustomer($customerTransfer);
+            $this->getFacade()->anonymizeCustomer($customerDeleteForm->getData());
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 
