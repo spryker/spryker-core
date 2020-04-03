@@ -73,22 +73,22 @@ class QuoteItemReader implements QuoteItemReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool
      */
-    protected function checkRequestedItemIsInQuote(CartItemRequestTransfer $cartItemRequestTransfer, array $items): bool
+    protected function checkRequestedItemIsInQuote(CartItemRequestTransfer $cartItemRequestTransfer, array $itemTransfers): bool
     {
-        if (count($items) === 0) {
+        if (count($itemTransfers) === 0) {
             return false;
         }
 
-        foreach ($items as $item) {
+        foreach ($itemTransfers as $itemTransfer) {
             if ($cartItemRequestTransfer->getGroupKey()) {
-                return $item->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
+                return $itemTransfer->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
             }
 
-            if ($item->getSku() === $cartItemRequestTransfer->getSku()) {
+            if ($itemTransfer->getSku() === $cartItemRequestTransfer->getSku()) {
                 return true;
             }
         }
