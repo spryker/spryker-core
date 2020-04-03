@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Transfer\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
- * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
-class EntityTransferGeneratorConsole extends Console
+class RemoveDataBuilderConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:entity:generate';
-    public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema definition files';
+    public const COMMAND_NAME = 'transfer:databuilder:remove';
+    public const COMMAND_DESCRIPTION = 'Removes the generated data builders';
 
     /**
      * @return void
@@ -40,11 +40,9 @@ class EntityTransferGeneratorConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $transferFacade = $this->getFactory()->getTransferFacade();
-        $messenger = $this->getMessenger();
+        $transferFacade = $this->getFacade();
 
-        $transferFacade->deleteGeneratedEntityTransferObjects();
-        $transferFacade->generateEntityTransferObjects($messenger);
+        $transferFacade->deleteGeneratedDataBuilderObjects();
 
         return static::CODE_SUCCESS;
     }

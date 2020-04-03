@@ -15,10 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
-class EntityTransferGeneratorConsole extends Console
+class RemoveEntityTransferConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:entity:generate';
-    public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema definition files';
+    public const COMMAND_NAME = 'transfer:entity:remove';
+    public const COMMAND_DESCRIPTION = 'Removes generated entity transfer objects';
 
     /**
      * @return void
@@ -41,10 +41,8 @@ class EntityTransferGeneratorConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $transferFacade = $this->getFactory()->getTransferFacade();
-        $messenger = $this->getMessenger();
 
         $transferFacade->deleteGeneratedEntityTransferObjects();
-        $transferFacade->generateEntityTransferObjects($messenger);
 
         return static::CODE_SUCCESS;
     }
