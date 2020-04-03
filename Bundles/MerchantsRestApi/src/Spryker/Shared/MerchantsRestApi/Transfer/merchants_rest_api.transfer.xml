@@ -41,6 +41,7 @@
         <property name="merchantReference" type="string"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantProfile" type="MerchantStorageProfile"/>
+        <property name="merchantStorageProfile" type="MerchantStorageProfile"/>
     </transfer>
 
     <transfer name="MerchantStorageProfile">
@@ -63,6 +64,7 @@
         <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
+        <property name="merchantUrl" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorageProfileAddress">
@@ -79,6 +81,9 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
     </transfer>
 
 </transfers>
