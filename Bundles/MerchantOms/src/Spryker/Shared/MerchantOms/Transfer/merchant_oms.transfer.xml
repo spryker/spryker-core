@@ -38,12 +38,15 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
-    <transfer name="StateMachineProcessCriteriaFilter">
+    <transfer name="StateMachineProcessCriteria">
         <property name="idStateMachineProcess" type="int"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">
         <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCriteria">
     </transfer>
 
 </transfers>
