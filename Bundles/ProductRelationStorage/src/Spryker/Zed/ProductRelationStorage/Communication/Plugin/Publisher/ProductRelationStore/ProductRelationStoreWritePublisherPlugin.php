@@ -25,14 +25,14 @@ class ProductRelationStoreWritePublisherPlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductRelationStoreEvents($transfers);
+        $this->getFacade()->writeCollectionByProductRelationStoreEvents($eventTransfers);
     }
 
     /**
