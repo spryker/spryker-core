@@ -7,10 +7,17 @@
 
 namespace SprykerTest\Zed\ProductOffer\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductOffer\Business\ProductOfferBusinessFactory;
+use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
+use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -118,5 +125,54 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
         $this->assertFalse($productOfferResponseTransfer->getProductOffer()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testfilterInactiveProductOfferItems(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setItems(new ArrayObject([
+            (new ItemTransfer())->setProductOfferReference('test1')->setSku('sku1'),
+            (new ItemTransfer())->setProductOfferReference('test2')->setSku('sku2'),
+        ]));
+
+        $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
+        $productOfferCollectionTransfer->setProductOffers(
+            new ArrayObject([
+                (new ProductOfferTransfer())->setProductOfferReference('test1'),
+            ])
+        );
+
+        $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
+            ->setMethods(['find', 'findOne'])
+            ->getMock();
+        $productOfferRepositoryMock
+            ->method('find')
+            ->willReturn($productOfferCollectionTransfer);
+
+        $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
+            ->setMethods(['getRepository', 'resolveDependencyProvider'])
+            ->getMock();
+        $productOfferBusinessFactoryMock
+            ->method('getRepository')
+            ->willReturn($productOfferRepositoryMock);
+        $productOfferBusinessFactoryMock
+            ->method('resolveDependencyProvider')
+            ->willReturn(
+                new ProductOfferDependencyProvider()
+            );
+
+        /** @var \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $productOfferFacade */
+        $productOfferFacade = $this->tester->getFacade();
+        $productOfferFacade->setFactory($productOfferBusinessFactoryMock);
+
+        // Act
+        $quoteTransferFiltered = $productOfferFacade->filterInactiveProductOfferItems($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransferFiltered->getItems());
     }
 }

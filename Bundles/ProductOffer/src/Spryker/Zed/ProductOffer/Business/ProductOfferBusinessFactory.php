@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilter;
-use Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilterInterface;
+use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilter;
+use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilterInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOffer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\ProductOffer\ProductOfferWriterInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
@@ -35,11 +35,11 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter\InactiveOfferItemsFilterInterface
+     * @return \Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilterInterface
      */
-    public function createInactiveOfferItemsFilter(): InactiveOfferItemsFilterInterface
+    public function createInactiveProductOfferItemsFilter(): InactiveProductOfferItemsFilterInterface
     {
-        return new InactiveOfferItemsFilter(
+        return new InactiveProductOfferItemsFilter(
             $this->getRepository(),
             $this->getStoreFacade(),
             $this->getMessengerFacade()

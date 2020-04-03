@@ -72,9 +72,9 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, $container->factory(function (Container $container) {
             return new ProductOfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        }));
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, $container->factory(function (Container $container) {
             return new ProductOfferToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        }));
 
         return $container;
     }

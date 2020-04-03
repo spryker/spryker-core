@@ -72,7 +72,7 @@ interface ProductOfferFacadeInterface
     /**
      * Specification:
      *  - Removes inactive offer items from quote.
-     *  - Adds note to messages about removed offer items.
+     *  - Adds info messages for the removed product offers.
      *
      * @api
      *
@@ -80,5 +80,5 @@ interface ProductOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

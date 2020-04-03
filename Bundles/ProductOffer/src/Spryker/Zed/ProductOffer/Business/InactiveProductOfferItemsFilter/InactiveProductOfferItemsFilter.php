@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter;
+namespace Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
@@ -15,7 +15,7 @@ use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInte
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
-class InactiveOfferItemsFilter implements InactiveOfferItemsFilterInterface
+class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilterInterface
 {
     protected const MESSAGE_PARAM_SKU = '%sku%';
     protected const MESSAGE_INFO_OFFER_INACTIVE_PRODUCT_REMOVED = 'product-offer.info.product-offer-inactive.removed';
@@ -55,24 +55,22 @@ class InactiveOfferItemsFilter implements InactiveOfferItemsFilterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $offerReferences = $this->getProductOfferReferencesFromQuoteTransfer($quoteTransfer);
 
-        $productOfferCollectionTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCollectionTransfer->setProductOfferReferences($offerReferences);
-        $productOfferCollectionTransfer->setIsActive(true);
-        $productOfferCollectionTransfer->setIdStore(
-            $this->storeFacade->getCurrentStore()->getIdStore()
-        );
+        $productOfferCollectionTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences($offerReferences)
+            ->setIsActive(true)
+            ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
         $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCollectionTransfer);
 
-        $indexedProductConcreteTransfers = $this->indexProductOfferTransfersByOfferReferences($productOfferCollectionTransfer);
+        $indexedProductConcreteTransfers = $this->indexByProductOfferReferences($productOfferCollectionTransfer);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             if (
                 $itemTransfer->getProductOfferReference() !== null &&
-                !$this->existOffer($itemTransfer->getProductOfferReference(), $indexedProductConcreteTransfers)
+                !isset($indexedProductConcreteTransfers[$itemTransfer->getProductOfferReference()])
             ) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
@@ -120,15 +118,15 @@ class InactiveOfferItemsFilter implements InactiveOfferItemsFilterInterface
      */
     protected function getProductOfferReferencesFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {
-        $offerReferences = [];
+        $productOfferReferences = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getProductOfferReference()) {
-                $offerReferences[] = $itemTransfer->getProductOfferReference();
+                $productOfferReferences[] = $itemTransfer->getProductOfferReference();
             }
         }
 
-        return $offerReferences;
+        return $productOfferReferences;
     }
 
     /**
@@ -136,7 +134,7 @@ class InactiveOfferItemsFilter implements InactiveOfferItemsFilterInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
      */
-    protected function indexProductOfferTransfersByOfferReferences(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
+    protected function indexByProductOfferReferences(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {
         $indexedProductOfferTransfers = [];
 

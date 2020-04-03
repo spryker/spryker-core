@@ -34,10 +34,6 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
-    <transfer name="MessageTransfer">
-        <property name="message" type="string"/>
-    </transfer>
-
     <transfer name="ProductOfferCollection">
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>

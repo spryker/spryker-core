@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOffer\Business\InactiveOfferItemsFilter;
+namespace Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface InactiveOfferItemsFilterInterface
+interface InactiveProductOfferItemsFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

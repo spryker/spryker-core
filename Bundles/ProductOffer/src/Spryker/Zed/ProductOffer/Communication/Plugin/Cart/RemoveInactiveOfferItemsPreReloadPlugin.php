@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -20,9 +20,8 @@ class RemoveInactiveOfferItemsPreReloadPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     *   - This plugin check and remove inactive offers from cart.
-     *   - Adds message after removing offer from cart.
+     *   - Checks and removes inactive product offers from the cart.
+     *   - Adds info messages for the removed product offers.
      *
      * @api
      *
@@ -32,6 +31,6 @@ class RemoveInactiveOfferItemsPreReloadPlugin extends AbstractPlugin implements 
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->filterInactiveOfferItems($quoteTransfer);
+        return $this->getFacade()->filterInactiveProductOfferItems($quoteTransfer);
     }
 }

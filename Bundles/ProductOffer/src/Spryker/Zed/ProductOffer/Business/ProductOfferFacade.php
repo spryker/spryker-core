@@ -88,10 +88,10 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createInactiveOfferItemsFilter()
-            ->filterInactiveOfferItems($quoteTransfer);
+            ->createInactiveProductOfferItemsFilter()
+            ->filterInactiveProductOfferItems($quoteTransfer);
     }
 }
