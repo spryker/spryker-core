@@ -107,6 +107,12 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductCriteriaFilter">
+        <property name="idStore" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="skus" type="string[]"/>
+    </transfer>
+
     <transfer name="Filter">
     </transfer>
 

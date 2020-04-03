@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -1125,5 +1126,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
     {
         return $this->getRepository()->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteriaFilter(ProductCriteriaFilterTransfer $productCriteriaFilterTransfer): array
+    {
+        return $this->getRepository()->getProductConcretesByCriteriaFilter($productCriteriaFilterTransfer);
     }
 }

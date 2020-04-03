@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -22,6 +23,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -354,8 +356,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
 
         $productAbstractQuery = $this->getFactory()
-            ->createProductAbstractQuery()
-            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->createProductAbstractQuery();
+        $productAbstractQuery->leftJoinSpyProductAbstractLocalizedAttributes()
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse()
@@ -584,6 +586,55 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->find();
 
         return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteriaFilter(ProductCriteriaFilterTransfer $productCriteriaFilterTransfer): array
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes();
+
+        $productQuery = $this->applyCriteriaFilter($productQuery, $productCriteriaFilterTransfer);
+        $productConcreteEntities = $productQuery->find();
+
+        if ($productConcreteEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
+    }
+
+    /**
+     * @module Store
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyCriteriaFilter(SpyProductQuery $productQuery, ProductCriteriaFilterTransfer $productCriteriaFilterTransfer)
+    {
+        if ($productCriteriaFilterTransfer->getSkus()) {
+            $productQuery->filterBySku_In($productCriteriaFilterTransfer->getSkus());
+        }
+        if ($productCriteriaFilterTransfer->getIsActive()) {
+            $productQuery->filterByIsActive($productCriteriaFilterTransfer->getIsActive());
+        }
+        if ($productCriteriaFilterTransfer->getIdStore()) {
+            $productQuery->useSpyProductAbstractQuery()
+                ->useSpyProductAbstractStoreQuery()
+                    ->filterByFkStore($productCriteriaFilterTransfer->getIdStore())
+                ->endUse()
+            ->endUse();
+        }
+
+        return $productQuery;
     }
 
     /**
