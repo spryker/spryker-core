@@ -70,12 +70,12 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
-        $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
-        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-            if ($shipmentTransfer === null) {
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $shipmentGroupShipmentTransfer = $shipmentGroupTransfer->getShipment();
+            if ($shipmentGroupShipmentTransfer === null) {
                 continue;
             }
 
@@ -83,29 +83,30 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            $availableShipmentMethods = $this->findAvailableShipmentMethodsByShipment(
-                $availableShipmentMethodsCollectionTransfer,
-                $shipmentTransfer
-            );
-
-            if ($availableShipmentMethods === null) {
-                continue;
-            }
-
-            $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
-            $shipmentMethodTransfer = $this->findAvailableShipmentMethodByIdShipmentMethod(
+            $availableShipmentMethodsByShipmentGroup = $this->findAvailableShipmentMethodsByShipment(
                 $availableShipmentMethods,
-                $cartShipmentMethodTransfer->getIdShipmentMethod()
+                $shipmentGroupShipmentTransfer
             );
 
-            if ($shipmentMethodTransfer === null) {
+            if ($availableShipmentMethodsByShipmentGroup === null) {
                 continue;
             }
 
-            $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-            $shipmentMethodTransfer->setSourcePrice($cartShipmentMethodTransfer->getSourcePrice());
+            $shipmentGroupShipmentMethodTransfer = $shipmentGroupShipmentTransfer->getMethod();
+            $availableShipmentMethodByShipmentGroup = $this->findAvailableShipmentMethodByIdShipmentMethod(
+                $availableShipmentMethodsByShipmentGroup,
+                $shipmentGroupShipmentMethodTransfer->getIdShipmentMethod()
+            );
+
+            if ($availableShipmentMethodByShipmentGroup === null) {
+                continue;
+            }
+
+            $availableShipmentMethodByShipmentGroup->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+            $availableShipmentMethodByShipmentGroup->setSourcePrice($shipmentGroupShipmentMethodTransfer->getSourcePrice());
+
             $shipmentGroupTransfer->getShipment()->setMethod(
-                (new ShipmentMethodTransfer())->fromArray($shipmentMethodTransfer->toArray())
+                (new ShipmentMethodTransfer())->fromArray($availableShipmentMethodByShipmentGroup->toArray())
             );
 
             $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
@@ -134,7 +135,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return true;
         }
 
-        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isDifferentQuoteShipmentAndExpenseShipmentPrices($quoteTransfer, $shipmentGroupTransfer)) {
+        if ($this->isDifferentQuoteShipmentAndExpenseShipmentPrices($quoteTransfer, $shipmentGroupTransfer)) {
             return true;
         }
 

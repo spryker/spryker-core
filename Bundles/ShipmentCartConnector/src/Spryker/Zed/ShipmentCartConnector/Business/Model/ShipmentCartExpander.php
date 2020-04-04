@@ -101,7 +101,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             return true;
         }
 
-        if (!$shipmentMethodTransfer->getSourcePrice() && $this->isDifferentQuoteShipmentAndExpenseShipmentPrices($quoteTransfer, $shipmentMethodTransfer)) {
+        if ($this->isDifferentQuoteShipmentAndExpenseShipmentPrices($quoteTransfer, $shipmentMethodTransfer)) {
             return true;
         }
 
