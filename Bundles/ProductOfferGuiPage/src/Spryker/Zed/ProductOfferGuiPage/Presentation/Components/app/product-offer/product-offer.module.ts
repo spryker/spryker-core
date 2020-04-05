@@ -1,18 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from '@spryker/table';
-import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table/columns';
 import { ProductOfferComponent } from './product-offer.component';
+import { ProductOfferTableModule } from "../product-offer-table/product-offer-table.module";
 
 @NgModule({
     imports: [
         CommonModule,
-        TableColumnTextModule,
-        TableModule,
-        TableModule.forRoot(),
-        TableModule.withColumnComponents({
-            text: TableColumnTextComponent,
-        } as any),
+        ProductOfferTableModule
     ],
     declarations: [
         ProductOfferComponent
