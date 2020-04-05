@@ -1,0 +1,21 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+
+{% block content %}
+    {% set config = {
+        dataUrl: dataUrl,
+        columns: columns,
+        selectable: true,
+        rowActions: rowActions,
+        pageSizes: pageSizes,
+        search: search,
+        filters: filters
+    } %}
+
+    <mp-product-offer table-config="{{ config | json_encode() }}"></mp-product-offer>
+{% endblock %}
+
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-product-offer/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp-product-offer/main-es5.js') }}" nomodule defer></script>
+{% endblock %}

@@ -18,7 +18,7 @@
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
-        <property name="searchOptions" type="array" associative="true" singular="searchOption"/>
+        <property name="search" type="array" associative="true" singular="searchOption"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">
@@ -79,6 +79,8 @@
         <property name="isActive" type="bool"/>
         <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
+        <property name="productAbstractLocalizedAttributes" type="array" singular="productAbstractLocalizedAttribute"/>
+        <property name="productConcreteLocalizedAttributes" type="array" singular="productConcreteLocalizedAttribute"/>
         <property name="offersCount" type="int"/>
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>

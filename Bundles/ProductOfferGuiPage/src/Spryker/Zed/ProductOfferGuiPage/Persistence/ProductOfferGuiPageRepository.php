@@ -21,15 +21,11 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\ProductOfferValidity\Persistence\Map\SpyProductOfferValidityTableMap;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -86,8 +82,10 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $localeId);
         $productConcreteQuery->leftJoinSpyProductValidity()
             ->addAsColumn(ProductTableRowDataTransfer::SKU, SpyProductTableMap::COL_SKU)
-            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES, SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductTableRowDataTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
             ->addAsColumn(ProductTableRowDataTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
@@ -133,7 +131,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductStoresSubquery(): string
     {
-        $productStoresSubquery = SpyStoreQuery::create()
+        $productStoresSubquery = $this->getFactory()->getStorePropelQuery()
             ->joinSpyProductAbstractStore()
             ->useSpyProductAbstractStoreQuery()
             ->joinSpyProductAbstract()
@@ -152,7 +150,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductImagesSubquery(int $localeId): string
     {
-        $productImagesSubquery = SpyProductImageQuery::create()
+        $productImagesSubquery = $this->getFactory()->getProductImagePropelQuery()
             ->joinSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
             ->joinSpyProductImageSet()
@@ -179,7 +177,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function createProductOffersCountSubquery(int $merchantId): string
     {
-        $productOffersSubquery = SpyProductOfferQuery::create()
+        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery()
             ->addAsColumn('offers_count', 'COUNT(*)')
             ->where(sprintf(
                 '%s = %s AND %s = %s',
@@ -328,7 +326,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function addHasOffersFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
-        $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers() ?? null;
+        $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers();
 
         if ($productConcreteHasOffers === null) {
             return $productConcreteQuery;
@@ -336,7 +334,11 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
 
         $merchantUserId = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser()->requireIdMerchant()->getIdMerchant();
         $productConcreteQuery->where(
-            sprintf('(%s) > 0', $this->createProductOffersCountSubquery($merchantUserId))
+            sprintf(
+                '(%s) %s 0',
+                $this->createProductOffersCountSubquery($merchantUserId),
+                $productConcreteHasOffers ? '>' : '='
+            )
         );
 
         return $productConcreteQuery;

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 
 class ProductTable extends AbstractTable
@@ -54,17 +55,19 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface $productTableDataProvider
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[] $productTableFilterDataProviders
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
      */
     public function __construct(
         ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
         ProductTableDataProviderInterface $productTableDataProvider,
         array $productTableFilterDataProviders,
         ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
     ) {
-        parent::__construct($utilEncodingService);
+        parent::__construct($utilEncodingService, $translatorFacade);
         $this->productTableDataProvider = $productTableDataProvider;
         $this->productTableFilterDataProviders = $productTableFilterDataProviders;
         $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
@@ -89,7 +92,7 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addSearchToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataUrl(static::DATA_URL);
 
@@ -243,7 +246,7 @@ class ProductTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function addSearchOptionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
 

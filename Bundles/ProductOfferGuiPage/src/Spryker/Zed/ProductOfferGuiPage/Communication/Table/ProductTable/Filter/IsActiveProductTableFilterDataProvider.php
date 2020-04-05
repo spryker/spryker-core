@@ -41,7 +41,7 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
             ],
             [
                 static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_INACTIVE,
-                static::OPTION_VALUE_KEY_VALUE => 2,
+                static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];
     }

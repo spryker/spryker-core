@@ -11,11 +11,15 @@ use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
 class ProductTableDataProvider implements ProductTableDataProviderInterface
 {
     protected const ATTRIBUTE_KEY_COLOR = 'color';
+
+    protected const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+    protected const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
 
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface
@@ -23,11 +27,20 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     protected $productOfferGuiPageRepository;
 
     /**
-     * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface
      */
-    public function __construct(ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository)
-    {
+    protected $translatorFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+     */
+    public function __construct(
+        ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository,
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+    ) {
         $this->productOfferGuiPageRepository = $productOfferGuiPageRepository;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -46,7 +59,7 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
                 ProductTable::COL_KEY_NAME => $this->getNameColumnData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
-                ProductTable::COL_KEY_STATUS => $productTableRowDataTransfer->getIsActive(),
+                ProductTable::COL_KEY_STATUS => $this->getStatusColumnData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_VALID_FROM => $productTableRowDataTransfer->getValidFrom(),
                 ProductTable::COL_KEY_VALID_TO => $productTableRowDataTransfer->getValidTo(),
                 ProductTable::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount(),
@@ -75,8 +88,14 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
         }
 
         $extendedProductConcreteNameParts = [$productConcreteName];
-        $productConcreteAttributes = $productTableRowDataTransfer->getProductConcreteAttributes();
-        $productAbstractAttributes = $productTableRowDataTransfer->getProductAbstractAttributes();
+        $productConcreteAttributes = array_merge(
+            $productTableRowDataTransfer->getProductConcreteAttributes(),
+            $productTableRowDataTransfer->getProductConcreteLocalizedAttributes()
+        );
+        $productAbstractAttributes = array_merge(
+            $productTableRowDataTransfer->getProductAbstractAttributes(),
+            $productTableRowDataTransfer->getProductAbstractLocalizedAttributes()
+        );
 
         foreach ($productConcreteAttributes as $productConcreteAttribute) {
             if (!$productConcreteAttribute) {
@@ -86,7 +105,7 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
             $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
         }
 
-        if (array_key_exists(static::ATTRIBUTE_KEY_COLOR, $productAbstractAttributes)) {
+        if (!isset($productConcreteAttributes[static::ATTRIBUTE_KEY_COLOR]) && isset($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR])) {
             $extendedProductConcreteNameParts[] = ucfirst($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR]);
         }
 
@@ -108,5 +127,19 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
         }
 
         return $stores;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     *
+     * @return string
+     */
+    protected function getStatusColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): string
+    {
+        $isActiveColumnData = $productTableRowDataTransfer->getIsActive()
+            ? static::COLUMN_DATA_STATUS_ACTIVE
+            : static::COLUMN_DATA_STATUS_INACTIVE;
+
+        return $this->translatorFacade->trans($isActiveColumnData);
     }
 }

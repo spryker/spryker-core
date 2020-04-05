@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ProductOfferGuiPage;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceBridge;
 
 class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -20,11 +23,14 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
+    public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
+    public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,6 +42,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -48,7 +55,9 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addProductConcretePropelQuery($container);
+        $container = $this->addProductImagePropelQuery($container);
         $container = $this->addProductOfferPropelQuery($container);
+        $container = $this->addStorePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -107,11 +116,41 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new ProductOfferGuiPageToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductConcretePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_CONCRETE, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_CONCRETE, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImagePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE, $container->factory(function () {
+            return SpyProductImageQuery::create();
+        }));
 
         return $container;
     }
@@ -123,9 +162,23 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductOfferPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, $container->factory(function () {
             return SpyProductOfferQuery::create();
-        });
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
+            return SpyStoreQuery::create();
+        }));
 
         return $container;
     }
