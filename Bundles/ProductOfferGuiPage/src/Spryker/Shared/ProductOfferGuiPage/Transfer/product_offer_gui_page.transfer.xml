@@ -71,6 +71,8 @@
         <property name="isActive" type="bool"/>
         <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
+        <property name="productAbstractLocalizedAttributes" type="array" singular="productAbstractLocalizedAttribute"/>
+        <property name="productConcreteLocalizedAttributes" type="array" singular="productConcreteLocalizedAttribute"/>
         <property name="offersCount" type="int"/>
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>

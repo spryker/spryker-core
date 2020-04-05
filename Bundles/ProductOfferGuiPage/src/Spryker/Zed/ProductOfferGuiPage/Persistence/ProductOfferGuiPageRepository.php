@@ -76,8 +76,10 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $localeId);
         $productConcreteQuery->leftJoinSpyProductValidity()
             ->addAsColumn(ProductTableRowDataTransfer::SKU, SpyProductTableMap::COL_SKU)
-            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES, SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductTableRowDataTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
             ->addAsColumn(ProductTableRowDataTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
@@ -318,7 +320,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function addHasOffersFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
-        $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers() ?? null;
+        $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers();
 
         if ($productConcreteHasOffers === null) {
             return $productConcreteQuery;
@@ -326,7 +328,11 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
 
         $merchantUserId = $productTableCriteriaTransfer->requireMerchantUser()->getMerchantUser()->requireIdMerchant()->getIdMerchant();
         $productConcreteQuery->where(
-            sprintf('(%s) > 0', $this->createProductOffersCountSubquery($merchantUserId))
+            sprintf(
+                '(%s) %s 0',
+                $this->createProductOffersCountSubquery($merchantUserId),
+                $productConcreteHasOffers ? '>' : '='
+            )
         );
 
         return $productConcreteQuery;

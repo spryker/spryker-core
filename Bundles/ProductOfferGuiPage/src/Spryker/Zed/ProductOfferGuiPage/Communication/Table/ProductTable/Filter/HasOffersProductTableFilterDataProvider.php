@@ -41,7 +41,7 @@ class HasOffersProductTableFilterDataProvider implements ProductTableFilterDataP
                 ],
             [
                 static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_WITHOUT_OFFERS,
-                static::OPTION_VALUE_KEY_VALUE => 2,
+                static::OPTION_VALUE_KEY_VALUE => 0,
                 ],
         ];
     }

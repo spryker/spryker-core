@@ -171,11 +171,13 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
         }
 
         if (array_key_exists(IsActiveProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
-            $productTableCriteriaTransfer->setIsActive(true);
+            $isActive = (bool)$this->filters[IsActiveProductTableFilterDataProvider::FILTER_NAME];
+            $productTableCriteriaTransfer->setIsActive($isActive);
         }
 
         if (array_key_exists(HasOffersProductTableFilterDataProvider::FILTER_NAME, $this->filters)) {
-            $productTableCriteriaTransfer->setHasOffers(true);
+            $hasOffers = (bool)$this->filters[HasOffersProductTableFilterDataProvider::FILTER_NAME];
+            $productTableCriteriaTransfer->setHasOffers($hasOffers);
         }
 
         return $productTableCriteriaTransfer;

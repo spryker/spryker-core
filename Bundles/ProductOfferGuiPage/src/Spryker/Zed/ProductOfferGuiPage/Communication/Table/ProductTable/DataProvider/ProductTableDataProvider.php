@@ -88,8 +88,14 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
         }
 
         $extendedProductConcreteNameParts = [$productConcreteName];
-        $productConcreteAttributes = $productTableRowDataTransfer->getProductConcreteAttributes();
-        $productAbstractAttributes = $productTableRowDataTransfer->getProductAbstractAttributes();
+        $productConcreteAttributes = array_merge(
+            $productTableRowDataTransfer->getProductConcreteAttributes(),
+            $productTableRowDataTransfer->getProductConcreteLocalizedAttributes()
+        );
+        $productAbstractAttributes = array_merge(
+            $productTableRowDataTransfer->getProductAbstractAttributes(),
+            $productTableRowDataTransfer->getProductAbstractLocalizedAttributes()
+        );
 
         foreach ($productConcreteAttributes as $productConcreteAttribute) {
             if (!$productConcreteAttribute) {
@@ -99,7 +105,7 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
             $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
         }
 
-        if (array_key_exists(static::ATTRIBUTE_KEY_COLOR, $productAbstractAttributes)) {
+        if (!isset($productConcreteAttributes[static::ATTRIBUTE_KEY_COLOR]) && isset($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR])) {
             $extendedProductConcreteNameParts[] = ucfirst($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR]);
         }
 
