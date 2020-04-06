@@ -31,11 +31,6 @@ class StepFactoryTest extends Unit
     public const METHOD_HANDLER = 'method handler';
 
     /**
-     * @var \SprykerTest\Yves\Checkout\CheckoutModelTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testCreatePaymentMethodSubForms(): void
