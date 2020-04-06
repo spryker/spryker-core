@@ -147,14 +147,14 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->addMethods(['find', 'findOne'])
+            ->onlyMethods(['find', 'findOne'])
             ->getMock();
         $productOfferRepositoryMock
             ->method('find')
             ->willReturn($productOfferCollectionTransfer);
 
         $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
-            ->addMethods(['getRepository', 'resolveDependencyProvider'])
+            ->onlyMethods(['getRepository', 'resolveDependencyProvider'])
             ->getMock();
         $productOfferBusinessFactoryMock
             ->method('getRepository')
