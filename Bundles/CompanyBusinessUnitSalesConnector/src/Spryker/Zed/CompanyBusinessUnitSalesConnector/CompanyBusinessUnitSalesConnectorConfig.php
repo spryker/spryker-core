@@ -11,12 +11,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyBusinessUnitSalesConnectorConfig extends AbstractBundleConfig
 {
+    public const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
+
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ALL
      */
     public const FILTER_FIELD_TYPE_ALL = 'all';
 
+    /**
+     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_FIELD_TYPE_ORDER_BY
+     */
     public const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
 
-    public const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
+    /**
+     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+     */
+    public const FILTER_FIELD_TYPE_COMPANY = 'company';
 }

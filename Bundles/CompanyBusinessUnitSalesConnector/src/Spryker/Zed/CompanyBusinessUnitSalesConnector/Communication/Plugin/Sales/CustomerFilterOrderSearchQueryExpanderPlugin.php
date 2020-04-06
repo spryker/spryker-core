@@ -30,10 +30,17 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
      */
     public function isApplicable(array $filterFieldTransfers): bool
     {
-        return $this->getFacade()->isFilterFieldSet(
+        $isApplicableForCompanyBusinessUnitFilter = $this->getFacade()->isFilterFieldSet(
             $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
         );
+
+        $isApplicableForCompanyFilter = $this->getFacade()->isFilterFieldSet(
+            $filterFieldTransfers,
+            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+        );
+
+        return !$isApplicableForCompanyBusinessUnitFilter || $isApplicableForCompanyFilter;
     }
 
     /**
