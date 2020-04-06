@@ -19,7 +19,7 @@ class OauthToOauthRevokeFacadeBridge implements OauthToOauthRevokeFacadeInterfac
     protected $oauthRevokeFacade;
 
     /**
-     * @param $oauthRevokeFacade
+     * @param \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface $oauthRevokeFacade
      */
     public function __construct($oauthRevokeFacade)
     {
