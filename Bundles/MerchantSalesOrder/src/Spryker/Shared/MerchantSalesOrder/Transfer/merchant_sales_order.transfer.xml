@@ -50,6 +50,7 @@
         <property name="idSalesOrder" type="int"/>
         <property name="orderReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="Pagination">
