@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -59,7 +60,7 @@ class CustomerDeleteForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => CustomerTransfer::class,
-            'method' => 'POST',
+            'method' => Request::METHOD_POST,
         ]);
     }
 }

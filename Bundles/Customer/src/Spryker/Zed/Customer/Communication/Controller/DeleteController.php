@@ -59,7 +59,13 @@ class DeleteController extends AbstractController
         $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
         $customerDeleteForm->handleRequest($request);
 
-        if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
+        if (!$customerDeleteForm->isSubmitted()) {
+            $this->addErrorMessage('Form was not submitted.');
+
+            return $this->redirectResponse('/customer');
+        }
+
+        if (!$customerDeleteForm->isValid()) {
             foreach ($customerDeleteForm->getErrors(true) as $formError) {
                 /** @var \Symfony\Component\Form\FormError $formError */
                 $this->addErrorMessage($formError->getMessage(), $formError->getMessageParameters());
