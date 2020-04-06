@@ -32,6 +32,6 @@ class MerchantStoreWriterStep extends PublishAwareStep implements DataImportStep
             ->setFkStore($dataSet[MerchantStoreDataSetInterface::ID_STORE])
             ->save();
 
-        $this->addPublishEvents(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, $merchantStoreEntity->getFkMerchant());
+        $this->addPublishEvents(MerchantEvents::MERCHANT_STORE_PUBLISH, $merchantStoreEntity->getIdMerchantStore());
     }
 }

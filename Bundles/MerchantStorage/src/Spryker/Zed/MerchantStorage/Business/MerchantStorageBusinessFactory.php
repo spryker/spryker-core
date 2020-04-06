@@ -12,6 +12,7 @@ use Spryker\Zed\MerchantStorage\Business\Writer\MerchantStorageWriter;
 use Spryker\Zed\MerchantStorage\Business\Writer\MerchantStorageWriterInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface;
+use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantStorage\MerchantStorageDependencyProvider;
 
 /**
@@ -29,6 +30,7 @@ class MerchantStorageBusinessFactory extends AbstractBusinessFactory
         return new MerchantStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getMerchantFacade(),
+            $this->getStoreFacade(),
             $this->getEntityManager(),
             $this->getRepository()
         );
@@ -48,5 +50,13 @@ class MerchantStorageBusinessFactory extends AbstractBusinessFactory
     public function getMerchantFacade(): MerchantStorageToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantStorageDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MerchantStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantStorageDependencyProvider::FACADE_STORE);
     }
 }

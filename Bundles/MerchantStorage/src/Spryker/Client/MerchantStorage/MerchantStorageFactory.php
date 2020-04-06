@@ -9,6 +9,7 @@ namespace Spryker\Client\MerchantStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
+use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapper;
@@ -48,7 +49,8 @@ class MerchantStorageFactory extends AbstractFactory
     {
         return new UrlStorageMerchantMapper(
             $this->getSynchronizationService(),
-            $this->getStorageClient()
+            $this->getStorageClient(),
+            $this->getStoreClient()
         );
     }
 
@@ -74,5 +76,13 @@ class MerchantStorageFactory extends AbstractFactory
     public function getUtilEncodingService(): MerchantStorageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(MerchantStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface
+     */
+    public function getStoreClient(): MerchantStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(MerchantStorageDependencyProvider::CLIENT_STORE);
     }
 }

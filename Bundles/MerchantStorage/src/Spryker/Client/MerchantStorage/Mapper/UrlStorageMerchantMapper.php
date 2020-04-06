@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
+use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 
@@ -27,15 +28,23 @@ class UrlStorageMerchantMapper implements UrlStorageMerchantMapperInterface
     protected $storageClient;
 
     /**
+     * @var \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         MerchantStorageToSynchronizationServiceInterface $synchronizationService,
-        MerchantStorageToStorageClientInterface $storageClient
+        MerchantStorageToStorageClientInterface $storageClient,
+        MerchantStorageToStoreClientInterface $storeClient
     ) {
         $this->synchronizationService = $synchronizationService;
         $this->storageClient = $storageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -68,6 +77,7 @@ class UrlStorageMerchantMapper implements UrlStorageMerchantMapperInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($reference);
+        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService->getStorageKeyBuilder(MerchantStorageConfig::MERCHANT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);

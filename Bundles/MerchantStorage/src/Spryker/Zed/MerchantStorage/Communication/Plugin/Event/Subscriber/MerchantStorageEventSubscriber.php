@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantStoragePublishListener;
+use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantStoreStoragePublishListener;
 
 /**
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
@@ -33,6 +34,9 @@ class MerchantStorageEventSubscriber extends AbstractPlugin implements EventSubs
     {
         $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantStoragePublishListener());
         $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_STORE_PUBLISH, new MerchantStoreStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_STORE_CREATE, new MerchantStoreStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_STORE_DELETE, new MerchantStoreStoragePublishListener());
 
         return $eventCollection;
     }
