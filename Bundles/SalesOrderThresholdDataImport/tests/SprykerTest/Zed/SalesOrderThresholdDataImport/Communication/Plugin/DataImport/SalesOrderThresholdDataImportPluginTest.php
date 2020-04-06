@@ -42,6 +42,7 @@ class SalesOrderThresholdDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $this->setupDependencies();
+        $this->tester->clearFactoryContainerCache();
 
         $this->tester->truncateSalesOrderThresholds();
         $this->tester->assertSalesOrderThresholdTableIsEmtpy();

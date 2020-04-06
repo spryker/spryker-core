@@ -138,6 +138,7 @@ class ShoppingListSessionClientTest extends Unit
         );
         $shoppingListClientMock = $this->getShoppingListClientMock($shoppingListCollectionTransferSecond);
         $this->tester->setDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT, $shoppingListClientMock);
+        $this->tester->clearFactoryContainerCache();
         $customerShoppingListCollectionSecondResult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
         //Assert
