@@ -34,7 +34,7 @@ abstract class AbstractPlugin
     /**
      * @var \Spryker\Service\Container\Container|null
      */
-    protected static $application;
+    protected static $container;
 
     /**
      * @var string|null
@@ -154,11 +154,11 @@ abstract class AbstractPlugin
      */
     protected function getApplication()
     {
-        if (static::$application === null) {
-            static::$application = (new Pimple())->getApplication();
+        if (static::$container === null) {
+            static::$container = (new Pimple())->getApplication();
         }
 
-        return static::$application;
+        return static::$container;
     }
 
     /**
