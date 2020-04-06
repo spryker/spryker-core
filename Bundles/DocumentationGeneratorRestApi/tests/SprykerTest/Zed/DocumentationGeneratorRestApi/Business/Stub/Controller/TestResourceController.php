@@ -16,8 +16,7 @@ class TestResourceController
      *              "Summary example"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad Request",

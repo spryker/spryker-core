@@ -23,8 +23,7 @@ class OrdersResourceController extends AbstractController
      *              "Retrieves order by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestOrderDetailsAttributesTransfer",
      *          "responses": {
@@ -37,8 +36,7 @@ class OrdersResourceController extends AbstractController
      *              "Retrieves list of orders."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request."
