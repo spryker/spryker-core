@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
@@ -47,8 +46,12 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $skus = $this->getProductSkusFromQuoteTransfer($quoteTransfer);
+        $productConcreteTransfers = $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($skus);
+        $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
+
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            if (!$this->isProductConcreteActive($itemTransfer->getSku())) {
+            if (!$this->isProductConcreteActive($itemTransfer->getSku(), $indexedProductConcreteTransfers)) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
             }
@@ -59,14 +62,17 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
 
     /**
      * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $indexedProductConcreteTransfers
      *
      * @return bool
      */
-    protected function isProductConcreteActive(string $concreteSku): bool
+    protected function isProductConcreteActive(string $concreteSku, array $indexedProductConcreteTransfers): bool
     {
-        return $this->productFacade->isProductConcreteActive(
-            (new ProductConcreteTransfer())->setSku($concreteSku)
-        );
+        if (!isset($indexedProductConcreteTransfers[$concreteSku])) {
+            return false;
+        }
+
+        return $indexedProductConcreteTransfers[$concreteSku]->getIsActive();
     }
 
     /**
@@ -83,5 +89,37 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
         ]);
 
         $this->messengerFacade->addInfoMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductSkusFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
+    {
+        $skus = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $skus[] = $itemTransfer->getSku();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function indexProductConcreteTransfersBySku(array $productConcreteTransfers): array
+    {
+        $indexedProductConcreteTransfers = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $indexedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $indexedProductConcreteTransfers;
     }
 }
