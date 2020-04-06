@@ -36,26 +36,6 @@ class MerchantOmsProcessDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tester->ensureStateMachineProcessTableIsEmpty();
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->tester->ensureStateMachineProcessTableIsEmpty();
-    }
-
-    /**
-     * @return void
-     */
     public function testMerchantOmsProcessImport(): void
     {
         // Arrange
