@@ -15,6 +15,7 @@ use Exception;
 use ReflectionClass;
 use Spryker\Client\Kernel\AbstractFactory as ClientAbstractFactory;
 use Spryker\Glue\Kernel\AbstractFactory as GlueAbstractFactory;
+use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\AbstractSharedFactory;
 use Spryker\Yves\Kernel\AbstractFactory as YvesAbstractFactory;
@@ -44,6 +45,7 @@ class FactoryHelper extends Module
             ZedAbstractFactory::class,
             YvesAbstractFactory::class,
             GlueAbstractFactory::class,
+            AbstractServiceFactory::class,
         ];
 
         foreach ($factoriesArray as $factory) {
