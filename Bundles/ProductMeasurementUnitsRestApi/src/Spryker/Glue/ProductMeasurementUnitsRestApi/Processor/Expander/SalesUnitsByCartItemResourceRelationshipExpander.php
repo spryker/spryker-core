@@ -131,7 +131,12 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
     {
         $skus = [];
         foreach ($resources as $resource) {
-            $skus[] = $resource->getId();
+            $restItemsAttributesTransfer = $resource->getAttributes();
+            if (!$restItemsAttributesTransfer instanceof RestItemsAttributesTransfer) {
+                continue;
+            }
+
+            $skus[] = $restItemsAttributesTransfer->getSku();
         }
 
         return $skus;
