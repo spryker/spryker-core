@@ -10,12 +10,6 @@
         <property name="priceMode" type="string"/>
     </transfer>
 
-    <transfer name="RestUser">
-        <property name="naturalIdentifier" type="string"/>
-        <property name="idCompanyUser" type="int"/>
-        <property name="surrogateIdentifier" type="int"/>
-    </transfer>
-
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
@@ -31,6 +25,7 @@
         <property name="shippingAddress" type="RestOrderAddress"/>
         <property name="priceMode" type="string"/>
         <property name="payments" type="RestOrderPayment[]" singular="payment"/>
+        <property name="shipments" type="RestOrderShipment[]" singular="shipment"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
@@ -126,6 +121,15 @@
         <property name="paymentMethod" type="string"/>
     </transfer>
 
+    <transfer name="RestOrderShipment">
+        <property name="shipmentMethodName" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
     <transfer name="RestOrderItemMetadata">
         <property name="superAttributes" type="array" singular="superAttribute"/>
         <property name="image" type="string"/>
@@ -174,7 +178,10 @@
         <property name="totals" type="Totals"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -198,4 +205,18 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+        <property name="fkSalesExpense" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idSalesExpense" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
 </transfers>

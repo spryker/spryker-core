@@ -38,7 +38,6 @@ class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvide
     public function providePersistenceLayerDependencies(Container $container)
     {
         //TODO Provide dependencies
-
         return $container;
     }
 
