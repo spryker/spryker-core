@@ -29,3 +29,4 @@ suites:
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
