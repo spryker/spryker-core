@@ -110,7 +110,7 @@
     <transfer name="ProductCriteriaFilter">
         <property name="idStore" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="skus" type="string[]"/>
+        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
     <transfer name="Filter">
