@@ -18,9 +18,9 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
      */
-    public const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
+    protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
-    public const MAPPED_ORDER_BY_FILTERS = [
+    protected const MAPPED_ORDER_BY_FILTERS = [
         'customerName' => self::COLUMN_FULL_NAME,
         'customerEmail' => self::COLUMN_EMAIL,
     ];

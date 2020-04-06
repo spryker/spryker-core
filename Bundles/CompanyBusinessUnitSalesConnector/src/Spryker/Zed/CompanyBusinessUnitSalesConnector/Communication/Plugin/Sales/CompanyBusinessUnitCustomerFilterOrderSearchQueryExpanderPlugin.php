@@ -16,7 +16,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginI
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
  */
-class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CompanyBusinessUnitCustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,17 +30,10 @@ class CustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implem
      */
     public function isApplicable(array $filterFieldTransfers): bool
     {
-        $isCompanyBusinessUnitFilterFieldSet = $this->getFacade()->isFilterFieldSet(
+        return $this->getFacade()->isFilterFieldSet(
             $filterFieldTransfers,
             CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
         );
-
-        $isCompanyFilterFieldSet = $this->getFacade()->isFilterFieldSet(
-            $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
-        );
-
-        return $isCompanyBusinessUnitFilterFieldSet || $isCompanyFilterFieldSet;
     }
 
     /**

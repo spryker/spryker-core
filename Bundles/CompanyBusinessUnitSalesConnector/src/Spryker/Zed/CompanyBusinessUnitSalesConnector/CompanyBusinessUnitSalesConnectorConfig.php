@@ -22,9 +22,4 @@ class CompanyBusinessUnitSalesConnectorConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_FIELD_TYPE_ORDER_BY
      */
     public const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
-
-    /**
-     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
-     */
-    public const FILTER_FIELD_TYPE_COMPANY = 'company';
 }
