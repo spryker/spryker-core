@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ZedNavigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheBuilder;
+use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheRemover;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor;
@@ -34,7 +37,18 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor(),
-            $this->getNavigationItemFilterPlugins()
+            $this->createNavigationItemFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
+     */
+    public function createNavigationItemFilter(): NavigationItemFilterInterface
+    {
+        return new NavigationItemFilter(
+            $this->getNavigationItemFilterPlugins(),
+            $this->getNavigationItemCollectionFilterPlugins()
         );
     }
 
@@ -45,6 +59,16 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ZedNavigationCacheBuilder(
             $this->createNavigationCollector(),
+            $this->createNavigationCache()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheRemover
+     */
+    public function createNavigationCacheRemover(): ZedNavigationCacheRemover
+    {
+        return new ZedNavigationCacheRemover(
             $this->createNavigationCache()
         );
     }
@@ -126,11 +150,21 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()} instead.
+     *
      * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
      */
     public function getNavigationItemFilterPlugins(): array
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     */
+    public function getNavigationItemCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER);
     }
 
     /**

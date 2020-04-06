@@ -9,7 +9,7 @@ namespace Spryker\Zed\DiscountPromotionsRestApi\Business;
 
 use Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper\DiscountPromotionMapper;
 use Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper\DiscountPromotionMapperInterface;
-use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface;
+use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface;
 use Spryker\Zed\DiscountPromotionsRestApi\DiscountPromotionsRestApiDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -27,9 +27,9 @@ class DiscountPromotionsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionInterface
+     * @return \Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
      */
-    protected function getDiscountPromotionFacade(): DiscountPromotionsRestApiToDiscountPromotionInterface
+    protected function getDiscountPromotionFacade(): DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
     {
         return $this->getProvidedDependency(DiscountPromotionsRestApiDependencyProvider::FACADE_DISCOUNT_PROMOTION);
     }

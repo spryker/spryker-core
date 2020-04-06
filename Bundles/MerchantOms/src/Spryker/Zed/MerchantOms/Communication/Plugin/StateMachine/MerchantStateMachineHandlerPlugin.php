@@ -29,7 +29,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getCommandPlugins(): array
     {
-        return [];
+        return $this->getFactory()->getStateMachineCommandPlugins();
     }
 
     /**
@@ -41,7 +41,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getConditionPlugins(): array
     {
-        return [];
+        return $this->getFactory()->getStateMachineConditionPlugins();
     }
 
     /**
@@ -65,7 +65,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function getActiveProcesses(): array
     {
-        return $this->getConfig()->getMerchantOmsActiveProcesses();
+        return $this->getConfig()->getMerchantOmsProcesses();
     }
 
     /**
@@ -94,11 +94,12 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      */
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
-        $merchantOrderItemResponseTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->updateMerchantOrderItem(
-            (new MerchantOrderItemTransfer())
-                ->setIdMerchantOrderItem($stateMachineItemTransfer->getIdentifier())
-                ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
-        );
+        $merchantOrderItemResponseTransfer = $this->getFactory()->getMerchantSalesOrderFacade()
+            ->updateMerchantOrderItem(
+                (new MerchantOrderItemTransfer())
+                    ->setIdMerchantOrderItem($stateMachineItemTransfer->getIdentifier())
+                    ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
+            );
 
         return $merchantOrderItemResponseTransfer->getIsSuccessful();
     }

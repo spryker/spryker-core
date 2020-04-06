@@ -19,7 +19,7 @@
         <property name="stateMachineName" type="string"/>
     </transfer>
 
-    <transfer name="StateMachineProcessCriteriaFilter">
+    <transfer name="StateMachineProcessCriteria">
         <property name="idStateMachineProcess" type="int"/>
     </transfer>
 

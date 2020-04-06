@@ -24,6 +24,9 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STATE_MACHINE = 'FACADE_STATE_MACHINE';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
+    public const PLUGINS_STATE_MACHINE_CONDITION = 'PLUGINS_STATE_MACHINE_CONDITION';
+    public const PLUGINS_PLUGINS_STATE_MACHINE_COMMAND = 'PLUGINS_PLUGINS_STATE_MACHINE_COMMAND';
+
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
 
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
@@ -52,6 +55,8 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
+        $container = $this->addStateMachineCommandPlugins($container);
+        $container = $this->addStateMachineConditionPlugins($container);
         $container = $this->addMerchantSalesOrderFacade($container);
         $container = $this->addUtilDataReaderService($container);
 
@@ -140,5 +145,49 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStateMachineConditionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_STATE_MACHINE_CONDITION, function () {
+            return $this->getStateMachineConditionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStateMachineCommandPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PLUGINS_STATE_MACHINE_COMMAND, function () {
+            return $this->getStateMachineCommandPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     */
+    protected function getStateMachineConditionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     */
+    protected function getStateMachineCommandPlugins(): array
+    {
+        return [];
     }
 }

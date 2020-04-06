@@ -9,8 +9,9 @@ namespace Spryker\Zed\MerchantOms\Business\StateMachineProcess;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StateMachineProcessCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Spryker\Zed\MerchantOms\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsConfig;
@@ -48,13 +49,18 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $merchantReference
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
-    public function resolveMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): StateMachineProcessTransfer
+    public function resolveMerchantStateMachineProcess(string $merchantReference): StateMachineProcessTransfer
     {
-        $stateMachineProcessTransfer = $this->findMerchantStateMachineProcess($merchantTransfer);
+        $merchantTransfer = $this->getMerchantByReference($merchantReference);
+
+        $stateMachineProcessTransfer = $this->stateMachineFacade->findStateMachineProcess(
+            (new StateMachineProcessCriteriaTransfer())
+                ->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess())
+        );
 
         if (!$stateMachineProcessTransfer) {
             $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
@@ -66,22 +72,22 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $merchantReference
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
+     * @throws \Spryker\Zed\MerchantOms\Business\Exception\MerchantNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function findMerchantStateMachineProcess(MerchantTransfer $merchantTransfer): ?StateMachineProcessTransfer
+    protected function getMerchantByReference(string $merchantReference): MerchantTransfer
     {
         $merchantTransfer = $this->merchantFacade->findOne(
-            (new MerchantCriteriaFilterTransfer())->setMerchantReference($merchantTransfer->getMerchantReference())
+            (new MerchantCriteriaFilterTransfer())->setMerchantReference($merchantReference)
         );
 
-        if (!$merchantTransfer || !$merchantTransfer->getFkStateMachineProcess()) {
-            return null;
+        if (!$merchantTransfer) {
+            throw new MerchantNotFoundException(sprintf('Merchant with reference "%s" is not found.', $merchantReference));
         }
 
-        return $this->stateMachineFacade->findStateMachineProcess(
-            (new StateMachineProcessCriteriaFilterTransfer())->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess())
-        );
+        return $merchantTransfer;
     }
 }

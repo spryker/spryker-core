@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantOms\Communication\Plugin\MerchantSalesOrder;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface;
 
@@ -38,7 +37,7 @@ class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implement
         $this->getFacade()->triggerForNewMerchantOrderItems(
             (new MerchantOmsTriggerRequestTransfer())
                 ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
-                ->setMerchant((new MerchantTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference()))
+                ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
         );
     }
 }

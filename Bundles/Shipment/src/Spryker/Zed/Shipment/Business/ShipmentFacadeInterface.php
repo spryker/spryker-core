@@ -194,7 +194,23 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Selects shipment method tax rates using shipping address's country code.
+     * - Uses default tax rate if shipping address is not defined.
+     * - Sets tax rate to provided object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateShipmentTaxRateByCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
+
+    /**
+     * Specification:
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface before shipment saving
+     * in case of multi shipment.
      * - Creates sales shipments for sales order.
      * - Creates sales shipping addresses for each item level shipment.
      *
@@ -279,6 +295,7 @@ interface ShipmentFacadeInterface
      * - Creates new or update existing shipment for specified order in Zed.
      * - Uses shipment saving logic from the saveOrderShipment() method.
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface before shipment saving.
      * - Creates or updates sales shipment.
      * - Creates or updates sales shipping addresses.
      *

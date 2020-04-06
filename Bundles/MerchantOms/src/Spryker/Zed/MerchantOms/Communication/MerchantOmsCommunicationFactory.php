@@ -28,6 +28,22 @@ class MerchantOmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     */
+    public function getStateMachineConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_STATE_MACHINE_CONDITION);
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     */
+    public function getStateMachineCommandPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_PLUGINS_STATE_MACHINE_COMMAND);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface
      */
     public function getUtilDataReaderService(): MerchantOmsToUtilDataReaderServiceInterface

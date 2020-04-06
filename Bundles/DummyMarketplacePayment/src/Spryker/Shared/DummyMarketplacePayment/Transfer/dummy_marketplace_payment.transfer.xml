@@ -38,6 +38,7 @@
 
     <transfer name="PaymentProvider">
         <property name="name" type="string"/>
+        <property name="paymentProviderKey" type="string"/>
     </transfer>
 
 </transfers>

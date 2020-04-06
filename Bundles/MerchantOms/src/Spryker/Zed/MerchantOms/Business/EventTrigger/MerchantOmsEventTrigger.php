@@ -40,25 +40,26 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
-     * @return void
+     * @return int
      */
-    public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): void
+    public function triggerForNewMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int
     {
         $merchantOmsTriggerRequestTransfer
-            ->requireMerchantOrderItems()
-            ->requireMerchant()
-            ->getMerchant()
-                ->requireMerchantReference();
+            ->requireMerchantReference()
+            ->requireMerchantOrderItems();
 
         $stateMachineProcessTransfer = $this->stateMachineProcessReader
-            ->resolveMerchantStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchant());
+            ->resolveMerchantStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchantReference());
 
+        $transitionCount = 0;
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $this->stateMachineFacade->triggerForNewStateMachineItem(
+            $transitionCount += $this->stateMachineFacade->triggerForNewStateMachineItem(
                 $stateMachineProcessTransfer,
                 $merchantOrderItemTransfer->getIdMerchantOrderItem()
             );
         }
+
+        return $transitionCount;
     }
 
     /**
@@ -78,10 +79,12 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             $stateMachineItemTransfers[] = $this->createStateMachineItem($merchantOrderItemTransfer);
         }
 
-        return $this->stateMachineFacade->triggerEventForItems(
+        $transitionCount = $this->stateMachineFacade->triggerEventForItems(
             $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
             $stateMachineItemTransfers
         );
+
+        return $transitionCount ?? 0;
     }
 
     /**

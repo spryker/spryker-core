@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
-        <property name="merchant" type="Merchant"/>
+        <property name="merchantReference" type="string"/>
         <property name="merchantOmsEventName" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
@@ -38,7 +38,7 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
-    <transfer name="StateMachineProcessCriteriaFilter">
+    <transfer name="StateMachineProcessCriteria">
         <property name="idStateMachineProcess" type="int"/>
     </transfer>
 

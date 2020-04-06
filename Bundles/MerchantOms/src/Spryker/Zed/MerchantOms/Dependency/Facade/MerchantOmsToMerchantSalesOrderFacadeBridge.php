@@ -27,16 +27,6 @@ class MerchantOmsToMerchantSalesOrderFacadeBridge implements MerchantOmsToMercha
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
-     */
-    public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer
-    {
-        return $this->merchantSalesOrderFacade->updateMerchantOrderItem($merchantOrderItemTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
@@ -44,5 +34,15 @@ class MerchantOmsToMerchantSalesOrderFacadeBridge implements MerchantOmsToMercha
     public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer
     {
         return $this->merchantSalesOrderFacade->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
+     */
+    public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer
+    {
+        return $this->merchantSalesOrderFacade->updateMerchantOrderItem($merchantOrderItemTransfer);
     }
 }

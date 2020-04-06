@@ -35,14 +35,6 @@ class MerchantOmsDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function ensureStateMachineProcessTableIsEmpty(): void
-    {
-        $this->ensureDatabaseTableIsEmpty($this->getStateMachineProcessPropelQuery());
-    }
-
-    /**
-     * @return void
-     */
     public function assertStateMachineProcessDatabaseTableContainsData(): void
     {
         $this->assertTrue(

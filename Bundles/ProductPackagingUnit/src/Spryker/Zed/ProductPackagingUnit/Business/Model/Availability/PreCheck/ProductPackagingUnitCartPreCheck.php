@@ -194,7 +194,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     }
 
     /**
-     * @param \ArrayObject $cartErrorMessages
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */

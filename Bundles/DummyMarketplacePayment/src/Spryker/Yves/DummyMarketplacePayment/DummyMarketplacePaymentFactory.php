@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
@@ -53,13 +52,5 @@ class DummyMarketplacePaymentFactory extends AbstractFactory
     public function createDateOfBirthValueConstraint(): Constraint
     {
         return new DateOfBirthValueConstraint();
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function createNotBlankConstraint(): Constraint
-    {
-        return new NotBlank();
     }
 }
