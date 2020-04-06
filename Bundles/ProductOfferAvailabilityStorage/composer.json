@@ -24,7 +24,6 @@
     "spryker/code-sniffer": "*",
     "spryker/decimal-object": "*",
     "spryker/event": "*",
-    "spryker/merchant": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/stock": "*",

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\Merchant\Helper\MerchantHelper;
 
 class ProductOfferHelper extends Module
 {
@@ -32,11 +31,6 @@ class ProductOfferHelper extends Module
         /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
         $productOfferTransfer = (new ProductOfferBuilder($seedData))->build();
         $productOfferTransfer->setIdProductOffer(null);
-
-        if (!$productOfferTransfer->getFkMerchant()) {
-            $merchantTransfer = $this->getMerchantHelper()->haveMerchant();
-            $productOfferTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        }
 
         $productOfferTransfer = $this->getLocator()
             ->productOffer()
@@ -71,16 +65,5 @@ class ProductOfferHelper extends Module
         $productOfferStoreTransfer = new ProductOfferStoreTransfer();
 
         return $productOfferStoreTransfer->fromArray($productOfferStoreEntity->toArray(), true);
-    }
-
-    /**
-     * @return \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-     */
-    protected function getMerchantHelper(): MerchantHelper
-    {
-        /** @var \SprykerTest\Zed\Merchant\Helper\MerchantHelper $merchantHelper */
-        $merchantHelper = $this->getModule('\\' . MerchantHelper::class);
-
-        return $merchantHelper;
     }
 }

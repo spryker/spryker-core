@@ -30,4 +30,3 @@ suites:
                 - \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
-                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
