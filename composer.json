@@ -371,6 +371,7 @@
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
     "spryker/oauth-permission": "*",
+    "spryker/oauth-revoke": "*",
     "spryker/offer": "*",
     "spryker/offer-extension": "*",
     "spryker/offer-gui": "*",
