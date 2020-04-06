@@ -609,6 +609,7 @@
     "spryker/sql-criteria-builder": "*",
     "spryker/state-machine": "*",
     "spryker/step-engine": "*",
+    "spryker/step-engine-extension": "*",
     "spryker/stock": "*",
     "spryker/stock-data-import": "*",
     "spryker/stock-extension": "*",

@@ -35,7 +35,7 @@ class StepEngine implements StepEngineInterface
     protected $stepBreadcrumbGenerator;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
+     * @var \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[]
      */
     protected $stepEnginePreRenderPlugins;
 
@@ -43,7 +43,7 @@ class StepEngine implements StepEngineInterface
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      * @param \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null $stepBreadcrumbGenerator
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[] $stepEnginePreRenderPlugins
+     * @param \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[] $stepEnginePreRenderPlugins
      */
     public function __construct(
         StepCollectionInterface $stepCollection,
