@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Table;
 
 use Orm\Zed\MerchantUser\Persistence\Map\SpyMerchantUserTableMap;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantUserGui\Communication\Controller\DeleteMerchantUserController;
@@ -21,6 +20,46 @@ use Spryker\Zed\Router\Business\Router\ChainRouter;
 
 class MerchantUserTable extends AbstractTable
 {
+    /**
+     * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::getPhpName()
+     */
+    protected const USER_PHP_TABLE_NAME = 'SpyUser';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS
+     */
+    protected const USER_COLUMN_STATUS = 'spy_user.status';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_FIRST_NAME
+     */
+    protected const USER_COLUMN_FIRST_NAME = 'spy_user.first_name';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_LAST_NAME
+     */
+    protected const USER_COLUMN_LAST_NAME = 'spy_user.last_name';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_USERNAME
+     */
+    protected const USER_COLUMN_USERNAME = 'spy_user.username';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     */
+    protected const USER_STATUS_BLOCKED = 'blocked';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     */
+    protected const USER_STATUS_DELETED = 'deleted';
+
     protected const MERCHANT_USER_STATUS = 'status';
     protected const MERCHANT_USER_FIRST_NAME = 'first_name';
     protected const MERCHANT_USER_LAST_NAME = 'last_name';
@@ -31,24 +70,32 @@ class MerchantUserTable extends AbstractTable
     /**
      * @var array
      */
-    protected const STATUS_CLASS_LABEL_MAPPING = [
-        SpyUserTableMap::COL_STATUS_ACTIVE => [
+    protected const STATUS_LABEL_MAPPING = [
+        'active' => [
             'title' => 'Active',
             'class' => 'label-info',
-            'status_change_action_title' => 'Activate',
-            'status_change_action_class' => 'btn-create',
         ],
-        SpyUserTableMap::COL_STATUS_BLOCKED => [
+        'blocked' => [
             'title' => 'Blocked',
             'class' => 'label-danger',
-            'status_change_action_title' => 'Deny Access',
-            'status_change_action_class' => 'btn-remove',
         ],
-        SpyUserTableMap::COL_STATUS_DELETED => [
+        'deleted' => [
             'title' => 'Deleted',
             'class' => 'label-default',
-            'status_change_action_title' => 'Delete',
-            'status_change_action_class' => 'btn-delete',
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected const STATUS_CHANGE_ACTION_MAPPING = [
+        'active' => [
+            'title' => 'Activate',
+            'class' => 'btn-create',
+        ],
+        'blocked' => [
+            'title' => 'Deny Access',
+            'class' => 'btn-remove',
         ],
     ];
 
@@ -135,29 +182,25 @@ class MerchantUserTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->merchantUserQuery
-            ->innerJoinSpyUser()
+            ->innerJoinWithSpyUser()
             ->filterByFkMerchant($this->idMerchant)
-            ->withColumn(SpyUserTableMap::COL_STATUS, static::MERCHANT_USER_STATUS)
-            ->withColumn(SpyUserTableMap::COL_FIRST_NAME, static::MERCHANT_USER_FIRST_NAME)
-            ->withColumn(SpyUserTableMap::COL_LAST_NAME, static::MERCHANT_USER_LAST_NAME)
-            ->withColumn(SpyUserTableMap::COL_USERNAME, static::MERCHANT_USER_NAME);
+            ->withColumn(static::USER_COLUMN_FIRST_NAME, static::MERCHANT_USER_FIRST_NAME)
+            ->withColumn(static::USER_COLUMN_LAST_NAME, static::MERCHANT_USER_LAST_NAME)
+            ->withColumn(static::USER_COLUMN_USERNAME, static::MERCHANT_USER_NAME);
 
         $queryResults = $this->runQuery($query, $config);
         $results = [];
 
         foreach ($queryResults as $item) {
-            $item[static::MERCHANT_USER_STATUS] = $this->convertStatusEnumKeyToValue($item[static::MERCHANT_USER_STATUS]);
+            $item[static::MERCHANT_USER_STATUS] = $item[static::USER_PHP_TABLE_NAME][static::USER_COLUMN_STATUS];
+
             $results[] = [
                 static::MERCHANT_USER_ID => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                 static::MERCHANT_USER_NAME => $item[static::MERCHANT_USER_NAME],
                 static::MERCHANT_USER_FIRST_NAME => $item[static::MERCHANT_USER_FIRST_NAME],
                 static::MERCHANT_USER_LAST_NAME => $item[static::MERCHANT_USER_LAST_NAME],
                 static::MERCHANT_USER_STATUS => $this->createStatusLabel($item),
-                static::ACTIONS => implode(
-                    ' ',
-                    $this->createActionColumn($item)
-                ),
-
+                static::ACTIONS => implode(' ', $this->createActionColumn($item)),
             ];
         }
 
@@ -210,13 +253,13 @@ class MerchantUserTable extends AbstractTable
     {
         $currentStatus = $merchantUserData[static::MERCHANT_USER_STATUS];
 
-        if (!isset(static::STATUS_CLASS_LABEL_MAPPING[$currentStatus])) {
+        if (!isset(static::STATUS_LABEL_MAPPING[$currentStatus])) {
             return '';
         }
 
         return $this->generateLabel(
-            static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]['title'],
-            static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]['class']
+            static::STATUS_LABEL_MAPPING[$currentStatus]['title'],
+            static::STATUS_LABEL_MAPPING[$currentStatus]['class']
         );
     }
 
@@ -228,9 +271,9 @@ class MerchantUserTable extends AbstractTable
      */
     protected function buildAvailableStatusButton(ChainRouter $router, array $item): string
     {
-        $availableStatus = $item[static::MERCHANT_USER_STATUS] === SpyUserTableMap::COL_STATUS_ACTIVE
-            ? SpyUserTableMap::COL_STATUS_BLOCKED
-            : SpyUserTableMap::COL_STATUS_ACTIVE;
+        $availableStatus = $item[static::MERCHANT_USER_STATUS] === static::USER_STATUS_ACTIVE
+            ? static::USER_STATUS_BLOCKED
+            : static::USER_STATUS_ACTIVE;
 
         return $this->generateButton(
             $router->generate(
@@ -241,21 +284,11 @@ class MerchantUserTable extends AbstractTable
                     'status' => $availableStatus,
                 ]
             ),
-            static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_title'],
+            static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['title'],
             [
                 'icon' => 'fa fa-key',
-                'class' => static::STATUS_CLASS_LABEL_MAPPING[$availableStatus]['status_change_action_class'],
+                'class' => static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['class'],
             ]
         );
-    }
-
-    /**
-     * @param int $status
-     *
-     * @return string
-     */
-    protected function convertStatusEnumKeyToValue(int $status): string
-    {
-        return SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)[$status];
     }
 }
