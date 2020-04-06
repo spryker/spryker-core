@@ -83,6 +83,7 @@ interface SalesReturnFacadeInterface
      * Specification:
      * - Requires ItemTransfer::idSalesOrderItem to be set.
      * - Retrieves item by idSalesOrderItem.
+     * - Skips setting when non-existing data is provided.
      * - Copies ItemTransfer::refundableAmount to ItemTransfer::remunerationAmount.
      * - Persists ItemTransfer afterward.
      *
@@ -92,7 +93,7 @@ interface SalesReturnFacadeInterface
      *
      * @return void
      */
-    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void;
+    public function setOrderItemRemunerationAmount(ItemTransfer $itemTransfer): void;
 
     /**
      * Specification:

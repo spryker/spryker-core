@@ -66,6 +66,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @module Oms
+     *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -74,7 +76,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         $salesOrderItemQuery = $this->getFactory()
             ->createSalesOrderItemQuery()
-            ->leftJoinWithOrder()
+            ->innerJoinWithOrder()
             ->leftJoinWithProcess()
             ->leftJoinWithState();
 

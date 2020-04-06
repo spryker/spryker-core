@@ -40,11 +40,11 @@ class ItemRemunerationAmountSetter implements ItemRemunerationAmountSetterInterf
      *
      * @return void
      */
-    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void
+    public function setOrderItemRemunerationAmount(ItemTransfer $itemTransfer): void
     {
         $itemTransfer->requireIdSalesOrderItem();
 
-        $itemTransfer = $this->salesReturnRepository->findSalesOrderItemByIdSalesOrder($itemTransfer->getIdSalesOrderItem());
+        $itemTransfer = $this->salesReturnRepository->findSalesOrderItemById($itemTransfer->getIdSalesOrderItem());
 
         if (!$itemTransfer) {
             return;

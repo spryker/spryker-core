@@ -5,7 +5,6 @@
 
     <transfer name="ReturnReason">
         <property name="idSalesReturnReason" type="int"/>
-        <property name="key" type="string"/>
         <property name="glossaryKeyReason" type="string"/>
     </transfer>
 

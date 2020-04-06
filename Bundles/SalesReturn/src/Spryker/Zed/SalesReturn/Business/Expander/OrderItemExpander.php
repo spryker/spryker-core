@@ -79,6 +79,6 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $currentTime = new DateTime('now');
         $createdAt = new DateTime($itemTransfer->getCreatedAt());
 
-        return $currentTime->diff($createdAt)->days >= $this->salesReturnConfig->getReturnableNumberOfDays();
+        return $currentTime->diff($createdAt)->days >= $this->salesReturnConfig->getGlobalReturnableNumberOfDays();
     }
 }

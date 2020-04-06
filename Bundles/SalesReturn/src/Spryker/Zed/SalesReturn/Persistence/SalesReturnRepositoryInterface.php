@@ -21,7 +21,7 @@ interface SalesReturnRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findSalesOrderItemByIdSalesOrder(int $idSalesOrderItem): ?ItemTransfer;
+    public function findSalesOrderItemById(int $idSalesOrderItem): ?ItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer

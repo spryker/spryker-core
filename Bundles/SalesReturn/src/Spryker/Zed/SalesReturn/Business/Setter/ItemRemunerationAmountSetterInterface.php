@@ -16,5 +16,5 @@ interface ItemRemunerationAmountSetterInterface
      *
      * @return void
      */
-    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void;
+    public function setOrderItemRemunerationAmount(ItemTransfer $itemTransfer): void;
 }

@@ -20,10 +20,10 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group SetItemRemunerationAmountTest
+ * @group SetOrderItemRemunerationAmountTest
  * Add your own group annotations below this line
  */
-class SetItemRemunerationAmountTest extends Unit
+class SetOrderItemRemunerationAmountTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const FAKE_SALES_ORDER_ITEM_ID = 6666;
@@ -46,14 +46,14 @@ class SetItemRemunerationAmountTest extends Unit
     /**
      * @return void
      */
-    public function testSetItemRemunerationAmountCopyRefundableAmountToRemunerationAmount(): void
+    public function testSetOrderItemRemunerationAmountCopyRefundableAmountToRemunerationAmount(): void
     {
         // Arrange
         $orderTransfer = $this->tester->haveOrder([ItemTransfer::REFUNDABLE_AMOUNT => 228], static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getOrderItems()->getIterator()->current();
 
         // Act
-        $this->tester->getFacade()->setItemRemunerationAmount($itemTransfer);
+        $this->tester->getFacade()->setOrderItemRemunerationAmount($itemTransfer);
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -70,7 +70,7 @@ class SetItemRemunerationAmountTest extends Unit
     /**
      * @return void
      */
-    public function testSetItemRemunerationAmountThrowsExceptionWithEmptySalesOrderItemId(): void
+    public function testSetOrderItemRemunerationAmountThrowsExceptionWithEmptySalesOrderItemId(): void
     {
         // Arrange
         $itemTransfer = new ItemTransfer();
@@ -79,19 +79,19 @@ class SetItemRemunerationAmountTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->setItemRemunerationAmount($itemTransfer);
+        $this->tester->getFacade()->setOrderItemRemunerationAmount($itemTransfer);
     }
 
     /**
      * @return void
      */
-    public function testSetItemRemunerationAmountWithNotWrongSalesOrderItemId(): void
+    public function testSetOrderItemRemunerationAmountWithNotWrongSalesOrderItemId(): void
     {
         // Arrange
         $itemTransfer = (new ItemTransfer())->setIdSalesOrderItem(static::FAKE_SALES_ORDER_ITEM_ID);
 
         // Act
-        $this->tester->getFacade()->setItemRemunerationAmount($itemTransfer);
+        $this->tester->getFacade()->setOrderItemRemunerationAmount($itemTransfer);
 
         // Assert
     }
@@ -99,14 +99,14 @@ class SetItemRemunerationAmountTest extends Unit
     /**
      * @return void
      */
-    public function testSetItemRemunerationAmountWithNullableRefundableAmount(): void
+    public function testSetOrderItemRemunerationAmountWithNullableRefundableAmount(): void
     {
         // Arrange
         $orderTransfer = $this->tester->haveOrder([ItemTransfer::REFUNDABLE_AMOUNT => null], static::DEFAULT_OMS_PROCESS_NAME);
         $itemTransfer = $orderTransfer->getOrderItems()->getIterator()->current();
 
         // Act
-        $this->tester->getFacade()->setItemRemunerationAmount($itemTransfer);
+        $this->tester->getFacade()->setOrderItemRemunerationAmount($itemTransfer);
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */

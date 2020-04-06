@@ -35,7 +35,7 @@ class StartReturnCommandPlugin extends AbstractPlugin implements CommandByItemIn
         $itemTransfer = (new ItemTransfer())
             ->setIdSalesOrderItem($orderItem->getIdSalesOrderItem());
 
-        $this->getFacade()->setItemRemunerationAmount($itemTransfer);
+        $this->getFacade()->setOrderItemRemunerationAmount($itemTransfer);
 
         return [];
     }

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesReturnConfig extends AbstractBundleConfig
 {
     protected const EVENT_RETURN = 'return';
-    protected const RETURNABLE_NUMBER_OF_DAYS = 30;
+    protected const GLOBAL_RETURNABLE_NUMBER_OF_DAYS = 30;
 
     protected const RETURNABLE_STATE_NAMES = [
         'shipped',
@@ -44,9 +44,9 @@ class SalesReturnConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getReturnableNumberOfDays(): int
+    public function getGlobalReturnableNumberOfDays(): int
     {
-        return static::RETURNABLE_NUMBER_OF_DAYS;
+        return static::GLOBAL_RETURNABLE_NUMBER_OF_DAYS;
     }
 
     /**

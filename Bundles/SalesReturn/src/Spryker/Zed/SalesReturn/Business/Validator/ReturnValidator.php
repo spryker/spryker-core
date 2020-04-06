@@ -69,19 +69,6 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    protected function isOrderItemsRelatedToCustomer(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        ArrayObject $itemTransfers
-    ): bool {
-        return $itemTransfers->count() === $returnCreateRequestTransfer->getReturnItems()->count();
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool

@@ -29,7 +29,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findSalesOrderItemByIdSalesOrder(int $idSalesOrderItem): ?ItemTransfer
+    public function findSalesOrderItemById(int $idSalesOrderItem): ?ItemTransfer
     {
         $salesOrderItemEntity = $this->getFactory()
             ->getSalesOrderItemPropelQuery()

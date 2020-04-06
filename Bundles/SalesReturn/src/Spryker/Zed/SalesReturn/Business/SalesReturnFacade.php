@@ -97,11 +97,11 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @return void
      */
-    public function setItemRemunerationAmount(ItemTransfer $itemTransfer): void
+    public function setOrderItemRemunerationAmount(ItemTransfer $itemTransfer): void
     {
         $this->getFactory()
             ->createItemRemunerationAmountSetter()
-            ->setItemRemunerationAmount($itemTransfer);
+            ->setOrderItemRemunerationAmount($itemTransfer);
     }
 
     /**
