@@ -27,6 +27,7 @@ Delete,Löschen
 Email,E-Mail
 "First Name",Vorname
 "First name",Vorname
+"Form was not submitted.","Der Formular wurde nicht eingereicht."
 Gender,Geschlecht
 "Last name",Nachname
 "List Customers","Liste der Kunden"
@@ -41,4 +42,3 @@ View,Ansicht
 "View Customer","Kunden anzeigen"
 "Zed Account Reference",Zed-Konto-Referenz
 ZipCode,Postleitzahl
-"Form was not submitted.","Der Formular wurde nicht eingereicht."

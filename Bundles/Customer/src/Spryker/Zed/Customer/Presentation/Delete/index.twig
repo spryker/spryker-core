@@ -22,7 +22,7 @@
                 {{ form_widget(customerDeleteForm.idCustomer) }}
 
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
-                <button type="submit" class="btn btn-danger safe-submit">{{ 'Delete account' | trans}}</button>
+                <button class="btn btn-danger safe-submit">{{ 'Delete account' | trans}}</button>
             {{ form_end(customerDeleteForm) }}
         {% endblock %}
 
