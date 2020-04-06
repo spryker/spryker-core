@@ -20,6 +20,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+    protected const SCHEMA_NAME_PARTIAL_INCLUDED = 'Included';
     protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
     protected const SCHEMA_NAME_PARTIAL_RESPONSE = 'Response';
 
@@ -172,6 +173,20 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS
+        );
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    public function createIncludedSchemaNameFromTransferClassName(string $transferClassName): string
+    {
+        return $this->createSchemaNameFromTransferClassName(
+            $this->getTransferClassNamePartial($transferClassName),
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::SCHEMA_NAME_PARTIAL_INCLUDED
         );
     }
 

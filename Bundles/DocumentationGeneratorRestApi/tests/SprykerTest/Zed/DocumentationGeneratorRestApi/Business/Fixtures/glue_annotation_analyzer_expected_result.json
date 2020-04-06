@@ -513,6 +513,9 @@
         },
         "links": {
           "$ref": "#\/components\/schemas\/RestLinks"
+        },
+        "included": {
+            "$ref": "#\/components\/schemas\/RestTestIncluded"
         }
       }
     },
@@ -531,6 +534,16 @@
           "$ref": "#\/components\/schemas\/RestLinks"
         }
       }
+    },
+    "RestTestIncluded": {
+        "items": {
+            "oneOf": {
+                "0": {
+                    "$ref": "#\/components\/schemas\/RestTestAnnotationResourceRelationshipAttributes"
+                }
+            }
+        },
+        "type": "array"
     }
   },
   "securitySchemes": {

@@ -34,6 +34,8 @@
 
     <transfer name="SchemaData">
         <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="items" type="SchemaItems"/>
         <property name="properties" singular="property" type="SchemaProperty[]"/>
         <property name="required" type="string[]" singular="required"/>
     </transfer>
@@ -58,6 +60,15 @@
         <property name="itemsReference" type="string"/>
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
+        <property name="oneOf" singular="oneOf" type="string[]"/>
+    </transfer>
+
+    <transfer name="SchemaItems">
+        <property name="oneOf" singular="oneOf" type="string[]"/>
+    </transfer>
+
+    <transfer name="SchemaItemsComponent">
+        <property name="oneOf" singular="oneOf" type="string[]"/>
     </transfer>
 
     <transfer name="SecurityScheme">
@@ -103,6 +114,8 @@
 
     <transfer name="SchemaComponent">
         <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="items" singular="item" type="array"/>
         <property name="properties" type="array" singular="property"/>
         <property name="required" type="string[]" singular="required"/>
     </transfer>
@@ -121,6 +134,7 @@
         <property name="type" type="string"/>
         <property name="schemaReference" type="string"/>
         <property name="itemsSchemaReference" type="string"/>
+        <property name="oneOf" singular="oneOf" type="string[]"/>
         <property name="itemsType" type="string"/>
         <property name="isNullable" type="bool"/>
     </transfer>
@@ -137,6 +151,10 @@
         <property name="post" type="Annotation"/>
         <property name="patch" type="Annotation"/>
         <property name="delete" type="Annotation"/>
+    </transfer>
+
+    <transfer name="PluginAnnotations">
+        <property name="resourceAttributesClassName" type="string"/>
     </transfer>
 
     <transfer name="Annotation">

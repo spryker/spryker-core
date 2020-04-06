@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -57,21 +58,29 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $textInflector;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface
+     */
+    protected $resourceSchemaNameStorageProcessor;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface $httpMethodProcessor
      * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor
      */
     public function __construct(
         HttpMethodProcessorInterface $httpMethodProcessor,
         array $resourceRoutesPluginsProviderPlugins,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
-        DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
+        DocumentationGeneratorRestApiToTextInflectorInterface $textInflector,
+        ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor
     ) {
         $this->httpMethodProcessor = $httpMethodProcessor;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
+        $this->resourceSchemaNameStorageProcessor = $resourceSchemaNameStorageProcessor;
     }
 
     /**
@@ -79,6 +88,8 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      */
     public function createRestApiDocumentationFromPlugins(): array
     {
+        $this->addAllPluginResourceTypesToStorage();
+
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
                 $pathAnnotationsTransfer = $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin);
@@ -100,6 +111,18 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             static::KEY_PARAMETERS => $this->httpMethodProcessor->getGeneratedParameters(),
             static::KEY_TAGS => $this->httpMethodProcessor->getGeneratedTags(),
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function addAllPluginResourceTypesToStorage(): void
+    {
+        foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
+            foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
+                $this->resourceSchemaNameStorageProcessor->addResourceSchemaNamesToStorage($plugin);
+            }
+        }
     }
 
     /**
