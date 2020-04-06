@@ -7,22 +7,22 @@
 
 namespace Spryker\Yves\StepEngineExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
- * Provides preparation of quote transfer for each step of checkout process before template rendering.
+ * Allows to modify data that is passed to step template.
  */
 interface StepEnginePreRenderPluginInterface
 {
     /**
      * Specifications:
-     * - Prepares quote transfer for each step of checkout process before template rendering.
+     * - Prepares data for each step of process, before template rendering.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function execute(AbstractTransfer $dataTransfer): AbstractTransfer;
 }
