@@ -85,7 +85,7 @@ class TriggerEventFromFileConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -96,25 +96,27 @@ class TriggerEventFromFileConsole extends Console
         }
 
         $this->prepareOutputTable();
-        $totalRowsCount = $csvReader->getTotal();
-        $processedRowsCount = 0;
+        $totalRowsCount = $csvReader->getTotal() - 1;
+        $successfullyProcessedRowsCount = 0;
+        $processedCount = 0;
 
         try {
-            while ($totalRowsCount > $csvReader->getFile()->key() + 1) {
+            while ($processedCount < $totalRowsCount) {
                 $rowData = $csvReader->read();
+                $processedCount++;
                 $resultData = $this->triggerMerchantOmsEvent($rowData);
 
                 if ($resultData[static::RESULT_DATA_KEY_IS_SUCCESS]) {
-                    $processedRowsCount++;
+                    $successfullyProcessedRowsCount++;
                 }
 
                 $this->appendOutputTableRow(
-                    $csvReader->getFile()->key() + 1,
+                    $processedCount,
                     $rowData,
                     $resultData[static::RESULT_DATA_KEY_MESSAGE]
                 );
 
-                $this->writeProcessingOutput($rowData, $resultData, $processedRowsCount, $totalRowsCount);
+                $this->writeProcessingOutput($resultData, $successfullyProcessedRowsCount, $totalRowsCount);
 
                 if (!$resultData[static::RESULT_DATA_KEY_IS_SUCCESS] && !$input->getOption(static::OPTION_IGNORE_ERRORS)) {
                     return static::CODE_ERROR;
@@ -151,7 +153,7 @@ class TriggerEventFromFileConsole extends Console
             return null;
         }
 
-        if (array_intersect(static::MANDATORY_COLUMNS, $csvReader->getColumns()) === static::MANDATORY_COLUMNS) {
+        if (array_intersect(static::MANDATORY_COLUMNS, $csvReader->getColumns()) !== static::MANDATORY_COLUMNS) {
             $this->error(
                 sprintf(
                     'Csv file does not contain mandatory fields: %s.',
@@ -261,17 +263,15 @@ class TriggerEventFromFileConsole extends Console
     }
 
     /**
-     * @param string[] $rowData
      * @param string[] $resultData
-     * @param int $processedRowsCount
+     * @param int $successfullyProcessedRowsCount
      * @param int $totalRowsCount
      *
      * @return void
      */
     protected function writeProcessingOutput(
-        array $rowData,
         array $resultData,
-        int $processedRowsCount,
+        int $successfullyProcessedRowsCount,
         int $totalRowsCount
     ): void {
         if ($this->output->isVerbose()) {
@@ -279,7 +279,7 @@ class TriggerEventFromFileConsole extends Console
         }
 
         if ($resultData[static::RESULT_DATA_KEY_IS_SUCCESS]) {
-            $this->info(sprintf('Rows processed: %s/%s', $processedRowsCount, $totalRowsCount));
+            $this->info(sprintf('Rows processed: %s/%s', $successfullyProcessedRowsCount, $totalRowsCount));
 
             return;
         }

@@ -47,7 +47,6 @@
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
-        <property name="stateMachineItemStateIds" type="int[]" singular="stateMachineItemStateId"/>
         <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
