@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -194,5 +195,32 @@ class ProductFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcretesByCriteriaFilter(): void
+    {
+        // Arrange
+        $productConcreteIds = $this->tester->getProductConcreteIds();
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($productConcreteIds[0]);
+        $productCriteriaFilterTransferWithExistingStore = new ProductCriteriaFilterTransfer();
+        $productCriteriaFilterTransferWithExistingStore->setIdStore(
+            $this->tester->getStoreFacade()->getCurrentStore()->getIdStore()
+        );
+        $productCriteriaFilterTransferWithExistingStore->setIsActive(true);
+        $productCriteriaFilterTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
+
+        $productCriteriaFilterTransferWithNotExistingStore = clone $productCriteriaFilterTransferWithExistingStore;
+        $productCriteriaFilterTransferWithNotExistingStore->setIdStore(9999);
+
+        // Act
+        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaFilterTransferWithExistingStore);
+        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaFilterTransferWithNotExistingStore);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfersWithStore);
+        $this->assertCount(0, $productConcreteTransfersWithoutStore);
     }
 }
