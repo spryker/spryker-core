@@ -116,7 +116,7 @@ class SalesUnitsByCartItemResourceRelationshipExpander implements SalesUnitsByCa
             $resource->addRelationship(
                 $this->salesUnitRestResponseBuilder->createSalesUnitRestResource(
                     $productMeasurementSalesUnitTransfer,
-                    $resource->getId()
+                    $productConcreteSku
                 )
             );
         }
