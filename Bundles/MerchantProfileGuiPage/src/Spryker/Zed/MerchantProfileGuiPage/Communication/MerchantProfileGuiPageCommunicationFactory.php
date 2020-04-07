@@ -10,13 +10,11 @@ namespace Spryker\Zed\MerchantProfileGuiPage\Communication;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint\UniqueUrl;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProvider;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProviderInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileAddressFormDataProviderInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantProfileFormDataProviderInterface;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantForm;
+use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileForm;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeInterface;
@@ -37,17 +35,9 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMerchantForm(?MerchantTransfer $data = null, array $options = []): FormInterface
+    public function createMerchantProfileForm(?MerchantTransfer $data = null, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MerchantForm::class, $data, $options);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider\MerchantFormDataProviderInterface
-     */
-    public function createMerchantFormDataProvider(): MerchantFormDataProviderInterface
-    {
-        return new MerchantFormDataProvider($this->getMerchantFacade());
+        return $this->getFormFactory()->create(MerchantProfileForm::class, $data, $options);
     }
 
     /**
@@ -57,6 +47,7 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
     {
         return new MerchantProfileFormDataProvider(
             $this->getConfig(),
+            $this->getMerchantFacade(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
         );
@@ -75,9 +66,7 @@ class MerchantProfileGuiPageCommunicationFactory extends AbstractCommunicationFa
      */
     public function createUniqueUrlConstraint(): UniqueUrl
     {
-        return new UniqueUrl([
-            UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
-        ]);
+        return new UniqueUrl();
     }
 
     /**

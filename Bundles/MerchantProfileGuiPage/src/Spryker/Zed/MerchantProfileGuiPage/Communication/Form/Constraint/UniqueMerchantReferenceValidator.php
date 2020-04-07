@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractValidator;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
-class UniqueMerchantReferenceValidator extends ConstraintValidator
+/**
+ * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
+ */
+class UniqueMerchantReferenceValidator extends AbstractValidator
 {
     /**
      * @param string $value
@@ -24,7 +29,7 @@ class UniqueMerchantReferenceValidator extends ConstraintValidator
             return;
         }
 
-        $merchantTransfer = $constraint->findMerchantByReference($value);
+        $merchantTransfer = $this->findMerchantByReference($value);
 
         if ($merchantTransfer === null) {
             return;
@@ -37,5 +42,18 @@ class UniqueMerchantReferenceValidator extends ConstraintValidator
         $this->context
             ->buildViolation($constraint->getMessage())
             ->addViolation();
+    }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    protected function findMerchantByReference(string $merchantReference): ?MerchantTransfer
+    {
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
+
+        return $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
     }
 }

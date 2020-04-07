@@ -9,13 +9,13 @@ namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException;
+use Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
-class MerchantUserReader implements MerchantUserReaderInterface
+class CurrentMerchantUserReader implements MerchantUserReaderInterface
 {
-    protected const EXCEPTION_MESSAGE_MERCHANT_USER_NOT_FOUND_FOR_USER = 'Merchant user was not found by provided user id %s';
+    protected const EXCEPTION_MESSAGE_CURRENT_MERCHANT_USER_NOT_FOUND = 'Current merchant user was not found';
 
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
@@ -40,7 +40,7 @@ class MerchantUserReader implements MerchantUserReaderInterface
     }
 
     /**
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
@@ -54,8 +54,8 @@ class MerchantUserReader implements MerchantUserReaderInterface
         $merchantUserTransfers = $this->merchantUserRepository->getMerchantUsers($merchantUserCriteriaFilterTransfer);
 
         if (count($merchantUserTransfers) === 0) {
-            throw new MerchantUserNotFoundException(sprintf(
-                static::EXCEPTION_MESSAGE_MERCHANT_USER_NOT_FOUND_FOR_USER,
+            throw new CurrentMerchantUserNotFoundException(sprintf(
+                static::EXCEPTION_MESSAGE_CURRENT_MERCHANT_USER_NOT_FOUND,
                 $userTransfer->getIdUser()
             ));
         }

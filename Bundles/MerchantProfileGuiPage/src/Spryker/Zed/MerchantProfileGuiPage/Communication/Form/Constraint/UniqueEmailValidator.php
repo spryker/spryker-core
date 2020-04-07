@@ -7,11 +7,16 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractValidator;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueEmailValidator extends ConstraintValidator
+/**
+ * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
+ */
+class UniqueEmailValidator extends AbstractValidator
 {
     protected const ERROR_MESSAGE_PROVIDED_EMAIL_IS_ALREADY_USED = 'Email is already used.';
 
@@ -35,7 +40,7 @@ class UniqueEmailValidator extends ConstraintValidator
             throw new UnexpectedTypeException($uniqueEmailConstraint, UniqueEmail::class);
         }
 
-        $merchantTransfer = $uniqueEmailConstraint->findMerchantByEmail($email);
+        $merchantTransfer = $this->findMerchantByEmail($email);
 
         if ($merchantTransfer === null) {
             return;
@@ -48,5 +53,18 @@ class UniqueEmailValidator extends ConstraintValidator
         $this->context->buildViolation(static::ERROR_MESSAGE_PROVIDED_EMAIL_IS_ALREADY_USED)
             ->atPath('merchant_email')
             ->addViolation();
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    protected function findMerchantByEmail(string $email): ?MerchantTransfer
+    {
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setEmail($email);
+
+        return $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
     }
 }

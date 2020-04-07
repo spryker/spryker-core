@@ -9,13 +9,15 @@ namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileFormType;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig;
 
 class MerchantProfileFormDataProvider implements MerchantProfileFormDataProviderInterface
@@ -24,6 +26,11 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      * @var \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig
      */
     protected $merchantProfileGuiPageConfig;
+
+    /**
+     * @var \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface
+     */
+    protected $merchantFacade;
 
     /**
      * @var \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface
@@ -37,46 +44,58 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
 
     /**
      * @param \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig $merchantProfileGuiPageConfig
+     * @param \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         MerchantProfileGuiPageConfig $merchantProfileGuiPageConfig,
+        MerchantProfileGuiPageToMerchantFacadeInterface $merchantFacade,
         MerchantProfileGuiPageToGlossaryFacadeInterface $glossaryFacade,
         MerchantProfileGuiPageToLocaleFacadeInterface $localeFacade
     ) {
+        $this->merchantFacade = $merchantFacade;
         $this->merchantProfileGuiPageConfig = $merchantProfileGuiPageConfig;
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
     }
 
     /**
-     * @return array
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getOptions(): array
+    public function findMerchantById(int $idMerchant): ?MerchantTransfer
     {
-        return [
-            'data_class' => MerchantProfileTransfer::class,
-            'label' => false,
-            MerchantProfileFormType::SALUTATION_CHOICES_OPTION => $this->merchantProfileGuiPageConfig->getSalutationChoices(),
-        ];
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
+
+        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+
+        if (!$merchantTransfer) {
+            return null;
+        }
+
+        $merchantTransfer = $this->addMerchantProfileData($merchantTransfer);
+
+        return $merchantTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer|null $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function getData(?MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    public function addMerchantProfileData(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        if ($merchantProfileTransfer === null) {
-            $merchantProfileTransfer = new MerchantProfileTransfer();
-        }
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile() ?? new MerchantProfileTransfer();
 
         $merchantProfileTransfer = $this->addLocalizedGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->addInitialUrlCollection($merchantProfileTransfer);
 
-        return $merchantProfileTransfer;
+        $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
+
+        return $merchantTransfer;
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider;
 interface MerchantProfileAddressFormDataProviderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
-    public function getOptions(): array;
+    public function getCountryChoices(): array;
 }

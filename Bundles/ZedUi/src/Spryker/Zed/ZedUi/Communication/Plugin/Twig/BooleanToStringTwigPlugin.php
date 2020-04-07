@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedUi\Communication\Plugin\Twig;
 
+use RuntimeException;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -50,16 +51,22 @@ class BooleanToStringTwigPlugin extends AbstractPlugin implements TwigPluginInte
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return \Twig\TwigFilter
      */
     protected function getBoolToStrFilter(): TwigFilter
     {
         return new TwigFilter(static::FILTER_NAME_BOOL_TO_STR, function ($value) {
-            if (is_bool($value)) {
-                return $value ? 'true' : 'false';
+            if (!is_bool($value)) {
+                throw new RuntimeException(sprintf(
+                    'The "%s" filter expects boolean, got "%s".',
+                    static::FILTER_NAME_BOOL_TO_STR,
+                    is_object($value) ? get_class($value) : gettype($value)
+                ));
             }
 
-            return $value;
+            return $value ? 'true' : 'false';
         });
     }
 }

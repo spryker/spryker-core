@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFormDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer|null $merchantProfileTransfer
+     * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getData(?MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array;
+    public function findMerchantById(int $idMerchant): ?MerchantTransfer;
 }

@@ -30,19 +30,18 @@ class ProfileController extends AbstractController
             ->getCurrentMerchantUser()
             ->getIdMerchant();
 
-        $merchantFormDataProvider = $this->getFactory()->createMerchantFormDataProvider();
-        $merchantTransfer = $merchantFormDataProvider->getData($merchantId);
-        $formOptions = $merchantFormDataProvider->getOptions($merchantTransfer);
+        $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
+        $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($merchantId);
 
-        $merchantForm = $this->getFactory()->getMerchantForm($merchantTransfer, $formOptions);
-        $merchantForm->handleRequest($request);
+        $merchantProfileForm = $this->getFactory()->createMerchantProfileForm($merchantTransfer);
+        $merchantProfileForm->handleRequest($request);
 
-        if ($merchantForm->isSubmitted() && $merchantForm->isValid()) {
-            $this->updateMerchant($merchantForm);
+        if ($merchantProfileForm->isSubmitted() && $merchantProfileForm->isValid()) {
+            $this->updateMerchant($merchantProfileForm);
         }
 
         return $this->viewResponse([
-            'form' => $merchantForm->createView(),
+            'form' => $merchantProfileForm->createView(),
         ]);
     }
 

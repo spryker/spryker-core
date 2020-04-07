@@ -11,6 +11,7 @@ City,Stadt
 Country,Land
 "Data Privacy",Datenschutz
 Description,Beschreibung
+Dr,Dr
 Email,Email
 "Fax number",Faxnummer
 "First Name",Vorname
@@ -22,6 +23,9 @@ Latitude,Längengrad
 Longitude,Breitengrad
 "Merchant Company Details","Details zur Händlerfirma"
 "Merchant Reference",Händler-Referenznummer
+Mr,Herr
+Mrs,Frau
+Ms,Frau
 Number,Nummer
 "Online Profile","Online Profil"
 "Online Status","Online Status"

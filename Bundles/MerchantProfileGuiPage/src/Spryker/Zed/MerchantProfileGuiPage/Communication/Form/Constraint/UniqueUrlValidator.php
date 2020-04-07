@@ -8,12 +8,15 @@
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractValidator;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueUrlValidator extends ConstraintValidator
+/**
+ * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
+ */
+class UniqueUrlValidator extends AbstractValidator
 {
     /**
      * Checks if the passed url is unique.
@@ -41,12 +44,49 @@ class UniqueUrlValidator extends ConstraintValidator
             return;
         }
 
-        if ($constraint->hasUrlCaseInsensitive($value->getUrl())) {
+        if ($this->hasUrlCaseInsensitive($value->getUrl())) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
                 ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
                 ->addViolation();
         }
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    protected function findExistingUrl(string $url): ?UrlTransfer
+    {
+        $urlTransfer = $this->createUrlTransfer($url);
+
+        return $this->getFactory()->getUrlFacade()->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function hasUrlCaseInsensitive(string $url): bool
+    {
+        $urlTransfer = $this->createUrlTransfer($url);
+
+        return $this->getFactory()->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function createUrlTransfer(string $url): UrlTransfer
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setUrl($url);
+
+        return $urlTransfer;
     }
 
     /**
@@ -57,7 +97,7 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $existingUrlTransfer = $constraint->findExistingUrl($urlTransfer->getUrl());
+        $existingUrlTransfer = $this->findExistingUrl($urlTransfer->getUrl());
 
         if (!$existingUrlTransfer) {
             return true;

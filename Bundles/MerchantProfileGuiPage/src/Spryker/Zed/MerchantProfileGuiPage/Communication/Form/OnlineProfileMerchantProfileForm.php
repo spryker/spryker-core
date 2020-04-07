@@ -7,19 +7,16 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -30,16 +27,9 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\MerchantProfileGuiPage\MerchantProfileGuiPageConfig getConfig()
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
  */
-class MerchantProfileFormType extends AbstractType
+class OnlineProfileMerchantProfileForm extends AbstractType
 {
-    public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
-
     protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
-    protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
-    protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
-    protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
-    protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
-    protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
     protected const FIELD_LOGO_URL = 'logo_url';
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
@@ -57,11 +47,6 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_LONGITUDE = 'longitude';
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
-    protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
-    protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
-    protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
-    protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
-    protected const LABEL_CONTACT_PERSON_PHONE = 'Phone Number';
     protected const LABEL_LOGO_URL = 'Logo URL';
     protected const LABEL_URL = 'Profile URL';
     protected const LABEL_PUBLIC_EMAIL = 'Email';
@@ -76,22 +61,6 @@ class MerchantProfileFormType extends AbstractType
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => MerchantProfileTransfer::class,
-        ]);
-
-        $resolver->setRequired(static::SALUTATION_CHOICES_OPTION);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -100,11 +69,6 @@ class MerchantProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdMerchantProfileField($builder)
-            ->addContactPersonPhoneField($builder)
-            ->addContactPersonTitleField($builder, $options[static::SALUTATION_CHOICES_OPTION])
-            ->addContactPersonFirstNameField($builder)
-            ->addContactPersonLastNameField($builder)
-            ->addContactPersonRoleField($builder)
             ->addPublicEmailField($builder)
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
@@ -263,73 +227,6 @@ class MerchantProfileFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addContactPersonTitleField(FormBuilderInterface $builder, array $choices = [])
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
-            'choices' => array_flip($choices),
-            'required' => false,
-            'label' => static::LABEL_CONTACT_PERSON_TITLE,
-            'placeholder' => 'select.default.placeholder',
-
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonFirstNameField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
-            'required' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonLastNameField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
-            'required' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonRoleField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_ROLE, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_ROLE,
-            'constraints' => $this->getTextFieldConstraints(),
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -356,22 +253,6 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_PUBLIC_PHONE, TextType::class, [
             'label' => static::LABEL_PUBLIC_PHONE,
-            'constraints' => $this->getTextFieldConstraints(),
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonPhoneField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_PHONE, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_PHONE,
             'constraints' => $this->getTextFieldConstraints(),
             'required' => false,
         ]);
@@ -422,12 +303,9 @@ class MerchantProfileFormType extends AbstractType
      */
     protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
-        $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
-
         $builder->add(
             'addressCollection',
-            MerchantProfileAddressFormType::class,
-            $merchantProfileAddressFormDataProvider->getOptions()
+            MerchantProfileAddressFormType::class
         );
 
         return $this;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form;
 
+use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Transformer\MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -46,7 +47,10 @@ class MerchantProfileAddressFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
+        $resolver->setDefaults([
+            'data_class' => MerchantProfileAddressTransfer::class,
+            'label' => false,
+        ]);
     }
 
     /**
@@ -58,7 +62,7 @@ class MerchantProfileAddressFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdMerchantProfileAddressField($builder)
-            ->addCountryField($builder, $options[static::OPTION_COUNTRY_CHOICES])
+            ->addCountryField($builder)
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
             ->addZipCodeField($builder)
@@ -82,17 +86,18 @@ class MerchantProfileAddressFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
-    protected function addCountryField(FormBuilderInterface $builder, array $choices = [])
+    protected function addCountryField(FormBuilderInterface $builder)
     {
+        $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
+
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => static::LABEL_FK_COUNTRY,
             'placeholder' => 'select.default.placeholder',
             'required' => false,
-            'choices' => array_flip($choices),
+            'choices' => array_flip($merchantProfileAddressFormDataProvider->getCountryChoices()),
         ]);
 
         return $this;

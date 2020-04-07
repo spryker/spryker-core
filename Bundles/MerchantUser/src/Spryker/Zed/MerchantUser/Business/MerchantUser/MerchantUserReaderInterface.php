@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantUserTransfer;
 interface MerchantUserReaderInterface
 {
     /**
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\MerchantUserNotFoundException
+     * @throws \Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */

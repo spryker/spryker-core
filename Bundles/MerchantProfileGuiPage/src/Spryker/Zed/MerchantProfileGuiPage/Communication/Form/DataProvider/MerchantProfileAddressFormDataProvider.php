@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
-use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileAddressFormType;
 use Spryker\Zed\MerchantProfileGuiPage\Dependency\Facade\MerchantProfileGuiPageToCountryFacadeInterface;
 
 class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFormDataProviderInterface
@@ -27,21 +25,9 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
     }
 
     /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return [
-            'data_class' => MerchantProfileAddressTransfer::class,
-            'label' => false,
-            MerchantProfileAddressFormType::OPTION_COUNTRY_CHOICES => $this->prepareCountryChoices(),
-        ];
-    }
-
-    /**
      * @return string[]
      */
-    protected function prepareCountryChoices(): array
+    public function getCountryChoices(): array
     {
         $countryChoices = [];
 

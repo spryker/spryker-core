@@ -76,7 +76,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function getCurrentMerchantUser(): MerchantUserTransfer
     {
         return $this->getFactory()
-            ->createMerchantUserReader()
+            ->createCurrentMerchantUserReader()
             ->getCurrentMerchantUser();
     }
 }

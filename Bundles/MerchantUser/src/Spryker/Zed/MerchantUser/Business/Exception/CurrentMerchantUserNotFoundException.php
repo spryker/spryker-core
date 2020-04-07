@@ -9,6 +9,6 @@ namespace Spryker\Zed\MerchantUser\Business\Exception;
 
 use Exception;
 
-class MerchantUserNotFoundException extends Exception
+class CurrentMerchantUserNotFoundException extends Exception
 {
 }
