@@ -120,7 +120,9 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
         $oauthRefreshTokenTransfers = $this->getOauthRefreshTokens($oauthTokenCriteriaFilterTransfer);
 
-        $this->refreshTokenRepository->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
+        if ($oauthRefreshTokenTransfers->count()) {
+            $this->refreshTokenRepository->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
+        }
 
         return (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(true);
     }
