@@ -104,7 +104,7 @@
                 <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
                     <div class="mp-profile__row">
                         <div class="mp-profile__col mp-profile__col--business-left">
-                            <spy-card class="mp-profile__card" cloak title="{{ 'Contact Person Details' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Contact Person' | trans }}">
                                 {{ _self.spyFormItemInput(
                                     businessInfoMerchantProfileFields.contact_person_role.vars.id,
                                     businessInfoMerchantProfileFields.contact_person_role.vars.full_name,
@@ -182,7 +182,7 @@
                             </spy-card>
                         </div>
                         <div class="mp-profile__col mp-profile__col--business-right">
-                            <spy-card class="mp-profile__card" cloak title="{{ 'Merchant Company Details' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Company' | trans }}">
                                 {{ _self.spyFormItemInput(
                                     businessInfoMerchantProfileFields.name.vars.id,
                                     businessInfoMerchantProfileFields.name.vars.full_name,
@@ -240,7 +240,7 @@
                                     <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
                                 {% endfor %}
                             </spy-card>
-                            <spy-card class="mp-profile__card" cloak title="{{ 'About the store' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'About Your Store' | trans }}">
                                 {% for form in onlineProfileMerchantProfileFields.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set descriptionGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.descriptionGlossaryKey %}
 
@@ -452,7 +452,7 @@
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
-                            <spy-card class="mp-profile__card" cloak title="{{ 'Terms and Conditions' | trans }}">
+                            <spy-card class="mp-profile__card" cloak title="{{ 'Terms & Conditions' | trans }}">
                                 {% for form in onlineProfileMerchantProfileFields.merchantProfileLocalizedGlossaryAttributes.children %}
                                     {% set termsConditionsGlossaryKey = form.children.merchantProfileGlossaryAttributeValues.children.termsConditionsGlossaryKey %}
 

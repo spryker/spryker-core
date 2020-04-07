@@ -1,18 +1,19 @@
-"About the store","Ihr Shop"
+"About Your Store","Ihr Shop"
 "Addition to address",Adresszusatz
 "Average Delivery Time","Durchschnittliche Lieferzeit"
 "Banner URL","Banner URL"
-"Business Info",Geschäftsinformationen
+"Business Info",Geschäftsinformation
 "Cancellation Policy",Widerrufsbelehrung
 City,Stadt
+"Company","Firma"
 "Company Name","Name der Firma"
-"Contact Details & Address","Kontaktdaten & Adresse"
-"Contact Person Details","Details der Kontaktperson"
+"Contact Details & Address","Kontaktdaten und Adresse"
+"Contact Person","Kontaktperson"
 Country,Land
 "Data Privacy",Datenschutz
 Description,Beschreibung
-Dr,Dr
-Email,Email
+Dr,Dr.
+Email,E-Mail
 "Fax number",Faxnummer
 "First Name",Vorname
 Imprint,Impressum
@@ -21,11 +22,10 @@ Imprint,Impressum
 Latitude,Längengrad
 "Logo URL","Logo URL"
 Longitude,Breitengrad
-"Merchant Company Details","Details zur Händlerfirma"
 "Merchant Reference",Händler-Referenznummer
 Mr,Herr
-Mrs,Frau
-Ms,Frau
+Mrs,Fr.
+Ms,Fr.
 Number,Nummer
 "Online Profile","Online Profil"
 "Online Status","Online Status"
@@ -41,17 +41,19 @@ profile.status.message.offline,"<p><br>Dies bedeutet, dass ihr Shop nicht online
 "Provide Return Policy","Rücknahmebedingungen einfügen"
 "Provide Terms & Conditions","AGB einfügen"
 "Provide the URL of your Store","URL Ihres Shops einfügen"
-"Registration number",Registrierungsnummer
+"Registration number",Registriernummer
 "Return Policy",Rücknahmebedingungen
 Role,Position
+Save,Speichern
 select.default.placeholder,Auswählen
 "Store Profile URL",Shopprofil-URL
 store.state.online,"Ihr Shop ist online."
 store.state.offline,"Ihr Shop ist offline."
 Street,Straße
 "Tell us about your store","Beschreiben Sie den Shop"
-"Terms and Conditions",AGB
-"The Profile was saved successfully.","Das Profil wurde erfolgreich gespeichert."
+"Terms & Conditions",AGB
+"The Profile has been changed successfully.","Das Profil wurde erfolgreich geändert."
 Title,Titel
+"Your Store is online","Ihr Shop ist online"
 "Visual assets","Visuelle Elemente"
 "Zip Code",Postleitzahl

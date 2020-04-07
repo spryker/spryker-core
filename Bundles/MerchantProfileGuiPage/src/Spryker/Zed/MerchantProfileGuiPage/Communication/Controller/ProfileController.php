@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfileController extends AbstractController
 {
-    protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile was saved successfully.';
+    protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
