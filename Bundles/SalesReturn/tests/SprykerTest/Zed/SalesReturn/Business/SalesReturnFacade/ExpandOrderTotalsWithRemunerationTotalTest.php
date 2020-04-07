@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -66,16 +65,16 @@ class ExpandOrderTotalsWithRemunerationTotalTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderTotalsWithRemunerationTotalThrowsExceptionWithEmptyTotals(): void
+    public function testExpandOrderTotalsWithRemunerationTotalWithoutTotal(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderWithFakeRemuneration();
         $orderTransfer->setTotals(null);
 
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
         // Act
         $this->tester->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
+
+        // Assert
+        $this->assertNull($orderTransfer->getTotals());
     }
 }

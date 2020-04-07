@@ -37,14 +37,6 @@
         <property name="returnTotals" type="RestReturnTotalsAttributes"/>
     </transfer>
 
-    <transfer name="RestReturnDetailsAttributes">
-        <property name="returnReference" type="string"/>
-        <property name="store" type="string"/>
-        <property name="customerReference" type="string"/>
-        <property name="returnTotals" type="RestReturnTotalsAttributes"/>
-        <property name="returnItems" type="RestReturnItemsAttributes[]" singular="returnItem"/>
-    </transfer>
-
     <transfer name="RestReturnTotalsAttributes">
         <property name="refundTotal" type="int"/>
         <property name="remunerationTotal" type="int"/>
@@ -53,24 +45,11 @@
     <transfer name="RestReturnItemsAttributes">
         <property name="uuid" type="string"/>
         <property name="reason" type="string"/>
-        <property name="orderItem" type="RestOrderItemsAttributes"/>
+        <property name="orderItemUuid" type="string"/>
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
         <property name="uuid" type="string"/>
-    </transfer>
-
-    <transfer name="RestReturnableItemRequestAttributes">
-        <property name="orderReferences" type="array" singular="orderReference"/>
-    </transfer>
-
-    <transfer name="ReturnableItemFilter">
-        <property name="customerReferences" type="string[]" singular="customerReference"/>
-        <property name="orderReferences" type="string[]" singular="orderReference"/>
-        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
-    </transfer>
-
-    <transfer name="RestReturnableItemsAttributes">
     </transfer>
 
     <transfer name="Filter">

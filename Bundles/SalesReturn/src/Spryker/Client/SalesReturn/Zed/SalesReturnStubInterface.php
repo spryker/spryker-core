@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\SalesReturn\Zed;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\ReturnableItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
@@ -38,11 +36,4 @@ interface SalesReturnStubInterface
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnableItemFilterTransfer $returnableItemFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function getReturnableItems(ReturnableItemFilterTransfer $returnableItemFilterTransfer): ItemCollectionTransfer;
 }

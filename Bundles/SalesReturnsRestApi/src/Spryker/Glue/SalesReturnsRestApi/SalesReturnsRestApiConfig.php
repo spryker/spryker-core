@@ -15,16 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 class SalesReturnsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_RETURNS = 'returns';
-    public const RESOURCE_RETURNABLE_ITEMS = 'returnable-items';
+    public const RESOURCE_RETURN_ITEMS = 'return-items';
     public const RESOURCE_RETURN_REASONS = 'return-reasons';
 
     public const RESPONSE_CODE_RETURN_CANT_BE_CREATED = '3601';
     public const RESPONSE_CODE_CANT_FIND_RETURN = '3602';
-    public const RESPONSE_CODE_CANT_FIND_RETURNABLE_ITEM = '3603';
 
     public const RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
     public const RESPONSE_MESSAGE_CANT_FIND_RETURN = 'Can\'t find return by the given return reference.';
-    public const RESPONSE_MESSAGE_CANT_FIND_RETURNABLE_ITEM = 'Can\'t find returnable item by the given id.';
 
     /**
      * @api
@@ -43,11 +41,6 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CANT_FIND_RETURN,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_CANT_FIND_RETURN,
-            ],
-            SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURNABLE_ITEM_NOT_FOUND => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CANT_FIND_RETURNABLE_ITEM,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_CANT_FIND_RETURNABLE_ITEM,
             ],
         ];
     }

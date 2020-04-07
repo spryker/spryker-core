@@ -10,15 +10,13 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Writer;
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnRequestAttributesTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface;
 use Spryker\Shared\SalesReturnsRestApi\SalesReturnsRestApiConfig as SalesReturnsRestApiSharedConfig;
 
 class ReturnWriter implements ReturnWriterInterface
@@ -29,28 +27,20 @@ class ReturnWriter implements ReturnWriterInterface
     protected $salesReturnClient;
 
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface
+     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface
      */
-    protected $restResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface
-     */
-    protected $returnResourceMapper;
+    protected $restReturnResponseBuilder;
 
     /**
      * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface $restResponseBuilder
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface $returnResourceMapper
+     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface $restReturnResponseBuilder
      */
     public function __construct(
         SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient,
-        RestResponseBuilderInterface $restResponseBuilder,
-        ReturnResourceMapperInterface $returnResourceMapper
+        RestReturnResponseBuilderInterface $restReturnResponseBuilder
     ) {
         $this->salesReturnClient = $salesReturnClient;
-        $this->restResponseBuilder = $restResponseBuilder;
-        $this->returnResourceMapper = $returnResourceMapper;
+        $this->restReturnResponseBuilder = $restReturnResponseBuilder;
     }
 
     /**
@@ -64,20 +54,13 @@ class ReturnWriter implements ReturnWriterInterface
         RestReturnRequestAttributesTransfer $restReturnRequestAttributesTransfer
     ): RestResponseInterface {
         $returnFilterTransfer = $this->createReturnRequest($restRequest, $restReturnRequestAttributesTransfer);
-
         $returnResponseTransfer = $this->salesReturnClient->createReturn($returnFilterTransfer);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
-            return $this->restResponseBuilder->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN);
+            return $this->restReturnResponseBuilder->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN);
         }
 
-        $restReturnDetailsAttributesTransfer = $this->returnResourceMapper
-            ->mapReturnTransferToRestReturnDetailsAttributesTransfer(
-                $returnResponseTransfer->getReturn(),
-                new RestReturnDetailsAttributesTransfer()
-            );
-
-        return $this->restResponseBuilder->createReturnDetailRestResponse($restReturnDetailsAttributesTransfer);
+        return $this->restReturnResponseBuilder->createReturnRestResponse($returnResponseTransfer->getReturn());
     }
 
     /**

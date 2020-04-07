@@ -8,13 +8,11 @@
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface;
 use Spryker\Shared\SalesReturnsRestApi\SalesReturnsRestApiConfig as SalesReturnsRestApiSharedConfig;
 
 class ReturnReader implements ReturnReaderInterface
@@ -25,28 +23,20 @@ class ReturnReader implements ReturnReaderInterface
     protected $salesReturnClient;
 
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface
+     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface
      */
-    protected $restResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface
-     */
-    protected $returnResourceMapper;
+    protected $restReturnResponseBuilder;
 
     /**
      * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface $restResponseBuilder
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface $returnResourceMapper
+     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface $restReturnResponseBuilder
      */
     public function __construct(
         SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient,
-        RestResponseBuilderInterface $restResponseBuilder,
-        ReturnResourceMapperInterface $returnResourceMapper
+        RestReturnResponseBuilderInterface $restReturnResponseBuilder
     ) {
         $this->salesReturnClient = $salesReturnClient;
-        $this->restResponseBuilder = $restResponseBuilder;
-        $this->returnResourceMapper = $returnResourceMapper;
+        $this->restReturnResponseBuilder = $restReturnResponseBuilder;
     }
 
     /**
@@ -57,10 +47,10 @@ class ReturnReader implements ReturnReaderInterface
     public function getReturns(RestRequestInterface $restRequest): RestResponseInterface
     {
         if ($restRequest->getResource()->getId()) {
-            return $this->getReturnDetailAttributes($restRequest);
+            return $this->getReturnAttributes($restRequest);
         }
 
-        return $this->getReturnAttributes($restRequest);
+        return $this->getReturnsAttributes($restRequest);
     }
 
     /**
@@ -68,18 +58,14 @@ class ReturnReader implements ReturnReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getReturnAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getReturnsAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnFilterTransfer = $this->createReturnFilter($restRequest);
         $returnCollectionTransfer = $this->salesReturnClient->getReturns($returnFilterTransfer);
 
-        $restReturnsAttributesTransfers = $this->returnResourceMapper
-            ->mapReturnTransfersToRestReturnsAttributesTransfers($returnCollectionTransfer->getReturns());
-
-        return $this->restResponseBuilder->createReturnListRestResponse(
+        return $this->restReturnResponseBuilder->createReturnListRestResponse(
             $returnFilterTransfer,
-            $restReturnsAttributesTransfers,
-            $returnCollectionTransfer->getPagination()
+            $returnCollectionTransfer
         );
     }
 
@@ -88,7 +74,7 @@ class ReturnReader implements ReturnReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getReturnDetailAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getReturnAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnFilterTransfer = $this->createReturnFilter($restRequest)
             ->setReturnReference($restRequest->getResource()->getId());
@@ -99,16 +85,10 @@ class ReturnReader implements ReturnReaderInterface
             ->current();
 
         if (!$returnTransfer) {
-            return $this->restResponseBuilder->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND);
+            return $this->restReturnResponseBuilder->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_RETURN_NOT_FOUND);
         }
 
-        $restReturnDetailsAttributesTransfer = $this->returnResourceMapper
-            ->mapReturnTransferToRestReturnDetailsAttributesTransfer(
-                $returnTransfer,
-                new RestReturnDetailsAttributesTransfer()
-            );
-
-        return $this->restResponseBuilder->createReturnDetailRestResponse($restReturnDetailsAttributesTransfer);
+        return $this->restReturnResponseBuilder->createReturnRestResponse($returnTransfer);
     }
 
     /**

@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\CheckReturnableStateOrderItemExpanderPlugin;
+use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 /**
@@ -75,7 +75,7 @@ class CreateReturnTest extends Unit
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
 
         $this->tester->setDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER, [
-            new CheckReturnableStateOrderItemExpanderPlugin(),
+            new UpdateOrderItemIsReturnableByItemStatePlugin(),
         ]);
     }
 

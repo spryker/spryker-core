@@ -7,18 +7,13 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnsAttributesTransfer;
 use Generated\Shared\Transfer\RestReturnTotalsAttributesTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface;
 use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class ReturnResourceMapper implements ReturnResourceMapperInterface
@@ -29,20 +24,11 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
     protected $salesReturnsRestApiConfig;
 
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface
-     */
-    protected $ordersRestApiResource;
-
-    /**
      * @param \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig $salesReturnsRestApiConfig
-     * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface $ordersRestApiResource
      */
-    public function __construct(
-        SalesReturnsRestApiConfig $salesReturnsRestApiConfig,
-        SalesReturnsRestApiToOrdersRestApiResourceInterface $ordersRestApiResource
-    ) {
+    public function __construct(SalesReturnsRestApiConfig $salesReturnsRestApiConfig)
+    {
         $this->salesReturnsRestApiConfig = $salesReturnsRestApiConfig;
-        $this->ordersRestApiResource = $ordersRestApiResource;
     }
 
     /**
@@ -67,107 +53,34 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     * @param \Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestReturnsAttributesTransfer $restReturnsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestReturnDetailsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestReturnsAttributesTransfer
      */
-    public function mapReturnTransferToRestReturnDetailsAttributesTransfer(
+    public function mapReturnTransferToRestReturnsAttributesTransfer(
         ReturnTransfer $returnTransfer,
-        RestReturnDetailsAttributesTransfer $restReturnDetailsAttributesTransfer
-    ): RestReturnDetailsAttributesTransfer {
-        $returnTransfer
-            ->requireReturnTotals()
-            ->requireReturnItems();
-
-        $restReturnItemsAttributesTransfers = $this->mapReturnItemTransfersRestReturnItemsAttributesTransfers($returnTransfer->getReturnItems());
-
-        $restReturnDetailsAttributesTransfer = $restReturnDetailsAttributesTransfer
+        RestReturnsAttributesTransfer $restReturnsAttributesTransfer
+    ): RestReturnsAttributesTransfer {
+        return $restReturnsAttributesTransfer
             ->fromArray($returnTransfer->toArray(), true)
-            ->setReturnItems(new ArrayObject($restReturnItemsAttributesTransfers))
             ->setReturnTotals(
                 (new RestReturnTotalsAttributesTransfer())
                     ->fromArray($returnTransfer->getReturnTotals()->toArray(), true)
             );
-
-        return $restReturnDetailsAttributesTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnTransfer[] $returnTransfers
+     * @param \Generated\Shared\Transfer\ReturnItemTransfer $returnItemTransfer
+     * @param \Generated\Shared\Transfer\RestReturnItemsAttributesTransfer $restReturnItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestReturnsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestReturnItemsAttributesTransfer
      */
-    public function mapReturnTransfersToRestReturnsAttributesTransfers(ArrayObject $returnTransfers): array
-    {
-        $restReturnsAttributesTransfers = [];
-
-        foreach ($returnTransfers as $returnTransfer) {
-            $restReturnsAttributesTransfers[] = (new RestReturnsAttributesTransfer())
-                ->fromArray($returnTransfer->toArray(), true)
-                ->setReturnTotals(
-                    (new RestReturnTotalsAttributesTransfer())
-                        ->fromArray($returnTransfer->getReturnTotals()->toArray(), true)
-                );
-        }
-
-        return $restReturnsAttributesTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[]
-     */
-    public function mapItemCollectionTransferToRestOrderItemsAttributesTransfers(ItemCollectionTransfer $itemCollectionTransfer): array
-    {
-        $restReturnItemsAttributesTransfer = [];
-
-        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $restReturnItemsAttributesTransfer[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
-                $itemTransfer,
-                new RestOrderItemsAttributesTransfer()
-            );
-        }
-
-        return $restReturnItemsAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
-     */
-    public function mapItemTransferToRestOrderItemsAttributesTransfer(
-        ItemTransfer $itemTransfer,
-        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
-    ): RestOrderItemsAttributesTransfer {
-        return $this->ordersRestApiResource->mapItemTransferToRestOrderItemsAttributesTransfer(
-            $itemTransfer,
-            $restOrderItemsAttributesTransfer
-        );
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnItemTransfer[] $returnItemTransfers
-     *
-     * @return \Generated\Shared\Transfer\RestReturnItemsAttributesTransfer[]
-     */
-    protected function mapReturnItemTransfersRestReturnItemsAttributesTransfers(ArrayObject $returnItemTransfers): array
-    {
-        $restReturnItemsAttributesTransfers = [];
-
-        foreach ($returnItemTransfers as $returnItemTransfer) {
-            $restOrderItemsAttributesTransfer = $this->ordersRestApiResource->mapItemTransferToRestOrderItemsAttributesTransfer(
-                $returnItemTransfer->getOrderItem(),
-                new RestOrderItemsAttributesTransfer()
-            );
-
-            $restReturnItemsAttributesTransfers[] = (new RestReturnItemsAttributesTransfer())
-                ->fromArray($returnItemTransfer->toArray(), true)
-                ->setOrderItem($restOrderItemsAttributesTransfer);
-        }
-
-        return $restReturnItemsAttributesTransfers;
+    public function mapReturnItemTransferToRestReturnItemsAttributesTransfer(
+        ReturnItemTransfer $returnItemTransfer,
+        RestReturnItemsAttributesTransfer $restReturnItemsAttributesTransfer
+    ): RestReturnItemsAttributesTransfer {
+        return $restReturnItemsAttributesTransfer
+            ->fromArray($returnItemTransfer->toArray(), true)
+            ->setOrderItemUuid($returnItemTransfer->getOrderItem()->getUuid());
     }
 }

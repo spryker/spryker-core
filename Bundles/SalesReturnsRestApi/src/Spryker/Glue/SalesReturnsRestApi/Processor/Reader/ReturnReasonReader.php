@@ -12,8 +12,7 @@ use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface;
 
 class ReturnReasonReader implements ReturnReasonReaderInterface
 {
@@ -23,28 +22,20 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     protected $salesReturnClient;
 
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface
+     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface
      */
-    protected $restResponseBuilder;
-
-    /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface
-     */
-    protected $returnReasonResourceMapper;
+    protected $restReturnReasonResponseBuilder;
 
     /**
      * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface $restResponseBuilder
-     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface $returnReasonResourceMapper
+     * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface $restReturnReasonResponseBuilder
      */
     public function __construct(
         SalesReturnsRestApiToSalesReturnClientInterface $salesReturnClient,
-        RestResponseBuilderInterface $restResponseBuilder,
-        ReturnReasonResourceMapperInterface $returnReasonResourceMapper
+        RestReturnReasonResponseBuilderInterface $restReturnReasonResponseBuilder
     ) {
         $this->salesReturnClient = $salesReturnClient;
-        $this->restResponseBuilder = $restResponseBuilder;
-        $this->returnReasonResourceMapper = $returnReasonResourceMapper;
+        $this->restReturnReasonResponseBuilder = $restReturnReasonResponseBuilder;
     }
 
     /**
@@ -57,16 +48,10 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
         $returnReasonFilterTransfer = $this->createReturnReasonFilter($restRequest);
         $returnReasonCollectionTransfer = $this->salesReturnClient->getReturnReasons($returnReasonFilterTransfer);
 
-        $restReturnReasonsAttributesTransfers = $this->returnReasonResourceMapper
-            ->mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-                $returnReasonCollectionTransfer->getReturnReasons(),
-                $restRequest->getMetadata()->getLocale()
-            );
-
-        return $this->restResponseBuilder->createReturnReasonListRestResponse(
+        return $this->restReturnReasonResponseBuilder->createReturnReasonListRestResponse(
             $returnReasonFilterTransfer,
-            $restReturnReasonsAttributesTransfers,
-            $returnReasonCollectionTransfer->getPagination()
+            $returnReasonCollectionTransfer,
+            $restRequest->getMetadata()->getLocale()
         );
     }
 

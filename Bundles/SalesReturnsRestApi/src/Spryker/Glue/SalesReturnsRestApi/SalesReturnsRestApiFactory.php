@@ -10,15 +10,16 @@ namespace Spryker\Glue\SalesReturnsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilder;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilder;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilder;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Expander\ReturnItemExpander;
+use Spryker\Glue\SalesReturnsRestApi\Processor\Expander\ReturnItemExpanderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapper;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapper;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnableItemReader;
-use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnableItemReaderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReader;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReaderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnReasonReader;
@@ -38,8 +39,17 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnReasonReader(
             $this->getSalesReturnClient(),
-            $this->createRestResponseBuilder(),
-            $this->createReturnReasonResourceMapper()
+            $this->createRestReturnReasonResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Expander\ReturnItemExpanderInterface
+     */
+    public function createReturnItemExpander(): ReturnItemExpanderInterface
+    {
+        return new ReturnItemExpander(
+            $this->createRestReturnResponseBuilder()
         );
     }
 
@@ -50,20 +60,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnWriter(
             $this->getSalesReturnClient(),
-            $this->createRestResponseBuilder(),
-            $this->createReturnResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Reader\ReturnableItemReaderInterface
-     */
-    public function createReturnableItemReader(): ReturnableItemReaderInterface
-    {
-        return new ReturnableItemReader(
-            $this->getSalesReturnClient(),
-            $this->createRestResponseBuilder(),
-            $this->createReturnResourceMapper()
+            $this->createRestReturnResponseBuilder()
         );
     }
 
@@ -74,19 +71,29 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new ReturnReader(
             $this->getSalesReturnClient(),
-            $this->createRestResponseBuilder(),
+            $this->createRestReturnResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface
+     */
+    public function createRestReturnResponseBuilder(): RestReturnResponseBuilderInterface
+    {
+        return new RestReturnResponseBuilder(
+            $this->getResourceBuilder(),
             $this->createReturnResourceMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestResponseBuilderInterface
+     * @return \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface
      */
-    public function createRestResponseBuilder(): RestResponseBuilderInterface
+    public function createRestReturnReasonResponseBuilder(): RestReturnReasonResponseBuilderInterface
     {
-        return new RestResponseBuilder(
+        return new RestReturnReasonResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createReturnResourceMapper()
+            $this->createReturnReasonResourceMapper()
         );
     }
 
@@ -106,8 +113,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function createReturnResourceMapper(): ReturnResourceMapperInterface
     {
         return new ReturnResourceMapper(
-            $this->getConfig(),
-            $this->getOrdersRestApiResource()
+            $this->getConfig()
         );
     }
 
@@ -125,13 +131,5 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): SalesReturnsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Glue\SalesReturnsRestApi\Dependency\RestApiResource\SalesReturnsRestApiToOrdersRestApiResourceInterface
-     */
-    public function getOrdersRestApiResource(): SalesReturnsRestApiToOrdersRestApiResourceInterface
-    {
-        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::RESOURCE_ORDERS_REST_API);
     }
 }

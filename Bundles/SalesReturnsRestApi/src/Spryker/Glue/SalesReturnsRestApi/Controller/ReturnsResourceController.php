@@ -27,7 +27,7 @@ class ReturnsResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnDetailsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnsAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request.",
      *              "404": "Return not found."
