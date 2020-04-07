@@ -20,21 +20,21 @@ interface MerchantUserGuiToMerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function updateMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function deleteMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer

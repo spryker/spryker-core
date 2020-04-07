@@ -53,7 +53,7 @@ class CreateMerchantUserController extends AbstractCrudMerchantUserController
     {
         $userTransfer = $merchantUserForm->getData();
 
-        $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->create(
+        $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->createMerchantUser(
             (new MerchantUserTransfer())->setUser($userTransfer)->setIdMerchant($idMerchant)
         );
 

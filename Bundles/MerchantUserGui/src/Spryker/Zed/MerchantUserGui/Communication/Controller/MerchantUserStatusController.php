@@ -46,7 +46,7 @@ class MerchantUserStatusController extends AbstractCrudMerchantUserController
         }
 
         $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);
-        $merchantResponseTransfer = $this->getFactory()->getMerchantUserFacade()->update($merchantUserTransfer);
+        $merchantResponseTransfer = $this->getFactory()->getMerchantUserFacade()->updateMerchantUser($merchantUserTransfer);
         $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
 
         if (!$merchantResponseTransfer->getIsSuccessful()) {

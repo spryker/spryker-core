@@ -87,7 +87,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer->setIdMerchant($merchantTransfer->getIdMerchant())->setUser($userTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUser($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
             (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
         );
@@ -111,7 +111,7 @@ class MerchantUserFacadeTest extends Unit
             ->setUser($userTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUser($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
             (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
         );
@@ -142,7 +142,7 @@ class MerchantUserFacadeTest extends Unit
             ->setUser($newUserTransfer);
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->create($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUser($merchantUserTransfer);
 
         // Assert
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccessful());
@@ -180,7 +180,7 @@ class MerchantUserFacadeTest extends Unit
         $this->authFacadeMock->expects($this->never())->method('requestPasswordReset');
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->update($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());
@@ -215,7 +215,7 @@ class MerchantUserFacadeTest extends Unit
         $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->update($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());
@@ -250,7 +250,7 @@ class MerchantUserFacadeTest extends Unit
         $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
 
         // Act
-        $merchantUserResponseTransfer = $this->tester->getFacade()->update($merchantUserTransfer);
+        $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
 
         // Assert
         $this->assertTrue($merchantUserResponseTransfer->getIsSuccessful());

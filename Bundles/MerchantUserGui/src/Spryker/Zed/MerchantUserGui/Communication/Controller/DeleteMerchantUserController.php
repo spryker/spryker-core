@@ -49,7 +49,7 @@ class DeleteMerchantUserController extends AbstractCrudMerchantUserController
         $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
         $merchantUserResponseTransfer = $this->getFactory()
             ->getMerchantUserFacade()
-            ->delete($merchantUserTransfer);
+            ->deleteMerchantUser($merchantUserTransfer);
 
         if (!$merchantUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage('Merchant user was not deleted.');

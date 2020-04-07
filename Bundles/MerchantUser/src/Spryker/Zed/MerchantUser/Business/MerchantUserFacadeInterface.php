@@ -27,7 +27,7 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:
@@ -42,11 +42,11 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function updateMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:
-     * - Requires MerchantUserTransfer.user.idUser.
+     * - Requires MerchantUserTransfer.idUser.
      * - Deletes MerchantUser by passed MerchantUser transfer data.
      * - Sets MerchantUserResponseTransfer.isSuccessful=true if merchant user was deleted.
      * - Sets MerchantUserResponseTransfer.isSuccessful=false if merchant user cannot be deleted.
@@ -57,7 +57,7 @@ interface MerchantUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
+    public function deleteMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer;
 
     /**
      * Specification:

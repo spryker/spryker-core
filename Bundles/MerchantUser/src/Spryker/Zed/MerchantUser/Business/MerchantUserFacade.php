@@ -30,7 +30,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserCreator()
@@ -46,7 +46,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function updateMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserUpdater()
@@ -62,7 +62,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function deleteMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantUserDeleter()

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,7 +42,7 @@ class EditMerchantUserController extends AbstractCrudMerchantUserController
             ->handleRequest($request);
 
         if ($merchantUserUpdateForm->isSubmitted() && $merchantUserUpdateForm->isValid()) {
-            return $this->updateMerchant($merchantUserTransfer, $merchantUserUpdateForm);
+            return $this->updateMerchantUser($merchantUserTransfer, $merchantUserUpdateForm);
         }
 
         return $this->viewResponse([
@@ -55,17 +56,19 @@ class EditMerchantUserController extends AbstractCrudMerchantUserController
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      * @param \Symfony\Component\Form\FormInterface $merchantUserUpdateForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function updateMerchant(MerchantUserTransfer $merchantUserTransfer, FormInterface $merchantUserUpdateForm)
-    {
+    protected function updateMerchantUser(
+        MerchantUserTransfer $merchantUserTransfer,
+        FormInterface $merchantUserUpdateForm
+    ): RedirectResponse {
         $redirectUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
         $userTransfer = $merchantUserUpdateForm->getData();
         $merchantUserTransfer->setUser($userTransfer);
 
         $merchantUserResponseTransfer = $this->getFactory()
             ->getMerchantUserFacade()
-            ->update($merchantUserTransfer);
+            ->updateMerchantUser($merchantUserTransfer);
 
         if ($merchantUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage('Merchant user was successfully updated');

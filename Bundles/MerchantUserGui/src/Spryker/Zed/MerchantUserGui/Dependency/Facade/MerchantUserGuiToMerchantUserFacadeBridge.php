@@ -33,9 +33,9 @@ class MerchantUserGuiToMerchantUserFacadeBridge implements MerchantUserGuiToMerc
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function create(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function createMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
-        return $this->merchantUserFacade->create($merchantUserTransfer);
+        return $this->merchantUserFacade->createMerchantUser($merchantUserTransfer);
     }
 
     /**
@@ -43,9 +43,9 @@ class MerchantUserGuiToMerchantUserFacadeBridge implements MerchantUserGuiToMerc
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function update(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function updateMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
-        return $this->merchantUserFacade->update($merchantUserTransfer);
+        return $this->merchantUserFacade->updateMerchantUser($merchantUserTransfer);
     }
 
     /**
@@ -53,9 +53,9 @@ class MerchantUserGuiToMerchantUserFacadeBridge implements MerchantUserGuiToMerc
      *
      * @return \Generated\Shared\Transfer\MerchantUserResponseTransfer
      */
-    public function delete(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
+    public function deleteMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserResponseTransfer
     {
-        return $this->merchantUserFacade->delete($merchantUserTransfer);
+        return $this->merchantUserFacade->deleteMerchantUser($merchantUserTransfer);
     }
 
     /**
