@@ -26,3 +26,7 @@
 {% endfor %}
 
 {% do merchantForm.urlCollection.setRendered %}
+
+{% if (merchantForm.stocks is defined) %}
+    {{ form_row(merchantForm.stocks) }}
+{% endif %}
