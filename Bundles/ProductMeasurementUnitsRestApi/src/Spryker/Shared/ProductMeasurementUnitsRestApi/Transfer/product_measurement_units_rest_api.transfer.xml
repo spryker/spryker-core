@@ -72,6 +72,7 @@
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
+        <property name="amount" type="decimal"/>
         <property name="salesUnit" type="RestOrdersSalesUnitAttributes"/>
     </transfer>
 

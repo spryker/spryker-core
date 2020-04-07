@@ -77,6 +77,8 @@ class SalesUnitMapper implements SalesUnitMapperInterface
             ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
             ->setProductMeasurementUnit($restProductMeasurementUnitsAttributesTransfer);
 
-        return $restOrderItemsAttributesTransfer->setSalesUnit($restOrdersSalesUnitAttributesTransfer);
+        return $restOrderItemsAttributesTransfer
+            ->setAmount($itemTransfer->getAmount())
+            ->setSalesUnit($restOrdersSalesUnitAttributesTransfer);
     }
 }
