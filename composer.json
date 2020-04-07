@@ -412,6 +412,8 @@
     "spryker/price-product-offer": "*",
     "spryker/price-product-offer-data-import": "*",
     "spryker/price-product-offer-storage": "*",
+    "spryker/price-product-offer-storage-extension": "*",
+    "spryker/price-product-offer-volume": "*",
     "spryker/price-product-schedule": "*",
     "spryker/price-product-schedule-data-import": "*",
     "spryker/price-product-schedule-gui": "*",
