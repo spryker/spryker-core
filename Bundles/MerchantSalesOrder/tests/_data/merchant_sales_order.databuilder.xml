@@ -16,4 +16,8 @@
         <property name="totals" dataBuilderRule="Totals"/>
     </transfer>
 
+    <transfer name="MerchantOrderItem">
+        <property name="reference" dataBuilderRule="unique()->sentence"/>
+    </transfer>
+
 </transfers>

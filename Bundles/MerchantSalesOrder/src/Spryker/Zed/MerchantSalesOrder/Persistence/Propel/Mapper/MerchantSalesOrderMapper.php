@@ -105,8 +105,7 @@ class MerchantSalesOrderMapper
         return $merchantOrderItemTransfer->fromArray($merchantSalesOrderItemEntity->toArray(), true)
             ->setIdMerchantOrderItem($merchantSalesOrderItemEntity->getIdMerchantSalesOrderItem())
             ->setIdOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem())
-            ->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder())
-            ->setReference($merchantSalesOrderItemEntity->getMerchantOrderItemReference());
+            ->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
     }
 
     /**
@@ -123,7 +122,7 @@ class MerchantSalesOrderMapper
         $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
             ->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem())
             ->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder())
-            ->setMerchantOrderItemReference($merchantOrderItemTransfer->getReference());
+            ->setReference($merchantOrderItemTransfer->getReference());
 
         return $merchantSalesOrderItemEntity;
     }

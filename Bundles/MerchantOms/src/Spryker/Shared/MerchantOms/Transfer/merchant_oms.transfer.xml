@@ -47,7 +47,7 @@
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
-        <property name="merchantOrderItemReference" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

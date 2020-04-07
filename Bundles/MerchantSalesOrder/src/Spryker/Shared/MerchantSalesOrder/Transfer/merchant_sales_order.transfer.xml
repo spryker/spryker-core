@@ -46,6 +46,7 @@
     <transfer name="MerchantOrderItemCriteria">
         <property name="idMerchantOrderItem" type="int"/>
         <property name="idOrderItem" type="int"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">

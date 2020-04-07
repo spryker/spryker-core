@@ -181,7 +181,7 @@ class TriggerEventFromFileConsole extends Console
     protected function triggerMerchantOmsEvent(array $rowData): array
     {
         $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
-            ->setMerchantOrderItemReference($rowData[static::COLUMN_MERCHANT_ORDER_ITEM_REFERENCE]);
+            ->setReference($rowData[static::COLUMN_MERCHANT_ORDER_ITEM_REFERENCE]);
 
         $merchantOrderItemTransfer = $this->getFactory()
             ->getMerchantSalesOrderFacade()
