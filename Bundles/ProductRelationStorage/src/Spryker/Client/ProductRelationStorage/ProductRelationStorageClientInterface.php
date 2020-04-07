@@ -15,25 +15,23 @@ interface ProductRelationStorageClientInterface
      * Specification:
      *  - Retrieves related products for the provided product abstract ID.
      *  - Maps raw product data from Storage to ProductViewTransfer for the provided locale.
-     *  - From next major version (Forward Compatibility):
-     *     Only product relations assigned with passed $storeName will be returned.
+     *  - Only product relations assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName, ?string $storeName = null);
+    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName);
 
     /**
      * Specification:
      *  - Retrieves upselling products for the provided QuoteTransfer.
      *  - Maps raw product data from Storage to ProductViewTransfer for the provided locale.
-     *  - From next major version (Forward Compatibility):
-     *     Only product relations assigned with store of the Quote will be returned.
+     *  - Only product relations assigned with store of the Quote will be returned.
      *
      * @api
      *
@@ -47,23 +45,21 @@ interface ProductRelationStorageClientInterface
     /**
      * Specification:
      *  - Retrieves related abstract product ids for the provided product abstract ID.
-     *  - From next major version (Forward Compatibility):
-     *     Only product relations with passed $storeName will be returned.
+     *  - Only product relations with passed $storeName will be returned.
      *
      * @api
      *
      * @param int $idProductAbstract
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return int[]
      */
-    public function findRelatedAbstractProductIds(int $idProductAbstract, ?string $storeName = null): array;
+    public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array;
 
     /**
      * Specification:
      *  - Retrieves upselling abstract product ids for the provided QuoteTransfer.
-     *  - From next major version (Forward Compatibility):
-     *     Only product relations assigned with store of the Quote will be returned.
+     *  - Only product relations assigned with store of the Quote will be returned.
      *
      * @api
      *
