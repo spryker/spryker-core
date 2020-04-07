@@ -171,11 +171,9 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         PathMethodDataTransfer $pathMethodDataTransfer,
         PathSchemaDataTransfer $errorSchemaDataTransfer
     ): void {
-        $responseSchemaDataTransfer = new PathSchemaDataTransfer();
-
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
+            new PathSchemaDataTransfer(),
             (string)Response::HTTP_NO_CONTENT
         );
         if ($responseSchemaDataTransfer) {
