@@ -10,6 +10,7 @@ namespace Spryker\Zed\OauthRevoke\Persistence;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -22,15 +23,17 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
     protected const COLUMN_REVOKED_AT = 'RevokedAt';
 
     /**
-     * @param string $expiresAt
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return int
      */
-    public function deleteExpiredRefreshTokens(string $expiresAt): int
+    public function deleteExpiredRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): int
     {
+        $oauthTokenCriteriaFilterTransfer->requireExpiresAt();
+
         return $this->getFactory()
             ->createRefreshTokenQuery()
-            ->filterByExpiresAt($expiresAt, Criteria::LESS_EQUAL)
+            ->filterByExpiresAt($oauthTokenCriteriaFilterTransfer->getExpiresAt(), Criteria::LESS_EQUAL)
             ->delete();
     }
 

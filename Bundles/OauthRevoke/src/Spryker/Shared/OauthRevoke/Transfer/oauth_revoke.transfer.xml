@@ -16,6 +16,7 @@
         <property name="identifier" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="isRevoked" type="bool"/>
+        <property name="expiresAt" type="string"/>
     </transfer>
 
     <transfer name="OauthRefreshTokenCollection">

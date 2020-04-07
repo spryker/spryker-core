@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
@@ -22,10 +21,12 @@ use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
-use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeBridge;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
+use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthExpiredRefreshTokenRemoverPlugin;
+use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenReaderPlugin;
+use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenSaverPlugin;
 
 /**
  * Auto-generated group annotations
@@ -232,7 +233,7 @@ class OauthFacadeTest extends Unit
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
-        $this->getOauthToOauthRevokeFacadeBridgeMock();
+        $this->setOauthDependencies();
         $this->setUserProviderPluginMock();
         $customerTransfer = $this->tester->createCustomerTransfer();
         $oauthResponseTransfer = $this->tester->haveAuthorizationToGlue($customerTransfer);
@@ -307,9 +308,7 @@ class OauthFacadeTest extends Unit
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
-        $this->setUserProviderPluginMock();
-        $customerTransfer = $this->tester->createCustomerTransfer();
-        $this->tester->haveAuthorizationToGlue($customerTransfer);
+        $this->setOauthDependencies();
 
         $oauthClient = new SpyOauthClient();
         $oauthClient
@@ -414,21 +413,6 @@ class OauthFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    protected function getOauthToOauthRevokeFacadeBridgeMock(): void
-    {
-        $oauthRefreshTokenTransfer = new OauthRefreshTokenTransfer();
-        $oauthRefreshTokenTransfer->setIdentifier('test-identifier');
-
-        $oauthRevokeFacade = $this->createMock(OauthToOauthRevokeFacadeBridge::class);
-        $oauthRevokeFacade
-            ->method('findRefreshToken')->willReturn($oauthRefreshTokenTransfer);
-
-        $this->tester->setDependency(OauthDependencyProvider::FACADE_OAUTH_REVOKE, $oauthRevokeFacade);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\OauthRequestTransfer
      */
     protected function createOauthRequestTransfer(): OauthRequestTransfer
@@ -450,5 +434,21 @@ class OauthFacadeTest extends Unit
     protected function getOauthFacade(): OauthFacadeInterface
     {
         return $this->tester->getLocator()->oauth()->facade();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setOauthDependencies(): void
+    {
+        $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_READER, [
+            new OauthRefreshTokenReaderPlugin(),
+        ]);
+        $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER, [
+            new OauthRefreshTokenSaverPlugin(),
+        ]);
+        $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER, [
+            new OauthExpiredRefreshTokenRemoverPlugin(),
+        ]);
     }
 }

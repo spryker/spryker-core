@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthRevoke\Communication\Plugin\OauthRevoke;
+namespace Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface;
 
 /**
  * @method \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthRevoke\OauthRevokeConfig getConfig()
  */
-class OauthRefreshTokenRevokerPlugin extends AbstractPlugin implements OauthRefreshTokenRevokerPluginInterface
+class OauthRefreshTokenCheckerPlugin extends AbstractPlugin implements OauthRefreshTokenCheckerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -24,13 +24,27 @@ class OauthRefreshTokenRevokerPlugin extends AbstractPlugin implements OauthRefr
      *
      * @param string $tokenId
      *
-     * @return void
+     * @return bool
      */
-    public function revokeRefreshToken(string $tokenId): void
+    public function isApplicable(string $tokenId): bool
+    {
+        return (bool)$tokenId;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $tokenId
+     *
+     * @return bool
+     */
+    public function isRefreshTokenRevoked(string $tokenId): bool
     {
         $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
             ->setIdentifier($tokenId);
 
-        $this->getFacade()->revokeRefreshToken($oauthRefreshTokenTransfer);
+        return $this->getFacade()->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
     }
 }

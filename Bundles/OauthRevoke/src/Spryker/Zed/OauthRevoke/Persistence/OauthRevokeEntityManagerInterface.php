@@ -9,15 +9,16 @@ namespace Spryker\Zed\OauthRevoke\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 
 interface OauthRevokeEntityManagerInterface
 {
     /**
-     * @param string $expiresAt
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return int
      */
-    public function deleteExpiredRefreshTokens(string $expiresAt): int;
+    public function deleteExpiredRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer

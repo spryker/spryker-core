@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\Oauth\Business\Model;
 
+use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use League\OAuth2\Server\CryptTrait;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface;
-use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 
@@ -27,11 +28,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
 
     /**
-     * @var \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
-     */
-    protected $oauthRevokeFacade;
-
-    /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface
      */
     protected $refreshTokenRepository;
@@ -42,21 +38,34 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[]
+     */
+    protected $oauthRefreshTokenReaderPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[]
+     */
+    protected $oauthRefreshTokensReaderPlugins;
+
+    /**
      * @param \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
-     * @param \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface $oauthRevokeFacade
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[] $oauthRefreshTokenReaderPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[] $oauthRefreshTokensReaderPlugins
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
-        OauthToOauthRevokeFacadeInterface $oauthRevokeFacade,
         OauthToUtilEncodingServiceInterface $utilEncodingService,
-        OauthConfig $oauthConfig
+        OauthConfig $oauthConfig,
+        array $oauthRefreshTokenReaderPlugins,
+        array $oauthRefreshTokensReaderPlugins
     ) {
         $this->refreshTokenRepository = $refreshTokenRepository;
-        $this->oauthRevokeFacade = $oauthRevokeFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->encryptionKey = $oauthConfig->getEncryptionKey();
+        $this->oauthRefreshTokenReaderPlugins = $oauthRefreshTokenReaderPlugins;
+        $this->oauthRefreshTokensReaderPlugins = $oauthRefreshTokensReaderPlugins;
     }
 
     /**
@@ -83,8 +92,11 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
 
-        $oauthRefreshTokenTransfer = $this->oauthRevokeFacade->findRefreshToken($oauthTokenCriteriaFilterTransfer);
+        $oauthRefreshTokenTransfer = $this->findOauthRefreshToken($oauthTokenCriteriaFilterTransfer);
+
         if (!$oauthRefreshTokenTransfer) {
+            dd(123);
+
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE);
@@ -108,13 +120,53 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
             ->setCustomerReference($revokeRefreshTokenRequestTransfer->getCustomerReference())
             ->setIsRevoked(false);
 
-        $oauthRefreshTokenTransfers = $this->oauthRevokeFacade
-            ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
-            ->getOauthRefreshTokens();
+        $oauthRefreshTokenTransfers = $this->getOauthRefreshTokens($oauthTokenCriteriaFilterTransfer);
 
         $this->refreshTokenRepository->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
 
         return (new RevokeRefreshTokenResponseTransfer())->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
+     */
+    protected function findOauthRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer
+    {
+        $oauthRefreshTokenTransfer = null;
+        foreach ($this->oauthRefreshTokenReaderPlugins as $oauthRefreshTokenReaderPlugin) {
+            if (!$oauthRefreshTokenReaderPlugin->isApplicable($oauthTokenCriteriaFilterTransfer)) {
+                continue;
+            }
+
+            return $oauthRefreshTokenReaderPlugin->findRefreshToken($oauthTokenCriteriaFilterTransfer);
+        }
+
+        return $oauthRefreshTokenTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[]
+     */
+    protected function getOauthRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ArrayObject
+    {
+        $oauthRefreshTokens = [];
+        foreach ($this->oauthRefreshTokensReaderPlugins as $oauthRefreshTokensReaderPlugin) {
+            $receivedOauthRefreshTokens = $oauthRefreshTokensReaderPlugin
+                ->getRefreshTokens($oauthTokenCriteriaFilterTransfer)
+                ->getOauthRefreshTokens()
+                ->getArrayCopy();
+
+            $oauthRefreshTokens = array_merge(
+                $oauthRefreshTokens,
+                $receivedOauthRefreshTokens
+            );
+        }
+
+        return new ArrayObject($oauthRefreshTokens);
     }
 
     /**

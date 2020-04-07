@@ -5,29 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Dependency\Facade;
+namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer;
-use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 
-interface OauthToOauthRevokeFacadeInterface
+interface OauthRefreshTokensReaderPluginInterface
 {
     /**
-     * @param string $expiresAt
+     * @api
      *
-     * @return int
-     */
-    public function deleteExpiredRefreshTokens(string $expiresAt): int;
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
+     * Specification:
+     * - Get refresh tokens by provided criteria.
      *
-     * @return \Generated\Shared\Transfer\OauthRefreshTokenTransfer|null
-     */
-    public function findRefreshToken(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ?OauthRefreshTokenTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\OauthRefreshTokenCollectionTransfer

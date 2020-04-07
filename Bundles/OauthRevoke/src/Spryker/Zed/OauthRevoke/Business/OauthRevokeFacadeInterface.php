@@ -18,11 +18,11 @@ interface OauthRevokeFacadeInterface
     /**
      * @api
      *
-     * @param string $expiresAt
+     * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
      * @return int
      */
-    public function deleteExpiredRefreshTokens(string $expiresAt): int;
+    public function deleteExpiredRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): int;
 
     /**
      * Specification:

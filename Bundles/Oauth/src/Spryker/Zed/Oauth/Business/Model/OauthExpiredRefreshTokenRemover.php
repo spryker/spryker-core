@@ -9,16 +9,11 @@ namespace Spryker\Zed\Oauth\Business\Model;
 
 use DateInterval;
 use DateTime;
-use Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface;
+use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Spryker\Zed\Oauth\OauthConfig;
 
 class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemoverInterface
 {
-    /**
-     * @var \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface
-     */
-    protected $oauthRevokeFacade;
-
     /**
      * @var \Spryker\Zed\Oauth\OauthConfig
      */
@@ -30,18 +25,23 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     protected $presentDateTime;
 
     /**
-     * @param \Spryker\Zed\Oauth\Dependency\Facade\OauthToOauthRevokeFacadeInterface $oauthRevokeFacade
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface[]
+     */
+    protected $oauthExpiredRefreshTokenRemoverPlugins;
+
+    /**
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      * @param \DateTime $presentDateTime
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface[] $oauthExpiredRefreshTokenRemoverPlugins
      */
     public function __construct(
-        OauthToOauthRevokeFacadeInterface $oauthRevokeFacade,
         OauthConfig $oauthConfig,
-        DateTime $presentDateTime
+        DateTime $presentDateTime,
+        array $oauthExpiredRefreshTokenRemoverPlugins
     ) {
-        $this->oauthRevokeFacade = $oauthRevokeFacade;
         $this->oauthConfig = $oauthConfig;
         $this->presentDateTime = $presentDateTime;
+        $this->oauthExpiredRefreshTokenRemoverPlugins = $oauthExpiredRefreshTokenRemoverPlugins;
     }
 
     /**
@@ -51,7 +51,13 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     {
         $refreshTokenRetentionInterval = new DateInterval($this->oauthConfig->getRefreshTokenRetentionInterval());
 
-        return $this->oauthRevokeFacade->deleteExpiredRefreshTokens($this->getExpiresAt($refreshTokenRetentionInterval));
+        $deletedExpiredRefreshTokens = 0;
+        $oauthTokenCriteriaFilterTransfer = (new OauthTokenCriteriaFilterTransfer())->setExpiresAt($this->getExpiresAt($refreshTokenRetentionInterval));
+        foreach ($this->oauthExpiredRefreshTokenRemoverPlugins as $expiredRefreshTokenRemoverPlugin) {
+            $deletedExpiredRefreshTokens += $expiredRefreshTokenRemoverPlugin->deleteExpiredRefreshTokens($oauthTokenCriteriaFilterTransfer);
+        }
+
+        return $deletedExpiredRefreshTokens;
     }
 
     /**

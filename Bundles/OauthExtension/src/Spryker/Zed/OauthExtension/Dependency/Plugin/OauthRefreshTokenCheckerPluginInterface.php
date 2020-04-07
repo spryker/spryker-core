@@ -13,7 +13,7 @@ interface OauthRefreshTokenCheckerPluginInterface
      * @api
      *
      * Specification:
-     * - Check if refresh token identifier isn't empty.
+     * - Check if refresh token identifier is acceptable by this plugin.
      *
      * @param string $tokenId
      *
