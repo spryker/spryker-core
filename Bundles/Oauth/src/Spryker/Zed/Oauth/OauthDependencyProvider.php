@@ -139,9 +139,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokenRevokerPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER, function () {
             return $this->getOauthRefreshTokenRevokerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokensRevokerPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER, function () {
             return $this->getOauthRefreshTokensRevokerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -167,9 +167,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokenSaverPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER, function () {
             return $this->getOauthRefreshTokenSaverPlugins();
-        };
+        });
 
         return $container;
     }
@@ -181,9 +181,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokenCheckerPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER, function () {
             return $this->getOauthRefreshTokenCheckerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -195,9 +195,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthExpiredRefreshTokenRemoverPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER] = function () {
+        $container->set(static::PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER, function () {
             return $this->getOauthExpiredRefreshTokenRemoverPlugins();
-        };
+        });
 
         return $container;
     }
@@ -209,9 +209,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokenReaderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKEN_READER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_READER, function () {
             return $this->getOauthRefreshTokenReaderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -223,9 +223,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthRefreshTokensReaderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_REFRESH_TOKENS_READER] = function () {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKENS_READER, function () {
             return $this->getOauthRefreshTokensReaderPlugins();
-        };
+        });
 
         return $container;
     }

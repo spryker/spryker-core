@@ -95,8 +95,6 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
         $oauthRefreshTokenTransfer = $this->findOauthRefreshToken($oauthTokenCriteriaFilterTransfer);
 
         if (!$oauthRefreshTokenTransfer) {
-            dd(123);
-
             return $revokeRefreshTokenResponseTransfer
                 ->setIsSuccessful(false)
                 ->setError(static::REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE);
