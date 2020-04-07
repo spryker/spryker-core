@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservationBusinessFactory getFactory()()
  * @method \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface getRepository()
  */
 class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProductOfferReservationFacadeInterface
