@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
@@ -101,13 +101,13 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $ProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcretesByCriteriaFilter(ProductCriteriaFilterTransfer $productCriteriaFilterTransfer): array
+    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $ProductCriteriaTransfer): array
     {
-        return $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaFilterTransfer);
+        return $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransfer);
     }
 
     /**

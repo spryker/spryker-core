@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
@@ -57,12 +57,12 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $skus = $this->getProductSkusFromQuoteTransfer($quoteTransfer);
-        $productCriteriaFilterTransfer = (new ProductCriteriaFilterTransfer())
+        $ProductCriteriaTransfer = (new ProductCriteriaTransfer())
             ->setSkus($skus)
             ->setIsActive(true)
             ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
 
-        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaFilterTransfer);
+        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransfer);
         $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
