@@ -28,6 +28,16 @@ interface HttpMethodProcessorInterface
     public function getGeneratedSecuritySchemes(): array;
 
     /**
+     * @return array
+     */
+    public function getGeneratedParameters(): array;
+
+    /**
+     * @return array
+     */
+    public function getGeneratedTags(): array;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $resourcePath
      * @param bool $isProtected

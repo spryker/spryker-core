@@ -18,6 +18,8 @@ use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
@@ -36,7 +38,8 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
         return new MerchantOrderCreator(
             $this->getEntityManager(),
             $this->createMerchantOrderItemCreator(),
-            $this->createMerchantOrderTotalsCreator()
+            $this->createMerchantOrderTotalsCreator(),
+            $this->getMerchantOrderPostCreatePlugins()
         );
     }
 
@@ -65,6 +68,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
+     */
+    public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
+    {
+        return new MerchantOrderItemWriter($this->getEntityManager(), $this->getRepository());
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
@@ -78,5 +89,13 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function getCalculationFacade(): MerchantSalesOrderToCalculationFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    public function getMerchantOrderPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_POST_CREATE);
     }
 }

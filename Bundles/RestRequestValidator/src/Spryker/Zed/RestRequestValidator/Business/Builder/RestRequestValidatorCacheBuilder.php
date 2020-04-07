@@ -60,6 +60,7 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
         foreach ($this->store->getAllowedStores() as $storeName) {
             $config = $this->restRequestValidatorCacheCollector->collect($storeName);
             $config = $this->restRequestValidatorSchemaMerger->merge($config);
+
             $this->restRequestValidatorCacheSaver->save($config, $storeName);
         }
     }

@@ -23,8 +23,7 @@ class ContentBannersResourceController extends AbstractController
      *              "Retrieve content banner item data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Content key is missing.",
