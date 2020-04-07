@@ -24,4 +24,6 @@ interface AuthConstants
     public const AUTHORIZATION_WILDCARD = '*';
     public const DAY_IN_SECONDS = 86400;
     public const AUTH_TOKEN = 'Auth-Token';
+
+    public const SYSTEM_USER_SESSION_REDIS_LIFE_TIME = 'AUTH:SYSTEM_USER_SESSION_REDIS_LIFE_TIME';
 }
