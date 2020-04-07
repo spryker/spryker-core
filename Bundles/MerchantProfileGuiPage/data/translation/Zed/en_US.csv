@@ -5,7 +5,7 @@
 "Business Info","Business Info"
 "Cancellation Policy","Cancellation Policy"
 City,City
-"Company","Company"
+Company,Company
 "Company Name","Company Name"
 "Contact Details & Address","Contact Details & Address"
 "Contact Person","Contact Person Details"
@@ -45,7 +45,6 @@ profile.status.message.offline,"<p><br>This means that your store is not availab
 "Return Policy","Return Policy"
 Role,Role
 Save,Save
-"Search by SKU, Name","Search by SKU, Name"
 select.default.placeholder,Select
 "Store Profile URL","Store Profile URL"
 store.state.online,"Your Store is online."
