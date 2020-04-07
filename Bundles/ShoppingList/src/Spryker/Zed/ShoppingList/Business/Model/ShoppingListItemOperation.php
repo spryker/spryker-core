@@ -398,7 +398,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
-        $shoppingListItems = $this->shoppingListEntityManager->saveShoppingListItems($shoppingListItemCollectionTransfer, $shoppingListTransfer);
+        $shoppingListItemCollectionTransfer = $this->shoppingListEntityManager->saveShoppingListItems($shoppingListItemCollectionTransfer, $shoppingListTransfer);
         $this->pluginExecutor->executeBulkPostSavePlugins($shoppingListItemCollectionTransfer);
     }
 }
