@@ -13,6 +13,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShipmentMethodsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
 class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
