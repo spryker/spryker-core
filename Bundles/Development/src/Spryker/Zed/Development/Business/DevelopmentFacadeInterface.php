@@ -265,11 +265,31 @@ interface DevelopmentFacadeInterface
     public function generateYvesIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Yves IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeYvesIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateZedIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Zed IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void;
 
     /**
      * @api
@@ -279,6 +299,16 @@ interface DevelopmentFacadeInterface
     public function generateClientIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Client IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeClientIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
@@ -286,11 +316,31 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Service IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeServiceIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateGlueIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Glue IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void;
 
     /**
      * Run the architecture sniffer against the given module and returns the violations

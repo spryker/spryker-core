@@ -13,6 +13,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestPaymentMethodsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiFactory getFactory()
  */
 class PaymentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

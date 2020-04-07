@@ -1,2 +1,47 @@
-"Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
+Actions,Aktionen
+"Are you sure about deleting this delivery method?",
+"Availability plugin",
+"Available in Store",
+Carrier,
+"Carrier Company",
+"Carrier was created successfully.",
+"Carrier with the same name already exists.",
+Configuration,
+"Create Delivery Method",
+"Create new carrier company",
+"Create new delivery method",
+Delete,Löschen
+"Delete Delivery Method",
+"Delete Delivery Method: %s",
+"Delivery Method Key",
+"Delivery method not found.",
+"Delivery method was deleted successfully.",
+"Delivery Methods",
+"Delivery Time plugin",
+Edit,Bearbeiten
+"Edit Delivery Method: %s",
+Enabled?,Aktiviert?
+"Is this delivery method active?",
+"List Shipment Methods",
+"Method Name",
+Name,Name
 "New address","Neue Adresse"
+"No, I want to keep this delivery method",
+None,Keine
+"Price & Tax","Preis und Steuer"
+"Price plugin",
+Save,Speichern
+"Select one",
+"Shipment method has been successfully saved",
+"Shipment method has been successfully updated",
+"Shipment method is not found",
+"Shipment method not found",
+"Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
+Status,Status
+"Store relation",
+"Tax set",Steuer-Set
+"This name is already in use.","Dieser Name wird schon benutzt."
+"This shipment method key is already in use.",
+View,
+"View Delivery Method: %s",
+"Yes, delete this delivery method",

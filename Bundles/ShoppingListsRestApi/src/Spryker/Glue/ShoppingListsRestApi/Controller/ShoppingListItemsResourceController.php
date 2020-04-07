@@ -25,8 +25,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *          ],
      *          "parameters": [
      *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header"
+     *                  "ref": "acceptLanguage"
      *              }
      *          ],
      *          "responses": {
@@ -60,8 +59,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "Updates the shopping list item."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shopping list id or shopping list item id not specified.",
@@ -95,8 +93,7 @@ class ShoppingListItemsResourceController extends AbstractController
      *              "Deletes the shopping list item."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shopping list id or shopping list item id not specified.",
