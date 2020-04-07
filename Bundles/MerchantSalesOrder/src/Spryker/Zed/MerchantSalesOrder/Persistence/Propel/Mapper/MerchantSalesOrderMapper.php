@@ -121,8 +121,7 @@ class MerchantSalesOrderMapper
         $merchantSalesOrderItemEntity->fromArray($merchantOrderItemTransfer->modifiedToArray());
         $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
             ->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem())
-            ->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder())
-            ->setReference($merchantOrderItemTransfer->getReference());
+            ->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
 
         return $merchantSalesOrderItemEntity;
     }

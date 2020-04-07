@@ -47,16 +47,12 @@ class MerchantOrderItemCreator implements MerchantOrderItemCreatorInterface
     }
 
     /**
-     * @param int|null $idSalesOrderItem
+     * @param int $idSalesOrderItem
      *
      * @return string
      */
-    protected function generateMerchantOrderItemReference(?int $idSalesOrderItem): string
+    protected function generateMerchantOrderItemReference(int $idSalesOrderItem): string
     {
-        if (!$idSalesOrderItem) {
-            return '';
-        }
-
         return md5(sprintf('SOI-%s', (string)$idSalesOrderItem));
     }
 }

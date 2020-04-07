@@ -229,13 +229,12 @@ class TriggerEventFromFileConsole extends Console
             return;
         }
 
-        $table = (new Table($this->output->section()))
-            ->setHeaders([
-                static::COLUMN_ROW_NUMBER,
-                static::COLUMN_MERCHANT_ORDER_ITEM_REFERENCE,
-                static::COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE,
-                static::COLUMN_RESULT,
-            ]);
+        $table = (new Table($this->output->section()))->setHeaders([
+            static::COLUMN_ROW_NUMBER,
+            static::COLUMN_MERCHANT_ORDER_ITEM_REFERENCE,
+            static::COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE,
+            static::COLUMN_RESULT,
+        ]);
         $table->render();
 
         $this->outputTable = $table;
