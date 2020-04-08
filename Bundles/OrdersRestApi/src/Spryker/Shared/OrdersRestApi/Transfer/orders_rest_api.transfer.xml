@@ -146,6 +146,8 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="uuid" type="string"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -218,5 +220,14 @@
 
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 </transfers>

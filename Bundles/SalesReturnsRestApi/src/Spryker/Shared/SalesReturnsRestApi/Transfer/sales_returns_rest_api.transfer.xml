@@ -70,10 +70,12 @@
     <transfer name="Return">
         <property name="returnTotals" type="ReturnTotals"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="returnReference" type="string"/>
     </transfer>
 
     <transfer name="ReturnItem">
         <property name="orderItem" type="Item"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="ReturnResponse">
