@@ -10,6 +10,10 @@ namespace Spryker\Zed\Kernel\Communication;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 
+/**
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
+ */
 class KernelCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

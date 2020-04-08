@@ -7,11 +7,16 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface MerchantSalesOrderFacadeInterface
@@ -27,6 +32,7 @@ interface MerchantSalesOrderFacadeInterface
      * - Creates a new merchant order item for each order item with merchant reference and assign it to a merchant order accordingly.
      * - Creates a new merchant order totals and assign it to a merchant order accordingly.
      * - Returns a collection of merchant orders filled with merchant order items and merchant order totals.
+     * - Executes MerchantOrderPostCreatePluginInterface plugin stack.
      *
      * @api
      *
@@ -35,6 +41,21 @@ interface MerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer;
+
+    /**
+     * Specification
+     * - Requires MerchantOrderItem.idMerchantOrderItem transfer field to be set.
+     * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
+     * - Returns MerchantOrderItemResponse transfer with isSuccessful = false when merchant order item not found.
+     * - Returns MerchantOrderItemResponse transfer with isSuccessful = true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemResponseTransfer
+     */
+    public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer;
 
     /**
      * Specification:
@@ -68,6 +89,19 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification:
+     * - Returns a merchant order item found using provided criteria.
+     * - Returns NULL if merchant order item was not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
+     */
+    public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer;
+
+    /**
+     * Specification:
      * - Expands SpySalesOrderItemEntityTransfer with ItemTransfer.merchantReference if exists.
      *
      * @api
@@ -81,6 +115,25 @@ interface MerchantSalesOrderFacadeInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification
+     * - Expands expense transfer with merchant reference from items.
+     * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
+     * - Requires ShipmentGroup.items property to be set.
+     * - Returns expanded expense transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function expandShipmentExpenseWithMerchantReference(
+        ExpenseTransfer $expenseTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): ExpenseTransfer;
 
     /**
      * Specification:

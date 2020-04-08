@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -30,18 +31,26 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
     protected $merchantOrderTotalsCreator;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    protected $merchantOrderPostCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
      * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface $merchantOrderItemCreator
      * @param \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator
+     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[] $merchantOrderPostCreatePlugins
      */
     public function __construct(
         MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
         MerchantOrderItemCreatorInterface $merchantOrderItemCreator,
-        MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator
+        MerchantOrderTotalsCreatorInterface $merchantOrderTotalsCreator,
+        array $merchantOrderPostCreatePlugins
     ) {
         $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
         $this->merchantOrderItemCreator = $merchantOrderItemCreator;
         $this->merchantOrderTotalsCreator = $merchantOrderTotalsCreator;
+        $this->merchantOrderPostCreatePlugins = $merchantOrderPostCreatePlugins;
     }
 
     /**
@@ -64,7 +73,23 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             );
         }
 
+        $this->executeMerchantOrderPostCreatePlugins($merchantOrderCollectionTransfer);
+
         return $merchantOrderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return void
+     */
+    protected function executeMerchantOrderPostCreatePlugins(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): void
+    {
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            foreach ($this->merchantOrderPostCreatePlugins as $merchantOrderPostCreatePlugin) {
+                $merchantOrderPostCreatePlugin->postCreate($merchantOrderTransfer);
+            }
+        }
     }
 
     /**
@@ -107,6 +132,11 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             $merchantOrderTransfer,
             $itemTransfers
         );
+        $merchantOrderTransfer = $this->addExpensesToMerchantOrder(
+            $merchantOrderTransfer,
+            $orderTransfer->getExpenses()
+        );
+        $merchantOrderTransfer->setPriceMode($orderTransfer->getPriceMode());
 
         return $merchantOrderTransfer->setTotals(
             $this->merchantOrderTotalsCreator->createMerchantOrderTotals($merchantOrderTransfer)
@@ -127,6 +157,27 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
             $merchantOrderTransfer->addMerchantOrderItem(
                 $this->merchantOrderItemCreator->createMerchantOrderItem($itemTransfer, $merchantOrderTransfer)
             );
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function addExpensesToMerchantOrder(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        ArrayObject $expenseTransfers
+    ): MerchantOrderTransfer {
+        foreach ($expenseTransfers as $expenseTransfer) {
+            if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+                continue;
+            }
+
+            $merchantOrderTransfer->addExpense($expenseTransfer);
         }
 
         return $merchantOrderTransfer;

@@ -8,8 +8,9 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Creator;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface;
 
 class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
@@ -20,11 +21,20 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
     protected $merchantSalesOrderEntityManager;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
+     * @var \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface
      */
-    public function __construct(MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager)
-    {
+    protected $calculationFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager
+     * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+     */
+    public function __construct(
+        MerchantSalesOrderEntityManagerInterface $merchantSalesOrderEntityManager,
+        MerchantSalesOrderToCalculationFacadeInterface $calculationFacade
+    ) {
         $this->merchantSalesOrderEntityManager = $merchantSalesOrderEntityManager;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -32,18 +42,52 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
-    public function createMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): TotalsTransfer
-    {
-        $totalsTransfer = (new TotalsTransfer())
-            ->setRefundTotal(0)
-            ->setGrandTotal(0)
-            ->setTaxTotal((new TaxTotalTransfer()))
-            ->setExpenseTotal(0)
-            ->setSubtotal(0)
-            ->setDiscountTotal(0)
-            ->setCanceledTotal(0);
+    public function createMerchantOrderTotals(
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer {
+        $totalsTransfer = $this->calculateTotals($merchantOrderTransfer);
 
         return $this->merchantSalesOrderEntityManager
             ->createMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder(), $totalsTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function calculateTotals(
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): TotalsTransfer {
+        $calculationOrderTransfer = (new OrderTransfer())
+            ->setPriceMode($merchantOrderTransfer->getPriceMode())
+            ->setExpenses($merchantOrderTransfer->getExpenses())
+            ->setTotals(new TotalsTransfer());
+
+        $calculationOrderTransfer = $this->expandOrderWithMerchantOrderItems(
+            $calculationOrderTransfer,
+            $merchantOrderTransfer
+        );
+
+        $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
+
+        return $calculationOrderTransfer->getTotals();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $calculationOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function expandOrderWithMerchantOrderItems(
+        OrderTransfer $calculationOrderTransfer,
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): OrderTransfer {
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $calculationOrderTransfer->addItem($merchantOrderItemTransfer->getOrderItem());
+        }
+
+        return $calculationOrderTransfer;
     }
 }

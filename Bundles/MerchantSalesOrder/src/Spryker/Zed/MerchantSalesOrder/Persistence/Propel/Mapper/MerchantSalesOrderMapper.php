@@ -105,7 +105,8 @@ class MerchantSalesOrderMapper
         return $merchantOrderItemTransfer
             ->setIdMerchantOrderItem($merchantSalesOrderItemEntity->getIdMerchantSalesOrderItem())
             ->setIdOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem())
-            ->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
+            ->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder())
+            ->fromArray($merchantSalesOrderItemEntity->toArray(), true);
     }
 
     /**
@@ -121,6 +122,7 @@ class MerchantSalesOrderMapper
         $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
         $merchantSalesOrderItemEntity->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem());
         $merchantSalesOrderItemEntity->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
+        $merchantSalesOrderItemEntity->fromArray($merchantOrderItemTransfer->modifiedToArray());
 
         return $merchantSalesOrderItemEntity;
     }
@@ -139,6 +141,7 @@ class MerchantSalesOrderMapper
 
         return $totalsTransfer
             ->fromArray($merchantSalesOrderTotalsEntity->toArray(), true)
+            ->setExpenseTotal($merchantSalesOrderTotalsEntity->getOrderExpenseTotal())
             ->setTaxTotal($taxTotalTransfer);
     }
 
@@ -155,8 +158,12 @@ class MerchantSalesOrderMapper
         SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
     ): SpyMerchantSalesOrderTotals {
         $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
-        $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
+        $merchantSalesOrderTotalsEntity->setOrderExpenseTotal($totalsTransfer->getExpenseTotal());
         $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($idMerchantOrder);
+
+        if ($totalsTransfer->getTaxTotal()) {
+            $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
+        }
 
         return $merchantSalesOrderTotalsEntity;
     }
