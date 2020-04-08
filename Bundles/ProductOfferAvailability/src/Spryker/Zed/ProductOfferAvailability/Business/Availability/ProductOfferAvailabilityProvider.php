@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferAvailability\Business\Availability;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
@@ -72,12 +74,17 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
             return $quantity;
         }
 
-        $reservedProductQuantity = $this->omsFacade->getOmsReservedProductQuantityForSku(
-            $productOfferAvailabilityRequestTransfer->getSku(),
-            $productOfferAvailabilityRequestTransfer->getStore()
-        );
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($productOfferAvailabilityRequestTransfer->getSku())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference());
 
-        return $quantity->subtract($reservedProductQuantity);
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setItem($itemTransfer)
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+
+        $reservationResponseTransfer = $this->omsFacade->getOmsReservedProductQuantity($reservationRequestTransfer);
+
+        return $quantity->subtract($reservationResponseTransfer->getReservationQuantity());
     }
 
     /**
