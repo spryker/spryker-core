@@ -8,18 +8,18 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Merchant\Business\Creator\MerchantCreator;
+use Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaver;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantCreator;
-use Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantReader;
-use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantUpdater;
-use Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Reader\MerchantReader;
+use Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusReader;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidator;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Updater\MerchantUpdater;
+use Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
@@ -32,7 +32,7 @@ use Spryker\Zed\Merchant\MerchantDependencyProvider;
 class MerchantBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface
+     * @return \Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface
      */
     public function createMerchantCreator(): MerchantCreatorInterface
     {
@@ -45,7 +45,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface
+     * @return \Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface
      */
     public function createMerchantUpdater(): MerchantUpdaterInterface
     {
@@ -59,7 +59,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface
+     * @return \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface
      */
     public function createMerchantReader(): MerchantReaderInterface
     {
@@ -70,7 +70,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
+     * @return \Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface
      */
     public function createMerchantStatusReader(): MerchantStatusReaderInterface
     {
@@ -80,7 +80,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     * @return \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface
      */
     public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
     {

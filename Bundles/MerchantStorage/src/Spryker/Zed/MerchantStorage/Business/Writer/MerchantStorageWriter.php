@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantStorage\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
@@ -78,9 +78,9 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
      */
     protected function writeCollectionByMerchantIds(array $merchantIds): void
     {
-        $merchantCriteriaFilterTransfer = (new MerchantCriteriaFilterTransfer())->setMerchantIds($merchantIds);
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
 
-        $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaTransfer);
 
         $merchantIdsToRemove = [];
 

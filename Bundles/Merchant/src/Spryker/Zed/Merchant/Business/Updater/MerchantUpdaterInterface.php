@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Model;
+namespace Spryker\Zed\Merchant\Business\Updater;
 
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
-interface MerchantCreatorInterface
+interface MerchantUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function create(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function update(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

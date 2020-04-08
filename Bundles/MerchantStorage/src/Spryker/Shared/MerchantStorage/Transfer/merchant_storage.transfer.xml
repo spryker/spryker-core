@@ -59,7 +59,7 @@
         <property name="key" type="string"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
         <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="filter" type="Filter"/>
     </transfer>

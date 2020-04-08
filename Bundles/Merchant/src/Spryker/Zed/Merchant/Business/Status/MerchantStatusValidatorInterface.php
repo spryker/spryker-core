@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Model\Status;
+namespace Spryker\Zed\Merchant\Business\Status;
 
 interface MerchantStatusValidatorInterface
 {

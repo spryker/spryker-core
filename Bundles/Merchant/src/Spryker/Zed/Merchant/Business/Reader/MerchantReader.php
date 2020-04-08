@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Model;
+namespace Spryker\Zed\Merchant\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
@@ -38,26 +38,26 @@ class MerchantReader implements MerchantReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaTransfer);
         $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
 
         return $merchantCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer
     {
-        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
+        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaTransfer);
         if ($merchantTransfer === null) {
             return null;
         }

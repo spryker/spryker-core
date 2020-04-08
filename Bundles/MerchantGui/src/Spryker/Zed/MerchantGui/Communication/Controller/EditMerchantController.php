@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 use Symfony\Component\Form\FormInterface;
@@ -130,7 +130,7 @@ class EditMerchantController extends AbstractController
             ->getMerchantFacade();
 
         $merchantTransfer = $merchantFacade->findOne(
-            (new MerchantCriteriaFilterTransfer())
+            (new MerchantCriteriaTransfer())
                 ->setIdMerchant($idMerchant)
         );
 

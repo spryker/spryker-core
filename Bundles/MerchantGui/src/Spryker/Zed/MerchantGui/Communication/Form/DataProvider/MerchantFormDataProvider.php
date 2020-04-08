@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
@@ -59,9 +59,9 @@ class MerchantFormDataProvider
         $merchantTransfer = new MerchantTransfer();
 
         if ($idMerchant) {
-            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-            $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
-            $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+            $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+            $merchantCriteriaTransfer->setIdMerchant($idMerchant);
+            $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
         }
 
         $merchantTransfer = $this->setInitialUrlCollection($merchantTransfer);

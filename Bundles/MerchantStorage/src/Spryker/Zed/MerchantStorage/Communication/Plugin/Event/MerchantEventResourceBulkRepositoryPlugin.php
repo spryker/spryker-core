@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Event;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
@@ -47,10 +47,10 @@ class MerchantEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $merchantCriteriaFilterTransfer = (new MerchantCriteriaFilterTransfer())->setFilter($filterTransfer);
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setFilter($filterTransfer);
         $merchantCollectionTransfer = $this->getFactory()
             ->getMerchantFacade()
-            ->get($merchantCriteriaFilterTransfer);
+            ->get($merchantCriteriaTransfer);
 
         return $merchantCollectionTransfer->getMerchants()->getArrayCopy();
     }

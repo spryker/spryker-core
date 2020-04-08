@@ -20,6 +20,8 @@ class MerchantTable extends AbstractTable
 {
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
+    public const COL_ACTIONS = 'actions';
+
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         MerchantGuiConfig::STATUS_APPROVED => 'label-info',
@@ -95,22 +97,22 @@ class MerchantTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            MerchantTableConstants::COL_ID_MERCHANT,
-            MerchantTableConstants::COL_NAME,
-            MerchantTableConstants::COL_STATUS,
+            SpyMerchantTableMap::COL_ID_MERCHANT,
+            SpyMerchantTableMap::COL_NAME,
+            SpyMerchantTableMap::COL_STATUS,
         ]);
 
         $config->setRawColumns([
-            MerchantTableConstants::COL_ACTIONS,
-            MerchantTableConstants::COL_STATUS,
-            MerchantTableConstants::COL_IS_ACTIVE,
+            static::COL_ACTIONS,
+            SpyMerchantTableMap::COL_STATUS,
+            SpyMerchantTableMap::COL_IS_ACTIVE,
         ]);
-        $config->setDefaultSortField(MerchantTableConstants::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpyMerchantTableMap::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
-            MerchantTableConstants::COL_ID_MERCHANT,
-            MerchantTableConstants::COL_NAME,
-            MerchantTableConstants::COL_STATUS,
+            SpyMerchantTableMap::COL_ID_MERCHANT,
+            SpyMerchantTableMap::COL_NAME,
+            SpyMerchantTableMap::COL_STATUS,
         ]);
 
         $config = $this->executeConfigExpanderPlugins($config);
@@ -155,14 +157,14 @@ class MerchantTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
-            MerchantTableConstants::COL_ID_MERCHANT => 'Merchant Id',
-            MerchantTableConstants::COL_NAME => 'Name',
-            MerchantTableConstants::COL_STATUS => 'Status',
-            MerchantTableConstants::COL_IS_ACTIVE => 'active',
+            SpyMerchantTableMap::COL_ID_MERCHANT => 'Merchant Id',
+            SpyMerchantTableMap::COL_NAME => 'Name',
+            SpyMerchantTableMap::COL_STATUS => 'Status',
+            SpyMerchantTableMap::COL_IS_ACTIVE => 'active',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
-        $actions = [MerchantTableConstants::COL_ACTIONS => 'Actions'];
+        $actions = [static::COL_ACTIONS => 'Actions'];
 
         $config->setHeader(array_merge($baseData, $externalData, $actions));
 
@@ -194,12 +196,12 @@ class MerchantTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $rowData = array_merge([
-                MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
-                MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
-                MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
-                MerchantTableConstants::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
+                SpyMerchantTableMap::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
+                SpyMerchantTableMap::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
+                SpyMerchantTableMap::COL_STATUS => $this->createStatusLabel($item),
+                SpyMerchantTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
             ], $this->executeDataExpanderPlugins($item));
-            $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
+            $rowData[static::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
         }
         unset($queryResults);
@@ -216,12 +218,12 @@ class MerchantTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(
-            Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
+            Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT]]),
             'Edit'
         );
-        $buttons[] = ($item[MerchantTableConstants::COL_IS_ACTIVE]) ?
-            $this->createDeactivateButton($item[MerchantTableConstants::COL_ID_MERCHANT]) :
-            $this->createActivateButton($item[MerchantTableConstants::COL_ID_MERCHANT]);
+        $buttons[] = ($item[SpyMerchantTableMap::COL_IS_ACTIVE]) ?
+            $this->createDeactivateButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]) :
+            $this->createActivateButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
 
         $buttons = array_merge(
             $buttons,
@@ -240,12 +242,12 @@ class MerchantTable extends AbstractTable
     protected function buildAvailableStatusButtons(array $item): array
     {
         $availableStatusButtons = [];
-        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[MerchantTableConstants::COL_STATUS]);
+        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[SpyMerchantTableMap::COL_STATUS]);
         foreach ($availableStatuses as $availableStatus) {
             $availableStatusButtons[] = $this->generateButton(
                 Url::generate(
                     MerchantGuiConfig::URL_MERCHANT_STATUS,
-                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT], 'status' => $availableStatus]
+                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT], 'status' => $availableStatus]
                 ),
                 $availableStatus . '_button',
                 ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
@@ -291,7 +293,7 @@ class MerchantTable extends AbstractTable
             [
                     'class' => 'btn-remove',
                     'icon' => 'fa fa-trash',
-                ]
+            ]
         );
     }
 

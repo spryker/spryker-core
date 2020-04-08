@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Model\Status;
+namespace Spryker\Zed\Merchant\Business\Status;
 
 class MerchantStatusValidator implements MerchantStatusValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
+     * @var \Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface
      */
     protected $merchantStatusReader;
 
     /**
-     * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface $merchantStatusReader
+     * @param \Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface $merchantStatusReader
      */
     public function __construct(
         MerchantStatusReaderInterface $merchantStatusReader

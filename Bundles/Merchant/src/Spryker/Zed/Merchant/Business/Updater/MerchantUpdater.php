@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business\Model;
+namespace Spryker\Zed\Merchant\Business\Updater;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
@@ -36,7 +36,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantRepository;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     * @var \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface
      */
     protected $merchantStatusValidator;
 
@@ -53,7 +53,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
+     * @param \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      */
@@ -83,10 +83,10 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
 
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant());
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setIdMerchant($merchantTransfer->getIdMerchant());
 
-        $existingMerchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
+        $existingMerchantTransfer = $this->merchantRepository->findOne($merchantCriteriaTransfer);
         if ($existingMerchantTransfer === null) {
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_NOT_FOUND);
 
