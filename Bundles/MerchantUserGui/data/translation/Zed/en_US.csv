@@ -1,6 +1,8 @@
 "Add New User","Add Merchant User"
 Back,Back
 "Back to Merchant Users","Back to Merchant Users"
+Deactivate,Deactivate
+Deactivated,Deactivated
 Delete,Delete
 Deleted,Deleted
 Create,Create
@@ -18,7 +20,6 @@ Users,Users
 Edit,Edit
 Activate,Activate
 Active,Active
-"Deny Access","Deny Access"
 Blocked,Blocked
 E-mail,E-mail
 Status,Status

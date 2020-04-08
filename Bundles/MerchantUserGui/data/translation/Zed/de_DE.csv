@@ -1,6 +1,8 @@
 "Add New User","Neuen Benutzer hinzufügen"
 Back,Zurück
 "Back to Merchant Users","Zurück zu Händlerbenutzern"
+Deactivate,Deaktivieren
+Deactivated,Deaktiviert
 Delete,Löschen
 Deleted,Gelöscht
 Create,Erstellen
@@ -18,8 +20,6 @@ Users,Benutzer
 Edit,Bearbeiten
 Activate,Aktivieren
 Active,Aktiv
-"Deny Access","Zugriff verweigern"
-Blocked,Verstopft
 E-mail,E-mail
 Status,Status
 "Last Name",Nachname

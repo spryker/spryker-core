@@ -76,7 +76,7 @@ class MerchantUserTable extends AbstractTable
             'class' => 'label-info',
         ],
         'blocked' => [
-            'title' => 'Blocked',
+            'title' => 'Deactivated',
             'class' => 'label-danger',
         ],
         'deleted' => [
@@ -94,7 +94,7 @@ class MerchantUserTable extends AbstractTable
             'class' => 'btn-create',
         ],
         'blocked' => [
-            'title' => 'Deny Access',
+            'title' => 'Deactivate',
             'class' => 'btn-remove',
         ],
     ];
@@ -230,16 +230,18 @@ class MerchantUserTable extends AbstractTable
 
         $buttons[] = $this->buildAvailableStatusButton($router, $item);
 
-        $buttons[] = $this->generateRemoveButton(
-            $router->generate(
-                'merchant-user-gui:delete-merchant-user:confirm-delete',
-                [
-                    DeleteMerchantUserController::PARAM_MERCHANT_USER_ID =>
-                        $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                ]
-            ),
-            'Delete'
-        );
+        if ($item[static::MERCHANT_USER_STATUS] !== static::USER_STATUS_DELETED) {
+            $buttons[] = $this->generateRemoveButton(
+                $router->generate(
+                    'merchant-user-gui:delete-merchant-user:confirm-delete',
+                    [
+                        DeleteMerchantUserController::PARAM_MERCHANT_USER_ID =>
+                            $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
+                    ]
+                ),
+                'Delete'
+            );
+        }
 
         return $buttons;
     }
