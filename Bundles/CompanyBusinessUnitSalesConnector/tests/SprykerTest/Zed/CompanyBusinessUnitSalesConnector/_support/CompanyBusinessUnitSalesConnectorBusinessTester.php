@@ -42,7 +42,7 @@ class CompanyBusinessUnitSalesConnectorBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function haveCompanyUserWithPermission(string $permissionKey): CompanyUserTransfer
+    public function createCompanyUserWithPermission(string $permissionKey): CompanyUserTransfer
     {
         $companyTransfer = $this->haveCompany();
 

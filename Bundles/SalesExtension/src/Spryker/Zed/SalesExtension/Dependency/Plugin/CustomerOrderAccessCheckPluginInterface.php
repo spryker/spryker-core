@@ -10,12 +10,12 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface CustomerOrderPreCheckPluginInterface
+interface CustomerOrderAccessCheckPluginInterface
 {
     /**
      * Specification:
-     * - Executes plugins before a customer order is retrieved.
-     * - Checks if customer order is applicable for retrieval.
+     * - Executed before the customer order is retrieved.
+     * - Checks if customer order is retrievable.
      *
      * @api
      *

@@ -10,17 +10,17 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sal
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
  */
-class CheckSeeBusinessUnitOrdersPermissionPlugin extends AbstractPlugin implements CustomerOrderPreCheckPluginInterface
+class CompanyBusinessUnitCustomerOrderAccessCheckPlugin extends AbstractPlugin implements CustomerOrderAccessCheckPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks SeeBusinessUnitOrdersPermissionPlugin for customer who retrieve customer order.
+     * - Checks SeeBusinessUnitOrdersPermissionPlugin for customer who retrieves customer order.
      * - Returns true if customer has SeeBusinessUnitOrdersPermissionPlugin, false otherwise.
      *
      * @api
@@ -32,6 +32,6 @@ class CheckSeeBusinessUnitOrdersPermissionPlugin extends AbstractPlugin implemen
      */
     public function check(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return $this->getFacade()->checkSeeBusinessUnitOrdersPermission($orderTransfer, $customerTransfer);
+        return $this->getFacade()->checkOrderAccessByCustomerBusinessUnit($orderTransfer, $customerTransfer);
     }
 }

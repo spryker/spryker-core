@@ -21,7 +21,7 @@ class PermissionChecker implements PermissionCheckerInterface
      *
      * @return bool
      */
-    public function checkSeeCompanyOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
     {
         if (
             !$orderTransfer->getCompanyUuid()

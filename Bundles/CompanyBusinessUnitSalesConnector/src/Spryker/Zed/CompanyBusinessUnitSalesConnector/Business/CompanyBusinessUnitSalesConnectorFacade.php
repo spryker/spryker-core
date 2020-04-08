@@ -123,10 +123,10 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
      *
      * @return bool
      */
-    public function checkSeeBusinessUnitOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
+    public function checkOrderAccessByCustomerBusinessUnit(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
     {
         return $this->getFactory()
             ->createPermissionChecker()
-            ->checkSeeBusinessUnitOrdersPermission($orderTransfer, $customerTransfer);
+            ->checkOrderAccessByCustomerBusinessUnit($orderTransfer, $customerTransfer);
     }
 }

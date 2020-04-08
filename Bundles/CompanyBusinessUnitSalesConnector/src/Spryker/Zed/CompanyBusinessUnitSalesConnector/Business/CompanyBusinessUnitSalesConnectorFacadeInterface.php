@@ -95,7 +95,7 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Checks SeeBusinessUnitOrdersPermissionPlugin for customer who retrieve customer order.
+     * - Checks SeeBusinessUnitOrdersPermissionPlugin for customer who retrieves customer order.
      * - Returns true if customer has SeeBusinessUnitOrdersPermissionPlugin, false otherwise.
      *
      * @api
@@ -105,5 +105,5 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
      *
      * @return bool
      */
-    public function checkSeeBusinessUnitOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
+    public function checkOrderAccessByCustomerBusinessUnit(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
 }

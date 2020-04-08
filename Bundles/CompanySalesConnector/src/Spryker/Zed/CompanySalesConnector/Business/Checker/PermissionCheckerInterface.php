@@ -18,5 +18,5 @@ interface PermissionCheckerInterface
      *
      * @return bool
      */
-    public function checkSeeCompanyOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
 }

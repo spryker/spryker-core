@@ -83,10 +83,10 @@ class CompanySalesConnectorFacade extends AbstractFacade implements CompanySales
      *
      * @return bool
      */
-    public function checkSeeCompanyOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
     {
         return $this->getFactory()
             ->createPermissionChecker()
-            ->checkSeeCompanyOrdersPermission($orderTransfer, $customerTransfer);
+            ->checkOrderAccessByCustomerCompany($orderTransfer, $customerTransfer);
     }
 }

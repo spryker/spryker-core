@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CompanySalesConnector\Plugin\Permission;
+namespace Spryker\Client\CompanyBusinessUnitSalesConnector\Plugin\Permission;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
-/**
- * For Zed & Client PermissionDependencyProvider::getPermissionPlugins() registration
- */
-class SeeCompanyOrdersPermissionPlugin implements PermissionPluginInterface
+class SeeBusinessUnitOrdersPermissionPlugin implements PermissionPluginInterface
 {
-    protected const KEY = 'SeeCompanyOrdersPermissionPlugin';
+    protected const KEY = 'SeeBusinessUnitOrdersPermissionPlugin';
 
     /**
      * {@inheritDoc}

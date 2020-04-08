@@ -39,8 +39,8 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
 
         if (
             $orderEntity === null
-            || !$orderTransfer->getCustomer()
-            && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference()
+            || (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference())
+            || !$this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer())
         ) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
@@ -48,11 +48,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
                 $orderTransfer->getCustomerReference()
             ));
         }
-
-        $this->executeCustomerOrderPreCheckPlugins(
-            (new OrderTransfer())->fromArray($orderEntity->toArray(), true),
-            $orderTransfer->getCustomer()
-        );
 
         return $orderEntity;
     }

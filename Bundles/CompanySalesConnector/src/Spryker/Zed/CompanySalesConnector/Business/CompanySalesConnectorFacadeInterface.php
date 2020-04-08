@@ -60,7 +60,7 @@ interface CompanySalesConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Checks SeeCompanyOrdersPermissionPlugin for customer who retrieve customer order.
+     * - Checks SeeCompanyOrdersPermissionPlugin for customer who retrieves customer order.
      * - Returns true if customer has SeeCompanyOrdersPermissionPlugin, false otherwise.
      *
      * @api
@@ -70,5 +70,5 @@ interface CompanySalesConnectorFacadeInterface
      *
      * @return bool
      */
-    public function checkSeeCompanyOrdersPermission(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
 }

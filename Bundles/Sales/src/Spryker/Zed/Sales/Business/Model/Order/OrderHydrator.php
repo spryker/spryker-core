@@ -53,29 +53,29 @@ class OrderHydrator implements OrderHydratorInterface
     protected $hydrateOrderPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
      */
-    protected $customerOrderPreCheckPlugins;
+    protected $customerOrderAccessCheckPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[] $customerOrderPreCheckPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[] $customerOrderAccessCheckPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
         SalesToCustomerInterface $customerFacade,
         array $hydrateOrderPlugins = [],
-        array $customerOrderPreCheckPlugins = []
+        array $customerOrderAccessCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->customerFacade = $customerFacade;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
-        $this->customerOrderPreCheckPlugins = $customerOrderPreCheckPlugins;
+        $this->customerOrderAccessCheckPlugins = $customerOrderAccessCheckPlugins;
     }
 
     /**
@@ -114,8 +114,8 @@ class OrderHydrator implements OrderHydratorInterface
 
         if (
             $orderEntity === null
-            || !$orderTransfer->getCustomer()
-            && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference()
+            || (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference())
+            || !$this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer())
         ) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
@@ -123,11 +123,6 @@ class OrderHydrator implements OrderHydratorInterface
                 $orderTransfer->getCustomerReference()
             ));
         }
-
-        $this->executeCustomerOrderPreCheckPlugins(
-            (new OrderTransfer())->fromArray($orderEntity->toArray(), true),
-            $orderTransfer->getCustomer()
-        );
 
         return $orderEntity;
     }
@@ -541,29 +536,25 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
-     *
-     * @return void
+     * @return bool
      */
-    protected function executeCustomerOrderPreCheckPlugins(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): void
+    protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer->getCustomerReference() === $orderTransfer->getCustomerReference()) {
-            return;
+        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+
+        if ($orderTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
+            return true;
         }
 
-        foreach ($this->customerOrderPreCheckPlugins as $customerOrderPreCheckPlugin) {
-            if ($customerOrderPreCheckPlugin->check($orderTransfer, $customerTransfer)) {
-                return;
+        foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
+            if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {
+                return true;
             }
         }
 
-        throw new InvalidSalesOrderException(sprintf(
-            'Order could not be found for ID %s and customer reference %s',
-            $orderTransfer->getIdSalesOrder(),
-            $customerTransfer->getCustomerReference()
-        ));
+        return false;
     }
 }

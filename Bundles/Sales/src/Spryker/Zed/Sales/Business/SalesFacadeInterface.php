@@ -201,7 +201,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
-     *  - Executes CustomerOrderPreCheckPluginInterface plugins, expects OrderTransfer::customer to be provided, not applicable to order creator.
+     *  - Executes CustomerOrderAccessCheckPluginInterface plugins, expects OrderTransfer::customer to be provided, not applicable to order creator.
      *  - Aggregates order totals calls -> SalesAggregator.
      *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *

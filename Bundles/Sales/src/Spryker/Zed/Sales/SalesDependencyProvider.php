@@ -45,7 +45,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER = 'PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER';
     public const PLUGINS_SEARCH_ORDER_EXPANDER = 'PLUGINS_SEARCH_ORDER_EXPANDER';
     public const PLUGINS_ORDER_SEARCH_QUERY_EXPANDER = 'PLUGINS_ORDER_SEARCH_QUERY_EXPANDER';
-    public const PLUGINS_CUSTOMER_ORDER_PRE_CHECK = 'PLUGINS_CUSTOMER_ORDER_PRE_CHECK';
+    public const PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK = 'PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -77,7 +77,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
         $container = $this->addSearchOrderExpanderPlugins($container);
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
-        $container = $this->addCustomerOrderPreCheckPlugins($container);
+        $container = $this->addCustomerOrderAccessCheckPlugins($container);
 
         return $container;
     }
@@ -401,10 +401,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerOrderPreCheckPlugins(Container $container): Container
+    protected function addCustomerOrderAccessCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CUSTOMER_ORDER_PRE_CHECK, function () {
-            return $this->getCustomerOrderPreCheckPlugins();
+        $container->set(static::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK, function () {
+            return $this->getCustomerOrderAccessCheckPlugins();
         });
 
         return $container;
@@ -491,9 +491,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
      */
-    protected function getCustomerOrderPreCheckPlugins(): array
+    protected function getCustomerOrderAccessCheckPlugins(): array
     {
         return [];
     }

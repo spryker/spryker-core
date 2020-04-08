@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\CompanySalesConnector\Plugin\Permission\SeeCompanyOrdersPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
+use Spryker\Zed\CompanySalesConnector\Communication\Plugin\Permission\SeeCompanyOrdersPermissionPlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
@@ -23,10 +23,10 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
  * @group CompanySalesConnector
  * @group Business
  * @group CompanySalesConnectorFacade
- * @group CheckSeeCompanyOrdersPermissionTest
+ * @group CheckOrderAccessByCustomerCompanyTest
  * Add your own group annotations below this line
  */
-class CheckSeeCompanyOrdersPermissionTest extends Unit
+class CheckOrderAccessByCustomerCompanyTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const FAKE_COMPANY_UUID = 'FAKE_COMPANY_UUID';
@@ -56,15 +56,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermission(): void
+    public function testCheckOrderAccessByCustomerCompany(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
                 (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
             );
@@ -76,15 +76,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermissionWithoutCompanyUuid(): void
+    public function testCheckOrderAccessByCustomerCompanyWithoutCompanyUuid(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid(null),
                 (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
             );
@@ -96,15 +96,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermissionWithoutCompanyUser(): void
+    public function testCheckOrderAccessByCustomerCompanyWithoutCompanyUser(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
                 (new CustomerTransfer())->setCompanyUserTransfer(null)
             );
@@ -116,15 +116,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermissionWithoutIdCompanyUser(): void
+    public function testCheckOrderAccessByCustomerCompanyWithoutIdCompanyUser(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
                 (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer())
             );
@@ -136,15 +136,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermissionWithoutCompany(): void
+    public function testCheckOrderAccessByCustomerCompanyWithoutCompany(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
                 (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer->setCompany(null))
             );
@@ -156,15 +156,15 @@ class CheckSeeCompanyOrdersPermissionTest extends Unit
     /**
      * @return void
      */
-    public function testCheckSeeCompanyOrdersPermissionWithDifferentCompanyUuids(): void
+    public function testCheckOrderAccessByCustomerCompanyWithDifferentCompanyUuids(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
+        $companyUserTransfer = $this->tester->createCompanyUserWithPermission('SeeCompanyOrdersPermissionPlugin');
 
         // Act
         $isPermissionGranted = $this->tester
             ->getFacade()
-            ->checkSeeCompanyOrdersPermission(
+            ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid(static::FAKE_COMPANY_UUID),
                 (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
             );

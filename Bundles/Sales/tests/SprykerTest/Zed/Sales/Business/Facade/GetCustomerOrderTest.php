@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -106,12 +106,12 @@ class GetCustomerOrderTest extends Test
     /**
      * @return void
      */
-    public function testGetCustomerOrderSupportsCustomerOrderPreCheckPluginStack(): void
+    public function testGetCustomerOrderSupportsCustomerOrderAccessCheckPluginStack(): void
     {
         // Arrange
         $this->tester->setDependency(
-            SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_PRE_CHECK,
-            [$this->getCustomerOrderPreCheckPluginMock()]
+            SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK,
+            [$this->getCustomerOrderAccessCheckPluginMock()]
         );
 
         $customerTransfer = $this->tester->haveCustomer();
@@ -131,12 +131,12 @@ class GetCustomerOrderTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface
      */
-    protected function getCustomerOrderPreCheckPluginMock(): CustomerOrderPreCheckPluginInterface
+    protected function getCustomerOrderAccessCheckPluginMock(): CustomerOrderAccessCheckPluginInterface
     {
         $customerOrderPreCheckPluginMock = $this
-            ->getMockBuilder(CustomerOrderPreCheckPluginInterface::class)
+            ->getMockBuilder(CustomerOrderAccessCheckPluginInterface::class)
             ->getMock();
 
         $customerOrderPreCheckPluginMock

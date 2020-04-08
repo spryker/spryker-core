@@ -229,7 +229,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
-            $this->getCustomerOrderPreCheckPlugins()
+            $this->getCustomerOrderAccessCheckPlugins()
         );
     }
 
@@ -243,7 +243,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
-            $this->getCustomerOrderPreCheckPlugins()
+            $this->getCustomerOrderAccessCheckPlugins()
         );
     }
 
@@ -522,10 +522,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderPreCheckPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
      */
-    public function getCustomerOrderPreCheckPlugins(): array
+    public function getCustomerOrderAccessCheckPlugins(): array
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_PRE_CHECK);
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
     }
 }
