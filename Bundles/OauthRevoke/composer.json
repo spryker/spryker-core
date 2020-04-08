@@ -1,5 +1,6 @@
 {
   "name": "spryker/oauth-revoke",
+  "type": "library",
   "description": "OauthRevoke module",
   "license": "proprietary",
   "require": {
@@ -12,8 +13,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "*"
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
