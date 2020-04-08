@@ -26,9 +26,13 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFind
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
@@ -38,6 +42,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelatio
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -54,6 +60,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\Schema
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRenderer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRenderer;
@@ -110,11 +118,27 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface
+     */
+    public function createOpenApiSpecificationParameterSchemeGenerator(): OpenApiSpecificationParameterGeneratorInterface
+    {
+        return new OpenApiSpecificationParameterGenerator($this->createParameterSchemeRenderer());
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
     public function createOpenApiSpecificationPathGenerator(): PathGeneratorInterface
     {
         return new OpenApiSpecificationPathGenerator($this->createPathMethodRenderer());
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface
+     */
+    public function createOpenApiTagGenerator(): OpenApiTagGeneratorInterface
+    {
+        return new OpenApiTagGenerator();
     }
 
     /**
@@ -190,7 +214,9 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new HttpMethodProcessor(
             $this->createOpenApiSpecificationPathGenerator(),
             $this->createOpenApiSpecificationSchemaGenerator(),
-            $this->createOpenApiSpecificationSecuritySchemeGenerator()
+            $this->createOpenApiSpecificationSecuritySchemeGenerator(),
+            $this->createOpenApiSpecificationParameterSchemeGenerator(),
+            $this->createOpenApiTagGenerator()
         );
     }
 
@@ -225,6 +251,14 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createSecuritySchemeRenderer(): SecuritySchemeRendererInterface
     {
         return new SecuritySchemeRenderer($this->createSecuritySchemeSpecificationComponent());
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendererInterface
+     */
+    public function createParameterSchemeRenderer(): ParameterRendererInterface
+    {
+        return new ParameterRenderer($this->createParameterSpecificationComponent());
     }
 
     /**
@@ -281,6 +315,14 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createSchemaSpecificationComponent(): SchemaSpecificationComponentInterface
     {
         return new SchemaSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponentInterface
+     */
+    public function createParameterSpecificationComponent(): ParameterSpecificationComponentInterface
+    {
+        return new ParameterSpecificationComponent();
     }
 
     /**

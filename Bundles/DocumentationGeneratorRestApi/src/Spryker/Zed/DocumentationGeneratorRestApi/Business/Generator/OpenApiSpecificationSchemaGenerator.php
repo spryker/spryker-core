@@ -209,10 +209,11 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->schemas[$attributesSchemaName] = [];
 
         $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
-        foreach ($transferMetadata as $key => $value) {
-            if ($value[static::KEY_IS_TRANSFER] && class_exists($value[static::KEY_TYPE])) {
-                $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($value[static::KEY_TYPE]);
-                $this->addResponseDataAttributesSchemaFromTransfer(new $value[static::KEY_TYPE](), $schemaName);
+        foreach ($transferMetadata as $property) {
+            if ($property[static::KEY_IS_TRANSFER]) {
+                $this->validateTransfer($property[static::KEY_TYPE]);
+                $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
+                $this->addResponseDataAttributesSchemaFromTransfer(new $property[static::KEY_TYPE](), $schemaName);
             }
         }
 
@@ -235,6 +236,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
         foreach ($transferMetadata as $property) {
             if ($property[static::KEY_IS_TRANSFER] && $property[static::KEY_REST_REQUEST_PARAMETER] !== static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
+                $this->validateTransfer($property[static::KEY_TYPE]);
                 $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
                 $this->addRequestDataAttributesSchemaFromTransfer(new $property[static::KEY_TYPE](), $schemaName);
             }
@@ -417,5 +419,21 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
                 ->resourceRelationshipProcessor
                 ->getIncludeDataSchemaForPlugin($plugin, $transferClassName, $resourceRelationships)
         );
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException
+     *
+     * @return void
+     */
+    protected function validateTransfer(string $transferClassName): void
+    {
+        if (!$this->resourceTransferAnalyzer->isTransferValid($transferClassName)) {
+            throw new InvalidTransferClassException(
+                sprintf('Invalid transfer %s', $transferClassName)
+            );
+        }
     }
 }
