@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
-class HasOffersProductTableFilterDataProvider implements ProductTableFilterDataProviderInterface
+class HasOffersProductTableFilterDataProvider implements TableFilterDataProviderInterface
 {
     public const FILTER_NAME = 'offers';
 
@@ -30,7 +31,7 @@ class HasOffersProductTableFilterDataProvider implements ProductTableFilterDataP
     }
 
     /**
-     * @return int[][]
+     * @return array
      */
     protected function getIsActiveValues(): array
     {

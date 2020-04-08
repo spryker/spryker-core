@@ -23,10 +23,14 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
+use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
 use Orm\Zed\ProductOfferValidity\Persistence\Map\SpyProductOfferValidityTableMap;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
@@ -48,7 +52,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productConcreteMapper = $this->getFactory()->createProductTableDataMapper();
 
         $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer);
-        $productConcreteQuery = $this->applySearch($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductSearch($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addFilters($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
@@ -273,8 +277,10 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function applySearch(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
-    {
+    protected function applyProductSearch(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
         $searchTerm = $productTableCriteriaTransfer->getSearchTerm();
 
         if (!$searchTerm) {
@@ -282,19 +288,38 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         }
 
         $criteria = new Criteria();
-        $productNameSearchCriterion = $criteria->getNewCriterion(
-            SpyProductLocalizedAttributesTableMap::COL_NAME,
-            '%' . $searchTerm . '%',
-            Criteria::LIKE
-        );
-        $productSkuSearchCriterion = $criteria->getNewCriterion(
-            SpyProductTableMap::COL_SKU,
-            '%' . $searchTerm . '%',
-            Criteria::LIKE
-        );
+        $productNameSearchCriterion = $this->getProductNameSearchCriteria($criteria, $searchTerm);
+        $productSkuSearchCriterion = $this->getProductSkuSearchCriteria($criteria, $searchTerm);
         $productNameSearchCriterion->addOr($productSkuSearchCriterion);
 
         return $productConcreteQuery->addAnd($productNameSearchCriterion);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function applyProductOfferSearch(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+    ): SpyProductOfferQuery {
+        $searchTerm = $productOfferTableCriteriaTransfer->getSearchTerm();
+
+        if (!$searchTerm) {
+            return $productOfferQuery;
+        }
+
+        $criteria = new Criteria();
+        $productNameSearchCriterion = $this->getProductNameSearchCriteria($criteria, $searchTerm);
+        $productOfferReferenceSearchCriterion = $this->getProductOfferReferenceSearchCriteria($criteria, $searchTerm);
+        $productOfferMerchantSkuSearchCriterion = $this->getProductOfferMerchantSkuSearchCriteria($criteria, $searchTerm);
+
+        $productNameSearchCriterion->addOr($productOfferReferenceSearchCriterion);
+        $productOfferReferenceSearchCriterion->addOr($productOfferMerchantSkuSearchCriterion);
+
+        return $productOfferQuery->add($productNameSearchCriterion);
     }
 
     /**
@@ -355,14 +380,18 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $merchantId = $productOfferTableCriteriaTransfer->getMerchantUser()->getIdMerchant();
 
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferQuery = $this->applyProductOfferSearch($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $localeId);
         $productOfferQuery = $this->joinProductAbstractLocalizedAttributesToProductOfferQuery($productOfferQuery, $localeId);
         $productOfferQuery->leftJoinSpyProductOfferValidity()
+            ->leftJoinProductOfferStock()
             ->addAsColumn(ProductOfferTableRowDataTransfer::OFFER_REFERENCE, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE)
             ->addAsColumn(ProductOfferTableRowDataTransfer::MERCHANT_SKU, SpyProductOfferTableMap::COL_MERCHANT_SKU)
             ->addAsColumn(ProductOfferTableRowDataTransfer::IMAGE, sprintf('(%s)', $this->createProductImagesSubquery($localeId)))
             ->addAsColumn(ProductOfferTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
             ->addAsColumn(ProductOfferTableRowDataTransfer::APPROVAL_STATUS, SpyProductOfferTableMap::COL_APPROVAL_STATUS)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::QUANTITY, SpyProductOfferStockTableMap::COL_QUANTITY)
+            ->addAsColumn(ProductOfferTableRowDataTransfer::IS_NEVER_OUT_OF_STOCK, SpyProductOfferStockTableMap::COL_IS_NEVER_OUT_OF_STOCK)
             ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES, SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES)
@@ -459,5 +488,65 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
             );
 
         return $productOfferQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     */
+    protected function getProductNameSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    {
+        return $criteria->getNewCriterion(
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     */
+    protected function getProductSkuSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    {
+        return $criteria->getNewCriterion(
+            SpyProductTableMap::COL_SKU,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     */
+    protected function getProductOfferReferenceSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    {
+        return $criteria->getNewCriterion(
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     */
+    protected function getProductOfferMerchantSkuSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    {
+        return $criteria->getNewCriterion(
+            SpyProductOfferTableMap::COL_MERCHANT_SKU,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
     }
 }

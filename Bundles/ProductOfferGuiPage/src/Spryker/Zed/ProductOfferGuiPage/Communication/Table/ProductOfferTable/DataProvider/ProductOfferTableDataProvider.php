@@ -11,11 +11,14 @@ use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
 class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInterface
 {
     protected const ATTRIBUTE_KEY_COLOR = 'color';
+
+    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
 
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface
@@ -23,11 +26,20 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected $productOfferGuiPageRepository;
 
     /**
-     * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface
      */
-    public function __construct(ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository)
-    {
+    protected $translatorFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+     */
+    public function __construct(
+        ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository,
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+    ) {
         $this->productOfferGuiPageRepository = $productOfferGuiPageRepository;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -42,11 +54,12 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
 
         foreach ($productOfferTableDataTransfer->getRows() as $productOfferTableRowDataTransfer) {
             $productTableDataArray[] = [
-                ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTableRowDataTransfer->getMerchantSku(),
                 ProductOfferTable::COL_KEY_OFFER_REFERENCE => $productOfferTableRowDataTransfer->getOfferReference(),
+                ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTableRowDataTransfer->getMerchantSku(),
                 ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_IMAGE => $productOfferTableRowDataTransfer->getImage(),
                 ProductOfferTable::COL_KEY_APPROVAL_STATUS => $productOfferTableRowDataTransfer->getApprovalStatus(),
+                ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_VALID_FROM => $productOfferTableRowDataTransfer->getValidFrom(),
                 ProductOfferTable::COL_KEY_VALID_TO => $productOfferTableRowDataTransfer->getValidTo(),
@@ -110,5 +123,19 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
         }
 
         return $stores;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal|string|null
+     */
+    protected function getStockColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer)
+    {
+        if ($productOfferTableRowDataTransfer->getIsNeverOutOfStock()) {
+            return $this->translatorFacade->trans(static::COLUMN_DATA_IS_NEVER_OUT_OF_STOCK);
+        }
+
+        return $productOfferTableRowDataTransfer->getQuantity();
     }
 }

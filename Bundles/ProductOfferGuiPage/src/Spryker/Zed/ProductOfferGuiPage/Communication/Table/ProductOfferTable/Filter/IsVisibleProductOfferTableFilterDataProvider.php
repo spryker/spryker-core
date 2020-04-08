@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
-class IsActiveProductTableFilterDataProvider implements TableFilterDataProviderInterface
+class IsVisibleProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'status';
+    public const FILTER_NAME = 'visibility';
 
-    protected const OPTION_NAME_ACTIVE = 'Active';
-    protected const OPTION_NAME_INACTIVE = 'Inactive';
+    protected const OPTION_NAME_ONLINE = 'Online';
+    protected const OPTION_NAME_OFFLINE = 'Offline';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -24,24 +24,24 @@ class IsActiveProductTableFilterDataProvider implements TableFilterDataProviderI
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
-            ->setTitle('Status')
+            ->setTitle('Visibility')
             ->setType('select')
             ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsActiveOptions());
+            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsVisibleOptions());
     }
 
     /**
      * @return array
      */
-    protected function getIsActiveOptions(): array
+    protected function getIsVisibleOptions(): array
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_ACTIVE,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_ONLINE,
                 static::OPTION_VALUE_KEY_VALUE => 1,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_INACTIVE,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_OFFLINE,
                 static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];

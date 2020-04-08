@@ -14,14 +14,16 @@ use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 
 class ProductOfferTable extends AbstractTable
 {
     public const COL_KEY_OFFER_REFERENCE = 'name';
-    public const COL_KEY_MERCHANT_SKU = 'sku';
+    public const COL_KEY_MERCHANT_SKU = 'merchantSku';
     public const COL_KEY_IMAGE = 'image';
     public const COL_KEY_STORES = 'stores';
+    public const COL_KEY_STOCK = 'stock';
     public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
     public const COL_KEY_PRODUCT_NAME = 'productName';
     public const COL_KEY_VALID_FROM = 'validFrom';
@@ -50,15 +52,17 @@ class ProductOfferTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface $productTableDataProvider
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
      */
     public function __construct(
         ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
         ProductOfferTableDataProviderInterface $productTableDataProvider,
         ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
     ) {
-        parent::__construct($utilEncodingService);
+        parent::__construct($utilEncodingService, $translatorFacade);
         $this->productOfferTableDataProvider = $productTableDataProvider;
         $this->productOfferTableCriteriaBuilder = $productOfferTableCriteriaBuilder;
     }
@@ -98,7 +102,7 @@ class ProductOfferTable extends AbstractTable
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_MERCHANT_SKU)
-                ->setTitle('Sku')
+                ->setTitle('Merchant SKU')
                 ->setType('text')
                 ->setSortable(true)
                 ->setHideable(false)
@@ -137,9 +141,18 @@ class ProductOfferTable extends AbstractTable
                 ->setTitle('Stores')
                 ->setType('text')
                 ->setSortable(false)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(true)
                 ->setMultiRenderModeLimit(2)
+        );
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
+                ->setId(static::COL_KEY_STOCK)
+                ->setTitle('Stock')
+                ->setType('chip')
+                ->setSortable(true)
+                ->setHideable(false)
+                ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter;
+namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 
-interface ProductTableFilterDataProviderInterface
+interface TableFilterDataProviderInterface
 {
     public const OPTION_NAME_MULTISELECT = 'multiselect';
     public const OPTION_NAME_VALUES = 'values';

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Exception\InvalidSortingConfigurationException;
@@ -397,20 +397,20 @@ abstract class AbstractTable
 
         $typeOptions = $guiTableFilterTransfer->getTypeOptions();
 
-        if (!isset($typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES])) {
+        if (!isset($typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES])) {
             return $guiTableFilterTransfer;
         }
 
-        $optionNameValues = $typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES];
+        $optionNameValues = $typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES];
 
         foreach ($optionNameValues as $key => $optionNameValue) {
-            if (isset($optionNameValue[ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE])) {
-                $titleTranslated = $this->translate($optionNameValue[ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE]);
-                $optionNameValues[$key][ProductTableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
+            if (isset($optionNameValue[TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE])) {
+                $titleTranslated = $this->translate($optionNameValue[TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE]);
+                $optionNameValues[$key][TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
             }
         }
 
-        $typeOptions[ProductTableFilterDataProviderInterface::OPTION_NAME_VALUES] = $optionNameValues;
+        $typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES] = $optionNameValues;
         $guiTableFilterTransfer->setTypeOptions($typeOptions);
 
         return $guiTableFilterTransfer;

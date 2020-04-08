@@ -96,6 +96,8 @@
         <property name="offerReference" type="string"/>
         <property name="merchantSku" type="string"/>
         <property name="image" type="string"/>
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
         <property name="approvalStatus" type="string"/>
         <property name="productConcreteName" type="string"/>
         <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>

@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
@@ -20,7 +22,6 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvide
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
@@ -42,7 +43,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
             $this->getUtilEncodingService(),
             $this->getTranslatorFacade(),
             $this->createProductTableDataProvider(),
-            $this->createProductTableFilterDataProviders(),
+            $this->getProductTableFilterDataProviders(),
             $this->createProductTableCriteriaBuilder()
         );
     }
@@ -76,6 +77,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductOfferTable(
             $this->getUtilEncodingService(),
+            $this->getTranslatorFacade(),
             $this->createProductOfferTableDataProvider(),
             $this->createProductOfferTableCriteriaBuilder()
         );
@@ -98,34 +100,53 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function createProductOfferTableDataProvider(): ProductOfferTableDataProviderInterface
     {
         return new ProductOfferTableDataProvider(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getTranslatorFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
      */
-    public function createIsActiveProductTableFilterDataProvider(): ProductTableFilterDataProviderInterface
+    public function createIsActiveProductTableFilterDataProvider(): TableFilterDataProviderInterface
     {
         return new IsActiveProductTableFilterDataProvider();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
      */
-    public function createHasOffersProductTableFilterDataProvider(): ProductTableFilterDataProviderInterface
+    public function createHasOffersProductTableFilterDataProvider(): TableFilterDataProviderInterface
     {
         return new HasOffersProductTableFilterDataProvider();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[]
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[]
      */
-    public function createProductTableFilterDataProviders(): array
+    public function getProductTableFilterDataProviders(): array
     {
         return [
             $this->createIsActiveProductTableFilterDataProvider(),
             $this->createHasOffersProductTableFilterDataProvider(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    public function createIsVisibleProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
+    {
+        return new IsVisibleProductOfferTableFilterDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[]
+     */
+    public function getProductOfferTableFilterDataProviders(): array
+    {
+        return [
+            $this->createIsVisibleProductOfferTableFilterDataProvider(),
         ];
     }
 
