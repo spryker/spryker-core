@@ -64,10 +64,12 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      */
     public function deleteMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void
     {
-        $this->getFactory()
+        $merchantStoreEntity = $this->getFactory()
             ->createMerchantStoreQuery()
             ->filterByFkMerchant($merchantTransfer->getIdMerchant())
             ->filterByFkStore($storeTransfer->getIdStore())
-            ->delete();
+            ->findOne();
+
+        $merchantStoreEntity->delete();
     }
 }

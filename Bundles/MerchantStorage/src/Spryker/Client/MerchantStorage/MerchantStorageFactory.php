@@ -30,7 +30,8 @@ class MerchantStorageFactory extends AbstractFactory
             $this->createMerchantStorageMapper(),
             $this->getSynchronizationService(),
             $this->getStorageClient(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getStoreClient()
         );
     }
 

@@ -10,6 +10,7 @@ namespace Spryker\Client\MerchantStorage\Storage;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
+use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface;
@@ -41,21 +42,29 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface $merchantStorageMapper
      * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         MerchantStorageMapperInterface $merchantStorageMapper,
         MerchantStorageToSynchronizationServiceInterface $synchronizationService,
         MerchantStorageToStorageClientInterface $storageClient,
-        MerchantStorageToUtilEncodingServiceInterface $utilEncodingService
+        MerchantStorageToUtilEncodingServiceInterface $utilEncodingService,
+        MerchantStorageToStoreClientInterface $storeClient
     ) {
         $this->merchantStorageMapper = $merchantStorageMapper;
         $this->synchronizationService = $synchronizationService;
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -156,6 +165,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($reference);
+        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(MerchantStorageConfig::MERCHANT_RESOURCE_NAME)
