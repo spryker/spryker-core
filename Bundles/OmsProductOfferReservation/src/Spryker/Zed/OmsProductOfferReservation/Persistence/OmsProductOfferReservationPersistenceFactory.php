@@ -11,6 +11,7 @@ use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
+ * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
  * @method \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface getRepository()
  */
 class OmsProductOfferReservationPersistenceFactory extends AbstractPersistenceFactory

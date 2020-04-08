@@ -17,7 +17,7 @@ interface OmsProductOfferReservationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
-    public function getQuantityForProductOffer(
+    public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer;
 }
