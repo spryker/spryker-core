@@ -22,11 +22,13 @@ class AuthRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
     public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Invalid access token.';
+    public const RESPONSE_DETAIL_MESSAGE_ANONYMOUS_USER_WITH_ACCESS_TOKEN = 'Headers request error. A user can\'t act as logged and not logged user at the same time.';
 
     public const RESPONSE_CODE_ACCESS_CODE_INVALID = '001';
     public const RESPONSE_CODE_FORBIDDEN = '002';
     public const RESPONSE_INVALID_LOGIN = '003';
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
+    public const RESPONSE_CODE_ANONYMOUS_USER_WITH_ACCESS_TOKEN = '005';
 
     /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
@@ -37,6 +39,11 @@ class AuthRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
      */
     public const HEADER_AUTHORIZATION = 'authorization';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID
+     */
+    public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     /**
      * @api
