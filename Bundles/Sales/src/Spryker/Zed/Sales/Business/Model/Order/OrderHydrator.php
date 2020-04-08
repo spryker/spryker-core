@@ -437,6 +437,8 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Sales\StateHistoryOrderItemExpanderPlugin} instead.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -444,6 +446,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
     {
+        // For BC reasons
         if (!$this->salesConfig->isHydrateOrderHistoryToItems()) {
             return;
         }

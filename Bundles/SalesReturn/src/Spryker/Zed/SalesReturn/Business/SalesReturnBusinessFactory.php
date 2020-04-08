@@ -10,14 +10,14 @@ namespace Spryker\Zed\SalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculator;
 use Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface;
-use Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpander;
-use Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpander;
 use Spryker\Zed\SalesReturn\Business\Expander\OrderRemunerationTotalExpanderInterface;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGenerator;
 use Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReader;
 use Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface;
+use Spryker\Zed\SalesReturn\Business\Setter\IsReturnableSetter;
+use Spryker\Zed\SalesReturn\Business\Setter\IsReturnableSetterInterface;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetter;
 use Spryker\Zed\SalesReturn\Business\Setter\ItemRemunerationAmountSetterInterface;
 use Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggerer;
@@ -125,11 +125,11 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturn\Business\Expander\OrderItemExpanderInterface
+     * @return \Spryker\Zed\SalesReturn\Business\Setter\IsReturnableSetterInterface
      */
-    public function createOrderItemExpander(): OrderItemExpanderInterface
+    public function createIsReturnableSetter(): IsReturnableSetterInterface
     {
-        return new OrderItemExpander(
+        return new IsReturnableSetter(
             $this->getConfig()
         );
     }

@@ -29,6 +29,6 @@ class UpdateOrderItemIsReturnableByGlobalReturnableNumberOfDaysPlugin extends Ab
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderItemsWithIsReturnable($itemTransfers);
+        return $this->getFacade()->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
     }
 }

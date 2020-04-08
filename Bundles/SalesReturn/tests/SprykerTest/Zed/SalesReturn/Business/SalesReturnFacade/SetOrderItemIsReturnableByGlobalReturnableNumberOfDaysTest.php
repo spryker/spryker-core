@@ -19,10 +19,10 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @group SalesReturn
  * @group Business
  * @group SalesReturnFacade
- * @group ExpandOrderItemsWithIsReturnableTest
+ * @group SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest
  * Add your own group annotations below this line
  */
-class ExpandOrderItemsWithIsReturnableTest extends Unit
+class SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
@@ -32,7 +32,7 @@ class ExpandOrderItemsWithIsReturnableTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithIsReturnable(): void
+    public function testSetOrderItemIsReturnableByGlobalReturnableNumberOfDays(): void
     {
         // Arrange
         $itemTransfers = [
@@ -45,7 +45,7 @@ class ExpandOrderItemsWithIsReturnableTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithIsReturnable($itemTransfers);
+            ->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
@@ -57,7 +57,7 @@ class ExpandOrderItemsWithIsReturnableTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithIsReturnableWithoutCreateAtField(): void
+    public function testSetOrderItemIsReturnableByGlobalReturnableNumberOfDaysWithoutCreateAtField(): void
     {
         // Arrange
         $itemTransfers = [
@@ -69,7 +69,7 @@ class ExpandOrderItemsWithIsReturnableTest extends Unit
         // Act
         $sanitizedItemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithIsReturnable($itemTransfers);
+            ->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());

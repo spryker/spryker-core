@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReturn\Business\Expander;
+namespace Spryker\Zed\SalesReturn\Business\Setter;
 
-interface OrderItemExpanderInterface
+interface IsReturnableSetterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
+    public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array;
+    public function setOrderItemIsReturnableByItemState(array $itemTransfers): array;
 }

@@ -103,7 +103,7 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array;
+    public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array;
 
     /**
      * Specification:
@@ -118,5 +118,5 @@ interface SalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array;
+    public function setOrderItemIsReturnableByItemState(array $itemTransfers): array;
 }

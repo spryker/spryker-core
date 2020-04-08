@@ -111,11 +111,11 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array
+    public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createOrderItemExpander()
-            ->expandOrderItemsWithIsReturnable($itemTransfers);
+            ->createIsReturnableSetter()
+            ->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
     }
 
     /**
@@ -127,10 +127,10 @@ class SalesReturnFacade extends AbstractFacade implements SalesReturnFacadeInter
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array
+    public function setOrderItemIsReturnableByItemState(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createOrderItemExpander()
-            ->expandOrderItemsWithIsReturnableByItemState($itemTransfers);
+            ->createIsReturnableSetter()
+            ->setOrderItemIsReturnableByItemState($itemTransfers);
     }
 }

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReturn\Business\Expander;
+namespace Spryker\Zed\SalesReturn\Business\Setter;
 
 use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
-class OrderItemExpander implements OrderItemExpanderInterface
+class IsReturnableSetter implements IsReturnableSetterInterface
 {
     /**
      * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
@@ -31,10 +31,10 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnable(array $itemTransfers): array
+    public function setOrderItemIsReturnableByGlobalReturnableNumberOfDays(array $itemTransfers): array
     {
         foreach ($itemTransfers as $itemTransfer) {
-            if ($this->isOrderItemPassedReturnableNumberOfDays($itemTransfer)) {
+            if ($this->isOrderItemPassedGlobalReturnableNumberOfDays($itemTransfer)) {
                 $itemTransfer->setIsReturnable(false);
             }
         }
@@ -47,7 +47,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithIsReturnableByItemState(array $itemTransfers): array
+    public function setOrderItemIsReturnableByItemState(array $itemTransfers): array
     {
         $returnableStateNames = $this->salesReturnConfig->getReturnableStateNames();
 
@@ -70,7 +70,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return bool
      */
-    protected function isOrderItemPassedReturnableNumberOfDays(ItemTransfer $itemTransfer): bool
+    protected function isOrderItemPassedGlobalReturnableNumberOfDays(ItemTransfer $itemTransfer): bool
     {
         if (!$itemTransfer->getCreatedAt()) {
             return true;
