@@ -16,6 +16,10 @@ use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 interface OauthRevokeFacadeInterface
 {
     /**
+     * Specification:
+     * - Returns amount of deleted refresh tokens by provided criteria which can be filtered by `identifier`, `customer reference`, `isRevoked` and `expiresAt` fields.
+     * - Requires `expiresAt` to be set on `OauthTokenCriteriaFilterTransfer` taken as parameter.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
@@ -26,8 +30,9 @@ interface OauthRevokeFacadeInterface
 
     /**
      * Specification:
-     * - Returns collection of refresh tokens by provided criteria which can be filtered by `customer reference`, `identifier` and `isRevoked` fields.
+     * - Returns collection of refresh tokens by provided criteria which can be filtered by `identifier`, `customer reference`, `isRevoked` and `expiresAt` fields.
      * - Returns `OauthRefreshTokenTransfer` if found, NULL otherwise.
+     * - Requires `identifier` to be set on `OauthTokenCriteriaFilterTransfer` taken as parameter.
      *
      * @api
      *
@@ -39,7 +44,7 @@ interface OauthRevokeFacadeInterface
 
     /**
      * Specification:
-     * - Returns collection of refresh tokens by provided criteria which can be filtered by `customer reference`, `identifier` and `isRevoked` fields.
+     * - Returns collection of refresh tokens by provided criteria which can be filtered by `identifier`, `customer reference`, `isRevoked` and `expiresAt` fields.
      *
      * @api
      *
@@ -94,7 +99,7 @@ interface OauthRevokeFacadeInterface
 
     /**
      * Specification:
-     * - Persists a new refresh token to permanent storage.
+     * - Persists the new refresh token to permanent storage.
      *
      * @api
      *

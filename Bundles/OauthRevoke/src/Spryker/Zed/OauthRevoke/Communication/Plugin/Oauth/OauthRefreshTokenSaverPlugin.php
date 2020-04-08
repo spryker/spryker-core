@@ -19,6 +19,7 @@ class OauthRefreshTokenSaverPlugin extends AbstractPlugin implements OauthRefres
 {
     /**
      * {@inheritDoc}
+     * - Persists the new refresh token to permanent storage.
      *
      * @api
      *

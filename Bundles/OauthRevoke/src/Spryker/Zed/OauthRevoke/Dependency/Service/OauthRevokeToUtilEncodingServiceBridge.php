@@ -27,9 +27,9 @@ class OauthRevokeToUtilEncodingServiceBridge implements OauthRevokeToUtilEncodin
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string|null
+     * @return string
      */
-    public function encodeJson($value, ?int $options = null, ?int $depth = null)
+    public function encodeJson($value, $options = null, $depth = null)
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
@@ -40,9 +40,9 @@ class OauthRevokeToUtilEncodingServiceBridge implements OauthRevokeToUtilEncodin
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return array
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }

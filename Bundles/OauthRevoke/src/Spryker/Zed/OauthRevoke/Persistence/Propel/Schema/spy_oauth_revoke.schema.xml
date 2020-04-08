@@ -16,8 +16,7 @@
         <column name="expires_at" type="TIMESTAMP" required="true"/>
         <column name="revoked_at" type="TIMESTAMP" required="false"/>
 
-        <foreign-key name="spy_oauth_refresh_token-identifier" foreignTable="spy_oauth_client"
-                     phpName="OauthClient" refPhpName="OauthRefreshToken">
+        <foreign-key name="spy_oauth_refresh_token-identifier" foreignTable="spy_oauth_client">
             <reference local="fk_oauth_client" foreign="identifier"/>
         </foreign-key>
 

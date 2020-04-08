@@ -12,10 +12,10 @@ use ArrayObject;
 interface OauthRefreshTokensRevokerPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
      * - Revoke all the refresh tokens.
+     *
+     * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
      *

@@ -20,6 +20,9 @@ class OauthRefreshTokensReaderPlugin extends AbstractPlugin implements OauthRefr
 {
     /**
      * {@inheritDoc}
+     * - Gets refresh tokens by provided criteria.
+     * - Returns oauth refresh tokens collection.
+     * - Returns the empty collection in case there is no refresh tokens.
      *
      * @api
      *

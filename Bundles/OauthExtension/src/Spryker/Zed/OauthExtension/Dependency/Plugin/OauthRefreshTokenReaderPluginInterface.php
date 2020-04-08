@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 interface OauthRefreshTokenReaderPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     * - Check if provided criteria is acceptable by this plugin.
+     * - Checks if provided criteria is acceptable by this plugin.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
@@ -25,10 +25,10 @@ interface OauthRefreshTokenReaderPluginInterface
     public function isApplicable(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): bool;
 
     /**
-     * @api
-     *
      * Specification:
-     * - Finds the refresh token by provided criteria.
+     * - Finds refresh token by provided criteria.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *

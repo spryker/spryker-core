@@ -19,6 +19,9 @@ class OauthRefreshTokenRevokerPlugin extends AbstractPlugin implements OauthRefr
 {
     /**
      * {@inheritDoc}
+     * - Checks if refresh token isn't revoked yet by provided identifier.
+     * - Looks up the persisted refresh token record by the `identifier`.
+     * - Revokes refresh token found.
      *
      * @api
      *

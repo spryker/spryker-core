@@ -19,6 +19,7 @@ class OauthExpiredRefreshTokenRemoverPlugin extends AbstractPlugin implements Oa
 {
     /**
      * {@inheritDoc}
+     * - Removes expired refresh tokens by provided criteria.
      *
      * @api
      *

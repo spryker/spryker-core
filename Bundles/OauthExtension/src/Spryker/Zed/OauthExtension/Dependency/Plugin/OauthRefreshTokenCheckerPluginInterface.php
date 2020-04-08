@@ -10,10 +10,10 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 interface OauthRefreshTokenCheckerPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     * - Check if refresh token identifier is acceptable by this plugin.
+     * - Checks if refresh token identifier is acceptable by this plugin.
+     *
+     * @api
      *
      * @param string $tokenId
      *
@@ -22,10 +22,10 @@ interface OauthRefreshTokenCheckerPluginInterface
     public function isApplicable(string $tokenId): bool;
 
     /**
-     * @api
-     *
      * Specification:
-     * - Check if the refresh token has been revoked.
+     * - Checks if refresh token has been revoked.
+     *
+     * @api
      *
      * @param string $tokenId
      *

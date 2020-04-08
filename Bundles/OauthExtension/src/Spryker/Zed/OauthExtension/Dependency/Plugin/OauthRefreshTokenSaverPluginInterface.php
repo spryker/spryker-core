@@ -12,10 +12,10 @@ use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 interface OauthRefreshTokenSaverPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     * - Revoke the refresh token.
+     * - Saves refresh token.
+     *
+     * @api
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *

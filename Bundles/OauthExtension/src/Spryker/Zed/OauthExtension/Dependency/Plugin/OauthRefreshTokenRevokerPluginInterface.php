@@ -10,10 +10,10 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 interface OauthRefreshTokenRevokerPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
      * - Revoke refresh token by provided token identifier.
+     *
+     * @api
      *
      * @param string $tokenId
      *

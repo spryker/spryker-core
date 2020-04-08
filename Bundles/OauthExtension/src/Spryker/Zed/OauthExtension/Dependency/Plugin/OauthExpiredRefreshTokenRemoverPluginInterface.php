@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 interface OauthExpiredRefreshTokenRemoverPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
-     * - Remove expired refresh tokens by provided criteria.
+     * - Removes expired refresh tokens by provided criteria.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *

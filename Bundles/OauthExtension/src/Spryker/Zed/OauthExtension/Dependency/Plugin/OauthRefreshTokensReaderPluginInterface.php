@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 interface OauthRefreshTokensReaderPluginInterface
 {
     /**
-     * @api
-     *
      * Specification:
      * - Get refresh tokens by provided criteria.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *

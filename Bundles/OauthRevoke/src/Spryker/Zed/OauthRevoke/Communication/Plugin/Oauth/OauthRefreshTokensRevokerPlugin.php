@@ -19,6 +19,8 @@ class OauthRefreshTokensRevokerPlugin extends AbstractPlugin implements OauthRef
 {
     /**
      * {@inheritDoc}
+     * - Looks up all refresh tokens by the `identifier` list.
+     * - Revokes each refresh token found.
      *
      * @api
      *

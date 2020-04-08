@@ -19,6 +19,7 @@ class OauthRefreshTokenCheckerPlugin extends AbstractPlugin implements OauthRefr
 {
     /**
      * {@inheritDoc}
+     * - Checks if refresh token identifier is not empty.
      *
      * @api
      *
@@ -33,6 +34,9 @@ class OauthRefreshTokenCheckerPlugin extends AbstractPlugin implements OauthRefr
 
     /**
      * {@inheritDoc}
+     * - Checks if refresh token with provided identifier has been revoked.
+     * - Returns true, if refresh token has been revoked.
+     * - Returns false, if refresh token has not been revoked.
      *
      * @api
      *

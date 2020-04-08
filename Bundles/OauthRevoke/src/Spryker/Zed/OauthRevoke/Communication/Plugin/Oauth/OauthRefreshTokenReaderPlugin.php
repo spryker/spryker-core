@@ -20,6 +20,7 @@ class OauthRefreshTokenReaderPlugin extends AbstractPlugin implements OauthRefre
 {
     /**
      * {@inheritDoc}
+     * - Checks if refresh token identifier is not empty.
      *
      * @api
      *
@@ -34,6 +35,8 @@ class OauthRefreshTokenReaderPlugin extends AbstractPlugin implements OauthRefre
 
     /**
      * {@inheritDoc}
+     * - Finds refresh token by provided criteria.
+     * - Returns oauth refresh token if refresh token was found and null if not.
      *
      * @api
      *
