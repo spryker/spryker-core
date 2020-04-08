@@ -9,13 +9,13 @@ namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Kernel\Communication\Validator\AbstractValidator;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
  */
-class UniqueMerchantReferenceValidator extends AbstractValidator
+class UniqueMerchantReferenceValidator extends AbstractConstraintValidator
 {
     /**
      * @param string $value

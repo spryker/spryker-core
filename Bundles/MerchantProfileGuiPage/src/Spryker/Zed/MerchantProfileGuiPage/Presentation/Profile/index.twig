@@ -33,46 +33,67 @@
     {% endif %}
 {% endmacro %}
 
-{% macro spyFormItemInput(id, name, value, placeholder, label, error, required = false, type = 'text', attrs = {}) %}
+{% macro spyFormItemTextInput(formField, attrs = {}) %}
     <spy-form-item
         {%  if attrs.noLabel is not defined %}
-            for="{{ id }}"
+            for="{{ formField.vars.id }}"
         {% endif %}
-        error="{{ error | trans }}"
-        required="{{ required | boolToStr }}"
+        error="{{ formField.vars.errors[0].message | default | trans }}"
+        required="{{ formField.vars.required | boolToStr }}"
         {{ attrs.noSpaces is defined ? 'no-spaces=' ~ attrs.noSpaces }}
         {{ attrs.noLabel is defined ? 'no-label=' ~ attrs.noLabel }}
     >
         {%  if attrs.noLabel is not defined %}
-            {{ label | trans}}
+            {{ formField.vars.label | trans}}
         {% endif %}
         <spy-input
                 control
                 attrs="{{ attrs.inputAttrs is defined ? attrs.inputAttrs }}"
                 {{ attrs.outerPrefix is defined ? 'outer-prefix=' ~ attrs.outerPrefix }}
-                spy-id="{{ id }}"
-                name="{{ name }}"
-                value="{{ value }}"
-                placeholder="{{ placeholder | trans }}"
-                type="{{ type }}"
+                spy-id="{{ formField.vars.id }}"
+                name="{{ formField.vars.full_name }}"
+                value="{{ formField.vars.value }}"
+                placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
+                type="text"
                 cloak
         >
         </spy-input>
     </spy-form-item>
 {% endmacro %}
 
-{% macro spyFormItemTextArea(id, name, value, placeholder, error) %}
+{% macro spyFormItemEmailInput(formField) %}
     <spy-form-item
-            error="{{ error | trans }}"
+            for="{{ formField.vars.id }}"
+            error="{{ formField.vars.errors[0].message | default | trans }}"
+            required="{{ formField.vars.required | boolToStr }}"
+    >
+        {{ formField.vars.label | trans}}
+        <spy-input
+                control
+                attrs=""
+                spy-id="{{ formField.vars.id }}"
+                name="{{ formField.vars.full_name }}"
+                value="{{ formField.vars.value }}"
+                placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
+                type="email"
+                cloak
+        >
+        </spy-input>
+    </spy-form-item>
+{% endmacro %}
+
+{% macro spyFormItemTextArea(formField) %}
+    <spy-form-item
+            error="{{ formField.vars.errors[0].message | default | trans }}"
             no-label="true"
             no-spaces="true"
     >
         <spy-textarea
                 control
-                spyId="{{ id }}"
-                name="{{ name }}"
-                value="{{ value }}"
-                placeholder="{{ placeholder | trans }}"
+                spyId="{{ formField.vars.id }}"
+                name="{{ formField.vars.full_name }}"
+                value="{{ formField.vars.value }}"
+                placeholder="{{ formField.vars.attr.placeholder | default | trans }}"
         ></spy-textarea>
     </spy-form-item>
 {% endmacro %}
@@ -105,15 +126,7 @@
                     <div class="mp-profile__row">
                         <div class="mp-profile__col mp-profile__col--business-left">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Contact Person' | trans }}">
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.id,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.full_name,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.value,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.label,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.contact_person_role.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(businessInfoMerchantProfileFields.contact_person_role) }}
 
                                 {% set translatedTitleChoices = [] %}
                                 {% for choice in businessInfoMerchantProfileFields.contact_person_title.vars.choices %}
@@ -137,84 +150,29 @@
                                     ></spy-select>
                                 </spy-form-item>
 
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.id,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.full_name,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.value,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.label,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.contact_person_first_name.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(businessInfoMerchantProfileFields.contact_person_first_name) }}
 
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.id,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.full_name,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.value,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.label,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.contact_person_last_name.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(businessInfoMerchantProfileFields.contact_person_last_name) }}
 
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.email.vars.id,
-                                    businessInfoMerchantProfileFields.email.vars.full_name,
-                                    businessInfoMerchantProfileFields.email.vars.value,
-                                    businessInfoMerchantProfileFields.email.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.email.vars.label,
-                                    businessInfoMerchantProfileFields.email.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.email.vars.required,
-                                    'email'
-                                ) }}
+                                {{ _self.spyFormItemEmailInput(businessInfoMerchantProfileFields.email) }}
 
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.id,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.full_name,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.value,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.label,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.contact_person_phone.vars.required,
-                                    'text',
+                                {{ _self.spyFormItemTextInput(
+                                    businessInfoMerchantProfileFields.contact_person_phone,
                                     { noSpaces: true, }
                                 ) }}
                             </spy-card>
                         </div>
                         <div class="mp-profile__col mp-profile__col--business-right">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Company' | trans }}">
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.name.vars.id,
-                                    businessInfoMerchantProfileFields.name.vars.full_name,
-                                    businessInfoMerchantProfileFields.name.vars.value,
-                                    businessInfoMerchantProfileFields.name.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.name.vars.label,
-                                    businessInfoMerchantProfileFields.name.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.name.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(businessInfoMerchantProfileFields.name) }}
 
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.registration_number.vars.id,
-                                    businessInfoMerchantProfileFields.registration_number.vars.full_name,
-                                    businessInfoMerchantProfileFields.registration_number.vars.value,
-                                    businessInfoMerchantProfileFields.registration_number.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.registration_number.vars.label,
-                                    businessInfoMerchantProfileFields.registration_number.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.registration_number.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(businessInfoMerchantProfileFields.registration_number) }}
 
                                 {% set referenceAttrs = {
                                     readonly: businessInfoMerchantProfileFields.merchant_reference.vars.attr.read_only | default(false)
                                 } | json_encode() %}
-                                {{ _self.spyFormItemInput(
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.id,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.full_name,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.value,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.attr.placeholder | default,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.label,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.errors[0].message | default,
-                                    businessInfoMerchantProfileFields.merchant_reference.vars.required,
-                                    'text',
+                                {{ _self.spyFormItemTextInput(
+                                    businessInfoMerchantProfileFields.merchant_reference,
                                     { noSpaces: 'true', inputAttrs: referenceAttrs, }
                                 ) }}
                             </spy-card>
@@ -226,15 +184,8 @@
                         <div class="mp-profile__col mp-profile__col--online-left">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Store Profile URL' | trans }} *">
                                 {% for urlForm in onlineProfileMerchantProfileFields.urlCollection %}
-                                    {{ _self.spyFormItemInput(
-                                        urlForm.children.url.vars.id,
-                                        urlForm.children.url.vars.full_name,
-                                        urlForm.children.url.vars.value,
-                                        urlForm.children.url.vars.attr.placeholder | default,
-                                        '',
-                                        urlForm.children.url.vars.errors[0].message | default,
-                                        urlForm.children.url.vars.required,
-                                        'text',
+                                    {{ _self.spyFormItemTextInput(
+                                        urlForm.children.url,
                                         { noSpaces: loop.last ? 'true' : 'false', noLabel: 'true', outerPrefix: urlForm.vars.data.urlPrefix | trans }
                                     ) }}
                                     <input type="hidden" id="{{ urlForm.children.fkLocale.vars.id }}" name="{{ urlForm.children.fkLocale.vars.full_name }}" value="{{ urlForm.children.fkLocale.vars.value }}" />
@@ -250,26 +201,12 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemTextArea(
-                                            descriptionGlossaryKey.vars.id,
-                                            descriptionGlossaryKey.vars.full_name,
-                                            descriptionGlossaryKey.vars.value,
-                                            descriptionGlossaryKey.vars.attr.placeholder | default,
-                                            descriptionGlossaryKey.vars.errors[0].message | default
-                                        ) }}
+                                        {{ _self.spyFormItemTextArea(descriptionGlossaryKey) }}
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
                             <spy-card class="mp-profile__card" cloak title="{{ 'Visual assets' | trans }}">
-                                {{ _self.spyFormItemInput(
-                                    onlineProfileMerchantProfileFields.logo_url.vars.id,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.full_name,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.value,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.attr.placeholder | default,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.label,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.errors[0].message | default,
-                                    onlineProfileMerchantProfileFields.logo_url.vars.required
-                                ) }}
+                                {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.logo_url) }}
 
                                 <spy-label class="mp-profile__card--label" cloak>
                                     {{ 'Banner URL' | trans }}
@@ -284,15 +221,8 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemInput(
-                                            bannerUrlGlossaryKey.vars.id,
-                                            bannerUrlGlossaryKey.vars.full_name,
-                                            bannerUrlGlossaryKey.vars.value,
-                                            bannerUrlGlossaryKey.vars.attr.placeholder | default,
-                                            '',
-                                            bannerUrlGlossaryKey.vars.errors[0].message | default,
-                                            bannerUrlGlossaryKey.vars.required,
-                                            'text',
+                                        {{ _self.spyFormItemTextInput(
+                                            bannerUrlGlossaryKey,
                                             { noSpaces: 'true', noLabel: 'true', }
                                         ) }}
                                     </spy-collapsible>
@@ -301,59 +231,19 @@
                             <spy-card class="mp-profile__card" cloak title="{{ 'Contact Details & Address' | trans }}">
                                 <div class="mp-profile__row">
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            addressCollectionFields.address1.vars.id,
-                                            addressCollectionFields.address1.vars.full_name,
-                                            addressCollectionFields.address1.vars.value,
-                                            addressCollectionFields.address1.vars.attr.placeholder | default,
-                                            addressCollectionFields.address1.vars.label,
-                                            addressCollectionFields.address1.vars.errors[0].message | default,
-                                            addressCollectionFields.address1.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(addressCollectionFields.address1) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--number">
-                                        {{ _self.spyFormItemInput(
-                                            addressCollectionFields.address2.vars.id,
-                                            addressCollectionFields.address2.vars.full_name,
-                                            addressCollectionFields.address2.vars.value,
-                                            addressCollectionFields.address2.vars.attr.placeholder | default,
-                                            addressCollectionFields.address2.vars.label,
-                                            addressCollectionFields.address2.vars.errors[0].message | default,
-                                            addressCollectionFields.address2.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(addressCollectionFields.address2) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--code">
-                                        {{ _self.spyFormItemInput(
-                                            addressCollectionFields.zip_code.vars.id,
-                                            addressCollectionFields.zip_code.vars.full_name,
-                                            addressCollectionFields.zip_code.vars.value,
-                                            addressCollectionFields.zip_code.vars.attr.placeholder | default,
-                                            addressCollectionFields.zip_code.vars.label,
-                                            addressCollectionFields.zip_code.vars.errors[0].message | default,
-                                            addressCollectionFields.zip_code.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(addressCollectionFields.zip_code) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--full">
-                                        {{ _self.spyFormItemInput(
-                                            addressCollectionFields.address3.vars.id,
-                                            addressCollectionFields.address3.vars.full_name,
-                                            addressCollectionFields.address3.vars.value,
-                                            addressCollectionFields.address3.vars.attr.placeholder | default,
-                                            addressCollectionFields.address3.vars.label,
-                                            addressCollectionFields.address3.vars.errors[0].message | default,
-                                            addressCollectionFields.address3.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(addressCollectionFields.address3) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            addressCollectionFields.city.vars.id,
-                                            addressCollectionFields.city.vars.full_name,
-                                            addressCollectionFields.city.vars.value,
-                                            addressCollectionFields.city.vars.attr.placeholder | default,
-                                            addressCollectionFields.city.vars.label,
-                                            addressCollectionFields.city.vars.errors[0].message | default,
-                                            addressCollectionFields.city.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(addressCollectionFields.city) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
                                         <spy-form-item
@@ -372,59 +262,19 @@
                                         </spy-form-item>
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            onlineProfileMerchantProfileFields.longitude.vars.id,
-                                            onlineProfileMerchantProfileFields.longitude.vars.full_name,
-                                            onlineProfileMerchantProfileFields.longitude.vars.value,
-                                            onlineProfileMerchantProfileFields.longitude.vars.attr.placeholder | default,
-                                            onlineProfileMerchantProfileFields.longitude.vars.label,
-                                            onlineProfileMerchantProfileFields.longitude.vars.errors[0].message | default,
-                                            onlineProfileMerchantProfileFields.longitude.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.longitude) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            onlineProfileMerchantProfileFields.latitude.vars.id,
-                                            onlineProfileMerchantProfileFields.latitude.vars.full_name,
-                                            onlineProfileMerchantProfileFields.latitude.vars.value,
-                                            onlineProfileMerchantProfileFields.latitude.vars.attr.placeholder | default,
-                                            onlineProfileMerchantProfileFields.latitude.vars.label,
-                                            onlineProfileMerchantProfileFields.latitude.vars.errors[0].message | default,
-                                            onlineProfileMerchantProfileFields.latitude.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.latitude) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            onlineProfileMerchantProfileFields.public_phone.vars.id,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.full_name,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.value,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.attr.placeholder | default,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.label,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.errors[0].message | default,
-                                            onlineProfileMerchantProfileFields.public_phone.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.public_phone) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--half">
-                                        {{ _self.spyFormItemInput(
-                                            onlineProfileMerchantProfileFields.fax_number.vars.id,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.full_name,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.value,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.attr.placeholder | default,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.label,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.errors[0].message | default,
-                                            onlineProfileMerchantProfileFields.fax_number.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.fax_number) }}
                                     </div>
                                     <div class="mp-profile__col mp-profile__col--full">
-                                        {{ _self.spyFormItemInput(
-                                            onlineProfileMerchantProfileFields.public_email.vars.id,
-                                            onlineProfileMerchantProfileFields.public_email.vars.full_name,
-                                            onlineProfileMerchantProfileFields.public_email.vars.value,
-                                            onlineProfileMerchantProfileFields.public_email.vars.attr.placeholder | default,
-                                            onlineProfileMerchantProfileFields.public_email.vars.label,
-                                            onlineProfileMerchantProfileFields.public_email.vars.errors[0].message | default,
-                                            onlineProfileMerchantProfileFields.public_email.vars.required
-                                        ) }}
+                                        {{ _self.spyFormItemTextInput(onlineProfileMerchantProfileFields.public_email) }}
                                     </div>
                                 </div>
                             </spy-card>
@@ -438,15 +288,8 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemInput(
-                                            deliveryTimeGlossaryKey.vars.id,
-                                            deliveryTimeGlossaryKey.vars.full_name,
-                                            deliveryTimeGlossaryKey.vars.value,
-                                            deliveryTimeGlossaryKey.vars.attr.placeholder | default,
-                                            '',
-                                            deliveryTimeGlossaryKey.vars.errors[0].message | default,
-                                            deliveryTimeGlossaryKey.vars.required,
-                                            'text',
+                                        {{ _self.spyFormItemTextInput(
+                                            deliveryTimeGlossaryKey,
                                             { noSpaces: 'true', noLabel: 'true', }
                                         ) }}
                                     </spy-collapsible>
@@ -462,13 +305,7 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemTextArea(
-                                            termsConditionsGlossaryKey.vars.id,
-                                            termsConditionsGlossaryKey.vars.full_name,
-                                            termsConditionsGlossaryKey.vars.value,
-                                            termsConditionsGlossaryKey.vars.attr.placeholder | default,
-                                            termsConditionsGlossaryKey.vars.errors[0].message | default
-                                        ) }}
+                                        {{ _self.spyFormItemTextArea(termsConditionsGlossaryKey) }}
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
@@ -482,13 +319,7 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemTextArea(
-                                            cancellationPolicyGlossaryKey.vars.id,
-                                            cancellationPolicyGlossaryKey.vars.full_name,
-                                            cancellationPolicyGlossaryKey.vars.value,
-                                            cancellationPolicyGlossaryKey.vars.attr.placeholder | default,
-                                            cancellationPolicyGlossaryKey.vars.errors[0].message | default
-                                        ) }}
+                                        {{ _self.spyFormItemTextArea(cancellationPolicyGlossaryKey) }}
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
@@ -502,13 +333,7 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemTextArea(
-                                            imprintGlossaryKey.vars.id,
-                                            imprintGlossaryKey.vars.full_name,
-                                            imprintGlossaryKey.vars.value,
-                                            imprintGlossaryKey.vars.attr.placeholder | default,
-                                            imprintGlossaryKey.vars.errors[0].message | default
-                                        ) }}
+                                        {{ _self.spyFormItemTextArea(imprintGlossaryKey) }}
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>
@@ -522,13 +347,7 @@
                                         title="{{ form.children.locale.children.localeName.vars.value }}"
                                         active="true"
                                     >
-                                        {{ _self.spyFormItemTextArea(
-                                            dataPrivacyGlossaryKey.vars.id,
-                                            dataPrivacyGlossaryKey.vars.full_name,
-                                            dataPrivacyGlossaryKey.vars.value,
-                                            dataPrivacyGlossaryKey.vars.attr.placeholder | default,
-                                            dataPrivacyGlossaryKey.vars.errors[0].message | default
-                                        ) }}
+                                        {{ _self.spyFormItemTextArea(dataPrivacyGlossaryKey) }}
                                     </spy-collapsible>
                                 {% endfor %}
                             </spy-card>

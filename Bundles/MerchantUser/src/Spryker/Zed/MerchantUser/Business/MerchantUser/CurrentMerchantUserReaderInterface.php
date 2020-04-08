@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantUser\Business\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
-interface MerchantUserReaderInterface
+interface CurrentMerchantUserReaderInterface
 {
     /**
      * @throws \Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException

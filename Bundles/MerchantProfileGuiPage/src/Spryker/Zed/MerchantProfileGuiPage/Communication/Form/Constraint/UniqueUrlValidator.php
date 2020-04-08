@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProfileGuiPage\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Kernel\Communication\Validator\AbstractValidator;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Spryker\Zed\MerchantProfileGuiPage\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 /**
  * @method \Spryker\Zed\MerchantProfileGuiPage\Communication\MerchantProfileGuiPageCommunicationFactory getFactory()
  */
-class UniqueUrlValidator extends AbstractValidator
+class UniqueUrlValidator extends AbstractConstraintValidator
 {
     /**
      * Checks if the passed url is unique.

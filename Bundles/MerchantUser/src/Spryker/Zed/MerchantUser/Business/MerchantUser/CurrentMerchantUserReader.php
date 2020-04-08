@@ -13,7 +13,7 @@ use Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundExcep
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
-class CurrentMerchantUserReader implements MerchantUserReaderInterface
+class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
 {
     protected const EXCEPTION_MESSAGE_CURRENT_MERCHANT_USER_NOT_FOUND = 'Current merchant user was not found';
 

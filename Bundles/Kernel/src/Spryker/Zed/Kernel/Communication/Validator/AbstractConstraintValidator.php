@@ -10,7 +10,7 @@ namespace Spryker\Zed\Kernel\Communication\Validator;
 use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Symfony\Component\Validator\ConstraintValidator;
 
-abstract class AbstractValidator extends ConstraintValidator
+abstract class AbstractConstraintValidator extends ConstraintValidator
 {
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
