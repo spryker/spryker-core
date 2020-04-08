@@ -27,7 +27,6 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
 class GetOrderItemsTest extends Test
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
-    protected const FAKE_OMS_STATE = 'FAKE_OMS_STATE';
     protected const FAKE_ID_SALES_ORDER_ITEM = 6666;
 
     /**

@@ -227,6 +227,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getConfig(),
             $this->getHydrateOrderPlugins(),
             $this->getOrderItemExpanderPlugins()
         );
@@ -240,6 +241,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getConfig(),
             $this->getHydrateOrderPlugins(),
             $this->getOrderItemExpanderPlugins()
         );

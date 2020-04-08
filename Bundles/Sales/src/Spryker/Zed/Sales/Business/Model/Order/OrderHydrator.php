@@ -24,6 +24,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 /**
  * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
@@ -41,6 +42,11 @@ class OrderHydrator implements OrderHydratorInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\SalesConfig
+     */
+    protected $salesConfig;
+
+    /**
      * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected $hydrateOrderPlugins;
@@ -53,17 +59,20 @@ class OrderHydrator implements OrderHydratorInterface
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
+        SalesConfig $salesConfig,
         array $hydrateOrderPlugins = [],
         array $orderItemExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
+        $this->salesConfig = $salesConfig;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
         $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
     }
@@ -428,8 +437,6 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Sales\StateHistoryOrderItemExpanderPlugin} instead.
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -437,6 +444,10 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
     {
+        if (!$this->salesConfig->isHydrateOrderHistoryToItems()) {
+            return;
+        }
+
         foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
             $itemStateTransfer = new ItemStateTransfer();
             $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
