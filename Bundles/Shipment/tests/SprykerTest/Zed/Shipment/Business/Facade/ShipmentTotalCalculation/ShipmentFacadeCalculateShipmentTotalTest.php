@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -63,21 +62,5 @@ class ShipmentFacadeCalculateShipmentTotalTest extends Test
 
         // Assert
         $this->assertSame(0, $calculableObjectTransfer->getTotals()->getShipmentTotal());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateShipmentTotalThrowsExceptionWithEmptyTotals(): void
-    {
-        // Arrange
-        $calculableObjectTransfer = $this->tester->createCalculableObjectWithFakeExpenses();
-        $calculableObjectTransfer->setTotals(null);
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester->getFacade()->calculateShipmentTotal($calculableObjectTransfer);
     }
 }
