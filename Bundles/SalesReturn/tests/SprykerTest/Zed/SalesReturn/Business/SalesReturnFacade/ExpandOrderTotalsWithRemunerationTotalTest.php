@@ -75,7 +75,6 @@ class ExpandOrderTotalsWithRemunerationTotalTest extends Unit
         $this->tester->getFacade()->expandOrderTotalsWithRemunerationTotal($orderTransfer);
 
         // Assert
-        $this->assertInstanceOf(TotalsTransfer::class, $orderTransfer->getTotals());
-        $this->assertNull($orderTransfer->getTotals()->getRemunerationTotal());
+        $this->assertSame(600, $orderTransfer->getTotals()->getRemunerationTotal());
     }
 }

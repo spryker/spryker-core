@@ -20,7 +20,7 @@ class OrderRemunerationTotalExpander implements OrderRemunerationTotalExpanderIn
     public function expandOrderTotalsWithRemunerationTotal(OrderTransfer $orderTransfer): OrderTransfer
     {
         if (!$orderTransfer->getTotals()) {
-            return $orderTransfer->setTotals(new TotalsTransfer());
+            $orderTransfer->setTotals(new TotalsTransfer());
         }
 
         $remunerationTotal = $this->calculateItemRemunerationTotal($orderTransfer);
