@@ -287,7 +287,6 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
             'required' => true,
         ]);
 
@@ -303,7 +302,6 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
             'required' => true,
         ]);
 

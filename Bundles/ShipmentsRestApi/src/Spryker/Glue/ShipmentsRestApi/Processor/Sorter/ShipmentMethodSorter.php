@@ -102,9 +102,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getSortResourceName(SortInterface $sort): ?string
     {
-        $resourceName = explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0];
-
-        return $resourceName ?? null;
+        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] ?? null;
     }
 
     /**
@@ -114,8 +112,6 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
      */
     protected function getSortResourceValue(SortInterface $sort): ?string
     {
-        $resourceValue = explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1];
-
-        return $resourceValue ?? null;
+        return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1] ?? null;
     }
 }

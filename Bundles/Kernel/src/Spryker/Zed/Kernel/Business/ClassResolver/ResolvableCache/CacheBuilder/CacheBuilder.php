@@ -77,7 +77,7 @@ class CacheBuilder implements CacheBuilderInterface
     protected function addCacheEntriesForModule(string $moduleName, array $cacheEntries): array
     {
         foreach ($this->config->getResolvableTypeClassNamePatternMap() as $resolvableType => $classNamePattern) {
-            $className = $this->classNameFinder->findClassName($moduleName, $classNamePattern);
+            $className = $this->classNameFinder->findClassName($moduleName, $classNamePattern, false);
             if ($className !== null) {
                 $cacheEntries[$moduleName . $resolvableType] = $className;
             }

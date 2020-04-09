@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 use Spryker\Zed\Category\Business\CategoryFacade;
@@ -59,14 +60,17 @@ class ProductRelationFacadeTest extends Unit
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
 
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+
+        $idProductRelation = $productRelationTransfer->getIdProductRelation();
 
         $productRelationTransfer->setIdProductRelation($idProductRelation);
         $productRelationTransfer->setIsActive(false);
 
-        $productRelationFacade->updateProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $productRelationFacade->updateProductRelation($productRelationTransfer);
 
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
         $this->assertFalse($productRelationTransfer->getIsActive());
     }
@@ -79,9 +83,12 @@ class ProductRelationFacadeTest extends Unit
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
 
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
-        $persistedProductRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+        $idProductRelation = $productRelationTransfer->getIdProductRelation();
+
+        $persistedProductRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation)->getProductRelation();
 
         $this->assertNotNull($persistedProductRelationTransfer);
     }
@@ -101,40 +108,6 @@ class ProductRelationFacadeTest extends Unit
             $productRelationTransfer->getProductRelationType()->getKey(),
             $productRelationFacade->getProductRelationTypeList()[0]->getKey()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testActivateProductRelationShouldActivateRelation(): void
-    {
-        $productRelationFacade = $this->createProductRelationFacade();
-        $productRelationTransfer = $this->createProductRelationTransfer(123);
-
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
-
-        $productRelationFacade->activateProductRelation($idProductRelation);
-
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
-
-        $this->assertTrue($productRelationTransfer->getIsActive());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeactivateProductRelationShouldDeactivateRelation(): void
-    {
-        $productRelationFacade = $this->createProductRelationFacade();
-        $productRelationTransfer = $this->createProductRelationTransfer(123);
-
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
-
-        $productRelationFacade->deactivateProductRelation($idProductRelation);
-
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
-
-        $this->assertFalse($productRelationTransfer->getIsActive());
     }
 
     /**
@@ -184,11 +157,13 @@ class ProductRelationFacadeTest extends Unit
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
 
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+        $idProductRelation = $productRelationTransfer->getIdProductRelation();
 
-        $deleted = $productRelationFacade->deleteProductRelation($idProductRelation);
+        $deleted = $productRelationFacade->deleteProductRelation($idProductRelation)->getIsSuccessful();
 
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation)->getProductRelation();
 
         $this->assertNull($productRelationTransfer);
         $this->assertTrue($deleted);
@@ -227,7 +202,8 @@ class ProductRelationFacadeTest extends Unit
     protected function createProductRelationTransfer(?string $skuValueForFilter = null, ?string $categoryName = null): ProductRelationTransfer
     {
         $productRelationTransfer = new ProductRelationTransfer();
-        $productRelationTransfer->setFkProductAbstract($this->createProductAbstract('sku-test-product-relations'));
+        $productRelationTransfer->setFkProductAbstract($this->createProductAbstract('sku-test-product-relations'))
+            ->setProductRelationKey('test');
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
@@ -246,6 +222,7 @@ class ProductRelationFacadeTest extends Unit
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
         $productRelationTypeTransfer->setKey(ProductRelationTypes::TYPE_UP_SELLING);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+        $productRelationTransfer->setStoreRelation(new StoreRelationTransfer());
 
         return $productRelationTransfer;
     }

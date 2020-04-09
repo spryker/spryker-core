@@ -1,103 +1,109 @@
-<table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable" data-paging="false">
-    <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
-        <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
-        <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
-        {{ form_widget(csrfForm) }}
-        <thead>
-        <tr>
-            <th>Key</th>
-            {% for localeCode,localeData in locales %}
-                {% if localeCode == '_' %}
-                    <th>{{ 'Default' }}</th>
-                {% else %}
-                    <th>{{ localeData.locale_name }}</th>
-                {% endif %}
-            {% endfor %}
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for key in productAttributeKeys %}
-                {% set idAttribute = metaAttributes[key]['attribute_id'] %}
-                {% set allowInput = metaAttributes[key]['allow_input'] %}
-                {% set isSuper = metaAttributes[key]['is_super'] %}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover gui-table-data" id="productAttributesTable"
+           data-paging="false">
+        <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
+            <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]"
+                   id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}"/>
+            <input type="hidden" name="attribute_values_form[hidden_product_id]"
+                   id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}"/>
+            {{ form_widget(csrfForm) }}
+            <thead>
+            <tr>
+                <th>Key</th>
+                {% for localeCode,localeData in locales %}
+                    {% if localeCode == '_' %}
+                        <th>{{ 'Default' }}</th>
+                    {% else %}
+                        <th>{{ localeData.locale_name }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for key in productAttributeKeys %}
+                    {% set idAttribute = metaAttributes[key]['attribute_id'] %}
+                    {% set allowInput = metaAttributes[key]['allow_input'] %}
+                    {% set isSuper = metaAttributes[key]['is_super'] %}
 
-                {% set isReadOnly = false %}
-                {% if isSuper or idAttribute is empty %}
-                    {% set isReadOnly = true %}
-                    {% set allowInput = false %}
-                {% endif %}
-                <tr {% if isSuper %} {{ 'style="display: none"' }} {% endif %}>
-                    <td style="vertical-align: middle;">
-                        {% if isSuper %}
-                            <strong>{{ key }}</strong>
-                        {% else %}
-                            {{ key }}
-                        {% endif %}
-                    </td>
-                    {% for localeData in locales %}
-                        {% set localeCode = localeData.locale_name %}
-                        {% set name = '[' ~ key ~ ']' %}
-                        {% set id = key %}
+                    {% set isReadOnly = false %}
+                    {% if isSuper or idAttribute is empty %}
+                        {% set isReadOnly = true %}
+                        {% set allowInput = false %}
+                    {% endif %}
+                    <tr {% if isSuper %} {{ 'style="display: none"' }} {% endif %}>
+                        <td style="vertical-align: middle;">
+                            {% if isSuper %}
+                                <strong>{{ key }}</strong>
+                            {% else %}
+                                {{ key }}
+                            {% endif %}
+                        </td>
+                        {% for localeData in locales %}
+                            {% set localeCode = localeData.locale_name %}
+                            {% set name = '[' ~ key ~ ']' %}
+                            {% set id = key %}
 
-                        {% if localeCode != '_' %}
-                            {% set name = name ~ '[' ~ localeCode ~ ']' %}
-                            {% set id = id ~ '_' ~ localeCode %}
-                        {% endif %}
+                            {% if localeCode != '_' %}
+                                {% set name = name ~ '[' ~ localeCode ~ ']' %}
+                                {% set id = id ~ '_' ~ localeCode %}
+                            {% endif %}
 
-                        {% set inputName = 'attribute_values_form' ~ name  %}
-                        {% set inputId = 'attribute_values_form_' ~ id  %}
-                        {% if productAttributes[localeCode][key] is defined %}
-                            {% set attributeValue = productAttributes[localeCode][key] %}
-                            <td>
-                                <input
-                                        {% if isReadOnly %}
-                                            readonly="readonly"
-                                        {% endif %}
-                                        id="{{ inputId }}"
-                                        name="{{ inputName }}"
-                                        type="text"
-                                        class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
-                                        value="{{ attributeValue }}"
-                                        data-allow_input="{{ allowInput }}"
-                                        data-is_super="{{ isSuper }}"
-                                        data-is_read_only="{{ isReadOnly }}"
-                                        data-attribute_key="{{ key }}"
-                                        data-is_attribute_input
-                                        data-id_attribute="{{ idAttribute }}"
-                                        data-locale_code="{{ localeData['locale_name'] }}"
-                                /><span style="display: none">{{ attributeValue }}</span>
-                            </td>
-                        {% else %}
-                            <td>
-                                <input
-                                        {% if isReadOnly %}
-                                            readonly="readonly"
-                                        {% endif %}
-                                        id="{{ inputId }}"
-                                        name="{{ inputName }}"
-                                        type="text"
-                                        class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
-                                        value=""
-                                        data-allow_input="{{ allowInput }}"
-                                        data-is_super="{{ isSuper }}"
-                                        data-is_read_only="{{ isReadOnly }}"
-                                        data-attribute_key="{{ key }}"
-                                        data-is_attribute_input
-                                        data-id_attribute="{{ idAttribute }}"
-                                        data-locale_code="{{ localeData['locale_name'] }}"
-                                />
-                                <span style="display: none"></span>
-                            </td>
-                        {% endif %}
-                    {% endfor %}
-                    <td style="vertical-align: middle; text-align: left;">
-                        {% if isSuper == false %}
-                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </form>
-</table>
+                            {% set inputName = 'attribute_values_form' ~ name %}
+                            {% set inputId = 'attribute_values_form_' ~ id %}
+                            {% if productAttributes[localeCode][key] is defined %}
+                                {% set attributeValue = productAttributes[localeCode][key] %}
+                                <td>
+                                    <input
+                                            {% if isReadOnly %}
+                                                readonly="readonly"
+                                            {% endif %}
+                                            id="{{ inputId }}"
+                                            name="{{ inputName }}"
+                                            type="text"
+                                            class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
+                                            value="{{ attributeValue }}"
+                                            data-allow_input="{{ allowInput }}"
+                                            data-is_super="{{ isSuper }}"
+                                            data-is_read_only="{{ isReadOnly }}"
+                                            data-attribute_key="{{ key }}"
+                                            data-is_attribute_input
+                                            data-id_attribute="{{ idAttribute }}"
+                                            data-locale_code="{{ localeData['locale_name'] }}"
+                                    /><span style="display: none">{{ attributeValue }}</span>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <input
+                                            {% if isReadOnly %}
+                                                readonly="readonly"
+                                            {% endif %}
+                                            id="{{ inputId }}"
+                                            name="{{ inputName }}"
+                                            type="text"
+                                            class="spryker-form-autocomplete form-control ui-autocomplete-input kv_attribute_autocomplete"
+                                            value=""
+                                            data-allow_input="{{ allowInput }}"
+                                            data-is_super="{{ isSuper }}"
+                                            data-is_read_only="{{ isReadOnly }}"
+                                            data-attribute_key="{{ key }}"
+                                            data-is_attribute_input
+                                            data-id_attribute="{{ idAttribute }}"
+                                            data-locale_code="{{ localeData['locale_name'] }}"
+                                    />
+                                    <span style="display: none"></span>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                        <td style="vertical-align: middle; text-align: left;">
+                            {% if isSuper == false %}
+                                <a data-key="{{ key }}" href="#"
+                                   class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </form>
+    </table>
+</div>
