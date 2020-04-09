@@ -19,7 +19,7 @@ class ShoppingListItemCollectionNoteExpanderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
-     * - Populates shopping list items notes.
+     * - Populates shopping list item notes.
      *
      * @api
      *
