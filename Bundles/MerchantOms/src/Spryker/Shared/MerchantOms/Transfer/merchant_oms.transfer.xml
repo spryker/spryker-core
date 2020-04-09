@@ -31,7 +31,13 @@
     <transfer name="MerchantOmsTriggerRequest">
         <property name="merchantReference" type="string"/>
         <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItemReference" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
