@@ -41,6 +41,7 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
             return $cartChangeTransfer;
         }
 
+        $cartChangeTransfer = $this->clearQuoteLevelShipmentForEmptyQuote($cartChangeTransfer);
         $cartChangeTransfer = $this->clearQuoteLevelShipmentMethod($cartChangeTransfer);
         $cartChangeTransfer = $this->clearItemsShipmentMethod($cartChangeTransfer);
         $cartChangeTransfer = $this->clearShipmentExpenses($cartChangeTransfer);
@@ -81,6 +82,24 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
         }
 
         $quoteTransfer->setExpenses($expenseTransfers);
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function clearQuoteLevelShipmentForEmptyQuote(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+
+        if (!$quoteTransfer->getItems()->count()) {
+            $quoteTransfer->setShipment(null);
+        }
 
         return $cartChangeTransfer;
     }
