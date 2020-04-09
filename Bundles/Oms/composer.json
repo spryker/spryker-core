@@ -25,6 +25,7 @@
     "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/oms-product-offer-reservation": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

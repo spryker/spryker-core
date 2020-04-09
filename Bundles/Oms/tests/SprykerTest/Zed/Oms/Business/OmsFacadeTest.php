@@ -9,6 +9,11 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
@@ -22,6 +27,7 @@ use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugin;
 
@@ -234,6 +240,65 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForProductOffer(): void
+    {
+        // Arrange
+        $omsProductOfferReservationTransfer = $this->tester->haveOmsProductOfferReservation([
+            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => 'test',
+            OmsProductOfferReservationTransfer::ID_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $this->setProductOfferOmsReservationReaderStrategyPluginReturn($omsProductOfferReservationTransfer);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setProductOfferReference($omsProductOfferReservationTransfer->getProductOfferReference());
+
+        $storeTransfer = (new StoreTransfer())
+            ->setIdStore($omsProductOfferReservationTransfer->getIdStore());
+
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setItem($itemTransfer)
+            ->setStore($storeTransfer);
+
+        // Act
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
+
+        // Assert
+        $this->assertSame($omsProductOfferReservationTransfer->getReservationQuantity()->toInt(), $reservationResponseTransfer->getReservationQuantity()->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForProduct(): void
+    {
+        // Arrange
+        $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $itemTransfer = (new ItemTransfer())->setSku($omsProductReservationTransfer->getSku());
+        $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setItem($itemTransfer)
+            ->setStore($storeTransfer);
+
+        // Act
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
+
+        // Assert
+        $this->assertSame(
+            $omsProductReservationTransfer->getReservationQuantity()->toInt(),
+            $reservationResponseTransfer->getReservationQuantity()->toInt()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade(): OmsFacadeInterface
@@ -286,5 +351,22 @@ class OmsFacadeTest extends Unit
         $omsFacade->setFactory($omsBusinessFactory);
 
         return $omsFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsProductOfferReservationTransfer|null $omsProductOfferReservationTransfer
+     *
+     * @return void
+     */
+    protected function setProductOfferOmsReservationReaderStrategyPluginReturn(
+        ?OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer = null
+    ): void {
+        $reservationResponseTransfer = (new ReservationResponseTransfer())
+            ->setReservationQuantity($omsProductOfferReservationTransfer->getReservationQuantity());
+
+        $productOfferOmsReservationReaderStrategyPlugin = $this->getMockBuilder(OmsReservationReaderStrategyPluginInterface::class)->getMock();
+        $productOfferOmsReservationReaderStrategyPlugin->method('isApplicable')->willReturn($omsProductOfferReservationTransfer->getProductOfferReference() !== null);
+        $productOfferOmsReservationReaderStrategyPlugin->method('getReservationQuantity')->willReturn($reservationResponseTransfer);
+        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [$productOfferOmsReservationReaderStrategyPlugin]);
     }
 }
