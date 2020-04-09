@@ -1,0 +1,97 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Product Relation: %s' | format(productRelation.productRelationKey) %}
+
+{% block section_title widget_title | trans %}
+{% block head_title widget_title | trans %}
+
+{% block action %}
+    {% set redirectUrl = url('/product-relation-gui/view/index', {'id-product-relation' : productRelation.idProductRelation}) %}
+
+    {{ backActionButton('/product-relation-gui/list/index', 'List Product relations' | trans) }}
+    {{ editActionButton(url('/product-relation-gui/edit/index', { 'id-product-relation': productRelation.idProductRelation }), 'Edit' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans }  %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Product relation key' | trans }}</b></div>
+                <div class="col-xs-10">{{ productRelation.productRelationKey }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Relation type' | trans }}</b></div>
+                <div class="col-xs-10">{{ productRelation.productRelationType.key }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Update regularly' | trans }}</b></div>
+                <div class="col-xs-10">{{ (productRelation.isRebuildScheduled ? 'Yes' : 'No') | trans }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+                <div class="col-xs-10">
+                    {% if productRelation.isActive %}
+                        <span class="label label-info">{{ 'Active'| trans }}</span>
+                    {% else %}
+                        <span class="label label-danger">{{ 'Inactive' | trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product owning the relation' | trans } %}
+        {% block widget_content %}
+            {% set imageUrl = '' %}
+            {% for imageSet in product.imageSets %}
+                {% if imageSet.locale.idLocale == locale.idLocale and imageSet.productImages|length > 0 %}
+                    {% set imageUrl = imageSet.productImages[0].externalUrlSmall %}
+                {% endif %}
+            {% endfor %}
+            {% for localizedAttributes in product.localizedAttributes %}
+                {% if localizedAttributes.locale.idLocale == locale.idLocale %}
+                    <div class="ibox-content product-box" id="selected-product">
+                        <div class="product-desc">
+                            <img height="100" id="product-img" src="{{ imageUrl }}"/> <br />
+                            <small class="text-muted" id="product-category"></small>
+                            <span class="product-name">{{ localizedAttributes.name }}</span>
+
+                            <div class="small m-t-xs" id="product-description">{{ localizedAttributes.description }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
+                <div class="col-xs-10">
+                    {% set stores = productRelation.storeRelation.stores %}
+                    {% if stores | length > 0 %}
+                        {% for store in stores %}
+                            <span class="label label-info">{{ store.name }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Related products' } %}
+        {% block widget_content %}
+             {{ productRuleTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

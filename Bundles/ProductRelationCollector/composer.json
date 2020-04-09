@@ -10,7 +10,7 @@
     "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-image": "^3.0.0",
-    "spryker/product-relation": "^1.0.0 || ^2.0.0",
+    "spryker/product-relation": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",

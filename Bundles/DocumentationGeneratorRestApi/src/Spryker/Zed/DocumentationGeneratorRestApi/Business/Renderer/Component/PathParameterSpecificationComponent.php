@@ -18,6 +18,7 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
 {
     protected const KEY_SCHEMA = 'schema';
     protected const KEY_TYPE = 'type';
+    protected const KEY_REF = '$ref';
 
     /**
      * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null $pathParameterComponentTransfer
@@ -42,6 +43,9 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
         $result = [];
         if (!$this->validatePathParameterComponentTransfer()) {
             return $result;
+        }
+        if ($this->pathParameterComponentTransfer->getRef()) {
+            return [static::KEY_REF => $this->pathParameterComponentTransfer->getRef()];
         }
 
         $result[PathParameterComponentTransfer::NAME] = $this->pathParameterComponentTransfer->getName();
@@ -71,6 +75,10 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     {
         if (!$this->pathParameterComponentTransfer) {
             return false;
+        }
+
+        if ($this->pathParameterComponentTransfer->getRef()) {
+            return true;
         }
 
         $this->pathParameterComponentTransfer->requireName();

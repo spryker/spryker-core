@@ -13,6 +13,10 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestAddressAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
 class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

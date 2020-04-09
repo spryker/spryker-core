@@ -9,6 +9,7 @@
         <property name="currency" type="string"/>
         <property name="netPrice" type="int"/>
         <property name="grossPrice" type="int"/>
+        <property name="priceData" type="string"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
@@ -41,6 +42,7 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="priceData" type="string"/>
     </transfer>
 
     <transfer name="Currency">
