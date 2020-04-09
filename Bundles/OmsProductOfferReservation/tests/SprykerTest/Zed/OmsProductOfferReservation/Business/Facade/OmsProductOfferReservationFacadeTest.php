@@ -9,9 +9,7 @@ namespace SprykerTest\Zed\OmsProductOfferReservation\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -22,10 +20,11 @@ use Spryker\DecimalObject\Decimal;
  * @group OmsProductOfferReservation
  * @group Business
  * @group Facade
- * @group OmsProductOfferReservationTest
+ * @group Facade
+ * @group OmsProductOfferReservationFacadeTest
  * Add your own group annotations below this line
  */
-class OmsProductOfferReservationTest extends Unit
+class OmsProductOfferReservationFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\OmsProductOfferReservation\OmsProductOfferReservationBusinessTester
@@ -41,21 +40,21 @@ class OmsProductOfferReservationTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer();
         $storeTransfer = $this->tester->haveStore();
         $this->tester->haveOmsProductOfferReservation([
-            ProductOfferTransfer::MERCHANT_REFERENCE => $productOfferTransfer->getProductOfferReference(),
-            StoreTransfer::ID_STORE => $storeTransfer->getIdStore(),
-            ReservationResponseTransfer::RESERVATION_QUANTITY => 5,
+            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+            OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
+            OmsProductOfferReservationTransfer::RESERVATION_QUANTITY => 5,
         ]);
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setStoreName($storeTransfer->getName());
+            ->setIdStore($storeTransfer->getIdStore());
 
         // Act
-        $reservatiionResponseTransfer = $this->tester->getFacade()->getQuantityForProductOffer($omsProductOfferReservationCriteriaTransfer);
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
 
         // Assert
-        $this->assertSame(5, $reservatiionResponseTransfer->getReservationQuantity()->toInt());
-        $this->assertInstanceOf(Decimal::class, $reservatiionResponseTransfer->getReservationQuantity());
+        $this->assertSame(5, $reservationResponseTransfer->getReservationQuantity()->toInt());
+        $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
     }
 
     /**
@@ -69,14 +68,14 @@ class OmsProductOfferReservationTest extends Unit
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setStoreName($storeTransfer->getName());
+            ->setIdStore($storeTransfer->getIdStore());
 
         // Act
-        $reservatiionResponseTransfer = $this->tester->getFacade()->getQuantityForProductOffer($omsProductOfferReservationCriteriaTransfer);
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
 
         // Assert
-        $this->assertTrue($reservatiionResponseTransfer->getReservationQuantity()->isZero());
-        $this->assertInstanceOf(Decimal::class, $reservatiionResponseTransfer->getReservationQuantity());
+        $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+        $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
     }
 
     /**
@@ -89,20 +88,20 @@ class OmsProductOfferReservationTest extends Unit
         $storeTransfer = $this->tester->haveStore();
         $wrongStoreTransfer = $this->tester->haveStore();
         $this->tester->haveOmsProductOfferReservation([
-            ProductOfferTransfer::MERCHANT_REFERENCE => $productOfferTransfer->getProductOfferReference(),
-            StoreTransfer::ID_STORE => $storeTransfer->getIdStore(),
-            ReservationResponseTransfer::RESERVATION_QUANTITY => 5,
+            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+            OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
+            OmsProductOfferReservationTransfer::RESERVATION_QUANTITY => 5,
         ]);
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setStoreName($wrongStoreTransfer->getName());
+            ->setIdStore($wrongStoreTransfer->getIdStore());
 
         // Act
-        $reservatiionResponseTransfer = $this->tester->getFacade()->getQuantityForProductOffer($omsProductOfferReservationCriteriaTransfer);
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
 
         // Assert
-        $this->assertTrue($reservatiionResponseTransfer->getReservationQuantity()->isZero());
-        $this->assertInstanceOf(Decimal::class, $reservatiionResponseTransfer->getReservationQuantity());
+        $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+        $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
     }
 }

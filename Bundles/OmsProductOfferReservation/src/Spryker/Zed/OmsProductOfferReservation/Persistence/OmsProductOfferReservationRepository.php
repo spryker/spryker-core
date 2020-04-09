@@ -23,17 +23,15 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
      *
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
-    public function getQuantityForProductOffer(
+    public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
         $omsProductOfferReservationCriteriaTransfer->requireProductOfferReference();
-        $omsProductOfferReservationCriteriaTransfer->requireStoreName();
+        $omsProductOfferReservationCriteriaTransfer->requireIdStore();
 
         $quantity = $this->getFactory()->createPropelOmsProductOfferReservationQuery()
             ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
-            ->useStoreQuery()
-                ->filterByName($omsProductOfferReservationCriteriaTransfer->getStoreName())
-            ->endUse()
+            ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())
             ->select([SpyOmsProductOfferReservationTableMap::COL_RESERVATION_QUANTITY])
             ->findOne();
 

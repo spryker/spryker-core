@@ -8,10 +8,6 @@
 namespace SprykerTest\Zed\OmsProductOfferReservation;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation;
 
 /**
  * Inherited Methods
@@ -32,21 +28,4 @@ use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation
 class OmsProductOfferReservationBusinessTester extends Actor
 {
     use _generated\OmsProductOfferReservationBusinessTesterActions;
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation
-     */
-    public function haveOmsProductOfferReservation(array $seedData = []): SpyOmsProductOfferReservation
-    {
-        $omsProductOfferReservation = (new SpyOmsProductOfferReservation())
-            ->setProductOfferReference($seedData[ProductOfferTransfer::MERCHANT_REFERENCE])
-            ->setFkStore($seedData[StoreTransfer::ID_STORE])
-            ->setReservationQuantity($seedData[ReservationResponseTransfer::RESERVATION_QUANTITY]);
-
-        $omsProductOfferReservation->save();
-
-        return $omsProductOfferReservation;
-    }
 }

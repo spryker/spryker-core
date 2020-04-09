@@ -26,9 +26,9 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      *
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
-    public function getQuantityForProductOffer(
+    public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
-        return $this->getRepository()->getQuantityForProductOffer($omsProductOfferReservationCriteriaTransfer);
+        return $this->getRepository()->getQuantity($omsProductOfferReservationCriteriaTransfer);
     }
 }
