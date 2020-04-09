@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\MerchantOms\Communication\Console;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Spryker\Zed\MerchantOms\Business\MerchantOmsFacade;
 use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
+use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
+use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
+use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -40,6 +42,15 @@ class TriggerEventFromFileConsoleTest extends Unit
      * @var \SprykerTest\Zed\MerchantOms\MerchantOmsCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->setMockDependencies();
+    }
 
     /**
      * @dataProvider filenameDataProvider
@@ -71,7 +82,7 @@ class TriggerEventFromFileConsoleTest extends Unit
             MerchantOrderItemTransfer::MERCHANT_ORDER_ITEM_REFERENCE => static::TEST_MERCHANT_ORDER_ITEM_REFERENCE,
         ]);
 
-        $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole())->setFacade($this->getMerchantOmsFacadeMock());
+        $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole());
         $input = new ArrayInput([static::ARGUMENT_FILE_PATH => codecept_data_dir() . 'import/' . $importFileName]);
         $output = new BufferedOutput();
 
@@ -89,21 +100,32 @@ class TriggerEventFromFileConsoleTest extends Unit
     public function filenameDataProvider(): array
     {
         return [
-            ['valid_import.csv', static::CODE_SUCCESS],
-            ['valid_empty_import.csv', static::CODE_SUCCESS],
-            ['invalid_not_existing_import.csv', static::CODE_ERROR],
-            ['invalid_without_headers_import.csv', static::CODE_ERROR],
+            'Valid import file' => ['valid_import.csv', static::CODE_SUCCESS],
+            'Valid empty import file' => ['valid_empty_import.csv', static::CODE_SUCCESS],
+            'Invalid non existing file' => ['invalid_not_existing_import.csv', static::CODE_ERROR],
+            'Invalid without headers' => ['invalid_without_headers_import.csv', static::CODE_ERROR],
         ];
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Business\MerchantOmsFacade
+     * @return void
      */
-    protected function getMerchantOmsFacadeMock(): MerchantOmsFacade
+    protected function setMockDependencies(): void
     {
-        $merchantOmsFacadeMock = $this->createMock(MerchantOmsFacade::class);
-        $merchantOmsFacadeMock->method('triggerEventForMerchantOrderItems')->willReturn(1);
+        $this->tester->setDependency(
+            MerchantOmsDependencyProvider::FACADE_STATE_MACHINE,
+            new MerchantOmsToStateMachineFacadeBridge($this->getStateMachineFacadeMock())
+        );
+    }
 
-        return $merchantOmsFacadeMock;
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachineFacade
+     */
+    protected function getStateMachineFacadeMock(): StateMachineFacade
+    {
+        $merchantOmsEventTrigger = $this->createMock(StateMachineFacade::class);
+        $merchantOmsEventTrigger->method('triggerEventForItems')->willReturn(1);
+
+        return $merchantOmsEventTrigger;
     }
 }

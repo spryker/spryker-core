@@ -190,7 +190,7 @@ class TriggerEventFromCsvFileConsole extends Console
     protected function validateHeaderColumns(CsvReaderInterface $csvReader): bool
     {
         $mandatoryColumns = $this->getMandatoryColumns();
-        if (array_diff_key($mandatoryColumns, $csvReader->getColumns())) {
+        if (array_diff($mandatoryColumns, $csvReader->getColumns())) {
             $this->error(
                 sprintf(
                     'Csv file does not contain mandatory fields: %s.',
