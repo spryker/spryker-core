@@ -52,16 +52,14 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
      */
     public function testExpandOrderItemsWithStateHistoryExpandOrderItemsWithStateHistory(): void
     {
+        $this->skipIfMySql();
+
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-
-        $this->sleepIfMySql(1);
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $this->sleepIfMySql(1);
 
         // Act
         $itemTransfers = $this->tester
@@ -79,8 +77,6 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-
-        $this->sleepIfMySql(1);
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
@@ -103,14 +99,14 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
      */
     public function testExpandOrderItemsWithStateHistoryCompareIdSalesOrderItemIds(): void
     {
+        $this->skipIfMySql();
+
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
 
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $this->sleepIfMySql(1);
 
         // Act
         $itemTransfers = $this->tester
@@ -151,14 +147,12 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     }
 
     /**
-     * @param int $seconds
-     *
      * @return void
      */
-    protected function sleepIfMySql(int $seconds): void
+    protected function skipIfMySql(): void
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
-            sleep($seconds);
+            $this->markTestSkipped('Not MYSQL related test');
         }
     }
 }
