@@ -25,14 +25,13 @@ class CheckoutResourceController extends AbstractController
      *          ],
      *          "parameters": [
      *              {
-     *                  "name": "Accept-Language",
-     *                  "in": "header"
+     *                  "ref": "acceptLanguage"
      *              },
      *              {
      *                  "name": "X-Anonymous-Customer-Unique-Id",
      *                  "in": "header",
      *                  "required": false,
-     *                  "description": "Guest customer unique ID"
+     *                  "description": "Guest customer unique ID."
      *              }
      *          ],
      *          "responses": {
