@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,14 +18,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantUserRepository extends AbstractRepository implements MerchantUserRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
-    public function findOne(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?MerchantUserTransfer
+    public function findOne(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?MerchantUserTransfer
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
-        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
+        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
         $merchantUserEntity = $merchantUserQuery->findOne();
 
@@ -39,14 +39,35 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
      */
-    public function getMerchantUsers(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): array
+    public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
+    {
+        $merchantUserTransfers = [];
+        $merchantUsersQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUsersQuery = $this->applyCriteria($merchantUsersQuery, $merchantUserCriteriaTransfer);
+
+        $merchantUserEntities = $merchantUsersQuery->find();
+
+        foreach ($merchantUserEntities as $merchantUserEntity) {
+            $merchantUserTransfers[] = $this->getFactory()->createMerchantUserMapper()
+                ->mapMerchantUserEntityToMerchantUserTransfer($merchantUserEntity, new MerchantUserTransfer());
+        }
+
+        return $merchantUserTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     */
+    public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
-        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaFilterTransfer);
+        $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
         $merchantUserEntities = $merchantUserQuery->find();
 
@@ -57,20 +78,24 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
 
     /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
      */
     protected function applyCriteria(
         SpyMerchantUserQuery $merchantUserQuery,
-        MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
     ): SpyMerchantUserQuery {
-        if ($merchantUserCriteriaFilterTransfer->getIdUser()) {
-            $merchantUserQuery->filterByFkUser($merchantUserCriteriaFilterTransfer->getIdUser());
+        if ($merchantUserCriteriaTransfer->getIdUser() !== null) {
+            $merchantUserQuery->filterByFkUser($merchantUserCriteriaTransfer->getIdUser());
         }
 
-        if ($merchantUserCriteriaFilterTransfer->getIdMerchant()) {
-            $merchantUserQuery->filterByFkMerchant($merchantUserCriteriaFilterTransfer->getIdMerchant());
+        if ($merchantUserCriteriaTransfer->getIdMerchant() !== null) {
+            $merchantUserQuery->filterByFkMerchant($merchantUserCriteriaTransfer->getIdMerchant());
+        }
+
+        if ($merchantUserCriteriaTransfer->getIdMerchantUser() !== null) {
+            $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
         }
 
         $merchantUserQuery->orderByIdMerchantUser();

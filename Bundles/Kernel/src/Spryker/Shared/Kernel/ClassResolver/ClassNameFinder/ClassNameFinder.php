@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Kernel\ClassResolver\ClassNameFinder;
 
 use Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilderInterface;
+use Throwable;
 
 class ClassNameFinder implements ClassNameFinderInterface
 {
@@ -25,18 +26,43 @@ class ClassNameFinder implements ClassNameFinderInterface
     }
 
     /**
-     * @param string $module
+     * @param string $moduleName
      * @param string $classNamePattern
+     * @param bool $throwException
      *
      * @return string|null
      */
-    public function findClassName(string $module, string $classNamePattern): ?string
+    public function findClassName(string $moduleName, string $classNamePattern, bool $throwException = true): ?string
     {
-        $classNameCandidates = $this->classNameCandidatesBuilder->buildClassNames($module, $classNamePattern);
+        $classNameCandidates = $this->classNameCandidatesBuilder->buildClassNames($moduleName, $classNamePattern);
 
         foreach ($classNameCandidates as $classNameCandidate) {
+            $className = $this->tryClassName($classNameCandidate, $throwException);
+            if ($className !== null) {
+                return $className;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $classNameCandidate
+     * @param bool $throwException
+     *
+     * @throws \Throwable
+     *
+     * @return string|null
+     */
+    protected function tryClassName(string $classNameCandidate, bool $throwException): ?string
+    {
+        try {
             if (class_exists($classNameCandidate)) {
                 return $classNameCandidate;
+            }
+        } catch (Throwable $throwable) {
+            if ($throwException) {
+                throw $throwable;
             }
         }
 

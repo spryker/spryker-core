@@ -109,10 +109,6 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
-    <transfer name="MerchantUserCriteriaFilter">
-        <property name="idUser" type="int"/>
-    </transfer>
-
     <transfer name="User">
         <property name="idUser" type="int"/>
     </transfer>

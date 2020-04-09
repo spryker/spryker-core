@@ -145,7 +145,8 @@ class DataImporter implements
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
-        $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
+        $source = $this->getSourceFromDataImporterConfigurationTransfer($dataImporterConfigurationTransfer);
+        $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader, $source);
 
         $this->beforeImport();
 
@@ -250,17 +251,19 @@ class DataImporter implements
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
+     * @param string|null $source
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    protected function prepareDataImportReport(DataReaderInterface $dataReader)
+    protected function prepareDataImportReport(DataReaderInterface $dataReader, ?string $source = null)
     {
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
             ->setImportType($this->getImportType())
             ->setImportedDataSetCount(0)
             ->setIsSuccess(true)
-            ->setIsReaderCountable(false);
+            ->setIsReaderCountable(false)
+            ->setSource($source);
 
         if ($dataReader instanceof Countable) {
             $dataImporterReportTransfer->setIsReaderCountable(true);
@@ -303,5 +306,19 @@ class DataImporter implements
         $message .= sprintf('%s:%s %s', $exception->getFile(), $exception->getLine(), PHP_EOL . PHP_EOL . $exception->getTraceAsString());
 
         return $message;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return string|null
+     */
+    protected function getSourceFromDataImporterConfigurationTransfer(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): ?string
+    {
+        if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getReaderConfiguration()) {
+            return $dataImporterConfigurationTransfer->getReaderConfiguration()->getFileName();
+        }
+
+        return null;
     }
 }
