@@ -26,7 +26,6 @@ interface MerchantUserRepositoryInterface
      */
     public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array;
 
-
     /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
