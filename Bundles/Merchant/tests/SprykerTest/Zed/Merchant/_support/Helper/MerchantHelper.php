@@ -7,9 +7,12 @@
 
 namespace SprykerTest\Zed\Merchant\Helper;
 
+use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Merchant\MerchantConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -30,6 +33,7 @@ class MerchantHelper extends Module
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
+        $merchantTransfer = $this->addStoreRelation($merchantTransfer, $seedData);
 
         $merchantResponseTransfer = $this->getLocator()
             ->merchant()
@@ -38,6 +42,39 @@ class MerchantHelper extends Module
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function addStoreRelation(MerchantTransfer $merchantTransfer, array $seedData): MerchantTransfer
+    {
+        $storeRelationTransfer = $this->createStoreRelationTransfer($seedData);
+        $merchantTransfer->setStoreRelation($storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant()));
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function createStoreRelationTransfer(array $seedData): StoreRelationTransfer
+    {
+        if (isset($seedData[MerchantTransfer::STORE_RELATION])) {
+            $storeRelationSeedData = $seedData[MerchantTransfer::STORE_RELATION];
+        } else {
+            $storeRelationSeedData = [
+                StoreRelationTransfer::ID_STORES => [],
+                StoreRelationTransfer::STORES => new ArrayObject(),
+            ];
+        }
+
+        return (new StoreRelationBuilder())->seed($storeRelationSeedData)->build();
     }
 
     /**

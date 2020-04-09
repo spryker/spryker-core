@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantDataImport;
 
 use Codeception\Actor;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
@@ -54,10 +55,26 @@ class MerchantDataImportCommunicationTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function truncateMerchantStoreRelations(): void
+    {
+        $this->truncateTableRelations($this->getMerchantStoreQuery());
+    }
+
+    /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
     protected function getMerchantQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery
+     */
+    protected function getMerchantStoreQuery(): SpyMerchantStoreQuery
+    {
+        return SpyMerchantStoreQuery::create();
     }
 }

@@ -98,7 +98,7 @@ class MerchantCreator implements MerchantCreatorInterface
         $storeRelationTransfer = $merchantTransfer->getStoreRelation();
         $urlTransfers = $merchantTransfer->getUrlCollection();
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer));
+        $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant())));
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer->setUrlCollection($urlTransfers));
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 

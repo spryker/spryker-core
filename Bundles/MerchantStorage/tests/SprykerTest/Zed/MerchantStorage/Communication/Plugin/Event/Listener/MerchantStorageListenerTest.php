@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\MerchantStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
@@ -55,7 +58,11 @@ class MerchantStorageListenerTest extends Unit
     public function testMerchantPublishStorageListenerStoreData(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
+        $storeRelationTransfer = $this->createStoreRelationTransfer();
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+        ]);
 
         // Act
         $merchantStoragePublishListener = new MerchantStoragePublishListener();
@@ -78,30 +85,57 @@ class MerchantStorageListenerTest extends Unit
     public function testMerchantPublishStorageListenerDeleteData(): void
     {
         // Arrange
-        $merchantTransfer1 = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
-        $merchantTransfer2 = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
+        $storeRelationTransfer = $this->createStoreRelationTransfer();
+        $merchantTransfer1 = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+        ]);
+        $merchantTransfer2 = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+        ]);
+        $merchantTransfer3 = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+        ]);
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantTransfer1->getIdMerchant()),
             (new EventEntityTransfer())->setId($merchantTransfer2->getIdMerchant()),
+            (new EventEntityTransfer())->setId($merchantTransfer3->getIdMerchant()),
         ];
 
         $merchantStoragePublishListener = new MerchantStoragePublishListener();
         $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         $merchantTransfer2->setIsActive(false);
+        $merchantTransfer3->setStoreRelation((new StoreRelationBuilder())->build());
 
         //Act
         $this->tester->getLocator()->merchant()->facade()->updateMerchant($merchantTransfer2);
+        $this->tester->getLocator()->merchant()->facade()->updateMerchant($merchantTransfer3);
         $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         //Assert
         $merchantStorageEntities = $this->tester->findMerchantStorageEntitiesByIdMerchants([
             $merchantTransfer1->getIdMerchant(),
             $merchantTransfer2->getIdMerchant(),
+            $merchantTransfer3->getIdMerchant(),
         ]);
 
         $this->assertCount(1, $merchantStorageEntities);
         $this->assertArrayHasKey('id_merchant', $merchantStorageEntities[0]->getData());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function createStoreRelationTransfer(): StoreRelationTransfer
+    {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+
+        return (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
     }
 }
