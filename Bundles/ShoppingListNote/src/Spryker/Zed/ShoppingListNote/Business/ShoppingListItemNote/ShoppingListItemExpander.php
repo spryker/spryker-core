@@ -17,18 +17,18 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @var \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface
      */
-    protected $shoppingLisItemNoteReader;
+    protected $shoppingListItemNoteReader;
 
     /**
-     * @param \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface $shoppingLisItemNoteReader
+     * @param \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface $shoppingListItemNoteReader
      */
-    public function __construct(ShoppingListItemNoteReaderInterface $shoppingLisItemNoteReader)
+    public function __construct(ShoppingListItemNoteReaderInterface $shoppingListItemNoteReader)
     {
-        $this->shoppingLisItemNoteReader = $shoppingLisItemNoteReader;
+        $this->shoppingListItemNoteReader = $shoppingListItemNoteReader;
     }
 
     /**
-     * @deprecated Use `ShoppingListItemExpander::expandItemCollection()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpander::expandItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -36,7 +36,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemNoteTransfer = $this->shoppingLisItemNoteReader
+        $shoppingListItemNoteTransfer = $this->shoppingListItemNoteReader
             ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
@@ -51,7 +51,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
      */
     public function expandItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        $shoppingListItemNoteTransfers = $this->shoppingLisItemNoteReader
+        $shoppingListItemNoteTransfers = $this->shoppingListItemNoteReader
             ->getShoppingListItemNoteTransfersByShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
         $indexedShoppingListItemNoteTransfers = $this

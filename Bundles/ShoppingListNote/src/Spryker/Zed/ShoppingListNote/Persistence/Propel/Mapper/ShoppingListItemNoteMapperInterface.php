@@ -41,5 +41,5 @@ interface ShoppingListItemNoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
      */
-    public function mapShoppingListItemEntityCollectionToCollectionTransfer(ObjectCollection $shoppingListItemEntityCollection): ArrayObject;
+    public function mapShoppingListItemEntityCollectionToTransferCollection(ObjectCollection $shoppingListItemEntityCollection): ArrayObject;
 }

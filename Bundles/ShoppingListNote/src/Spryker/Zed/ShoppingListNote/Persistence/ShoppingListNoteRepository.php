@@ -51,6 +51,6 @@ class ShoppingListNoteRepository extends AbstractRepository implements ShoppingL
 
         return $this->getFactory()
             ->createShoppingListItemNoteMapper()
-            ->mapShoppingListItemEntityCollectionToCollectionTransfer($shoppingListItemNoteEntities);
+            ->mapShoppingListItemEntityCollectionToTransferCollection($shoppingListItemNoteEntities);
     }
 }

@@ -148,7 +148,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ShoppingListDependencyProvider::addItemCollectionExpanderPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::addItemCollectionExpanderPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -206,7 +206,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ShoppingListDependencyProvider::getItemCollectionExpanderPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getItemCollectionExpanderPlugins()} instead.
      *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
@@ -240,7 +240,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ShoppingListDependencyProvider::addShoppingListItemBulkPostSavePlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::addShoppingListItemBulkPostSavePlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -270,7 +270,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ShoppingListDependencyProvider::getShoppingListItemBulkPostSavePlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getShoppingListItemBulkPostSavePlugins()} instead.
      *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
      */

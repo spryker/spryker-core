@@ -70,7 +70,7 @@ interface ShoppingListNoteFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `ShoppingListNoteFacadeInterface::expandShoppingListItemCollection()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacadeInterface::expandShoppingListItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

@@ -41,7 +41,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @deprecated Use `ShoppingListItemExpander::expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpander::expandShoppingListItemCollectionWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 interface ShoppingListItemExpanderInterface
 {
     /**
-     * @deprecated Use `ShoppingListItemExpanderInterface::expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpanderInterface::expandShoppingListItemCollectionWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

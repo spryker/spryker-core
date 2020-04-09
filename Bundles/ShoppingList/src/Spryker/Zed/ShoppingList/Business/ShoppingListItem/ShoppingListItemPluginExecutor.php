@@ -91,7 +91,7 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
-     * @deprecated Use `ShoppingListItemPluginExecutor::executeBulkPostSavePlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor::executeBulkPostSavePlugins()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -121,7 +121,7 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     }
 
     /**
-     * @deprecated Use `ShoppingListItemPluginExecutor::executeShoppingListItemCollectionExpanderPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor::executeShoppingListItemCollectionExpanderPlugins()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

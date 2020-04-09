@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingListExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 /**
- * @deprecated Use `\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface} instead.
  */
 interface ShoppingListItemPostSavePluginInterface
 {

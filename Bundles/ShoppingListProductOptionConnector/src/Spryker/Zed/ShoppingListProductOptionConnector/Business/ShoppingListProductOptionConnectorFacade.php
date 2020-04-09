@@ -74,7 +74,7 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @api
      *
-     * @deprecated Use `ShoppingListProductOptionConnectorFacade::expandShoppingListItemCollectionWithProductOptions()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacade::expandShoppingListItemCollectionWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
