@@ -1,21 +1,23 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductLabelStorage\Business\Deleter;
-
 
 interface ProductLabelDictionaryStorageDeleterInterface
 {
     /**
-     * @deprecated
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface::deleteProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
     public function unpublish();
 
     /**
-     * @param array $eventTransfers
      * @return void
      */
-    public function deleteProductLabelDictionaryStorageCollectionByProductLabelEvents(array $eventTransfers): void;
+    public function deleteProductLabelDictionaryStorageCollection(): void;
 }

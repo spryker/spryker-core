@@ -10,16 +10,14 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 interface ProductLabelDictionaryStorageWriterInterface
 {
     /**
-     * @deprecated
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface::writeProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
     public function publish();
 
     /**
-     * @param array $eventTransfers
-     *
      * @return void
      */
-    public function writeProductLabelDictionaryStorageCollectionByProductLabelEvents(array $eventTransfers): void;
+    public function writeProductLabelDictionaryStorageCollection(): void;
 }

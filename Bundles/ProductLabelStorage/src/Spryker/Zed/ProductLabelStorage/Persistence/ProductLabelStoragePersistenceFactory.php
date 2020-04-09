@@ -7,34 +7,25 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
+use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelProductAbstractMapper;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface getRepository()
  */
 class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface
-     */
-    public function getProductLabelQuery()
-    {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface
-     */
-    public function getProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
-
     /**
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
@@ -52,10 +43,66 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelProductAbstractMapper
      */
     public function createProductLabelProductMapper(): ProductLabelProductAbstractMapper
     {
         return new ProductLabelProductAbstractMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper
+     */
+    public function createProductAbstractLabelStorageMapper(): ProductAbstractLabelStorageMapper
+    {
+        return new ProductAbstractLabelStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
+     */
+    public function createProductLabelLocalizedAttributesMapper(): ProductLabelLocalizedAttributesMapper
+    {
+        return new ProductLabelLocalizedAttributesMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper
+     */
+    public function createProductLabelDictionaryStorageMapper(): ProductLabelDictionaryStorageMapper
+    {
+        return new ProductLabelDictionaryStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface
+     */
+    public function getProductLabelQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface
+     */
+    public function getProductQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function getProductLabelPropelQuery(): SpyProductLabelQuery
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function getProductLabelLocalizedAttributesPropelQuery(): SpyProductLabelLocalizedAttributesQuery
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTES);
     }
 }

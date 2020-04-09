@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface getRepository()
  */
 class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelStorageFacadeInterface
 {
@@ -18,6 +20,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
@@ -31,38 +35,27 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param array $eventTransfers
-     *
      * @return void
      */
-    public function writeCollectionByProductLabelEvents(array $eventTransfers): void
+    public function writeProductLabelDictionaryStorageCollection(): void
     {
-        $this->getFactory()->createProductLabelDictionaryStorageWriter()
-            ->writeProductLabelDictionaryStorageCollectionByProductLabelEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductLabelDictionaryStorageWriter()
+            ->writeProductLabelDictionaryStorageCollection();
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::deleteProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
     public function unpublishLabelDictionary()
     {
-        $this->getFactory()->createProductLabelDictionaryStorageWriter()->unpublish();
-    }
-
-    /**
-     * @param array $eventTransfers
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function deleteCollectionByProductLabelEvents(array $eventTransfers): void
-    {
-        $this->getFactory();
+        $this->getFactory()->createProductLabelDictionaryStorageDeleter()->unpublish();
     }
 
     /**
@@ -70,13 +63,30 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @return void
+     */
+    public function deleteProductLabelDictionaryStorageCollection(): void
+    {
+        $this->getFactory()
+            ->createProductLabelDictionaryStorageDeleter()
+            ->deleteProductLabelDictionaryStorageCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
+     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publishProductLabel(array $productAbstractIds)
     {
-        $this->getFactory()->createProductLabelStorageWriter()->publish($productAbstractIds);
+        $this->getFactory()->createProductAbstractLabelStorageWriter()->publish($productAbstractIds);
     }
 
     /**
@@ -84,12 +94,46 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductAbstractLabelStorageWriter()
+            ->writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductAbstractLabelStorageWriter()
+            ->writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function unpublishProductLabel(array $productAbstractIds)
     {
-        $this->getFactory()->createProductLabelStorageWriter()->unpublish($productAbstractIds);
+        $this->getFactory()->createProductAbstractLabelStorageDeleter()->unpublish($productAbstractIds);
     }
 }

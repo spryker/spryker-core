@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
+namespace Spryker\Zed\ProductLabelStorage\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelProductAbstractTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -16,20 +15,18 @@ class ProductLabelProductAbstractMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[] $productLabelProductAbstractsEntities
-     * @param \ArrayObject $productLabelProductAbstractsTransferCollection
+     * @param array $productLabelProductAbstractsTransferCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
      */
     public function mapProductLabelProductAbstractEntitiesToTransferCollection(
         ObjectCollection $productLabelProductAbstractsEntities,
-        ArrayObject $productLabelProductAbstractsTransferCollection
-    ): ArrayObject {
+        array $productLabelProductAbstractsTransferCollection
+    ): array {
         foreach ($productLabelProductAbstractsEntities as $productLabelProductAbstractsEntity) {
-            $productLabelProductAbstractsTransferCollection->append(
-                $this->mapProductLabelProductAbstractEntityToProductLabelProductAbstractTransfer(
-                    $productLabelProductAbstractsEntity,
-                    new ProductLabelProductAbstractTransfer()
-                )
+            $productLabelProductAbstractsTransferCollection[] = $this->mapProductLabelProductAbstractEntityToProductLabelProductAbstractTransfer(
+                $productLabelProductAbstractsEntity,
+                new ProductLabelProductAbstractTransfer()
             );
         }
 

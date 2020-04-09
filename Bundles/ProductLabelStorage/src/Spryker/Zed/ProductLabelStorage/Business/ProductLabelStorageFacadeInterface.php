@@ -15,10 +15,9 @@ interface ProductLabelStorageFacadeInterface
      * - Sends a copy of data to queue based on module config
      * - Deletes label dictionary storage entities if dictionary is empty
      *
-     * @deprecated Use `ProductLabelStorageFacadeInterface::writeCollectionByProductLabelEvents()` instead.
-     * @see `\Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeCollectionByProductLabelEvents()`
-     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
@@ -26,25 +25,15 @@ interface ProductLabelStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts product label ids from event transers
-     * - Finds active product labels by the product label ids
-     * - Prepares a new json collection based on localized attributes of the products labels
-     * - Finds all storage data
-     * - Compare new prepared collection with founded storage data and form new collection to update
-     * - Stores collection to update as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
-     * - Deletes label dictionary storage entities if dictionary is empty
-     *
-     * @deprecated Use `ProductLabelStorageFacadeInterface::writeCollectionByProductLabelEvents()` instead.
-     * @see `\Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeCollectionByProductLabelEvents()`
+     * - Stores label dictionary data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     * - Deletes label dictionary storage entities if dictionary is empty.
      *
      * @api
      *
-     * @param array $eventTransfers
-     *
      * @return void
      */
-    public function writeCollectionByProductLabelEvents(array $eventTransfers): void;
+    public function writeProductLabelDictionaryStorageCollection(): void;
 
     /**
      * Specification:
@@ -54,23 +43,23 @@ interface ProductLabelStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::deleteProductLabelDictionaryStorageCollection()} instead.
+     *
      * @return void
      */
     public function unpublishLabelDictionary();
 
     /**
      * Specification:
-     * - Finds storage dictionary items by product label id and deletes
-     * - Sends delete message to queue based on module config
-     * - Deletes label dictionary storage entities if dictionary is empty
+     * - Finds and deletes label dictionary storage entities.
+     * - Sends delete message to queue based on module config.
+     * - Deletes label dictionary storage entities if dictionary is empty.
      *
      * @api
      *
-     * @param array $eventTransfers
-     *
      * @return void
      */
-    public function deleteCollectionByProductLabelEvents(array $eventTransfers): void;
+    public function deleteProductLabelDictionaryStorageCollection(): void;
 
     /**
      * Specification:
@@ -80,11 +69,43 @@ interface ProductLabelStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
+     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publishProductLabel(array $productAbstractIds);
+
+    /**
+     * Specification:
+     * - Extracts product abstract ids from event transfers.
+     * - Queries all product labels with the given product abstract ids.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Queries all product labels the given $eventTransfer by ProductLabelProductAbstractEvents.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void;
 
     /**
      * Specification:
@@ -93,7 +114,9 @@ interface ProductLabelStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Deleter;
 
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
 
-class ProductLabelDictionaryStorageDeleter implements ProductLabelDictionaryStorageDeleterInterface
+class ProductAbstractLabelStorageDeleter implements ProductAbstractLabelStorageDeleterInterface
 {
     /**
      * @var \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface
@@ -25,20 +25,14 @@ class ProductLabelDictionaryStorageDeleter implements ProductLabelDictionaryStor
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleter::deleteProductLabelDictionaryStorageCollection()} instead.
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublish(): void
+    public function unpublish(array $productAbstractIds): void
     {
-        $this->deleteProductLabelDictionaryStorageCollection();
-    }
-
-    /**
-     * @return void
-     */
-    public function deleteProductLabelDictionaryStorageCollection(): void
-    {
-        $this->productLabelStorageEntityManager->deleteAllProductLabelDictionaryStorageEntities();
+        $this->productLabelStorageEntityManager->deleteProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
     }
 }
