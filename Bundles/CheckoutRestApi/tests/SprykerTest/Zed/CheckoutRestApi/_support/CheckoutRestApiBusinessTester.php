@@ -327,7 +327,7 @@ class CheckoutRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder(['uuid' => static::CART_UUID]))
-            ->withCustomer(static::CUSTOMER)
+            ->withCustomer(['isGuest' => false] + static::CUSTOMER)
             ->withBillingAddress(static::ADDRESS_1)
             ->withShippingAddress(static::ADDRESS_2)
             ->withShipment()
