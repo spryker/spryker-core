@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Oms\Business\OmsFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 
 /**
  * Auto-generated group annotations
@@ -52,12 +54,19 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        $this->tester->setItemState($orderTransfer->getItems()->getIterator()->current()->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        $this->sleepIfMySql(1);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        $this->sleepIfMySql(1);
 
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithStateHistory($orderTransfer->getItems()->getArrayCopy());
+            ->expandOrderItemsWithStateHistory([$itemTransfer]);
 
         // Assert
         $this->assertCount(2, $itemTransfers[0]->getStateHistory());
@@ -70,6 +79,9 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $this->sleepIfMySql(1);
+
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
         $itemTransfer->setState(new ItemStateTransfer());
@@ -98,10 +110,12 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
 
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
+        $this->sleepIfMySql(1);
+
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithStateHistory($orderTransfer->getItems()->getArrayCopy());
+            ->expandOrderItemsWithStateHistory([$itemTransfer]);
 
         // Assert
         $this->assertSame($itemTransfer->getIdSalesOrderItem(), $itemTransfers[0]->getStateHistory()->offsetGet(0)->getIdSalesOrderItem());
@@ -134,5 +148,17 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
 
         // Assert
         $this->assertEmpty($itemTransfers[0]->getStateHistory());
+    }
+
+    /**
+     * @param int $seconds
+     *
+     * @return void
+     */
+    protected function sleepIfMySql(int $seconds): void
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+            sleep($seconds);
+        }
     }
 }
