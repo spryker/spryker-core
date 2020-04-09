@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Auth\Business;
 
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -137,6 +138,22 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
         return $this->getFactory()
             ->createAuthModel()
             ->getCurrentUserToken();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return bool
+     */
+    public function isSystemUserRequest(HttpRequestTransfer $httpRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createAuthModel()
+            ->isSystemUserRequest($httpRequestTransfer);
     }
 
     /**

@@ -18,6 +18,8 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
+    public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -28,6 +30,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCalculationFacade($container);
+        $container = $this->addMerchantOrderPostCreatePlugins($container);
 
         return $container;
     }
@@ -44,5 +47,27 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantOrderPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_ORDER_POST_CREATE, function () {
+            return $this->getMerchantOrderPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    protected function getMerchantOrderPostCreatePlugins(): array
+    {
+        return [];
     }
 }
