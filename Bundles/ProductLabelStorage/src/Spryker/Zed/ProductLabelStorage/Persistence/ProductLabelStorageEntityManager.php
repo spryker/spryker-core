@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage;
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -30,23 +28,24 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
             ->filterByFkProductAbstract($productAbstractLabelStorageTransfer->getIdProductAbstract())
             ->findOneOrCreate();
 
-        $productAbstractLabelStorageEntity->setData($productAbstractLabelStorageTransfer->getProductLabelIds());
+        $productAbstractLabelStorageEntity->setData($productAbstractLabelStorageTransfer->toArray());
         $productAbstractLabelStorageEntity->save();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+     * @param string $locale
      *
      * @return void
      */
-    public function saveProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer): void
+    public function saveProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer, string $locale): void
     {
         $productLabelDictionaryStorageEntity = $this->getFactory()
             ->createSpyProductLabelDictionaryStorageQuery()
-            ->filterByLocale($productLabelDictionaryStorageTransfer->getLocale())
+            ->filterByLocale($locale)
             ->findOneOrCreate();
 
-        $productLabelDictionaryStorageEntity->setData($productLabelDictionaryStorageTransfer->getItems()->getArrayCopy());
+        $productLabelDictionaryStorageEntity->setData($productLabelDictionaryStorageTransfer->toArray());
         $productLabelDictionaryStorageEntity->save();
     }
 

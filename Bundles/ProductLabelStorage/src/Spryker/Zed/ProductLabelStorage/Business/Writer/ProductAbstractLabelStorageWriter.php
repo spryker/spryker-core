@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
-use Generated\Shared\Transfer\ProductAbstractLabelStorageDictionaryTransfer;
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;

@@ -21,10 +21,11 @@ interface ProductLabelStorageEntityManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+     * @param string $locale
      *
      * @return void
      */
-    public function saveProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer): void;
+    public function saveProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer, string $locale): void;
 
     /**
      * @return void

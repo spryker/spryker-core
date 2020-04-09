@@ -63,13 +63,13 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
                 ->requireLocale()
                 ->requireProductLabel();
 
-            $localeName = $productLabelLocalizedAttributesTransfer->getLocale()->getName();
+            $localeName = $productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName();
             if ($this->isValidByDate($productLabelLocalizedAttributesTransfer->getProductLabel())) {
                 $productLabelDictionaryItems[$localeName][] = $this->mapProductLabelDictionaryItem($productLabelLocalizedAttributesTransfer);
             }
         }
 
-        if (!$productLabelDictionaryItems) {
+        if ($productLabelDictionaryItems === []) {
             $this->productLabelStorageEntityManager->deleteAllProductLabelDictionaryStorageEntities();
 
             return;
@@ -91,9 +91,8 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
         foreach ($productLabelDictionaryItems as $localeName => $productLabelDictionaryItemTransfers) {
             $productLabelDictionaryStorageTransfer = $indexedProductLabelStorageTransfers[$localeName] ?? new ProductLabelDictionaryStorageTransfer();
             $productLabelDictionaryStorageTransfer->setItems(new ArrayObject($productLabelDictionaryItemTransfers));
-            $productLabelDictionaryStorageTransfer->setLocale($localeName);
 
-            $this->productLabelStorageEntityManager->saveProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer);
+            $this->productLabelStorageEntityManager->saveProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer, $localeName);
         }
     }
 
