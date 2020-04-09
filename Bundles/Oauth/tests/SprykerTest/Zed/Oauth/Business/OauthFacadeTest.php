@@ -299,6 +299,8 @@ class OauthFacadeTest extends Unit
             ['P100Y', '-100 years', 0],
             ['P2M', '', 1],
             ['P2M', '-2 month', 0],
+            ['PT0M', '1 month', 1],
+            ['PT0M', '', 0],
         ];
     }
 
@@ -331,7 +333,7 @@ class OauthFacadeTest extends Unit
             ->setUserIdentifier('test')
             ->setFkOauthClient($oauthClient->getIdentifier())
             ->setCustomerReference('test')
-            ->setExpiresAt((new DateTime($expiresAt))->format('Y-m-d'))
+            ->setExpiresAt((new DateTime($expiresAt))->format('Y-m-d H:i:s'))
             ->save();
 
         // Act
