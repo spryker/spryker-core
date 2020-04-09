@@ -1160,7 +1160,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getCsrfTokenManager(ContainerInterface $container, array $options): ?CsrfTokenManager
     {
-        return $container->has(static::SERVICE_FORM_CSRF_PROVIDER) ? $container->get(static::SERVICE_FORM_CSRF_PROVIDER) : null;
+        return !empty($options['with_csrf']) && $container->has(static::SERVICE_FORM_CSRF_PROVIDER) ? $container->get(static::SERVICE_FORM_CSRF_PROVIDER) : null;
     }
 
     /**
