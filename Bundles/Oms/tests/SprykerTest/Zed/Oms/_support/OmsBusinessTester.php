@@ -80,6 +80,7 @@ class OmsBusinessTester extends Actor
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
+            ->withItem()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
