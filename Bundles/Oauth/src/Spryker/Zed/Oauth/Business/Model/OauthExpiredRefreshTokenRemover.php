@@ -68,7 +68,7 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     protected function getExpiresAt(DateInterval $refreshTokenRetentionInterval): string
     {
         return $this->presentDateTime
-            ->add($refreshTokenRetentionInterval)
+            ->sub($refreshTokenRetentionInterval)
             ->format('Y-m-d H:i:s');
     }
 }

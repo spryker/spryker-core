@@ -19,8 +19,12 @@ use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Oauth\OauthConstants;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
-use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
+use Spryker\Zed\Oauth\Business\OauthBusinessFactory;
+use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
@@ -288,27 +292,32 @@ class OauthFacadeTest extends Unit
     /**
      * @return array
      */
-    public function dependencyOfRefreshTokenRetentionIntervalToRefreshTokenCountDataProvider()
+    public function dependencyOfRefreshTokenRetentionIntervalAndRefreshTokenExpiresAtDateToRefreshTokenCountDataProvider()
     {
         return [
-            ['-2 month', 0],
-            ['+2 month', 1],
+            ['P100Y', '', 1],
+            ['P100Y', '-100 years', 0],
+            ['P2M', '', 1],
+            ['P2M', '-2 month', 0],
         ];
     }
 
     /**
-     * @dataProvider dependencyOfRefreshTokenRetentionIntervalToRefreshTokenCountDataProvider
+     * @dataProvider dependencyOfRefreshTokenRetentionIntervalAndRefreshTokenExpiresAtDateToRefreshTokenCountDataProvider
      *
      * @param string $interval
+     * @param string $expiresAt
      * @param int $matches
      *
      * @return void
      */
-    public function testDeleteExpiredRefreshTokens(string $interval, int $matches): void
+    public function testDeleteExpiredRefreshTokens(string $interval, string $expiresAt, int $matches): void
     {
         // Arrange
         $this->tester->deleteAllOauthRefreshTokens();
         $this->setOauthDependencies();
+        $oauthConfigMock = $this->getOauthConfigMock();
+        $oauthConfigMock->method('getRefreshTokenRetentionInterval')->willReturn($interval);
 
         $oauthClient = new SpyOauthClient();
         $oauthClient
@@ -322,11 +331,11 @@ class OauthFacadeTest extends Unit
             ->setUserIdentifier('test')
             ->setFkOauthClient($oauthClient->getIdentifier())
             ->setCustomerReference('test')
-            ->setExpiresAt((new DateTime($interval))->format('Y-m-d'))
+            ->setExpiresAt((new DateTime($expiresAt))->format('Y-m-d'))
             ->save();
 
         // Act
-        $this->getOauthFacade()->deleteExpiredRefreshTokens();
+        $this->getOauthFacade($oauthConfigMock)->deleteExpiredRefreshTokens();
 
         // Assert
         $this->assertEquals($matches, $this->tester->getOauthRefreshTokensCount());
@@ -429,11 +438,21 @@ class OauthFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\OauthFacadeInterface
+     * @return \Spryker\Zed\Oauth\OauthConfig
      */
-    protected function getOauthFacade(): OauthFacadeInterface
+    protected function getOauthConfigMock(): OauthConfig
     {
-        return $this->tester->getLocator()->oauth()->facade();
+        $oauthConfigMock = $this->createMock(OauthConfig::class);
+        $oauthConfigMock
+            ->method('getPrivateKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PRIVATE_KEY_PATH));
+        $oauthConfigMock
+            ->method('getPublicKeyPath')->willReturn(Config::getInstance()->get(OauthConstants::PUBLIC_KEY_PATH));
+        $oauthConfigMock
+            ->method('getAccessTokenTTL')->willReturn('PT8H');
+        $oauthConfigMock
+            ->method('getRefreshTokenTTL')->willReturn('P1M');
+
+        return $oauthConfigMock;
     }
 
     /**
@@ -450,5 +469,23 @@ class OauthFacadeTest extends Unit
         $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER, [
             new OauthExpiredRefreshTokenRemoverPlugin(),
         ]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Oauth\OauthConfig|null $oauthConfigMock
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function getOauthFacade(?OauthConfig $oauthConfigMock = null): AbstractFacade
+    {
+        if (!$oauthConfigMock) {
+            return $this->tester->getFacade();
+        }
+
+        $oauthBusinessFactory = new OauthBusinessFactory();
+        $oauthBusinessFactory->setConfig($oauthConfigMock);
+
+        return $this->tester->getFacade()
+            ->setFactory($oauthBusinessFactory);
     }
 }
