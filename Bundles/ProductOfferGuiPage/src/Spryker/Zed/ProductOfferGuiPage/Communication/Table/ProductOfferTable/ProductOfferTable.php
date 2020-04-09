@@ -21,13 +21,15 @@ class ProductOfferTable extends AbstractTable
 {
     public const COL_KEY_OFFER_REFERENCE = 'name';
     public const COL_KEY_MERCHANT_SKU = 'merchantSku';
+    public const COL_KEY_CONCRETE_SKU = 'concreteSku';
     public const COL_KEY_IMAGE = 'image';
+    public const COL_KEY_PRODUCT_NAME = 'productName';
     public const COL_KEY_STORES = 'stores';
     public const COL_KEY_STOCK = 'stock';
-    public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
-    public const COL_KEY_PRODUCT_NAME = 'productName';
+    public const COL_KEY_VISIBILITY = 'visibility';
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
+    public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
@@ -46,24 +48,33 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableDataProvider;
 
     /**
+     * @var array|\Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[]
+     */
+    protected $productOfferTableFilterDataProviders;
+
+    /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface
      */
     protected $productOfferTableCriteriaBuilder;
 
     /**
+     * ProductOfferTable constructor.
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface $productTableDataProvider
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[] $productOfferTableFilterDataProviders
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
      */
     public function __construct(
         ProductOfferGuiPageToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
         ProductOfferTableDataProviderInterface $productTableDataProvider,
+        array $productOfferTableFilterDataProviders,
         ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
     ) {
         parent::__construct($utilEncodingService, $translatorFacade);
         $this->productOfferTableDataProvider = $productTableDataProvider;
+        $this->productOfferTableFilterDataProviders = $productOfferTableFilterDataProviders;
         $this->productOfferTableCriteriaBuilder = $productOfferTableCriteriaBuilder;
     }
 
@@ -84,6 +95,7 @@ class ProductOfferTable extends AbstractTable
     {
         $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
@@ -101,11 +113,29 @@ class ProductOfferTable extends AbstractTable
     {
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
+                ->setId(static::COL_KEY_OFFER_REFERENCE)
+                ->setTitle('Reference')
+                ->setType('text')
+                ->setSortable(true)
+                ->setHideable(false)
+                ->setMultiRenderMode(false)
+        );
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_MERCHANT_SKU)
                 ->setTitle('Merchant SKU')
                 ->setType('text')
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
+                ->setMultiRenderMode(false)
+        );
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
+                ->setId(static::COL_KEY_CONCRETE_SKU)
+                ->setTitle('SKU')
+                ->setType('text')
+                ->setSortable(true)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
@@ -114,7 +144,7 @@ class ProductOfferTable extends AbstractTable
                 ->setTitle('Image')
                 ->setType('image')
                 ->setSortable(false)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
@@ -123,23 +153,14 @@ class ProductOfferTable extends AbstractTable
                 ->setTitle('Name')
                 ->setType('text')
                 ->setSortable(true)
-                ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_OFFER_REFERENCE)
-                ->setTitle('Name')
-                ->setType('text')
-                ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STORES)
                 ->setTitle('Stores')
-                ->setType('text')
+                ->setType('chip')
                 ->setSortable(false)
                 ->setHideable(true)
                 ->setMultiRenderMode(true)
@@ -151,16 +172,16 @@ class ProductOfferTable extends AbstractTable
                 ->setTitle('Stock')
                 ->setType('chip')
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_APPROVAL_STATUS)
-                ->setTitle('Status')
-                ->setType('text')
-                ->setSortable(false)
-                ->setHideable(false)
+                ->setId(static::COL_KEY_VISIBILITY)
+                ->setTitle('Visibility')
+                ->setType('chip')
+                ->setSortable(true)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
@@ -170,7 +191,7 @@ class ProductOfferTable extends AbstractTable
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
@@ -180,27 +201,36 @@ class ProductOfferTable extends AbstractTable
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
+                ->setMultiRenderMode(false)
+        );
+        $guiTableConfigurationTransfer->addColumn(
+            (new GuiTableColumnConfigurationTransfer())
+                ->setId(static::COL_KEY_APPROVAL_STATUS)
+                ->setTitle('Status')
+                ->setType('chip')
+                ->setSortable(true)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_CREATED_AT)
-                ->setTitle('Valid From')
+                ->setTitle('Created')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_UPDATED_AT)
-                ->setTitle('Valid To')
+                ->setTitle('Updated')
                 ->setType('date')
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
-                ->setHideable(false)
+                ->setHideable(true)
                 ->setMultiRenderMode(false)
         );
 
@@ -249,6 +279,20 @@ class ProductOfferTable extends AbstractTable
     protected function addSearchOptionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        foreach ($this->productOfferTableFilterDataProviders as $productOfferTableFilterDataProvider) {
+            $guiTableConfigurationTransfer->addFilter($productOfferTableFilterDataProvider->getFilterData());
+        }
 
         return $guiTableConfigurationTransfer;
     }

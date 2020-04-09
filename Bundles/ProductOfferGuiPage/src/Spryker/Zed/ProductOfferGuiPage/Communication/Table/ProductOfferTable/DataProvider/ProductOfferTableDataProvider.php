@@ -19,6 +19,8 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected const ATTRIBUTE_KEY_COLOR = 'color';
 
     protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
+    protected const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
+    protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'offline';
 
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface
@@ -56,13 +58,15 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
             $productTableDataArray[] = [
                 ProductOfferTable::COL_KEY_OFFER_REFERENCE => $productOfferTableRowDataTransfer->getOfferReference(),
                 ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTableRowDataTransfer->getMerchantSku(),
-                ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_CONCRETE_SKU => $productOfferTableRowDataTransfer->getConcreteSku(),
                 ProductOfferTable::COL_KEY_IMAGE => $productOfferTableRowDataTransfer->getImage(),
-                ProductOfferTable::COL_KEY_APPROVAL_STATUS => $productOfferTableRowDataTransfer->getApprovalStatus(),
-                ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_VALID_FROM => $productOfferTableRowDataTransfer->getValidFrom(),
                 ProductOfferTable::COL_KEY_VALID_TO => $productOfferTableRowDataTransfer->getValidTo(),
+                ProductOfferTable::COL_KEY_APPROVAL_STATUS => $productOfferTableRowDataTransfer->getApprovalStatus(),
                 ProductOfferTable::COL_KEY_CREATED_AT => $productOfferTableRowDataTransfer->getCreatedAt(),
                 ProductOfferTable::COL_KEY_UPDATED_AT => $productOfferTableRowDataTransfer->getUpdatedAt(),
             ];
@@ -137,5 +141,19 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
         }
 
         return $productOfferTableRowDataTransfer->getQuantity();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return string
+     */
+    protected function getVisibilityColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): string
+    {
+        if ($productOfferTableRowDataTransfer->getIsActive()) {
+            return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE);
+        }
+
+        return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_OFFLINE);
     }
 }

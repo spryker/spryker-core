@@ -12,9 +12,13 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\StockFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\IsVisibleFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
@@ -79,6 +83,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
             $this->getUtilEncodingService(),
             $this->getTranslatorFacade(),
             $this->createProductOfferTableDataProvider(),
+            $this->getProductOfferTableFilterDataProviders(),
             $this->createProductOfferTableCriteriaBuilder()
         );
     }
@@ -90,7 +95,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductOfferTableCriteriaBuilder(
             $this->getMerchantUserFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getCreateIsVisibleFilterProductOfferTableCriteriaExpanders()
         );
     }
 
@@ -141,12 +147,52 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    public function createStockProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
+    {
+        return new StockProductOfferTableFilterDataProvider();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[]
      */
     public function getProductOfferTableFilterDataProviders(): array
     {
         return [
             $this->createIsVisibleProductOfferTableFilterDataProvider(),
+            $this->createStockProductOfferTableFilterDataProvider(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface
+     */
+    public function createIsVisibleFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
+    {
+        return new IsVisibleFilterProductOfferTableCriteriaExpander(
+            $this->createIsVisibleProductOfferTableFilterDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface
+     */
+    public function createStockFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
+    {
+        return new StockFilterProductOfferTableCriteriaExpander(
+            $this->createStockProductOfferTableFilterDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface[]
+     */
+    public function getCreateIsVisibleFilterProductOfferTableCriteriaExpanders(): array
+    {
+        return [
+            $this->createIsVisibleFilterProductOfferTableCriteriaExpander(),
+            $this->createStockFilterProductOfferTableCriteriaExpander(),
         ];
     }
 

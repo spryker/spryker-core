@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 
@@ -23,6 +24,8 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface
      */
     protected $localeFacade;
+
+    protected $filterProductOfferTableCriteriaExpanders;
 
     /**
      * @var string|null
@@ -52,13 +55,16 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface[] $filterProductOfferTableCriteriaExpanders
      */
     public function __construct(
         ProductOfferGuiPageToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferGuiPageToLocaleFacadeInterface $localeFacade
+        ProductOfferGuiPageToLocaleFacadeInterface $localeFacade,
+        array $filterProductOfferTableCriteriaExpanders
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->localeFacade = $localeFacade;
+        $this->filterProductOfferTableCriteriaExpanders = $filterProductOfferTableCriteriaExpanders;
     }
 
     /**
@@ -70,6 +76,7 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
         $productOfferTableCriteriaTransfer->setSearchTerm($this->searchTerm);
         $productOfferTableCriteriaTransfer->setOrderBy($this->sorting);
         $productOfferTableCriteriaTransfer->setPagination($this->buildPaginationTransfer());
+        $productOfferTableCriteriaTransfer = $this->addFilterData($productOfferTableCriteriaTransfer);
 
         return $productOfferTableCriteriaTransfer;
     }
@@ -154,5 +161,27 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
         return (new PaginationTransfer())
             ->setPage($this->page)
             ->setMaxPerPage($this->pageSize);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     */
+    protected function addFilterData(
+        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+    ): ProductOfferTableCriteriaTransfer {
+        if (!$this->filters) {
+            return $productOfferTableCriteriaTransfer;
+        }
+
+        foreach ($this->filterProductOfferTableCriteriaExpanders as $filterProductOfferTableCriteriaExpander) {
+            $productOfferTableCriteriaTransfer = $filterProductOfferTableCriteriaExpander->expandProductOfferTableCriteria(
+                $this->filters,
+                $productOfferTableCriteriaTransfer
+            );
+        }
+
+        return $productOfferTableCriteriaTransfer;
     }
 }
