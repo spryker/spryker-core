@@ -52,10 +52,7 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($orderTransfer->getItems()->getIterator()->current()->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         // Act
         $itemTransfers = $this->tester

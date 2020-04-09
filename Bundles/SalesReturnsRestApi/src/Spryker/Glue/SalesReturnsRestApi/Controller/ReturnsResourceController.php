@@ -24,8 +24,7 @@ class ReturnsResourceController extends AbstractController
      *              "Retrieves return by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnsAttributesTransfer",
      *          "responses": {
@@ -38,8 +37,7 @@ class ReturnsResourceController extends AbstractController
      *              "Retrieves list of returns."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request."
@@ -63,8 +61,7 @@ class ReturnsResourceController extends AbstractController
      *              "Creates a return."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "422": "Unprocessable entity."

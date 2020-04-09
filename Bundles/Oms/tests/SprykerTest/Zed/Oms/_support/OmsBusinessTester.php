@@ -9,7 +9,10 @@ namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
@@ -52,15 +55,10 @@ class OmsBusinessTester extends Actor
      */
     public function createOrderByStateMachineProcessName(string $stateMachineProcessName): OrderTransfer
     {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withStore()
-            ->withCustomer()
-            ->withItem()
-            ->withTotals()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCurrency()
-            ->build();
+        $quoteTransfer = $this->buildFakeQuote(
+            $this->haveCustomer(),
+            $this->haveStore([StoreTransfer::NAME => 'DE'])
+        );
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
 
@@ -70,5 +68,28 @@ class OmsBusinessTester extends Actor
             ->setStore($quoteTransfer->getStore()->getName())
             ->setCustomer($quoteTransfer->getCustomer())
             ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->setCustomer($customerTransfer)
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
     }
 }

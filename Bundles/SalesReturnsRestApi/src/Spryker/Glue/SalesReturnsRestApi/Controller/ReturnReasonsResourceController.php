@@ -23,8 +23,7 @@ class ReturnReasonsResourceController extends AbstractController
      *              "Retrieves list of return reasons."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })
