@@ -20,7 +20,6 @@
     "spryker/container": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*",
