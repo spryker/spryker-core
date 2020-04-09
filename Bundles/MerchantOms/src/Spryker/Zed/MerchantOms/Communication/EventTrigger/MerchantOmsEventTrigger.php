@@ -49,7 +49,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         $merchantOmsTriggerRequestTransfer->requireMerchantOmsEventName();
 
         $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
-            ->setReference($merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference());
+            ->setMerchantOrderItemReference($merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference());
 
         $merchantOmsTriggerResponseTransfer = new MerchantOmsTriggerResponseTransfer();
 

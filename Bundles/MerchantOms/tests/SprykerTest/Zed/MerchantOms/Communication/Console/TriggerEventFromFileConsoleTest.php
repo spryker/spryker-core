@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantOms\Business\MerchantOmsFacade;
-use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromFileConsole;
+use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -68,10 +68,10 @@ class TriggerEventFromFileConsoleTest extends Unit
             MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
             MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-            MerchantOrderItemTransfer::REFERENCE => static::TEST_MERCHANT_ORDER_ITEM_REFERENCE,
+            MerchantOrderItemTransfer::MERCHANT_ORDER_ITEM_REFERENCE => static::TEST_MERCHANT_ORDER_ITEM_REFERENCE,
         ]);
 
-        $triggerEventFromFileConsole = (new TriggerEventFromFileConsole())->setFacade($this->getMerchantOmsFacadeMock());
+        $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole())->setFacade($this->getMerchantOmsFacadeMock());
         $input = new ArrayInput([static::ARGUMENT_FILE_PATH => codecept_data_dir() . 'import/' . $importFileName]);
         $output = new BufferedOutput();
 
