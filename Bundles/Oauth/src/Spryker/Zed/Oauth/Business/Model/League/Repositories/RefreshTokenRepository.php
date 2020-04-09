@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 
@@ -84,8 +85,11 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function revokeRefreshToken($tokenId)
     {
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier($tokenId);
+
         foreach ($this->refreshTokenRevokerPlugins as $refreshTokenRevokePlugin) {
-            $refreshTokenRevokePlugin->revokeRefreshToken($tokenId);
+            $refreshTokenRevokePlugin->revokeRefreshToken($oauthRefreshTokenTransfer);
         }
     }
 
@@ -112,9 +116,12 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier($tokenId);
+
         foreach ($this->refreshTokenCheckerPlugins as $refreshTokenCheckerPlugin) {
             if ($refreshTokenCheckerPlugin->isApplicable($tokenId)) {
-                return $refreshTokenCheckerPlugin->isRefreshTokenRevoked($tokenId);
+                return $refreshTokenCheckerPlugin->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
             }
         }
 

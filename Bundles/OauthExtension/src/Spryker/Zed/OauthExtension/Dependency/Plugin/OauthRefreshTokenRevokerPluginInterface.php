@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+
 interface OauthRefreshTokenRevokerPluginInterface
 {
     /**
      * Specification:
-     * - Revoke refresh token by provided token identifier.
+     * - Revokes refresh token.
      *
      * @api
      *
-     * @param string $tokenId
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return void
      */
-    public function revokeRefreshToken(string $tokenId): void;
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 }

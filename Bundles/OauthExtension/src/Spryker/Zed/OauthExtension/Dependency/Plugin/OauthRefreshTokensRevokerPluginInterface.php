@@ -13,7 +13,7 @@ interface OauthRefreshTokensRevokerPluginInterface
 {
     /**
      * Specification:
-     * - Revoke all the refresh tokens.
+     * - Revokes all the refresh tokens.
      *
      * @api
      *

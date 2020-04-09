@@ -19,21 +19,18 @@ class OauthRefreshTokenRevokerPlugin extends AbstractPlugin implements OauthRefr
 {
     /**
      * {@inheritDoc}
-     * - Checks if refresh token isn't revoked yet by provided identifier.
+     * - Checks if refresh token isn't revoked.
      * - Looks up the persisted refresh token record by the `identifier`.
      * - Revokes refresh token found.
      *
      * @api
      *
-     * @param string $tokenId
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return void
      */
-    public function revokeRefreshToken(string $tokenId): void
+    public function revokeRefreshToken(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
     {
-        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
-            ->setIdentifier($tokenId);
-
         $this->getFacade()->revokeRefreshToken($oauthRefreshTokenTransfer);
     }
 }

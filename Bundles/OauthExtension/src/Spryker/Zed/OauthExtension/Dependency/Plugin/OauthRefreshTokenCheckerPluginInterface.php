@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
+
 interface OauthRefreshTokenCheckerPluginInterface
 {
     /**
@@ -27,9 +29,9 @@ interface OauthRefreshTokenCheckerPluginInterface
      *
      * @api
      *
-     * @param string $tokenId
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
      *
      * @return bool
      */
-    public function isRefreshTokenRevoked(string $tokenId): bool;
+    public function isRefreshTokenRevoked(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): bool;
 }
