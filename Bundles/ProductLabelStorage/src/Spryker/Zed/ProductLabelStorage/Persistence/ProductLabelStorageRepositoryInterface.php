@@ -19,21 +19,9 @@ interface ProductLabelStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
-     */
-    public function getProductLabelProductAbstractTransfersByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[]
      */
     public function getProductAbstractLabelStorageTransfersByProductAbstractIds(array $productAbstractIds): array;
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributesTransfers(): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[]

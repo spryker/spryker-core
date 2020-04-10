@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface;
 
@@ -25,6 +26,11 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     protected $eventBehaviorFacade;
 
     /**
+     * @var \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface
+     */
+    protected $productLabelFacade;
+
+    /**
      * @var \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface
      */
     protected $productLabelStorageRepository;
@@ -36,15 +42,18 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
     /**
      * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface $productLabelStorageRepository
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
      */
     public function __construct(
         ProductLabelStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade,
         ProductLabelStorageRepositoryInterface $productLabelStorageRepository,
         ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
+        $this->productLabelFacade = $productLabelFacade;
         $this->productLabelStorageRepository = $productLabelStorageRepository;
         $this->productLabelStorageEntityManager = $productLabelStorageEntityManager;
     }
@@ -158,8 +167,8 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      */
     protected function getGroupedProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
-        $productLabelProductAbstractTransfers = $this->productLabelStorageRepository
-            ->getProductLabelProductAbstractTransfersByProductAbstractIds($productAbstractIds);
+        $productLabelProductAbstractTransfers = $this->productLabelFacade
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
 
         return $this->getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
             $productLabelProductAbstractTransfers

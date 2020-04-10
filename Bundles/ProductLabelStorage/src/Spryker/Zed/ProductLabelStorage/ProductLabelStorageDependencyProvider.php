@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\ProductLabelStorage;
 
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeBridge;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
+use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerBridge;
+use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
@@ -24,9 +28,23 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
 
     public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
-    public const PROPEL_QUERY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTES';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductLabelFacade($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +55,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductLabelFacade($container);
 
         return $container;
     }
@@ -52,7 +71,6 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductLabelQueryContainer($container);
         $container = $this->addProductQueryContainer($container);
         $container = $this->addProductLabelPropelQuery($container);
-        $container = $this->addProductLabelLocalizedAttributesPropelQuery($container);
 
         return $container;
     }
@@ -64,8 +82,10 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
-            return new ProductLabelStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): ProductLabelStorageToEventBehaviorFacadeInterface {
+            return new ProductLabelStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
         });
 
         return $container;
@@ -78,8 +98,10 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductLabelQueryContainer(Container $container): Container
     {
-        $container->set(static::QUERY_CONTAINER_PRODUCT_LABEL, function (Container $container) {
-            return new ProductLabelStorageToProductLabelQueryContainerBridge($container->getLocator()->productLabel()->queryContainer());
+        $container->set(static::QUERY_CONTAINER_PRODUCT_LABEL, function (Container $container): ProductLabelStorageToProductLabelQueryContainerInterface {
+            return new ProductLabelStorageToProductLabelQueryContainerBridge(
+                $container->getLocator()->productLabel()->queryContainer()
+            );
         });
 
         return $container;
@@ -92,8 +114,10 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
-            return new ProductLabelStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container): ProductLabelStorageToProductQueryContainerInterface {
+            return new ProductLabelStorageToProductQueryContainerBridge(
+                $container->getLocator()->product()->queryContainer()
+            );
         });
 
         return $container;
@@ -118,10 +142,12 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductLabelLocalizedAttributesPropelQuery(Container $container): Container
+    protected function addProductLabelFacade(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTES, function (): SpyProductLabelLocalizedAttributesQuery {
-            return SpyProductLabelLocalizedAttributesQuery::create();
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container): ProductLabelStorageToProductLabelFacadeInterface {
+            return new ProductLabelStorageToProductLabelFacadeBridge(
+                $container->getLocator()->productLabel()->facade()
+            );
         });
 
         return $container;

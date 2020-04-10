@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelStorage\Persistence\Mapper;
+namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
@@ -37,12 +37,12 @@ class ProductLabelLocalizedAttributesMapper
         return $productLabelLocalizedAttributesTransfers;
     }
 
-   /**
-    * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
-    * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
-    *
-    * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
-    */
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
     protected function mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
         SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
         ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer

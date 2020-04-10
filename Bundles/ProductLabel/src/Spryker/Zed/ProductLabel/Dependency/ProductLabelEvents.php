@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Dependency;
 
 /**
- * @deprecated Use {@link \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig} instead.
+ * @deprecated Use {@link \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig} or {@link \Spryker\Shared\ProductLabelSearch\ProductLabelSearchConfig} instead.
  */
 interface ProductLabelEvents
 {

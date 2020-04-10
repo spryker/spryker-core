@@ -28,6 +28,8 @@
         <property name="fkProductLabel" type="int"/>
         <property name="fkLocale" type="int"/>
         <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="productLabel" type="ProductLabel"/>
     </transfer>
 
     <transfer name="StorageProductLabel">
@@ -72,6 +74,17 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstract">
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
 </transfers>

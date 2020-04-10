@@ -21,6 +21,7 @@ class ProductLabelDictionaryDeletePublisherPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
+     * - Unpublishes product label dictionary data by unpublish ProductLabelDictionary event.
      *
      * @api
      *

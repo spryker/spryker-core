@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel\Persistence;
+namespace Spryker\Zed\ProductLabelStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
 
-interface ProductLabelRepositoryInterface
+interface ProductLabelStorageToProductLabelFacadeInterface
 {
-    /**
-     * @param int $idProductLabel
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
-     */
-    public function findProductLabelById(int $idProductLabel): ?ProductLabelTransfer;
-
     /**
      * @param int[] $productAbstractIds
      *

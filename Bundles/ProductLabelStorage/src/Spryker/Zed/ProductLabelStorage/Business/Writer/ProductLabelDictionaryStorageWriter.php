@@ -13,11 +13,17 @@ use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface;
 
 class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface
+     */
+    protected $productLabelFacade;
+
     /**
      * @var \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface
      */
@@ -29,13 +35,16 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $productLabelStorageEntityManager;
 
     /**
+     * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface $productLabelStorageRepository
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
      */
     public function __construct(
+        ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade,
         ProductLabelStorageRepositoryInterface $productLabelStorageRepository,
         ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
     ) {
+        $this->productLabelFacade = $productLabelFacade;
         $this->productLabelStorageRepository = $productLabelStorageRepository;
         $this->productLabelStorageEntityManager = $productLabelStorageEntityManager;
     }
@@ -55,7 +64,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
      */
     public function writeProductLabelDictionaryStorageCollection(): void
     {
-        $productLabelLocalizedAttributeTransfers = $this->productLabelStorageRepository->getProductLabelLocalizedAttributesTransfers();
+        $productLabelLocalizedAttributeTransfers = $this->productLabelFacade->getProductLabelLocalizedAttributes();
 
         $productLabelDictionaryItems = [];
         foreach ($productLabelLocalizedAttributeTransfers as $productLabelLocalizedAttributesTransfer) {

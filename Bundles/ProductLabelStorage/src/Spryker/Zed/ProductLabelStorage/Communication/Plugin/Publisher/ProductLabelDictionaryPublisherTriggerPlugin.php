@@ -5,24 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelDictionaryPublisherTriggerPlugin} instead.
- *
- * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  */
-class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class ProductLabelDictionaryPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves product label dictionaries by provided limit and offset.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getData(int $offset, int $limit): array
+    {
+        return [];
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -40,25 +52,11 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
      *
      * @api
      *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData(array $ids = []): ?ModelCriteria
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return string
      */
     public function getEventName(): string
     {
-        return ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH;
+        return ProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_PUBLISH;
     }
 
     /**

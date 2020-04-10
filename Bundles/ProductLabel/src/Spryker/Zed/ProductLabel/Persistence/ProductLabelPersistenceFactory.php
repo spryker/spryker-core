@@ -11,7 +11,9 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelMapper;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
@@ -51,5 +53,21 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     public function createProductLabelMapper(): ProductLabelMapper
     {
         return new ProductLabelMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper
+     */
+    public function createProductLabelProductAbstractMapper(): ProductLabelProductAbstractMapper
+    {
+        return new ProductLabelProductAbstractMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
+     */
+    public function createProductLabelLocalizedAttributesMapper(): ProductLabelLocalizedAttributesMapper
+    {
+        return new ProductLabelLocalizedAttributesMapper();
     }
 }

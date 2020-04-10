@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
@@ -203,4 +204,40 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
+
+    /**
+     * Specification:
+     * - Gets product label product abstract relations by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Gets product label product abstract relations by FilterTransfer.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Gets all product label localized attributes.
+     * - Adds `ProductLabelTransfer` and `LocaleTransfer` to `ProductLabelLocalizedAttributesTransfer`.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
+     */
+    public function getProductLabelLocalizedAttributes(): array;
 }

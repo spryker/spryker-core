@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -38,33 +37,6 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
-     */
-    public function getProductLabelProductAbstractTransfersByProductAbstractIds(array $productAbstractIds): array
-    {
-        $productLabelProductAbstractEntities = $this->getFactory()
-            ->getProductLabelQueryContainer()
-            ->queryAllProductLabelProductAbstractRelations()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->joinWithSpyProductLabel()
-            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
-            ->find();
-
-        if (!$productLabelProductAbstractEntities->count()) {
-            return [];
-        }
-
-        return $this->getFactory()
-            ->createProductLabelProductMapper()
-            ->mapProductLabelProductAbstractEntitiesToTransferCollection(
-                $productLabelProductAbstractEntities,
-                []
-            );
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
      * @return array
      */
     public function getProductAbstractLabelStorageTransfersByProductAbstractIds(array $productAbstractIds): array
@@ -82,29 +54,6 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
             ->createProductAbstractLabelStorageMapper()
             ->mapProductAbstractLabelStorageEntitiesToProductAbstractLabelStorageTransfers(
                 $productAbstractLabelStorageEntities,
-                []
-            );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributesTransfers(): array
-    {
-        $productLabelLocalizedAttributesEntities = $this->getFactory()
-            ->getProductLabelLocalizedAttributesPropelQuery()
-            ->joinWithSpyProductLabel()
-            ->joinWithSpyLocale()
-            ->find();
-
-        if (!$productLabelLocalizedAttributesEntities->count()) {
-            return [];
-        }
-
-        return $this->getFactory()
-            ->createProductLabelLocalizedAttributesMapper()
-            ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
-                $productLabelLocalizedAttributesEntities,
                 []
             );
     }

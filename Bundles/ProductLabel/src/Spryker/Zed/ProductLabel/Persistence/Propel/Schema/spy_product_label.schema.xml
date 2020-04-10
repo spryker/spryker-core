@@ -47,10 +47,6 @@
             <unique-column name="fk_store"/>
         </unique>
 
-        <behavior name="event">
-            <parameter name="spy_product_label_store_all" column="*"/>
-        </behavior>
-
         <id-method-parameter value="spy_product_label_store_pk_seq"/>
     </table>
 </database>

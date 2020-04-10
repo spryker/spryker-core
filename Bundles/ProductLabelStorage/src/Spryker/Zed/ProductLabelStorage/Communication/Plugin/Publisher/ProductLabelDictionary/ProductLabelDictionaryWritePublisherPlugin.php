@@ -21,6 +21,8 @@ class ProductLabelDictionaryWritePublisherPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
+     * - Publishes product label dictionary data by publish ProductLabelDictionary event.
+     * - Publishes product label dictionary data spy_product_label and spy_product_label_localized_attributes tables events.
      *
      * @api
      *
