@@ -34,7 +34,8 @@ class GiftCardMapper
         $firstProductAbstractEntity = $giftCardProductAbstractConfigurationEntity
             ->getSpyGiftCardProductAbstractConfigurationLinks()
             ->getIterator()
-            ->current();
+            ->current()
+            ->getSpyProductAbstract();
 
         return $giftCardAbstractProductConfigurationForProductAbstractTransfer
             ->setGiftCardAbstractProductConfiguration($giftCardAbstractProductConfigurationTransfer)
@@ -79,7 +80,8 @@ class GiftCardMapper
         $firstProductEntity = $giftCardProductConfigurationEntity
             ->getSpyGiftCardProductConfigurationLinks()
             ->getIterator()
-            ->current();
+            ->current()
+            ->getSpyProduct();
 
         return $giftCardProductConfigurationForProductTransfer
             ->setSku($firstProductEntity->getSku())
