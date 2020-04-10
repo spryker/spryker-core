@@ -37,10 +37,10 @@ class OrderExpander implements OrderExpanderInterface
         $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())->setWithOrder(true);
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $merchantOrderItemCriteriaTransfer->addIdOrderItem($itemTransfer->getIdSalesOrderItem());
+            $merchantOrderItemCriteriaTransfer->addOrderItemId($itemTransfer->getIdSalesOrderItem());
         }
 
-        if (!$merchantOrderItemCriteriaTransfer->getIdOrderItems()) {
+        if (!$merchantOrderItemCriteriaTransfer->getOrderItemIds()) {
             return $orderTransfer;
         }
 
