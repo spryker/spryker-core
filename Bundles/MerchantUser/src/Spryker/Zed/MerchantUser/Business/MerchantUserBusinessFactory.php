@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\Deleter\MerchantUserDeleter;
 use Spryker\Zed\MerchantUser\Business\Deleter\MerchantUserDeleterInterface;
+use Spryker\Zed\MerchantUser\Business\Reader\CurrentMerchantUserReader;
+use Spryker\Zed\MerchantUser\Business\Reader\CurrentMerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater;
@@ -84,6 +86,17 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserReader(
             $this->getRepository(),
             $this->getUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\Reader\CurrentMerchantUserReaderInterface
+     */
+    public function createCurrentMerchantUserReader(): CurrentMerchantUserReaderInterface
+    {
+        return new CurrentMerchantUserReader(
+            $this->getUserFacade(),
+            $this->getRepository()
         );
     }
 
