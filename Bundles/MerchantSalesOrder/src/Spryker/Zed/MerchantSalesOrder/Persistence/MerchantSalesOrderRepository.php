@@ -320,7 +320,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         if ($merchantOrderItemCriteriaTransfer->getWithOrder()) {
-            $merchantOrderItemCollectionTransfer = $this->addMerchantOrderToMerchantOrderItems($merchantOrderItemCollectionTransfer);
+            $merchantOrderItemCollectionTransfer = $this->addMerchantOrderToMerchantOrderItemCollection($merchantOrderItemCollectionTransfer);
         }
 
         return $merchantOrderItemCollectionTransfer;
@@ -331,7 +331,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
      */
-    protected function addMerchantOrderToMerchantOrderItems(
+    protected function addMerchantOrderToMerchantOrderItemCollection(
         MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
     ): MerchantOrderItemCollectionTransfer {
         $merchantOrderIds = [];
