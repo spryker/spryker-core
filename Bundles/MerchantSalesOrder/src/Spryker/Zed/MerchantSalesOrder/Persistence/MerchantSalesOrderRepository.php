@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
@@ -186,12 +185,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
-        if ($merchantOrderCriteriaTransfer->getMerchantOrderIds()) {
-            $merchantSalesOrderQuery->filterByIdMerchantSalesOrder_In(
-                $merchantOrderCriteriaTransfer->getMerchantOrderIds()
-            );
-        }
-
         if ($merchantOrderCriteriaTransfer->getMerchantOrderReference() !== null) {
             $merchantSalesOrderQuery->filterByMerchantSalesOrderReference(
                 $merchantOrderCriteriaTransfer->getMerchantOrderReference()
@@ -288,79 +281,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
-     */
-    public function getMerchantOrderItemCollection(
-        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
-    ): MerchantOrderItemCollectionTransfer {
-        $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
-        $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters(
-            $merchantOrderItemCriteriaTransfer,
-            $merchantSalesOrderItemQuery
-        );
-
-        $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery->find();
-
-        $merchantOrderItemCollectionTransfer = new MerchantOrderItemCollectionTransfer();
-
-        if (!$merchantSalesOrderItemEntities->count()) {
-            return $merchantOrderItemCollectionTransfer;
-        }
-
-        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
-
-        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
-            $merchantOrderItemCollectionTransfer->addMerchantOrderItem(
-                $merchantSalesOrderMapper->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
-                    $merchantSalesOrderItemEntity,
-                    new MerchantOrderItemTransfer()
-                )
-            );
-        }
-
-        if ($merchantOrderItemCriteriaTransfer->getWithOrder()) {
-            $merchantOrderItemCollectionTransfer = $this->addMerchantOrderToMerchantOrderItemCollection($merchantOrderItemCollectionTransfer);
-        }
-
-        return $merchantOrderItemCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
-     */
-    protected function addMerchantOrderToMerchantOrderItemCollection(
-        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
-    ): MerchantOrderItemCollectionTransfer {
-        $merchantOrderIds = [];
-
-        foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOrderIds[] = $merchantOrderItemTransfer->getIdMerchantOrder();
-        }
-
-        $merchantOrderCollectionTransfer = $this->getMerchantOrderCollection(
-            (new MerchantOrderCriteriaTransfer())->setMerchantOrderIds($merchantOrderIds)
-        );
-
-        $groupedByIdMerchantOrderTransfers = [];
-
-        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
-            $groupedByIdMerchantOrderTransfers[$merchantOrderTransfer->getIdMerchantOrder()] = $merchantOrderTransfer;
-        }
-
-        foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOrderItemTransfer->setMerchantOrder(
-                $groupedByIdMerchantOrderTransfers[$merchantOrderItemTransfer->getIdMerchantOrder()]
-            );
-        }
-
-        return $merchantOrderItemCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
@@ -375,10 +295,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         if ($merchantOrderItemCriteriaTransfer->getIdOrderItem()) {
             $merchantSalesOrderItemQuery->filterByFkSalesOrderItem($merchantOrderItemCriteriaTransfer->getIdOrderItem());
-        }
-
-        if ($merchantOrderItemCriteriaTransfer->getOrderItemIds()) {
-            $merchantSalesOrderItemQuery->filterByFkSalesOrderItem_In($merchantOrderItemCriteriaTransfer->getOrderItemIds());
         }
 
         return $merchantSalesOrderItemQuery;

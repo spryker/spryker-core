@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 
-use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
 
@@ -34,48 +34,45 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandOrderWithMerchantOrderData(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())->setWithOrder(true);
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setWithItems(true)
+            ->setIdOrder($orderTransfer->getIdSalesOrder());
 
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $merchantOrderItemCriteriaTransfer->addOrderItemId($itemTransfer->getIdSalesOrderItem());
-        }
-
-        if (!$merchantOrderItemCriteriaTransfer->getOrderItemIds()) {
-            return $orderTransfer;
-        }
-
-        $merchantOrderItemCollectionTransfer = $this->merchantSalesOrderRepository->getMerchantOrderItemCollection(
-            $merchantOrderItemCriteriaTransfer
+        $merchantOrderCollectionTransfer = $this->merchantSalesOrderRepository->getMerchantOrderCollection(
+            $merchantOrderCriteriaTransfer
         );
 
-        $orderTransfer = $this->expandOrderItemsWithMerchantOrderReference($orderTransfer, $merchantOrderItemCollectionTransfer);
+        $orderTransfer = $this->expandOrderItemsWithMerchantOrderReference($orderTransfer, $merchantOrderCollectionTransfer);
 
         return $orderTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function expandOrderItemsWithMerchantOrderReference(
         OrderTransfer $orderTransfer,
-        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
     ): OrderTransfer {
-        $groupedByItemIdMerchantOrderItemTransfers = [];
-        foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $groupedByItemIdMerchantOrderItemTransfers[$merchantOrderItemTransfer->getIdOrderItem()] = $merchantOrderItemTransfer;
+        $groupedByItemIdMerchantOrderTransfers = [];
+
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+                $groupedByItemIdMerchantOrderTransfers[$merchantOrderItemTransfer->getIdOrderItem()] = $merchantOrderTransfer;
+            }
         }
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            /** @var \Generated\Shared\Transfer\MerchantOrderItemTransfer|null $merchantOrderItemTransfer */
-            $merchantOrderItemTransfer = $groupedByItemIdMerchantOrderItemTransfers[$itemTransfer->getIdSalesOrderItem()] ?? null;
-            if (!$merchantOrderItemTransfer) {
+            if (!isset($groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()])) {
                 continue;
             }
 
-            $itemTransfer->setMerchantOrderReference($merchantOrderItemTransfer->getMerchantOrder()->getMerchantOrderReference());
+            /** @var \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrder */
+            $merchantOrder = $groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()];
+            $itemTransfer->setMerchantOrderReference($merchantOrder->getMerchantOrderReference());
         }
 
         return $orderTransfer;

@@ -41,23 +41,15 @@
         <property name="idOrderItem" type="int"/>
         <property name="idMerchantOrder" type="int"/>
         <property name="orderItem" type="Item"/>
-        <property name="merchantOrder" type="MerchantOrder"/>
-    </transfer>
-
-    <transfer name="MerchantOrderItemCollection">
-        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
         <property name="idMerchantOrderItem" type="int"/>
         <property name="idOrderItem" type="int"/>
-        <property name="orderItemIds" type="int[]" singular="orderItemId"/>
-        <property name="withOrder" type="bool"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
         <property name="idMerchantOrder" type="int"/>
-        <property name="merchantOrderIds" type="int[]" singular="merchantOrderId"/>
         <property name="merchantOrderReference" type="string"/>
         <property name="idOrder" type="int"/>
         <property name="idMerchant" type="int"/>
