@@ -12,7 +12,7 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataPr
 
 class IsVisibleProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
 {
-    protected const FILTER_NAME = 'visibility';
+    public const FILTER_NAME = 'visibility';
 
     protected const OPTION_NAME_ONLINE = 'Online';
     protected const OPTION_NAME_OFFLINE = 'Offline';

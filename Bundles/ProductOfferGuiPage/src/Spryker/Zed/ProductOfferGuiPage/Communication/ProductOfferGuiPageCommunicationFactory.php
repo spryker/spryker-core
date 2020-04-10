@@ -12,13 +12,17 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\StockFilterProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\IsVisibleFilterProductOfferTableCriteriaExpander;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\StatusFilterProductOfferTableCriteriaExpander;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\StockFilterProductOfferTableCriteriaExpander;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\StoresFilterProductOfferTableCriteriaExpander;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StatusProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StoresProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
@@ -29,6 +33,7 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\Filter\IsAc
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
@@ -96,7 +101,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
         return new ProductOfferTableCriteriaBuilder(
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade(),
-            $this->getCreateIsVisibleFilterProductOfferTableCriteriaExpanders()
+            $this->getFilterProductOfferTableCriteriaExpanders()
         );
     }
 
@@ -155,6 +160,22 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    public function createStatusProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
+    {
+        return new StatusProductOfferTableFilterDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    public function createStoresProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
+    {
+        return new StoresProductOfferTableFilterDataProvider($this->getStoreFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface[]
      */
     public function getProductOfferTableFilterDataProviders(): array
@@ -162,6 +183,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
         return [
             $this->createIsVisibleProductOfferTableFilterDataProvider(),
             $this->createStockProductOfferTableFilterDataProvider(),
+            $this->createStatusProductOfferTableFilterDataProvider(),
+            $this->createStoresProductOfferTableFilterDataProvider(),
         ];
     }
 
@@ -170,9 +193,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createIsVisibleFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
     {
-        return new IsVisibleFilterProductOfferTableCriteriaExpander(
-            $this->createIsVisibleProductOfferTableFilterDataProvider()
-        );
+        return new IsVisibleFilterProductOfferTableCriteriaExpander();
     }
 
     /**
@@ -180,19 +201,35 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createStockFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
     {
-        return new StockFilterProductOfferTableCriteriaExpander(
-            $this->createStockProductOfferTableFilterDataProvider()
-        );
+        return new StockFilterProductOfferTableCriteriaExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface
+     */
+    public function createStatusFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
+    {
+        return new StatusFilterProductOfferTableCriteriaExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface
+     */
+    public function createStoresFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
+    {
+        return new StoresFilterProductOfferTableCriteriaExpander();
     }
 
     /**
      * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface[]
      */
-    public function getCreateIsVisibleFilterProductOfferTableCriteriaExpanders(): array
+    public function getFilterProductOfferTableCriteriaExpanders(): array
     {
         return [
             $this->createIsVisibleFilterProductOfferTableCriteriaExpander(),
             $this->createStockFilterProductOfferTableCriteriaExpander(),
+            $this->createStatusFilterProductOfferTableCriteriaExpander(),
+            $this->createStoresFilterProductOfferTableCriteriaExpander(),
         ];
     }
 
@@ -226,5 +263,13 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function getTranslatorFacade(): ProductOfferGuiPageToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductOfferGuiPageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::FACADE_STORE);
     }
 }

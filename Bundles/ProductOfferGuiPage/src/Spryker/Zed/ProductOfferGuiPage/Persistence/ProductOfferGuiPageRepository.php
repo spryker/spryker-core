@@ -328,8 +328,10 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function addIsActiveProductFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
-    {
+    protected function addIsActiveProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
         if (!$productTableCriteriaTransfer->isPropertyModified(ProductTableCriteriaTransfer::IS_ACTIVE)) {
             return $productConcreteQuery;
         }
@@ -349,8 +351,10 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function addHasOffersProductFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
-    {
+    protected function addHasOffersProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
         $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers();
 
         if ($productConcreteHasOffers === null) {
@@ -570,6 +574,8 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
     ): SpyProductOfferQuery {
         $productOfferQuery = $this->addIsVisibleProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addStockProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addStatusProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addStoresProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
 
         return $productOfferQuery;
     }
@@ -605,14 +611,6 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        if ($productOfferTableCriteriaTransfer->getIsNeverOutOfStock()) {
-            $productOfferQuery->useProductOfferStockQuery()
-                    ->filterByIsNeverOutOfStock(true)
-                ->endUse();
-
-            return $productOfferQuery;
-        }
-
         if ($productOfferTableCriteriaTransfer->getHasStock() === null) {
             return $productOfferQuery;
         }
@@ -632,6 +630,48 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
         $productOfferQuery->_or()
             ->useProductOfferStockQuery()
                 ->filterByIdProductOfferStock(null, Criteria::ISNULL)
+            ->endUse();
+
+        return $productOfferQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function addStatusProductOfferFilter(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+    ): SpyProductOfferQuery {
+        if ($productOfferTableCriteriaTransfer->getApprovalStatus() === null) {
+            return $productOfferQuery;
+        }
+
+        $productOfferQuery->filterByApprovalStatus(
+            $productOfferTableCriteriaTransfer->getApprovalStatus()
+        );
+
+        return $productOfferQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function addStoresProductOfferFilter(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+    ): SpyProductOfferQuery {
+        if ($productOfferTableCriteriaTransfer->getInStores() === null) {
+            return $productOfferQuery;
+        }
+
+        $productOfferQuery->useSpyProductOfferStoreQuery()
+                ->filterByFkStore_In($productOfferTableCriteriaTransfer->getInStores())
             ->endUse();
 
         return $productOfferQuery;

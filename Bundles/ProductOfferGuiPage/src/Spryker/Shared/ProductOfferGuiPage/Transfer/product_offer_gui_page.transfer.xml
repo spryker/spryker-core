@@ -49,7 +49,6 @@
 
     <transfer name="ProductTableCriteria">
         <property name="inCategories" type="string[]" singular="inCategory"/>
-        <property name="inStores" type="string[]" singular="inStore"/>
         <property name="isActive" type="bool"/>
         <property name="hasOffers" type="bool"/>
         <property name="searchTerm" type="string"/>
@@ -62,7 +61,8 @@
     <transfer name="ProductOfferTableCriteria">
         <property name="isVisible" type="bool"/>
         <property name="hasStock" type="bool"/>
-        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="approvalStatus" type="string"/>
+        <property name="inStores" type="int[]" singular="inStore"/>
         <property name="searchTerm" type="string"/>
         <property name="locale" type="Locale"/>
         <property name="merchantUser" type="MerchantUser"/>

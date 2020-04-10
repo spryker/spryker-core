@@ -1,31 +1,17 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
 
 class IsVisibleFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
-    protected $tableFilterDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
-     */
-    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
-    {
-        $this->tableFilterDataProvider = $tableFilterDataProvider;
-    }
-
     /**
      * @param array $filters
      * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
@@ -36,10 +22,10 @@ class IsVisibleFilterProductOfferTableCriteriaExpander implements FilterProductO
         array $filters,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $filterId = $this->tableFilterDataProvider->getFilterData()->getId();
+        $filterName = IsVisibleProductOfferTableFilterDataProvider::FILTER_NAME;
 
-        if (isset($filters[$filterId])) {
-            $isVisible = (bool)$filters[$filterId];
+        if (isset($filters[$filterName])) {
+            $isVisible = (bool)$filters[$filterName];
             $productOfferTableCriteriaTransfer->setIsVisible($isVisible);
         }
 

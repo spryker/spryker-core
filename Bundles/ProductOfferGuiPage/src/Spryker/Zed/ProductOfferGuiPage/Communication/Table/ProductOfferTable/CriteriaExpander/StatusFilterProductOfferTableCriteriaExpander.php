@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StatusProductOfferTableFilterDataProvider;
 
-class StockFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class StatusFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
 {
     /**
      * @param array $filters
@@ -22,11 +22,12 @@ class StockFilterProductOfferTableCriteriaExpander implements FilterProductOffer
         array $filters,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $filterName = StockProductOfferTableFilterDataProvider::FILTER_NAME;
+        $filterName = StatusProductOfferTableFilterDataProvider::FILTER_NAME;
 
         if (isset($filters[$filterName])) {
-            $hasStock = (bool)$filters[$filterName];
-            $productOfferTableCriteriaTransfer->setHasStock($hasStock);
+            $productOfferTableCriteriaTransfer->setApprovalStatus(
+                strtolower($filters[$filterName])
+            );
         }
 
         return $productOfferTableCriteriaTransfer;

@@ -10,15 +10,13 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
-class StockProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
+class StatusProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'stock';
+    public const FILTER_NAME = 'status';
 
-    protected const OPTION_HAS_STOCK = 'Has stock';
-    protected const OPTION_OUT_OF_STOCK = 'Out of stock';
-
-    protected const OPTION_HAS_STOCK_VALUE = 1;
-    protected const OPTION_OUT_OF_STOCK_VALUE = 0;
+    protected const OPTION_APPROVED = 'Approved';
+    protected const OPTION_DENIED = 'Denied';
+    protected const OPTION_PENDING = 'Pending';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -27,25 +25,29 @@ class StockProductOfferTableFilterDataProvider implements TableFilterDataProvide
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
-            ->setTitle('Stock')
+            ->setTitle('Status')
             ->setType('select')
             ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getStockOptions());
+            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getStatusOptions());
     }
 
     /**
      * @return array
      */
-    protected function getStockOptions(): array
+    protected function getStatusOptions(): array
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_HAS_STOCK,
-                static::OPTION_VALUE_KEY_VALUE => static::OPTION_HAS_STOCK_VALUE,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_APPROVED,
+                static::OPTION_VALUE_KEY_VALUE => static::OPTION_APPROVED,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_OUT_OF_STOCK,
-                static::OPTION_VALUE_KEY_VALUE => static::OPTION_OUT_OF_STOCK_VALUE,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_DENIED,
+                static::OPTION_VALUE_KEY_VALUE => static::OPTION_DENIED,
+            ],
+            [
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_PENDING,
+                static::OPTION_VALUE_KEY_VALUE => static::OPTION_PENDING,
             ],
         ];
     }
