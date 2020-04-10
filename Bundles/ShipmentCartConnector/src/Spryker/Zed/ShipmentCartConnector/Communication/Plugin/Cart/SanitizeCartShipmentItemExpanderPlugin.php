@@ -8,19 +8,19 @@
 namespace Spryker\Zed\ShipmentCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Communication\Plugin\Cart\CartShipmentCartOperationPostSavePlugin instead.
- *
  * @method \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
  */
-class CartShipmentExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class SanitizeCartShipmentItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Clears shipment method from quote and items in case of item add or remove action.
+     * - Clears shipment expenses in case of item add or remove action.
      *
      * @api
      *
@@ -28,8 +28,8 @@ class CartShipmentExpanderPlugin extends AbstractPlugin implements ItemExpanderP
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFacade()->updateShipmentPrice($cartChangeTransfer);
+        return $this->getFacade()->clearShipmentMethod($cartChangeTransfer);
     }
 }
