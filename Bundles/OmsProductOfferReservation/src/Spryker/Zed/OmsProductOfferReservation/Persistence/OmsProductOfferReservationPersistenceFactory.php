@@ -19,7 +19,7 @@ class OmsProductOfferReservationPersistenceFactory extends AbstractPersistenceFa
     /**
      * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery
      */
-    public function createPropelOmsProductOfferReservationQuery(): SpyOmsProductOfferReservationQuery
+    public function getPropelOmsProductOfferReservationQuery(): SpyOmsProductOfferReservationQuery
     {
         return SpyOmsProductOfferReservationQuery::create();
     }

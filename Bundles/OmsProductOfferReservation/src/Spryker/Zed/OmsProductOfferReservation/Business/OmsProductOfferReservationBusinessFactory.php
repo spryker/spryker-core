@@ -8,6 +8,8 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationReader;
+use Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationReaderInterface;
 
 /**
  * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
@@ -15,4 +17,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class OmsProductOfferReservationBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationReaderInterface
+     */
+    public function createOmsProductOfferReservationReader(): OmsProductOfferReservationReaderInterface
+    {
+        return new OmsProductOfferReservationReader($this->getRepository());
+    }
 }

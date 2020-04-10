@@ -23,12 +23,12 @@ class OmsProductOfferReservationHelper extends Module
     {
         $omsProductOfferReservationTransfer = (new OmsProductOfferReservationBuilder($seedData))->build();
 
-        $omsProductOfferReservation = (new SpyOmsProductOfferReservation())
+        $omsProductOfferReservationEntity = (new SpyOmsProductOfferReservation())
             ->setFkStore($omsProductOfferReservationTransfer->getIdStore());
 
-        $omsProductOfferReservation->fromArray($omsProductOfferReservationTransfer->toArray());
+        $omsProductOfferReservationEntity->fromArray($omsProductOfferReservationTransfer->toArray());
 
-        $omsProductOfferReservation->save();
+        $omsProductOfferReservationEntity->save();
 
         return $omsProductOfferReservationTransfer;
     }
