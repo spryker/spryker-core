@@ -57,13 +57,7 @@ class OrderExpander implements OrderExpanderInterface
         OrderTransfer $orderTransfer,
         MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
     ): OrderTransfer {
-        $groupedByItemIdMerchantOrderTransfers = [];
-
-        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
-            foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-                $groupedByItemIdMerchantOrderTransfers[$merchantOrderItemTransfer->getIdOrderItem()] = $merchantOrderTransfer;
-            }
-        }
+        $groupedByItemIdMerchantOrderTransfers = $this->groupMerchantOrderCollectionByItemId($merchantOrderCollectionTransfer);
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if (!isset($groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()])) {
@@ -76,5 +70,23 @@ class OrderExpander implements OrderExpanderInterface
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     */
+    protected function groupMerchantOrderCollectionByItemId(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): array
+    {
+        $groupedByItemIdMerchantOrderTransfers = [];
+
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+                $groupedByItemIdMerchantOrderTransfers[$merchantOrderItemTransfer->getIdOrderItem()] = $merchantOrderTransfer;
+            }
+        }
+
+        return $groupedByItemIdMerchantOrderTransfers;
     }
 }
