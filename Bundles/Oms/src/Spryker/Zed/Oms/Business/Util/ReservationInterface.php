@@ -8,34 +8,32 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface ReservationInterface
 {
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function updateReservationQuantity($sku);
+    public function updateReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer);
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
+    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
+    public function sumReservedProductQuantitiesForSku(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
 
     /**
      * @param string $sku

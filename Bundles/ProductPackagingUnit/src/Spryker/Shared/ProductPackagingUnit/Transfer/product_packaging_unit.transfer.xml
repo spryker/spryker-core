@@ -152,4 +152,10 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="item" type="Item"/>
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
 </transfers>

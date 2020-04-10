@@ -5,24 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
+namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface OmsProductOfferReservationRepositoryInterface
+interface ProductOfferPackagingUnitRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
-     */
-    public function getQuantity(
-        OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): ReservationResponseTransfer;
-
     /**
      * @param string $productOfferReference
      * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers

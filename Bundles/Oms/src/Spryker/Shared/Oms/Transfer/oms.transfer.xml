@@ -127,5 +127,12 @@
     <transfer name="ShipmentCarrier">
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="store" type="Store"/>
+        <property name="item" type="Item"/>
+        <property name="reservedStates" type="OmsStateCollection"/>
+    </transfer>
+
 </transfers>
 

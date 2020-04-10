@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business\Util;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -50,12 +51,18 @@ class Reservation implements ReservationInterface
     protected $reservationAggregationPlugins;
 
     /**
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface[]
+     */
+    protected $omsReservationAggregationPlugins;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface[] $omsReservationAggregationPlugins
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
@@ -63,7 +70,8 @@ class Reservation implements ReservationInterface
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade,
         OmsRepositoryInterface $omsRepository,
-        array $reservationAggregationPlugins = []
+        array $reservationAggregationPlugins = [],
+        array $omsReservationAggregationPlugins = []
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
@@ -71,36 +79,42 @@ class Reservation implements ReservationInterface
         $this->storeFacade = $storeFacade;
         $this->omsRepository = $omsRepository;
         $this->reservationAggregationPlugins = $reservationAggregationPlugins;
+        $this->omsReservationAggregationPlugins = $omsReservationAggregationPlugins;
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function updateReservationQuantity($sku)
+    public function updateReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer)
     {
-        $reservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
+        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($reservationRequestTransfer);
+        $reservationRequestTransfer->setReservationQuantity($reservationQuantity);
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $this->saveReservation($sku, $currentStoreTransfer, $reservationAmount);
+        $reservationRequestTransfer->setStore($currentStoreTransfer);
+        $this->saveReservation($reservationRequestTransfer);
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->saveReservation($sku, $storeTransfer, $reservationAmount);
+            $reservationRequestTransfer->setStore($storeTransfer);
+            $this->saveReservation($reservationRequestTransfer);
         }
 
-        $this->handleReservationPlugins($sku);
+        $this->handleReservationPlugins($reservationRequestTransfer->getItem()->getSku());
     }
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
+    public function sumReservedProductQuantitiesForSku(ReservationRequestTransfer $reservationRequestTransfer): Decimal
     {
         $reservedStates = $this->getOmsReservedStateCollection();
-        $salesAggregationTransfers = $this->aggregateSalesOrderItemReservations($reservedStates, $sku, $storeTransfer);
+
+        $reservationRequestTransfer->setReservedStates($reservedStates)
+            ->setStore($this->storeFacade->getCurrentStore());
+        $salesAggregationTransfers = $this->aggregateSalesOrderItemReservations($reservationRequestTransfer);
 
         return $this->calculateReservationQuantity(
             $reservedStates,
@@ -192,22 +206,30 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     protected function aggregateSalesOrderItemReservations(
-        OmsStateCollectionTransfer $reservedStates,
-        string $sku,
-        ?StoreTransfer $storeTransfer = null
+        ReservationRequestTransfer $reservationRequestTransfer
     ): array {
+        foreach ($this->omsReservationAggregationPlugins as $omsReservationAggregationPlugin) {
+            if (!$omsReservationAggregationPlugin->isApplicable($reservationRequestTransfer)) {
+                continue;
+            }
+
+            $salesAggregationTransfers = $omsReservationAggregationPlugin->aggregateReservations($reservationRequestTransfer);
+
+            if ($salesAggregationTransfers !== []) {
+                return $salesAggregationTransfers;
+            }
+        }
+
         foreach ($this->reservationAggregationPlugins as $reservationAggregationPlugin) {
             $salesAggregationTransfers = $reservationAggregationPlugin->aggregateReservations(
-                $sku,
-                $reservedStates,
-                $storeTransfer
+                $reservationRequestTransfer->getItem()->getSku(),
+                $reservationRequestTransfer->getReservedStates(),
+                $reservationRequestTransfer->getStore()
             );
 
             if ($salesAggregationTransfers !== []) {
@@ -216,9 +238,9 @@ class Reservation implements ReservationInterface
         }
 
         return $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
-            array_keys($reservedStates->getStates()->getArrayCopy()),
-            $sku,
-            $storeTransfer
+            array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()),
+            $reservationRequestTransfer->getItem()->getSku(),
+            $reservationRequestTransfer->getStore()
         );
     }
 
@@ -271,21 +293,19 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
+    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $storeTransfer->requireIdStore();
+        $reservationRequestTransfer->getStore()->requireIdStore();
 
         $reservationEntity = $this->queryContainer
-            ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
+            ->queryProductReservationBySkuAndStore($reservationRequestTransfer->getItem()->getSku(), $reservationRequestTransfer->getStore()->getIdStore())
             ->findOneOrCreate();
 
-        $reservationEntity->setReservationQuantity($reservationQuantity);
+        $reservationEntity->setReservationQuantity($reservationRequestTransfer->getReservationQuantity());
         $reservationEntity->save();
     }
 
