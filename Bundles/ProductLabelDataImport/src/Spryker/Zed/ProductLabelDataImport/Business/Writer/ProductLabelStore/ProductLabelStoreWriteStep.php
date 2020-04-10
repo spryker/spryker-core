@@ -16,6 +16,11 @@ use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabelStore\DataSet
 class ProductLabelStoreWriteStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
+     * @uses \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig::PRODUCT_LABEL_STORE_PUBLISH
+     */
+    protected const EVENT_PRODUCT_LABEL_STORE_PUBLISH = 'ProductLabel.product_label_store.publish';
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -29,6 +34,6 @@ class ProductLabelStoreWriteStep extends PublishAwareStep implements DataImportS
 
         $productLabelStoreEntity->save();
 
-        $this->addPublishEvents('', $productLabelStoreEntity->getIdProductLabelStore());
+        $this->addPublishEvents(static::EVENT_PRODUCT_LABEL_STORE_PUBLISH, $productLabelStoreEntity->getIdProductLabelStore());
     }
 }

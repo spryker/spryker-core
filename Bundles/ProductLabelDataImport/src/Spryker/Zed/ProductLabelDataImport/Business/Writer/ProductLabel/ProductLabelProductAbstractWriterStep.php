@@ -8,15 +8,23 @@
 namespace Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel;
 
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
-use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
 
 class ProductLabelProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const EVENT_PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const EVENT_PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -37,8 +45,8 @@ class ProductLabelProductAbstractWriterStep extends PublishAwareStep implements 
             if ($productLabelAbstractProductEntity->isNew() || $productLabelAbstractProductEntity->isModified()) {
                 $productLabelAbstractProductEntity->save();
 
-                $this->addPublishEvents(ProductLabelStorageConfig::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
-                $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
+                $this->addPublishEvents(static::EVENT_PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
+                $this->addPublishEvents(static::EVENT_PRODUCT_ABSTRACT_PUBLISH, $idProductAbstract);
             }
         }
     }

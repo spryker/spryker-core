@@ -17,6 +17,8 @@ class ProductLabelDataImportConfig extends DataImportConfig
     public const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductLabelDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -30,6 +32,8 @@ class ProductLabelDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductLabelStoreImporterConfiguration(): DataImporterConfigurationTransfer

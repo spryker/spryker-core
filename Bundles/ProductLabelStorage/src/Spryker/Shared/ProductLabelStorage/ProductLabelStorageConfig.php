@@ -45,6 +45,22 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
+     * - This events will be used for product_label_store publishing
+     *
+     * @api
+     */
+    public const PRODUCT_LABEL_STORE_PUBLISH = 'ProductLabel.product_label_store.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_label_store un-publishing
+     *
+     * @api
+     */
+    public const PRODUCT_LABEL_STORE_UNPUBLISH = 'ProductLabel.product_label_store.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_label_product_abstract entity creation
      *
      * @api
@@ -114,6 +130,30 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_product_label_localized_attributes.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_label_store entity deletion
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_LABEL_STORE_CREATE = 'Entity.spy_product_label_store.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_label_store entity deletion
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_LABEL_STORE_UPDATE = 'Entity.spy_product_label_store.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_label_store entity deletion
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_LABEL_STORE_DELETE = 'Entity.spy_product_label_store.delete';
 
     /**
      * Specification:

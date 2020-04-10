@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ProductLabelDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
+use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\Hook\ProductLabelAfterImportPublishHook;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelAttributeWriterStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelProductAbstractWriterStep;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\ProductLabelWriterStep;
@@ -40,6 +42,7 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
             ->addStep($this->createProductLabelProductAbstractWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+        $dataImporter->addAfterImportHook($this->createProductLabelAfterImportPublishHook());
 
         return $dataImporter;
     }
@@ -92,6 +95,14 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductLabelProductAbstractWriterStep(): DataImportStepInterface
     {
         return new ProductLabelProductAbstractWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
+     */
+    public function createProductLabelAfterImportPublishHook(): DataImporterAfterImportInterface
+    {
+        return new ProductLabelAfterImportPublishHook();
     }
 
     /**
