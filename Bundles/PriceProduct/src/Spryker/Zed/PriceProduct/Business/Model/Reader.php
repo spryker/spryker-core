@@ -562,6 +562,10 @@ class Reader implements ReaderInterface
 
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $priceProductCriteriaTransfer) {
+            if (!isset($priceProductFilterTransfers[$priceProductCriteriaTransfer->getSku()])) {
+                continue;
+            }
+            
             $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
                 $priceProductTransfers[$priceProductCriteriaTransfer->getSku()],
                 $priceProductCriteriaTransfer
