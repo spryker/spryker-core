@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -135,5 +136,35 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
     public function unpublishProductLabel(array $productAbstractIds)
     {
         $this->getFactory()->createProductAbstractLabelStorageDeleter()->unpublish($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
+    {
+        return $this->getRepository()->getProductAbstractLabelStorageDataTransfersByIds($filterTransfer, $ids);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
+    {
+        return $this->getRepository()->getProductLabelDictionaryStorageDataTransfersByIds($filterTransfer, $ids);
     }
 }

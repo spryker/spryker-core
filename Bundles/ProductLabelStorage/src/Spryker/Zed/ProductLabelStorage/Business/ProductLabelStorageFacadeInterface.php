@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductLabelStorageFacadeInterface
 {
     /**
@@ -121,4 +123,30 @@ interface ProductLabelStorageFacadeInterface
      * @return void
      */
     public function unpublishProductLabel(array $productAbstractIds);
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product abstract label storage transfers according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product label dictionary storage transfers according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
 }

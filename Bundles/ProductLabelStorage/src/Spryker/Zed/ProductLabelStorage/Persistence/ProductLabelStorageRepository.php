@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStoragePersistenceFactory getFactory()
@@ -77,5 +81,49 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
                 $productLabelDictionaryEntities,
                 []
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
+    {
+        if (!$filterTransfer->getOrderBy()) {
+            $filterTransfer->setOrderBy(SpyProductLabelProductAbstractTableMap::COL_ID_PRODUCT_LABEL_PRODUCT_ABSTRACT);
+        }
+
+        $query = $this->getFactory()->createSpyProductAbstractLabelStorageQuery();
+        if ($ids !== []) {
+            $query->filterByIdProductAbstractLabelStorage_In($ids);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
+    {
+        if (!$filterTransfer->getOrderBy()) {
+            $filterTransfer->setOrderBy(SpyProductLabelDictionaryStorageTableMap::COL_ID_PRODUCT_LABEL_DICTIONARY_STORAGE);
+        }
+
+        $query = $this->getFactory()->createSpyProductLabelDictionaryStorageQuery();
+        if ($ids !== []) {
+            $query->filterByIdProductLabelDictionaryStorage_In($ids);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 }

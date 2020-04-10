@@ -7,21 +7,38 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataRepositoryPlugin} instead.
- *
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
-class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
+class ProductAbstractLabelSynchronizationDataRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves a collection of product abstract label storage transfers according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getData(int $offset, int $limit, array $ids = []): array
+    {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->getProductAbstractLabelStorageDataTransfersByIds($filterTransfer, $ids);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -44,26 +61,6 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
     public function hasStore(): bool
     {
         return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData($ids = []): ?ModelCriteria
-    {
-        $query = $this->getQueryContainer()->queryProductAbstractLabelStorageByIds($ids);
-
-        if ($ids === []) {
-            $query->clear();
-        }
-
-        return $query->orderByIdProductAbstractLabelStorage();
     }
 
     /**
@@ -100,5 +97,18 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductAbstractLabelSynchronizationPoolName();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

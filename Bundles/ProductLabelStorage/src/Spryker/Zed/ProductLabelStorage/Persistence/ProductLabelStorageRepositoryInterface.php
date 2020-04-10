@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductLabelStorageRepositoryInterface
 {
     /**
@@ -27,4 +29,20 @@ interface ProductLabelStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[]
      */
     public function getProductLabelDictionaryStorageTransfers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
 }
