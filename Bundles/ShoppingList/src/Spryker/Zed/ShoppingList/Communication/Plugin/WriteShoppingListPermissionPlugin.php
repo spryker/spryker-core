@@ -22,6 +22,8 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
     public const KEY = ShoppingListConfig::WRITE_SHOPPING_LIST_PERMISSION_PLUGIN_KEY;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -51,6 +53,8 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

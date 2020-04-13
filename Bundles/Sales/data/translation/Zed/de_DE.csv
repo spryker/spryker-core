@@ -19,6 +19,7 @@ Items,Artikel
 Legend,Legende
 "List of orders","Liste der Bestellungen"
 Matrix,Matrix
+Note,Hinweis
 "Number of Items","Menge der Artikel"
 Option,Option
 "Order Matrix",Bestellungsmatrix
@@ -39,6 +40,7 @@ Shipment,Versand
 "Show more","Mehr anzeigen"
 Sku,SKU
 State,Status
+"Sub total",Zwischensumme
 Subtotal,Zwischensumme
 Totals,Gesamtsummen
 "Trigger all matching states","Alle passenden Stati antriggern"
@@ -48,4 +50,3 @@ Totals,Gesamtsummen
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"
 "View Order:","Bestellung anzeigen:"
-Note,Hinweis

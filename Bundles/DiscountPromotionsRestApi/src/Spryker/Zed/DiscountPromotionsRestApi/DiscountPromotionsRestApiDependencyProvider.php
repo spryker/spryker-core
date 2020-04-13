@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DiscountPromotionsRestApi;
 
-use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionBridge;
+use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -39,9 +39,7 @@ class DiscountPromotionsRestApiDependencyProvider extends AbstractBundleDependen
     protected function addDiscountPromotionFacade(Container $container): Container
     {
         $container->set(static::FACADE_DISCOUNT_PROMOTION, function (Container $container) {
-            return new DiscountPromotionsRestApiToDiscountPromotionBridge($container->getLocator()
-                ->discountPromotion()
-                ->facade());
+            return new DiscountPromotionsRestApiToDiscountPromotionFacadeBridge($container->getLocator()->discountPromotion()->facade());
         });
 
         return $container;

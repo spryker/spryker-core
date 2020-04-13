@@ -58,8 +58,10 @@ class CheckoutRequestAttributesExpander implements CheckoutRequestAttributesExpa
      *
      * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
      */
-    protected function expandCustomerData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutRequestAttributesTransfer
-    {
+    protected function expandCustomerData(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutRequestAttributesTransfer {
         $restCustomerTransfer = $this->customerMapper->mapRestCustomerTransferFromRestCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
         $restCheckoutRequestAttributesTransfer->setCustomer($restCustomerTransfer);
 
@@ -71,8 +73,9 @@ class CheckoutRequestAttributesExpander implements CheckoutRequestAttributesExpa
      *
      * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
      */
-    protected function expandPaymentSelection(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutRequestAttributesTransfer
-    {
+    protected function expandPaymentSelection(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutRequestAttributesTransfer {
         $payments = $restCheckoutRequestAttributesTransfer->getPayments();
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
 

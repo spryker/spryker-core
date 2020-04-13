@@ -32,8 +32,10 @@ class WishlistMapper implements WishlistMapperInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function mapWishlistAttributesToWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer, WishlistTransfer $wishlistTransfer): WishlistTransfer
-    {
+    public function mapWishlistAttributesToWishlistTransfer(
+        RestWishlistsAttributesTransfer $attributesTransfer,
+        WishlistTransfer $wishlistTransfer
+    ): WishlistTransfer {
         return $wishlistTransfer->fromArray($attributesTransfer->modifiedToArray(), true);
     }
 }

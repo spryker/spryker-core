@@ -15,6 +15,8 @@ class OmsConfig extends AbstractBundleConfig
     public const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProcessDefinitionLocation()
@@ -23,6 +25,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getActiveProcesses()
@@ -31,6 +35,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getGraphDefaults()
@@ -44,6 +50,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getStateBlacklist()
@@ -52,6 +60,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStateMachineLockerTimeoutInterval()
@@ -60,6 +70,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSubProcessPrefixDelimiter()
@@ -68,6 +80,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInitialStatus()

@@ -31,20 +31,23 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(ProductRelationStorageToStorageClientInterface $storageClient, ProductRelationStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        ProductRelationStorageToStorageClientInterface $storageClient,
+        ProductRelationStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer|null
      */
-    public function findProductAbstractRelation($idProductAbstract)
+    public function findProductAbstractRelation(int $idProductAbstract, string $storeName)
     {
-        $productAbstractRelationStorageData = $this->getStorageData($idProductAbstract);
+        $productAbstractRelationStorageData = $this->getStorageData($idProductAbstract, $storeName);
 
         if (!$productAbstractRelationStorageData) {
             return null;
@@ -57,10 +60,11 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract)
+    protected function getStorageData(int $idProductAbstract, string $storeName): ?array
     {
         if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
@@ -91,22 +95,24 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
             return $productAbstractRelationCollectorData;
         }
-        $key = $this->generateKey($idProductAbstract);
-        $productAbstractRelationStorageData = $this->storageClient->get($key);
 
-        return $productAbstractRelationStorageData;
+        $key = $this->generateKey($idProductAbstract, $storeName);
+
+        return $this->storageClient->get($key);
     }
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract)
+    protected function generateKey($idProductAbstract, string $storeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference((string)$idProductAbstract);
+            ->setReference((string)$idProductAbstract)
+            ->setStore($storeName);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)

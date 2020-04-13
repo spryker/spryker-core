@@ -15,6 +15,8 @@ class TwigConfig extends AbstractSharedConfig
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeName(): string
@@ -23,6 +25,8 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeNameDefault(): string
@@ -31,6 +35,8 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectNamespaces(): array
@@ -39,6 +45,8 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCoreNamespaces(): array

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
@@ -45,7 +47,9 @@ interface OauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
 
     /**
      * Specification:
@@ -118,4 +122,49 @@ interface OauthFacadeInterface
      * @return void
      */
     public function installOauthClient(): void;
+
+    /**
+     * Specification:
+     * - Revokes refresh token by provided identifier and customer reference.
+     * - Requires `refreshToken` and `customerReference` to be set on `RevokeRefreshTokenRequestTransfer` taken as parameter.
+     * - Decrypts the `refreshToken`.
+     * - Looks up the persisted refresh token record by the `identifier` and `customerReference`.
+     * - Revokes refresh token found.
+     * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = true` on success.
+     * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = false` when refresh token cannot be decrypted.
+     * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = false` when refresh token cannot be found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * Specification:
+     * - Revokes all refresh tokens by provided customer reference.
+     * - Requires `RevokeRefreshTokenRequestTransfer.customerReference`.
+     * - Looks up all refresh tokens by the `customerReference`.
+     * - Revokes each refresh token.
+     * - Returns `RevokeRefreshTokenResponseTransfer.isSuccessful = true` on success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeAllRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Deletes refresh tokens where expires_at column less than NOW() + OauthConfig::getRefreshTokenRetentionInterval().
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function deleteExpiredRefreshTokens(): ?int;
 }
