@@ -11,10 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -26,11 +28,11 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     /**
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): Decimal {
+    ): ReservationResponseTransfer {
         $quantity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
             ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
             ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())
@@ -61,7 +63,8 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         ArrayObject $omsStateTransfers,
         ?StoreTransfer $storeTransfer = null
     ): array {
-        $salesOrderItemQuery = (new SpySalesOrderItemQuery())
+        $salesOrderItemQuery = new SpySalesOrderItemQuery();
+        $salesOrderItemQuery
             ->filterByProductOfferReference($productOfferReference)
             ->useStateQuery()
                 ->filterByName_In(array_keys($omsStateTransfers->getArrayCopy()))
@@ -85,6 +88,9 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         }
 
         $salesAggregationTransfers = [];
+        /**
+         * @var array $salesOrderItemAggregation
+         */
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
                 ->fromArray($salesOrderItemAggregation, true);
