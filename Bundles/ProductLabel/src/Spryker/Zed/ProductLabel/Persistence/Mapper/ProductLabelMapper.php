@@ -49,12 +49,15 @@ class ProductLabelMapper
 
         $storeRelationTransfer = new StoreRelationTransfer();
         $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
-        $productLabelTransfer->setStoreRelation(
-            $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
-                $productLabelEntity->getProductLabelStores(),
-                $storeRelationTransfer
-            )
-        );
+
+        if ($productLabelEntity->getProductLabelStores()->count()) {
+            $productLabelTransfer->setStoreRelation(
+                $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
+                    $productLabelEntity->getProductLabelStores(),
+                    $storeRelationTransfer
+                )
+            );
+        }
 
         return $productLabelTransfer;
     }
@@ -74,5 +77,20 @@ class ProductLabelMapper
         }
 
         return $transferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     */
+    public function mapProductLabelTransferToProductLabelEntity(
+        ProductLabelTransfer $productLabelTransfer,
+        SpyProductLabel $productLabelEntity
+    ): SpyProductLabel {
+        $productLabelEntity->fromArray($productLabelTransfer->modifiedToArray());
+
+        return $productLabelEntity;
     }
 }

@@ -24,9 +24,9 @@ class LabelCreator implements LabelCreatorInterface
     protected $localizedAttributesCollectionWriter;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
      */
-    protected $queryContainer;
+    protected $productLabelEntityManager;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
@@ -40,18 +40,18 @@ class LabelCreator implements LabelCreatorInterface
 
     /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $productLabelStoreRelationUpdater
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
-        ProductLabelQueryContainerInterface $queryContainer,
+        ProductLabelEntityManagerInterface $productLabelEntityManager,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
         ProductLabelStoreRelationUpdaterInterface $productLabelStoreRelationUpdater
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
-        $this->queryContainer = $queryContainer;
+        $this->productLabelEntityManager = $productLabelEntityManager;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
         $this->productLabelStoreRelationUpdater = $productLabelStoreRelationUpdater;
     }
@@ -61,7 +61,7 @@ class LabelCreator implements LabelCreatorInterface
      *
      * @return void
      */
-    public function create(ProductLabelTransfer $productLabelTransfer)
+    public function create(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->assertProductLabel($productLabelTransfer);
 
@@ -75,7 +75,7 @@ class LabelCreator implements LabelCreatorInterface
      *
      * @return void
      */
-    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer)
+    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $productLabelTransfer
             ->requireName()
@@ -88,9 +88,9 @@ class LabelCreator implements LabelCreatorInterface
      *
      * @return void
      */
-    protected function executeCreateTransaction(ProductLabelTransfer $productLabelTransfer)
+    protected function executeCreateTransaction(ProductLabelTransfer $productLabelTransfer): void
     {
-        $productLabelTransfer = $this->persistLabel($productLabelTransfer);
+        $productLabelTransfer = $this->productLabelEntityManager->createProductLabel($productLabelTransfer);
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
         $this->persistStoreRelation($productLabelTransfer);
 
@@ -100,51 +100,9 @@ class LabelCreator implements LabelCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
-     */
-    protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
-    {
-        $productLabelEntity = $this->createEntityFromTransfer($productLabelTransfer);
-
-        $productLabelEntity->save();
-
-        return $this->updateTransferFromEntity($productLabelTransfer, $productLabelEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function createEntityFromTransfer(ProductLabelTransfer $productLabelTransfer)
-    {
-        $productLabelEntity = new SpyProductLabel();
-        $productLabelEntity->fromArray($productLabelTransfer->toArray());
-
-        return $productLabelEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer
-     */
-    protected function updateTransferFromEntity(
-        ProductLabelTransfer $productLabelTransfer,
-        SpyProductLabel $productLabelEntity
-    ) {
-        $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
-
-        return $productLabelTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
      * @return void
      */
-    protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer)
+    protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer): void
     {
         foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $localizedAttributesTransfer) {
             $localizedAttributesTransfer->setFkProductLabel($productLabelTransfer->getIdProductLabel());

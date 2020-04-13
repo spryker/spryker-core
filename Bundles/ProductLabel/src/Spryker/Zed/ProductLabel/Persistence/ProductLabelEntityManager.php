@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -15,6 +17,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ProductLabelEntityManager extends AbstractEntityManager implements ProductLabelEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    public function createProductLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelTransfer
+    {
+        $productLabelMapper = $this->getFactory()->createProductLabelMapper();
+
+        $productLabelEntity = $productLabelMapper->mapProductLabelTransferToProductLabelEntity(
+            $productLabelTransfer,
+            new SpyProductLabel()
+        );
+        $productLabelEntity->save();
+
+        return $productLabelMapper->mapProductLabelEntityToProductLabelTransfer(
+            $productLabelEntity,
+            $productLabelTransfer
+        );
+    }
+
     /**
      * @param int $idProductLabel
      *

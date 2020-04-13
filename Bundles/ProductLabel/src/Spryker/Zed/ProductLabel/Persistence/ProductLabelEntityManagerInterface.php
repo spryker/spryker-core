@@ -7,8 +7,17 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+
 interface ProductLabelEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    public function createProductLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelTransfer;
+
     /**
      * @param int $idProductLabel
      *

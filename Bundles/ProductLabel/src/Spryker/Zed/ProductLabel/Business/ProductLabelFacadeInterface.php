@@ -94,8 +94,11 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Persists new product-label entity to database
-     * - Touches product-label dictionary active
+     * - Requires ProductLabelTransfer.name, ProductLabelTransfer.isActive and ProductLabelTransfer.isExclusive properties to be set.
+     * - Persists new product label entity to database.
+     * - Persists product label localized attributes to database.
+     * - Persists product label to store relation to database.
+     * - Touches product label dictionary active
      *
      * @api
      *

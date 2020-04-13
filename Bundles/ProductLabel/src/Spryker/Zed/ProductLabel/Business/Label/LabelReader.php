@@ -40,7 +40,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findByIdProductLabel($idProductLabel)
+    public function findByIdProductLabel($idProductLabel): ?ProductLabelTransfer
     {
         $productLabelTransfer = $this->productLabelRepository->findProductLabelById($idProductLabel);
 
@@ -60,7 +60,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findProductLabelByName($labelName): ?ProductLabelTransfer
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelByNameProductLabel($labelName);
+        $productLabelTransfer = $this->productLabelRepository->findProductLabelByName($labelName);
 
         if (!$productLabelTransfer) {
             return null;
@@ -74,7 +74,7 @@ class LabelReader implements LabelReaderInterface
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function findAll()
+    public function findAll(): array
     {
         $productLabelTransferCollection = $this->productLabelRepository->getAllProductLabelsSortedByPosition();
 
@@ -88,7 +88,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function findAllByIdProductAbstract($idProductAbstract)
+    public function findAllByIdProductAbstract($idProductAbstract): array
     {
         $productLabelTransferCollection = $this->productLabelRepository->getProductLabelsByIdProductAbstract($idProductAbstract);
 
@@ -102,7 +102,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return int[]
      */
-    public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
+    public function findAllLabelIdsByIdProductAbstract($idProductAbstract): array
     {
         return $this->productLabelRepository->getProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
@@ -112,7 +112,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return int[]
      */
-    public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract)
+    public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract): array
     {
         return $this->productLabelRepository->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
     }

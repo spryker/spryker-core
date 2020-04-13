@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductLabel\Business;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
+use Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
@@ -38,11 +39,11 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface
      */
-    public function createLabelCreator()
+    public function createLabelCreator(): LabelCreatorInterface
     {
         return new LabelCreator(
             $this->createLocalizedAttributesCollectionWriter(),
-            $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createLabelDictionaryTouchManager(),
             $this->createProductLabelStoreRelationUpdater()
         );
