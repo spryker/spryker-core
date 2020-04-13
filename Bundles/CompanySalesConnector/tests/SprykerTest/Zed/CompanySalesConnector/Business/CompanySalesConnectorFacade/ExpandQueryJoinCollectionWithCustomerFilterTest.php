@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacade;
+namespace SprykerTest\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
+use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group CompanyBusinessUnitSalesConnector
+ * @group CompanySalesConnector
  * @group Business
- * @group CompanyBusinessUnitSalesConnectorFacade
+ * @group CompanySalesConnectorFacade
  * @group ExpandQueryJoinCollectionWithCustomerFilterTest
  * Add your own group annotations below this line
  */
@@ -32,24 +32,24 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
-     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_FULL_NAME
+     * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_FULL_NAME
      */
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
-     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
+     * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
      */
     protected const COLUMN_EMAIL = 'email';
 
     /**
-     * @see \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()
+     * @see \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()
      */
     protected const COLUMN_FULL_NAME_EXPRESSION = 'CONCAT(first_name,\' \', last_name)';
 
     protected const SEARCH_STRING = 'sample';
 
     /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorBusinessTester
+     * @var \SprykerTest\Zed\CompanySalesConnector\CompanySalesConnectorBusinessTester
      */
     protected $tester;
 
@@ -62,7 +62,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         $queryJoinCollectionTransfer = new QueryJoinCollectionTransfer();
 
         $filterFieldTransfer = (new FilterFieldTransfer())
-            ->setType(CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ALL)
+            ->setType(CompanySalesConnectorConfig::FILTER_FIELD_TYPE_ALL)
             ->setValue(static::SEARCH_STRING);
 
         // Act

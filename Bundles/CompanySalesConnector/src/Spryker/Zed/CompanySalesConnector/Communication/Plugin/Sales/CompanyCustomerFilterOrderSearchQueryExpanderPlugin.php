@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sales;
+namespace Spryker\Zed\CompanySalesConnector\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
-use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
+use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
- * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
+ * @method \Spryker\Zed\CompanySalesConnector\Business\CompanySalesConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig getConfig()
  */
-class CustomerSortingOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CompanyCustomerFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if sorting by customer name or email could be applied, false otherwise.
+     * - Returns true if filtering by customer name and email could be applied, false otherwise.
      *
      * @api
      *
@@ -32,13 +32,13 @@ class CustomerSortingOrderSearchQueryExpanderPlugin extends AbstractPlugin imple
     {
         return $this->getFacade()->isFilterFieldSet(
             $filterFieldTransfers,
-            CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY
+            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
         );
     }
 
     /**
      * {@inheritDoc}
-     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to sort by customer name or email.
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to filter by customer name and email.
      *
      * @api
      *
@@ -51,7 +51,7 @@ class CustomerSortingOrderSearchQueryExpanderPlugin extends AbstractPlugin imple
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer {
-        return $this->getFacade()->expandQueryJoinCollectionWithCustomerSorting(
+        return $this->getFacade()->expandQueryJoinCollectionWithCustomerFilter(
             $filterFieldTransfers,
             $queryJoinCollectionTransfer
         );

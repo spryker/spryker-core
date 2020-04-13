@@ -45,6 +45,38 @@ interface CompanySalesConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to filter by customer name and email.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCustomerFilter(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands QueryJoinCollectionTransfer with additional QueryJoinTransfers to sort by customer name or email.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
+     */
+    public function expandQueryJoinCollectionWithCustomerSorting(
+        array $filterFieldTransfers,
+        QueryJoinCollectionTransfer $queryJoinCollectionTransfer
+    ): QueryJoinCollectionTransfer;
+
+    /**
+     * Specification:
      * - Returns true if filter with specific type set, false otherwise.
      *
      * @api
