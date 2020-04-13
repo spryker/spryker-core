@@ -20,7 +20,7 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Check if item is offer.
+     * - Checks if an item is an offer.
      *
      * @api
      *

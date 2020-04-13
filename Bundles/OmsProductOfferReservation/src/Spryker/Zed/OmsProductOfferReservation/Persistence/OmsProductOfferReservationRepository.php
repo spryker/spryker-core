@@ -9,7 +9,6 @@ namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
@@ -28,11 +27,11 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     /**
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     * @return \Spryker\DecimalObject\Decimal
      */
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): ReservationResponseTransfer {
+    ): Decimal {
         $quantity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
             ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
             ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())

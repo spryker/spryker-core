@@ -9,19 +9,19 @@ namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface OmsProductOfferReservationRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     * @return \Spryker\DecimalObject\Decimal
      */
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): ReservationResponseTransfer;
+    ): Decimal;
 
     /**
      * @param string $productOfferReference

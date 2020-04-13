@@ -17,7 +17,7 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Check if item is offer.
+     * - Checks if an item is an offer.
      *
      * @api
      *
