@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\MerchantOms\Communication\Console;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantOms\Business\MerchantOmsFacade;
 use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -53,25 +51,6 @@ class TriggerEventFromFileConsoleTest extends Unit
     public function testTriggerEventFromFileConsoleReturnsSuccessWithValidImport(string $importFileName, int $resultCode): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
-
-        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
-
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
-
-        $processEntity = $this->tester->haveStateMachineProcess();
-
-        $stateEntity = $this->tester->createStateMachineItemState($processEntity);
-
-        $this->tester->haveMerchantOrderItem([
-            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
-            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-            MerchantOrderItemTransfer::MERCHANT_ORDER_ITEM_REFERENCE => static::TEST_MERCHANT_ORDER_ITEM_REFERENCE,
-        ]);
-
         $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole())->setFacade($this->getMerchantOmsFacadeMock());
         $input = new ArrayInput([static::ARGUMENT_FILE_PATH => codecept_data_dir() . 'import/' . $importFileName]);
         $output = new BufferedOutput();

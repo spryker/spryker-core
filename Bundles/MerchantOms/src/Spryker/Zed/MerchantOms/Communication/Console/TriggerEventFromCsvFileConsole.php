@@ -93,7 +93,13 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $csvReader = $this->getCsvReader();
+        $filePath = $this->resolveFilePath();
+
+        if (!$filePath) {
+            return static::CODE_ERROR;
+        }
+
+        $csvReader = $this->getCsvReader($filePath);
 
         if (!$csvReader) {
             return static::CODE_ERROR;
@@ -142,33 +148,36 @@ class TriggerEventFromCsvFileConsole extends Console
     }
 
     /**
-     * @return \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface|null
+     * @return string|null
      */
-    protected function getCsvReader(): ?CsvReaderInterface
+    protected function resolveFilePath(): ?string
     {
         $filePathArgument = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
-        $fileNames = [
+        $filePaths = [
             $filePathArgument,
             APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $filePathArgument,
         ];
-        $existingFileName = null;
 
-        foreach ($fileNames as $fileName) {
-            if (is_file($fileName) && is_readable($fileName)) {
-                $existingFileName = $fileName;
-
-                break;
+        foreach ($filePaths as $filePath) {
+            if (is_file($filePath) && is_readable($filePath)) {
+                return $filePath;
             }
         }
 
-        if (!$existingFileName) {
-            $this->error(sprintf('File "%s" does not exist or is unreadable.', $filePathArgument));
+        $this->error(sprintf('File "%s" does not exist or is unreadable.', $filePathArgument));
 
-            return null;
-        }
+        return null;
+    }
 
+    /**
+     * @param string $filePath
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface|null
+     */
+    protected function getCsvReader(string $filePath): ?CsvReaderInterface
+    {
         $csvReader = $this->getFactory()->getUtilDataReaderService()->getCsvReader();
-        $csvReader->load($existingFileName);
+        $csvReader->load($filePath);
 
         if (!$csvReader->valid()) {
             $this->error('CSV file is invalid.');
