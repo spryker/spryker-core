@@ -60,7 +60,7 @@ class ProductLabelDictionarySynchronizationDataRepositoryPlugin extends Abstract
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**

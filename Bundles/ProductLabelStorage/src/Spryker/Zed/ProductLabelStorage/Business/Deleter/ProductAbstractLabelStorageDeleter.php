@@ -25,7 +25,7 @@ class ProductAbstractLabelStorageDeleter implements ProductAbstractLabelStorageD
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()} instead.
      *
      * @param int[] $productAbstractIds
      *

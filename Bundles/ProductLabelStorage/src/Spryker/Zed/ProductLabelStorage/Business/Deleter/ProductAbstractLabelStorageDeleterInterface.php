@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Deleter;
 interface ProductAbstractLabelStorageDeleterInterface
 {
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()} instead.
      *
      * @param int[] $productAbstractIds
      *

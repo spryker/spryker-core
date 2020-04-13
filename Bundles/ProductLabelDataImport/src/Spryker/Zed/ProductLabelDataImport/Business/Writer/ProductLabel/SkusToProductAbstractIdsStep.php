@@ -74,7 +74,7 @@ class SkusToProductAbstractIdsStep implements DataImportStepInterface
     }
 
     /**
-     * @param array $productAbstractSkus
+     * @param string[] $productAbstractSkus
      *
      * @return void
      */

@@ -21,6 +21,7 @@ class ProductLabelWritePublisherPlugin extends AbstractPlugin implements Publish
 {
     /**
      * {@inheritDoc}
+     * - Publishes product label data by publish and unpublish ProductLabel events.
      *
      * @api
      *

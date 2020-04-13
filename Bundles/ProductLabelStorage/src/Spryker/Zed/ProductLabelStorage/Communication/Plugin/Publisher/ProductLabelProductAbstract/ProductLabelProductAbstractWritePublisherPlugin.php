@@ -21,7 +21,7 @@ class ProductLabelProductAbstractWritePublisherPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
-     * - Publishes product label data by spy_product_label_product_abstract table events.
+     * - Publishes product label data by spy_product_label_product_abstract entity events.
      *
      * @api
      *
