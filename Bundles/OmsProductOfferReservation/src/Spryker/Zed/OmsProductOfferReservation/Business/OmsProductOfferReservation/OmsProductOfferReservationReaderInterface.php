@@ -5,21 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Business;
+namespace Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 
-interface OmsProductOfferReservationFacadeInterface
+interface OmsProductOfferReservationReaderInterface
 {
     /**
-     * Specification:
-     * - Returns ReservationResponseTransfer with reserved quantity for product offer.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.productOfferReference.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.storeName.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
