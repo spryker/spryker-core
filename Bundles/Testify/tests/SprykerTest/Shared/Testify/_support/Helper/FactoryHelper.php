@@ -12,14 +12,8 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
-use ReflectionClass;
-use Spryker\Client\Kernel\AbstractFactory as ClientAbstractFactory;
-use Spryker\Glue\Kernel\AbstractFactory as GlueAbstractFactory;
-use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\AbstractSharedFactory;
-use Spryker\Yves\Kernel\AbstractFactory as YvesAbstractFactory;
-use Spryker\Zed\Kernel\AbstractFactory as ZedAbstractFactory;
 
 class FactoryHelper extends Module
 {
@@ -34,27 +28,6 @@ class FactoryHelper extends Module
      * @var \Spryker\Shared\Kernel\AbstractSharedFactory|null
      */
     protected $sharedFactoryStub;
-
-    /**
-     * @return void
-     */
-    public function clearFactoryContainerCache(): void
-    {
-        $factoriesArray = [
-            ClientAbstractFactory::class,
-            ZedAbstractFactory::class,
-            YvesAbstractFactory::class,
-            GlueAbstractFactory::class,
-            AbstractServiceFactory::class,
-        ];
-
-        foreach ($factoriesArray as $factory) {
-            $factory = new ReflectionClass($factory);
-            $containerProperty = $factory->getProperty('containers');
-            $containerProperty->setAccessible(true);
-            $containerProperty->setValue([]);
-        }
-    }
 
     /**
      * @param string $methodName
@@ -166,15 +139,5 @@ class FactoryHelper extends Module
     {
         $this->sharedFactoryStub = null;
         $this->mockedSharedFactoryMethods = [];
-    }
-
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
-    public function _after(TestInterface $test)
-    {
-        $this->clearFactoryContainerCache();
     }
 }
