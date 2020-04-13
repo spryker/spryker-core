@@ -166,7 +166,6 @@ class ProductPageSearchListenerTest extends Unit
     public function testProductPageProductAbstractListenerStoreData(): void
     {
         // Prepare
-        $this->tester->clearFactoryContainerCache();
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 

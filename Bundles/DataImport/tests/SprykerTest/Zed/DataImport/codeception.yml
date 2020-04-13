@@ -26,7 +26,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\DataImport\Helper\DataImporterHelper
                 - \SprykerTest\Zed\DataImport\Helper\DataReaderHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper
 
     Communication:
         path: Communication

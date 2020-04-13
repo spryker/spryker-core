@@ -20,4 +20,3 @@ suites:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

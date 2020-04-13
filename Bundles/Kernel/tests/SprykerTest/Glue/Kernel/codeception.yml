@@ -26,4 +26,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\Testify\Helper\ClassHelper
                 - \SprykerTest\Shared\Kernel\Helper\ClassResolverHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

@@ -26,4 +26,3 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

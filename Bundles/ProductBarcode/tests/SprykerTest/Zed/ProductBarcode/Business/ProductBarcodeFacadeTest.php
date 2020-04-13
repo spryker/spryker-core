@@ -58,8 +58,6 @@ class ProductBarcodeFacadeTest extends Test
         $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, [
             $this->barcodePlugin,
         ]);
-
-        $this->tester->clearFactoryContainerCache();
     }
 
     /**

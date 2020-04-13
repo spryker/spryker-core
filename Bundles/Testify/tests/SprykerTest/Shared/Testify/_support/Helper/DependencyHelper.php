@@ -13,6 +13,8 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 
 class DependencyHelper extends Module
 {
+    use FactoryHelperTrait;
+
     /**
      * @var \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
      */
@@ -36,6 +38,7 @@ class DependencyHelper extends Module
     public function setDependency(string $key, $value, ?string $onlyFor = null): void
     {
         $this->containerGlobals->set($key, $value, $onlyFor);
+        $this->getFactoryHelper()->clearFactoryContainerCache();
     }
 
     /**
@@ -46,5 +49,6 @@ class DependencyHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->containerGlobals->reset();
+        $this->getFactoryHelper()->clearFactoryContainerCache();
     }
 }

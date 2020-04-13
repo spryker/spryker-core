@@ -30,7 +30,6 @@ suites:
                 - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper
     Business:
         path: Business
         class_name: MerchantProductOfferSearchCommunicationTester
@@ -44,4 +43,3 @@ suites:
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper

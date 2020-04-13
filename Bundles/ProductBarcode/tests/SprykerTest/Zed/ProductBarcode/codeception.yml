@@ -27,4 +27,3 @@ suites:
                 - \SprykerTest\Zed\ProductBarcode\Helper\ProductBarcodeFacadeHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Testify\Helper\FactoryHelper
