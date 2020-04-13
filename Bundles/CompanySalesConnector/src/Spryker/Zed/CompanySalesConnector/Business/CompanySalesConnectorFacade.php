@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -107,5 +109,22 @@ class CompanySalesConnectorFacade extends AbstractFacade implements CompanySales
         return $this->getFactory()
             ->createOrderSearchQueryExpander()
             ->isFilterFieldSet($filterFieldTransfers, $type);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return $this->getFactory()
+            ->createPermissionChecker()
+            ->checkOrderAccessByCustomerCompany($orderTransfer, $customerTransfer);
     }
 }

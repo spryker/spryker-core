@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,7 +21,9 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -40,23 +43,39 @@ class OrderHydrator implements OrderHydratorInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected $hydrateOrderPlugins;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
+     */
+    protected $customerOrderAccessCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[] $customerOrderAccessCheckPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        array $hydrateOrderPlugins = []
+        SalesToCustomerInterface $customerFacade,
+        array $hydrateOrderPlugins = [],
+        array $customerOrderAccessCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
+        $this->customerFacade = $customerFacade;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
+        $this->customerOrderAccessCheckPlugins = $customerOrderAccessCheckPlugins;
     }
 
     /**
@@ -87,12 +106,17 @@ class OrderHydrator implements OrderHydratorInterface
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
 
+        $customerTransfer = $this->getCustomerByFkCustomer($orderTransfer);
+
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
-            ->filterByFkCustomer($orderTransfer->getFkCustomer())
             ->findOne();
 
-        if ($orderEntity === null) {
+        if (
+            $orderEntity === null
+            || (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference())
+            || !$this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer())
+        ) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
@@ -487,5 +511,50 @@ class OrderHydrator implements OrderHydratorInterface
             // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerByFkCustomer(OrderTransfer $orderTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->customerFacade->findCustomerById(
+            (new CustomerTransfer())->setIdCustomer($orderTransfer->getFkCustomer())
+        );
+
+        if (!$customerTransfer) {
+            throw new PropelException('Customer not found');
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
+    {
+        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+
+        if ($orderTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
+            return true;
+        }
+
+        foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
+            if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

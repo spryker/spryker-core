@@ -31,12 +31,17 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
 
+        $customerTransfer = $this->getCustomerByFkCustomer($orderTransfer);
+
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetailsWithoutShippingAddress($orderTransfer->getIdSalesOrder())
-            ->filterByFkCustomer($orderTransfer->getFkCustomer())
             ->findOne();
 
-        if ($orderEntity === null) {
+        if (
+            $orderEntity === null
+            || (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference())
+            || !$this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer())
+        ) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),

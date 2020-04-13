@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\PermissionChecker;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\PermissionCheckerInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpanderInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Writer\OrderWriter;
@@ -27,6 +29,14 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
         return new OrderWriter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\PermissionCheckerInterface
+     */
+    public function createPermissionChecker(): PermissionCheckerInterface
+    {
+        return new PermissionChecker();
     }
 
     /**

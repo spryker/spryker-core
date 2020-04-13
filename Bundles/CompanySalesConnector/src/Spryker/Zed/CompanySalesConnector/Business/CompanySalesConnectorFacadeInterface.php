@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -87,4 +89,18 @@ interface CompanySalesConnectorFacadeInterface
      * @return bool
      */
     public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool;
+
+    /**
+     * Specification:
+     * - Checks SeeCompanyOrdersPermissionPlugin for customer who retrieves customer order.
+     * - Returns true if customer has SeeCompanyOrdersPermissionPlugin, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool;
 }
