@@ -30,6 +30,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected const KEY_ID = 'id';
 
     /**
+     * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     */
+    protected const KV_PREFIX = 'kv:';
+
+    /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
@@ -126,6 +131,70 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productConcreteData);
 
         return $productConcreteData;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
+        $mappingData = array_filter($this->storageClient->getMulti($storageKeys));
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        return $this->getFilteredProductConcreteIds($storageKeys, $mappingData);
+    }
+
+    /**
+     * @param string[] $storageKeys
+     * @param array $mappingData
+     *
+     * @return int[]
+     */
+    protected function getFilteredProductConcreteIds(array $storageKeys, array $mappingData): array
+    {
+        $identifiersByStorageKey = [];
+        foreach ($storageKeys as $identifier => $storageKey) {
+            $identifiersByStorageKey[static::KV_PREFIX . $storageKey] = $identifier;
+        }
+
+        $productConcreteIds = [];
+        foreach ($mappingData as $storageKey => $mappingDataItem) {
+            $decodedMappingDataItem = $this->utilEncodingService->decodeJson($mappingDataItem, true);
+            if (!$decodedMappingDataItem || !$decodedMappingDataItem[static::KEY_ID]) {
+                continue;
+            }
+
+            $productConcreteIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID];
+        }
+
+        return $this->filterRestrictedProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getStorageKeysByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($identifiers as $identifier) {
+            $storageKeys[$identifier] = $this->getStorageKey(
+                sprintf('%s:%s', $mappingType, $identifier),
+                $localeName
+            );
+        }
+
+        return $storageKeys;
     }
 
     /**

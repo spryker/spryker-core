@@ -10,6 +10,7 @@ namespace Spryker\Zed\SessionRedis;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientBridge;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -20,6 +21,10 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
     public const CLIENT_SESSION_REDIS = 'CLIENT_SESSION_REDIS';
     public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
+    public const PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR = 'PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR';
+    public const REQUEST_STACK = 'REQUEST_STACK';
+
+    protected const REQUEST_STACK_CONTAINER_KEY = 'request_stack';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +35,8 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addMonitoringService($container);
         $container = $this->addRedisClient($container);
+        $container = $this->addRequestStack($container);
+        $container = $this->addSessionRedisLifeTimeCalculatorPlugins($container);
 
         return $container;
     }
@@ -43,6 +50,20 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addMonitoringService($container);
         $container = $this->addRedisClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::REQUEST_STACK, function () {
+            return (new Pimple())->getApplication()->get(static::REQUEST_STACK_CONTAINER_KEY);
+        });
 
         return $container;
     }
@@ -79,5 +100,27 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionRedisLifeTimeCalculatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR, function () {
+            return $this->getSessionRedisLifeTimeCalculatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     */
+    protected function getSessionRedisLifeTimeCalculatorPlugins(): array
+    {
+        return [];
     }
 }

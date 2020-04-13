@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Controller;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -219,7 +220,9 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $userTransfer = $this->getFacade()->findUserById($idUser);
+        $userTransfer = $this->getFacade()->findUser(
+            (new UserCriteriaTransfer())->setIdUser($idUser)
+        );
 
         if (!$userTransfer) {
             $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);

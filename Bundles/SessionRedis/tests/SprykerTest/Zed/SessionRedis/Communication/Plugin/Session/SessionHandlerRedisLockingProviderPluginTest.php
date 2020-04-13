@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Zed\SessionRedis\Communication\Plugin\Session\SessionHandlerRedisLockingProviderPlugin;
+use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Auto-generated group annotations
@@ -32,12 +34,18 @@ class SessionHandlerRedisLockingProviderPluginTest extends Unit
     protected $sessionHandlerPlugin;
 
     /**
+     * @var \SprykerTest\Zed\SessionRedis\SessionRedisCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->tester->setDependency(SessionRedisDependencyProvider::REQUEST_STACK, new RequestStack());
         $this->sessionHandlerPlugin = new SessionHandlerRedisLockingProviderPlugin();
     }
 
