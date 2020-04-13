@@ -11,7 +11,7 @@
     <transfer name="OmsProductOfferReservation">
         <property name="productOfferReference" type="string"/>
         <property name="idStore" type="int"/>
-        <property name="reservationQuantity" type="decimal" />
+        <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
     <transfer name="ReservationRequest">
