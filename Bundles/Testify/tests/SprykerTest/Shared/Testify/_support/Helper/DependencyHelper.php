@@ -49,6 +49,6 @@ class DependencyHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->containerGlobals->reset();
-        $this->getFactoryHelper()->clearFactoryContainerCache();
+        //$this->getFactoryHelper()->clearFactoryContainerCache();
     }
 }
