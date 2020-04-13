@@ -42,15 +42,15 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @param string $labelName
+     * @param string $productLabelName
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByNameProductLabel(string $labelName): ?ProductLabelTransfer
+    public function findProductLabelByName(string $productLabelName): ?ProductLabelTransfer
     {
         $productLabelEntity = $this->getFactory()
             ->createProductLabelQuery()
-            ->filterByName($labelName)
+            ->filterByName($productLabelName)
             ->leftJoinWithProductLabelStore()
             ->find()
             ->getFirst();

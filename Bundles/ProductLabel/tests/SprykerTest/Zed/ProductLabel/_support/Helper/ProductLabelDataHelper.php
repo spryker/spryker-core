@@ -53,7 +53,7 @@ class ProductLabelDataHelper extends Module
             $this->cleanupProductLabel($productLabelTransfer->getIdProductLabel());
         });
 
-        return $productLabelTransfer;
+        return $this->getProductLabelFacade()->findLabelByLabelName($productLabelTransfer->getName());
     }
 
     /**
