@@ -29,7 +29,6 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
-                - \SprykerTest\Zed\OmsProductOfferReservation\Helper\OmsProductOfferReservationHelper
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                       depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
                       serviceProvider:

@@ -49,8 +49,12 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
     public function getReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
     {
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
-            ->setProductOfferReference($reservationRequestTransfer->getItem()->getProductOfferReference())
-            ->setIdStore($reservationRequestTransfer->getStore()->getIdStore());
+            ->setProductOfferReference(
+                $reservationRequestTransfer->requireItem()->getItem()->requireProductOfferReference()->getProductOfferReference()
+            )
+            ->setIdStore(
+                $reservationRequestTransfer->requireStore()->getStore()->requireIdStore()->getIdStore()
+            );
 
         return $this->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
     }

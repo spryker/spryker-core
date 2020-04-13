@@ -245,8 +245,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getReservationAggregationStrategyPlugins(),
-            $this->getOmsReservationReaderStrategyPlugins()
+            $this->getOmsReservationReaderStrategyPlugins(),
+            $this->getReservationAggregationStrategyPlugins()
         );
     }
 

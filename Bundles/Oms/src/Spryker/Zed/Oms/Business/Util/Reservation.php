@@ -47,14 +47,14 @@ class Reservation implements ReservationInterface
     protected $omsRepository;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
-     */
-    protected $reservationAggregationPlugins;
-
-    /**
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
      */
     protected $omsReservationReaderStrategyPlugins;
+
+    /**
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     */
+    protected $reservationAggregationPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
@@ -62,8 +62,8 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[] $omsReservationReaderStrategyPlugins
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
@@ -71,8 +71,8 @@ class Reservation implements ReservationInterface
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade,
         OmsRepositoryInterface $omsRepository,
-        array $reservationAggregationPlugins = [],
-        array $omsReservationReaderStrategyPlugins = []
+        array $omsReservationReaderStrategyPlugins,
+        array $reservationAggregationPlugins = []
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
@@ -215,8 +215,8 @@ class Reservation implements ReservationInterface
         }
 
         $reservationQuantity = $this->getOmsReservedProductQuantityForSku(
-            $reservationRequestTransfer->getItem()->getSku(),
-            $reservationRequestTransfer->getStore()
+            $reservationRequestTransfer->requireItem()->getItem()->requireSku()->getSku(),
+            $reservationRequestTransfer->requireStore()->getStore()
         );
 
         return (new ReservationResponseTransfer())->setReservationQuantity($reservationQuantity);

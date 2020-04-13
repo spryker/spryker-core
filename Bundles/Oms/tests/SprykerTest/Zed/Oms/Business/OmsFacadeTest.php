@@ -242,37 +242,6 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOmsReservedProductQuantityForProductOffer(): void
-    {
-        // Arrange
-        $omsProductOfferReservationTransfer = $this->tester->haveOmsProductOfferReservation([
-            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => 'test',
-            OmsProductOfferReservationTransfer::ID_STORE => 1,
-            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
-        ]);
-
-        $this->setProductOfferOmsReservationReaderStrategyPluginReturn($omsProductOfferReservationTransfer);
-
-        $itemTransfer = (new ItemTransfer())
-            ->setProductOfferReference($omsProductOfferReservationTransfer->getProductOfferReference());
-
-        $storeTransfer = (new StoreTransfer())
-            ->setIdStore($omsProductOfferReservationTransfer->getIdStore());
-
-        $reservationRequestTransfer = (new ReservationRequestTransfer())
-            ->setItem($itemTransfer)
-            ->setStore($storeTransfer);
-
-        // Act
-        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
-
-        // Assert
-        $this->assertSame($omsProductOfferReservationTransfer->getReservationQuantity()->toInt(), $reservationResponseTransfer->getReservationQuantity()->toInt());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetOmsReservedProductQuantityForProduct(): void
     {
         // Arrange
