@@ -239,18 +239,10 @@ class ProductLabelFacadeTest extends Unit
             StoreRelationTransfer::ID_STORES => [
                 $storeTransferDE->getIdStore(),
             ],
-            StoreRelationTransfer::STORES => [
-                $storeTransferDE,
-
-            ],
         ];
         $storeRelationSeedDataForAT = [
             StoreRelationTransfer::ID_STORES => [
                 $storeTransferAT->getIdStore(),
-            ],
-            StoreRelationTransfer::STORES => [
-                $storeTransferAT,
-
             ],
         ];
 
@@ -320,10 +312,6 @@ class ProductLabelFacadeTest extends Unit
             ProductLabelTransfer::STORE_RELATION => [
                 StoreRelationTransfer::ID_STORES => [
                     $storeTransferDE->getIdStore(),
-                ],
-                StoreRelationTransfer::STORES => [
-                    $storeTransferDE,
-
                 ],
             ],
         ]);
