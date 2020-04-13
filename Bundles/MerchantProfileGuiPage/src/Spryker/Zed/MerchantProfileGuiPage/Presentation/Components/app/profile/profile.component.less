@@ -1,0 +1,93 @@
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+@spy-profile-spacing: 15px;
+
+.mp-profile {
+  font-family: @font-family;
+
+  &__title {
+    font-size: @heading-1-font-size;
+    font-weight: @font-weight-semi-bold;
+    color: @ink;
+    letter-spacing: 0.2px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 40px;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -@spy-profile-spacing;
+  }
+
+  &__col {
+    padding: 0 @spy-profile-spacing;
+
+    &--business-left {
+      width: 58.33%;
+    }
+
+    &--business-right {
+      width: 41.67%;
+    }
+
+    &--online-left {
+      width: 66.67%;
+    }
+
+    &--online-right {
+      width: 33.33%;
+    }
+
+    &--full {
+      width: 100%;
+    }
+
+    &--half {
+      width: 50%;
+    }
+
+    &--number {
+      width: 21%;
+    }
+
+    &--code {
+      width: 29%;
+    }
+  }
+
+  &__card {
+    display: block;
+    margin-bottom: 20px;
+
+      &--label {
+          display: block;
+          margin-bottom: 9px;
+      }
+  }
+
+  &__collapsible {
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  &__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__status-title {
+      &-online {
+          color: @green;
+      }
+
+      &-offline {
+          color: @gray-darker;
+      }
+  }
+}

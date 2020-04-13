@@ -31,6 +31,11 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ANONYMOUS_USER_WITH_ACCESS_TOKEN = '005';
 
     /**
+     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     */
+    public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
+    /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
      */
     public const HEADER_AUTHORIZATION = 'authorization';
