@@ -8,12 +8,11 @@
 namespace SprykerTest\Zed\MerchantOms\Communication\Console;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Spryker\Zed\MerchantOms\Business\MerchantOmsFacade;
 use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
-use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
-use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
-use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -42,15 +41,6 @@ class TriggerEventFromFileConsoleTest extends Unit
      * @var \SprykerTest\Zed\MerchantOms\MerchantOmsCommunicationTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->setMockDependencies();
-    }
 
     /**
      * @dataProvider filenameDataProvider
@@ -82,7 +72,7 @@ class TriggerEventFromFileConsoleTest extends Unit
             MerchantOrderItemTransfer::MERCHANT_ORDER_ITEM_REFERENCE => static::TEST_MERCHANT_ORDER_ITEM_REFERENCE,
         ]);
 
-        $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole());
+        $triggerEventFromFileConsole = (new TriggerEventFromCsvFileConsole())->setFacade($this->getMerchantOmsFacadeMock());
         $input = new ArrayInput([static::ARGUMENT_FILE_PATH => codecept_data_dir() . 'import/' . $importFileName]);
         $output = new BufferedOutput();
 
@@ -108,24 +98,15 @@ class TriggerEventFromFileConsoleTest extends Unit
     }
 
     /**
-     * @return void
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Business\MerchantOmsFacade
      */
-    protected function setMockDependencies(): void
+    protected function getMerchantOmsFacadeMock(): MerchantOmsFacade
     {
-        $this->tester->setDependency(
-            MerchantOmsDependencyProvider::FACADE_STATE_MACHINE,
-            new MerchantOmsToStateMachineFacadeBridge($this->getStateMachineFacadeMock())
+        $merchantOmsFacade = $this->createMock(MerchantOmsFacade::class);
+        $merchantOmsFacade->method('triggerEventForMerchantOrderItem')->willReturn(
+            (new MerchantOmsTriggerResponseTransfer())->setIsSuccessful(true)
         );
-    }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachineFacade
-     */
-    protected function getStateMachineFacadeMock(): StateMachineFacade
-    {
-        $merchantOmsEventTrigger = $this->createMock(StateMachineFacade::class);
-        $merchantOmsEventTrigger->method('triggerEventForItems')->willReturn(1);
-
-        return $merchantOmsEventTrigger;
+        return $merchantOmsFacade;
     }
 }
