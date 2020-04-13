@@ -36,7 +36,6 @@ class ProductLabelDataHelper extends Module
                 ProductLabelTransfer::VALID_TO => null,
             ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
-
         $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
 
         $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
@@ -46,14 +45,13 @@ class ProductLabelDataHelper extends Module
 
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 
+        $productLabelTransfer = $this->getProductLabelFacade()->findLabelByLabelName($productLabelTransfer->getName());
+
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productLabelTransfer): void {
-            $this->cleanupProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
-            $this->cleanupProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
-            $this->cleanupProductLabelStoreRelations($productLabelTransfer->getIdProductLabel());
-            $this->cleanupProductLabel($productLabelTransfer->getIdProductLabel());
+            $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
         });
 
-        return $this->getProductLabelFacade()->findLabelByLabelName($productLabelTransfer->getName());
+        return $productLabelTransfer;
     }
 
     /**

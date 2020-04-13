@@ -8,15 +8,15 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class LabelCreator implements LabelCreatorInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface
@@ -65,7 +65,7 @@ class LabelCreator implements LabelCreatorInterface
     {
         $this->assertProductLabel($productLabelTransfer);
 
-        $this->handleDatabaseTransaction(function () use ($productLabelTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
             $this->executeCreateTransaction($productLabelTransfer);
         });
     }
