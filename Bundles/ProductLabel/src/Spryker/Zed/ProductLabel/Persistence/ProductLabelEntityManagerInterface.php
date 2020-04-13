@@ -19,6 +19,13 @@ interface ProductLabelEntityManagerInterface
     public function createProductLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return string[]
+     */
+    public function updateProductLabel(ProductLabelTransfer $productLabelTransfer): array;
+
+    /**
      * @param int $idProductLabel
      *
      * @return void

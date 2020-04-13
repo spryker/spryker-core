@@ -89,7 +89,7 @@ class ProductLabelMapper
         ProductLabelTransfer $productLabelTransfer,
         SpyProductLabel $productLabelEntity
     ): SpyProductLabel {
-        $productLabelEntity->fromArray($productLabelTransfer->modifiedToArray());
+        $productLabelEntity->fromArray($productLabelTransfer->toArray());
 
         return $productLabelEntity;
     }
