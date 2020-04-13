@@ -18,6 +18,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CustomerForgottenPasswordResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Create customer forgotten password."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
+     *          }],
+     *          "responses": {
+     *              "204": "No content."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
      *
