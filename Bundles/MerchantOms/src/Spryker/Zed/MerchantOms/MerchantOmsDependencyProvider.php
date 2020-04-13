@@ -42,6 +42,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addMerchantFacade($container);
         $container = $this->addStateMachineFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
 
         return $container;
     }

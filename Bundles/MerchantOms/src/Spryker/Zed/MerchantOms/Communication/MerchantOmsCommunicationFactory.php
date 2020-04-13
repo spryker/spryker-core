@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantOms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantOms\Communication\EventTrigger\MerchantOmsEventTrigger;
-use Spryker\Zed\MerchantOms\Communication\EventTrigger\MerchantOmsEventTriggerInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
@@ -21,14 +19,6 @@ use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
  */
 class MerchantOmsCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantOms\Communication\EventTrigger\MerchantOmsEventTriggerInterface
-     */
-    public function createMerchantOmsEventTrigger(): MerchantOmsEventTriggerInterface
-    {
-        return new MerchantOmsEventTrigger($this->getMerchantSalesOrderFacade(), $this->getFacade());
-    }
-
     /**
      * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface
      */

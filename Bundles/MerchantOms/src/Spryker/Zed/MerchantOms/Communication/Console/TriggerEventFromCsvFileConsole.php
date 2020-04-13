@@ -99,30 +99,29 @@ class TriggerEventFromCsvFileConsole extends Console
             return static::CODE_ERROR;
         }
 
-        $merchantOmsEventTrigger = $this->getFactory()->createMerchantOmsEventTrigger();
         $this->prepareOutputTable();
 
         $totalRowsCount = $csvReader->getTotal() - 1;
         $successfullyProcessedRowsCount = 0;
-        $processedCount = $this->getStartFromOption();
+        $rowNumber = $this->getStartFromOption();
 
         try {
-            while ($processedCount < $totalRowsCount) {
+            while ($rowNumber < $totalRowsCount) {
                 $rowData = $csvReader->read();
-                $processedCount++;
+                $rowNumber++;
 
                 $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOrderItemReference($rowData[static::TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_REFERENCE])
                     ->setMerchantOmsEventName($rowData[static::TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE]);
 
-                $merchantOmsTriggerResponseTransfer = $merchantOmsEventTrigger->triggerMerchantOmsEvent($merchantOmsTriggerRequestTransfer);
+                $merchantOmsTriggerResponseTransfer = $this->getFacade()->triggerEventForMerchantOrderItem($merchantOmsTriggerRequestTransfer);
 
                 if ($merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
                     $successfullyProcessedRowsCount++;
                 }
 
                 $this->logOutput(
-                    $processedCount,
+                    $rowNumber,
                     $successfullyProcessedRowsCount,
                     $totalRowsCount,
                     $merchantOmsTriggerRequestTransfer,
@@ -150,7 +149,7 @@ class TriggerEventFromCsvFileConsole extends Console
         $fileName = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
 
         if (!is_file($fileName) || !is_readable($fileName)) {
-            $this->error(sprintf('Could not read file from path "%s".', $fileName));
+            $this->error(sprintf('File "%s" does not exist or is unreadable.', $fileName));
 
             return null;
         }
@@ -159,7 +158,7 @@ class TriggerEventFromCsvFileConsole extends Console
         $csvReader->load($fileName);
 
         if (!$csvReader->valid()) {
-            $this->error('Csv file is invalid.');
+            $this->error('CSV file is invalid.');
 
             return null;
         }
@@ -193,7 +192,7 @@ class TriggerEventFromCsvFileConsole extends Console
         if (array_diff($mandatoryColumns, $csvReader->getColumns())) {
             $this->error(
                 sprintf(
-                    'Csv file does not contain mandatory fields: %s.',
+                    'CSV file does not contain mandatory fields: %s.',
                     implode(', ', $mandatoryColumns)
                 )
             );
