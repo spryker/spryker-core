@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class TriggerController extends AbstractController
 {

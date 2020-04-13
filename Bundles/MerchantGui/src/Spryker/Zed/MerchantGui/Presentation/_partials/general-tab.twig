@@ -30,3 +30,7 @@
 {% if (merchantForm.storeRelation is defined) %}
     {{ form_row(merchantForm.storeRelation) }}
 {% endif %}
+
+{% if (merchantForm.stocks is defined) %}
+    {{ form_row(merchantForm.stocks) }}
+{% endif %}

@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -63,7 +63,7 @@ class CreateMerchantTest extends Unit
 
         // Act
         $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
-        $merchantTransfer = $this->tester->getFacade()->findOne((new MerchantCriteriaFilterTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
+        $merchantTransfer = $this->tester->getFacade()->findOne((new MerchantCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
 
         // Assert
         $this->assertNotNull($merchantTransfer);

@@ -8,7 +8,7 @@
 namespace Spryker\Client\MerchantSearch\MerchantReader;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToStoreClientInterface;
 use Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface;
 
@@ -41,15 +41,15 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchantCollection(): MerchantCollectionTransfer
     {
-        return $this->merchantSearchStub->getMerchantCollection($this->createMerchantCriteriaFilterTransfer());
+        return $this->merchantSearchStub->getMerchantCollection($this->createMerchantCriteriaTransfer());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\MerchantCriteriaTransfer
      */
-    protected function createMerchantCriteriaFilterTransfer(): MerchantCriteriaFilterTransfer
+    protected function createMerchantCriteriaTransfer(): MerchantCriteriaTransfer
     {
-        return (new MerchantCriteriaFilterTransfer())
+        return (new MerchantCriteriaTransfer())
             ->setIsActive(true)
             ->setStore(
                 $this->storeClient

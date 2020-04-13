@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\MerchantStorage\Persistence;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface MerchantStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorage[]
      */
     public function getFilteredMerchantStorageEntityTransfers(
-        MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
     ): ObjectCollection;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
@@ -40,7 +41,9 @@ class UserFormDataProvider
      */
     public function getData($idUser)
     {
-        $userTransfer = $this->userFacade->findUserById($idUser);
+        $userTransfer = $this->userFacade->findUser(
+            (new UserCriteriaTransfer())->setIdUser($idUser)
+        );
 
         if ($userTransfer === null) {
             return null;

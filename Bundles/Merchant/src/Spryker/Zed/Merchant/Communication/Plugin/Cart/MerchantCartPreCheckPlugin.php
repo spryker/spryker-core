@@ -10,7 +10,7 @@ namespace Spryker\Zed\Merchant\Communication\Plugin\Cart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -42,25 +42,14 @@ class MerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckP
     public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $messageTransfers = [];
+        $merchantTransfers = $this->getMerchantTransfersGroupedByMerchantReference($cartChangeTransfer);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }
 
-            $merchantTransfer = $this->getFacade()->findOne(
-                (new MerchantCriteriaFilterTransfer())
-                    ->setMerchantReference($itemTransfer->getMerchantReference())
-                    ->setIsActive(true)
-                    ->setStore(
-                        $this->getFactory()
-                            ->getStoreFacade()
-                            ->getCurrentStore()
-                            ->getName()
-                    )
-            );
-
-            if (!$merchantTransfer) {
+            if (!isset($merchantTransfers[$itemTransfer->getMerchantReference()])) {
                 $messageTransfers[] = (new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
                     ->setValue(static::GLOSSARY_KEY_REMOVED_MERCHANT)
@@ -71,5 +60,45 @@ class MerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckP
         return (new CartPreCheckResponseTransfer())
             ->setMessages(new ArrayObject($messageTransfers))
             ->setIsSuccess(!$messageTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return array
+     */
+    protected function getMerchantTransfersGroupedByMerchantReference(CartChangeTransfer $cartChangeTransfer)
+    {
+        $merchantReferenes = [];
+        $merchantTransfers = [];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getMerchantReference()) {
+                continue;
+            }
+            $merchantReferenes[] = $itemTransfer->getMerchantReference();
+        }
+
+        if (!$merchantReferenes) {
+            return $merchantTransfers;
+        }
+
+        $merchantReferenes = array_unique($merchantReferenes);
+        $merchantCollectionTransfer = $this->getFacade()->get(
+            (new MerchantCriteriaTransfer())
+                ->setMerchantReferences($merchantReferenes)
+                ->setIsActive(true)
+                ->setStore(
+                    $this->getFactory()
+                        ->getStoreFacade()
+                        ->getCurrentStore()
+                        ->getName()
+                )
+        );
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;
+        }
+
+        return $merchantTransfers;
     }
 }

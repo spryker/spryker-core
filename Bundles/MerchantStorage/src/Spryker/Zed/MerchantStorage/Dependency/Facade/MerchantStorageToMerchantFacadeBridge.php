@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 
 class MerchantStorageToMerchantFacadeBridge implements MerchantStorageToMerchantFacadeInterface
 {
@@ -26,12 +26,12 @@ class MerchantStorageToMerchantFacadeBridge implements MerchantStorageToMerchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->get($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->get($merchantCriteriaTransfer);
     }
 }

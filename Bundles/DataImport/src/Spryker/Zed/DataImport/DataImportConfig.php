@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataImport;
 
+use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
@@ -67,6 +68,16 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getDefaultYamlConfigPath(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @param string $file
      * @param string $importType
      *
@@ -82,6 +93,28 @@ class DataImportConfig extends AbstractBundleConfig
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
             ->setImportType($importType)
+            ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
+
+        return $dataImporterConfigurationTransfer;
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function buildImporterConfigurationByDataImportConfigAction(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+    ): DataImporterConfigurationTransfer {
+        $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImportReaderConfigurationTransfer
+            ->setFileName($dataImportConfigurationActionTransfer->getSource());
+
+        $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImporterConfigurationTransfer
+            ->setImportType($dataImportConfigurationActionTransfer->getDataEntity())
             ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
 
         return $dataImporterConfigurationTransfer;

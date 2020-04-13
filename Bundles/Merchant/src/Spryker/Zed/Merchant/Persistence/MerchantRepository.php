@@ -10,7 +10,7 @@ namespace Spryker\Zed\Merchant\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -28,43 +28,43 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     protected const DEFAULT_ORDER_COLUMN = SpyMerchantTableMap::COL_NAME;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function get(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
         $merchantQuery = $this->getFactory()->createMerchantQuery();
 
-        $filterTransfer = $merchantCriteriaFilterTransfer->getFilter();
+        $filterTransfer = $merchantCriteriaTransfer->getFilter();
         if ($filterTransfer === null || empty($filterTransfer->getOrderBy())) {
             $filterTransfer = (new FilterTransfer())->setOrderBy(static::DEFAULT_ORDER_COLUMN);
         }
 
-        $merchantQuery = $this->applyFilters($merchantQuery, $merchantCriteriaFilterTransfer);
+        $merchantQuery = $this->applyFilters($merchantQuery, $merchantCriteriaTransfer);
         $merchantQuery = $this->buildQueryFromCriteria($merchantQuery, $filterTransfer)->setFormatter(ObjectFormatter::class);
 
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantCollection */
-        $merchantCollection = $this->getPaginatedCollection($merchantQuery, $merchantCriteriaFilterTransfer->getPagination());
+        $merchantCollection = $this->getPaginatedCollection($merchantQuery, $merchantCriteriaTransfer->getPagination());
 
         $merchantCollectionTransfer = $this->getFactory()
             ->createPropelMerchantMapper()
             ->mapMerchantCollectionToMerchantCollectionTransfer($merchantCollection, new MerchantCollectionTransfer());
 
-        $merchantCollectionTransfer->setPagination($merchantCriteriaFilterTransfer->getPagination());
+        $merchantCollectionTransfer->setPagination($merchantCriteriaTransfer->getPagination());
 
         return $merchantCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer
     {
         $merchantQuery = $this->getFactory()->createMerchantQuery();
-        $merchantEntity = $this->applyFilters($merchantQuery, $merchantCriteriaFilterTransfer)->findOne();
+        $merchantEntity = $this->applyFilters($merchantQuery, $merchantCriteriaTransfer)->findOne();
 
         if (!$merchantEntity) {
             return null;
@@ -77,36 +77,40 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
     /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
-    protected function applyFilters(SpyMerchantQuery $merchantQuery, MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): SpyMerchantQuery
+    protected function applyFilters(SpyMerchantQuery $merchantQuery, MerchantCriteriaTransfer $merchantCriteriaTransfer): SpyMerchantQuery
     {
-        if ($merchantCriteriaFilterTransfer->getIdMerchant() !== null) {
-            $merchantQuery->filterByIdMerchant($merchantCriteriaFilterTransfer->getIdMerchant());
+        if ($merchantCriteriaTransfer->getIdMerchant() !== null) {
+            $merchantQuery->filterByIdMerchant($merchantCriteriaTransfer->getIdMerchant());
         }
 
-        if ($merchantCriteriaFilterTransfer->getEmail() !== null) {
-            $merchantQuery->filterByEmail($merchantCriteriaFilterTransfer->getEmail());
+        if ($merchantCriteriaTransfer->getEmail() !== null) {
+            $merchantQuery->filterByEmail($merchantCriteriaTransfer->getEmail());
         }
 
-        if ($merchantCriteriaFilterTransfer->getMerchantReference() !== null) {
-            $merchantQuery->filterByMerchantReference($merchantCriteriaFilterTransfer->getMerchantReference());
+        if ($merchantCriteriaTransfer->getMerchantReference() !== null) {
+            $merchantQuery->filterByMerchantReference($merchantCriteriaTransfer->getMerchantReference());
         }
 
-        if ($merchantCriteriaFilterTransfer->getMerchantIds()) {
-            $merchantQuery->filterByIdMerchant_In($merchantCriteriaFilterTransfer->getMerchantIds());
+        if ($merchantCriteriaTransfer->getMerchantReferences()) {
+            $merchantQuery->filterByMerchantReference_In($merchantCriteriaTransfer->getMerchantReferences());
         }
 
-        if ($merchantCriteriaFilterTransfer->getIsActive() !== null) {
-            $merchantQuery->filterByIsActive($merchantCriteriaFilterTransfer->getIsActive());
+        if ($merchantCriteriaTransfer->getMerchantIds()) {
+            $merchantQuery->filterByIdMerchant_In($merchantCriteriaTransfer->getMerchantIds());
         }
 
-        if ($merchantCriteriaFilterTransfer->getStore() !== null) {
+        if ($merchantCriteriaTransfer->getIsActive() !== null) {
+            $merchantQuery->filterByIsActive($merchantCriteriaTransfer->getIsActive());
+        }
+
+        if ($merchantCriteriaTransfer->getStore() !== null) {
             $merchantQuery->useSpyMerchantStoreQuery()
                     ->useSpyStoreQuery()
-                        ->filterByName($merchantCriteriaFilterTransfer->getStore())
+                        ->filterByName($merchantCriteriaTransfer->getStore())
                     ->endUse()
                 ->endUse();
         }

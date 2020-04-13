@@ -10,6 +10,7 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Iterator;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataQueryContainerPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
@@ -62,8 +63,17 @@ class QueryContainerExporter implements ExporterInterface
      */
     public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
+        $isPoolingEnabled = Propel::isInstancePoolingEnabled();
+        if ($isPoolingEnabled) {
+            Propel::disableInstancePooling();
+        }
+
         foreach ($plugins as $plugin) {
             $this->exportData($ids, $plugin);
+        }
+
+        if ($isPoolingEnabled) {
+            Propel::enableInstancePooling();
         }
     }
 
