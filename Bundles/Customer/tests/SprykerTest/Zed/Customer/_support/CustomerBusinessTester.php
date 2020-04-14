@@ -43,6 +43,6 @@ class CustomerBusinessTester extends Actor
     {
         $nativePasswordEncoder = new NativePasswordEncoder();
 
-        $this->assertTrue($nativePasswordEncoder->isPasswordValid($hash, $rowPassword, $salt));
+        $this->assertTrue($nativePasswordEncoder->isPasswordValid($hash, $rowPassword, $salt), 'Passwords are now equal.');
     }
 }

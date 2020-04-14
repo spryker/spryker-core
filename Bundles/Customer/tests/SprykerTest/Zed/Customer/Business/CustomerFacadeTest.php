@@ -607,8 +607,8 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = $customerResponse->getCustomerTransfer();
 
         // Assert
-        $this->assertTrue($customerResponse->getIsSuccess());
-        $this->assertEquals(static::TESTER_NAME, $customerTransfer->getLastName());
+        $this->assertTrue($customerResponse->getIsSuccess(), 'Customer response must be successful.');
+        $this->assertEquals(static::TESTER_NAME, $customerTransfer->getLastName(), 'Last name was not saved.');
         $this->tester->assertPasswordsEqual($customerTransfer->getPassword(), static::TESTER_NEW_PASSWORD);
     }
 
