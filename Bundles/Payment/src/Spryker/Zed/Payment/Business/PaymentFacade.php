@@ -185,4 +185,21 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->createPaymentMethodUpdater()
             ->updatePaymentMethod($paymentMethodTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCheckoutPaymentPluginValidator()
+            ->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+    }
 }

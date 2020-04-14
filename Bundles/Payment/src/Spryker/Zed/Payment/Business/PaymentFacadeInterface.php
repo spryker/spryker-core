@@ -149,4 +149,17 @@ interface PaymentFacadeInterface
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates payment
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

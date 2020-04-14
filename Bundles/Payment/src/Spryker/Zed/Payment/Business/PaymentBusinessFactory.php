@@ -10,6 +10,8 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Business\Checkout\PaymentPluginValidator;
+use Spryker\Zed\Payment\Business\Checkout\PaymentPluginValidatorInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
@@ -94,6 +96,16 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getStoreFacade(),
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginValidatorInterface
+     */
+    public function createCheckoutPaymentPluginValidator(): PaymentPluginValidatorInterface
+    {
+        return new PaymentPluginValidator(
+            $this->getConfig()
         );
     }
 
