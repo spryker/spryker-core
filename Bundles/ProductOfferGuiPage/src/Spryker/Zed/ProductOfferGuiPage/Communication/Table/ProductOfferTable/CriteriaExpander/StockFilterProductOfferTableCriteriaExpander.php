@@ -8,26 +8,45 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
 class StockFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
 {
     /**
-     * @param array $filters
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    protected $tableFilterDataProvider;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
+     */
+    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
+    {
+        $this->tableFilterDataProvider = $tableFilterDataProvider;
+    }
+
+    /**
+     * @param string $filterName
+     *
+     * @return bool
+     */
+    public function isApplicable(string $filterName): bool
+    {
+        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+    }
+
+    /**
+     * @param mixed $filterValue
      * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
      */
     public function expandProductOfferTableCriteria(
-        array $filters,
+        $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $filterName = StockProductOfferTableFilterDataProvider::FILTER_NAME;
-
-        if (isset($filters[$filterName])) {
-            $hasStock = (bool)$filters[$filterName];
-            $productOfferTableCriteriaTransfer->setHasStock($hasStock);
-        }
+        $hasStock = (bool)$filterValue;
+        $productOfferTableCriteriaTransfer->setHasStock($hasStock);
 
         return $productOfferTableCriteriaTransfer;
     }

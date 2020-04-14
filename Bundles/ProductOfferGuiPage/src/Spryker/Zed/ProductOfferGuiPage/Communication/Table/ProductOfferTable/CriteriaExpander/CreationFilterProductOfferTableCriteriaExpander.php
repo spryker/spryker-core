@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
-class StatusFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class CreationFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
@@ -45,7 +45,8 @@ class StatusFilterProductOfferTableCriteriaExpander implements FilterProductOffe
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setApprovalStatus(strtolower($filterValue));
+        $productOfferTableCriteriaTransfer->setCreatedFrom($filterValue['from'] ?? null);
+        $productOfferTableCriteriaTransfer->setCreatedTo($filterValue['to'] ?? null);
 
         return $productOfferTableCriteriaTransfer;
     }

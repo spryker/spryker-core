@@ -12,7 +12,7 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataPr
 
 class StatusProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'status';
+    protected const FILTER_NAME = 'status';
 
     protected const OPTION_APPROVED = 'Approved';
     protected const OPTION_DENIED = 'Denied';

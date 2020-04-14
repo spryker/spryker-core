@@ -221,8 +221,6 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * TODO: url needs to be adjusted once the create offer part is ready.
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
@@ -249,6 +247,7 @@ class ProductTable extends AbstractTable
     protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
+        $guiTableConfigurationTransfer->addSearchOption(static::CONFIG_ENABLED, true);
 
         return $guiTableConfigurationTransfer;
     }

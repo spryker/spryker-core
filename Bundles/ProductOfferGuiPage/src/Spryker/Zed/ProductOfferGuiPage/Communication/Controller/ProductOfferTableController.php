@@ -18,6 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductOfferTableController extends AbstractController
 {
     /**
+     * @return array
+     */
+    public function indexAction(): array
+    {
+        $productOfferTable = $this->getFactory()->createProductOfferTable();
+
+        return $this->viewResponse(
+            $productOfferTable->getConfiguration()
+        );
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse

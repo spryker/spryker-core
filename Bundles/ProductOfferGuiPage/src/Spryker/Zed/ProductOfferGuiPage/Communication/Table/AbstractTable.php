@@ -23,10 +23,17 @@ abstract class AbstractTable
 {
     protected const CONFIG_COLUMNS = 'columns';
     protected const CONFIG_DATA_URL = 'dataUrl';
-    protected const CONFIG_AVAILABLE_PAGE_SIZES = 'pageSizes';
+    protected const CONFIG_PAGINATION = 'pagination';
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
     protected const CONFIG_SEARCH = 'search';
+    protected const CONFIG_COLUMN_CONFIGURATOR = 'columnConfigurator';
+    protected const CONFIG_ITEM_SELECTION = 'itemselection';
+    protected const CONFIG_SYNC_STATE_URL = 'syncStateUrl';
+    protected const CONFIG_ENABLED = 'enabled';
+    protected const CONFIG_ACTIONS = 'actions';
+    protected const CONFIG_SIZES = 'sizes';
+    protected const CONFIG_ITEMS = 'items';
 
     protected const PARAM_PAGE = 'page';
     protected const PARAM_PAGE_SIZE = 'pageSize';
@@ -116,10 +123,13 @@ abstract class AbstractTable
         return [
             static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_DATA_URL => $guiTableConfigurationTransfer->getDataUrl(),
-            static::CONFIG_AVAILABLE_PAGE_SIZES => $this->prepareAvailablePageSizesConfigurationData($guiTableConfigurationTransfer),
+            static::CONFIG_PAGINATION => $this->preparePaginationData($guiTableConfigurationTransfer),
             static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
             static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
-            static::CONFIG_SEARCH => $guiTableConfigurationTransfer->getSearch(),
+            static::CONFIG_SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
+            static::CONFIG_COLUMN_CONFIGURATOR => $this->prepareColumnConfiguratorData($guiTableConfigurationTransfer),
+            static::CONFIG_ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
+            static::CONFIG_SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
         ];
     }
 
@@ -142,13 +152,18 @@ abstract class AbstractTable
     /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return int[]
+     * @return array
      */
-    protected function prepareAvailablePageSizesConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    protected function preparePaginationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        return !empty($guiTableConfigurationTransfer->getAvailablePageSizes())
+        $sizes = !empty($guiTableConfigurationTransfer->getAvailablePageSizes())
             ? $guiTableConfigurationTransfer->getAvailablePageSizes()
             : static::DEFAULT_AVAILABLE_PAGE_SIZES;
+
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizedEnabled() ?? true,
+            static::CONFIG_SIZES => $sizes,
+        ];
     }
 
     /**
@@ -158,13 +173,16 @@ abstract class AbstractTable
      */
     protected function prepareFiltersConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $filtersData = [];
+        $filtersItems = [];
 
         foreach ($guiTableConfigurationTransfer->getFilters() as $filterTransfer) {
-            $filtersData[] = $filterTransfer->toArray(true, true);
+            $filtersItems[] = $filterTransfer->toArray(true, true);
         }
 
-        return $filtersData;
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsFiltersEnabled() ?? true,
+            static::CONFIG_ITEMS => $filtersItems,
+        ];
     }
 
     /**
@@ -174,13 +192,64 @@ abstract class AbstractTable
      */
     protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $rowActions = [];
+        $actions = [];
 
         foreach ($guiTableConfigurationTransfer->getRowActions() as $rowActionTransfer) {
-            $rowActions[] = $rowActionTransfer->toArray(true, true);
+            $actions[] = $rowActionTransfer->toArray(true, true);
         }
 
-        return $rowActions;
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsRowActionsEnabled() ?? true,
+            static::CONFIG_ACTIONS => $actions,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareColumnConfiguratorData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsColumnConfiguratorEnabled() ?? true,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareItemSelectionData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsItemSelectionEnabled() ?? true,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareSyncStateUrlData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        return [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsSyncStateUrlEnabled() ?? true,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareSearchData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        return $guiTableConfigurationTransfer->getSearch() + [
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsSearchEnabled() ?? true,
+        ];
     }
 
     /**

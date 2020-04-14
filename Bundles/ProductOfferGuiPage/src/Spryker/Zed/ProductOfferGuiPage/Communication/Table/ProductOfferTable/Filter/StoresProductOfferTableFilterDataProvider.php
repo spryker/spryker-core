@@ -13,7 +13,7 @@ use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStore
 
 class StoresProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
 {
-    public const FILTER_NAME = 'stores';
+    protected const FILTER_NAME = 'stores';
 
     /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeInterface
@@ -52,7 +52,7 @@ class StoresProductOfferTableFilterDataProvider implements TableFilterDataProvid
         foreach ($storeTransfers as $storeTransfer) {
             $storeOptions[] = [
                 static::OPTION_VALUE_KEY_TITLE => $storeTransfer->getName(),
-                static::OPTION_VALUE_KEY_TITLE => $storeTransfer->getIdStore(),
+                static::OPTION_VALUE_KEY_VALUE => $storeTransfer->getIdStore(),
             ];
         }
 

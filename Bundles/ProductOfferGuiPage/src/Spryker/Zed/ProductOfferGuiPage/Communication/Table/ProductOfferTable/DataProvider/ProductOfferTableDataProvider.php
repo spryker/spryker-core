@@ -7,17 +7,20 @@
 
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
 class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInterface
 {
-    protected const ATTRIBUTE_KEY_COLOR = 'color';
-
     protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
     protected const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
     protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'offline';
@@ -33,15 +36,23 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface
+     */
+    protected $productNameBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      */
     public function __construct(
         ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository,
-        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+        ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
+        ProductNameBuilderInterface $productNameBuilder
     ) {
         $this->productOfferGuiPageRepository = $productOfferGuiPageRepository;
         $this->translatorFacade = $translatorFacade;
+        $this->productNameBuilder = $productNameBuilder;
     }
 
     /**
@@ -87,29 +98,47 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
      */
     protected function getNameColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
     {
-        $productConcreteName = $productOfferTableRowDataTransfer->getProductConcreteName();
+        $productConcreteTransfer = $this->createProductConcreteTransfer($productOfferTableRowDataTransfer);
+        $productAbstractTransfer = $this->createProductAbstractTransfer($productOfferTableRowDataTransfer);
 
-        if (!$productConcreteName) {
-            return null;
-        }
+        return $this->productNameBuilder->buildProductName($productConcreteTransfer, $productAbstractTransfer);
+    }
 
-        $extendedProductConcreteNameParts = [$productConcreteName];
-        $productConcreteAttributes = $productOfferTableRowDataTransfer->getProductConcreteAttributes();
-        $productAbstractAttributes = $productOfferTableRowDataTransfer->getProductAbstractAttributes();
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductConcreteTransfer(
+        ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+    ): ProductConcreteTransfer {
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+            ->addAttribute($productOfferTableRowDataTransfer->getProductConcreteLocalizedAttributes())
+            ->setName($productOfferTableRowDataTransfer->getProductConcreteName());
 
-        foreach ($productConcreteAttributes as $productConcreteAttribute) {
-            if (!$productConcreteAttribute) {
-                continue;
-            }
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setAttributes($productOfferTableRowDataTransfer->getProductConcreteAttributes())
+            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
 
-            $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
-        }
+        return $productConcreteTransfer;
+    }
 
-        if (array_key_exists(static::ATTRIBUTE_KEY_COLOR, $productAbstractAttributes)) {
-            $extendedProductConcreteNameParts[] = ucfirst($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR]);
-        }
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function createProductAbstractTransfer(
+        ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+    ): ProductAbstractTransfer {
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+            ->addAttribute($productOfferTableRowDataTransfer->getProductAbstractLocalizedAttributes());
 
-        return implode(', ', $extendedProductConcreteNameParts);
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractAttributes())
+            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
+
+        return $productAbstractTransfer;
     }
 
     /**

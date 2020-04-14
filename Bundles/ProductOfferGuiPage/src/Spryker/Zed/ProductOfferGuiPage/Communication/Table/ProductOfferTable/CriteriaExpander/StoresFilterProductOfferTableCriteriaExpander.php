@@ -8,29 +8,48 @@
 namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\Filter\StoresProductOfferTableFilterDataProvider;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface;
 
 class StoresFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
 {
     /**
-     * @param array $filters
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface
+     */
+    protected $tableFilterDataProvider;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
+     */
+    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
+    {
+        $this->tableFilterDataProvider = $tableFilterDataProvider;
+    }
+
+    /**
+     * @param string $filterName
+     *
+     * @return bool
+     */
+    public function isApplicable(string $filterName): bool
+    {
+        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+    }
+
+    /**
+     * @param mixed $filterValue
      * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
      */
     public function expandProductOfferTableCriteria(
-        array $filters,
+        $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $filterName = StoresProductOfferTableFilterDataProvider::FILTER_NAME;
+        $storeIds = array_map(function ($storeId) {
+            return (int)$storeId;
+        }, $filterValue);
 
-        if (isset($filters[$filterName])) {
-            $storeIds = array_map(function ($storeId) {
-                return (int)$storeId;
-            }, $filters[$filterName]);
-
-            $productOfferTableCriteriaTransfer->setInStores($storeIds);
-        }
+        $productOfferTableCriteriaTransfer->setInStores($storeIds);
 
         return $productOfferTableCriteriaTransfer;
     }

@@ -14,11 +14,18 @@
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
         <property name="dataUrl" type="string"/>
         <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
+        <property name="isPageSizedEnabled" type="bool"/>
         <property name="filters" type="GuiTableFilter[]" singular="filter"/>
+        <property name="isFiltersEnabled" type="bool"/>
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
+        <property name="isRowActionsEnabled" type="bool"/>
         <property name="search" type="array" associative="true" singular="searchOption"/>
+        <property name="isSearchEnabled" type="bool"/>
+        <property name="isColumnConfiguratorEnabled" type="bool"/>
+        <property name="isItemSelectionEnabled" type="bool"/>
+        <property name="isSyncStateUrlEnabled" type="bool"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">
@@ -63,6 +70,12 @@
         <property name="hasStock" type="bool"/>
         <property name="approvalStatus" type="string"/>
         <property name="inStores" type="int[]" singular="inStore"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="createdFrom" type="string"/>
+        <property name="createdTo" type="string"/>
+        <property name="updatedFrom" type="string"/>
+        <property name="updatedTo" type="string"/>
         <property name="searchTerm" type="string"/>
         <property name="locale" type="Locale"/>
         <property name="merchantUser" type="MerchantUser"/>
@@ -107,6 +120,8 @@
         <property name="productConcreteName" type="string"/>
         <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
+        <property name="productAbstractLocalizedAttributes" type="array" singular="productAbstractLocalizedAttribute"/>
+        <property name="productConcreteLocalizedAttributes" type="array" singular="productConcreteLocalizedAttribute"/>
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 
@@ -24,6 +25,9 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
      */
     protected $localeFacade;
 
+    /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface[]
+     */
     protected $filterProductOfferTableCriteriaExpanders;
 
     /**
@@ -174,13 +178,34 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
             return $productOfferTableCriteriaTransfer;
         }
 
-        foreach ($this->filterProductOfferTableCriteriaExpanders as $filterProductOfferTableCriteriaExpander) {
-            $productOfferTableCriteriaTransfer = $filterProductOfferTableCriteriaExpander->expandProductOfferTableCriteria(
-                $this->filters,
-                $productOfferTableCriteriaTransfer
-            );
+        foreach ($this->filters as $filterName => $filterValue) {
+            $productOfferTableCriteriaExpander = $this->findApplicableProductOfferTableCriteriaExpander($filterName);
+
+            if ($productOfferTableCriteriaExpander) {
+                $productOfferTableCriteriaTransfer = $productOfferTableCriteriaExpander->expandProductOfferTableCriteria(
+                    $filterValue,
+                    $productOfferTableCriteriaTransfer
+                );
+            }
         }
 
         return $productOfferTableCriteriaTransfer;
+    }
+
+    /**
+     * @param string $filterName
+     *
+     * @return \Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface|null
+     */
+    protected function findApplicableProductOfferTableCriteriaExpander(
+        string $filterName
+    ): ?FilterProductOfferTableCriteriaExpanderInterface {
+        foreach ($this->filterProductOfferTableCriteriaExpanders as $filterProductOfferTableCriteriaExpander) {
+            if ($filterProductOfferTableCriteriaExpander->isApplicable($filterName)) {
+                return $filterProductOfferTableCriteriaExpander;
+            }
+        }
+
+        return null;
     }
 }

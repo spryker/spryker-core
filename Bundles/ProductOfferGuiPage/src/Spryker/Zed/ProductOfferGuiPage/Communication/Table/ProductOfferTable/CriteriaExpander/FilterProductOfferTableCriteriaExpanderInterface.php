@@ -12,13 +12,20 @@ use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 interface FilterProductOfferTableCriteriaExpanderInterface
 {
     /**
-     * @param array $filters
+     * @param string $filterName
+     *
+     * @return bool
+     */
+    public function isApplicable(string $filterName): bool;
+
+    /**
+     * @param mixed $filterValue
      * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
      */
     public function expandProductOfferTableCriteria(
-        array $filters,
+        $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer;
 }
