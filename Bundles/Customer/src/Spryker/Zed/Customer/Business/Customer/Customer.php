@@ -462,6 +462,8 @@ class Customer implements CustomerInterface
             if ($customerResponseTransfer->getIsSuccess() === false) {
                 return $customerResponseTransfer;
             }
+            $customerTransfer->setNewPassword($customerResponseTransfer->getCustomerTransfer()->getNewPassword())
+                ->setPassword($customerResponseTransfer->getCustomerTransfer()->getPassword());
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
