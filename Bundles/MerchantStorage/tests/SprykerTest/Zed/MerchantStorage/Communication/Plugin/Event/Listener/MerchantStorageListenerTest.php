@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
-use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantStoragePublisherPlugin;
+use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 
 /**
  * Auto-generated group annotations
