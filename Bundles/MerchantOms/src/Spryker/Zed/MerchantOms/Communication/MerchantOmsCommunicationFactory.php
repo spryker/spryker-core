@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface;
+use Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 
 /**
@@ -40,5 +41,13 @@ class MerchantOmsCommunicationFactory extends AbstractCommunicationFactory
     public function getStateMachineCommandPlugins(): array
     {
         return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_PLUGINS_STATE_MACHINE_COMMAND);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface
+     */
+    public function getUtilDataReaderService(): MerchantOmsToUtilDataReaderServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::SERVICE_UTIL_DATA_READER);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 
 interface MerchantOmsFacadeInterface
 {
@@ -41,6 +42,24 @@ interface MerchantOmsFacadeInterface
      * @return int
      */
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int;
+
+    /**
+     * Specification:
+     * - Requires MerchantOmsTriggerRequest.merchantOrderItemReference transfer field to be set.
+     * - Requires MerchantOmsTriggerRequest.merchantOmsEventName transfer field to be set.
+     * - Dispatches a merchant OMS event for merchant order item.
+     * - Returns MerchantOmsTriggerRequest.isSuccessful = true if event trigger was successful.
+     * - Returns MerchantOmsTriggerRequest.isSuccessful = false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer
+     */
+    public function triggerEventForMerchantOrderItem(
+        MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+    ): MerchantOmsTriggerResponseTransfer;
 
     /**
      * Specification:
