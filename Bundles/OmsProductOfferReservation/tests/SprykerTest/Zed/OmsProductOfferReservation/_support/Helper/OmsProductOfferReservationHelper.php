@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\OmsProductOfferReservation\Helper;
@@ -23,12 +23,12 @@ class OmsProductOfferReservationHelper extends Module
     {
         $omsProductOfferReservationTransfer = (new OmsProductOfferReservationBuilder($seedData))->build();
 
-        $omsProductOfferReservation = (new SpyOmsProductOfferReservation())
+        $omsProductOfferReservationEntity = (new SpyOmsProductOfferReservation())
             ->setFkStore($omsProductOfferReservationTransfer->getIdStore());
 
-        $omsProductOfferReservation->fromArray($omsProductOfferReservationTransfer->toArray());
+        $omsProductOfferReservationEntity->fromArray($omsProductOfferReservationTransfer->toArray());
 
-        $omsProductOfferReservation->save();
+        $omsProductOfferReservationEntity->save();
 
         return $omsProductOfferReservationTransfer;
     }
