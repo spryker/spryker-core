@@ -24,6 +24,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Kernel\Container;
@@ -99,8 +100,6 @@ class CmsFacadeTest extends Unit
         $this->cmsQueryContainer = new CmsQueryContainer();
         $this->glossaryQueryContainer = new GlossaryQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
-
-        $this->buildGlossaryFacade();
     }
 
     /**
@@ -231,7 +230,7 @@ class CmsFacadeTest extends Unit
     {
         $pageKeyMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
 
-        $glossaryKeyId = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey');
+        $glossaryKeyId = $this->buildGlossaryFacade()->createKey('AHopefullyNotYetExistingKey');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName', 'ANotYetExistingTemplatePath');
 
         $page = new PageTransfer();
@@ -261,8 +260,9 @@ class CmsFacadeTest extends Unit
      */
     public function testSavePageKeyMappingUpdatesSomething(): void
     {
-        $glossaryKeyId1 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey2');
-        $glossaryKeyId2 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
+        $glossaryFacade = $this->buildGlossaryFacade();
+        $glossaryKeyId1 = $glossaryFacade->createKey('AHopefullyNotYetExistingKey2');
+        $glossaryKeyId2 = $glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName2', 'ANotYetExistingTemplatePath2');
 
         $page = new PageTransfer();
@@ -487,11 +487,11 @@ class CmsFacadeTest extends Unit
     }
 
     /**
-     * @return void
+     * @return \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
-    protected function buildGlossaryFacade(): void
+    protected function buildGlossaryFacade(): GlossaryFacadeInterface
     {
-        $this->glossaryFacade = new GlossaryFacade();
+        $glossaryFacade = new GlossaryFacade();
         $container = new Container();
 
         $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
@@ -501,7 +501,9 @@ class CmsFacadeTest extends Unit
         $factory = new GlossaryBusinessFactory();
         $factory->setContainer($container);
 
-        $this->glossaryFacade->setFactory($factory);
+        $glossaryFacade->setFactory($factory);
+
+        return $glossaryFacade;
     }
 
     /**
