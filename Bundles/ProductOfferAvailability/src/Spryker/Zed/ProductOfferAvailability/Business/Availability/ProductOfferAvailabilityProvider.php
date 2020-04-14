@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferAvailability\Business\Availability;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
@@ -74,12 +73,8 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
             return $quantity;
         }
 
-        $itemTransfer = (new ItemTransfer())
-            ->setSku($productOfferAvailabilityRequestTransfer->getSku())
-            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference());
-
         $reservationRequestTransfer = (new ReservationRequestTransfer())
-            ->setItem($itemTransfer)
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
             ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
         $reservationResponseTransfer = $this->omsFacade->getOmsReservedProductQuantity($reservationRequestTransfer);

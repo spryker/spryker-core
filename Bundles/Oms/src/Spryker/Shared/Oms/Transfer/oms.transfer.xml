@@ -129,7 +129,7 @@
 
     <transfer name="ReservationRequest">
         <property name="reservedStates" type="OmsStateCollection"/>
-        <property name="item" type="Item"/>
+        <property name="sku" type="string"/>
         <property name="store" type="Store"/>
         <property name="reservationQuantity" type="decimal"/>
     </transfer>

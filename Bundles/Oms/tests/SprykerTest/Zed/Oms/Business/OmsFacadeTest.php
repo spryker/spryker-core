@@ -10,10 +10,8 @@ namespace SprykerTest\Zed\Oms\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
@@ -27,7 +25,6 @@ use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugin;
 
@@ -320,22 +317,5 @@ class OmsFacadeTest extends Unit
         $omsFacade->setFactory($omsBusinessFactory);
 
         return $omsFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsProductOfferReservationTransfer|null $omsProductOfferReservationTransfer
-     *
-     * @return void
-     */
-    protected function setProductOfferOmsReservationReaderStrategyPluginReturn(
-        ?OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer = null
-    ): void {
-        $reservationResponseTransfer = (new ReservationResponseTransfer())
-            ->setReservationQuantity($omsProductOfferReservationTransfer->getReservationQuantity());
-
-        $productOfferOmsReservationReaderStrategyPlugin = $this->getMockBuilder(OmsReservationReaderStrategyPluginInterface::class)->getMock();
-        $productOfferOmsReservationReaderStrategyPlugin->method('isApplicable')->willReturn($omsProductOfferReservationTransfer->getProductOfferReference() !== null);
-        $productOfferOmsReservationReaderStrategyPlugin->method('getReservationQuantity')->willReturn($reservationResponseTransfer);
-        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [$productOfferOmsReservationReaderStrategyPlugin]);
     }
 }

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\OmsReservation;
@@ -21,7 +21,7 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.item has productOfferReference.
+     * - Checks if ReservationRequest has productOfferReference.
      *
      * @api
      *
@@ -31,14 +31,14 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
      */
     public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        return $reservationRequestTransfer->getItem()->getProductOfferReference() !== null;
+        return $reservationRequestTransfer->getProductOfferReference() !== null;
     }
 
     /**
      * {@inheritDoc}
      * - Returns ReservationResponse.reservationQuantity for provider product offer and store.
-     * - Requires ReservationRequest.item.productOfferReference.
-     * - Requires ReservationRequest.store.name.
+     * - Requires ReservationRequest.productOfferReference.
+     * - Requires ReservationRequest.store.id.
      *
      * @api
      *
@@ -49,12 +49,8 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
     public function getReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
     {
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
-            ->setProductOfferReference(
-                $reservationRequestTransfer->requireItem()->getItem()->requireProductOfferReference()->getProductOfferReference()
-            )
-            ->setIdStore(
-                $reservationRequestTransfer->requireStore()->getStore()->requireIdStore()->getIdStore()
-            );
+            ->setProductOfferReference($reservationRequestTransfer->requireProductOfferReference()->getProductOfferReference())
+            ->setIdStore($reservationRequestTransfer->requireStore()->getStore()->requireIdStore()->getIdStore());
 
         return $this->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
     }
