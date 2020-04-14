@@ -15,7 +15,6 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -62,7 +61,10 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         ArrayObject $omsStateTransfers,
         ?StoreTransfer $storeTransfer = null
     ): array {
-        $salesOrderItemQuery = new SpySalesOrderItemQuery();
+        $reservationRequestTransfer->requireItem();
+        $reservationRequestTransfer->requireReservedStates();
+
+        $salesOrderItemQuery = $this->getFactory()->getSalesOrderItemPropelQuery();
         $salesOrderItemQuery
             ->filterByProductOfferReference($productOfferReference)
             ->useStateQuery()

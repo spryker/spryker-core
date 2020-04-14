@@ -11,13 +11,14 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductOfferPackagingUnit\Persistence\ProductOfferPackagingUnitRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferPackagingUnit\Business\ProductOfferPackagingUnitFacade getFacade()
  */
 class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implements OmsReservationAggregationStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks if an item is an offer.
+     * - Checks if an item is a product offer.
+     * - Required parameters in ReservationRequestTransfer: item.
      *
      * @api
      *
@@ -27,25 +28,24 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
      */
     public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        return !empty($reservationRequestTransfer->getItem()->getProductOfferReference());
+        $reservationRequestTransfer->requireItem();
+
+        return (bool)$reservationRequestTransfer->getItem()->getProductOfferReference();
     }
 
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers packaging unit.
+     * - Required parameters in ReservationRequestTransfer: item, reservedStates.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function aggregateReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        return $this->getRepository()->getAggregatedReservations(
-            $reservationRequestTransfer->getItem()->getProductOfferReference(),
-            $reservationRequestTransfer->getReservedStates()->getStates(),
-            $reservationRequestTransfer->getStore()
-        );
+        return $this->getFacade()->getAggregatedReservations($reservationRequestTransfer);
     }
 }

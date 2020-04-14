@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -38,7 +37,7 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
         ArrayObject $omsStateTransfers,
         ?StoreTransfer $storeTransfer = null
     ): array {
-        $salesOrderItemQuery = (new SpySalesOrderItemQuery());
+        $salesOrderItemQuery = $this->getFactory()->createSalesOrderItemPropelQuery();
         $salesOrderItemQuery->filterByProductOfferReference($productOfferReference)
             ->groupByAmountSku()
             ->useStateQuery()
@@ -52,7 +51,7 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
             ->withColumn(
                 sprintf(
-                    "CASE WHEN %s IS NOT NULL' THEN SUM(%s) ELSE SUM(%s) END",
+                    "CASE WHEN %s IS NOT NULL THEN SUM(%s) ELSE SUM(%s) END",
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
                     SpySalesOrderItemTableMap::COL_AMOUNT,
                     SpySalesOrderItemTableMap::COL_QUANTITY

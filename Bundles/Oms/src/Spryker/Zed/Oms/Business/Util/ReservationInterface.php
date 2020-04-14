@@ -15,25 +15,35 @@ use Spryker\DecimalObject\Decimal;
 interface ReservationInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     * @param string $sku
      *
      * @return void
      */
-    public function updateReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer);
+    public function updateReservationQuantity($sku);
 
     /**
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
 
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
+    public function sumReservedProductQuantities(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
 
     /**
      * @param string $sku

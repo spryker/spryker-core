@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -30,5 +31,26 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
         return $this->getFactory()->createOmsProductOfferReservationReader()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
+    {
+        $reservationRequestTransfer->requireItem();
+        $reservationRequestTransfer->requireReservedStates();
+
+        return $this->getRepository()->getAggregatedReservations(
+            $reservationRequestTransfer->getItem()->getProductOfferReference(),
+            $reservationRequestTransfer->getReservedStates()->getStates(),
+            $reservationRequestTransfer->getStore()
+        );
     }
 }

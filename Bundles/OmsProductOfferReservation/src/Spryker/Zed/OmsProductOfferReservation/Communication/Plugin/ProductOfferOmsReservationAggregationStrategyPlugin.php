@@ -20,7 +20,8 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Checks if an item is an offer.
+     * - Checks if an item is a product offer.
+     * - Required parameters in ReservationRequestTransfer: item.
      *
      * @api
      *
@@ -30,12 +31,15 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
      */
     public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        return !empty($reservationRequestTransfer->getItem()->getProductOfferReference());
+        $reservationRequestTransfer->requireItem();
+
+        return (bool)$reservationRequestTransfer->getItem()->getProductOfferReference();
     }
 
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers.
+     * - Required parameters in ReservationRequestTransfer: item, reservedStates.
      *
      * @api
      *
@@ -45,10 +49,6 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
      */
     public function aggregateReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        return $this->getRepository()->getAggregatedReservations(
-            $reservationRequestTransfer->getItem()->getProductOfferReference(),
-            $reservationRequestTransfer->getReservedStates()->getStates(),
-            $reservationRequestTransfer->getStore()
-        );
+        return $this->getFacade()->getAggregatedReservations($reservationRequestTransfer);
     }
 }

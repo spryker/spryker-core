@@ -36,15 +36,19 @@ class ProductPackagingUnitOmsReservationAggregationStrategyPlugin extends Abstra
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers.
+     * - Required parameters in ReservationRequestTransfer: item, reservedStates
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function aggregateReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
+        $reservationRequestTransfer->requireItem();
+        $reservationRequestTransfer->requireReservedStates();
+
         return $this->getFacade()->aggregateProductPackagingUnitReservation(
             $reservationRequestTransfer->getItem()->getSku(),
             $reservationRequestTransfer->getReservedStates(),

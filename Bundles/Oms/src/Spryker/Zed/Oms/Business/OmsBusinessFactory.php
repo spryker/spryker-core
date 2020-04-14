@@ -245,8 +245,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getReservationAggregationStrategyPlugins(),
-            $this->getOmsReservationAggregationStrategyPlugins()
+            $this->getOmsReservationAggregationStrategyPlugins(),
+            $this->getReservationAggregationStrategyPlugins()
         );
     }
 
@@ -400,6 +400,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be remove in next major.
+     *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
     public function getReservationAggregationStrategyPlugins(): array
@@ -412,6 +414,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function getOmsReservationAggregationStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_AGGREGATION);
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_AGGREGATION_STRATEGY);
     }
 }
