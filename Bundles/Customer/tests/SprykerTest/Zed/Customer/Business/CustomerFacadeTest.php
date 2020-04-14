@@ -44,6 +44,7 @@ class CustomerFacadeTest extends Unit
     public const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     public const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
     public const TESTER_PASSWORD = '$2tester';
+    public const TESTER_NEW_PASSWORD = '$3tester';
     public const TESTER_NAME = 'Tester';
 
     /**
@@ -595,15 +596,20 @@ class CustomerFacadeTest extends Unit
      */
     public function testUpdateCustomerWithProvidedPasswordShouldSuccessWhenPasswordAreProvided(): void
     {
+        // Arrange
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setNewPassword('new password');
-        $customerTransfer->setPassword(self::TESTER_PASSWORD);
-        $customerTransfer->setLastName(self::TESTER_NAME);
+        $customerTransfer->setNewPassword(static::TESTER_NEW_PASSWORD);
+        $customerTransfer->setPassword(static::TESTER_PASSWORD);
+        $customerTransfer->setLastName(static::TESTER_NAME);
+
+        // Act
         $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
-        $this->assertNotNull($customerResponse);
-        $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
-        $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
+
+        // Assert
+        $this->assertTrue($customerResponse->getIsSuccess());
+        $this->assertEquals(static::TESTER_NAME, $customerTransfer->getLastName());
+        $this->tester->assertPasswordsEqual($customerTransfer->getPassword(), static::TESTER_NEW_PASSWORD);
     }
 
     /**
