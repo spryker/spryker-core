@@ -125,6 +125,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->addItem((new ItemTransfer())
                 ->setSku($cartItemRequestTransfer->getSku())
+                ->setGroupKey($cartItemRequestTransfer->getGroupKey())
                 ->setQuantity($cartItemRequestTransfer->getQuantity()))
             ->setCustomer($cartItemRequestTransfer->getCustomer());
     }
