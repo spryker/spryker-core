@@ -6,7 +6,7 @@
         "start": "ng serve",
         "build": "ng build",
         "postbuild": "run-s copy:*",
-        "copy:build": "copyfiles -u 1 dist/**/* ../../../../../public/Zed/assets/js/mp-product-offer",
+        "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/mp-product-offer",
         "test": "ng test",
         "lint": "ng lint"
     },
