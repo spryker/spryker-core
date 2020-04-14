@@ -9,6 +9,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/publisher-extension": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
@@ -17,7 +18,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*",

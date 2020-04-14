@@ -82,24 +82,24 @@ class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements Check
      */
     protected function getMerchantTransfersGroupedByMerchantReference(QuoteTransfer $quoteTransfer)
     {
-        $merchantReferenes = [];
+        $merchantReferences = [];
         $merchantTransfers = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }
-            $merchantReferenes[] = $itemTransfer->getMerchantReference();
+            $merchantReferences[] = $itemTransfer->getMerchantReference();
         }
 
-        if (!$merchantReferenes) {
+        if (!$merchantReferences) {
             return $merchantTransfers;
         }
 
-        $merchantReferenes = array_unique($merchantReferenes);
+        $merchantReferences = array_unique($merchantReferences);
         $merchantCollectionTransfer = $this->getFacade()->get(
             (new MerchantCriteriaTransfer())
-                ->setMerchantReferences($merchantReferenes)
+                ->setMerchantReferences($merchantReferences)
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

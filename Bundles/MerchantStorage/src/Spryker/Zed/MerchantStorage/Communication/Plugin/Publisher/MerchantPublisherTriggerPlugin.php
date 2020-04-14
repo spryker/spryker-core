@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantStorage\Communication\MerchantStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
  */
-class MerchantEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
+class MerchantPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
      * {@inheritDoc}

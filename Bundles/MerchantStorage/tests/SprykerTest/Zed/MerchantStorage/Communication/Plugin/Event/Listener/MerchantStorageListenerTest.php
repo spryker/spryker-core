@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
-use Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener\MerchantStoragePublishListener;
+use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantStoragePublisherPlugin;
 
 /**
  * Auto-generated group annotations
@@ -58,12 +58,12 @@ class MerchantStorageListenerTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
 
         // Act
-        $merchantStoragePublishListener = new MerchantStoragePublishListener();
+        $merchantStoragePublisherPlugin = new MerchantStoragePublisherPlugin();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
         ];
 
-        $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
+        $merchantStoragePublisherPlugin->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         // Assert
         $merchantStorageEntity = $this->tester->findMerchantStorageEntityByIdMerchant($merchantTransfer->getIdMerchant());
@@ -86,14 +86,14 @@ class MerchantStorageListenerTest extends Unit
             (new EventEntityTransfer())->setId($merchantTransfer2->getIdMerchant()),
         ];
 
-        $merchantStoragePublishListener = new MerchantStoragePublishListener();
-        $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
+        $merchantStoragePublisherPlugin = new MerchantStoragePublisherPlugin();
+        $merchantStoragePublisherPlugin->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         $merchantTransfer2->setIsActive(false);
 
         //Act
         $this->tester->getLocator()->merchant()->facade()->updateMerchant($merchantTransfer2);
-        $merchantStoragePublishListener->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
+        $merchantStoragePublisherPlugin->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         //Assert
         $merchantStorageEntities = $this->tester->findMerchantStorageEntitiesByIdMerchants([
