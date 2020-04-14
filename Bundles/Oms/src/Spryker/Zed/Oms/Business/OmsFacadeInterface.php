@@ -623,7 +623,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     * - Returns reserved quantity for provided ReservationRequestTransfer.item which aggregated in OMS.
+     * - Returns reserved quantity for provided ReservationRequestTransfer.
      *
      * @api
      *

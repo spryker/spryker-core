@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -248,10 +247,9 @@ class OmsFacadeTest extends Unit
             OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
         ]);
 
-        $itemTransfer = (new ItemTransfer())->setSku($omsProductReservationTransfer->getSku());
         $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
         $reservationRequestTransfer = (new ReservationRequestTransfer())
-            ->setItem($itemTransfer)
+            ->setSku($omsProductReservationTransfer->getSku())
             ->setStore($storeTransfer);
 
         // Act

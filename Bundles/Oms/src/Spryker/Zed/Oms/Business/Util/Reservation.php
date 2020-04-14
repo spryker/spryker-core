@@ -215,7 +215,7 @@ class Reservation implements ReservationInterface
         }
 
         $reservationQuantity = $this->getOmsReservedProductQuantityForSku(
-            $reservationRequestTransfer->requireItem()->getItem()->requireSku()->getSku(),
+            $reservationRequestTransfer->requireSku()->getSku(),
             $reservationRequestTransfer->requireStore()->getStore()
         );
 
