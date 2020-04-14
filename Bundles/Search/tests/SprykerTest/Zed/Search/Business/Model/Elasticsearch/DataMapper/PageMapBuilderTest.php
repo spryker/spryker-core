@@ -45,7 +45,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddingInvalidFieldShouldThrowException()
+    public function testAddingInvalidFieldShouldThrowException(): void
     {
         $this->expectException('InvalidArgumentException');
         $pageMapTransfer = new PageMapTransfer();
@@ -62,8 +62,12 @@ class PageMapBuilderTest extends Unit
      *
      * @return void
      */
-    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat($field, $attributeName, $attributeValue, array $expectedResult)
-    {
+    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat(
+        string $field,
+        string $attributeName,
+        $attributeValue,
+        array $expectedResult
+    ): void {
         $pageMapTransfer = new PageMapTransfer();
         $this->pageMapBuilder->add($pageMapTransfer, $field, $attributeName, $attributeValue);
 
@@ -73,7 +77,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    public function pageMapTransferDataProvider()
+    public function pageMapTransferDataProvider(): array
     {
         return [
             'single fulltext' => $this->createSingleFulltextData(),
@@ -102,7 +106,7 @@ class PageMapBuilderTest extends Unit
      *
      * @return void
      */
-    public function testAddStringFacetResetsValueKeys(array $value)
+    public function testAddStringFacetResetsValueKeys(array $value): void
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
@@ -124,7 +128,7 @@ class PageMapBuilderTest extends Unit
      *
      * @return void
      */
-    public function testAddIntegerFacetResetsValueKeys(array $value)
+    public function testAddIntegerFacetResetsValueKeys(array $value): void
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
@@ -142,7 +146,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    public function wronglyIndexedArrays()
+    public function wronglyIndexedArrays(): array
     {
         return [
            [
@@ -157,7 +161,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleFulltextData()
+    protected function createSingleFulltextData(): array
     {
         $field = PageIndexMap::FULL_TEXT;
         $attributeName = 'foo-name';
@@ -175,7 +179,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleFulltextData()
+    protected function createMultipleFulltextData(): array
     {
         $field = PageIndexMap::FULL_TEXT;
         $attributeName = 'foo-name';
@@ -195,7 +199,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleFulltextBoostedData()
+    protected function createSingleFulltextBoostedData(): array
     {
         $field = PageIndexMap::FULL_TEXT_BOOSTED;
         $attributeName = 'foo-name';
@@ -213,7 +217,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleFulltextBoostedData()
+    protected function createMultipleFulltextBoostedData(): array
     {
         $field = PageIndexMap::FULL_TEXT_BOOSTED;
         $attributeName = 'foo-name';
@@ -233,7 +237,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleCompletionTermsData()
+    protected function createSingleCompletionTermsData(): array
     {
         $field = PageIndexMap::COMPLETION_TERMS;
         $attributeName = 'foo-name';
@@ -251,7 +255,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleCompletionTermsData()
+    protected function createMultipleCompletionTermsData(): array
     {
         $field = PageIndexMap::COMPLETION_TERMS;
         $attributeName = 'foo-name';
@@ -271,7 +275,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleSuggestionTermsData()
+    protected function createSingleSuggestionTermsData(): array
     {
         $field = PageIndexMap::SUGGESTION_TERMS;
         $attributeName = 'foo-name';
@@ -289,7 +293,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleSuggestionTermsData()
+    protected function createMultipleSuggestionTermsData(): array
     {
         $field = PageIndexMap::SUGGESTION_TERMS;
         $attributeName = 'foo-name';
@@ -309,7 +313,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSimpleSearchResultData()
+    protected function createSimpleSearchResultData(): array
     {
         $field = PageIndexMap::SEARCH_RESULT_DATA;
         $attributeName = 'foo-name';
@@ -330,7 +334,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createArraySearchResultData()
+    protected function createArraySearchResultData(): array
     {
         $field = PageIndexMap::SEARCH_RESULT_DATA;
         $attributeName = 'foo-name';
@@ -355,7 +359,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleStringFacetData()
+    protected function createSingleStringFacetData(): array
     {
         $field = PageIndexMap::STRING_FACET;
         $attributeName = 'foo-name';
@@ -378,7 +382,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleStringFacetData()
+    protected function createMultipleStringFacetData(): array
     {
         $field = PageIndexMap::STRING_FACET;
         $attributeName = 'foo-name';
@@ -403,7 +407,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createSingleIntegerFacetData()
+    protected function createSingleIntegerFacetData(): array
     {
         $field = PageIndexMap::INTEGER_FACET;
         $attributeName = 'foo-name';
@@ -426,7 +430,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createMultipleIntegerFacetData()
+    protected function createMultipleIntegerFacetData(): array
     {
         $field = PageIndexMap::INTEGER_FACET;
         $attributeName = 'foo-name';
@@ -451,7 +455,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createStringSortData()
+    protected function createStringSortData(): array
     {
         $field = PageIndexMap::STRING_SORT;
         $attributeName = 'foo-name';
@@ -472,7 +476,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function createIntegerSortData()
+    protected function createIntegerSortData(): array
     {
         $field = PageIndexMap::INTEGER_SORT;
         $attributeName = 'foo-name';

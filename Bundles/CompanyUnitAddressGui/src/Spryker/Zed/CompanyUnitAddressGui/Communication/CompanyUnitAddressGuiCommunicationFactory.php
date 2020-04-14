@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Communication;
 
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyBusinessUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\CompanyUnitAddressTable;
-use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutor;
-use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\CompanyUnitAddressGuiDependencyProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCountryFacadeInterface;
-use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -30,30 +28,10 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function createAddressTable(): CompanyUnitAddressTable
     {
         return new CompanyUnitAddressTable(
-            $this->getCompanyUnitAddressQueryContainer(),
-            $this->createCompanyUnitAddressTablePluginExecutor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
-     */
-    protected function createCompanyUnitAddressTablePluginExecutor(): CompanyUnitAddressTablePluginExecutorInterface
-    {
-        return new CompanyUnitAddressTablePluginExecutor(
+            $this->getCompanyUnitAddressPropelQuery(),
             $this->getCompanyUnitAddressTableConfigExpanderPlugins(),
             $this->getCompanyUnitAddressTableHeaderExpanderPlugins(),
             $this->getCompanyUnitAddressTableDataExpanderPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
-     */
-    public function getCompanyUnitAddressQueryContainer(): CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
-    {
-        return $this->getProvidedDependency(
-            CompanyUnitAddressGuiDependencyProvider::QUERY_CONTAINER_COMPANY_UNIT_ADDRESS
         );
     }
 
@@ -163,5 +141,13 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function createCompanyBusinessUnitAddressChoiceFormType(): CompanyBusinessUnitAddressChoiceFormType
     {
         return new CompanyBusinessUnitAddressChoiceFormType();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function getCompanyUnitAddressPropelQuery(): SpyCompanyUnitAddressQuery
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PROPEL_QUERY_COMPANY_UNIT_ADDRESS);
     }
 }

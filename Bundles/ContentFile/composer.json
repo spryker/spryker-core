@@ -10,6 +10,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/storage": "^3.8.0",
+    "spryker/storage-redis": "^1.0.0",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -24,6 +26,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

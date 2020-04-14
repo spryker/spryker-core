@@ -21,7 +21,7 @@ class DependencyHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $this->containerGlobals = new ContainerGlobals();
     }
@@ -33,7 +33,7 @@ class DependencyHelper extends Module
      *
      * @return void
      */
-    public function setDependency($key, $value, $onlyFor = null)
+    public function setDependency(string $key, $value, ?string $onlyFor = null): void
     {
         $this->containerGlobals->set($key, $value, $onlyFor);
     }
@@ -43,7 +43,7 @@ class DependencyHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         $this->containerGlobals->reset();
     }

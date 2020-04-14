@@ -24,12 +24,14 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
+use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -71,7 +73,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceTypeValuesShouldReturnListOfAllPersistedPriceTypes()
+    public function testGetPriceTypeValuesShouldReturnListOfAllPersistedPriceTypes(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -87,7 +89,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceBySkuShouldReturnDefaultPriceForGivenProduct()
+    public function testGetPriceBySkuShouldReturnDefaultPriceForGivenProduct(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -101,7 +103,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceForShouldReturnPriceBasedOnFilter()
+    public function testGetPriceForShouldReturnPriceBasedOnFilter(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -125,7 +127,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePriceType()
+    public function testCreatePriceType(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -137,7 +139,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetPriceForProductShouldUpdateExistingPrice()
+    public function testSetPriceForProductShouldUpdateExistingPrice(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -155,7 +157,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasValidPriceShouldReturnTrueWhenProductHavePrices()
+    public function testHasValidPriceShouldReturnTrueWhenProductHavePrices(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -169,7 +171,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasValidPriceForReturnTrueWhenProductHavePrices()
+    public function testHasValidPriceForReturnTrueWhenProductHavePrices(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -186,7 +188,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetDefaultPriceTypeNameShouldReturnDefaultTypeName()
+    public function testGetDefaultPriceTypeNameShouldReturnDefaultTypeName(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
         $this->assertNotEmpty($priceProductFacade->getDefaultPriceTypeName());
@@ -195,7 +197,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetIdPriceProductShouldReturnIdOfPriceProductEntity()
+    public function testGetIdPriceProductShouldReturnIdOfPriceProductEntity(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -213,7 +215,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductAbstractPriceCollectionShouldSavePriceCollection()
+    public function testPersistProductAbstractPriceCollectionShouldSavePriceCollection(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -242,7 +244,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductConcretePriceCollectionShouldSavePriceCollection()
+    public function testPersistProductConcretePriceCollectionShouldSavePriceCollection(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -267,7 +269,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPriceFindPricesBySkuShouldReturnPricesForCurrentStoreConfiguration()
+    public function testPriceFindPricesBySkuShouldReturnPricesForCurrentStoreConfiguration(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -292,7 +294,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindPricesBySkuGroupedShouldReturnGroupedPrices()
+    public function testFindPricesBySkuGroupedShouldReturnGroupedPrices(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -335,7 +337,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractPricesShouldReturnPriceAssignedToAbstractProduct()
+    public function testFindProductAbstractPricesShouldReturnPriceAssignedToAbstractProduct(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -366,7 +368,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcretePricesShouldReturnPriceAssignedToConcreteProduct()
+    public function testFindProductConcretePricesShouldReturnPriceAssignedToConcreteProduct(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -394,7 +396,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractPriceShouldReturnDefaultPriceForAbstractProduct()
+    public function testFindProductAbstractPriceShouldReturnDefaultPriceForAbstractProduct(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -423,7 +425,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGroupPriceProductCollectionGroupsProvidedCollection()
+    public function testGroupPriceProductCollectionGroupsProvidedCollection(): void
     {
         // Assign
         $priceProductFacade = $this->getPriceProductFacade();
@@ -491,7 +493,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceModeIdentifierForBothType()
+    public function testGetPriceModeIdentifierForBothType(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -503,7 +505,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGeneratePriceDataChecksum()
+    public function testGeneratePriceDataChecksum(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -515,7 +517,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistPriceProductStore()
+    public function testPersistPriceProductStore(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -528,7 +530,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteOrphanPriceProductStoreEntitiesNotFails()
+    public function testDeleteOrphanPriceProductStoreEntitiesNotFails(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
         $priceProductBusinessFactory = (new PriceProductBusinessFactory());
@@ -549,7 +551,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testInstallNotFails()
+    public function testInstallNotFails(): void
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
@@ -610,7 +612,7 @@ class PriceProductFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function createPriceProduct($currencyCode, $priceTypeName, $grossAmount, $netAmount)
+    protected function createPriceProduct(string $currencyCode, string $priceTypeName, int $grossAmount, int $netAmount): PriceProductTransfer
     {
         return (new PriceProductTransfer())
             ->setPriceType((new PriceTypeTransfer())->setName($priceTypeName))
@@ -632,13 +634,12 @@ class PriceProductFacadeTest extends Unit
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function createProductWithAmount(
-        $grossAmount,
-        $netAmount,
-        $skuAbstract = '',
-        $skuConcrete = '',
-        $currencyIsoCode = ''
-    ) {
-
+        int $grossAmount,
+        int $netAmount,
+        string $skuAbstract = '',
+        string $skuConcrete = '',
+        string $currencyIsoCode = ''
+    ): PriceProductTransfer {
         $priceProductTransfer = (new PriceProductTransfer())
             ->setSkuProductAbstract($skuAbstract)
             ->setSkuProduct($skuConcrete);
@@ -669,7 +670,7 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {
@@ -679,7 +680,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
-    protected function createStoreFacade()
+    protected function createStoreFacade(): StoreFacadeInterface
     {
         return new StoreFacade();
     }
@@ -687,7 +688,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
-    protected function createCurrencyFacade()
+    protected function createCurrencyFacade(): CurrencyFacadeInterface
     {
         return new CurrencyFacade();
     }
@@ -695,7 +696,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return \Spryker\Shared\PriceProduct\PriceProductConfig
      */
-    protected function createSharedPriceProductConfig()
+    protected function createSharedPriceProductConfig(): PriceProductConfig
     {
         return new PriceProductConfig();
     }
@@ -720,10 +721,10 @@ class PriceProductFacadeTest extends Unit
     protected function createPriceProductTransfer(
         ProductConcreteTransfer $productConcreteTransfer,
         PriceTypeTransfer $priceTypeTransfer,
-        $netPrice,
-        $grossPrice,
-        $currencyIsoCode
-    ) {
+        int $netPrice,
+        int $grossPrice,
+        string $currencyIsoCode
+    ): PriceProductTransfer {
         $config = $this->createSharedPriceProductConfig();
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType($config->getPriceDimensionDefault());
@@ -757,7 +758,7 @@ class PriceProductFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyTransfer($currencyIsoCode)
+    protected function getCurrencyTransfer(string $currencyIsoCode): CurrencyTransfer
     {
         if (!$currencyIsoCode) {
             return $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
@@ -775,11 +776,11 @@ class PriceProductFacadeTest extends Unit
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function createMoneyValueTransfer(
-        $grossAmount,
-        $netAmount,
+        int $grossAmount,
+        int $netAmount,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
-    ) {
+    ): MoneyValueTransfer {
         return (new MoneyValueTransfer())
             ->setNetAmount($netAmount)
             ->setGrossAmount($grossAmount)
@@ -793,7 +794,7 @@ class PriceProductFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function buildProduct(PriceProductTransfer $priceProductTransfer)
+    protected function buildProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductTransfer
@@ -808,7 +809,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    protected function createPriceProductCriteriaTransfer()
+    protected function createPriceProductCriteriaTransfer(): PriceProductCriteriaTransfer
     {
         $config = $this->createSharedPriceProductConfig();
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
@@ -851,7 +852,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindPriceTypeByName()
+    public function testFindPriceTypeByName(): void
     {
         $priceTypeTransfer = $this->tester->havePriceType();
 
@@ -924,5 +925,281 @@ class PriceProductFacadeTest extends Unit
 
         //Assert
         $this->assertCount(count($priceProductTransfers), $resultPriceProductPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesUsingAbstractProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertEquals($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesUsingConcreteProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesMergingConcreteWithAbstract(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getSku()
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsProductPricesMergingConcreteWithAbstractWithDifferentCurrencies(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductTransfer = $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract(),
+            static::EUR_ISO_CODE
+        );
+
+        $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getSku(),
+            static::USD_ISO_CODE
+        );
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
+            ->setSku($productConcreteTransfer->getSku());
+
+        //Act
+        $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
+
+        //Assert
+        $this->assertCount(1, $resultPriceProductTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
+        $resultPriceProductTransfer = $resultPriceProductTransfers[0];
+
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getFkCurrency(),
+            $resultPriceProductTransfer->getMoneyValue()->getFkCurrency()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcreteWithPricesWillAddConcreteProductPricesWhenTheyAreDefinedForConcreteProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        //Act
+        $productConcreteTransfer = $this->getPriceProductFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
+
+        //Assert
+        $this->assertGreaterThan(0, $productConcreteTransfer->getPrices()->count());
+
+        $resultPriceProductTransfer = $productConcreteTransfer->getPrices()->offsetGet(0);
+        $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcreteWithPricesWillNotAddConcreteProductPricesWhenTheyAreDefinedOnlyForAbstractProduct(): void
+    {
+        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer->getAbstractSku(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
+
+        //Act
+        $productConcreteTransfer = $this->getPriceProductFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
+
+        //Assert
+        $this->assertSame(0, $productConcreteTransfer->getPrices()->count());
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idAbstractProduct
+     * @param string|null $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductForAbstractProduct(
+        string $abstractSku,
+        int $idAbstractProduct,
+        ?string $currencyIsoCode = null
+    ): PriceProductTransfer {
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProductAbstract($idAbstractProduct)
+            ->setSkuProductAbstract($abstractSku)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+            );
+
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            rand(10, 100),
+            rand(1, 9),
+            $this->createStoreFacade()->getCurrentStore(),
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+        );
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        return $this->getPriceProductFacade()->createPriceForProduct($priceProductTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idConcreteProduct
+     * @param string|null $sku
+     * @param string|null $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductForConcreteProduct(
+        string $abstractSku,
+        int $idConcreteProduct,
+        ?string $sku = null,
+        ?string $currencyIsoCode = null
+    ): PriceProductTransfer {
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProduct($idConcreteProduct)
+            ->setSkuProductAbstract($abstractSku)
+            ->setSkuProduct($sku)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+            );
+
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            rand(10, 100),
+            rand(1, 9),
+            $this->createStoreFacade()->getCurrentStore(),
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+        );
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        return $this->getPriceProductFacade()->createPriceForProduct($priceProductTransfer);
     }
 }

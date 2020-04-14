@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAmountSalesUnitValueInterface
 {
+    protected const DIVISION_SCALE = 10;
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,7 +28,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
             }
 
             $itemTransfer->getAmountSalesUnit()->setValue(
-                $this->calculateAmountNormalizedSalesUnitValue($itemTransfer)
+                $this->calculateAmountSalesUnitValue($itemTransfer)
             );
         }
 
@@ -37,48 +40,38 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
      *
      * @return int
      */
-    protected function calculateAmountNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
+    protected function calculateAmountSalesUnitValue(ItemTransfer $itemTransfer): int
     {
         $itemTransfer
             ->requireAmountSalesUnit()
             ->requireAmount()
             ->requireQuantity()
             ->getAmountSalesUnit()
-            ->requireConversion()
-            ->requirePrecision();
+                ->requireConversion()
+                ->requirePrecision();
 
-        $amountPreQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPreQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
 
-        return $this->calculateNormalizedValue(
-            (int)$amountPreQuantity,
+        return $this->calculateValue(
+            $amountPreQuantity,
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );
     }
 
     /**
-     * @param int $availabilityValue
+     * @param \Spryker\DecimalObject\Decimal $availabilityValue
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
      * @return int
      */
-    protected function calculateNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
+    protected function calculateValue(Decimal $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
     {
-        return (int)round(
-            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
-        );
-    }
-
-    /**
-     * @param int $availabilityValue
-     * @param float $unitToAvailabilityConversion
-     * @param int $unitPrecision
-     *
-     * @return float
-     */
-    protected function calculateFloatNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
-    {
-        return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
+        return $availabilityValue
+            ->divide($unitToAvailabilityConversion, static::DIVISION_SCALE)
+            ->multiply($unitPrecision)
+            ->round(0, Decimal::ROUND_HALF_UP)
+            ->toInt();
     }
 }

@@ -64,8 +64,8 @@ class ProductMeasurementUnitBusinessTester extends Actor
     public function addSkuToCartChangeTransfer(
         CartChangeTransfer $cartChangeTransfer,
         int $idProductMeasurementSalesUnit,
-        $sku,
-        $quantity = 1
+        string $sku,
+        int $quantity = 1
     ): CartChangeTransfer {
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 
@@ -77,6 +77,28 @@ class ProductMeasurementUnitBusinessTester extends Actor
         );
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param int $idProductMeasurementSalesUnit
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithItem(
+        int $idProductMeasurementSalesUnit,
+        string $sku,
+        int $quantity = 1
+    ): CartChangeTransfer {
+        $amountSalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
+
+        return (new CartChangeTransfer())->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setQuantity($quantity)
+                ->setQuantitySalesUnit($amountSalesUnit)
+        );
     }
 
     /**

@@ -29,7 +29,7 @@ class ContainsTest extends Unit
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenContainsExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenContainsExpressionProvided(): void
     {
         $contains = $this->createContains();
 
@@ -44,7 +44,7 @@ class ContainsTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueExistsInClauseShouldReturnTrue()
+    public function testCompareWhenValueExistsInClauseShouldReturnTrue(): void
     {
         $contains = $this->createContains();
 
@@ -59,7 +59,7 @@ class ContainsTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueNotExistingInClauseShouldReturnFalse()
+    public function testCompareWhenValueNotExistingInClauseShouldReturnFalse(): void
     {
         $contains = $this->createContains();
 
@@ -74,7 +74,7 @@ class ContainsTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenNonScalarValueUsedShouldThrowException()
+    public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
 
@@ -88,7 +88,7 @@ class ContainsTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Contains
      */
-    protected function createContains()
+    protected function createContains(): Contains
     {
         return new Contains();
     }

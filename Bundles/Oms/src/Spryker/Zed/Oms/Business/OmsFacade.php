@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -279,6 +280,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -296,30 +299,14 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getFactory()
-            ->createOrderStateMachineFinder()
-            ->getReservedOrderItemsForSku($sku);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -334,9 +321,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -348,17 +335,16 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @param string $stateName
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getStateEntity($stateName)
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createOrderStateMachinePersistenceManager()
-            ->getStateEntity($stateName);
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
     }
 
     /**
@@ -542,6 +528,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -554,6 +542,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -614,9 +604,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
@@ -625,6 +615,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return int
      */
@@ -637,6 +629,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $processName
      * @param string $stateName
@@ -653,13 +647,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $this->getFactory()
             ->createUtilReservation()
@@ -671,19 +667,23 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getOmsReservedStateCollection()` instead.
+     * @param string $sku
      *
-     * @return string[]
+     * @return void
      */
-    public function getReservedStateNames(): array
+    public function updateReservationQuantity(string $sku): void
     {
-        return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+        $this->getFactory()
+            ->createUtilReservation()
+            ->updateReservationQuantity($sku);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */

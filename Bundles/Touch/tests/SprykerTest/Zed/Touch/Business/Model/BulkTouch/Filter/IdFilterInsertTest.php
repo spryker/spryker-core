@@ -48,7 +48,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilter()
+    public function testFilter(): void
     {
         $ids = range(1, 200);
 
@@ -64,7 +64,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedAllInDatabase()
+    public function testFilterChunkedAllInDatabase(): void
     {
         $countAboveChunkSize = 500;
 
@@ -85,7 +85,7 @@ class IdFilterInsertTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedNoneInDatabase()
+    public function testFilterChunkedNoneInDatabase(): void
     {
         $countAboveChunkSize = 500;
 

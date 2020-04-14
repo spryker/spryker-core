@@ -48,7 +48,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return int
      */
-    public function createFilter($filterName)
+    public function createFilter(string $filterName): int
     {
         $this->amOnPage(FilterPreferencesPage::URL_CREATE);
 
@@ -70,7 +70,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function updateFilter($id)
+    public function updateFilter(int $id): void
     {
         $this->amOnPage(FilterPreferencesPage::URL_VIEW . $id);
 
@@ -90,7 +90,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function deleteFilter($id)
+    public function deleteFilter(int $id): void
     {
         $this->amOnPage(FilterPreferencesPage::URL_VIEW . $id);
 
@@ -106,7 +106,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function addAttributeToSearch($attributeKey)
+    public function addAttributeToSearch(string $attributeKey): void
     {
         $this->amOnPage(SearchPreferencesPage::URL_CREATE);
 
@@ -127,7 +127,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function updateAttributeToSearch($attributeKey)
+    public function updateAttributeToSearch(string $attributeKey): void
     {
         $this->searchTableByAttributeKey($attributeKey);
 
@@ -150,7 +150,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    public function deactivateAttributeToSearch($attributeKey)
+    public function deactivateAttributeToSearch(string $attributeKey): void
     {
         $this->searchTableByAttributeKey($attributeKey);
 
@@ -166,7 +166,7 @@ class ProductSearchPresentationTester extends Actor
      *
      * @return void
      */
-    protected function searchTableByAttributeKey($attributeKey)
+    protected function searchTableByAttributeKey(string $attributeKey): void
     {
         $this->amOnPage(SearchPreferencesPage::URL_LIST);
         $this->fillField(SearchPreferencesPage::SELECTOR_TABLE_SEARCH, $attributeKey);

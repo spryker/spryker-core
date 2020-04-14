@@ -32,6 +32,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+    public const PLUGINS_RESERVATION_AGGREGATION = 'PLUGINS_RESERVATION_AGGREGATION';
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
@@ -60,6 +61,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addGraphPlugin($container);
         $container = $this->addReservationHandlerPlugins($container);
+        $container = $this->addReservationAggregationStrategyPlugins($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
@@ -95,9 +97,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -132,6 +134,14 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
      */
     protected function getReservationHandlerPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     */
+    protected function getReservationAggregationStrategyPlugins(): array
     {
         return [];
     }
@@ -179,7 +189,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConditionPlugins(Container $container): Container
     {
-        $container->set(self::CONDITION_PLUGINS, function (Container $container) {
+        $container->set(static::CONDITION_PLUGINS, function (Container $container) {
             return $this->getConditionPlugins($container);
         });
 
@@ -193,7 +203,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCommandPlugins(Container $container): Container
     {
-        $container->set(self::COMMAND_PLUGINS, function (Container $container) {
+        $container->set(static::COMMAND_PLUGINS, function (Container $container) {
             return $this->getCommandPlugins($container);
         });
 
@@ -207,7 +217,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container->set(self::FACADE_MAIL, function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new OmsToMailBridge($container->getLocator()->mail()->facade());
         });
 
@@ -221,7 +231,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextFacade(Container $container): Container
     {
-        $container->set(self::FACADE_UTIL_TEXT, function (Container $container) {
+        $container->set(static::FACADE_UTIL_TEXT, function (Container $container) {
             return new OmsToUtilTextBridge($container->getLocator()->utilText()->service());
         });
 
@@ -235,7 +245,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitizeService(Container $container): Container
     {
-        $container->set(self::SERVICE_UTIL_SANITIZE, function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new OmsToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
         });
 
@@ -249,7 +259,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilNetworkService(Container $container): Container
     {
-        $container->set(self::SERVICE_UTIL_NETWORK, function (Container $container) {
+        $container->set(static::SERVICE_UTIL_NETWORK, function (Container $container) {
             return new OmsToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
         });
 
@@ -277,7 +287,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGraphPlugin(Container $container): Container
     {
-        $container->set(self::PLUGIN_GRAPH, function () {
+        $container->set(static::PLUGIN_GRAPH, function () {
             return $this->getGraphPlugin();
         });
 
@@ -291,8 +301,22 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addReservationHandlerPlugins(Container $container): Container
     {
-        $container->set(self::PLUGINS_RESERVATION, function (Container $container) {
+        $container->set(static::PLUGINS_RESERVATION, function (Container $container) {
             return $this->getReservationHandlerPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReservationAggregationStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RESERVATION_AGGREGATION, function () {
+            return $this->getReservationAggregationStrategyPlugins();
         });
 
         return $container;
@@ -315,7 +339,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsOrderMailExpanderPlugins(Container $container): Container
     {
-        $container->set(self::PLUGINS_OMS_ORDER_MAIL_EXPANDER, function (Container $container) {
+        $container->set(static::PLUGINS_OMS_ORDER_MAIL_EXPANDER, function (Container $container) {
             return $this->getOmsOrderMailExpanderPlugins($container);
         });
 
@@ -339,7 +363,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsManualEventGrouperPlugins(Container $container): Container
     {
-        $container->set(self::PLUGINS_OMS_MANUAL_EVENT_GROUPER, function (Container $container) {
+        $container->set(static::PLUGINS_OMS_MANUAL_EVENT_GROUPER, function (Container $container) {
             return $this->getOmsManualEventGrouperPlugins($container);
         });
 

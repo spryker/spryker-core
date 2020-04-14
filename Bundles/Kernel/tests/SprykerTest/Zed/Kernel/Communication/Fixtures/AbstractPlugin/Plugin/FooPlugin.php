@@ -7,14 +7,17 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class FooPlugin extends AbstractPlugin
 {
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractCommunicationFactory
     {
         return parent::getFactory();
     }
@@ -22,7 +25,7 @@ class FooPlugin extends AbstractPlugin
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    public function getFacade()
+    public function getFacade(): AbstractFacade
     {
         return parent::getFacade();
     }
@@ -30,7 +33,7 @@ class FooPlugin extends AbstractPlugin
     /**
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    public function getQueryContainer()
+    public function getQueryContainer(): AbstractQueryContainer
     {
         return parent::getQueryContainer();
     }
@@ -38,7 +41,7 @@ class FooPlugin extends AbstractPlugin
     /**
      * @return string
      */
-    protected function getBundleName()
+    protected function getBundleName(): string
     {
         return 'Kernel';
     }

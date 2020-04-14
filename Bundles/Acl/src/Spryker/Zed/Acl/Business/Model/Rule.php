@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
@@ -46,6 +47,16 @@ class Rule implements RuleInterface
      * @var \Spryker\Zed\Acl\AclConfig
      */
     protected $config;
+
+    /**
+     * @var \Generated\Shared\Transfer\GroupsTransfer[]
+     */
+    protected $groupsTransferCache = [];
+
+    /**
+     * @var \Generated\Shared\Transfer\RulesTransfer[]
+     */
+    protected $rulesTransferCache = [];
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
@@ -137,7 +148,7 @@ class Rule implements RuleInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return bool
      */
@@ -304,15 +315,19 @@ class Rule implements RuleInterface
             return true;
         }
 
-        $groups = $this->group->getUserGroups($userTransfer->getIdUser());
-        if (!$groups->getGroups()) {
+        if (!$userTransfer->getIdUser()) {
+            return false;
+        }
+
+        $groupsTransfer = $this->getGroupsTransferByIdUser($userTransfer->getIdUser());
+        if (!$groupsTransfer->getGroups()) {
             return false;
         }
 
         $this->provideUserRuleWhitelist();
 
-        foreach ($groups->getGroups() as $group) {
-            $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
+        foreach ($groupsTransfer->getGroups() as $groupTransfer) {
+            $rulesTransfer = $this->getRulesTransferByIdGroup($groupTransfer->getIdAclGroup());
 
             if (!$rulesTransfer->getRules()) {
                 continue;
@@ -327,6 +342,40 @@ class Rule implements RuleInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\GroupsTransfer
+     */
+    protected function getGroupsTransferByIdUser(int $idUser): GroupsTransfer
+    {
+        if (isset($this->groupsTransferCache[$idUser])) {
+            return $this->groupsTransferCache[$idUser];
+        }
+
+        $groupsTransfer = $this->group->getUserGroups($idUser);
+        $this->groupsTransferCache[$idUser] = $groupsTransfer;
+
+        return $this->group->getUserGroups($idUser);
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return \Generated\Shared\Transfer\RulesTransfer
+     */
+    protected function getRulesTransferByIdGroup(int $idGroup): RulesTransfer
+    {
+        if (isset($this->rulesTransferCache[$idGroup])) {
+            return $this->rulesTransferCache[$idGroup];
+        }
+
+        $rulesTransfer = $this->getRulesForGroupId($idGroup);
+        $this->rulesTransferCache[$idGroup] = $rulesTransfer;
+
+        return $rulesTransfer;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 
 /**
@@ -60,7 +61,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInProject()
+    public function testCheckCodeStyleRunsCommandInProject(): void
     {
         $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
         $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/';
@@ -72,10 +73,11 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInProjectModule()
+    public function testCheckCodeStyleRunsCommandInProjectModule(): void
     {
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
         $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/Development/';
+        $pathToApplicationRoot = rtrim(APPLICATION_ROOT_DIR) . '/src/Pyz/Zed/Development/';
         $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
 
         $codeStyleSnifferMock->checkCodeStyle('Development', $options);
@@ -84,7 +86,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCore()
+    public function testCheckCodeStyleRunsCommandInCore(): void
     {
         $module = 'Spryker.all';
         $options = [
@@ -101,7 +103,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne()
+    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne(): void
     {
         $module = 'Spryker.Development';
         $options = [
@@ -119,7 +121,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo()
+    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo(): void
     {
         $module = 'Spryker.Development';
         $options = [
@@ -140,7 +142,7 @@ class CodeStyleSnifferTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock($expectedPathToRunCommandWith, array $options)
+    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options): CodeStyleSniffer
     {
         $developmentConfig = $this->tester->createDevelopmentConfig();
         $codingStandard = $developmentConfig->getCodingStandard();

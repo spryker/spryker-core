@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator` instead.
+ */
 class TokenHashGenerator implements TokenGeneratorInterface
 {
     /**
@@ -33,8 +36,8 @@ class TokenHashGenerator implements TokenGeneratorInterface
     }
 
     /**
-     * @param mixed $expected
-     * @param mixed $actual
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */

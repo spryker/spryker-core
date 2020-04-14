@@ -46,7 +46,7 @@ class RefundPresentationTester extends Actor
     /**
      * @return void
      */
-    public function canOpenRefundListPage()
+    public function canOpenRefundListPage(): void
     {
         $i = $this;
         $i->amOnPage(RefundListPage::URL);
@@ -58,7 +58,7 @@ class RefundPresentationTester extends Actor
      *
      * @return void
      */
-    public function refundItem($idSalesOrderItem)
+    public function refundItem(int $idSalesOrderItem): void
     {
         $i = $this;
 
@@ -75,7 +75,7 @@ class RefundPresentationTester extends Actor
      *
      * @return void
      */
-    public function seeNumberOfRefunds($expectedNumberOfRefundRows)
+    public function seeNumberOfRefunds(int $expectedNumberOfRefundRows): void
     {
         $i = $this;
         $rows = $i->grabMultiple(SalesDetailPage::SELECTOR_REFUND_ROW);
@@ -86,7 +86,7 @@ class RefundPresentationTester extends Actor
     /**
      * @return int
      */
-    public function grabTotalRefundedAmount()
+    public function grabTotalRefundedAmount(): int
     {
         $i = $this;
         $refundTotals = $i->grabMultiple(SalesDetailPage::REFUND_TOTAL_AMOUNT_SELECTOR, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);

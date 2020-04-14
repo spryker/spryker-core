@@ -1,5 +1,4 @@
 namespace: SprykerTest\Shared\Testify
-actor: Tester
 paths:
     tests: .
     data: ../../../_data

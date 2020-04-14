@@ -40,7 +40,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGuestSubscribeShouldSucceed()
+    public function testGuestSubscribeShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct()
@@ -54,7 +54,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerSubscribeShouldSucceed()
+    public function testCustomerSubscribeShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
@@ -69,7 +69,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeFailsWhenEmailIsInvalid()
+    public function testSubscribeFailsWhenEmailIsInvalid(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
@@ -87,7 +87,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSubscribeForAlreadySubscribedTypeShouldSucceed()
+    public function testSubscribeForAlreadySubscribedTypeShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct()
@@ -101,7 +101,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnsubscribeBySubscriptionKeyShouldSucceed()
+    public function testUnsubscribeBySubscriptionKeyShouldSucceed(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscription(
             $this->tester->haveProduct()
@@ -115,7 +115,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnsubscribeByCustomerReferenceAndSkuShouldSucceed()
+    public function testUnsubscribeByCustomerReferenceAndSkuShouldSucceed(): void
     {
         $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
 
@@ -134,7 +134,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnsubscribeWithIncorrectSubscriptionKeyShouldFail()
+    public function testUnsubscribeWithIncorrectSubscriptionKeyShouldFail(): void
     {
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
@@ -152,7 +152,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAnonymize()
+    public function testAnonymize(): void
     {
         $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
 

@@ -33,7 +33,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuotePersistChangesToDatabase()
+    public function testUpdateQuotePersistChangesToDatabase(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();

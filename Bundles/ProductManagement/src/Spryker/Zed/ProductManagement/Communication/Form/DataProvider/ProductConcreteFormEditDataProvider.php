@@ -188,8 +188,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantGeneralAndSeoData(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection();
         $localizedData = $productTransfer->getLocalizedAttributes();
 
@@ -234,7 +237,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData
         );
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
-        $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
+        $productTransfer = $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
+        $productTransfer = $this->productStockHelper->trimStockQuantities($productTransfer);
 
         $stockCollection = $productTransfer->getStocks();
 
@@ -248,7 +252,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $stock[StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID] = $stockTransfer->getIdStockProduct();
             $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = (bool)$stockTransfer->getIsNeverOutOfStock();
             $stock[StockForm::FIELD_TYPE] = $stockTransfer->getStockType();
-            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
+            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity()->trim();
 
             $formData[ProductFormAdd::FORM_PRICE_AND_STOCK][] = $stock;
         }
@@ -288,8 +292,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantAbstractAttributes(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
         $attributesData = $productTransfer->getLocalizedAttributes();
 

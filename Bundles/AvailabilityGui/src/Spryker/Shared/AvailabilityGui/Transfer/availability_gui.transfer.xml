@@ -20,9 +20,23 @@
     <transfer name="StockProduct">
         <property name="idStockProduct" type="int"/>
         <property name="isNeverOutOfStock" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="decimal"/>
         <property name="stockType" type="string"/>
         <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstractAvailability">
+        <property name="availability" type="decimal"/>
+        <property name="productName" type="string"/>
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+        <property name="stockQuantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

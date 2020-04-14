@@ -115,9 +115,9 @@ abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross,price_
 088,,DEFAULT,DE,EUR,8879,9865,
 089,,DEFAULT,DE,EUR,37254,41393,
 090,,DEFAULT,DE,EUR,18144,20160,
-091,,DEFAULT,DE,EUR,17741,19712,
+091,,DEFAULT,DE,EUR,17741,19712,"[{""quantity"":5,""net_price"":150,""gross_price"":165}, {""quantity"":10,""net_price"":145,""gross_price"":158}, {""quantity"":20,""net_price"":140,""gross_price"":152}]"
 092,,DEFAULT,DE,EUR,15713,17459,
-093,,DEFAULT,DE,EUR,22409,24899,
+093,,DEFAULT,DE,EUR,22409,24899,"[{""quantity"":5,""net_price"":150,""gross_price"":165}, {""quantity"":10,""net_price"":145,""gross_price"":158}, {""quantity"":20,""net_price"":140,""gross_price"":152}]"
 094,,DEFAULT,DE,EUR,25360,28178,
 095,,DEFAULT,DE,EUR,16195,17994,
 096,,DEFAULT,DE,EUR,25975,28861,
@@ -1452,3 +1452,11 @@ abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross,price_
 219,,ORIGINAL,AT,EUR,175,185,
 219,,DEFAULT,AT,CHF,200,225,
 219,,ORIGINAL,AT,CHF,225,235,
+fish-1,,DEFAULT,DE,EUR,29952,37440,
+potato-1,,DEFAULT,DE,EUR,800,1000,
+cable-hdmi-1,,DEFAULT,DE,EUR,800,1000,
+,cable-hdmi-1-1,DEFAULT,DE,EUR,1200,1500,
+,cable-hdmi-1-2,DEFAULT,DE,EUR,400,500,
+cable-vga-1,,DEFAULT,DE,EUR,800,1000,
+,cable-vga-1-1,DEFAULT,DE,EUR,1200,1500,
+,cable-vga-1-2,DEFAULT,DE,EUR,400,500,

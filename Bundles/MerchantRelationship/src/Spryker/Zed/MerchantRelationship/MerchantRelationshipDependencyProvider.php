@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Container;
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE';
+    public const PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE';
+    public const PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +28,8 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addMerchantRelationshipPreDeletePlugins($container);
+        $container = $this->addMerchantRelationshipPostCreatePlugins($container);
+        $container = $this->addMerchantRelationshipPostUpdatePlugins($container);
 
         return $container;
     }
@@ -45,9 +49,53 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE, function () {
+            return $this->getMerchantRelationshipPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE, function () {
+            return $this->getMerchantRelationshipPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
      */
     protected function getMerchantRelationshipPreDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[]
+     */
+    protected function getMerchantRelationshipPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[]
+     */
+    protected function getMerchantRelationshipPostUpdatePlugins(): array
     {
         return [];
     }

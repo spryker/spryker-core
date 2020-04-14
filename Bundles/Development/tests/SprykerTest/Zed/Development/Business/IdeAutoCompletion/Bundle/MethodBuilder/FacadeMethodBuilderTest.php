@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -35,7 +36,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsFacade()
+    public function testMethodNameIsFacade(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -51,7 +52,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInBusinessLayer()
+    public function testFileLookupIsPerformedInBusinessLayer(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -65,7 +66,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupPrefersInterface()
+    public function testFileLookupPrefersInterface(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -87,7 +88,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing()
+    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -108,9 +109,9 @@ class FacadeMethodBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getFacadeMethodBuilderMock()
+    protected function getFacadeMethodBuilderMock(): FacadeMethodBuilder
     {
         $methodBuilderMock = $this
             ->getMockBuilder(FacadeMethodBuilder::class)
@@ -129,7 +130,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
-    protected function getNamespaceExtractorMock()
+    protected function getNamespaceExtractorMock(): NamespaceExtractorInterface
     {
         return $this
             ->getMockBuilder(NamespaceExtractor::class)
@@ -139,7 +140,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

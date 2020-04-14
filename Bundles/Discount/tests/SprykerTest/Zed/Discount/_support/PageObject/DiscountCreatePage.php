@@ -106,7 +106,7 @@ class DiscountCreatePage
      *
      * @return void
      */
-    public function createDiscount($discountName, $override = [])
+    public function createDiscount(string $discountName, array $override = []): void
     {
         $i = $this->tester;
         $i->amZed();
@@ -150,7 +150,7 @@ class DiscountCreatePage
      *
      * @return void
      */
-    public function fillInDiscountRule($number, $filter, $operator, $value)
+    public function fillInDiscountRule(int $number, string $filter, string $operator, string $value): void
     {
         $i = $this->tester;
         $i->waitForElement("select[name=builder_calculation_rule_{$number}_filter]");
@@ -165,7 +165,7 @@ class DiscountCreatePage
      *
      * @return void
      */
-    public function changeDiscountGroupOperator($operator, $group = '0')
+    public function changeDiscountGroupOperator(string $operator, string $group = '0'): void
     {
         $this->tester->click(Locator::contains('label', $operator), "#builder_calculation_group_$group");
     }
@@ -175,7 +175,7 @@ class DiscountCreatePage
      *
      * @return void
      */
-    public function assertDiscountQuery($query)
+    public function assertDiscountQuery(string $query): void
     {
         $i = $this->tester;
         $i->click(self::BTN_CALCULATION_GET);

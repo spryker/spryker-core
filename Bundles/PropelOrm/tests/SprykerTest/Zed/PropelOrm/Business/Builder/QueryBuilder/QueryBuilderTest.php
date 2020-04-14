@@ -37,7 +37,7 @@ class QueryBuilderTest extends Unit
     /**
      * @return array
      */
-    protected function getFilesToGenerate()
+    protected function getFilesToGenerate(): array
     {
         return [
             __DIR__ . '/Map/FooTableMap.php' => TableMapBuilder::class,
@@ -49,7 +49,7 @@ class QueryBuilderTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $config = new QuickGeneratorConfig();
         $table = new Table('Foo');
@@ -68,7 +68,7 @@ class QueryBuilderTest extends Unit
     /**
      * @return void
      */
-    protected function _after()
+    protected function _after(): void
     {
         foreach (array_keys($this->getFilesToGenerate()) as $fileName) {
             $this->deletePropelFile($fileName);
@@ -78,7 +78,7 @@ class QueryBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGeneratedFilterFunctionDoesNotThrowExceptionOnNotIn()
+    public function testGeneratedFilterFunctionDoesNotThrowExceptionOnNotIn(): void
     {
         $testQuery = new FooQuery();
         $testQuery->filterByTestColumn([1, 2, 3], Criteria::NOT_IN);
@@ -90,7 +90,7 @@ class QueryBuilderTest extends Unit
      *
      * @return void
      */
-    protected function writePropelFile(AbstractOMBuilder $queryBuilder, $fileName)
+    protected function writePropelFile(AbstractOMBuilder $queryBuilder, string $fileName): void
     {
         $fileContent = $queryBuilder->build();
         $directory = dirname($fileName);
@@ -105,7 +105,7 @@ class QueryBuilderTest extends Unit
      *
      * @return void
      */
-    protected function deletePropelFile($fileName)
+    protected function deletePropelFile(string $fileName): void
     {
         unlink($fileName);
     }

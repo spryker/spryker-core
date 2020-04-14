@@ -38,8 +38,11 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, array $requestParameters, SortSearchResultTransfer $expectedResult)
-    {
+    public function testFormatResultShouldReturnCorrectFormat(
+        SearchConfigInterface $searchConfig,
+        array $requestParameters,
+        SortSearchResultTransfer $expectedResult
+    ): void {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])
@@ -64,7 +67,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    public function resultFormatterDataProvider()
+    public function resultFormatterDataProvider(): array
     {
         return [
             'no active sort when it\'s not requested' => $this->getDataForInactiveSort(),
@@ -75,7 +78,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getDataForInactiveSort()
+    protected function getDataForInactiveSort(): array
     {
         $searchConfig = $this->createSimpleSearchConfigMock();
 
@@ -92,7 +95,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getDataForActiveSort()
+    protected function getDataForActiveSort(): array
     {
         $searchConfig = $this->createSimpleSearchConfigMock();
 
@@ -111,7 +114,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createSimpleSearchConfigMock()
+    protected function createSimpleSearchConfigMock(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig

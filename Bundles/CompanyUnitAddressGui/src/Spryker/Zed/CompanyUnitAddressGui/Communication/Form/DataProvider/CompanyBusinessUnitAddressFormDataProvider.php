@@ -91,8 +91,10 @@ class CompanyBusinessUnitAddressFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
-    {
+    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(
+        ?int $idCompany = null,
+        ?int $idCompanyBusinessUnit = null
+    ): CompanyUnitAddressCriteriaFilterTransfer {
         $pagination = new PaginationTransfer();
         $pagination->setMaxPerPage(0);
         $pagination->setPage(1);

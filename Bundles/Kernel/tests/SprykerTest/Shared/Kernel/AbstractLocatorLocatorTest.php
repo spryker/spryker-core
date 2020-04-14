@@ -24,7 +24,7 @@ class AbstractLocatorLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testMagicMethodCallShouldReturnBundleProxy()
+    public function testMagicMethodCallShouldReturnBundleProxy(): void
     {
         $locator = LocatorLocator::getInstance();
         $bundleProxy = $locator->foo();

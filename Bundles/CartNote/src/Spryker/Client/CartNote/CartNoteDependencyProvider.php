@@ -40,9 +40,9 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CartNoteToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteItemsFinderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_ITEMS_FINDER] = function (Container $container) {
+        $container->set(static::PLUGIN_QUOTE_ITEMS_FINDER, function (Container $container) {
             return $this->getQuoteItemsFinderPlugin();
-        };
+        });
 
         return $container;
     }

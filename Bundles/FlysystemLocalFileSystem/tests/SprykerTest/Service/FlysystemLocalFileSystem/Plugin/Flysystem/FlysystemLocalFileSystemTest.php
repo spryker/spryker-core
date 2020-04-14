@@ -46,7 +46,7 @@ class FlysystemLocalFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPlugin()
+    public function testLocalFilesystemBuilderPlugin(): void
     {
         $localFilesystemBuilderPlugin = new LocalFilesystemBuilderPlugin();
 
@@ -67,7 +67,7 @@ class FlysystemLocalFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPluginShouldAcceptType()
+    public function testLocalFilesystemBuilderPluginShouldAcceptType(): void
     {
         $localFilesystemBuilderPlugin = new LocalFilesystemBuilderPlugin();
 

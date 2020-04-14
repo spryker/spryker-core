@@ -10,6 +10,7 @@
     <transfer name="ProductConcrete">
         <property name="productAlternativeCreateRequests" type="ProductAlternativeCreateRequest[]" singular="productAlternativeCreateRequest"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
     </transfer>
 
     <transfer name="ProductAlternativeList">
@@ -29,6 +30,12 @@
     <transfer name="ProductAlternativeCreateRequest">
         <property name="idProduct" type="int"/>
         <property name="alternativeSku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAlternative">
+    </transfer>
+
+    <transfer name="ProductAlternativeListItem">
     </transfer>
 
 </transfers>

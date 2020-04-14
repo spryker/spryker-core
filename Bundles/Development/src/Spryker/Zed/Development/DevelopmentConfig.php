@@ -22,6 +22,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
@@ -50,14 +51,17 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
+        self::NAMESPACE_SPRYKER_MIDDLEWARE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-middleware/',
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
-    protected const TIMEOUT_DEFAULT = 4800;
+    protected const TIMEOUT_DEFAULT = 9000;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -66,6 +70,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalNamespaces(): array
@@ -74,6 +80,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTwigPathPatterns(): array
@@ -88,6 +96,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to application root directory.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToRoot()
@@ -97,6 +107,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Gets Application layers.
+     *
+     * @api
      *
      * @return array
      */
@@ -108,6 +120,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets Application namespaces.
      *
+     * @api
+     *
      * @return array
      */
     public function getApplicationNamespaces()
@@ -116,6 +130,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath() instead.
      *
      * Gets path to Spryker core modules.
@@ -134,6 +150,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath() instead.
      *
      * Gets path to SprykerSdk core modules.
@@ -146,6 +164,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath() instead.
      *
      * Gets path to SprykerShop core modules.
@@ -158,6 +178,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath() instead.
      *
      * Gets path to SprykerEco core modules.
@@ -170,6 +192,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getOrganizationPathMap(): array
@@ -184,6 +208,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *
+     * @api
+     *
      * @return string
      */
     public function getCodingStandard()
@@ -197,6 +223,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard. Can also be a comma separated list of multiple ones.
      *
+     * @api
+     *
      * @return string
      */
     public function getArchitectureStandard()
@@ -207,6 +235,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to Application's composer.lock file.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToComposerLock()
@@ -215,6 +245,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToJsonDependencyTree()
@@ -229,6 +261,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPhpstanConfigFilename(): string
@@ -237,6 +271,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToPhpstanModuleTemporaryConfigFolder()
@@ -247,6 +283,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to module config that holds information about engine modules.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToBundleConfig()
@@ -255,6 +293,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getExternalToInternalNamespaceMap()
@@ -264,6 +304,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
             'Pimple' => 'spryker/container',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
@@ -281,10 +322,13 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'JsonPath\\' => 'spryker/json-path',
             'JsonSchema\\' => 'spryker/json-schema',
+            'Webmozart\\Glob' => 'spryker/util-glob',
         ];
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getExternalToInternalMap()
@@ -308,10 +352,13 @@ class DevelopmentConfig extends AbstractBundleConfig
             'egulias/email-validator' => 'spryker/egulias',
             'ramsey/uuid' => 'spryker/ramsey-uuid',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
+            'webmozart/glob' => 'spryker/util-glob',
         ];
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getIgnorableDependencies()
@@ -331,6 +378,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getYvesIdeAutoCompletionOptions()
@@ -342,6 +391,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getZedIdeAutoCompletionOptions()
@@ -353,6 +404,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientIdeAutoCompletionOptions()
@@ -364,6 +417,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getGlueIdeAutoCompletionOptions()
@@ -375,6 +430,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getServiceIdeAutoCompletionOptions()
@@ -405,6 +462,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
@@ -416,6 +475,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIdeAutoCompletionGeneratorTemplatePaths()
@@ -428,6 +489,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Returns CLI commmand to run the architecture sniffer with [BUNDLE] placeholder
      *
+     * @api
+     *
      * @return string
      */
     public function getArchitectureSnifferCommand()
@@ -437,6 +500,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Either a relative or full path to the ruleset.xml
+     *
+     * @api
      *
      * @return string
      */
@@ -448,6 +513,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPhpMdCommand()
@@ -456,6 +523,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectNamespaces()
@@ -464,6 +533,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCoreNamespaces()
@@ -473,6 +544,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Gets default priority for architecture sniffer.
+     *
+     * @api
      *
      * @return int
      */
@@ -484,6 +557,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets PHPStan default level. The higher, the better.
      *
+     * @api
+     *
      * @return int
      */
     public function getPhpstanLevel()
@@ -494,6 +569,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets CodeSniffer default level. The higher, the better.
      *
+     * @api
+     *
      * @return int
      */
     public function getCodeSnifferLevel(): int
@@ -502,6 +579,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalNamespacesList(): array
@@ -510,13 +589,16 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $namespace
      *
      * @return string|null
      */
     public function getPathToInternalNamespace(string $namespace): ?string
     {
-        if ($pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace)) {
+        $pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace);
+        if ($pathToSprykerRoot) {
             return $pathToSprykerRoot;
         }
 
@@ -528,6 +610,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getPathsToInternalNamespace(): array
@@ -557,6 +641,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `spryker/module-finder` instead.
      *
      * @return string[]
@@ -583,6 +669,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getProcessTimeout(): int

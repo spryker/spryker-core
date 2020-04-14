@@ -49,7 +49,7 @@ class RedirectChainInjectionTest extends Unit
     /**
      * @return void
      */
-    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectCreate()
+    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectCreate(): void
     {
         $localeTransfer = $this->prepareTestData();
         $bazUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-baz', '/test-bar', $localeTransfer->getIdLocale());
@@ -68,7 +68,7 @@ class RedirectChainInjectionTest extends Unit
     /**
      * @return void
      */
-    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectUpdate()
+    public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectUpdate(): void
     {
         $localeTransfer = $this->prepareTestData();
 
@@ -90,7 +90,7 @@ class RedirectChainInjectionTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function prepareTestData()
+    protected function prepareTestData(): LocaleTransfer
     {
         $localeEntity = $this->createLocaleEntity();
         $localeTransfer = new LocaleTransfer();
@@ -105,7 +105,7 @@ class RedirectChainInjectionTest extends Unit
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocale
      */
-    protected function createLocaleEntity()
+    protected function createLocaleEntity(): SpyLocale
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -121,7 +121,7 @@ class RedirectChainInjectionTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlEntity(SpyLocale $localeEntity, $url)
+    protected function createUrlEntity(SpyLocale $localeEntity, string $url): SpyUrl
     {
         $urlEntity = new SpyUrl();
         $urlEntity
@@ -137,7 +137,7 @@ class RedirectChainInjectionTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function mapEntityToTransfer(SpyUrl $urlEntity)
+    protected function mapEntityToTransfer(SpyUrl $urlEntity): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($urlEntity->toArray(), true);
@@ -152,7 +152,7 @@ class RedirectChainInjectionTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlRedirectEntity($source, $target, $idLocale)
+    protected function createUrlRedirectEntity(string $source, string $target, int $idLocale): SpyUrl
     {
         $redirectEntity = new SpyUrlRedirect();
         $redirectEntity
@@ -176,7 +176,7 @@ class RedirectChainInjectionTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    protected function createUrlRedirectTransfer($sourceUrl, $targetUrl, $idLocale)
+    protected function createUrlRedirectTransfer(string $sourceUrl, string $targetUrl, int $idLocale): UrlRedirectTransfer
     {
         $sourceUrlTransfer = new UrlTransfer();
         $sourceUrlTransfer
@@ -198,7 +198,7 @@ class RedirectChainInjectionTest extends Unit
      *
      * @return bool
      */
-    protected function hasUrlRedirect($sourceUrl, $targetUrl)
+    protected function hasUrlRedirect(string $sourceUrl, string $targetUrl): bool
     {
         $count = SpyUrlQuery::create()
             ->useSpyUrlRedirectQuery()

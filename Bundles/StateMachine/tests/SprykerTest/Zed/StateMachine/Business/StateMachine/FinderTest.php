@@ -40,7 +40,7 @@ class FinderTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testGetActiveProcessShouldReturnProcessesRegisteredByHandler()
+    public function testGetActiveProcessShouldReturnProcessesRegisteredByHandler(): void
     {
         $statemachineHandlerMock = $this->createStateMachineHandlerMock();
         $statemachineHandlerMock->expects($this->once())
@@ -66,11 +66,11 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
-     * @uses ProcessInterface::getManuallyExecutableEventsBySource()
+     * @uses \Spryker\Zed\StateMachine\Business\Process\ProcessInterface::getManuallyExecutableEventsBySource()
      *
      * @return void
      */
-    public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems()
+    public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems(): void
     {
         $manualEvents = [
            'state name' => [
@@ -103,7 +103,7 @@ class FinderTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testGetItemWithFlagShouldReturnStatesMarkedWithGivenFlag()
+    public function testGetItemWithFlagShouldReturnStatesMarkedWithGivenFlag(): void
     {
         $states = [];
         $state = new State();
@@ -177,8 +177,7 @@ class FinderTest extends StateMachineMocks
         ?HandlerResolverInterface $handlerResolverMock = null,
         ?BuilderInterface $builderMock = null,
         ?StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
-    ) {
-
+    ): Finder {
         if ($builderMock === null) {
             $builderMock = $this->createBuilderMock();
         }

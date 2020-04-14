@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -45,8 +47,9 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
-    {
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
         return $this->getFactory()->createAccessTokenReader()->validate($authAccessTokenValidationRequestTransfer);
     }
 
@@ -134,5 +137,45 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
         $this->getFactory()
             ->createOauthClientInstaller()
             ->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeRefreshToken($revokeRefreshTokenRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeAllRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer
+    {
+        return $this->getFactory()->createOauthRefreshTokenRevoker()->revokeAllRefreshTokens($revokeRefreshTokenRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function deleteExpiredRefreshTokens(): ?int
+    {
+        return $this->getFactory()->createOauthExpiredRefreshTokenRemover()->deleteExpiredRefreshTokens();
     }
 }

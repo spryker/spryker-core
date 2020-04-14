@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\DataImport\Business\Exception\TransactionRolledBackAwareExceptionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -140,10 +141,12 @@ class DataImporter implements
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    protected function importByDataImporterConfiguration(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    protected function importByDataImporterConfiguration(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
-        $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
+        $source = $this->getSourceFromDataImporterConfigurationTransfer($dataImporterConfigurationTransfer);
+        $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader, $source);
 
         $this->beforeImport();
 
@@ -152,6 +155,9 @@ class DataImporter implements
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
+                if ($dataImportException instanceof TransactionRolledBackAwareExceptionInterface) {
+                    $dataImporterReportTransfer = $this->recalculateImportedDataSetCount($dataImporterReportTransfer, $dataImportException);
+                }
                 $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
 
                 if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
@@ -170,6 +176,25 @@ class DataImporter implements
 
             unset($dataSet);
         }
+
+        return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     * @param \Spryker\Zed\DataImport\Business\Exception\TransactionRolledBackAwareExceptionInterface $exception
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    protected function recalculateImportedDataSetCount(
+        DataImporterReportTransfer $dataImporterReportTransfer,
+        TransactionRolledBackAwareExceptionInterface $exception
+    ): DataImporterReportTransfer {
+        if ($dataImporterReportTransfer->getImportedDataSetCount() === 0) {
+            return $dataImporterReportTransfer;
+        }
+
+        $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() - $exception->getRolledBackRowsCount());
 
         return $dataImporterReportTransfer;
     }
@@ -226,17 +251,19 @@ class DataImporter implements
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
+     * @param string|null $source
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    protected function prepareDataImportReport(DataReaderInterface $dataReader)
+    protected function prepareDataImportReport(DataReaderInterface $dataReader, ?string $source = null)
     {
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
             ->setImportType($this->getImportType())
             ->setImportedDataSetCount(0)
             ->setIsSuccess(true)
-            ->setIsReaderCountable(false);
+            ->setIsReaderCountable(false)
+            ->setSource($source);
 
         if ($dataReader instanceof Countable) {
             $dataImporterReportTransfer->setIsReaderCountable(true);
@@ -279,5 +306,19 @@ class DataImporter implements
         $message .= sprintf('%s:%s %s', $exception->getFile(), $exception->getLine(), PHP_EOL . PHP_EOL . $exception->getTraceAsString());
 
         return $message;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return string|null
+     */
+    protected function getSourceFromDataImporterConfigurationTransfer(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): ?string
+    {
+        if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getReaderConfiguration()) {
+            return $dataImporterConfigurationTransfer->getReaderConfiguration()->getFileName();
+        }
+
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 # CollectorStorageConnector Module
-[![Build Status](https://travis-ci.org/spryker/CollectorStorageConnector.svg)](https://travis-ci.org/spryker/CollectorStorageConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CollectorStorageConnector/badge.svg)](https://coveralls.io/github/spryker/CollectorStorageConnector)
+[![Build Status](https://travis-ci.org/spryker/collector-storage-connector.svg)](https://travis-ci.org/spryker/collector-storage-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 CollectorStorageConnector allows to browse through the stored Redis entries in Zed Administration Interface.
 

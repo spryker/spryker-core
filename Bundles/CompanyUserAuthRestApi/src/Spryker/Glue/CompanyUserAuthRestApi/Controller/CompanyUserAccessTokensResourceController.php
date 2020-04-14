@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -24,13 +24,14 @@ class CompanyUserAccessTokensResourceController extends AbstractController
      *              "Creates access token for company user."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCompanyUserAccessTokenResponseAttributesTransfer",
      *          "responses": {
+     *              "400": "Bad request.",
      *              "401": "Failed to authenticate user.",
-     *              "403": "Unauthorized request."
+     *              "403": "Unauthorized request.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })

@@ -9,11 +9,14 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -23,9 +26,9 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected $availabilityQueryContainer;
+    protected $availabilityFacade;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
@@ -33,18 +36,34 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected $productBundleRepository;
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
+    protected $productBundleCache;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface $productBundleCache
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleRepositoryInterface $productBundleRepository,
+        ProductBundleCacheInterface $productBundleCache
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
-        $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
+        $this->productBundleRepository = $productBundleRepository;
+        $this->productBundleCache = $productBundleCache;
     }
 
     /**
@@ -91,10 +110,10 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productBundleTransfer = new ProductBundleTransfer();
         $productBundleTransfer->setBundledProducts($bundledProducts);
 
-        $productBundleAvailabilityEntity = $this->findOrCreateProductBundleAvailabilityEntity($productConcreteTransfer);
-        if ($productBundleAvailabilityEntity !== null) {
-            $productBundleTransfer->setAvailability($productBundleAvailabilityEntity->getQuantity());
-            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityEntity->getIsNeverOutOfStock());
+        $productBundleAvailabilityTransfer = $this->findProductConcreteAvailabilityBySkuForStore($productConcreteTransfer);
+        if ($productBundleAvailabilityTransfer !== null) {
+            $productBundleTransfer->setAvailability($productBundleAvailabilityTransfer->getAvailability());
+            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityTransfer->getIsNeverOutOfStock());
         }
 
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
@@ -117,14 +136,42 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findOrCreateProductBundleAvailabilityEntity(ProductConcreteTransfer $productConcreteTransfer)
+    protected function findProductConcreteAvailabilityBySkuForStore(ProductConcreteTransfer $productConcreteTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku(), $storeTransfer->getIdStore())
-            ->findOneOrCreate();
+        return $this->availabilityFacade
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     */
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
+    {
+        $notCachedSkus = [];
+        foreach ($skus as $sku) {
+            if (!$this->productBundleCache->hasProductForBundleTransfersBySku($sku)) {
+                $notCachedSkus[] = $sku;
+            }
+        }
+
+        if ($notCachedSkus) {
+            $productForBundleTransfers = $this->productBundleRepository->getProductForBundleTransfersByProductConcreteSkus($notCachedSkus);
+            $this->productBundleCache->cacheProductForBundleTransfersBySku($productForBundleTransfers);
+        }
+
+        $productForBundlesBySku = [];
+        foreach ($skus as $sku) {
+            if ($this->productBundleCache->hasProductForBundleTransfersBySku($sku)) {
+                $productForBundlesBySku[$sku] = $this->productBundleCache->getProductForBundleTransfersBySku($sku);
+            }
+        }
+
+        return $productForBundlesBySku;
     }
 }

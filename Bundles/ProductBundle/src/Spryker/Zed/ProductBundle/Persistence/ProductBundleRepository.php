@@ -41,8 +41,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
-    {
+    public function getProductBundleCollectionByCriteriaFilter(
+        ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+    ): ProductBundleCollectionTransfer {
         $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkProduct();
@@ -56,5 +57,25 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         return $this->getFactory()
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array
+    {
+        $productBundleEntities = $this->getFactory()
+            ->createProductBundleQuery()
+            ->joinWithSpyProductRelatedByFkProduct()
+            ->useSpyProductRelatedByFkProductQuery()
+                ->filterBySku_In($skus)
+            ->endUse()
+            ->find();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
     }
 }

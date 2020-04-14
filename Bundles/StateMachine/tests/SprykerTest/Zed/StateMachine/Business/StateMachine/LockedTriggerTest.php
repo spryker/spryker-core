@@ -30,7 +30,7 @@ class LockedTriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerForNewItemWhenLockedShouldThrowException()
+    public function testTriggerForNewItemWhenLockedShouldThrowException(): void
     {
         $this->expectException(LockException::class);
 
@@ -48,7 +48,7 @@ class LockedTriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerEventForNewItemWhenLockedShouldThrowException()
+    public function testTriggerEventForNewItemWhenLockedShouldThrowException(): void
     {
         $this->expectException(LockException::class);
 
@@ -69,7 +69,7 @@ class LockedTriggerTest extends StateMachineMocks
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger
      */
-    public function createLockedTrigger(?TriggerInterface $triggerMock = null, ?ItemLockInterface $itemLockMock = null)
+    public function createLockedTrigger(?TriggerInterface $triggerMock = null, ?ItemLockInterface $itemLockMock = null): LockedTrigger
     {
         if ($triggerMock === null) {
             $triggerMock = $this->createTriggerMock();

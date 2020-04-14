@@ -43,7 +43,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     /**
      * @return array
      */
-    public function _depends()
+    public function _depends(): array
     {
         return [
             BundleConfig::class => 'You need to enable \SprykerTest\Shared\Testify\Helper\BundleConfig in order to mock bundle configurations',
@@ -55,7 +55,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
      *
      * @return void
      */
-    public function _inject(BundleConfig $bundleConfig)
+    public function _inject(BundleConfig $bundleConfig): void
     {
         $this->bundleConfig = $bundleConfig;
     }
@@ -63,7 +63,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $this->loadApplication();
         $this->mockBundleConfigs();
@@ -74,7 +74,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->client = new Client($this->application->boot());
     }
@@ -84,7 +84,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
      *
      * @return void
      */
-    protected function loadApplication()
+    protected function loadApplication(): void
     {
         Request::createFromGlobals();
         Request::setTrustedHosts(['localhost']);
@@ -99,7 +99,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     /**
      * @return void
      */
-    private function mockBundleConfigs()
+    private function mockBundleConfigs(): void
     {
         $this->bundleConfig->addBundleConfigMock($this->getTwigBundleConfigMock());
     }

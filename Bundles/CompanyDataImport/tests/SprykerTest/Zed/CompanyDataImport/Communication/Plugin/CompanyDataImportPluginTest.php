@@ -77,7 +77,7 @@ class CompanyDataImportPluginTest extends Unit
     /**
      * @return \Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacade
      */
-    public function getFacadeMock()
+    public function getFacadeMock(): CompanyDataImportFacade
     {
         $factoryMock = $this->getMockBuilder(CompanyDataImportBusinessFactory::class)
             ->setMethods(

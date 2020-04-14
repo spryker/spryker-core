@@ -1,6 +1,6 @@
 # Permission Module
-[![Build Status](https://travis-ci.org/spryker/Permission.svg)](https://travis-ci.org/spryker/Permission)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/Permission/badge.svg)](https://coveralls.io/github/spryker/Permission)
+[![Build Status](https://travis-ci.org/spryker/permission.svg)](https://travis-ci.org/spryker/permission)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Permission module could be used as a part of ACL/RBAC.
 

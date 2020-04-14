@@ -43,7 +43,7 @@ class Transfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setKey($key)
+    public function setKey(string $key)
     {
         $this->key = $key;
         $this->modifiedProperties[self::KEY] = $key;
@@ -54,7 +54,7 @@ class Transfer extends AbstractTransfer
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }

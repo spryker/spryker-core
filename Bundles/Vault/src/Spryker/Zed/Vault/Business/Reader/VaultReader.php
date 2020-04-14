@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Vault\Business\Reader;
 
+use Generated\Shared\Transfer\VaultDepositTransfer;
+use Spryker\Zed\Vault\Business\Converter\InitialVectorConverterInterface;
 use Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceInterface;
 use Spryker\Zed\Vault\Persistence\VaultRepositoryInterface;
 use Spryker\Zed\Vault\VaultConfig;
@@ -29,18 +31,26 @@ class VaultReader implements VaultReaderInterface
     protected $vaultRepository;
 
     /**
+     * @var \Spryker\Zed\Vault\Business\Converter\InitialVectorConverterInterface
+     */
+    protected $initialVectorConverter;
+
+    /**
      * @param \Spryker\Zed\Vault\VaultConfig $vaultConfig
      * @param \Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceInterface $utilEncryptionService
      * @param \Spryker\Zed\Vault\Persistence\VaultRepositoryInterface $vaultRepository
+     * @param \Spryker\Zed\Vault\Business\Converter\InitialVectorConverterInterface $initialVectorConverter
      */
     public function __construct(
         VaultConfig $vaultConfig,
         VaultToUtilEncryptionServiceInterface $utilEncryptionService,
-        VaultRepositoryInterface $vaultRepository
+        VaultRepositoryInterface $vaultRepository,
+        InitialVectorConverterInterface $initialVectorConverter
     ) {
         $this->vaultConfig = $vaultConfig;
         $this->utilEncryptionService = $utilEncryptionService;
         $this->vaultRepository = $vaultRepository;
+        $this->initialVectorConverter = $initialVectorConverter;
     }
 
     /**
@@ -59,8 +69,22 @@ class VaultReader implements VaultReaderInterface
 
         return $this->utilEncryptionService->decryptOpenSsl(
             $vaultDepositTransfer->getCipherText(),
-            $vaultDepositTransfer->getInitialVector(),
+            $this->getInitializingVector($vaultDepositTransfer),
             $this->vaultConfig->getEncryptionKey()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
+     *
+     * @return string
+     */
+    protected function getInitializingVector(VaultDepositTransfer $vaultDepositTransfer): string
+    {
+        if (!$this->vaultConfig->useByteStringForEncryptionInitializationVector()) {
+            return $vaultDepositTransfer->getInitialVector();
+        }
+
+        return $this->initialVectorConverter->convertToBin($vaultDepositTransfer->getInitialVector());
     }
 }

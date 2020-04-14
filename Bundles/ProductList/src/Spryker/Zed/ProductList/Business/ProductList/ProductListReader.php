@@ -200,6 +200,10 @@ class ProductListReader implements ProductListReaderInterface
         $productListTransfer = $this->productListRepository
             ->getProductListById($productListTransfer->getIdProductList());
 
+        if (!$productListTransfer->getIdProductList()) {
+            return $productListTransfer;
+        }
+
         $productListCategoryRelationTransfer = new ProductListCategoryRelationTransfer();
         $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
         $productListCategoryRelationTransfer = $this->productListCategoryRelationReader
@@ -252,8 +256,11 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    protected function mergeProductConcreteAndProductAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
-    {
+    protected function mergeProductConcreteAndProductAbstractLists(
+        array $productConcreteLists,
+        array $productAbstractLists,
+        array $concreteToAbstractMap
+    ): array {
         $mergedProductConcreteAndProductAbstractLists = [];
 
         foreach ($concreteToAbstractMap as $idProductConcrete => $idProductAbstract) {

@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/calculation-extension": "^1.1.0",
     "spryker/country": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
@@ -14,6 +15,7 @@
   },
   "require-dev": {
     "spryker/calculation": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -32,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

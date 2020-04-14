@@ -31,7 +31,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnRedirectResponseWithEscapeUrlOfCurrentStepWhenPreConditionNotFulfilled()
+    public function testProcessReturnRedirectResponseWithEscapeUrlOfCurrentStepWhenPreConditionNotFulfilled(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMock = $this->getStepMock(false, false, false, '', self::ESCAPE_ROUTE);
@@ -47,7 +47,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnRedirectResponseWithUrlOfCurrentStepWhenStepCanNotAccessed()
+    public function testProcessReturnRedirectResponseWithUrlOfCurrentStepWhenStepCanNotAccessed(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMock = $this->getStepMock(true, false, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
@@ -63,7 +63,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnRedirectResponseWithUrlOfNextStepWhenStepNeedNoInput()
+    public function testProcessReturnRedirectResponseWithUrlOfNextStepWhenStepNeedNoInput(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
@@ -82,7 +82,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnViewDataWhenNoFormHandlerGiven()
+    public function testProcessReturnViewDataWhenNoFormHandlerGiven(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
@@ -98,7 +98,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnViewDataWhenFormCollectionHasNoSubmittedForm()
+    public function testProcessReturnViewDataWhenFormCollectionHasNoSubmittedForm(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
@@ -124,7 +124,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnRedirectResponseWithUrlToNextStepWhenFormValid()
+    public function testProcessReturnRedirectResponseWithUrlToNextStepWhenFormValid(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
@@ -157,7 +157,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormInterface
      */
-    protected function getFormMock()
+    protected function getFormMock(): FormInterface
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
     }
@@ -165,7 +165,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    protected function getFormCollectionHandlerMock()
+    protected function getFormCollectionHandlerMock(): FormCollectionHandlerInterface
     {
         return $this->getMockBuilder(FormCollectionHandlerInterface::class)->getMock();
     }
@@ -175,7 +175,7 @@ class StepEngineTest extends AbstractStepEngineTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    private function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
+    private function getDataContainerMock(?AbstractTransfer $dataTransfer = null): DataContainerInterface
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 

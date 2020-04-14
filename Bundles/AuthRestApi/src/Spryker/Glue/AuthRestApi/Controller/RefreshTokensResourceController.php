@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -23,12 +24,13 @@ class RefreshTokensResourceController extends AbstractController
      *              "Refreshes customer's auth token."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
-     *              "401": "Failed to authenticate user."
+     *              "400": "Bad request.",
+     *              "401": "Failed to authenticate user.",
+     *              "422": "Unprocessable entity."
      *          },
      *          "isIdNullable": true
      *     }
@@ -39,8 +41,10 @@ class RefreshTokensResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestRefreshTokensAttributesTransfer $restRefreshTokensAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestRefreshTokensAttributesTransfer $restRefreshTokensAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createRefreshTokensReader()
             ->processAccessTokenRequest($restRefreshTokensAttributesTransfer);
@@ -54,5 +58,31 @@ class RefreshTokensResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()->getResourceBuilder()->createRestResponse();
+    }
+
+    /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Revokes customer's refresh token."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
+     *          }],
+     *          "responses": {
+     *              "204": "No content."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeRefreshToken($restRequest);
     }
 }

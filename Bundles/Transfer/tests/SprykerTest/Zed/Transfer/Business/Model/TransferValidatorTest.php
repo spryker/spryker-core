@@ -35,7 +35,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidate()
+    public function testValidate(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
@@ -57,7 +57,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWithBC()
+    public function testValidateWithBC(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Error/Transfer/'),
@@ -79,7 +79,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWithoutBC()
+    public function testValidateWithoutBC(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Error/Transfer/'),
@@ -105,7 +105,7 @@ class TransferValidatorTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
      */
-    protected function getDefinitionFinder($sourceDirectories)
+    protected function getDefinitionFinder(array $sourceDirectories): TransferDefinitionFinder
     {
         $this->output = new ConsoleOutput();
         $definitionFinder = new TransferDefinitionFinder(
@@ -118,7 +118,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMessengerMock()
+    protected function getMessengerMock(): ConsoleLogger
     {
         return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
@@ -126,7 +126,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
      */
-    protected function getTransferConfigMock()
+    protected function getTransferConfigMock(): TransferConfig
     {
         return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }

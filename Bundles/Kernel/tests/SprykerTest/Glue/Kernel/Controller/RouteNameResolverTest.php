@@ -25,7 +25,7 @@ class RouteNameResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldReturnResolvedRouteName()
+    public function testResolveShouldReturnResolvedRouteName(): void
     {
         $resolver = new RouteNameResolver('foo', 'bar', 'baz');
 

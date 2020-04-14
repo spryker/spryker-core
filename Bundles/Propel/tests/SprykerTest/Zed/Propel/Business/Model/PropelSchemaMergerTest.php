@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Propel\Business\Model;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
+use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -29,16 +32,21 @@ class PropelSchemaMergerTest extends Unit
     public const LEVEL_VENDOR = 'Vendor';
 
     /**
+     * @var \SprykerTest\Zed\Propel\PropelBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent()
+    public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_PROJECT),
         ];
 
-        $merger = new PropelSchemaMerger(new PropelConfig());
+        $merger = $this->createPropelSchemaMerger();
         $content = $merger->merge($filesToMerge);
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.schema.xml');
 
@@ -48,7 +56,7 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
-    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent()
+    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
@@ -56,7 +64,7 @@ class PropelSchemaMergerTest extends Unit
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_PROJECT),
         ];
 
-        $merger = new PropelSchemaMerger(new PropelConfig());
+        $merger = $this->createPropelSchemaMerger();
         $content = $merger->merge($filesToMerge);
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.three.uniques.schema.xml');
         $this->assertSame($expected, $content);
@@ -65,14 +73,14 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
-    public function testMergeAllowsToChangeAttributeValue()
+    public function testMergeAllowsToChangeAttributeValue(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('attribute_value_change.schema.xml', static::LEVEL_VENDOR),
             $this->getSplFileInfo('attribute_value_change.schema.xml', static::LEVEL_PROJECT),
         ];
 
-        $merger = new PropelSchemaMerger(new PropelConfig());
+        $merger = $this->createPropelSchemaMerger();
         $content = $merger->merge($filesToMerge);
 
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged_attribute_change.schema.xml');
@@ -89,7 +97,7 @@ class PropelSchemaMergerTest extends Unit
             $this->getSplFileInfo('to_sort_first.schema.xml', static::LEVEL_PROJECT),
         ];
 
-        $merger = new PropelSchemaMerger(new PropelConfig());
+        $merger = $this->createPropelSchemaMerger();
 
         $content = $merger->merge($filesToMerge);
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.sorted.schema.xml');
@@ -103,7 +111,7 @@ class PropelSchemaMergerTest extends Unit
      *
      * @return \Symfony\Component\Finder\SplFileInfo
      */
-    protected function getSplFileInfo($fileName, $level)
+    protected function getSplFileInfo(string $fileName, string $level): SplFileInfo
     {
         return new SplFileInfo($this->getFixtureDirectory($level) . $fileName, '', '');
     }
@@ -113,7 +121,7 @@ class PropelSchemaMergerTest extends Unit
      *
      * @return string
      */
-    private function getFixtureDirectory($level = null)
+    private function getFixtureDirectory(?string $level = null): string
     {
         $pathParts = [
             __DIR__,
@@ -126,5 +134,19 @@ class PropelSchemaMergerTest extends Unit
         }
 
         return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
+     */
+    protected function createPropelSchemaMerger(): PropelSchemaMergerInterface
+    {
+        return new PropelSchemaMerger(
+            new PropelToUtilTextServiceBridge(
+                $this->tester->getLocator()->utilText()->service()
+            ),
+            new PropelSchemaElementFilter([]),
+            new PropelConfig()
+        );
     }
 }

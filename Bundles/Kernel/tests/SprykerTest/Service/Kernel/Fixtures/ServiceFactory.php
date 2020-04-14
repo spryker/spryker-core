@@ -23,7 +23,7 @@ class ServiceFactory extends AbstractServiceFactory
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
-    ) {
+    ): void {
         $container[AbstractServiceFactoryTest::CONTAINER_KEY] = AbstractServiceFactoryTest::CONTAINER_VALUE;
     }
 }

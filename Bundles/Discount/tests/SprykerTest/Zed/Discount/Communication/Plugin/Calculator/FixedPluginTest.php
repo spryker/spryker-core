@@ -28,7 +28,7 @@ class FixedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testTransformForPersistenceShouldConvertDecimalToInteger()
+    public function testTransformForPersistenceShouldConvertDecimalToInteger(): void
     {
         $plugin = new FixedPlugin();
 
@@ -39,7 +39,7 @@ class FixedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testTransformFromPersistenceShouldConvertIntegerToDecimalWithoutSymbol()
+    public function testTransformFromPersistenceShouldConvertIntegerToDecimalWithoutSymbol(): void
     {
         $this->setLocaleForTest();
         $plugin = new FixedPlugin();
@@ -53,7 +53,7 @@ class FixedPluginTest extends Unit
     /**
      * @return void
      */
-    private function setLocaleForTest()
+    private function setLocaleForTest(): void
     {
         Store::getInstance()->setCurrentLocale('de_DE');
     }

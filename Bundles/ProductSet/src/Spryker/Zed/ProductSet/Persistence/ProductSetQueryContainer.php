@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductSetQueryContainer extends AbstractQueryContainer implements ProductSetQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -27,6 +29,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
@@ -38,6 +42,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
@@ -49,6 +55,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -62,6 +70,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids
@@ -76,6 +86,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -90,6 +102,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -111,6 +125,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -133,6 +149,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -156,6 +174,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -175,6 +195,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet
@@ -192,6 +214,8 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductSet

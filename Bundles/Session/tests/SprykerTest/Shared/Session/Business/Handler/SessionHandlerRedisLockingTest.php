@@ -29,7 +29,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return void
      */
-    public function testReadReturnsEmptyStringOnMissingSessionKey()
+    public function testReadReturnsEmptyStringOnMissingSessionKey(): void
     {
         $redisClientMock = $this->getRedisClientMock(null);
         $lockerMock = $this->getRedisSpinLockLockerMock();
@@ -43,7 +43,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return void
      */
-    public function testReadDecodesLegacyJsonSession()
+    public function testReadDecodesLegacyJsonSession(): void
     {
         $redisClientMock = $this->getRedisClientMock(json_encode('foo bar baz'));
         $lockerMock = $this->getRedisSpinLockLockerMock();
@@ -59,7 +59,7 @@ class SessionHandlerRedisLockingTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
      */
-    private function getRedisClientMock($returnValue)
+    private function getRedisClientMock(?string $returnValue): Client
     {
         $redisClientMock = $this
             ->getMockBuilder(Client::class)
@@ -77,7 +77,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
      */
-    private function getRedisSpinLockLockerMock()
+    private function getRedisSpinLockLockerMock(): RedisSpinLockLocker
     {
         $lockerMock = $this
             ->getMockBuilder(RedisSpinLockLocker::class)
@@ -98,7 +98,7 @@ class SessionHandlerRedisLockingTest extends Unit
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
      */
-    private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock)
+    private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock): SessionHandlerRedisLocking
     {
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,

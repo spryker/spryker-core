@@ -8,7 +8,10 @@
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearch;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,9 +27,9 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearch(
             $this->getUtilEncoding(),
-            $this->getSearchFacade(),
+            $this->createCategoryNodePageSearchDataMapper(),
             $this->getQueryContainer(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -40,18 +43,18 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
      */
-    public function getSearchFacade()
+    public function getStoreFacade(): CategoryPageSearchToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_SEARCH);
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_STORE);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
      */
-    public function getStore()
+    public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
     {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::STORE);
+        return new CategoryNodePageSearchDataMapper();
     }
 }

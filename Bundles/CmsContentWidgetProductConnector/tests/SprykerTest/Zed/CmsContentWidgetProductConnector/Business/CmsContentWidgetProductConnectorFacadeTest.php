@@ -26,7 +26,7 @@ class CmsContentWidgetProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductSkuListShouldMapSkuToPrimaryKey()
+    public function testMapProductSkuListShouldMapSkuToPrimaryKey(): void
     {
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();

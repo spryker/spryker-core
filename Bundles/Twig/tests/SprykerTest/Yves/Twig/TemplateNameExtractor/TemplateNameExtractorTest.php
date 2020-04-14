@@ -10,6 +10,7 @@ namespace SprykerTest\Yves\Twig\TemplateNameExtractor;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
+use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 
 /**
@@ -32,7 +33,7 @@ class TemplateNameExtractorTest extends Unit
      *
      * @return void
      */
-    public function testExtractTemplateNameShouldReturnTemplatePath($templateName, $expectedBundleName)
+    public function testExtractTemplateNameShouldReturnTemplatePath(string $templateName, string $expectedBundleName): void
     {
         $templateNameExtractor = new TemplateNameExtractor($this->getUtilTextService());
 
@@ -42,7 +43,7 @@ class TemplateNameExtractorTest extends Unit
     /**
      * @return array
      */
-    public function nameDataProviderForTemplatePath()
+    public function nameDataProviderForTemplatePath(): array
     {
         return [
             ['@Bundle/DirectoryCamelCase/template.twig', 'directory-camel-case/template.twig'],
@@ -54,7 +55,7 @@ class TemplateNameExtractorTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
      */
-    protected function getUtilTextService()
+    protected function getUtilTextService(): TwigToUtilTextServiceInterface
     {
         return new TwigToUtilTextServiceBridge(new UtilTextService());
     }

@@ -32,7 +32,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testInvalidQuantity()
+    public function testInvalidQuantity(): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem(1);
@@ -47,7 +47,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateIsProductBundled()
+    public function testValidateIsProductBundled(): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
@@ -63,7 +63,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateIsDiscounted()
+    public function testValidateIsDiscounted(): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
@@ -82,7 +82,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateIsOptionDiscounted()
+    public function testValidateIsOptionDiscounted(): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
@@ -108,7 +108,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidOrderItem()
+    public function testValidOrderItem(): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
@@ -121,7 +121,7 @@ class ValidatorTest extends Unit
     /**
      * @return \Spryker\Zed\SalesSplit\Business\Model\Validation\Validator
      */
-    protected function getValidator()
+    protected function getValidator(): Validator
     {
         return new Validator();
     }
@@ -131,7 +131,7 @@ class ValidatorTest extends Unit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function getSalesOrderItem($quantity = 2)
+    protected function getSalesOrderItem(int $quantity = 2): SpySalesOrderItem
     {
         $spySalesOrderItem = new SpySalesOrderItem();
         $spySalesOrderItem->setQuantity($quantity);

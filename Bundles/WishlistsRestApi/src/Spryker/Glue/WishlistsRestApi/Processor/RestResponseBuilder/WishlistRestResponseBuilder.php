@@ -149,6 +149,10 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
             $wishlistResource->addRelationship(
                 $this->createWishlistItemsResource($wishlistItemTransfer)
+                    ->addLink(
+                        RestLinkInterface::LINK_SELF,
+                        $this->createSelfLinkForWishlistItem($wishlistTransfer->getUuid(), $wishlistItemTransfer->getSku())
+                    )
             );
         }
 

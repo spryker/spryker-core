@@ -42,6 +42,7 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
             return [];
         }
 
+        $pathData = [];
         $pathData[PathMethodComponentTransfer::SUMMARY] = $this->pathMethodComponentTransfer->getSummary();
         $pathData[PathMethodComponentTransfer::TAGS] = $this->pathMethodComponentTransfer->getTags();
         if ($this->pathMethodComponentTransfer->getParameters()) {
@@ -52,6 +53,9 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
         }
         if ($this->pathMethodComponentTransfer->getSecurity()) {
             $pathData[PathMethodComponentTransfer::SECURITY] = $this->pathMethodComponentTransfer->getSecurity();
+        }
+        if ($this->pathMethodComponentTransfer->getOperationId()) {
+            $pathData[PathMethodComponentTransfer::OPERATION_ID] = $this->pathMethodComponentTransfer->getOperationId();
         }
         $pathData[PathMethodComponentTransfer::RESPONSES] = [];
         foreach ($this->pathMethodComponentTransfer->getResponses() as $response) {

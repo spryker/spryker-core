@@ -11,10 +11,17 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use ReflectionMethod;
 use Spryker\Zed\Category\Business\CategoryBusinessFactory;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
+use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher;
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeBridge;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryRepository;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -45,7 +52,7 @@ class CategoryNodeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatingNodeTouchesEntireTreeBranch()
+    public function testUpdatingNodeTouchesEntireTreeBranch(): void
     {
         $toucherMock = $this->createCategoryToucherMock(['touchCategoryNodeActive']);
         $toucherMock
@@ -59,7 +66,8 @@ class CategoryNodeTest extends Unit
                 [$this->equalTo(static::CATEGORY_NODE_ID_COMPUTER)]         // Self
             );
 
-        $categoryNodeModel = $this->createCategoryNodeModel($toucherMock);
+        $publisherMock = $this->createCategoryNodePublisherMock(['triggerBulkCategoryNodePublishEventForUpdate']);
+        $categoryNodeModel = $this->createCategoryNodeModel($toucherMock, $publisherMock);
 
         $categoryTransfer = $this->createCategoryTransfer(static::CATEGORY_ID_COMPUTER);
         $categoryTransfer = $categoryNodeModel->read(static::CATEGORY_ID_COMPUTER, $categoryTransfer);
@@ -70,7 +78,7 @@ class CategoryNodeTest extends Unit
     /**
      * @return void
      */
-    public function testMovingNodeTouchesFormerParentNode()
+    public function testMovingNodeTouchesFormerParentNode(): void
     {
         $touchedIds = [];
         $expectedTouchedIds = [
@@ -86,12 +94,22 @@ class CategoryNodeTest extends Unit
             ->expects($this->exactly(5))
             ->method('touchCategoryNodeActive')
             ->will($this->returnCallback(
-                function ($idTouched) use (&$touchedIds) {
+                function ($idTouched) use (&$touchedIds): void {
                     $touchedIds[] = $idTouched;
                 }
             ));
 
-        $categoryNodeModel = $this->createCategoryNodeModel($toucherMock);
+        $publisherMock = $this->createCategoryNodePublisherMock(['triggerBulkCategoryNodePublishEventForUpdate']);
+        $publisherMock
+            ->expects($this->exactly(1))
+            ->method('triggerBulkCategoryNodePublishEventForUpdate')
+            ->withConsecutive(
+                [$this->equalTo(static::CATEGORY_NODE_ID_TABLETS)],         // Child
+                [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],            // Root (Demoshop)
+                [$this->equalTo(static::CATEGORY_NODE_ID_COMPUTER)]         // Self
+            );
+
+        $categoryNodeModel = $this->createCategoryNodeModel($toucherMock, $publisherMock);
 
         $categoryTransfer = $this->createCategoryTransfer(static::CATEGORY_ID_TABLETS);
         $categoryTransfer = $categoryNodeModel->read(static::CATEGORY_ID_TABLETS, $categoryTransfer);
@@ -111,7 +129,7 @@ class CategoryNodeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\Model\CategoryToucher
      */
-    protected function createCategoryToucherMock(array $methodsToMock)
+    protected function createCategoryToucherMock(array $methodsToMock): CategoryToucher
     {
         return $this
             ->getMockBuilder(CategoryToucher::class)
@@ -124,9 +142,28 @@ class CategoryNodeTest extends Unit
     }
 
     /**
+     * @param string[] $methodsToMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface
+     */
+    protected function createCategoryNodePublisherMock(array $methodsToMock): CategoryNodePublisher
+    {
+        return $this
+            ->getMockBuilder(CategoryNodePublisher::class)
+            ->setConstructorArgs(
+                [
+                    $this->createCategoryRepository(),
+                    $this->createEventFacade(),
+                ]
+            )
+            ->setMethods($methodsToMock)
+            ->getMock();
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
-    protected function createTouchFacade()
+    protected function createTouchFacade(): CategoryToTouchInterface
     {
         return $this
             ->getMockBuilder(CategoryToTouchBridge::class)
@@ -135,21 +172,41 @@ class CategoryNodeTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
+     */
+    protected function createEventFacade(): CategoryToEventFacadeInterface
+    {
+        return $this
+            ->getMockBuilder(CategoryToEventFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
-    protected function createCategoryQueryContainer()
+    protected function createCategoryQueryContainer(): CategoryQueryContainer
     {
         return new CategoryQueryContainer();
     }
 
     /**
+     * @return \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     */
+    protected function createCategoryRepository(): CategoryRepositoryInterface
+    {
+        return new CategoryRepository();
+    }
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucher $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher $categoryNodePublisher
      *
      * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode
      */
-    protected function createCategoryNodeModel($categoryToucher)
+    protected function createCategoryNodeModel(CategoryToucher $categoryToucher, CategoryNodePublisher $categoryNodePublisher): CategoryNode
     {
-        $factory = $this->createCategoryBusinessFactory($categoryToucher);
+        $factory = $this->createCategoryBusinessFactory($categoryToucher, $categoryNodePublisher);
 
         $methodReflection = new ReflectionMethod($factory, 'createCategoryNode');
         $methodReflection->setAccessible(true);
@@ -159,20 +216,29 @@ class CategoryNodeTest extends Unit
 
     /**
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucher $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher $categoryNodePublisher
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory
      */
-    protected function createCategoryBusinessFactory($categoryToucher)
+    protected function createCategoryBusinessFactory(CategoryToucher $categoryToucher, CategoryNodePublisher $categoryNodePublisher): CategoryBusinessFactory
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory $factoryMock */
         $factoryMock = $this
             ->getMockBuilder(CategoryBusinessFactory::class)
-            ->setMethods(['createCategoryToucher'])
+            ->setMethods(
+                [
+                    'createCategoryToucher',
+                    'createCategoryNodePublisher',
+                ]
+            )
             ->getMock();
 
         $factoryMock
             ->method('createCategoryToucher')
             ->will($this->returnValue($categoryToucher));
+        $factoryMock
+            ->method('createCategoryNodePublisher')
+            ->will($this->returnValue($categoryNodePublisher));
 
         $container = new Container();
         $dependencyProvider = new CategoryDependencyProvider();
@@ -180,6 +246,7 @@ class CategoryNodeTest extends Unit
         $factoryMock->setContainer($container);
 
         $factoryMock->setQueryContainer($this->createCategoryQueryContainer());
+        $factoryMock->setRepository($this->createCategoryRepository());
 
         return $factoryMock;
     }
@@ -189,7 +256,7 @@ class CategoryNodeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function createCategoryTransfer($idCategory)
+    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setIdCategory($idCategory);

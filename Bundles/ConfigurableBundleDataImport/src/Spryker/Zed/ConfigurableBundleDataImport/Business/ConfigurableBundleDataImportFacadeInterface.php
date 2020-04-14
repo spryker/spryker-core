@@ -34,5 +34,21 @@ interface ConfigurableBundleDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importConfigurableBundleTemplateSlots(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importConfigurableBundleTemplateSlots(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports Configurable Bundle Template Images data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importConfigurableBundleTemplateImages(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer;
 }

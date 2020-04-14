@@ -106,7 +106,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
-     * @return array
+     * @return string[]
      */
     public function getAllowedLanguages(): array
     {
@@ -120,6 +120,8 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a list of supported stores for Route manipulation.
      * - Will be used to strip of store information from a route before a route is matched.
+     *
+     * @api
      *
      * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
      *

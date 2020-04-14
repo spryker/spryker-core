@@ -20,6 +20,9 @@ class AmountAvailabilityCartPreCheckPlugin extends AbstractPlugin implements Car
 {
     /**
      * {@inheritDoc}
+     * - Checks if item amounts which being added to cart are available.
+     * - Checks the quantity availability of the product packaging unit too, unless if it's a self-lead packaging unit.
+     * - If a lead product is added separately, the lead product total availability amount will be checked.
      *
      * @api
      *

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface;
 use Spryker\Client\Search\Exception\InvalidFacetSearchResultValueTransformerPluginException;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory` instead.
+ */
 class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterface
 {
     /**

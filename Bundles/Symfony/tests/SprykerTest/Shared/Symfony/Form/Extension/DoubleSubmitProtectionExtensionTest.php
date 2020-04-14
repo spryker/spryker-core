@@ -78,7 +78,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFinishViewIgnoredForNotFormRoot()
+    public function testFinishViewIgnoredForNotFormRoot(): void
     {
         $view = $this->formFactory
             ->createNamedBuilder('root', FormType::class)
@@ -100,7 +100,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFinishFormViewSuccess()
+    public function testFinishFormViewSuccess(): void
     {
         $expectedToken = 'TOKEN';
         $this->generator->expects($this->once())
@@ -121,7 +121,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
      *
      * @return void
      */
-    public function testValidateTokenOnSubmit($valid)
+    public function testValidateTokenOnSubmit(bool $valid): void
     {
         $expectedToken = 'TOKEN';
 
@@ -151,7 +151,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return array
      */
-    protected function getFormExtensions()
+    protected function getFormExtensions(): array
     {
         return [
             new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator),
@@ -161,7 +161,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return array
      */
-    public function booleanDataProvider()
+    public function booleanDataProvider(): array
     {
         return [
             [true],

@@ -14,6 +14,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductLabelSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductLabelMapExpanderPlugin` instead.
+ *
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
@@ -21,6 +23,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class ProductLabelMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

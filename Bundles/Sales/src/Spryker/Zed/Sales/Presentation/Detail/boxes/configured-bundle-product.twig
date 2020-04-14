@@ -42,7 +42,7 @@
             {% endif %}
         </div>
     {% endif %}
-    {% include '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}
+    {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
 </td>
 <td>
     {{ orderItem.quantity }}

@@ -12,11 +12,12 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductPackagingUnitFacadeInterface
 {
@@ -68,22 +69,6 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product packaging lead product by the provided product abstract ID.
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
-
-    /**
-     * Specification:
      * - Retrieves a product packaging unit type using the product packaging type ID within the provided transfer.
      *
      * @api
@@ -114,7 +99,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
+     * - Retrieves the list of product concrete IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
@@ -122,7 +107,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * Specification:
@@ -248,7 +233,10 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+    public function expandSalesOrderItemWithAmountSalesUnit(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:
@@ -261,12 +249,16 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+    public function expandSalesOrderItemWithAmountAndAmountSku(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:
      * - Checks if item amounts which being added to cart are available.
-     * - Even if same lead product added separately, the lead product availability is checked together.
+     * - Checks the quantity availability of the product packaging unit too, unless if it's a self-lead packaging unit.
+     * - If a lead product is added separately, the lead product total availability amount will be checked.
      * - Sets error message if not available.
      *
      * @api
@@ -297,7 +289,8 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the lead product availability of the provided product pacakaging unit sku.
+     * - Updates the lead product availability of the provided product packaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -310,6 +303,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Updates the lead product reservations of the provided product pacakaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -318,6 +312,24 @@ interface ProductPackagingUnitFacadeInterface
      * @return void
      */
     public function updateLeadProductReservation(string $sku): void;
+
+    /**
+     * Specification:
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function aggregateProductPackagingUnitReservation(
+        string $sku,
+        OmsStateCollectionTransfer $reservedStates,
+        ?StoreTransfer $storeTransfer = null
+    ): array;
 
     /**
      * Specification:
@@ -411,4 +423,18 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Checks if packaging units are found for items in `CartChangeTransfer`.
+     * - Checks items with amount set.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

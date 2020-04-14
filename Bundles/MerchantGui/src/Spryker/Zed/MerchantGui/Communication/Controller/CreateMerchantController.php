@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantGui\Communication\Table\MerchantTableConstants;
+use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +20,6 @@ class CreateMerchantController extends AbstractController
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
-    protected const MESSAGE_MERCHANT_CREATE_ERROR = 'Merchant has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,7 +30,7 @@ class CreateMerchantController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
         $merchantForm = $this->getFactory()
-            ->getMerchantForm(
+            ->getMerchantCreateForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
@@ -43,6 +42,7 @@ class CreateMerchantController extends AbstractController
 
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
+            'merchantFormTabs' => $this->getFactory()->createMerchantFormTabs()->createView(),
         ]);
     }
 
@@ -54,22 +54,25 @@ class CreateMerchantController extends AbstractController
      */
     protected function createMerchant(Request $request, FormInterface $merchantForm)
     {
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantGuiConfig::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
-        $merchantTransfer = $this->getFactory()
+        $merchantResponseTransfer = $this->getFactory()
             ->getMerchantFacade()
             ->createMerchant($merchantTransfer);
 
-        if (!$merchantTransfer->getIdMerchant()) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
+        if ($merchantResponseTransfer->getIsSuccess() && $merchantResponseTransfer->getMerchant()->getIdMerchant()) {
+            $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
 
-            return $this->viewResponse([
-                'form' => $merchantForm->createView(),
-            ]);
+            return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
+        foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
+            $this->addErrorMessage($merchantErrorTransfer->getMessage());
+        }
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->viewResponse([
+            'form' => $merchantForm->createView(),
+            'merchantFormTabs' => $this->getFactory()->createMerchantFormTabs()->createView(),
+        ]);
     }
 }

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 interface OauthStubInterface
 {
@@ -26,5 +28,21 @@ interface OauthStubInterface
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshToken(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeAllRefreshTokens(RevokeRefreshTokenRequestTransfer $revokeRefreshTokenRequestTransfer): RevokeRefreshTokenResponseTransfer;
 }

@@ -23,6 +23,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Dependency:
         path: Dependency

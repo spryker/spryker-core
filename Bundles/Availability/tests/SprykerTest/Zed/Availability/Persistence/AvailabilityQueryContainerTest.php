@@ -27,7 +27,7 @@ class AvailabilityQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllAvailabilityAbstractsReturnCorrectQueryObject()
+    public function testQueryAllAvailabilityAbstractsReturnCorrectQueryObject(): void
     {
         $availabilityQueryContainer = new AvailabilityQueryContainer();
         $availabilityQueryContainer->setFactory(new AvailabilityPersistenceFactory());

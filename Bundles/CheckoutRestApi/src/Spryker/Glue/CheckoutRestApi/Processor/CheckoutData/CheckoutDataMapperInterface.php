@@ -14,13 +14,13 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 interface CheckoutDataMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restRestCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     public function mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(
-        RestCheckoutDataTransfer $restRestCheckoutDataTransfer,
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer;
 }

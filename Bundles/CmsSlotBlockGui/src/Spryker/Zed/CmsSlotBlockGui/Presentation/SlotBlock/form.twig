@@ -1,0 +1,9 @@
+{% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
+    <div class="js-cms-slot-block-form-item" id="js-cms-slot-block-form-item-{{ slotBlockItemForm.idCmsBlock.vars.value }}">
+        {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
+        {{ form_widget(slotBlockItemForm.idSlot) }}
+        {{ form_widget(slotBlockItemForm.idCmsBlock) }}
+        {{ form_widget(slotBlockItemForm.position) }}
+        {{ form_widget(slotBlockItemForm.conditions) }}
+    </div>
+{% endfor %}

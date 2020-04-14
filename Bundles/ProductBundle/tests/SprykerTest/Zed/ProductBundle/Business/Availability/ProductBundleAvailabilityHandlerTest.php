@@ -9,15 +9,16 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
@@ -34,28 +35,36 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
     public const ID_STORE = 1;
+    protected const STORE_NAME = 'DE';
 
     /**
      * @return void
      */
-    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
+    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = 10;
-        $expectedBundleAvailability = $bundledItemAvailability / $bundleQuantity; //5
+        $bundledItemAvailability = new Decimal(15);
+        $expectedBundleAvailability = new Decimal(7); // floor(15 / 2)
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
 
-        $bundledProducts = new ObjectCollection();
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
+            ->willReturn(
+                (new ProductConcreteAvailabilityTransfer())
+                    ->setSku($bundledItemSku)
+                    ->setAvailability($bundledItemAvailability)
+            );
+
+        $bundledProducts = [];
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
 
         $productEntity->setSku($bundleSku);
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
-        $bundledProducts->append($productBundleEntity);
+        $bundledProducts[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
             ->willReturn($bundledProducts);
@@ -73,16 +82,23 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability()
+    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = 10;
-        $expectedBundleAvailability = $bundledItemAvailability / $bundleQuantity; //5
+        $bundledItemAvailability = new Decimal(15);
+        $expectedBundleAvailability = new Decimal(7); // floor(15 / 2)
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
+
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
+            ->willReturn(
+                (new ProductConcreteAvailabilityTransfer())
+                    ->setSku($bundledItemSku)
+                    ->setAvailability($bundledItemAvailability)
+            );
 
         $bundleProductEntity = new SpyProductBundle();
 
@@ -99,104 +115,102 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface|null $stockFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface
      */
     protected function createProductBundleAvailabilityHandler(
-        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
-    ) {
+        ?ProductBundleToAvailabilityFacadeInterface $availabilityFacadeMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null,
+        ?ProductBundleToStockFacadeInterface $stockFacadeMock = null
+    ): ProductBundleAvailabilityHandlerInterface {
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
-        $availabilityQueryContainerMock = $this->createAvailabilityQueryContainerMock();
 
         if ($availabilityFacadeMock === null) {
             $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         }
 
-        if ($storeFacadeMock === null) {
-            $storeFacadeMock = $this->createStoreFacadeMock();
+        if ($stockFacadeMock === null) {
+            $stockFacadeMock = $this->createStockFacadeMock();
             $storeTransfer = (new StoreBuilder([
-                StoreTransfer::ID_STORE => self::ID_STORE,
-            ]))
-            ->build();
-            $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
-            $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
+                StoreTransfer::ID_STORE => static::ID_STORE,
+                StoreTransfer::NAME => static::STORE_NAME,
+            ]))->build();
+            $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+                ->willReturn([$storeTransfer]);
         }
 
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
-            ->setConstructorArgs([$availabilityQueryContainerMock, $availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $stockFacadeMock])
             ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected function createAvailabilityQueryContainerMock()
+    protected function createAvailabilityFacadeMock(): ProductBundleToAvailabilityFacadeInterface
     {
-        return $this->getMockBuilder(ProductBundleToAvailabilityQueryContainerInterface::class)->getMock();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
-     */
-    protected function createAvailabilityFacadeMock()
-    {
-        return $this->getMockBuilder(ProductBundleToAvailabilityInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected function createProductBundleQueryContainerMock()
+    protected function createProductBundleQueryContainerMock(): ProductBundleQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
      */
-    protected function createStoreFacadeMock()
+    protected function createStockFacadeMock(): ProductBundleToStockFacadeInterface
     {
-        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToStockFacadeInterface::class)->getMock();
     }
 
     /**
      * @param int $bundleQuantity
      * @param string $bundledItemSku
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
-    {
-        $bundleItems = new ObjectCollection();
+    protected function setupGetBundleItemsByIdProduct(
+        int $bundleQuantity,
+        string $bundledItemSku,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
+        $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
         $productEntity = new SpyProduct();
 
         $productEntity->setSku($bundledItemSku);
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
-        $bundleItems->append($productBundleEntity);
+        $bundleItems[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundleItemsByIdProduct')
             ->willReturn($bundleItems);
     }
 
     /**
-     * @param int $bundledItemAvailability
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock
+     * @param \Spryker\DecimalObject\Decimal $bundledItemAvailability
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupProductBundleAvailability($bundledItemAvailability, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
-    {
-        $availabilityEntity = new SpyAvailability();
-        $availabilityEntity->setQuantity($bundledItemAvailability);
+    protected function setupProductBundleAvailability(
+        Decimal $bundledItemAvailability,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
+        $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
+        $availabilityTransfer->setAvailability($bundledItemAvailability);
 
         $productBundleAvailabilityHandlerMock->method('findBundledItemAvailabilityEntityBySku')
-            ->willReturn($availabilityEntity);
+            ->willReturn($availabilityTransfer);
     }
 }

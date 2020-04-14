@@ -10,6 +10,9 @@ namespace Spryker\Client\Discount\CartCode;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed in the next major version.
+ */
 interface VoucherCartCodeInterface
 {
     /**

@@ -20,9 +20,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * Auto-generated group annotations

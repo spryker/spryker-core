@@ -20,7 +20,7 @@ class DataReaderHelper extends Module
      *
      * @return void
      */
-    public function assertDataSetWithKeys($expectedRow, DataSetInterface $dataSet)
+    public function assertDataSetWithKeys(int $expectedRow, DataSetInterface $dataSet): void
     {
         $dataSetWithKeys = $this->getDataSetWithKeys($expectedRow);
         $this->assertEquals(new DataSet($dataSetWithKeys), $dataSet);
@@ -32,7 +32,7 @@ class DataReaderHelper extends Module
      *
      * @return void
      */
-    public function assertDataSetWithoutKeys($expectedRow, DataSetInterface $dataSet)
+    public function assertDataSetWithoutKeys(int $expectedRow, DataSetInterface $dataSet): void
     {
         $dataSetWithKeys = $this->getDataSetWithKeys($expectedRow);
         $this->assertEquals(new DataSet(array_values($dataSetWithKeys)), $dataSet);
@@ -44,7 +44,7 @@ class DataReaderHelper extends Module
      *
      * @return void
      */
-    public function assertDataSetCount($expectedNumberOfDataSets, Countable $reader)
+    public function assertDataSetCount(int $expectedNumberOfDataSets, Countable $reader): void
     {
         $givenCount = $reader->count();
         $this->assertSame($expectedNumberOfDataSets, $givenCount, sprintf(
@@ -59,7 +59,7 @@ class DataReaderHelper extends Module
      *
      * @return array
      */
-    private function getDataSetWithKeys($expectedRow)
+    private function getDataSetWithKeys(int $expectedRow): array
     {
         return [
             'column1' => 'value-1-row-' . $expectedRow,

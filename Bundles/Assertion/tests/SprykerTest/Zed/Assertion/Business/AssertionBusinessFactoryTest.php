@@ -26,7 +26,7 @@ class AssertionBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateAssertion()
+    public function testCreateAssertion(): void
     {
         $factory = new AssertionBusinessFactory();
         $this->assertInstanceOf(Assertion::class, $factory->createAssertion());

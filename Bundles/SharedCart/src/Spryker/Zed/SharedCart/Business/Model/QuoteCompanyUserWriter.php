@@ -224,7 +224,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         $shareDetailTransfer->requireIdCompanyUser()
             ->requireQuotePermissionGroup();
 
-        if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
+        if (
+            in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
             && $this->isQuotePermissionGroupChanged($shareDetailTransfer, $storedQuotePermissionGroupIdIndexes)
         ) {
             $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);

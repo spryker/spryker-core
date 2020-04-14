@@ -65,9 +65,9 @@ class CountryFacadeTest extends Unit
     }
 
     /**
-     * @return \Psr\Log\LoggerInterface
+     * @return \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockLogger()
+    protected function getMockLogger(): LoggerInterface
     {
         return $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
@@ -75,7 +75,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetIdByIso2CodeReturnsRightValue()
+    public function testGetIdByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -88,7 +88,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso2CodeReturnsRightValue()
+    public function testGetCountryByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -105,7 +105,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso3CodeReturnsRightValue()
+    public function testGetCountryByIso3CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
@@ -122,7 +122,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso3CodeReturnsException()
+    public function testGetCountryByIso3CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
@@ -131,7 +131,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountryByIso2CodeReturnsException()
+    public function testGetCountryByIso2CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
@@ -140,7 +140,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountriesByCountryIso2CodesReturnsRightValue()
+    public function testGetCountriesByCountryIso2CodesReturnsRightValue(): void
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);

@@ -11,7 +11,7 @@
 {% for bundle in mappedBundles %}
     <tr>
         <td colspan="5">
-            {{ bundle.name | trans }}
+            {{ (bundle.translations[0].name ?? bundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
@@ -27,12 +27,27 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
+    {% set partialItemCount = 0 %}
     {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
         <tr>
             {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
             {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image} %}{% endembed %}
         </tr>
+        {% set partialItemCount = partialItemCount + 1 %}
     {% endfor %}
+    {% if bundle.note is defined and bundle.note is not empty %}
+        <tr>
+            <td colspan="8" class="text-left">
+                {{ 'Note' | trans }}<br>
+                {{ bundle.note | escape | nl2br }}
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td colspan="8">
+            {{ 'Items' | trans }}: {{ partialItemCount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
+        </td>
+    </tr>
     <tr>
         <td colspan="8">&nbsp;</td>
     </tr>

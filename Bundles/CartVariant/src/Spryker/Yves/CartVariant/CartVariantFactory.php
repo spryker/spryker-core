@@ -14,11 +14,11 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class CartVariantFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
+     * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface
      */
-    public function getAvailabilityClient()
+    public function getAvailabilityStorageClient()
     {
-        return $this->getProvidedDependency(CartVariantDependencyProvider::CLIENT_AVAILABILITY);
+        return $this->getProvidedDependency(CartVariantDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
 
     /**
@@ -45,6 +45,6 @@ class CartVariantFactory extends AbstractFactory
      */
     public function createCartItemsAvailabilityMapper()
     {
-        return new CartItemsAvailabilityMapper($this->getAvailabilityClient());
+        return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
     }
 }

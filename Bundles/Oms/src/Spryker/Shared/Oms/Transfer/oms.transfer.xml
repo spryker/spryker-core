@@ -29,7 +29,7 @@
 
     <transfer name="OmsAvailabilityReservationRequest">
         <property name="sku" type="string"/>
-        <property name="reservationAmount" type="int"/>
+        <property name="reservationAmount" type="decimal"/>
         <property name="originStore" type="Store"/>
         <property name="synchronizeToStore" type="Store"/>
         <property name="version" type="string"/>
@@ -54,7 +54,7 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
@@ -100,6 +100,13 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="OmsProductReservation">
+        <property name="idOmsProductReservation" type="int"/>
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
@@ -115,6 +122,9 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
     </transfer>
 
 </transfers>

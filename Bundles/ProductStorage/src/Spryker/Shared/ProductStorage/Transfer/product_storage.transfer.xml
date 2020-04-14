@@ -86,6 +86,10 @@
 
     <transfer name="Store">
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductStorageCriteria">
     </transfer>
 
 </transfers>

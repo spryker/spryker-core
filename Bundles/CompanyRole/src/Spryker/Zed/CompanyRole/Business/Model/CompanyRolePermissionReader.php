@@ -21,9 +21,8 @@ class CompanyRolePermissionReader implements CompanyRolePermissionReaderInterfac
     /**
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface $repository
      */
-    public function __construct(
-        CompanyRoleRepositoryInterface $repository
-    ) {
+    public function __construct(CompanyRoleRepositoryInterface $repository)
+    {
         $this->repository = $repository;
     }
 

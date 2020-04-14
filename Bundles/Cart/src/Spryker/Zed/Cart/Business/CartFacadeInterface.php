@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -128,6 +129,24 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Does nothing if quote is locked.
+     * - Validates quote before reloading.
+     * - Reloads all items in quote as new - it recreates all items transfer, reads new prices, options, bundles.
+     * - Runs cart pre check plugins.
+     * - Recalculates quote.
+     * - Returns QuoteResponse with updated quote if quote is not locked.
+     * - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

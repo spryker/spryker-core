@@ -17,7 +17,7 @@ class TestCommandExceptionPlugin extends TestCommandPlugin
      *
      * @return bool
      */
-    public function run(StateMachineItemTransfer $stateMachineItemTransfer)
+    public function run(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
         $this->throwTestException();
 
@@ -29,7 +29,7 @@ class TestCommandExceptionPlugin extends TestCommandPlugin
      *
      * @return void
      */
-    protected function throwTestException()
+    protected function throwTestException(): void
     {
         throw new Exception('Sry, something went wrong');
     }

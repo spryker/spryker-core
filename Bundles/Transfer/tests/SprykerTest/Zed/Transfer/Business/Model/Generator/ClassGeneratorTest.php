@@ -45,7 +45,7 @@ class ClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    private function removeTargetDirectory()
+    private function removeTargetDirectory(): void
     {
         if (is_dir($this->getFixtureDirectory())) {
             $filesystem = new Filesystem();
@@ -56,7 +56,7 @@ class ClassGeneratorTest extends Unit
     /**
      * @return string
      */
-    private function getFixtureDirectory()
+    private function getFixtureDirectory(): string
     {
         return __DIR__ . '/FixturesTest/';
     }
@@ -64,7 +64,7 @@ class ClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateShouldCreateTargetDirectoryIfNotExist()
+    public function testGenerateShouldCreateTargetDirectoryIfNotExist(): void
     {
         $transferGenerator = new DataBuilderClassGenerator($this->getFixtureDirectory());
         $transferDefinition = new DataBuilderDefinition();

@@ -31,7 +31,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeShouldAddRequestInformationToRecordsExtra()
+    public function testInvokeShouldAddRequestInformationToRecordsExtra(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new RequestProcessor($sanitizer);
@@ -44,7 +44,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testWhenRequestInContextSessionIdShouldBeAdded()
+    public function testWhenRequestInContextSessionIdShouldBeAdded(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new RequestProcessor($sanitizer);
@@ -62,7 +62,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testWhenRequestInContextAndUserInSessionUsernameShouldBeAdded()
+    public function testWhenRequestInContextAndUserInSessionUsernameShouldBeAdded(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new RequestProcessor($sanitizer);
@@ -80,7 +80,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testWhenRequestInContextItMustBeRemovedAfterProcessing()
+    public function testWhenRequestInContextItMustBeRemovedAfterProcessing(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new RequestProcessor($sanitizer);
@@ -98,7 +98,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequestMockWithSession()
+    protected function getRequestMockWithSession(): Request
     {
         $request = Request::createFromGlobals();
         $session = new Session(new MockArraySessionStorage());
@@ -110,7 +110,7 @@ class RequestProcessorTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequestMockWithUser()
+    protected function getRequestMockWithUser(): Request
     {
         $request = Request::createFromGlobals();
         $session = new Session(new MockArraySessionStorage());

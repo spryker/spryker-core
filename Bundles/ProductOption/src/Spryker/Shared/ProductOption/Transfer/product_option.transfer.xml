@@ -35,6 +35,8 @@
         <property name="productOptionIds" type="array" singular="productOptionIds"/>
         <property name="productOptionGroupIsActive" type="bool"/>
         <property name="productConcreteSku" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -214,6 +216,20 @@
     <transfer name="TaxSet">
         <property name="idTaxSet" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
     </transfer>
 
 </transfers>

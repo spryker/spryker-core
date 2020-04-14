@@ -58,7 +58,7 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity,
         int $expected
-    ) {
+    ): void {
         // Assign
         $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
         $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($nonSplitItemTransferCollection);
@@ -86,7 +86,7 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity,
         int $expected
-    ) {
+    ): void {
         // Assign
         $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
         $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($splitItemTransferCollection);
@@ -112,7 +112,7 @@ class TaxAmountCalculatorTest extends Unit
         float $taxRate,
         int $price,
         int $quantity
-    ) {
+    ): void {
         // Assign
         $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
         $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
@@ -134,7 +134,7 @@ class TaxAmountCalculatorTest extends Unit
     /**
      * @return array
      */
-    public function getGroupTestData()
+    public function getGroupTestData(): array
     {
         return [
             [7.25, 3400, 20],
@@ -148,7 +148,7 @@ class TaxAmountCalculatorTest extends Unit
     /**
      * @return array
      */
-    public function getSeparateTestData()
+    public function getSeparateTestData(): array
     {
         return [
             [7.25, 124, 20, 180],

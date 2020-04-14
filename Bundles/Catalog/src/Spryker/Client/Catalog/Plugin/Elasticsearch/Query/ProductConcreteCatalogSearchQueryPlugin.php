@@ -14,16 +14,20 @@ use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
- * @method \Spryker\Client\ProductPageSearch\CatalogConfig getConfig()
+ * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
  */
-class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
+class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface
 {
+    protected const SOURCE_IDENTIFIER = 'page';
+
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
      */
@@ -40,6 +44,11 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     protected $searchString = '';
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * Specification:
      * - Builds score based on multimatch cross fileds query type.
      */
@@ -49,6 +58,11 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns query object for concrete products catalog search.
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery(): Query
@@ -70,6 +84,49 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     {
         $this->searchString = $searchString;
         $this->createQuery();
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines context for concrete products catalog search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets context for concrete products catalog search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -158,6 +215,14 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     {
         return $this->getFactory()
             ->getCatalogConfig()
-            ->getFullTextBoostedBoostingValue();
+            ->getElasticsearchFullTextBoostedBoostingValue();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

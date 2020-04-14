@@ -20,6 +20,8 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     protected $queryContainer;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -169,8 +171,10 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
      *
      * @return array
      */
-    protected function getGroupedProductAbstractIds(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedAttributeEntity, array $groupedProductAbstractIds)
-    {
+    protected function getGroupedProductAbstractIds(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedAttributeEntity,
+        array $groupedProductAbstractIds
+    ) {
         foreach ($spyProductAbstractLocalizedAttributeEntity->getSpyProductAbstract()->getSpyProductAbstractGroups() as $spyProductAbstractGroup) {
             $idProductGroup = $spyProductAbstractGroup->getFkProductGroup();
             if (!isset($groupedProductAbstractIds[$idProductGroup])) {

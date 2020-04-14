@@ -31,7 +31,7 @@ class AssertionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterServiceProvider()
+    public function testRegisterServiceProvider(): void
     {
         $application = new Application();
 

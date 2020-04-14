@@ -130,7 +130,7 @@ class BarcodeServiceTest extends Test
     {
         $unregisteredPlugin = new BarcodeGeneratorPluginMockUnregistered();
 
-        $this->tester->expectException(BarcodeGeneratorPluginNotFoundException::class, function () use ($unregisteredPlugin) {
+        $this->tester->expectException(BarcodeGeneratorPluginNotFoundException::class, function () use ($unregisteredPlugin): void {
             $this->tester->generateBarcodeUsingBarcodeService(get_class($unregisteredPlugin));
         });
     }

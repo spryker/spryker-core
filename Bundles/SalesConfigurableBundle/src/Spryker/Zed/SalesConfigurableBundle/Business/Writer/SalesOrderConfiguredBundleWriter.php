@@ -104,9 +104,9 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
                 ->requireName();
 
         $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
+            ->fromArray($configuredBundleTransfer->toArray(), true)
             ->setConfigurableBundleTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid())
-            ->setName($configuredBundleTransfer->getTemplate()->getName())
-            ->setQuantity($configuredBundleTransfer->getQuantity());
+            ->setName($configuredBundleTransfer->getTemplate()->getName());
 
         if (!isset($salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
             $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = $salesOrderConfiguredBundleTransfer;

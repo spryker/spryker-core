@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -28,9 +28,9 @@ class CartDeleter implements CartDeleterInterface
     protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartMapper;
 
     /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
@@ -40,18 +40,18 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartsResourceMapperInterface $cartsResourceMapper,
+        CartMapperInterface $cartMapper,
         array $customerExpanderPlugins
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->cartMapper = $cartMapper;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
@@ -62,7 +62,7 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteTransfer = $this->cartsResourceMapper->mapRestRequestToQuoteTransfer($restRequest, new QuoteTransfer());
+        $quoteTransfer = $this->cartMapper->mapRestRequestToQuoteTransfer($restRequest, new QuoteTransfer());
         $customerTransfer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
         $quoteTransfer->setCustomer($customerTransfer);
 

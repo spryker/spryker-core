@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\NavigationsRestApi\Processor\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
-use Generated\Shared\Transfer\RestNavigationNodeTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface;
 use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
@@ -47,40 +51,70 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     }
 
     /**
-     * @param \ArrayObject $restNavigationNodeTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
      */
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {
+        $urlCollection = [];
+        $this->getUrlCollection($restNavigationNodeTransfers, $urlCollection);
+        $urlStorageTransfers = $this->urlStorageClient->getUrlStorageTransferByUrls($urlCollection);
+
+        return $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
+            $urlStorageTransfers,
+            $restNavigationNodeTransfers
+        );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
+     * @param string[] $urlCollection
+     *
+     * @return void
+     */
+    protected function getUrlCollection(ArrayObject $restNavigationNodeTransfers, array &$urlCollection = []): void
+    {
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
-            $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
-            if ($urlStorageTransfer) {
-                $restNavigationNodeTransfer->setResourceId($this->findResourceId($restNavigationNodeTransfer));
+            if ($restNavigationNodeTransfer->getUrl()) {
+                $urlCollection[] = $restNavigationNodeTransfer->getUrl();
             }
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
-                $navigationNodeChildren = $this->expandNavigationNodeTransfers($restNavigationNodeTransfer->getChildren());
+                $this->getUrlCollection($restNavigationNodeTransfer->getChildren(), $urlCollection);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer[] $urlStorageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
+     */
+    protected function mapUrlStorageTransfersToRestNavigationNodeTransfers(
+        array $urlStorageTransfers,
+        ArrayObject $restNavigationNodeTransfers
+    ): ArrayObject {
+        foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
+            if (array_key_exists($restNavigationNodeTransfer->getUrl(), $urlStorageTransfers)) {
+                $resourceId = $this->findResourceIdByNodeType(
+                    $urlStorageTransfers[$restNavigationNodeTransfer->getUrl()],
+                    $restNavigationNodeTransfer->getNodeType()
+                );
+                $restNavigationNodeTransfer->setResourceId($resourceId);
+            }
+
+            if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
+                $navigationNodeChildren = $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
+                    $urlStorageTransfers,
+                    $restNavigationNodeTransfer->getChildren()
+                );
                 $restNavigationNodeTransfer->setChildren($navigationNodeChildren);
             }
         }
 
         return $restNavigationNodeTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
-     *
-     * @return int|null
-     */
-    protected function findResourceId(RestNavigationNodeTransfer $restNavigationNodeTransfer): ?int
-    {
-        $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
-        if ($urlStorageTransfer) {
-            return $this->findResourceIdByNodeType($urlStorageTransfer, $restNavigationNodeTransfer->getNodeType());
-        }
-
-        return null;
     }
 
     /**

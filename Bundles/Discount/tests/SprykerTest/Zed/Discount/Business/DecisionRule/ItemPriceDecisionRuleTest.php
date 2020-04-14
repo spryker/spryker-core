@@ -28,7 +28,7 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleWhenCurrentItemPriceMatchesShouldReturnTrue()
+    public function testDecisionRuleWhenCurrentItemPriceMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemPrice) {
@@ -50,7 +50,7 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule
      */
-    protected function createItemPriceDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemPriceDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): ItemPriceDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

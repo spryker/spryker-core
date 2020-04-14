@@ -42,7 +42,7 @@ class FindActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
         $config = new ApiConfig();
         $processor = new FindActionPostProcessor($config);

@@ -48,7 +48,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return void
      */
-    public function testCreatingCyclicRedirectsThrowsException()
+    public function testCreatingCyclicRedirectsThrowsException(): void
     {
         $this->expectException(RedirectLoopException::class);
         $localeTransfer = $this->prepareTestData();
@@ -70,7 +70,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function prepareTestData()
+    protected function prepareTestData(): LocaleTransfer
     {
         $localeEntity = $this->createLocaleEntity();
         $localeTransfer = new LocaleTransfer();
@@ -84,7 +84,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocale
      */
-    protected function createLocaleEntity()
+    protected function createLocaleEntity(): SpyLocale
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -101,7 +101,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlRedirectEntity($source, $target, SpyLocale $localeEntity)
+    protected function createUrlRedirectEntity(string $source, string $target, SpyLocale $localeEntity): SpyUrl
     {
         $redirectEntity = new SpyUrlRedirect();
         $redirectEntity
@@ -124,7 +124,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlEntity(SpyLocale $localeEntity, $url)
+    protected function createUrlEntity(SpyLocale $localeEntity, string $url): SpyUrl
     {
         $urlEntity = new SpyUrl();
         $urlEntity
@@ -140,7 +140,7 @@ class RedirectLoopTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function mapEntityToTransfer(SpyUrl $urlEntity)
+    protected function mapEntityToTransfer(SpyUrl $urlEntity): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($urlEntity->toArray(), true);

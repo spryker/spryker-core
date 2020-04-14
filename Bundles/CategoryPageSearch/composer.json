@@ -10,7 +10,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.5.0",
-    "spryker/search": "^7.0.0 || ^8.0.0",
+    "spryker/store": "^1.12.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/url": "^3.3.0",
@@ -20,10 +20,12 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
+    "spryker/search": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/search": "If you want to use Search mapping plugins, minimum required version: 7.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -37,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

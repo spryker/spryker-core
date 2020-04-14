@@ -13,6 +13,7 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -22,6 +23,7 @@
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
         <property name="discount" type="Discount"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -54,6 +56,7 @@
         <property name="abstractSku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
@@ -62,7 +65,6 @@
 
     <transfer name="StorageProduct">
          <property name="promotionItem" type="PromotionItem"/>
-         <property name="maxQuantity" type="int"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -75,7 +77,7 @@
 
     <transfer name="ProductAbstractAvailability">
         <property name="isNeverOutOfStock" type="bool"/>
-        <property name="availability" type="int"/>
+        <property name="availability" type="decimal"/>
     </transfer>
 
     <transfer name="Locale">
@@ -96,5 +98,10 @@
         <property name="idDiscount" type="int"/>
     </transfer>
 
-</transfers>
+    <transfer name="Store">
+    </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+</transfers>

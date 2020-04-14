@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -33,7 +33,7 @@ class RestResourceNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sResource for your module "%1$s"',
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Resource to your module.' . PHP_EOL;
@@ -41,7 +41,7 @@ class RestResourceNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %s\\Glue\\%2$s\\%2$sResource',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         );
 
         $message .= PHP_EOL . new Backtrace();

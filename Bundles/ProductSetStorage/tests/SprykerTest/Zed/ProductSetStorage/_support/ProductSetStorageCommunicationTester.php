@@ -53,7 +53,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @return bool
      */
-    public function isSuiteProject()
+    public function isSuiteProject(): bool
     {
         if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
             return true;
@@ -129,7 +129,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @param int $idProductSet
      *
-     * @return array[]
+     * @return array
      */
     public function getProductSetImages(int $idProductSet): array
     {

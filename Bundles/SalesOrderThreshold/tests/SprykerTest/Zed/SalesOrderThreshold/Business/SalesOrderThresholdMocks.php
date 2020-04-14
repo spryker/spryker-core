@@ -8,16 +8,16 @@
 namespace SprykerTest\Zed\SalesOrderThreshold\Business;
 
 use Codeception\TestCase\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacade;
+use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
 
 abstract class SalesOrderThresholdMocks extends Test
 {
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory
      */
-    protected function createSalesOrderThresholdBusinessFactoryMock(): MockObject
+    protected function createSalesOrderThresholdBusinessFactoryMock(): SalesOrderThresholdBusinessFactory
     {
         $mockObject = $this->getMockBuilder(SalesOrderThresholdBusinessFactory::class)
             ->enableProxyingToOriginalMethods()
@@ -27,12 +27,13 @@ abstract class SalesOrderThresholdMocks extends Test
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|null $factory
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory|null $factory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface
      */
-    protected function createSalesOrderThresholdFacadeMock(?MockObject $factory = null): MockObject
+    protected function createSalesOrderThresholdFacadeMock(?SalesOrderThresholdBusinessFactory $factory = null): SalesOrderThresholdFacadeInterface
     {
+        /** @var \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacade|\PHPUnit\Framework\MockObject\MockObject $mockObject */
         $mockObject = $this->getMockBuilder(SalesOrderThresholdFacade::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();

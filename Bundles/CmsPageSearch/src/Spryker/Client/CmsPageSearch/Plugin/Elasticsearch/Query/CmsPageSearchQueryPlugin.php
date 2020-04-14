@@ -15,15 +15,19 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Elastica\Suggest;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Search\SearchConstants;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
-class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+/**
+ * @method \Spryker\Client\CmsPageSearch\CmsPageSearchFactory getFactory()
+ */
+class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    protected const SOURCE_IDENTIFIER = 'page';
     protected const TYPE = 'cms_page';
 
     /**
@@ -36,17 +40,59 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected $query;
 
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
     public function __construct()
     {
         $this->query = $this->createSearchQuery();
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns query object for CMS page search.
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery(): Query
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines context for CMS page search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets context for CMS page search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -89,7 +135,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
         ];
 
         $matchQuery = (new MultiMatch())
@@ -156,5 +202,32 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         $suggest->setGlobalText($this->getSearchString());
 
         $baseQuery->setSuggest($suggest);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->getFactory()->getConfig()->getFullTextBoostedBoostingValue();
     }
 }

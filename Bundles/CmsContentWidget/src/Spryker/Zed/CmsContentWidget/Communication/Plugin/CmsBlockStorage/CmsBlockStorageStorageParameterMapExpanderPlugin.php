@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin implements CmsBlockStorageDataExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $collectedData
@@ -32,7 +34,9 @@ class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin im
     {
         $placeholders = $this->gePlaceholders($collectedData);
 
-        $cmsBlockData['placeholders'] = $placeholders;
+        $cmsBlockData = [
+            'placeholders' => $placeholders,
+        ];
         $localeTransfer = (new LocaleTransfer())->setLocaleName($localeName);
         $data = $this->getFacade()->expandCmsBlockCollectorData($cmsBlockData, $localeTransfer);
         $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $data[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP];
@@ -43,7 +47,7 @@ class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin im
     /**
      * @param array $collectedData
      *
-     * @return array
+     * @return string[]
      */
     protected function gePlaceholders(array $collectedData)
     {

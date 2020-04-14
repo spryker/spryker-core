@@ -59,7 +59,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageOptions()
+    public function testRegisterShouldSetSessionStorageOptions(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -73,7 +73,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageHandler()
+    public function testRegisterShouldSetSessionStorageHandler(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -86,7 +86,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider
      */
-    protected function getSessionServiceProviderMock()
+    protected function getSessionServiceProviderMock(): SessionServiceProvider
     {
         $sessionServiceProviderMockBuilder = $this->getMockBuilder(SessionServiceProvider::class);
         $sessionServiceProviderMockBuilder->setMethods(['isCliOrPhpDbg']);
@@ -100,7 +100,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClientInterface
      */
-    protected function getSessionClientMock()
+    protected function getSessionClientMock(): SessionClientInterface
     {
         $sessionClientMockBuilder = $this->getMockBuilder(SessionClient::class);
         $sessionClientMockBuilder->setMethods(['setContainer']);
@@ -116,7 +116,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedis()
+    public function testCanBeUsedWithSessionHandlerRedis(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS);
 
@@ -133,7 +133,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedisLock()
+    public function testCanBeUsedWithSessionHandlerRedisLock(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS_LOCKING);
 
@@ -150,7 +150,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerFile()
+    public function testCanBeUsedWithSessionHandlerFile(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_FILE);
 
@@ -217,7 +217,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \Spryker\Zed\Session\Communication\SessionCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSessionCommunicationFactoryMock()
+    protected function createSessionCommunicationFactoryMock(): SessionCommunicationFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionCommunicationFactory::class)
             ->setMethods([

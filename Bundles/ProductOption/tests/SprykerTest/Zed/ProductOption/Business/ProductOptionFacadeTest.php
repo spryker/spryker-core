@@ -1081,7 +1081,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return void
      */
-    protected function mockStoreFacadeDefaultStore($storeName): void
+    protected function mockStoreFacadeDefaultStore(string $storeName): void
     {
         $storeTransfer = $this->tester->getLocator()->store()->facade()->getStoreByName($storeName);
 
@@ -1105,7 +1105,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return void
      */
-    protected function mockCurrencyFacadeDefaultCurrency($currencyCode): void
+    protected function mockCurrencyFacadeDefaultCurrency(string $currencyCode): void
     {
         $currencyTransfer = $this->tester->getLocator()->currency()->facade()->fromIsoCode($currencyCode);
 

@@ -31,7 +31,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const DEFAULT_LEVEL = 'defaultLevel';
     public const MEMORY_LIMIT = '512M';
     public const CODE_SUCCESS = 0;
-    public const CODE_ERROR = 0;
 
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_VERBOSE = 'verbose';
@@ -93,11 +92,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($module) {
             $paths = $this->getPaths($module);
+            if (empty($paths)) {
+                throw new RuntimeException('No path found for module ' . $module);
+            }
         } else {
-            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
-        }
-        if (empty($paths)) {
-            throw new RuntimeException('No path found for module ' . $module);
+            $paths = [
+                $this->config->getPathToRoot() => $this->config->getPathToRoot(),
+            ];
         }
 
         $resultCode = 0;
@@ -185,8 +186,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $output->write($processOutputBuffer);
             $processOutputBuffer = '';
         });
-
-        $processOutputBuffer = '';
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);

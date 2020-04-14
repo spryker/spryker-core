@@ -38,7 +38,7 @@ class CmsGuiCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function registerCmsBlockStoreRelationFormTypePlugin()
+    public function registerCmsBlockStoreRelationFormTypePlugin(): void
     {
         $this->setDependency(CmsGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return new StoreRelationToggleFormTypePlugin();

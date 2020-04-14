@@ -14,6 +14,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Will be removed, use Spryks instead.
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */

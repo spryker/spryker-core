@@ -46,7 +46,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return string
      */
-    private function getFixtureDirectory()
+    private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
@@ -54,7 +54,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testGetSchemasShouldReturnIterateableFileCollection()
+    public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
         $schemaFinder = new ZedNavigationSchemaFinder(
             [$this->getFixtureDirectory()],

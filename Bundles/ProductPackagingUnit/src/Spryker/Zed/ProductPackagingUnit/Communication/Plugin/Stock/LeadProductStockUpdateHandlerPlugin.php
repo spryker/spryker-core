@@ -19,6 +19,8 @@ class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements Stoc
 {
     /**
      * {@inheritDoc}
+     * - Updates the lead product's availability for the provided product packaging unit SKU.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -28,10 +30,6 @@ class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements Stoc
      */
     public function handle($sku)
     {
-        $this->getFacade()
-            ->updateLeadProductAvailability($sku);
-
-        $this->getFacade()
-            ->updateLeadProductReservation($sku);
+        $this->getFacade()->updateLeadProductAvailability($sku);
     }
 }

@@ -58,7 +58,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageOptions()
+    public function testRegisterShouldSetSessionStorageOptions(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -72,7 +72,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageHandler()
+    public function testRegisterShouldSetSessionStorageHandler(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -85,7 +85,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootShouldAddSessionToSessionClient()
+    public function testBootShouldAddSessionToSessionClient(): void
     {
         $applicationMock = $this->getApplicationMock();
         $sessionServiceProvider = new SessionServiceProvider();
@@ -96,7 +96,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Application
      */
-    private function getApplicationMock()
+    private function getApplicationMock(): Application
     {
         $sessionMock = $this->getMockBuilder(SessionInterface::class)->getMock();
         $dispatcherMock = $this->getMockBuilder(EventDispatcher::class)->getMock();
@@ -118,7 +118,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedis()
+    public function testCanBeUsedWithSessionHandlerRedis(): void
     {
         $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS);
 
@@ -135,7 +135,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedisLock()
+    public function testCanBeUsedWithSessionHandlerRedisLock(): void
     {
         $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS_LOCKING);
 
@@ -152,7 +152,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerFile()
+    public function testCanBeUsedWithSessionHandlerFile(): void
     {
         $this->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_FILE);
 
@@ -219,7 +219,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \Spryker\Yves\Session\SessionFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSessionFactoryMock()
+    protected function createSessionFactoryMock(): SessionFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionFactory::class)
             ->setMethods([

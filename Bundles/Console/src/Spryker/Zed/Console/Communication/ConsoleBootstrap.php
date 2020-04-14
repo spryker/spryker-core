@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -34,6 +35,16 @@ class ConsoleBootstrap extends Application
      * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
+
+    /**
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     */
+    protected $bootablePlugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
 
     /**
      * @param string $name
@@ -77,6 +88,10 @@ class ConsoleBootstrap extends Application
 
         foreach ($applicationPlugins as $applicationPlugin) {
             $applicationPlugin->provide($this->application);
+
+            if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+                $this->bootablePlugins[] = $applicationPlugin;
+            }
         }
     }
 
@@ -171,6 +186,11 @@ class ConsoleBootstrap extends Application
 
         $this->application->boot();
 
+        if (!$this->booted) {
+            $this->booted = true;
+            $this->bootPlugins();
+        }
+
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
         }
@@ -182,6 +202,16 @@ class ConsoleBootstrap extends Application
         }
 
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    protected function bootPlugins(): void
+    {
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $bootablePlugin->boot($this->application);
+        }
     }
 
     /**

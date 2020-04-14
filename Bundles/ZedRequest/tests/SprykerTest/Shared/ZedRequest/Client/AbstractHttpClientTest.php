@@ -33,7 +33,7 @@ class AbstractHttpClientTest extends Unit
     /**
      * @return void
      */
-    public function testRequest()
+    public function testRequest(): void
     {
         $abstractRequest = $this->getAbstractRequestMock();
 
@@ -51,7 +51,7 @@ class AbstractHttpClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
      */
-    protected function getAbstractRequestMock()
+    protected function getAbstractRequestMock(): AbstractHttpClient
     {
         $baseUrl = Config::get(ZedRequestConstants::BASE_URL_ZED_API);
         $url = $baseUrl . '/';

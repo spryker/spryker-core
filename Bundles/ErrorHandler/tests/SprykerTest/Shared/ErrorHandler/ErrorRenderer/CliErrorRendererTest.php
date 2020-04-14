@@ -26,7 +26,7 @@ class CliErrorRendererTest extends Unit
     /**
      * @return void
      */
-    public function testRenderExceptionShouldReturnString()
+    public function testRenderExceptionShouldReturnString(): void
     {
         $errorRenderer = new CliErrorRenderer();
         $exception = new Exception('ExceptionMessage');

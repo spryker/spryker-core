@@ -30,7 +30,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
     /**
      * @return void
      */
-    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()
+    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest(): void
     {
         $this->expectException('Spryker\Client\Search\Exception\MissingSuggestionQueryException');
         $baseQueryPlugin = $this->createBaseQueryPlugin();
@@ -48,7 +48,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
      *
      * @return void
      */
-    public function testSuggestionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery, Suggest $expectedSuggest)
+    public function testSuggestionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery, Suggest $expectedSuggest): void
     {
         $queryExpander = new SpellingSuggestionQueryExpanderPlugin();
 
@@ -65,7 +65,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
     /**
      * @return array
      */
-    public function suggestionQueryExpanderDataProvider()
+    public function suggestionQueryExpanderDataProvider(): array
     {
         return [
             'simple suggestion query' => $this->getDataForSimpleSuggestionQuery(),
@@ -76,7 +76,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
     /**
      * @return array
      */
-    protected function getDataForSimpleSuggestionQuery()
+    protected function getDataForSimpleSuggestionQuery(): array
     {
         /** @var \Elastica\Query $expectedQuery */
         $expectedQuery = $this
@@ -98,7 +98,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
     /**
      * @return array
      */
-    protected function getDataForEmptySuggestionQuery()
+    protected function getDataForEmptySuggestionQuery(): array
     {
         /** @var \Elastica\Query $expectedQuery */
         $expectedQuery = $this

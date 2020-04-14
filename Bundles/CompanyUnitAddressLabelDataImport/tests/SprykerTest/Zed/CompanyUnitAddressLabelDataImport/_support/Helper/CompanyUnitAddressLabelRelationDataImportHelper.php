@@ -15,7 +15,7 @@ class CompanyUnitAddressLabelRelationDataImportHelper extends Module
     /**
      * @return void
      */
-    public function ensureRelationTableIsEmpty()
+    public function ensureRelationTableIsEmpty(): void
     {
         $companyUnitAddressLabelToCompanyUnitAddressQuery = new SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery();
         $companyUnitAddressLabelToCompanyUnitAddressQuery->deleteAll();
@@ -24,7 +24,7 @@ class CompanyUnitAddressLabelRelationDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertRelationTableContainsData()
+    public function assertRelationTableContainsData(): void
     {
         $companyUnitAddressLabelToCompanyUnitAddressQuery = new SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery();
         $this->assertTrue(($companyUnitAddressLabelToCompanyUnitAddressQuery->count() > 0), 'Expected at least one entry in the relation table but relation table is empty');

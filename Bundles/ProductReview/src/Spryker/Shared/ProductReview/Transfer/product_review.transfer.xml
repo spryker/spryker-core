@@ -46,6 +46,16 @@
         <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
+    <transfer name="BulkProductReviewSearchRequest">
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
     <transfer name="ProductAbstractReview">
         <property name="idProductAbstract" type="int"/>
         <property name="averageRating" type="float"/>
@@ -73,6 +83,7 @@
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>
         <property name="isDescending" type="bool"/>
+        <property name="unmappedType" type="string"/>
     </transfer>
 
     <transfer name="PaginationConfig">
@@ -84,6 +95,25 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="rating" type="ProductReviewSummary"/>
+    </transfer>
+
+    <transfer name="ProductReviewSummary">
+        <property name="maximumRating" type="int"/>
+        <property name="averageRating" type="float"/>
+        <property name="totalReview" type="int"/>
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+    </transfer>
+
+    <transfer name="RatingAggregation">
+        <property name="ratingAggregation" type="int[]" singular="ratingAggregation"/>
     </transfer>
 
 </transfers>

@@ -7,24 +7,11 @@
 
 namespace Spryker\Shared\Search;
 
-interface IndexMapInterface
+use Spryker\Shared\SearchExtension\SourceInterface;
+
+/**
+ * @deprecated Use `\Spryker\Shared\SearchExtension\SourceInterface` instead.
+ */
+interface IndexMapInterface extends SourceInterface
 {
-    /**
-     * @return array
-     */
-    public function getProperties();
-
-    /**
-     * @param string $propertyName
-     *
-     * @return string|null
-     */
-    public function getType($propertyName);
-
-    /**
-     * @param string $propertyName
-     *
-     * @return array
-     */
-    public function getMetadata($propertyName);
 }

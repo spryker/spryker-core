@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\CmsSlotStorage\tests\SprykerTest\Zed\CmsSlotStorage\Business;
@@ -37,12 +37,16 @@ class CmsSlotStorageFacadeTest extends Unit
     public function testGetSynchronizationTransferCollectionReturnsCorrectNumberOfTransfers(): void
     {
         // Arrange
-        $this->tester->haveCmsSlotStorageInDb(1, 'key-1');
-        $this->tester->haveCmsSlotStorageInDb(2, 'key-2');
-        $this->tester->haveCmsSlotStorageInDb(3, 'key-3');
+        $cmSlotStorageEntity1 = $this->tester->haveCmsSlotStorageInDb('key-1');
+        $cmSlotStorageEntity2 = $this->tester->haveCmsSlotStorageInDb('key-2');
+        $cmSlotStorageEntity3 = $this->tester->haveCmsSlotStorageInDb('key-3');
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationTransferCollection(new FilterTransfer(), [1, 3]);
+        $synchronizationDataTransfers = $this->tester->getFacade()
+            ->getSynchronizationTransferCollection(new FilterTransfer(), [
+                $cmSlotStorageEntity1->getIdCmsSlotStorage(),
+                $cmSlotStorageEntity2->getIdCmsSlotStorage(),
+            ]);
 
         // Assert
         $this->assertCount(2, $synchronizationDataTransfers);
@@ -58,10 +62,11 @@ class CmsSlotStorageFacadeTest extends Unit
             'property1' => 'value1',
             'property2' => 'value2',
         ];
-        $this->tester->haveCmsSlotStorageInDb(1, 'key-1', $data);
+        $cmSlotStorageEntity = $this->tester->haveCmsSlotStorageInDb('key-1', $data);
 
         // Act
-        $synchronizationDataTransfer = $this->tester->getFacade()->getSynchronizationTransferCollection(new FilterTransfer(), [1])[0];
+        $synchronizationDataTransfer = $this->tester->getFacade()
+            ->getSynchronizationTransferCollection(new FilterTransfer(), [$cmSlotStorageEntity->getIdCmsSlotStorage()])[0];
 
         // Assert
         $this->assertEquals($synchronizationDataTransfer->getData(), $data);

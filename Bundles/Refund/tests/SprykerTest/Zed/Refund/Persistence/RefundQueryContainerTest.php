@@ -26,7 +26,7 @@ class RefundQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundQueryShouldReturnRefundQuery()
+    public function testCreateRefundQueryShouldReturnRefundQuery(): void
     {
         $refundQueryContainer = new RefundQueryContainer();
 

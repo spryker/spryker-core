@@ -59,4 +59,30 @@ interface ProductAbstractStorageReaderInterface
      * @return array
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getBulkProductAbstractIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 }

@@ -26,7 +26,7 @@ class EnvironmentProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeShouldAddEnvironmentInformationToRecordsExtra()
+    public function testInvokeShouldAddEnvironmentInformationToRecordsExtra(): void
     {
         $processor = new EnvironmentProcessor();
         $record = ['extra'];

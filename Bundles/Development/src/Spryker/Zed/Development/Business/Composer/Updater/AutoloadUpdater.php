@@ -61,6 +61,7 @@ class AutoloadUpdater implements UpdaterInterface
      * @var array
      */
     protected $applications = [
+        'Service',
         'Client',
         'Shared',
         'Yves',
@@ -113,7 +114,7 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $composerJson = $this->updateAutoload($composerJson, $composerJsonFile);
 

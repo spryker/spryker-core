@@ -18,4 +18,25 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="RestItemsAttributes">
+    </transfer>
+
+    <transfer name="RestItemProductOptions">
+    </transfer>
+
+    <transfer name="CartItemRequest">
+    </transfer>
+
+    <transfer name="ProductOption">
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+    </transfer>
+
 </transfers>

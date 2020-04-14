@@ -138,7 +138,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         }
 
         // if non auto-increment but using sequence, get the id first
-        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
             /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if (!$column) {
@@ -217,7 +217,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         }
 
         // if auto-increment, get the id after
-        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
             $script .= "
         try {";
             $script .= $platform->getIdentifierPhp('$pk', '$con', $primaryKeyMethodInfo);

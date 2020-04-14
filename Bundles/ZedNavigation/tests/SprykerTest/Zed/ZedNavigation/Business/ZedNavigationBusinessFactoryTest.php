@@ -24,7 +24,7 @@ class ZedNavigationBusinessFactoryTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
+    public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance(): void
     {
         $instance = $this->getFactory()->createNavigationBuilder();
 

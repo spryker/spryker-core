@@ -25,7 +25,7 @@ class PropelSchemaFinderTest extends AbstractPropelSchemaTest
     /**
      * @return void
      */
-    public function testGetSchemasShouldReturnIterateableFileCollection()
+    public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
         $schemaFinder = new PropelSchemaFinder(
             [$this->getFixtureDirectory()]

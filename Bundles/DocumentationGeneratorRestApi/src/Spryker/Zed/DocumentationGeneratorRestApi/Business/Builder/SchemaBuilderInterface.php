@@ -78,6 +78,14 @@ interface SchemaBuilderInterface
 
     /**
      * @param string $schemaName
+     * @param string $ref
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedBaseSchema(string $schemaName, string $ref): SchemaDataTransfer;
+
+    /**
+     * @param string $schemaName
      * @param array $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
@@ -85,9 +93,22 @@ interface SchemaBuilderInterface
     public function createRelationshipDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer;
 
     /**
+     * @param string $schemaName
+     * @param array $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer;
+
+    /**
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
     public function createDefaultRelationshipDataAttributesSchema(): SchemaDataTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createDefaultRelationshipDataCollectionAttributesSchema(): SchemaDataTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\SchemaDataTransfer

@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -137,8 +138,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
@@ -161,7 +160,12 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
-        $this->expandProducts($shoppingListOverviewResponseTransfer->getItemsCollection());
+
+        $this->expandProducts(
+            $shoppingListOverviewResponseTransfer->getItemsCollection(),
+            $shoppingListOverviewRequestTransfer->getCurrencyIsoCode(),
+            $shoppingListOverviewRequestTransfer->getPriceMode()
+        );
 
         $customerTransfer = new CustomerTransfer();
         $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
@@ -234,8 +238,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         $shoppingListItemIds = [];
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
@@ -303,6 +308,36 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListTransfer->requireUuid();
+
+        $shoppingListResponseTransfer = (new ShoppingListResponseTransfer())
+            ->setIsSuccess(false);
+
+        $shoppingListTransferByRequest = (new ShoppingListTransfer())->fromArray($shoppingListTransfer->toArray());
+        $shoppingListTransferByUuid = $this->shoppingListRepository->findShoppingListByUuid($shoppingListTransferByRequest);
+
+        if ($shoppingListTransferByUuid === null) {
+            return $shoppingListResponseTransfer;
+        }
+
+        $shoppingListTransferByRequest->setIdShoppingList($shoppingListTransferByUuid->getIdShoppingList());
+        $shoppingListTransferById = $this->getShoppingList($shoppingListTransferByRequest);
+
+        if ($shoppingListTransferById->getIdShoppingList() === null) {
+            return $shoppingListResponseTransfer;
+        }
+
+        return $shoppingListResponseTransfer->setIsSuccess(true)
+            ->setShoppingList($shoppingListTransferById);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param array $shoppingListIds
      *
@@ -356,29 +391,60 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param string|null $currencyIsoCode
+     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    protected function expandProducts(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ?string $currencyIsoCode = null,
+        ?string $priceMode = null
+    ): ShoppingListItemCollectionTransfer {
         $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
         if (empty($shoppingListItemsSkus)) {
             return $shoppingListItemCollectionTransfer;
         }
 
-        $expandedShoppingListItemCollection = new ShoppingListItemCollectionTransfer();
         $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
         $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
-        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
+        $shoppingListItemTransfers = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
 
-        foreach ($shoppingListItems as $shoppingListItem) {
-            $expandedShoppingListItemCollection->addItem(
-                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItem)
+        $shoppingListItemTransfers = $this->expandShoppingListItemTransfers(
+            $shoppingListItemTransfers,
+            $currencyIsoCode,
+            $priceMode
+        );
+
+        return $shoppingListItemCollectionTransfer->setItems($shoppingListItemTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param string|null $currencyIsoCode
+     * @param string|null $priceMode
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     */
+    protected function expandShoppingListItemTransfers(
+        ArrayObject $shoppingListItemTransfers,
+        ?string $currencyIsoCode = null,
+        ?string $priceMode = null
+    ): ArrayObject {
+        $expandedShoppingListItemTransfers = new ArrayObject();
+
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            $shoppingListItemTransfer
+                ->setCurrencyIsoCode($currencyIsoCode)
+                ->setPriceMode($priceMode);
+
+            $expandedShoppingListItemTransfers->append(
+                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer)
             );
         }
 
-        return $expandedShoppingListItemCollection;
+        return $expandedShoppingListItemTransfers;
     }
 
     /**
@@ -415,7 +481,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
      */
     protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {
@@ -496,8 +562,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $shoppingListCollectionTransfer, int $idCompanyUser): ShoppingListCollectionTransfer
-    {
+    protected function filterBlacklistedShoppingLists(
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer,
+        int $idCompanyUser
+    ): ShoppingListCollectionTransfer {
         $filteredShoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
         $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($idCompanyUser);
         foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingListTransfer) {

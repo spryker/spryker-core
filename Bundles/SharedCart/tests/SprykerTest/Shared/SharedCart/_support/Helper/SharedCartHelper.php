@@ -28,7 +28,7 @@ class SharedCartHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
      */
-    public function haveQuotePermissionGroup($name, array $permissionKeys)
+    public function haveQuotePermissionGroup(string $name, array $permissionKeys): SpyQuotePermissionGroupEntityTransfer
     {
         $quotePermissionGroupEntity = new SpyQuotePermissionGroup();
         $quotePermissionGroupEntity->setName($name);
@@ -64,7 +64,7 @@ class SharedCartHelper extends Module
         CompanyUserTransfer $companyUserTransfer,
         QuoteTransfer $quoteTransfer,
         SpyQuotePermissionGroupEntityTransfer $spyQuotePermissionGroupEntityTransfer
-    ) {
+    ): SpyQuoteCompanyUserEntityTransfer {
         $quoteCompanyUserEntity = new SpyQuoteCompanyUser();
         $quoteCompanyUserEntity
             ->setFkCompanyUser($companyUserTransfer->requireIdCompanyUser()->getIdCompanyUser())

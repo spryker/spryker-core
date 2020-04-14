@@ -80,7 +80,6 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $companyRoleDataImportPlugin = new CompanyRoleDataImportPlugin();
         $this->assertSame(
             CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_ROLE,
             $this->getCompanyRoleDataImportPlugin()->getImportType()

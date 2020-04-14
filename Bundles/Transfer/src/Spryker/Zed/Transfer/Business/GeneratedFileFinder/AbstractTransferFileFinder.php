@@ -52,8 +52,11 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
      */
     protected function filterTransferFileEntry(SplFileInfo $fileEntry): bool
     {
+        $filename = $fileEntry->getFilename();
+        $filenameWithoutExtension = pathinfo($filename, PATHINFO_FILENAME);
+
         $transferClassName = $this->buildFullyQualifiedTransferClassName(
-            $fileEntry->getFilenameWithoutExtension()
+            $filenameWithoutExtension
         );
 
         return $this->extendsExpectedBaseClass($transferClassName);

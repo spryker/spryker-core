@@ -1,7 +1,6 @@
 # ProductStorage Module
-[![Build Status](https://travis-ci.org/spryker/ProductStorage.svg)](https://travis-ci.org/spryker/ProductStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductStorage/badge.svg)](https://coveralls.io/github/spryker/ProductStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/product-storage.svg)](https://travis-ci.org/spryker/product-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ## Installation
 

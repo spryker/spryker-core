@@ -265,8 +265,11 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addPasswordsDoNotMatchError(RestResponseInterface $restResponse, string $passwordFieldName, string $passwordConfirmFieldName): RestResponseInterface
-    {
+    public function addPasswordsDoNotMatchError(
+        RestResponseInterface $restResponse,
+        string $passwordFieldName,
+        string $passwordConfirmFieldName
+    ): RestResponseInterface {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -286,21 +289,25 @@ class RestApiError implements RestApiErrorInterface
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
                 $restResponse = $this->addCustomerEmailInvalidError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED) {
                 $restResponse = $this->addCustomerEmailLengthExceededError($restResponse);
+
                 continue;
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 $restResponse = $this->addPasswordNotValidError($restResponse);
+
                 continue;
             }
         }
@@ -314,8 +321,10 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnRegistration(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
-    {
+    public function processCustomerErrorOnRegistration(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface {
         $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
 
         if (!count($restResponse->getErrors())) {
@@ -351,8 +360,10 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function processCustomerErrorOnPasswordUpdate(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
-    {
+    public function processCustomerErrorOnPasswordUpdate(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface {
         $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
 
         if (!count($restResponse->getErrors())) {

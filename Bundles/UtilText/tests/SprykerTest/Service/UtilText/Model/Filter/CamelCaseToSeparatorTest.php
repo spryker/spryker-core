@@ -26,7 +26,7 @@ class CamelCaseToSeparatorTest extends Unit
     /**
      * @return array
      */
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             ['camelCase', '-', 'camel-case'],
@@ -47,7 +47,7 @@ class CamelCaseToSeparatorTest extends Unit
      *
      * @return void
      */
-    public function testWithDifferentSeparator($camelCase, $separator, $expected)
+    public function testWithDifferentSeparator(string $camelCase, string $separator, string $expected): void
     {
         $filter = new CamelCaseToSeparator();
         $this->assertEquals($expected, $filter->filter($camelCase, $separator));

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartNote\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartNoteToQuoteFacadeInterface
@@ -16,12 +17,12 @@ interface CartNoteToQuoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteById($idQuote);
+    public function findQuoteById($idQuote): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteTransfer $quoteTransfer);
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

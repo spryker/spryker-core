@@ -308,6 +308,7 @@ class EditOfferType extends AbstractType
                         if ($itemTransfer->getSku() && !$itemTransfer->getQuantity()) {
                             $context->buildViolation('One of selected products contains invalid quantity')
                                 ->addViolation();
+
                             break;
                         }
                     }

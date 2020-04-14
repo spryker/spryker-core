@@ -8,21 +8,14 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
 
 class ProductBundleWriter implements ProductBundleWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
-     */
-    protected $productFacade;
-
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
@@ -34,16 +27,13 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected $productBundleStockWriter;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface $productBundleStockWriter
      */
     public function __construct(
-        ProductBundleToProductInterface $productFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleStockWriterInterface $productBundleStockWriter
     ) {
-        $this->productFacade = $productFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->productBundleStockWriter = $productBundleStockWriter;
     }
@@ -78,11 +68,9 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
+
             throw $exception;
         }
         $productBundleTransfer->setBundlesToRemove([]);

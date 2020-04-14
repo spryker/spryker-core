@@ -78,6 +78,7 @@ abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoC
             return $storeReader;
         }
 
+        /** @var \Spryker\Zed\Collector\Business\Exporter\Reader\Search\ConfigurableSearchReaderInterface $configurableSearchReader */
         $configurableSearchReader = $this->cloneReader($storeReader);
         $configurableSearchReader->setSearchCollectorConfiguration($this->getCollectorConfiguration());
 
@@ -105,7 +106,7 @@ abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoC
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      *
-     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface|\Spryker\Zed\Collector\Business\Exporter\Writer\Search\ConfigurableSearchWriterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface|\Spryker\Zed\Collector\Business\Exporter\Reader\Search\ConfigurableSearchReaderInterface
      */
     protected function cloneReader(ReaderInterface $storeReader)
     {

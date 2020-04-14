@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Category\Persistence" package="src.Orm.Zed.Category.Persistence">
-  <table name="spy_category" idMethod="native" phpName="SpyCategory">
+  <table name="spy_category" idMethod="native">
     <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
     <column name="category_key" required="true" type="VARCHAR" size="255"/>
     <column name="is_active" default="true" type="BOOLEAN"/>
@@ -16,7 +16,7 @@
     </unique>
     <id-method-parameter value="spy_category_pk_seq"/>
   </table>
-  <table name="spy_category_attribute" idMethod="native" phpName="SpyCategoryAttribute">
+  <table name="spy_category_attribute" idMethod="native">
     <column name="id_category_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
     <column name="fk_category" required="true" type="INTEGER"/>
     <column name="name" type="VARCHAR" size="255" required="true"/>
@@ -34,7 +34,7 @@
     </foreign-key>
     <id-method-parameter value="spy_category_attribute_pk_seq"/>
   </table>
-  <table name="spy_category_node" idMethod="native" phpName="SpyCategoryNode">
+  <table name="spy_category_node" idMethod="native">
     <column name="id_category_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
     <column name="fk_category" required="true" type="INTEGER"/>
     <column name="fk_parent_category_node" required="false" type="INTEGER" default="NULL"/>
@@ -52,7 +52,7 @@
     </index>
     <id-method-parameter value="spy_category_node_pk_seq"/>
   </table>
-  <table name="spy_category_closure_table" idMethod="native" phpName="SpyCategoryClosureTable">
+  <table name="spy_category_closure_table" idMethod="native">
     <column name="id_category_closure_table" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
     <column name="fk_category_node" required="true" type="INTEGER"/>
     <column name="fk_category_node_descendant" required="true" type="INTEGER"/>

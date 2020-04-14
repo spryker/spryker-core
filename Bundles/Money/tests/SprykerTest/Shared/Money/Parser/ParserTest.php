@@ -38,7 +38,7 @@ class ParserTest extends Unit
      *
      * @return void
      */
-    public function testParseShouldReturnMoneyTransfer($value, $locale, $isoCode, $expectedAmount)
+    public function testParseShouldReturnMoneyTransfer(string $value, string $locale, string $isoCode, string $expectedAmount): void
     {
         $parser = $this->getParser($locale);
         $currencyTransfer = new CurrencyTransfer();
@@ -52,7 +52,7 @@ class ParserTest extends Unit
     /**
      * @return array
      */
-    public function parseData()
+    public function parseData(): array
     {
         return [
             ['10,00 €', 'de_DE', 'EUR', '1000'],
@@ -67,7 +67,7 @@ class ParserTest extends Unit
      *
      * @return \Spryker\Shared\Money\Parser\Parser
      */
-    protected function getParser($locale)
+    protected function getParser(string $locale): Parser
     {
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, new ISOCurrencies());

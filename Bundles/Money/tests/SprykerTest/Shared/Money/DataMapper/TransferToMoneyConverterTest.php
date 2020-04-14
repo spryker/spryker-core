@@ -31,7 +31,7 @@ class TransferToMoneyConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertShouldReturnMoney()
+    public function testConvertShouldReturnMoney(): void
     {
         $isoCodeTransfer = new CurrencyTransfer();
         $isoCodeTransfer->setCode(self::CURRENCY);

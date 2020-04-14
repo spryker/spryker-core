@@ -136,6 +136,9 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         $abstractProductQuery
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinStockProduct()
+                ->useStockProductQuery()
+                    ->joinStock()
+                ->endUse()
                 ->useSpyProductLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkLocale(
                         $localeTransferConditions[self::LOCALE_FILTER_VALUE],
@@ -151,7 +154,17 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 
         $abstractProductQuery->groupBy(SpyStockProductTableMap::COL_FK_STOCK);
 
-        return $abstractProductQuery;
+        if (!$abstractProductDataFeedTransfer->getUseOnlyActiveStock()) {
+            return $abstractProductQuery;
+        }
+
+        return $abstractProductQuery->useSpyProductQuery()
+            ->useStockProductQuery()
+                ->useStockQuery()
+                    ->filterByIsActive(true)
+                ->endUse()
+            ->endUse()
+            ->endUse();
     }
 
     /**

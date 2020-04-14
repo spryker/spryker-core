@@ -30,7 +30,7 @@ class IsNotInTest extends Unit
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenIsNotInExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenIsNotInExpressionProvided(): void
     {
         $isNotIn = $this->createIsNotIn();
 
@@ -45,7 +45,7 @@ class IsNotInTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueIsNotInClauseShouldReturnTrue()
+    public function testCompareWhenValueIsNotInClauseShouldReturnTrue(): void
     {
         $equal = $this->createIsNotIn();
 
@@ -61,7 +61,7 @@ class IsNotInTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueIsInClauseShouldReturnFalse()
+    public function testCompareWhenValueIsInClauseShouldReturnFalse(): void
     {
         $contains = $this->createIsNotIn();
 
@@ -77,7 +77,7 @@ class IsNotInTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenNonScalarValueUsedShouldThrowException()
+    public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
 
@@ -91,7 +91,7 @@ class IsNotInTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn
      */
-    protected function createIsNotIn()
+    protected function createIsNotIn(): IsNotIn
     {
         return new IsNotIn();
     }

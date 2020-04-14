@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -34,7 +33,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldReturnInstanceIfExists()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfExists(): void
     {
         $formType = new FooType();
 
@@ -52,18 +51,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
-    {
-        $this->expectException(FacadeNotFoundException::class);
-
-        $formType = new FooType();
-        $formType->getFacade();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetFacadeShouldReturnInstanceIfExists()
+    public function testGetFacadeShouldReturnInstanceIfExists(): void
     {
         $formType = new FooType();
 
@@ -81,7 +69,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
+    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound(): void
     {
         $this->expectException(QueryContainerNotFoundException::class);
 
@@ -105,7 +93,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists()
+    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists(): void
     {
         $formType = new FooType();
 

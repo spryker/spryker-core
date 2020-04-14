@@ -34,7 +34,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {
             if (!$event->isMasterRequest()) {
                 return;
             }

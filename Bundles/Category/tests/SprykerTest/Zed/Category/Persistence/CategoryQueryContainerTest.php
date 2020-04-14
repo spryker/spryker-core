@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Category\Persistence;
+namespace SprykerTest\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
@@ -16,8 +16,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Category
  * @group Persistence
@@ -31,7 +30,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryClosureTableParentEntriesMustReturnExecutableQuery()
+    public function testQueryClosureTableParentEntriesMustReturnExecutableQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryClosureTableParentEntries(self::ID_CATEGORY_NODE);
@@ -43,7 +42,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllCategoryNodesReturnCorrectQuery()
+    public function testQueryAllCategoryNodesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryAllCategoryNodes();
@@ -54,7 +53,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllCategoryAttributesReturnCorrectQuery()
+    public function testQueryAllCategoryAttributesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryAllCategoryAttributes();

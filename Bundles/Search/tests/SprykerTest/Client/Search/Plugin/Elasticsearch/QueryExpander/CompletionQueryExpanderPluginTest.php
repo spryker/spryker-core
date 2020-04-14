@@ -33,7 +33,7 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testCompletionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery)
+    public function testCompletionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery): void
     {
         $baseQueryPlugin = $this->createBaseQueryPlugin();
 
@@ -48,7 +48,7 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function completionQueryExpanderDataProvider()
+    public function completionQueryExpanderDataProvider(): array
     {
         return [
             'simple completion query' => $this->getDataForSimpleCompletionQuery(),
@@ -58,7 +58,7 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForSimpleCompletionQuery()
+    protected function getDataForSimpleCompletionQuery(): array
     {
         /** @var \Elastica\Query $expectedQuery */
         $expectedQuery = $this

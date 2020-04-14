@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -33,7 +34,7 @@ class ProductOptionValueSaverTest extends MockProvider
      *
      * @return void
      */
-    public function testSaveProductOptionValuePersistsProvidedOptionValue()
+    public function testSaveProductOptionValuePersistsProvidedOptionValue(): void
     {
         // Assign
         $productOptionValueEntity = $this->createProductOptionValueEntityMock();
@@ -63,7 +64,7 @@ class ProductOptionValueSaverTest extends MockProvider
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
-    protected function createProductOptionValueEntityMock()
+    protected function createProductOptionValueEntityMock(): SpyProductOptionValue
     {
         return $this->getMockBuilder(SpyProductOptionValue::class)
             ->setMethods(['save'])
@@ -75,7 +76,7 @@ class ProductOptionValueSaverTest extends MockProvider
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
      */
-    protected function createProductOptionValueSaver()
+    protected function createProductOptionValueSaver(): ProductOptionValueSaverInterface
     {
         return $this->getMockBuilder(ProductOptionValueSaver::class)
             ->setConstructorArgs([

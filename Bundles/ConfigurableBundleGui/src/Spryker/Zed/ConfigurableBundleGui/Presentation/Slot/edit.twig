@@ -1,0 +1,55 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Slot details' %}
+
+{% block section_title %}
+    {{ 'Edit Slot' | trans ~ ': ' ~ form.vars.data.configurableBundleTemplateSlot.idConfigurableBundleTemplateSlot ~ ' ' ~ 'for' | trans ~ ' ' ~ configurableBundleTemplate.translations[0].name }}
+{% endblock %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(
+        url('/configurable-bundle-gui/template/edit', {
+            'id-configurable-bundle-template' : form.vars.data.configurableBundleTemplateSlot.fkConfigurableBundleTemplate,
+            'id-configurable-bundle-template-slot': form.vars.data.configurableBundleTemplateSlot.idConfigurableBundleTemplateSlot
+        }) ~ '#tab-content-slots',
+        'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {% set tips %}
+                {% include '@ConfigurableBundleGui/Slot/_partials/slot-tips.twig' %}
+            {% endset %}
+
+            {{ tabs(tabs, {
+                form: form,
+                productListCategoryRelationForm: form.productListCategoryRelation,
+                productListProductConcreteRelationForm: form.productListProductConcreteRelation,
+                availableProductConcreteRelationTabs: availableProductConcreteRelationTabs,
+                assignedProductConcreteRelationTabs: assignedProductConcreteRelationTabs,
+                availableProductConcreteTable: availableProductConcreteTable,
+                assignedProductConcreteTable: assignedProductConcreteTable,
+                currentLocale: currentLocale,
+                tips: tips
+            }) }}
+
+            {{ form_row(form.assignedProductIds, { 'id': 'productListAggregate_assignedProductIds'}) }}
+            {{ form_row(form.productIdsToBeAssigned, { 'id': 'productListAggregate_productIdsToBeAssigned'}) }}
+            {{ form_row(form.productIdsToBeDeAssigned, { 'id': 'productListAggregate_productIdsToBeDeAssigned'}) }}
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-configurable-bundle-template-slot.js"></script>
+{% endblock %}

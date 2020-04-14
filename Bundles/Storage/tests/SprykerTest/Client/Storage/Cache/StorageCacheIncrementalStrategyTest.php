@@ -27,7 +27,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
      *
      * @return void
      */
-    protected function testStrategy($testType)
+    protected function testStrategy(string $testType): void
     {
         $this->setCachedKeysByType($testType);
 
@@ -47,7 +47,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithNewKeys()
+    public function testIncrementalStrategyWithNewKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_KEYS);
     }
@@ -55,7 +55,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithUsedKeys()
+    public function testIncrementalStrategyWithUsedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_USED_KEYS);
     }
@@ -63,7 +63,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithUnusedKeys()
+    public function testIncrementalStrategyWithUnusedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_UNUSED_KEYS);
     }
@@ -71,7 +71,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithNewAndUsedKeys()
+    public function testIncrementalStrategyWithNewAndUsedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_AND_USED_KEYS);
     }
@@ -79,7 +79,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithNewAndUsedAndUnusedKeys()
+    public function testIncrementalStrategyWithNewAndUsedAndUnusedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS);
     }
@@ -87,7 +87,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyWithNoKeys()
+    public function testIncrementalStrategyWithNoKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NO_KEYS);
     }
@@ -95,7 +95,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyOverLimitWithAllKeysAreNew()
+    public function testIncrementalStrategyOverLimitWithAllKeysAreNew(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_NEW_KEYS);
     }
@@ -103,7 +103,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyOverLimitWithAllKeysAreUsed()
+    public function testIncrementalStrategyOverLimitWithAllKeysAreUsed(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_USED_KEYS);
     }
@@ -111,7 +111,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyOverLimitWithAllKeysAreUnused()
+    public function testIncrementalStrategyOverLimitWithAllKeysAreUnused(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_UNUSED_KEYS);
     }
@@ -119,7 +119,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyOverLimitWithKeysAreNewAndUsed()
+    public function testIncrementalStrategyOverLimitWithKeysAreNewAndUsed(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_KEYS);
     }
@@ -127,7 +127,7 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     /**
      * @return void
      */
-    public function testIncrementalStrategyOverLimitWithKeysAreNewAndUsedAndUnused()
+    public function testIncrementalStrategyOverLimitWithKeysAreNewAndUsedAndUnused(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
     }

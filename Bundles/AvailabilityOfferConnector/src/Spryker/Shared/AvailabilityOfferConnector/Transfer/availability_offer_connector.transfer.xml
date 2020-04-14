@@ -9,7 +9,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string"/>
-        <property name="stock" type="int"/>
+        <property name="stock" type="decimal"/>
     </transfer>
 
     <transfer name="Quote">

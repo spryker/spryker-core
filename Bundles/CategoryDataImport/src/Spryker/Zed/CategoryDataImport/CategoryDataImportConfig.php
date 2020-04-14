@@ -14,6 +14,8 @@ class CategoryDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CATEGORY = 'category';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCategoryDataImporterConfiguration()

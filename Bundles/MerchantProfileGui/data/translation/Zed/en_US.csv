@@ -1,0 +1,36 @@
+Activate,Activate
+active,Active
+"Addition to address","Addition to Address"
+"Average Delivery Time","Average Delivery Time"
+"Banner URL","Banner URL"
+"Banner url","Banner url"
+"Cancellation Policy","Cancellation Policy"
+City,City
+"Contact Person","Contact Person"
+Country,Country
+"Data Privacy","Data Privacy"
+Deactivate,Deactivate
+Description,Description
+"Fax number","Fax Number"
+"First Name","First Name"
+Imprint,Imprint
+inactive,Inactive
+"Is Active","Is Active"
+"Last Name","Last Name"
+Latitude,Latitude
+"Legal Information","Legal Information"
+"Logo URL","Logo URL"
+Longitude,Longitude
+"Merchant Profile","Merchant Profile"
+"Merchant Reference","Merchant reference"
+merchant_profile.activated,"Merchant Profile successfully activated."
+merchant_profile.deactivated,"Merchant Profile successfully deactivated."
+Number,Number
+Phone,Phone
+"Public Email","Public Email"
+"Public Phone","Public Phone"
+Role,Role
+Street,Street
+"Terms and Conditions","Terms and Conditions"
+Title,Title
+"Zip Code","Zip Code"

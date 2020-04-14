@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Propel\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Propel\Business\PropelFacade;
-use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
@@ -25,41 +23,38 @@ use Spryker\Zed\Propel\PropelConfig;
 class PropelFacadeTest extends Unit
 {
     /**
-     * @return \Spryker\Zed\Propel\Business\PropelFacade
+     * @var \SprykerTest\Zed\Propel\PropelBusinessTester
      */
-    private function getFacade()
-    {
-        return new PropelFacade();
-    }
+    protected $tester;
 
     /**
-     * @return \Spryker\Zed\Propel\PropelConfig
+     * @return void
      */
-    private function getConfig()
+    public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt(): void
     {
-        return new PropelConfig();
+        $schemaDirectory = $this->tester->getVirtualDirectory();
+
+        $this->tester->mockConfigMethod('getSchemaDirectory', function () use ($schemaDirectory) {
+            return $schemaDirectory;
+        });
+
+        $this->assertTrue(is_dir($schemaDirectory));
+        $this->tester->getFacade()->cleanPropelSchemaDirectory();
+        $this->assertFalse(is_dir($schemaDirectory));
     }
 
     /**
      * @return void
      */
-    public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt()
+    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory(): void
     {
-        if (!is_dir($this->getConfig()->getSchemaDirectory())) {
-            mkdir($this->getConfig()->getSchemaDirectory(), 755, true);
-        }
+        $schemaDirectory = $this->tester->getVirtualDirectory();
 
-        $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
-        $this->getFacade()->cleanPropelSchemaDirectory();
-        $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));
-    }
+        $this->tester->mockConfigMethod('getSchemaDirectory', function () use ($schemaDirectory) {
+            return $schemaDirectory;
+        });
 
-    /**
-     * @return void
-     */
-    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory()
-    {
-        $this->getFacade()->copySchemaFilesToTargetDirectory();
-        $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
+        $this->tester->getFacade()->copySchemaFilesToTargetDirectory();
+        $this->assertTrue(is_dir($schemaDirectory));
     }
 }

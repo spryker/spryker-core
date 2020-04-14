@@ -33,7 +33,7 @@ class StepFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePaymentMethodSubForms()
+    public function testCreatePaymentMethodSubForms(): void
     {
         $container = new Container();
         $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = self::METHOD_HANDLER;
@@ -47,7 +47,7 @@ class StepFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStepEngine()
+    public function testCreateStepEngine(): void
     {
         $stepFactory = new StepFactory();
         $stepProcess = $stepFactory->createStepEngine(
@@ -60,7 +60,7 @@ class StepFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    private function getUrlGeneratorMock()
+    private function getUrlGeneratorMock(): UrlGeneratorInterface
     {
         return $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
     }

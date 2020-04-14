@@ -73,8 +73,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return string[]
      */
-    protected function checkRemovedDiscountsItemsSku(array $indexResultDiscountTransferCollection, array $indexSourceDiscountTransferCollection, QuoteTransfer $quoteTransfer): array
-    {
+    protected function checkRemovedDiscountsItemsSku(
+        array $indexResultDiscountTransferCollection,
+        array $indexSourceDiscountTransferCollection,
+        QuoteTransfer $quoteTransfer
+    ): array {
         $itemSkuCollection = [];
         foreach ($indexSourceDiscountTransferCollection as $discountTransfer) {
             if (!isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()])) {
@@ -95,11 +98,15 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return string[]
      */
-    protected function checkCurrentDiscountsDiffItemsSku(array $indexResultDiscountTransferCollection, array $indexSourceDiscountTransferCollection, QuoteTransfer $quoteTransfer): array
-    {
+    protected function checkCurrentDiscountsDiffItemsSku(
+        array $indexResultDiscountTransferCollection,
+        array $indexSourceDiscountTransferCollection,
+        QuoteTransfer $quoteTransfer
+    ): array {
         $itemSkuCollection = [];
         foreach ($indexSourceDiscountTransferCollection as $discountTransfer) {
-            if (isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]) &&
+            if (
+                isset($indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]) &&
                 $discountTransfer->getAmount() !== $indexResultDiscountTransferCollection[$discountTransfer->getIdDiscount()]->getAmount()
             ) {
                 $itemSkuCollection = array_merge(

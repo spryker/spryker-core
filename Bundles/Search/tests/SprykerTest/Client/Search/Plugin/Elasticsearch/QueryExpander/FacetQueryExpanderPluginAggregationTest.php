@@ -24,7 +24,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    public function facetQueryExpanderDataProvider()
+    public function facetQueryExpanderDataProvider(): array
     {
         return [
             'single string facet' => $this->createStringFacetData(),
@@ -40,7 +40,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createStringFacetData()
+    protected function createStringFacetData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
 
@@ -54,7 +54,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createMultiStringFacetData()
+    protected function createMultiStringFacetData(): array
     {
         $searchConfig = $this->createMultiStringSearchConfig();
 
@@ -70,7 +70,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createIntegerFacetData()
+    protected function createIntegerFacetData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
 
@@ -84,7 +84,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createMultiIntegerFacetData()
+    protected function createMultiIntegerFacetData(): array
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
 
@@ -100,7 +100,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createCategoryFacetData()
+    protected function createCategoryFacetData(): array
     {
         $searchConfig = $this->createCategorySearchConfig();
 
@@ -114,7 +114,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createMultiCategoryFacetData()
+    protected function createMultiCategoryFacetData(): array
     {
         $searchConfig = $this->createMultiCategorySearchConfig();
 
@@ -130,7 +130,7 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
     /**
      * @return array
      */
-    protected function createMixedFacetData()
+    protected function createMixedFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
 

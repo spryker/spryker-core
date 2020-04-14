@@ -25,13 +25,8 @@
                     <input type="submit" class="btn btn-primary" name="submit-confirm" value="{{ 'Confirm' | trans }}" />
                 </div>
             </div>
-            {% if (form["fk_company_business_unit"] is defined) %}
-                {{ form_row(form["fk_company_business_unit"]) }}
-            {% endif %}
 
-            {% if (form["assigneeCompanyBusinessUnits"] is defined) %}
-                {{ form_row(form["assigneeCompanyBusinessUnits"]) }}
-            {% endif %}
+            {{ form_rest(form) }}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}

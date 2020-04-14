@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
 
-    <table name="spy_sales_order_address" phpName="SpySalesOrderAddress">
+    <table name="spy_sales_order_address">
         <column name="id_sales_order_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
@@ -35,7 +35,7 @@
         <id-method-parameter value="spy_sales_order_address_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_address_history" phpName="SpySalesOrderAddressHistory">
+    <table name="spy_sales_order_address_history">
         <column name="id_sales_order_address_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
@@ -73,7 +73,7 @@
         <id-method-parameter value="spy_sales_order_address_history_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order" phpName="SpySalesOrder">
+    <table name="spy_sales_order">
         <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_address_billing" type="INTEGER" required="true"/>
         <column name="fk_sales_order_address_shipping" type="INTEGER" required="false"/>
@@ -116,7 +116,7 @@
         <id-method-parameter value="spy_sales_order_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_totals" phpName="SpySalesOrderTotals">
+    <table name="spy_sales_order_totals">
         <column name="id_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true" default="0"/>
 
@@ -137,7 +137,7 @@
         <id-method-parameter value="spy_sales_order_totals_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
+    <table name="spy_sales_order_item">
         <column name="id_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
@@ -184,7 +184,7 @@
         <id-method-parameter value="spy_sales_order_item_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_note" phpName="SpySalesOrderNote">
+    <table name="spy_sales_order_note">
         <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
@@ -200,7 +200,7 @@
         <id-method-parameter value="spy_sales_order_note_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_comment" phpName="SpySalesOrderComment">
+    <table name="spy_sales_order_comment">
         <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
@@ -215,7 +215,7 @@
         <id-method-parameter value="spy_sales_order_comment_pk_seq"/>
     </table>
 
-    <table name="spy_sales_expense" phpName="SpySalesExpense">
+    <table name="spy_sales_expense">
         <column name="id_sales_expense" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="false" default="NULL"/>
         <column name="type" type="VARCHAR" size="150"/>

@@ -34,7 +34,7 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedLanguages())) {
+        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedLanguages(), true)) {
             $this->currentLanguage = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);

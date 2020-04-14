@@ -31,7 +31,7 @@ class RefundPluginTest extends Unit
     /**
      * @return void
      */
-    public function testRunShouldDelegateToFacade()
+    public function testRunShouldDelegateToFacade(): void
     {
         $dummyPaymentFacadeMock = $this->getDummyPaymentFacadeMock();
         $refundPlugin = new RefundPlugin();

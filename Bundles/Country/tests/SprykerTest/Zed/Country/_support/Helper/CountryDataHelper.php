@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Country\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CountryBuilder;
+use Generated\Shared\Transfer\CountryTransfer;
+use Spryker\Zed\Country\Business\CountryFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CountryDataHelper extends Module
@@ -20,7 +22,7 @@ class CountryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function haveCountry(array $seed = [])
+    public function haveCountry(array $seed = []): CountryTransfer
     {
         $countryTransferBuilder = new CountryBuilder($seed);
         $countryTransfer = $countryTransferBuilder->build();
@@ -33,7 +35,7 @@ class CountryDataHelper extends Module
     /**
      * @return \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
-    protected function getCountryFacade()
+    protected function getCountryFacade(): CountryFacadeInterface
     {
         return $this->getLocator()->country()->facade();
     }

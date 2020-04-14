@@ -28,7 +28,7 @@ class RedisSessionKeyGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateAddsPrefix()
+    public function testGenerateAddsPrefix(): void
     {
         $generator = new RedisSessionKeyGenerator();
         $generatedKey = $generator->generateSessionKey('foo-session-123');

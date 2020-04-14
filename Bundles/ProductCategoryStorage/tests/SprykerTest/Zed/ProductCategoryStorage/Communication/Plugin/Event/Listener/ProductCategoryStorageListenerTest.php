@@ -47,7 +47,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductCategoryPublishStorageListenerStoreData()
+    public function testProductCategoryPublishStorageListenerStoreData(): void
     {
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract(1)->delete();
         $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
@@ -67,7 +67,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductCategoryStorageListenerStoreData()
+    public function testProductCategoryStorageListenerStoreData(): void
     {
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract(1)->delete();
         $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
@@ -89,7 +89,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryNodeStorageListenerStoreData()
+    public function testCategoryNodeStorageListenerStoreData(): void
     {
         $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
@@ -112,7 +112,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryUrlStorageListenerStoreData()
+    public function testCategoryUrlStorageListenerStoreData(): void
     {
         $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
@@ -138,7 +138,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryAttributeStorageListenerStoreData()
+    public function testCategoryAttributeStorageListenerStoreData(): void
     {
         $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
@@ -164,7 +164,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryStorageListenerStoreData()
+    public function testCategoryStorageListenerStoreData(): void
     {
         $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
         SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
@@ -188,7 +188,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacade
      */
-    protected function getProductCategoryStorageFacade()
+    protected function getProductCategoryStorageFacade(): ProductCategoryStorageFacade
     {
         $factory = new ProductCategoryStorageBusinessFactory();
         $factory->setConfig(new ProductCategoryStorageConfigMock());
@@ -204,7 +204,7 @@ class ProductCategoryStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractStorage($beforeCount)
+    protected function assertProductAbstractStorage(int $beforeCount): void
     {
         $productCategoryStorageCount = SpyProductAbstractCategoryStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productCategoryStorageCount);
@@ -215,7 +215,7 @@ class ProductCategoryStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractCategoryStorage($beforeCount)
+    protected function assertProductAbstractCategoryStorage(int $beforeCount): void
     {
         $productCategoryStorageCount = SpyProductAbstractCategoryStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productCategoryStorageCount);
@@ -230,7 +230,7 @@ class ProductCategoryStorageListenerTest extends Unit
      *
      * @return array
      */
-    protected function findProductAbstractIdsByIdCategory($idCategory)
+    protected function findProductAbstractIdsByIdCategory(int $idCategory): array
     {
         $productCategoryQueryContainer = new ProductCategoryStorageQueryContainer();
         $productCategoryFacade = $this->getProductCategoryStorageFacade();

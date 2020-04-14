@@ -29,9 +29,22 @@ class ShoppingListHelper extends Module
      */
     public function haveShoppingList(array $seed = []): ShoppingListTransfer
     {
-        $shoppingListTransfer = (new ShoppingListBuilder($seed))->build();
+        $shoppingListTransfer = $this->buildShoppingList($seed);
 
         return $this->getLocator()->shoppingList()->facade()->createShoppingList($shoppingListTransfer)->getShoppingList();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function buildShoppingList(array $seed = []): ShoppingListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
+        $shoppingListTransfer = (new ShoppingListBuilder($seed))->build();
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -41,7 +54,10 @@ class ShoppingListHelper extends Module
      */
     public function buildShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
-        return (new ShoppingListItemBuilder($seed))->build();
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
+        $shoppingListItemTransfer = (new ShoppingListItemBuilder($seed))->build();
+
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -51,9 +67,9 @@ class ShoppingListHelper extends Module
      */
     public function haveShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
-        return $this->getLocator()->shoppingList()->facade()->addItem(
+        return $this->getLocator()->shoppingList()->facade()->addShoppingListItem(
             $this->buildShoppingListItem($seed)
-        );
+        )->getShoppingListItem();
     }
 
     /**
@@ -62,7 +78,7 @@ class ShoppingListHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
-    public function haveShoppingListPermissionGroup($name, array $permissionKeys): ShoppingListPermissionGroupTransfer
+    public function haveShoppingListPermissionGroup(string $name, array $permissionKeys): ShoppingListPermissionGroupTransfer
     {
         $shoppingListPermissionGroupEntity = new SpyShoppingListPermissionGroup();
         $shoppingListPermissionGroupEntity->setName($name);

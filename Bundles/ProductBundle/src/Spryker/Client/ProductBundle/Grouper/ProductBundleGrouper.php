@@ -261,7 +261,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      * @param string $bundleGroupKey
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getAlreadyBundledItems(array $bundleItems, $bundleGroupKey)
     {
@@ -277,8 +277,10 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected function getBundleOptions(ItemTransfer $itemTransfer, ArrayObject $items)
     {
         foreach ($items as $cartItemTransfer) {
-            if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && count($cartItemTransfer->getProductOptions()) > 0) {
+            if (
+                $itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
+                && count($cartItemTransfer->getProductOptions()) > 0
+            ) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }

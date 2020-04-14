@@ -22,6 +22,8 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer|null $productDataFeedTransfer
@@ -36,7 +38,7 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
 
         if ($productDataFeedTransfer !== null) {
             $abstractProductQuery = $this->getFactory()
-                ->getAbstractProductJoinQuery()
+                ->createAbstractProductJoinQuery()
                 ->applyJoins($abstractProductQuery, $productDataFeedTransfer);
             $abstractProductQuery = $this->filterByUpdatedAt($abstractProductQuery, $productDataFeedTransfer);
         }

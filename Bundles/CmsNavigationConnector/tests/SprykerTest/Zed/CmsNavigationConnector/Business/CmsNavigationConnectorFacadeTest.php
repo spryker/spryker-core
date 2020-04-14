@@ -34,7 +34,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetNavigationNodeToActiveWhenCmsIsActive()
+    public function testSetNavigationNodeToActiveWhenCmsIsActive(): void
     {
         $this->runUpNavigationNodeCmsTest(true);
     }
@@ -42,7 +42,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetNavigationNodeToInactiveWhenCmsIsInactive()
+    public function testSetNavigationNodeToInactiveWhenCmsIsInactive(): void
     {
         $this->runUpNavigationNodeCmsTest(false);
     }
@@ -72,7 +72,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
      *
      * @return void
      */
-    protected function runUpNavigationNodeCmsTest($isActive): void
+    protected function runUpNavigationNodeCmsTest(bool $isActive): void
     {
         // Arrange
         $cmsPageTransfer = $this->createCmsPage($isActive);

@@ -38,7 +38,7 @@ class ResourceParametersPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessNoParameters()
+    public function testProcessNoParameters(): void
     {
         $processor = new ResourceParametersPreProcessor();
 
@@ -52,7 +52,7 @@ class ResourceParametersPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithParameters()
+    public function testProcessWithParameters(): void
     {
         $processor = new ResourceParametersPreProcessor();
 

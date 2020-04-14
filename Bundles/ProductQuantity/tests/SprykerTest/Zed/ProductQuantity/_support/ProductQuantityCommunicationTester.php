@@ -39,7 +39,7 @@ class ProductQuantityCommunicationTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createEmptyCartChangeTransfer()
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
            ->setQuote(

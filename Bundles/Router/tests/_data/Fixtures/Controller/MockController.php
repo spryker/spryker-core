@@ -14,7 +14,7 @@ class MockController extends AbstractController
     /**
      * @return void
      */
-    public function mockAction()
+    public function mockAction(): void
     {
     }
 }

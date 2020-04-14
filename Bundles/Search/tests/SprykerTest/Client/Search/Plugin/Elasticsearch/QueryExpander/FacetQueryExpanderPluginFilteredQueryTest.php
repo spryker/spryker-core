@@ -33,7 +33,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    public function facetQueryExpanderDataProvider()
+    public function facetQueryExpanderDataProvider(): array
     {
         return [
             'filtered single string facet' => $this->createFilteredStringFacetData(),
@@ -57,7 +57,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredStringFacetData()
+    protected function createFilteredStringFacetData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
 
@@ -80,7 +80,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createMultiFilteredStringFacetData()
+    protected function createMultiFilteredStringFacetData(): array
     {
         $searchConfig = $this->createMultiStringSearchConfig();
         $expectedQuery = (new BoolQuery())
@@ -118,7 +118,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredStringFacetDataWithMultipleValues()
+    protected function createFilteredStringFacetDataWithMultipleValues(): array
     {
         $searchConfig = $this->createStringSearchConfig();
 
@@ -143,7 +143,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createMultiValuedFilteredStringFacetData()
+    protected function createMultiValuedFilteredStringFacetData(): array
     {
         /*
          * Filter criteria should be: (foo == 'asdf' || foo == 'qwer' || foo == 'yxcv')
@@ -196,7 +196,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredIntegerFacetData()
+    protected function createFilteredIntegerFacetData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
         $expectedQuery = (new BoolQuery())
@@ -218,7 +218,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredPriceRangeFacetData()
+    protected function createFilteredPriceRangeFacetData(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -290,7 +290,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredOpenPriceRangeFacetData()
+    protected function createFilteredOpenPriceRangeFacetData(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -359,7 +359,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createMultiFilteredIntegerFacetData()
+    protected function createMultiFilteredIntegerFacetData(): array
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
         $expectedQuery = (new BoolQuery())
@@ -400,7 +400,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createMultiValuedFilteredIntegerFacetData()
+    protected function createMultiValuedFilteredIntegerFacetData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
 
@@ -448,7 +448,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredCategoryFacetData()
+    protected function createFilteredCategoryFacetData(): array
     {
         $searchConfig = $this->createCategorySearchConfig();
         $expectedQuery = (new BoolQuery())
@@ -465,7 +465,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredMixedFacetData()
+    protected function createFilteredMixedFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery())
@@ -498,7 +498,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredIncorrectStringFacetData()
+    protected function createFilteredIncorrectStringFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -513,7 +513,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createMultiFilteredIncorrectValuesFacetData()
+    protected function createMultiFilteredIncorrectValuesFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery());
@@ -530,7 +530,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredStringFacetDataWithMultipleIncorrectValues()
+    protected function createFilteredStringFacetDataWithMultipleIncorrectValues(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -549,7 +549,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
-    protected function createFilteredZeroValuesFacetData()
+    protected function createFilteredZeroValuesFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery())

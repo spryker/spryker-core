@@ -27,7 +27,7 @@ class ProductCustomerPermissionQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryProductCustomerPermissionByCustomerReturnsCorrectQuery()
+    public function testQueryProductCustomerPermissionByCustomerReturnsCorrectQuery(): void
     {
         $productCustomerPermissionQueryContainer = new ProductCustomerPermissionQueryContainer();
         $productCustomerPermissionQueryContainer->setFactory(new ProductCustomerPermissionPersistenceFactory());
@@ -39,7 +39,7 @@ class ProductCustomerPermissionQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryProductCustomerPermissionByCustomerAndProductsReturnsCorrectQuery()
+    public function testQueryProductCustomerPermissionByCustomerAndProductsReturnsCorrectQuery(): void
     {
         $productCustomerPermissionQueryContainer = new ProductCustomerPermissionQueryContainer();
         $productCustomerPermissionQueryContainer->setFactory(new ProductCustomerPermissionPersistenceFactory());

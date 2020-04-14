@@ -10,6 +10,8 @@ namespace Spryker\Zed\Http\Communication\Plugin\Application;
 use ArrayObject;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
+use Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler;
+use Spryker\Zed\Http\Communication\SubRequest\SubRequestHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_KERNEL = 'kernel';
     protected const SERVICE_REQUEST_STACK = 'request_stack';
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
     protected const SERVICE_RESOLVER = 'resolver';
 
     /**
@@ -62,6 +65,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         $container = $this->addKernelService($container);
         $container = $this->addRequestStackService($container);
         $container = $this->addRequestContextService($container);
+        $container = $this->addSubRequestHandlerService($container);
         $container = $this->addCookie($container);
 
         return $container;
@@ -113,6 +117,20 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             $context->setHttpsPort($this->getConfig()->getHttpsPort());
 
             return $context;
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addSubRequestHandlerService(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_SUB_REQUEST, function (ContainerInterface $container): SubRequestHandlerInterface {
+            return new SubRequestHandler($container->get(static::SERVICE_KERNEL));
         });
 
         return $container;

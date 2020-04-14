@@ -38,7 +38,7 @@ class DiscountCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function registerStoreRelationToggleFormTypePlugin()
+    public function registerStoreRelationToggleFormTypePlugin(): void
     {
         $this->setDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return new StoreRelationToggleFormTypePlugin();

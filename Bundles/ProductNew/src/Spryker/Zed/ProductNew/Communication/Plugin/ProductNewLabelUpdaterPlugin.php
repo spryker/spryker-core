@@ -18,6 +18,8 @@ use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPlugin
 class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]

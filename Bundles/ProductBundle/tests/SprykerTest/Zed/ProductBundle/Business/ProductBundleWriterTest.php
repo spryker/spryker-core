@@ -16,7 +16,6 @@ use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
@@ -34,7 +33,7 @@ class ProductBundleWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSaveBundledProductsShouldPersistGivenBundles()
+    public function testSaveBundledProductsShouldPersistGivenBundles(): void
     {
         $idBundledProductToRemove = 3;
         $idProductBundle = 1;
@@ -92,7 +91,7 @@ class ProductBundleWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle
      */
-    protected function createProductBundleEntityMock()
+    protected function createProductBundleEntityMock(): SpyProductBundle
     {
         $productBundleEntityMock = $this->getMockBuilder(SpyProductBundle::class)
             ->setMethods(['save', 'delete', 'getIdProductBundle'])
@@ -110,9 +109,8 @@ class ProductBundleWriterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter
      */
-    protected function createProductBundleWriterMock(?ProductBundleStockWriterInterface $productBundleStockWriterMock = null)
+    protected function createProductBundleWriterMock(?ProductBundleStockWriterInterface $productBundleStockWriterMock = null): ProductBundleWriter
     {
-        $productFacadeMock = $this->createProductFacadeMock();
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
 
         $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
@@ -126,7 +124,7 @@ class ProductBundleWriterTest extends Unit
         $productBundleStockWriterMock->expects($this->once())->method('updateStock');
 
         $productBundleWriterMock = $this->getMockBuilder(ProductBundleWriter::class)
-            ->setConstructorArgs([$productFacadeMock, $productBundleQueryContainerMock, $productBundleStockWriterMock])
+            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleStockWriterMock])
             ->setMethods(['findOrCreateProductBundleEntity', 'findProductBundleEntity'])
             ->getMock();
 
@@ -134,25 +132,17 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductBundleStockWriter()
+    protected function createProductBundleStockWriter(): ProductBundleStockWriterInterface
     {
         return $this->getMockBuilder(ProductBundleStockWriterInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
-     */
-    protected function createProductFacadeMock()
-    {
-        return $this->getMockBuilder(ProductBundleToProductInterface::class)->getMock();
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected function createProductBundleQueryContainerMock()
+    protected function createProductBundleQueryContainerMock(): ProductBundleQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }

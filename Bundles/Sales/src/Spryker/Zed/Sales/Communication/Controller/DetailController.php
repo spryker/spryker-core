@@ -23,7 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     public const ROUTE_REDIRECT = '/sales/detail';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -54,7 +60,7 @@ class DetailController extends AbstractController
         }
 
         $groupedOrderItems = $this->getFacade()
-            ->getUniqueOrderItems($orderTransfer->getItems());
+            ->getUniqueItemsFromOrder($orderTransfer);
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -154,6 +160,6 @@ class DetailController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()->get('sub_request');
+        return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
     }
 }

@@ -17,6 +17,12 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="amount" type="decimal"/>
+    </transfer>
+
     <transfer name="CartPreCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
@@ -27,9 +33,13 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
-    <transfer name="Item">
+    <transfer name="ProductConcreteAvailability">
         <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAvailabilityCriteria">
     </transfer>
 
 </transfers>

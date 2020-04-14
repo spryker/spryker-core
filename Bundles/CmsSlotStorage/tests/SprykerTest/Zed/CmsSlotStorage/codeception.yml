@@ -22,8 +22,10 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Zed\CmsSlot\Helper\CmsSlotHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\CmsSlot\Helper\CmsSlotHelper
+
 
     Business:
         path: Business

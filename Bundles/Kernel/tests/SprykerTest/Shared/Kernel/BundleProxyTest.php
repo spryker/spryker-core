@@ -27,17 +27,17 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testAddLocatorShouldAddLocatorCreateMatcherAndReturnBundleProxy()
+    public function testAddLocatorShouldAddLocatorCreateMatcherAndReturnBundleProxy(): void
     {
         $bundleProxy = new BundleProxy();
 
-        $this->assertInstanceOf(BundleProxy::class, $bundleProxy->addLocator(new LocatorWithMatcher('Foo')));
+        $this->assertInstanceOf(BundleProxy::class, $bundleProxy->addLocator(new LocatorWithMatcher()));
     }
 
     /**
      * @return void
      */
-    public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated()
+    public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated(): void
     {
         $this->expectException(LogicException::class);
 
@@ -48,7 +48,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testSetBundleShouldReturnBundleProxy()
+    public function testSetBundleShouldReturnBundleProxy(): void
     {
         $bundleProxy = new BundleProxy();
 
@@ -58,10 +58,10 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator()
+    public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator(): void
     {
         $bundleProxy = new BundleProxy();
-        $locator = new LocatorWithMatcher('foo');
+        $locator = new LocatorWithMatcher();
         $bundleProxy->addLocator($locator);
 
         $this->assertSame($locator, $bundleProxy->locatorTest());
@@ -70,12 +70,12 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod()
+    public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod(): void
     {
         $this->expectException(LogicException::class);
 
         $bundleProxy = new BundleProxy();
-        $bundleProxy->addLocator(new LocatorWithMatcher('Foo'));
+        $bundleProxy->addLocator(new LocatorWithMatcher());
 
         $bundleProxy->notMatchingTest();
     }

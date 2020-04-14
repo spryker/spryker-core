@@ -18,27 +18,22 @@
         <property name="idProductPackagingUnit" type="int"/>
         <property name="productPackagingUnitType" type="ProductPackagingUnitType"/>
         <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount"/>
-        <property name="hasLeadProduct" type="bool"/>
+        <property name="leadProduct" type="ProductConcrete"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
-        <property name="idProductPackagingUnitAmount" type="int"/>
-        <property name="isVariable" type="bool"/>
-        <property name="defaultAmount" type="int"/>
-        <property name="amountMin" type="int"/>
-        <property name="amountMax" type="int"/>
-        <property name="amountInterval" type="int"/>
-    </transfer>
-
-    <transfer name="ProductPackagingLeadProduct">
-        <property name="idProductAbstract" type="int"/>
-        <property name="product" type="ProductConcrete"/>
+        <property name="isAmountVariable" type="bool"/>
+        <property name="defaultAmount" type="decimal"/>
+        <property name="amountMin" type="decimal"/>
+        <property name="amountMax" type="decimal"/>
+        <property name="amountInterval" type="decimal"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amountLeadProduct" type="ProductConcrete"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amount" type="int"/>
+        <property name="amount" type="decimal"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
         <property name="id" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
@@ -48,6 +43,10 @@
         <property name="groupKey" type="string"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="decimal"/>
     </transfer>
 
     <transfer name="OmsStateCollection">
@@ -67,7 +66,7 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -107,6 +106,7 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">

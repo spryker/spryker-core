@@ -63,7 +63,7 @@ class SalesOrderThresholdHelper extends Module
     {
         $salesOrderThresholdTypeTransfer = $this->getFacade()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTypeTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTypeTransfer): void {
             $this->getSalesOrderThresholdTypeQuery()
                 ->filterByKey($salesOrderThresholdTypeTransfer->getKey())
                 ->filterByThresholdGroup($salesOrderThresholdTypeTransfer->getThresholdGroup())

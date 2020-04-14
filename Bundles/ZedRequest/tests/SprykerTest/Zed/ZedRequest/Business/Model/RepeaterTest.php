@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ZedRequest\Business\Model;
 
 use Codeception\TestCase\Test;
+use Spryker\Zed\ZedRequest\Business\Exception\InvalidActionPathException;
 use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 
 /**
@@ -28,7 +29,7 @@ class RepeaterTest extends Test
     /**
      * @return void
      */
-    public function testSetRepeatedDataWritesDataToFiles()
+    public function testSetRepeatedDataWritesDataToFiles(): void
     {
         $requestMock = $this->tester->getTransferRequest();
         $httpRequest = $this->tester->getHttpRequest();
@@ -43,11 +44,86 @@ class RepeaterTest extends Test
     /**
      * @return void
      */
-    public function testGetRepeatedDataReturnsArray()
+    public function testSetRepeatedDataThrowsExceptionForInvalidBundleRequest(): void
     {
+        // Arrange
+        $requestMock = $this->tester->getTransferRequest();
+        $httpRequest = $this->tester->getHttpRequestWithInvalidBundleAttribute();
+
         $repeater = new Repeater();
 
-        $this->assertIsArray($repeater->getRepeatData());
-        $this->assertIsArray($repeater->getRepeatData($this->tester->getBundleControllerAction()));
+        // Assert
+        $this->expectException(InvalidActionPathException::class);
+
+        // Act
+        $repeater->setRepeatData($requestMock, $httpRequest);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetRepeatedDataThrowsExceptionForInvalidControllerRequest(): void
+    {
+        // Arrange
+        $requestMock = $this->tester->getTransferRequest();
+        $httpRequest = $this->tester->getHttpRequestWithInvalidControllerAttribute();
+
+        $repeater = new Repeater();
+
+        // Assert
+        $this->expectException(InvalidActionPathException::class);
+
+        // Act
+        $repeater->setRepeatData($requestMock, $httpRequest);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetRepeatedDataThrowsExceptionForInvalidActionRequest(): void
+    {
+        // Arrange
+        $requestMock = $this->tester->getTransferRequest();
+        $httpRequest = $this->tester->getHttpRequestWithInvalidActionAttribute();
+
+        $repeater = new Repeater();
+
+        // Assert
+        $this->expectException(InvalidActionPathException::class);
+
+        // Act
+        $repeater->setRepeatData($requestMock, $httpRequest);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetRepeatedDataReturnsArray(): void
+    {
+        // Arrange
+        $repeater = new Repeater();
+
+        // Act
+        $repeatData = $repeater->getRepeatData();
+        $bundleControllerActionRepeatData = $repeater->getRepeatData($this->tester->getBundleControllerAction());
+
+        // Assert
+        $this->assertIsArray($repeatData);
+        $this->assertIsArray($bundleControllerActionRepeatData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetRepeatedDataThrowsExceptionOnInvalidBundleControllerAction(): void
+    {
+        // Arrange
+        $repeater = new Repeater();
+
+        // Assert
+        $this->expectException(InvalidActionPathException::class);
+
+        // Act
+        $repeater->getRepeatData($this->tester->getInvalidBundleControllerAction());
     }
 }

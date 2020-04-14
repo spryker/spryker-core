@@ -1,6 +1,6 @@
 # MerchantRelationshipGui Module
 [![Build Status](https://travis-ci.org/spryker/merchant-relationship-gui.svg)](https://travis-ci.org/spryker/merchant-relationship-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-relationship-gui/badge.svg)](https://coveralls.io/github/spryker/merchant-relationship-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 MerchantRelationshipGui Module provides Zed UI interface for management merchant relationships.
 

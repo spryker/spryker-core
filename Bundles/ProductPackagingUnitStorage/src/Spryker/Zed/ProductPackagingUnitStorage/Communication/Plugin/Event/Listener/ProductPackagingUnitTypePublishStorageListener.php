@@ -9,11 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Lis
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishStoragePublishListener` and `\Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishStorageUnpublishListener` instead.
- *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
@@ -21,6 +18,8 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -34,27 +33,8 @@ class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin impl
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingTypeIds);
+        $productConcreteIds = $this->getFacade()->findProductIdsByProductPackagingUnitTypeIds($productPackagingTypeIds);
 
-        $publishEvents = $this->getPublishEvents();
-
-        if (in_array($eventName, $publishEvents)) {
-            $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
-
-            return;
-        }
-
-        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getPublishEvents(): array
-    {
-        return [
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE,
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE,
-        ];
+        $this->getFacade()->publishProductPackagingUnit($productConcreteIds);
     }
 }

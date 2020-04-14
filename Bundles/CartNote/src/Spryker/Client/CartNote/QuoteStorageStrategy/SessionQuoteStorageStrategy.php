@@ -8,6 +8,7 @@
 namespace Spryker\Client\CartNote\QuoteStorageStrategy;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface;
 use Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -91,7 +92,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function findItem($quoteTransfer, $sku, $groupKey = null): array
+    protected function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): array
     {
         return $this->quoteItemFinderPlugin->findItem($quoteTransfer, $sku, $groupKey);
     }

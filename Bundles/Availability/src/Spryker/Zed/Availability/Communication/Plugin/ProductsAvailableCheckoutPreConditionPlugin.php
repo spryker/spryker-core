@@ -22,6 +22,8 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
+     *  - Check if all items in cart are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

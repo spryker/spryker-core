@@ -8,8 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/testify": "*"
+    "spryker/container": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use ApplicationPluginInterface or BootableApplicationPluginInterface"
@@ -21,6 +20,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -8,17 +8,22 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -373,6 +378,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productConcreteEntities = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductQuery(),
+            $filterTransfer
+        )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
@@ -464,6 +484,120 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $productAbstractTransfers[] = $productMapper->mapProductAbstractEntityToProductAbstractTransferForSuggestion(
+                $productAbstractEntity,
+                new ProductAbstractTransfer()
+            );
+        }
+
+        return $productAbstractTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productQuery = $this->getFactory()->createProductQuery();
+        $productConcreteEntities = $this->buildQueryFromCriteria($productQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+        return $this->mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations($productConcreteEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function mapProductConcreteEntitiesToProductConcreteTransfersWithoutRelations(
+        ObjectCollection $productConcreteEntities
+    ): array {
+        $productConcreteTransfers = [];
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
+                $productConcreteEntity,
+                new ProductConcreteTransfer()
+            );
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
+    {
+        $urlQuery = $this->getFactory()
+            ->getUrlQueryContainer()
+            ->queryUrls();
+
+        $urlQuery = $this->setUrlFilters($urlQuery, $productUrlCriteriaFilterTransfer);
+        $urlEntities = $urlQuery->find();
+
+        $urlTransfers = [];
+
+        foreach ($urlEntities as $urlEntity) {
+            $urlTransfers[] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        }
+
+        return $urlTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function setUrlFilters(
+        SpyUrlQuery $urlQuery,
+        ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+    ): SpyUrlQuery {
+        if (count($productUrlCriteriaFilterTransfer->getProductAbstractIds())) {
+            $urlQuery->filterByFkResourceProductAbstract_In($productUrlCriteriaFilterTransfer->getProductAbstractIds());
+        }
+
+        if ($productUrlCriteriaFilterTransfer->getIdLocale()) {
+            $urlQuery->filterByFkLocale($productUrlCriteriaFilterTransfer->getIdLocale());
+        }
+
+        return $urlQuery;
+    }
+
+    /**
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        $productAbstractEntities = $this->getFactory()->createProductAbstractQuery()
+            ->filterBySku_In($productAbstractSkus)
+            ->find();
+
+        return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    protected function mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations(ObjectCollection $productAbstractEntities): array
+    {
+        $productAbstractTransfers = [];
+        $mapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $mapper->mapProductAbstractEntityToProductAbstractTransferWithoutRelations(
                 $productAbstractEntity,
                 new ProductAbstractTransfer()
             );

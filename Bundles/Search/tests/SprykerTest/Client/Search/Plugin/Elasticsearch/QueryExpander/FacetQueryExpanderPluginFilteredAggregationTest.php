@@ -33,7 +33,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    public function facetQueryExpanderDataProvider()
+    public function facetQueryExpanderDataProvider(): array
     {
         return [
             'filtered single string facet' => $this->createFilteredStringFacetData(),
@@ -48,7 +48,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createFilteredStringFacetData()
+    protected function createFilteredStringFacetData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();
@@ -72,7 +72,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createMultiFilteredStringFacetData()
+    protected function createMultiFilteredStringFacetData(): array
     {
         $searchConfig = $this->createMultiStringSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();
@@ -152,7 +152,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createFilteredIntegerFacetData()
+    protected function createFilteredIntegerFacetData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
         $expectedIntegerFacetAggregation = $this->getExpectedIntegerFacetAggregation();
@@ -176,7 +176,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createMultiFilteredIntegerFacetData()
+    protected function createMultiFilteredIntegerFacetData(): array
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
         $expectedIntegerFacetAggregation = $this->getExpectedIntegerFacetAggregation();
@@ -264,7 +264,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createFilteredCategoryFacetData()
+    protected function createFilteredCategoryFacetData(): array
     {
         $searchConfig = $this->createCategorySearchConfig();
         $expectedCategoryFacetAggregation = $this->getExpectedCategoryFacetAggregation();
@@ -287,7 +287,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
     /**
      * @return array
      */
-    protected function createFilteredMixedFacetData()
+    protected function createFilteredMixedFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();

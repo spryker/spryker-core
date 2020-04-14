@@ -29,7 +29,7 @@ class DataImportBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCsvDataImporterCanBeCreatedFromConfiguration()
+    public function testCsvDataImporterCanBeCreatedFromConfiguration(): void
     {
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import-standard.csv');

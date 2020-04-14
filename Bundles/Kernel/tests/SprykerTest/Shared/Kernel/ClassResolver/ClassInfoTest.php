@@ -8,8 +8,8 @@
 namespace SprykerTest\Shared\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver;
 
 /**
  * Auto-generated group annotations
@@ -26,13 +26,13 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleStripsStoreNameFromBundleName()
+    public function testGetBundleStripsStoreNameFromModuleName(): void
     {
         $classInfo = $this->getClassInfo('DE');
 
         $classInfo->setClass('\\ProjectNamespace\\Zed\CartDE\\Business\\CartFacade');
 
-        $this->assertSame('Cart', $classInfo->getBundle());
+        $this->assertSame('Cart', $classInfo->getModule());
     }
 
     /**
@@ -40,16 +40,16 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    protected function getClassInfo($storeName)
+    protected function getClassInfo(string $storeName): ClassInfo
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
-            ->setMethods(['getBundleNameResolver'])
+            ->setMethods(['getModuleNameResolver'])
             ->getMock();
 
         $mock
-            ->method('getBundleNameResolver')
-            ->will($this->returnValue($this->getBundleNameResolverMock($storeName)));
+            ->method('getModuleNameResolver')
+            ->will($this->returnValue($this->getModuleNameResolverMock($storeName)));
 
         return $mock;
     }
@@ -57,12 +57,12 @@ class ClassInfoTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolverMock($storeName)
+    protected function getModuleNameResolverMock(string $storeName): ModuleNameResolver
     {
         $mock = $this
-            ->getMockBuilder(BundleNameResolver::class)
+            ->getMockBuilder(ModuleNameResolver::class)
             ->setMethods(['getStoreName'])
             ->getMock();
 

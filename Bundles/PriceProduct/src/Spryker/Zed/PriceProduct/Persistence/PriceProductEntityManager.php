@@ -130,12 +130,15 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->requireFkPriceType()
             ->requireIdProduct();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity */
+        $priceProductEntity = $this->getFactory()
             ->createPriceProductQuery()
             ->filterByFKProduct($priceProductTransfer->getIdProduct())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
             ->findOneOrCreate()
             ->save();
+
+        return $priceProductEntity->getIdPriceProduct();
     }
 
     /**
@@ -149,11 +152,14 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->requireFkPriceType()
             ->requireIdProductAbstract();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity */
+        $priceProductEntity = $this->getFactory()
             ->createPriceProductQuery()
             ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
             ->findOneOrCreate()
             ->save();
+
+        return $priceProductEntity->getIdPriceProduct();
     }
 }

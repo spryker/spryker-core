@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
+use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -42,7 +43,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetByIdCurrencyShouldReturnCurrencyTransfer()
+    public function testGetByIdCurrencyShouldReturnCurrencyTransfer(): void
     {
         $idCurrency = $this->tester->haveCurrency();
         $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency($idCurrency);
@@ -53,7 +54,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateCurrencyShouldPersistGivenData()
+    public function testCreateCurrencyShouldPersistGivenData(): void
     {
         $currencyTransfer = (new CurrencyBuilder())->build();
 
@@ -65,7 +66,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetByIdCurrencyShouldReturnCurrencyFromPersistence()
+    public function testGetByIdCurrencyShouldReturnCurrencyFromPersistence(): void
     {
         $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency(1);
 
@@ -154,7 +155,7 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
-    protected function createCurrencyFacade()
+    protected function createCurrencyFacade(): CurrencyFacadeInterface
     {
         return new CurrencyFacade();
     }

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\AuthRestApi\Helper;
@@ -21,7 +21,7 @@ class AuthRestApiHelper extends Module
     /**
      * Specification:
      * - Authorizes customer and returns OauthResponseTransfer.
-     * - Returns OauthResponseTransfer with error if authorization failed.
+     * - Fails test in case oauth request was not successful.
      *
      * @part json
      *
@@ -43,9 +43,13 @@ class AuthRestApiHelper extends Module
             $oauthRequestTransfer->setCustomerReference($anonymousCustomerReference);
         }
 
-        return $this->getLocator()
+        $oauthResponseTransfer = $this->getLocator()
             ->authRestApi()
             ->facade()
             ->createAccessToken($oauthRequestTransfer);
+
+        $this->assertTrue($oauthResponseTransfer->getIsValid(), 'OAuth token request failed');
+
+        return $oauthResponseTransfer;
     }
 }

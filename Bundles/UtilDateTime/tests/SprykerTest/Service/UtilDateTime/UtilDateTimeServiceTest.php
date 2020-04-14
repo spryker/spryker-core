@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use DateTimeZone;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 /**
@@ -32,13 +33,13 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider dateFormatDataProvider
      *
-     * @param string $date
+     * @param string|\DateTime $date
      * @param string $format
      * @param string $expectedFormattedDate
      *
      * @return void
      */
-    public function testFormatDateReturnsFormattedDate($date, $format, $expectedFormattedDate)
+    public function testFormatDateReturnsFormattedDate($date, string $format, string $expectedFormattedDate): void
     {
         $utilDateTimeService = $this->getService([
             UtilDateTimeConstants::DATE_TIME_FORMAT_DATE => $format,
@@ -51,7 +52,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @return array
      */
-    public function dateFormatDataProvider()
+    public function dateFormatDataProvider(): array
     {
         return [
             ['1980-12-06 08:00:00', 'M. d, Y', 'Dec. 06, 1980'],
@@ -64,13 +65,13 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider dateTimeFormatDataProvider
      *
-     * @param string $date
+     * @param string|\DateTime $date
      * @param string $format
      * @param string $expectedFormattedDateTime
      *
      * @return void
      */
-    public function testFormatDateTimeReturnsFormattedDateTime($date, $format, $expectedFormattedDateTime)
+    public function testFormatDateTimeReturnsFormattedDateTime($date, string $format, string $expectedFormattedDateTime): void
     {
         $utilDateTimeService = $this->getService([
             UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME => $format,
@@ -83,7 +84,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @return array
      */
-    public function dateTimeFormatDataProvider()
+    public function dateTimeFormatDataProvider(): array
     {
         return [
             ['1980-12-06 08:00:00', 'M. d, Y H:i', 'Dec. 06, 1980 08:00'],
@@ -96,13 +97,13 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider timeFormatDataProvider
      *
-     * @param string $date
+     * @param string|\DateTime $date
      * @param string $format
      * @param string $expectedFormattedTime
      *
      * @return void
      */
-    public function testFormatTimeReturnsFormattedTime($date, $format, $expectedFormattedTime)
+    public function testFormatTimeReturnsFormattedTime($date, string $format, string $expectedFormattedTime): void
     {
         $utilDateTimeService = $this->getService([
             UtilDateTimeConstants::DATE_TIME_FORMAT_TIME => $format,
@@ -115,7 +116,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @return array
      */
-    public function timeFormatDataProvider()
+    public function timeFormatDataProvider(): array
     {
         return [
             ['1980-12-06 23:00:00', 'H:i', '23:00'],
@@ -129,7 +130,7 @@ class UtilDateTimeServiceTest extends Unit
      *
      * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected function getService(array $config)
+    protected function getService(array $config): UtilDateTimeServiceInterface
     {
         $this->prepareConfig($config);
         $utilDateTimeService = new UtilDateTimeService();
@@ -142,7 +143,7 @@ class UtilDateTimeServiceTest extends Unit
      *
      * @return void
      */
-    protected function prepareConfig(array $config)
+    protected function prepareConfig(array $config): void
     {
         foreach ($config as $key => $value) {
             $this->tester->setConfig($key, $value);

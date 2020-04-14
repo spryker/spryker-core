@@ -33,6 +33,7 @@
     </transfer>
 
     <transfer name="Company">
+        <property name="fkCompanyType" type="int"/>
     </transfer>
 
 </transfers>

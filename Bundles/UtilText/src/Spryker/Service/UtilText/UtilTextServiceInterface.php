@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Service\UtilText;
 
 interface UtilTextServiceInterface
@@ -31,6 +32,18 @@ interface UtilTextServiceInterface
      * @return string
      */
     public function generateRandomString($length);
+
+    /**
+     * Specification:
+     * - Generates a random byte string which is suitable for usage in security relevant topics.
+     *
+     * @api
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string;
 
     /**
      * Specification:
@@ -88,6 +101,8 @@ interface UtilTextServiceInterface
     /**
      * Specification:
      * - Checks if a hash matches against a raw token that gets hashed internally.
+     *
+     * @api
      *
      * @param string $rawToken
      * @param string $hash

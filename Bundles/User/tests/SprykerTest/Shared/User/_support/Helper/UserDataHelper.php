@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\User\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\User\Business\UserFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class UserDataHelper extends Module
@@ -20,7 +22,7 @@ class UserDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function haveUser(array $override = [])
+    public function haveUser(array $override = []): UserTransfer
     {
         $userTransfer = (new UserBuilder($override))->build();
         $userTransfer = $this->getUserFacade()->addUser(
@@ -36,7 +38,7 @@ class UserDataHelper extends Module
     /**
      * @return \Spryker\Zed\User\Business\UserFacadeInterface
      */
-    private function getUserFacade()
+    private function getUserFacade(): UserFacadeInterface
     {
         return $this->getLocatorHelper()->getLocator()->user()->facade();
     }

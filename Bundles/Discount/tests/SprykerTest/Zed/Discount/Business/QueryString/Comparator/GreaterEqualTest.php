@@ -29,7 +29,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenMoreEqualExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenMoreEqualExpressionProvided(): void
     {
         $moreEqual = $this->createMoreEqual();
 
@@ -44,7 +44,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue()
+    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue(): void
     {
         $moreEqual = $this->createMoreEqual();
 
@@ -59,7 +59,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse()
+    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse(): void
     {
         $moreEqual = $this->createMoreEqual();
 
@@ -74,7 +74,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenClauseValueIsEqualShouldReturnTrue()
+    public function testCompareWhenClauseValueIsEqualShouldReturnTrue(): void
     {
         $moreEqual = $this->createMoreEqual();
 
@@ -89,7 +89,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenNonNumericValueUsedShouldThrowException()
+    public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
 
@@ -103,7 +103,7 @@ class GreaterEqualTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual
      */
-    protected function createMoreEqual()
+    protected function createMoreEqual(): GreaterEqual
     {
         return new GreaterEqual();
     }

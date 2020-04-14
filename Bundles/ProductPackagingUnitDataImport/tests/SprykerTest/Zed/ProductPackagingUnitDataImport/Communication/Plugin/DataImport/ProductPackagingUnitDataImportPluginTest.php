@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
+use Throwable;
 
 /**
  * Auto-generated group annotations
@@ -31,7 +32,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
  */
 class ProductPackagingUnitDataImportPluginTest extends Unit
 {
-    protected const EXPECTED_AMOUNT = 2;
+    protected const EXPECTED_AMOUNT = 4;
 
     protected const PRODUCT_SKUS = [
         'concrete_sku_example_1',
@@ -66,10 +67,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
     {
         $this->tester->truncateProductPackagingUnits();
         $this->tester->truncateProductPackagingUnitTypes();
-        $this->tester->truncateProductPackagingLeadProducts();
         $this->tester->assertProductPackagingUnitTableIsEmtpy();
         $this->tester->assertProductPackagingUnitTypeTableIsEmtpy();
-        $this->tester->assertProductPackagingLeadProductTableIsEmtpy();
 
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
@@ -88,10 +87,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertProductPackagingLeadProductTableHasRecords();
+        $this->tester->assertProductPackagingUnitTableHasRecords(static::EXPECTED_AMOUNT);
         $this->cleanupTestProducts();
-        $this->tester->assertProductPackagingUnitTableHasRecords();
-        $this->tester->assertProductPackagingUnitAmountTableHasRecords(static::EXPECTED_AMOUNT);
     }
 
     /**
@@ -109,7 +106,12 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
     protected function createTestProducts(): void
     {
         foreach (static::PRODUCT_SKUS as $sku) {
-            $productConcreteTransfer = $this->tester->haveProduct([SpyProductEntityTransfer::SKU => $sku]);
+            try {
+                $productConcreteTransfer = $this->tester->haveProduct([SpyProductEntityTransfer::SKU => $sku]);
+            } catch (Throwable $throwable) {
+                $productConcreteTransfer = $this->tester->getLocator()->product()->facade()->getProductConcrete($sku);
+            }
+
             $this->productAbstractIds[$sku] = $productConcreteTransfer->getFkProductAbstract();
             $this->productConcreteIds[$sku] = $productConcreteTransfer->getIdProductConcrete();
         }
@@ -144,8 +146,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
      */
     protected function cleanupTestProducts(): void
     {
-        foreach ($this->productAbstractIds as $abstractId) {
-            $this->tester->cleanupProductPackagingLeadProduct($abstractId);
+        foreach ($this->productConcreteIds as $concreteId) {
+            $this->tester->cleanupProductPackagingUnitProduct($concreteId);
         }
     }
 }

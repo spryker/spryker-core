@@ -47,10 +47,10 @@ class MerchantDataImportHelper extends Module
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
-    public function findMerchantByKey(string $key): SpyMerchant
+    public function findMerchantByKey(string $key): ?SpyMerchant
     {
         return $this->getMerchantQuery()
-            ->filterByKey($key)
+            ->filterByMerchantKey($key)
             ->findOne();
     }
 }

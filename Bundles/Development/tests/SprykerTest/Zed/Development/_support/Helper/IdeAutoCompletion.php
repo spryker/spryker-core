@@ -19,7 +19,7 @@ class IdeAutoCompletion extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -30,7 +30,7 @@ class IdeAutoCompletion extends Module
     /**
      * @return void
      */
-    protected function removeTestTargetDirectory()
+    protected function removeTestTargetDirectory(): void
     {
         if (!is_dir(static::TEST_TARGET_DIRECTORY)) {
             return;
@@ -50,7 +50,7 @@ class IdeAutoCompletion extends Module
     /**
      * @return void
      */
-    protected function createTestTargetDirectory()
+    protected function createTestTargetDirectory(): void
     {
         mkdir(static::TEST_TARGET_DIRECTORY, 0777, true);
     }
@@ -60,7 +60,7 @@ class IdeAutoCompletion extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         parent::_after($test);
 
@@ -69,11 +69,11 @@ class IdeAutoCompletion extends Module
 
     /**
      * @param \Codeception\TestInterface $test
-     * @param bool $fail
+     * @param \Exception $fail
      *
      * @return void
      */
-    public function _failed(TestInterface $test, $fail)
+    public function _failed(TestInterface $test, $fail): void
     {
         parent::_failed($test, $fail);
 

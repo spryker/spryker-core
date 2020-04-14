@@ -29,7 +29,7 @@ class DateTimeFormatterServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterAddsExtensionToTwig()
+    public function testRegisterAddsExtensionToTwig(): void
     {
         $applicationMock = $this->getApplicationMock();
         $dateTimeFormatterServiceProvider = new DateTimeFormatterServiceProvider();
@@ -43,7 +43,7 @@ class DateTimeFormatterServiceProviderTest extends Unit
     /**
      * @return \Silex\Application
      */
-    protected function getApplicationMock()
+    protected function getApplicationMock(): Application
     {
         $application = new Application();
         $application['twig'] = function () {

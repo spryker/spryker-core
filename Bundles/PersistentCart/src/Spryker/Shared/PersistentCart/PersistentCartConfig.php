@@ -17,6 +17,8 @@ class PersistentCartConfig extends AbstractBundleConfig
     protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPersistentCartAnonymousPrefix(): string

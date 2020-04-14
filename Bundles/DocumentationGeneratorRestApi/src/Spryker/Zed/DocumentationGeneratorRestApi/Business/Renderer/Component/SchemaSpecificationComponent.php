@@ -40,16 +40,73 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             return [];
         }
 
-        if (count($this->schemaComponentTransfer->getProperties()) === 0) {
+        if (count($this->schemaComponentTransfer->getProperties()) === 0 && !$this->schemaComponentTransfer->getItems()) {
             //empty object is needed for generation of valid OpenAPI scheme
             return [
                 $this->schemaComponentTransfer->getName() => (object)[],
             ];
         }
 
-        $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
+        $schemaData = [];
+        $schemaData = $this->addProperties($schemaData);
+        $schemaData = $this->addItems($schemaData);
+        $schemaData = $this->addRequired($schemaData);
+        $schemaData = $this->addType($schemaData);
+
+        return $schemaData;
+    }
+
+    /**
+     * @param array $schemaData
+     *
+     * @return array
+     */
+    protected function addProperties(array $schemaData): array
+    {
+        if (count($this->schemaComponentTransfer->getProperties())) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
+        }
+
+        return $schemaData;
+    }
+
+    /**
+     * @param array $schemaData
+     *
+     * @return array
+     */
+    protected function addItems(array $schemaData): array
+    {
+        if ($this->schemaComponentTransfer->getItems()) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::ITEMS] = $this->schemaComponentTransfer->getItems();
+        }
+
+        return $schemaData;
+    }
+
+    /**
+     * @param array $schemaData
+     *
+     * @return array
+     */
+    protected function addRequired(array $schemaData): array
+    {
         if ($this->schemaComponentTransfer->getRequired()) {
             $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::REQUIRED] = $this->schemaComponentTransfer->getRequired();
+        }
+
+        return $schemaData;
+    }
+
+    /**
+     * @param array $schemaData
+     *
+     * @return array
+     */
+    protected function addType(array $schemaData): array
+    {
+        if ($this->schemaComponentTransfer->getType()) {
+            $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::TYPE] = $this->schemaComponentTransfer->getType();
         }
 
         return $schemaData;
@@ -65,7 +122,6 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
         }
 
         $this->schemaComponentTransfer->requireName();
-        $this->schemaComponentTransfer->requireProperties();
 
         return true;
     }

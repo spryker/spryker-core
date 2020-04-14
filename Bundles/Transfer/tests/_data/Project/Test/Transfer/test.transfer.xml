@@ -3,6 +3,7 @@
     <transfer name="FooBar">
         <property name="name" type="string"/>
         <property name="bla" type="int"/>
+        <property name="stock" type="decimal"/>
     </transfer>
 
     <transfer name="AnEmptyOne">

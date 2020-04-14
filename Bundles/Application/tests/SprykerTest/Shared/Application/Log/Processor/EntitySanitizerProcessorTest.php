@@ -32,7 +32,7 @@ class EntitySanitizerProcessorTest extends Unit
      *
      * @return void
      */
-    public function testInvokeShouldAddSanitizedEntityDataToRecordsExtra(array $context)
+    public function testInvokeShouldAddSanitizedEntityDataToRecordsExtra(array $context): void
     {
         $record = ['message' => 'message', 'context' => $context];
         $filterFields = [
@@ -48,7 +48,7 @@ class EntitySanitizerProcessorTest extends Unit
     /**
      * @return array
      */
-    public function getContext()
+    public function getContext(): array
     {
         $entity = new Entity();
 
@@ -61,7 +61,7 @@ class EntitySanitizerProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testIfContextDoesNotContainEntityDoNothing()
+    public function testIfContextDoesNotContainEntityDoNothing(): void
     {
         $record = ['message' => 'message', 'context' => ''];
         $sanitizer = new Sanitizer([], '***');

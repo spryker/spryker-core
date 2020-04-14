@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ConfigurableBundleTemplatePageSearch">
+        <property name="idConfigurableBundleTemplatePageSearch" type="string"/>
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+        <property name="key" type="string"/>
+        <property name="data" type="string"/>
+        <property name="structuredData" type="string"/>
+        <property name="images" type="array" singular="image"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchCollection">
+        <property name="configurableBundleTemplatePageSearches" type="ConfigurableBundleTemplatePageSearch[]" singular="configurableBundleTemplatePageSearch"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateCollection">
+        <property name="configurableBundleTemplates" type="ConfigurableBundleTemplate[]" singular="configurableBundleTemplate"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplate">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
+        <property name="isActive" type="bool"/>
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+        <property name="requestParameters" type="array" singular="requestParameter"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="key" type="string"/>
+        <property name="data" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateTranslation">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+</transfers>

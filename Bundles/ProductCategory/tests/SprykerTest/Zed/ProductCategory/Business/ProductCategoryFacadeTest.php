@@ -31,7 +31,7 @@ class ProductCategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByCategoryIdsReturnArrayOfIdsOfAssignedConcretes()
+    public function testGetProductConcreteIdsByCategoryIdsReturnArrayOfIdsOfAssignedConcretes(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveCategory();
@@ -51,7 +51,7 @@ class ProductCategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByCategoryIdsReturnsEmptyArrayWhenNoProductsAssignedToCategory()
+    public function testGetProductConcreteIdsByCategoryIdsReturnsEmptyArrayWhenNoProductsAssignedToCategory(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveCategory();

@@ -7,7 +7,9 @@
 
 {% block action %}
     {{ parent() }}
-    {{ createActionButton('/product-list-gui/create', 'Create Product List' | trans) }}
+    {% include '@ProductListGui/_partials/button-collection.twig' with {
+        buttonCollection: topButtons
+    } only %}
 {% endblock %}
 
 {% block content %}

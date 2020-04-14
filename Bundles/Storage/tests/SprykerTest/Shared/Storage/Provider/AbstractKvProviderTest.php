@@ -25,7 +25,7 @@ class AbstractKvProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetConfigByKvNameShouldReturnArray()
+    public function testGetConfigByKvNameShouldReturnArray(): void
     {
         $abstractKvProviderMock = $this->getAbstractKvProviderMock();
         $config = $abstractKvProviderMock->getConfigByKvName(AbstractKvProvider::KV_ADAPTER_REDIS);
@@ -36,7 +36,7 @@ class AbstractKvProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Storage\Provider\AbstractKvProvider
      */
-    protected function getAbstractKvProviderMock()
+    protected function getAbstractKvProviderMock(): AbstractKvProvider
     {
         $abstractKvProviderMock = $this->getMockBuilder(AbstractKvProvider::class)
             ->setMethods(['getConnectionParameters'])

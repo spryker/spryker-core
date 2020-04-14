@@ -24,11 +24,11 @@ class CartsResourceController extends AbstractController
      *              "Retrieves a cart by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "404": "Cart not found."
+     *              "404": "Cart not found.",
+     *              "403": "Missing access token."
      *          }
      *     },
      *     "getCollection": {
@@ -36,8 +36,7 @@ class CartsResourceController extends AbstractController
      *              "Retrieves list of all customer's carts."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })
@@ -64,8 +63,7 @@ class CartsResourceController extends AbstractController
      *              "Creates a cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized cart action.",
@@ -91,8 +89,7 @@ class CartsResourceController extends AbstractController
      *              "Deletes cart by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
@@ -119,13 +116,13 @@ class CartsResourceController extends AbstractController
      *              "Updates a cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
      *              "403": "Unauthorized cart action.",
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Can’t switch price mode when there are items in the cart."
      *          }
      *     }
      * })

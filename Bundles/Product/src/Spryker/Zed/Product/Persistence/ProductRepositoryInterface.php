@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 
 interface ProductRepositoryInterface
@@ -122,4 +124,32 @@ interface ProductRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
+
+    /**
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

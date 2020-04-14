@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class TaxAmountCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

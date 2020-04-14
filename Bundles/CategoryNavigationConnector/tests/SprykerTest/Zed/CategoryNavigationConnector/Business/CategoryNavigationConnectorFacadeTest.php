@@ -34,7 +34,7 @@ class CategoryNavigationConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetNavigationNodeToActiveWhenCategoryIsActive()
+    public function testSetNavigationNodeToActiveWhenCategoryIsActive(): void
     {
         $this->setUpNavigationNodeCategoryTest(true);
     }
@@ -42,7 +42,7 @@ class CategoryNavigationConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetNavigationNodeToInactiveWhenCategoryIsInactive()
+    public function testSetNavigationNodeToInactiveWhenCategoryIsInactive(): void
     {
         $this->setUpNavigationNodeCategoryTest(false);
     }
@@ -52,7 +52,7 @@ class CategoryNavigationConnectorFacadeTest extends Unit
      *
      * @return void
      */
-    protected function setUpNavigationNodeCategoryTest($isActive)
+    protected function setUpNavigationNodeCategoryTest(bool $isActive): void
     {
         // Arrange
         $locale = $this->tester->haveLocale();

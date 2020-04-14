@@ -240,7 +240,7 @@ class BusinessOnBehalfFacadeTest extends Unit
      *
      * @return array
      */
-    protected function haveCompanyUsers(int $amount, array $seed = [])
+    protected function haveCompanyUsers(int $amount, array $seed = []): array
     {
         $companyUsers = [];
 

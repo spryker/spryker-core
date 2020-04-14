@@ -1,6 +1,6 @@
 # Store Module
-[![Build Status](https://travis-ci.org/spryker/Store.svg)](https://travis-ci.org/spryker/Store)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/Store/badge.svg)](https://coveralls.io/github/spryker/Store)
+[![Build Status](https://travis-ci.org/spryker/store.svg)](https://travis-ci.org/spryker/store)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Store contains store related functionality. It provides store related information on request. Store can deliver current store information, information for all stores and information for a store requested by id. For a store currencies and locales can be retrieved.
 

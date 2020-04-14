@@ -12,7 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OauthPermissionConfig extends AbstractBundleConfig
 {
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getOauthUserIdentifierFilterKeys(): array
     {

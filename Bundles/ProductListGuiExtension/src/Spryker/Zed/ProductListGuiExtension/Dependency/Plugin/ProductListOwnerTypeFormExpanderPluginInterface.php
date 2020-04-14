@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductListGuiExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ProductListOwnerTypeFormExpanderPluginInterface
 {
     /**

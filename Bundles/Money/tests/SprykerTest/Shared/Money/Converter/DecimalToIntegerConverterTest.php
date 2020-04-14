@@ -31,7 +31,7 @@ class DecimalToIntegerConverterTest extends Unit
      *
      * @return void
      */
-    public function testConvertValidInput($input, $expected)
+    public function testConvertValidInput(float $input, int $expected): void
     {
         $decimalToIntegerConverter = new DecimalToIntegerConverter();
 
@@ -41,7 +41,7 @@ class DecimalToIntegerConverterTest extends Unit
     /**
      * @return array
      */
-    public function convertValues()
+    public function convertValues(): array
     {
         return [
             [10.01, 1001],
@@ -56,7 +56,7 @@ class DecimalToIntegerConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertInvalidInput()
+    public function testConvertInvalidInput(): void
     {
         $this->expectException(InvalidConverterArgumentException::class);
 

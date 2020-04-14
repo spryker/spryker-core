@@ -16,8 +16,7 @@ class TestResourceWithInvalidAnnotationsController
      *              "Summary example"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad Request",
@@ -28,7 +27,7 @@ class TestResourceWithInvalidAnnotationsController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 
@@ -44,7 +43,7 @@ class TestResourceWithInvalidAnnotationsController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 }

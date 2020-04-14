@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-lg-2">
                     <p><b>{{ 'Availability' | trans }}:</b></p><p>
-                        {% if productAbstractAvailability.availability > 0 or productAbstractAvailability.isNeverOutOfStock %}
+                        {% if productAbstractAvailability.availability.greaterThan(0) or productAbstractAvailability.isNeverOutOfStock %}
                             <span class="label label-info"> {{ "Available" | trans }}</span>
                         {% else  %}
                             <span class="label label-info"> {{ "Not available" | trans }}</span>

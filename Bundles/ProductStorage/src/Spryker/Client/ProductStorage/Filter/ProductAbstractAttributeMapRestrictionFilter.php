@@ -156,7 +156,9 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
         string $attributeVariantKey,
         array $attributeVariantValue
     ): array {
-        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
+        $attributeVariantPath = [
+            $attributeVariantKey => $attributeVariantValue,
+        ];
         for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
             $attributeVariantPath = [
                 $iterator->getSubIterator($i)->key() => $attributeVariantPath,

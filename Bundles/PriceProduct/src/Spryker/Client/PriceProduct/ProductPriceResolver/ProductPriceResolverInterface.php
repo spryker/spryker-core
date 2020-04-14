@@ -22,7 +22,7 @@ interface ProductPriceResolverInterface
     public function resolve(array $priceMap);
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */

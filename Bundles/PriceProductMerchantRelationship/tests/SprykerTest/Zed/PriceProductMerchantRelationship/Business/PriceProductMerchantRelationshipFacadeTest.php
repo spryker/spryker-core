@@ -33,7 +33,7 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
      *
      * @return void
      */
-    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore()
+    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore(): void
     {
         $idPriceProductStore = $this
             ->tester

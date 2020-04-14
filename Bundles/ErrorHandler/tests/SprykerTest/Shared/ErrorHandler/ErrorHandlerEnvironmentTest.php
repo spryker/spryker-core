@@ -24,7 +24,7 @@ class ErrorHandlerEnvironmentTest extends Unit
     /**
      * @return void
      */
-    public function testInitializeShouldSetErrorHandler()
+    public function testInitializeShouldSetErrorHandler(): void
     {
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();

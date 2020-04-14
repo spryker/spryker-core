@@ -27,7 +27,7 @@ class IndexControllerCest
      *
      * @return void
      */
-    public function listCategories(CategoryCommunicationTester $i)
+    public function listCategories(CategoryCommunicationTester $i): void
     {
         $i->amOnPage('/category');
         $i->seeResponseCodeIs(200);

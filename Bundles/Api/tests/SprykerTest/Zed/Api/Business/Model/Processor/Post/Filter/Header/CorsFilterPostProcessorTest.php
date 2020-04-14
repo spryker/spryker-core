@@ -41,7 +41,7 @@ class CorsFilterPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithItem()
+    public function testProcessWithItem(): void
     {
         $config = new ApiConfig();
         $processor = new CorsFilterPostProcessor($config);
@@ -65,7 +65,7 @@ class CorsFilterPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithCollection()
+    public function testProcessWithCollection(): void
     {
         $config = new ApiConfig();
         $processor = new CorsFilterPostProcessor($config);

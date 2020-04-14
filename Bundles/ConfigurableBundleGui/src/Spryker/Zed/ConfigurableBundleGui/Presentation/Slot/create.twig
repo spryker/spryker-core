@@ -1,0 +1,35 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Slot details' %}
+
+{% block section_title %}
+    {{ 'Create Slot for' | trans ~ ' ' ~ configurableBundleTemplate.translations[0].name }}
+{% endblock %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : configurableBundleTemplate.idConfigurableBundleTemplate }),'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {% set tips %}
+                {% include '@ConfigurableBundleGui/Slot/_partials/slot-tips.twig' %}
+            {% endset %}
+
+            {{ tabs(tabs, {
+                form: form,
+                currentLocale: currentLocale,
+                tips: tips
+            }) }}
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

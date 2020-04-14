@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,10 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
-    protected const SUM_COLUMN = 'sumAmount';
-    protected const SKU_COLUMN = 'sku';
-    protected const PROCESS_NAME_COLUMN = 'processName';
-    protected const STATE_NAME_COLUMN = 'stateName';
+    protected const COL_PRODUCT_RESERVATION_TOTAL_QUANTITY = 'productReservationTotalQuantity';
 
     /**
      * @param int[] $processIds
@@ -48,26 +47,29 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ])->filterBySku($sku)
-            ->innerJoinProcess()
+            ->filterBySku($sku)
             ->useStateQuery()
                 ->filterByName_In($stateNames)
             ->endUse()
             ->groupByFkOmsOrderItemState()
+            ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
-            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
-            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
-            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN);
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
+            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT)
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+            ]);
 
         if ($storeTransfer !== null) {
+            $storeTransfer->requireName();
+
             $salesOrderItemQuery
                 ->useOrderQuery()
                     ->filterByStore($storeTransfer->getName())
@@ -76,9 +78,29 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
+                ->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal
+    {
+        $productReservationTotalQuantity = $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->select([static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY])
+            ->filterByFkStore($idStore)
+            ->filterBySku_In($concreteSkus)
+            ->withColumn(sprintf('SUM(%s)', SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY), static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY)
+            ->findOne();
+
+        return new Decimal($productReservationTotalQuantity ?? 0);
     }
 }

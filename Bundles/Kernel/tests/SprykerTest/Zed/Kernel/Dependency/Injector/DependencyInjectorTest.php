@@ -30,7 +30,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $dependencyInjector = new DependencyInjector($dependencyInjectorCollection);
@@ -41,7 +41,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectBusinessLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector()
+    public function testInjectBusinessLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $abstractDependencyInjectorMock = $this->getAbstractDependencyInjectorMock();
@@ -56,7 +56,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectCommunicationLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector()
+    public function testInjectCommunicationLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $abstractDependencyInjectorMock = $this->getAbstractDependencyInjectorMock();
@@ -71,7 +71,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return void
      */
-    public function testInjectPersistenceLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector()
+    public function testInjectPersistenceLayerDependenciesShouldCallMethodOfRegisteredDependencyInjector(): void
     {
         $dependencyInjectorCollection = new DependencyInjectorCollection();
         $abstractDependencyInjectorMock = $this->getAbstractDependencyInjectorMock();
@@ -86,7 +86,7 @@ class DependencyInjectorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector
      */
-    private function getAbstractDependencyInjectorMock()
+    private function getAbstractDependencyInjectorMock(): AbstractDependencyInjector
     {
         return $this->getMockBuilder(AbstractDependencyInjector::class)->getMock();
     }

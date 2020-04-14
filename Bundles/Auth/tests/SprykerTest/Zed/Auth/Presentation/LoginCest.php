@@ -29,7 +29,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginWithValidCredentialsShouldRedirectToHomepage(AuthPresentationTester $i)
+    public function testLoginWithValidCredentialsShouldRedirectToHomepage(AuthPresentationTester $i): void
     {
         $i->wantTo('Login the system');
         $i->amGoingTo('try to login with an NON valid NAME');
@@ -46,7 +46,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginWithInvalidUsernameShouldShowErrorMessage(AuthPresentationTester $i)
+    public function testLoginWithInvalidUsernameShouldShowErrorMessage(AuthPresentationTester $i): void
     {
         $i->wantTo('Login the system');
         $i->amGoingTo('try to login with an invalid username');
@@ -69,7 +69,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginWithInvalidPasswordShouldShowErrorMessage(AuthPresentationTester $i)
+    public function testLoginWithInvalidPasswordShouldShowErrorMessage(AuthPresentationTester $i): void
     {
         $i->wantTo('Login the system');
         $i->amGoingTo('try to log in with an invalid password');
@@ -92,7 +92,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginWithoutUsernameShouldShowErrorMessageInFom(AuthPresentationTester $i)
+    public function testLoginWithoutUsernameShouldShowErrorMessageInFom(AuthPresentationTester $i): void
     {
         $i->wantTo('Login the system');
         $i->amGoingTo('try to log in without username');
@@ -109,7 +109,7 @@ class LoginCest
      *
      * @return void
      */
-    public function testLoginWithoutPasswordShouldShowErrorMessageInFom(AuthPresentationTester $i)
+    public function testLoginWithoutPasswordShouldShowErrorMessageInFom(AuthPresentationTester $i): void
     {
         $i->wantTo('Login the system');
         $i->amGoingTo('try to log in without password');

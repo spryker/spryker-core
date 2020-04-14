@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\CustomerNoteGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerTest\Zed\CustomerNoteGui\CustomerNoteGuiCommunicationTester;
 use SprykerTest\Zed\CustomerNoteGui\PageObject\CustomerNotePage;
 
@@ -28,7 +29,7 @@ class CustomerNoteGuiCest
      *
      * @return void
      */
-    public function testIndexAction(CustomerNoteGuiCommunicationTester $i)
+    public function testIndexAction(CustomerNoteGuiCommunicationTester $i): void
     {
         $i->sendAjaxPostRequest(CustomerNotePage::URL, [
             'customerTransfer' => $this->getCustomer($i),
@@ -41,7 +42,7 @@ class CustomerNoteGuiCest
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomer(CustomerNoteGuiCommunicationTester $i)
+    protected function getCustomer(CustomerNoteGuiCommunicationTester $i): CustomerTransfer
     {
         return $i->haveCustomer();
     }

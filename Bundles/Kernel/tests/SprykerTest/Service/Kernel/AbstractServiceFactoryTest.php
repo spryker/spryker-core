@@ -29,7 +29,7 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testSetContainer()
+    public function testSetContainer(): void
     {
         $container = new Container();
         $factory = new ServiceFactory();
@@ -40,7 +40,7 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyThrowsException()
+    public function testGetProvidedDependencyThrowsException(): void
     {
         $container = new Container();
         $factory = new ServiceFactory();
@@ -53,7 +53,7 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependency()
+    public function testGetProvidedDependency(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -66,7 +66,7 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyShouldResolveContainer()
+    public function testGetProvidedDependencyShouldResolveContainer(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -80,9 +80,9 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractFactory
+     * @return \SprykerTest\Service\Kernel\Fixtures\ServiceFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getFactoryMock(array $methods)
+    protected function getFactoryMock(array $methods): ServiceFactory
     {
         $factoryMock = $this->getMockBuilder(ServiceFactory::class)->setMethods($methods)->getMock();
 

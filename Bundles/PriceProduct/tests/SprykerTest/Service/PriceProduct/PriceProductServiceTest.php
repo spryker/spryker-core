@@ -239,7 +239,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return array
      */
-    public function getPriceProductTransfersWithMoreConcreteData()
+    public function getPriceProductTransfersWithMoreConcreteData(): array
     {
         return [
             [$this->getMultiplePriceProductTransfers(), $this->getSinglePriceProductTransfers()],
@@ -251,7 +251,7 @@ class PriceProductServiceTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers)
+    protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers): array
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->setIsMergeable(true)

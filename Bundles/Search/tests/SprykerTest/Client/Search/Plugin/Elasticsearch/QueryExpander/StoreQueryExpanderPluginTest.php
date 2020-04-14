@@ -34,7 +34,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testStoreQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery)
+    public function testStoreQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery): void
     {
         $queryExpander = $this->createStoreQueryExpanderPluginMock();
 
@@ -48,7 +48,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function storeQueryExpanderDataProvider()
+    public function storeQueryExpanderDataProvider(): array
     {
         return [
             'simple store filtered query' => $this->getDataForSimpleStoreFilteredQuery(),
@@ -58,7 +58,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForSimpleStoreFilteredQuery()
+    protected function getDataForSimpleStoreFilteredQuery(): array
     {
         $expectedQuery = (new Query())
             ->setQuery((new BoolQuery())
@@ -69,10 +69,11 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStoreQueryExpanderPluginMock()
+    protected function createStoreQueryExpanderPluginMock(): StoreQueryExpanderPlugin
     {
+        /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject $queryExpander */
         $queryExpander = $this->getMockBuilder(StoreQueryExpanderPlugin::class)
             ->setMethods(['getStore'])
             ->getMock();

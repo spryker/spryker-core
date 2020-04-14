@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -33,7 +34,7 @@ class CustomerUserConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerUserConnectionUpdatesCustomers()
+    public function testUpdateCustomerUserConnectionUpdatesCustomers(): void
     {
         // Assign
         $userTransfer = $this->tester->haveUser();
@@ -63,7 +64,7 @@ class CustomerUserConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): CustomerUserConnectorFacadeInterface
     {
         return $this->tester->getLocator()->customerUserConnector()->facade();
     }
@@ -74,7 +75,7 @@ class CustomerUserConnectorFacadeTest extends Unit
      *
      * @return int[]
      */
-    protected function assignCustomers($idUser, $numberOfCustomers)
+    protected function assignCustomers(int $idUser, int $numberOfCustomers): array
     {
         $idCustomersToAssign = $this->createCustomers($numberOfCustomers);
 
@@ -93,7 +94,7 @@ class CustomerUserConnectorFacadeTest extends Unit
      *
      * @return int[]
      */
-    protected function createCustomers($numberOfCustomers)
+    protected function createCustomers(int $numberOfCustomers): array
     {
         $customers = [];
         for ($i = 0; $i < $numberOfCustomers; $i++) {
@@ -115,7 +116,7 @@ class CustomerUserConnectorFacadeTest extends Unit
      *
      * @return int[]
      */
-    protected function getAssignedCustomerIds($idUser)
+    protected function getAssignedCustomerIds(int $idUser): array
     {
         $customerEntities = (new SpyCustomerQuery())->findByFkUser($idUser);
 

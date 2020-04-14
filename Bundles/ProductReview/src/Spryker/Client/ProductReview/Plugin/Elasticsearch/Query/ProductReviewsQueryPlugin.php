@@ -14,15 +14,19 @@ use Elastica\Query\Match;
 use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getFactory()
  */
-class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
+class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    protected const SOURCE_IDENTIFIER = 'product-review';
+
     /**
      * @var \Elastica\Query
      */
@@ -34,6 +38,11 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     protected $productReviewSearchRequestTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      */
     public function __construct(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
@@ -43,11 +52,59 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for product review search.
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines a context for product review search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for product review search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -105,5 +162,13 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $productReviewTypeFilter;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

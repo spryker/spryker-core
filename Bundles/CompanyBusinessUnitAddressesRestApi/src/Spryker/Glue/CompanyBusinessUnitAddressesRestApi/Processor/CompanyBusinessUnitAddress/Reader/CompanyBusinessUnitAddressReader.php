@@ -68,7 +68,8 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             (new CompanyUnitAddressTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
-        if (!$companyUnitAddressResponseTransfer->getIsSuccessful()
+        if (
+            !$companyUnitAddressResponseTransfer->getIsSuccessful()
             || !$this->isCurrentCompanyUserInCompany($restRequest, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
         ) {
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();

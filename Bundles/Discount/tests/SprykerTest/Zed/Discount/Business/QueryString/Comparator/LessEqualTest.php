@@ -29,7 +29,7 @@ class LessEqualTest extends Unit
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenLessEqualExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenLessEqualExpressionProvided(): void
     {
         $lessEqual = $this->createLessEqual();
 
@@ -44,7 +44,7 @@ class LessEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueLessClauseShouldReturnTrue()
+    public function testCompareWhenValueLessClauseShouldReturnTrue(): void
     {
         $lessEqual = $this->createLessEqual();
 
@@ -59,7 +59,7 @@ class LessEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueEqualClauseShouldReturnTrue()
+    public function testCompareWhenValueEqualClauseShouldReturnTrue(): void
     {
         $lessEqual = $this->createLessEqual();
 
@@ -74,7 +74,7 @@ class LessEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenValueNotLessThanClauseShouldReturnFalse()
+    public function testCompareWhenValueNotLessThanClauseShouldReturnFalse(): void
     {
         $lessEqual = $this->createLessEqual();
 
@@ -89,7 +89,7 @@ class LessEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenNonNumericValueUsedShouldThrowException()
+    public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
 
@@ -103,7 +103,7 @@ class LessEqualTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual
      */
-    protected function createLessEqual()
+    protected function createLessEqual(): LessEqual
     {
         return new LessEqual();
     }

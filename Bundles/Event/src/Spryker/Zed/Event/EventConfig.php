@@ -15,10 +15,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class EventConfig extends AbstractBundleConfig
 {
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 500;
+    protected const ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE = 500;
+
     public const DEFAULT_MAX_RETRY = 1;
     public const NO_RETRY = 0;
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function findEventLogPath()
@@ -31,6 +35,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isLoggerActivated()
@@ -43,6 +49,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getEventQueueMessageChunkSize()
@@ -51,6 +59,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxRetryAmount()
@@ -66,6 +76,16 @@ class EventConfig extends AbstractBundleConfig
         }
 
         return static::DEFAULT_MAX_RETRY;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getEnqueueEventMessageChunkSize(): int
+    {
+        return $this->get(EventConstants::ENQUEUE_EVENT_CHUNK, static::ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE);
     }
 
     /**

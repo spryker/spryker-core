@@ -20,6 +20,10 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Throwable;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
+ * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+ *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -32,6 +36,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event

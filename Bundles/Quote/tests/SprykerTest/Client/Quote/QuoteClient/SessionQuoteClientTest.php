@@ -40,7 +40,7 @@ class SessionQuoteClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetQuoteShouldReturnQuoteTransfer()
+    public function testGetQuoteShouldReturnQuoteTransfer(): void
     {
         $quoteClient = new QuoteClient();
 
@@ -50,7 +50,7 @@ class SessionQuoteClientTest extends Unit
     /**
      * @return void
      */
-    public function testSetQuoteShouldStoreQuoteTransfer()
+    public function testSetQuoteShouldStoreQuoteTransfer(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteClient = new QuoteClient();
@@ -62,7 +62,7 @@ class SessionQuoteClientTest extends Unit
     /**
      * @return void
      */
-    public function testClearQuoteShouldSetEmptyQuoteTransfer()
+    public function testClearQuoteShouldSetEmptyQuoteTransfer(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem(new ItemTransfer());

@@ -44,7 +44,7 @@ class RouterTester extends Actor
      *
      * @return void
      */
-    public function addCalledControllerMethod(string $methodName)
+    public function addCalledControllerMethod(string $methodName): void
     {
         $this->calledControllerMethods[$methodName] = true;
     }
@@ -158,7 +158,8 @@ class RouterTester extends Actor
     public function getRequestWithNotInvokableControllerObject(): Request
     {
         $request = $this->getRequest();
-        $controllerMock = new class {
+        $controllerMock = new class
+        {
         };
         $request->attributes->set('_controller', $controllerMock);
 
@@ -170,7 +171,7 @@ class RouterTester extends Actor
      *
      * @return callable
      */
-    public function getInvokableControllerMock(RouterTester $tester)
+    public function getInvokableControllerMock(RouterTester $tester): callable
     {
         $this->calledControllerMethods = [];
 

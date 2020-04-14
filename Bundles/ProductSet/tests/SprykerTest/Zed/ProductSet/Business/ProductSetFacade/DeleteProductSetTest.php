@@ -29,7 +29,7 @@ class DeleteProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductSetRemovesEntitiesFromDatabase()
+    public function testDeleteProductSetRemovesEntitiesFromDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

@@ -40,7 +40,7 @@ class LocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnBundleProxy()
+    public function testCallShouldReturnBundleProxy(): void
     {
         $this->assertInstanceOf(BundleProxy::class, $this->locator->foo());
     }

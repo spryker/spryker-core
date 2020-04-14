@@ -18,6 +18,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\IsActiveInDateRangeQueryExpanderPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface

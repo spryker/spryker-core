@@ -28,7 +28,7 @@ class ProductLabelQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllLocalizedAttributesLabelsReturnsCorrectQuery()
+    public function testQueryAllLocalizedAttributesLabelsReturnsCorrectQuery(): void
     {
         $productLabelQueryContainer = new ProductLabelQueryContainer();
         $productLabelQueryContainer->setFactory(new ProductLabelPersistenceFactory());
@@ -40,7 +40,7 @@ class ProductLabelQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductLabelProductAbstractRelationsReturnsCorrectQuery()
+    public function testQueryAllProductLabelProductAbstractRelationsReturnsCorrectQuery(): void
     {
         $productLabelQueryContainer = new ProductLabelQueryContainer();
         $productLabelQueryContainer->setFactory(new ProductLabelPersistenceFactory());

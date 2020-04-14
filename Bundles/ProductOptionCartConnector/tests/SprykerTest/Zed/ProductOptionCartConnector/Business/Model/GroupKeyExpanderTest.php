@@ -29,7 +29,7 @@ class GroupKeyExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testKeyGroupByProvidedOptions()
+    public function testKeyGroupByProvidedOptions(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -50,7 +50,7 @@ class GroupKeyExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testWithExistingGroupKey()
+    public function testWithExistingGroupKey(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -73,7 +73,7 @@ class GroupKeyExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testWithDifferentOptionsOrder()
+    public function testWithDifferentOptionsOrder(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -107,7 +107,7 @@ class GroupKeyExpanderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer(array $cartItems)
+    protected function createCartChangeTransfer(array $cartItems): CartChangeTransfer
     {
         $changeTransfer = new CartChangeTransfer();
 

@@ -15,11 +15,13 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductReviewStorageClient extends AbstractClient implements ProductReviewStorageClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer|null
      */
     public function findProductAbstractReview($idProductAbstract)
     {

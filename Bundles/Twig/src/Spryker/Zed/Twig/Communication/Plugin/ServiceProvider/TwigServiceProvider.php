@@ -168,11 +168,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/Gui';
+        $guiDirectory = $this->getConfig()->getBundlesDirectory() . '/Gui/';
         if (!is_dir($guiDirectory)) {
-            $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/gui';
+            $guiDirectory = $this->getConfig()->getBundlesDirectory() . '/gui/';
         }
-        $path = $guiDirectory . '/src/Spryker/Zed/Gui/Presentation/Form/Type';
+        $path = $guiDirectory . 'src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app->extend('twig.loader.filesystem', function (FilesystemLoader $loader) use ($path) {
             $loader->addPath($path);
@@ -180,6 +180,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return $loader;
         });
 
+        /** @var \SplFileInfo[] $files */
         $files = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME);
 
         $typeTemplates = [];

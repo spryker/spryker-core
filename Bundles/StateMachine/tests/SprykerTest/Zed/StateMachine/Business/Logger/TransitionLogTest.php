@@ -31,7 +31,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testLoggerPersistsAllProvidedData()
+    public function testLoggerPersistsAllProvidedData(): void
     {
         $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
         $stateMachineTransitionLogEntityMock
@@ -75,7 +75,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testWhenNonCliRequestUsedShouldExtractOutputParamsAndPersist()
+    public function testWhenNonCliRequestUsedShouldExtractOutputParamsAndPersist(): void
     {
         $_SERVER[TransitionLog::QUERY_STRING] = 'one=1&two=2';
         $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
@@ -95,7 +95,7 @@ class TransitionLogTest extends StateMachineMocks
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
-    protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock)
+    protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock): TransitionLog
     {
         $partialTransitionLogMock = $this->getMockBuilder(TransitionLog::class)
             ->setMethods(['createStateMachineTransitionLogEntity'])
@@ -111,7 +111,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface
      */
-    protected function createPathFinderMock()
+    protected function createPathFinderMock(): PathFinderInterface
     {
         return $this->getMockBuilder(PathFinderInterface::class)->getMock();
     }
@@ -119,7 +119,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog
      */
-    protected function createTransitionLogEntityMock()
+    protected function createTransitionLogEntityMock(): SpyStateMachineTransitionLog
     {
         return $this->getMockBuilder(SpyStateMachineTransitionLog::class)->setMethods(['save'])->getMock();
     }
@@ -127,7 +127,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
-    protected function createUtilNetworkServiceMock()
+    protected function createUtilNetworkServiceMock(): UtilNetworkServiceInterface
     {
         $utilNetworkServiceMock = $this->getMockBuilder(UtilNetworkServiceInterface::class)->setMethods(['getHostName', 'getRequestId'])->getMock();
         $utilNetworkServiceMock->method('getHostName')->willReturn('hostname-mock');
@@ -138,7 +138,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    protected function createItemTransfer()
+    protected function createItemTransfer(): StateMachineItemTransfer
     {
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier(1);

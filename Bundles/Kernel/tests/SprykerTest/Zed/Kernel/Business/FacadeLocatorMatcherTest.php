@@ -26,7 +26,7 @@ class FacadeLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnTrueIfMethodStartsWithFacade()
+    public function testMatchShouldReturnTrueIfMethodStartsWithFacade(): void
     {
         $this->assertTrue((new FacadeLocatorMatcher())->match('facadeFoo'));
     }
@@ -34,7 +34,7 @@ class FacadeLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacade()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacade(): void
     {
         $this->assertFalse((new FacadeLocatorMatcher())->match('locatorFoo'));
     }
@@ -42,7 +42,7 @@ class FacadeLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacadeButFacadeInString()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithFacadeButFacadeInString(): void
     {
         $this->assertFalse((new FacadeLocatorMatcher())->match('locatorFacade'));
     }

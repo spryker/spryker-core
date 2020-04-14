@@ -27,7 +27,7 @@ class ProductSetQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductSetDataReturnsCorrectQuery()
+    public function testQueryAllProductSetDataReturnsCorrectQuery(): void
     {
         $productSetQueryContainer = new ProductSetQueryContainer();
         $productSetQueryContainer->setFactory(new ProductSetPersistenceFactory());

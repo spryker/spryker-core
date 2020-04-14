@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed in the next major version.
+ */
 class GiftCardCartCode implements GiftCardCartCodeInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';

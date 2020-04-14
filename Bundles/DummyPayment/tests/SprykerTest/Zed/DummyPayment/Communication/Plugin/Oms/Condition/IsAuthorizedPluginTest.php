@@ -31,7 +31,7 @@ class IsAuthorizedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckReturnTrueWhenLastNameValid()
+    public function testCheckReturnTrueWhenLastNameValid(): void
     {
         $isAuthorizedPlugin = new IsAuthorizedPlugin();
         $salesOrderEntity = new SpySalesOrder();
@@ -45,7 +45,7 @@ class IsAuthorizedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckReturnFalseWhenLastNameInvalid()
+    public function testCheckReturnFalseWhenLastNameInvalid(): void
     {
         $isAuthorizedPlugin = new IsAuthorizedPlugin();
         $salesOrderEntity = new SpySalesOrder();

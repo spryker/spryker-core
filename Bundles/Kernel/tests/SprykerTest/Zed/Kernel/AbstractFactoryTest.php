@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Kernel;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
@@ -33,7 +34,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testSetContainer()
+    public function testSetContainer(): void
     {
         $container = new Container();
         $factory = new Factory();
@@ -44,7 +45,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyThrowsException()
+    public function testGetProvidedDependencyThrowsException(): void
     {
         $container = new Container();
         $factory = new Factory();
@@ -57,7 +58,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependency()
+    public function testGetProvidedDependency(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -70,7 +71,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyShouldResolveContainer()
+    public function testGetProvidedDependencyShouldResolveContainer(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -84,7 +85,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyShouldGetInjectedData()
+    public function testGetProvidedDependencyShouldGetInjectedData(): void
     {
         $dependencyInjectorResolver = $this->getDependencyInjectorResolverMock();
         $factoryMock = $this->getFactoryMock(['createDependencyInjectorResolver', 'resolveDependencyProvider']);
@@ -99,7 +100,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getDependencyInjectorResolverMock()
+    protected function getDependencyInjectorResolverMock(): DependencyInjectorResolver
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -123,7 +124,7 @@ class AbstractFactoryTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractFactory
      */
-    protected function getFactoryMock(array $methods)
+    protected function getFactoryMock(array $methods): AbstractFactory
     {
         $factoryMock = $this->getMockBuilder(Factory::class)->setMethods($methods)->getMock();
 

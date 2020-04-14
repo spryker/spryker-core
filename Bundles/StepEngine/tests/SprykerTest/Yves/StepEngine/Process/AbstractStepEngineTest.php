@@ -9,6 +9,7 @@ namespace SprykerTest\Yves\StepEngine\Process;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMock;
@@ -50,7 +51,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \Spryker\Yves\StepEngine\Process\StepCollection
      */
-    protected function getStepCollection()
+    protected function getStepCollection(): StepCollection
     {
         return new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
     }
@@ -58,7 +59,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    protected function getUrlGeneratorMock()
+    protected function getUrlGeneratorMock(): UrlGeneratorInterface
     {
         $urlGeneratorMock = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $urlGeneratorMock->method('generate')->will($this->returnCallback([$this, 'urlGeneratorCallBack']));
@@ -71,7 +72,7 @@ abstract class AbstractStepEngineTest extends Unit
      *
      * @return string
      */
-    public function urlGeneratorCallBack($input)
+    public function urlGeneratorCallBack(string $input): string
     {
         $map = [
             self::ERROR_ROUTE => self::ERROR_URL,
@@ -89,12 +90,17 @@ abstract class AbstractStepEngineTest extends Unit
      * @param bool $postCondition
      * @param bool $requireInput
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    protected function getStepMock($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
-    {
+    protected function getStepMock(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        ?string $escapeRoute = null
+    ): StepInterface {
         return new StepMock($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 
@@ -103,7 +109,7 @@ abstract class AbstractStepEngineTest extends Unit
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest($route = '')
+    protected function getRequest(string $route = ''): Request
     {
         $request = Request::createFromGlobals();
         $request->request->set('_route', $route);
@@ -114,7 +120,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function getDataTransferMock()
+    protected function getDataTransferMock(): AbstractTransfer
     {
         return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }
@@ -122,7 +128,7 @@ abstract class AbstractStepEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface
      */
-    protected function getStepWithExternalRedirectUrl()
+    protected function getStepWithExternalRedirectUrl(): StepWithExternalRedirectInterface
     {
         $stepMock = $this->getMockBuilder(StepWithExternalRedirectInterface::class)->getMock();
         $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);

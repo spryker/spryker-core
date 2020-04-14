@@ -31,6 +31,12 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageFilter">
+        <property name="productImageSetIds" type="array" singular="productImageSetId"/>
+        <property name="productImageIds" type="array" singular="productImageId"/>
     </transfer>
 
 </transfers>

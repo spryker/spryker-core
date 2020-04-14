@@ -31,7 +31,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransferWithoutAnyErrorIfPaymentAuthorizationApproved()
+    public function testExecuteShouldReturnCheckoutResponseTransferWithoutAnyErrorIfPaymentAuthorizationApproved(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -51,7 +51,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransferWithErrorIfPaymentAuthorizationNotApproved()
+    public function testExecuteShouldReturnCheckoutResponseTransferWithErrorIfPaymentAuthorizationNotApproved(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Tax\Business\Model;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\TaxSetBuilder;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
@@ -53,7 +54,7 @@ class WriterTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
-    private function createTaxRateTransfer()
+    private function createTaxRateTransfer(): TaxRateTransfer
     {
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
@@ -65,7 +66,7 @@ class WriterTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    private function createTaxSetTransfer()
+    private function createTaxSetTransfer(): TaxSetTransfer
     {
         return (new TaxSetBuilder())->build();
     }
@@ -73,7 +74,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTaxRate()
+    public function testCreateTaxRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
 
@@ -89,7 +90,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTaxSetWithNewTaxRate()
+    public function testCreateTaxSetWithNewTaxRate(): void
     {
         $taxSetTransfer = $this->createTaxSetTransfer();
         $taxRateTransfer = $this->createTaxRateTransfer();
@@ -108,7 +109,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTaxSetWithExistingTaxRate()
+    public function testCreateTaxSetWithExistingTaxRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
         $this->taxFacade->createTaxRate($taxRateTransfer);
@@ -126,7 +127,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTaxRate()
+    public function testUpdateTaxRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
         $id = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();
@@ -148,7 +149,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTaxSet()
+    public function testUpdateTaxSet(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
         $taxSetTransfer = $this->createTaxSetTransfer();
@@ -178,7 +179,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testAddTaxRateToTaxSet()
+    public function testAddTaxRateToTaxSet(): void
     {
         $taxSetTransfer = $this->createTaxSetTransfer();
         $taxSetTransfer->addTaxRate($this->createTaxRateTransfer());
@@ -200,7 +201,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveTaxRateFromTaxSet()
+    public function testRemoveTaxRateFromTaxSet(): void
     {
         $taxRate1Transfer = $this->createTaxRateTransfer();
         $rate1Id = $this->taxFacade->createTaxRate($taxRate1Transfer)->getIdTaxRate();
@@ -231,7 +232,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToUpdateNonExistentTaxRate()
+    public function testExceptionRaisedIfAttemptingToUpdateNonExistentTaxRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
         $taxRateTransfer->setIdTaxRate(self::NON_EXISTENT_ID);
@@ -243,7 +244,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate()
+    public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate(): void
     {
         $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
 
@@ -260,7 +261,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteTaxRate()
+    public function testDeleteTaxRate(): void
     {
         $id = $this->taxFacade->createTaxRate($this->createTaxRateTransfer())->getIdTaxRate();
 
@@ -278,7 +279,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteTaxSetShouldDeleteSetButNotTheAssociatedRate()
+    public function testDeleteTaxSetShouldDeleteSetButNotTheAssociatedRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
         $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();
@@ -308,7 +309,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTaxSetWithExistingTaxSetNameShouldRaiseException()
+    public function testCreateTaxSetWithExistingTaxSetNameShouldRaiseException(): void
     {
         //Arrange
         $taxSetTransfer = (new TaxSetBuilder())->build();
@@ -327,7 +328,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTaxSetWithExistingTaxSetNameShouldRaiseException()
+    public function testUpdateTaxSetWithExistingTaxSetNameShouldRaiseException(): void
     {
         //Arrange
         $taxSetTransfer = (new TaxSetBuilder())->build();

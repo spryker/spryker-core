@@ -27,11 +27,11 @@ class CategoryDeleteCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CategoryPresentationTester $i)
+    public function breadcrumbIsVisible(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getDeleteButtonSelector());
         $i->click(CategoryListPage::getDeleteButtonSelector());
-        $i->seeBreadcrumbNavigation('Dashboard / Category / Delete Category');
+        $i->seeBreadcrumbNavigation('Category / Delete Category');
     }
 }

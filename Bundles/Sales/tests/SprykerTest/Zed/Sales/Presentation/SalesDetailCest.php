@@ -29,7 +29,7 @@ class SalesDetailCest
      *
      * @return void
      */
-    public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesPresentationTester $i, SalesListPage $salesListPage)
+    public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
         $i->createOrderWithOneItem();
 

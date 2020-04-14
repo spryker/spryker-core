@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface` instead.
+ */
 interface AggregationExtractorInterface
 {
     /**

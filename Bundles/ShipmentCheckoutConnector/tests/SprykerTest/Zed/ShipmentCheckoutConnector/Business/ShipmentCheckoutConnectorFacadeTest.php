@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacade;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +39,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckShipmentWhenNonActiveUsedShouldAddError()
+    public function testCheckShipmentWhenNonActiveUsedShouldAddError(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
 
@@ -64,7 +65,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckShipmentWhenNonActiveUsedShouldAddErrorWithItemLevelShipment()
+    public function testCheckShipmentWhenNonActiveUsedShouldAddErrorWithItemLevelShipment(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
 
@@ -90,7 +91,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckShipmentWhenNoShipmentGivenShouldPass()
+    public function testCheckShipmentWhenNoShipmentGivenShouldPass(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
 
@@ -107,7 +108,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckShipmentWhenValidShipmentGivenShouldPass()
+    public function testCheckShipmentWhenValidShipmentGivenShouldPass(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
 
@@ -151,7 +152,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckShipmentWhenValidShipmentGivenShouldPassWithItemLevelShipment()
+    public function testCheckShipmentWhenValidShipmentGivenShouldPassWithItemLevelShipment(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
 
@@ -197,7 +198,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacadeInterface
      */
-    protected function createShipmentCheckoutConnectorFacade()
+    protected function createShipmentCheckoutConnectorFacade(): ShipmentCheckoutConnectorFacadeInterface
     {
         return new ShipmentCheckoutConnectorFacade();
     }
@@ -205,7 +206,7 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     /**
      * @return string
      */
-    public function getDefaultStoreName()
+    public function getDefaultStoreName(): string
     {
         return $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName();
     }

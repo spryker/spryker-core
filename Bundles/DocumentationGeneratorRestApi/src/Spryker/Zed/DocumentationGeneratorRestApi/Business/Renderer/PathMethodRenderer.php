@@ -29,6 +29,8 @@ class PathMethodRenderer implements PathMethodRendererInterface
     protected const PARAMETER_SCHEMA_TYPE_STRING = 'string';
     protected const PARAMETER_SECURITY_BEARER_AUTH = 'BearerAuth';
 
+    protected const PATTERN_PARAMETER_REFERENCE = '#/components/parameters/%s';
+
     /**
      * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface
      */
@@ -79,6 +81,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
         $pathMethodComponentTransfer->setSummary($this->getFormattedSummary($pathMethodDataTransfer));
         $pathMethodComponentTransfer->addTag($pathMethodDataTransfer->getResource());
+        $pathMethodComponentTransfer->setOperationId($pathMethodDataTransfer->getOperationId());
 
         $this->addResponseComponents($pathMethodComponentTransfer, $pathMethodDataTransfer->getResponseSchemas());
         $this->addIdParametersFromPath($pathMethodComponentTransfer, $pathMethodDataTransfer->getPath());
@@ -117,7 +120,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\PathMethodComponentTransfer $methodComponent
-     * @param \ArrayObject $responseSchemas
+     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
      *
      * @return void
      */
@@ -209,6 +212,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
         }
         if ($parameterComponentTransfer->getSchemaType() === null) {
             $parameterComponentTransfer->setSchemaType(static::PARAMETER_SCHEMA_TYPE_STRING);
+        }
+
+        if ($parameterComponentTransfer->getRef()) {
+            $parameterComponentTransfer->setRef(sprintf(static::PATTERN_PARAMETER_REFERENCE, $parameterComponentTransfer->getRef()));
         }
         $this->pathParameterSpecificationComponent->setPathParameterComponentTransfer($parameterComponentTransfer);
         $pathParameterSpecificationData = $this->pathParameterSpecificationComponent->getSpecificationComponentData();

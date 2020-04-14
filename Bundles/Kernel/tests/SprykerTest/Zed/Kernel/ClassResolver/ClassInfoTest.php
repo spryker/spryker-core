@@ -25,7 +25,7 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testSetClassNameMustReturnSelf()
+    public function testSetClassNameMustReturnSelf(): void
     {
         $classInfo = new ClassInfo();
         $this->assertInstanceOf(
@@ -37,7 +37,7 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testSetClassNameMustExtractNamespaceFromClass()
+    public function testSetClassNameMustExtractNamespaceFromClass(): void
     {
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
@@ -48,7 +48,7 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testSetClassNameMustExtractApplicationFromClass()
+    public function testSetClassNameMustExtractApplicationFromClass(): void
     {
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
@@ -59,18 +59,18 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testSetClassNameMustExtractBundleFromClass()
+    public function testSetClassNameMustExtractBundleFromClass(): void
     {
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
 
-        $this->assertSame('Kernel', $classInfo->getBundle());
+        $this->assertSame('Kernel', $classInfo->getModule());
     }
 
     /**
      * @return void
      */
-    public function testSetClassNameMustExtractLayerFromClass()
+    public function testSetClassNameMustExtractLayerFromClass(): void
     {
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);

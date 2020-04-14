@@ -1,13 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -209,7 +209,7 @@ class RequestFormatterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
-    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): MockObject
+    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): GlueApplicationConfig
     {
         $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->setMethods(['isEagerRelationshipsLoadingEnabled'])

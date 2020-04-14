@@ -60,8 +60,6 @@ class PriceProductMapper implements PriceProductMapperInterface
         array $prices,
         string $currencyCode
     ): void {
-        $priceProductTransfer = null;
-
         foreach (PriceProductStorageConfig::PRICE_MODES as $priceMode) {
             if (!isset($prices[$priceMode])) {
                 continue;
@@ -103,7 +101,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param string $currencyCode
      * @param string $priceType
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

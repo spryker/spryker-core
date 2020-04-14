@@ -1,6 +1,6 @@
 # CompanyUnitAddress Module
-[![Build Status](https://travis-ci.org/spryker/CompanyUnitAddress.svg)](https://travis-ci.org/spryker/CompanyUnitAddress)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyUnitAddress/badge.svg)](https://coveralls.io/github/spryker/CompanyUnitAddress)
+[![Build Status](https://travis-ci.org/spryker/company-unit-address.svg)](https://travis-ci.org/spryker/company-unit-address)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Company unit address provides the support of addresses to company business units.
 

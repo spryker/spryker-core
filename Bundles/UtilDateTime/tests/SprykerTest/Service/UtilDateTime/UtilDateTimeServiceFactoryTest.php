@@ -25,7 +25,7 @@ class UtilDateTimeServiceFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateDateFormatterShouldReturnDateFormatter()
+    public function testCreateDateFormatterShouldReturnDateFormatter(): void
     {
         $utilDateTimeServiceFactory = new UtilDateTimeServiceFactory();
 

@@ -101,7 +101,7 @@ class ProductSearchConfigStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductSearchConfigStorage\Business\ProductSearchConfigStorageFacade
      */
-    protected function getProductSearchConfigStorageFacade()
+    protected function getProductSearchConfigStorageFacade(): ProductSearchConfigStorageFacade
     {
         $factory = new ProductSearchConfigStorageBusinessFactory();
         $factory->setConfig(new ProductSearchConfigStorageConfigMock());

@@ -1,6 +1,6 @@
 # QuoteRequestDataImport Module
 [![Build Status](https://travis-ci.org/spryker/quote-request-data-import.svg)](https://travis-ci.org/spryker/quote-request-data-import)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/quote-request-data-import/badge.svg)](https://coveralls.io/github/spryker/quote-request-data-import)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 DataImport for Quote Requests.
 

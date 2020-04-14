@@ -28,7 +28,7 @@ class DataSetStepBrokerTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesDataImportSteps()
+    public function testExecutesDataImportSteps(): void
     {
         $dataSetStepBroker = $this->tester->getFactory()->createDataSetStepBroker();
         $dataSetStepBroker->addStep($this->tester->getDataImportStepMock());
@@ -39,7 +39,7 @@ class DataSetStepBrokerTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesBeforeAndAfterDataImportSteps()
+    public function testExecutesBeforeAndAfterDataImportSteps(): void
     {
         $dataSetStepBroker = $this->tester->getFactory()->createDataSetStepBroker();
         $dataSetStepBroker->addStep(new DataImportStepBeforeAndAfter());

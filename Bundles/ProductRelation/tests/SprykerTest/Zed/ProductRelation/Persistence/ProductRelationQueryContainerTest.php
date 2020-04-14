@@ -27,7 +27,7 @@ class ProductRelationQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryProductRelationsReturnCorrectQuery()
+    public function testQueryProductRelationsReturnCorrectQuery(): void
     {
         $productRelationQueryContainer = new ProductRelationQueryContainer();
         $productRelationQueryContainer->setFactory(new ProductRelationPersistenceFactory());

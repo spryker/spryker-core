@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace SprykerTest\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Codeception\Test\Unit;
 use Silex\Application;
@@ -15,8 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Zed
  * @group Application
  * @group Communication
@@ -38,11 +37,11 @@ class RequestServiceProviderTest extends Unit
      * @return void
      */
     public function testBeforeMustParseRequestDataAndSetBundleControllerAndActionInRequest(
-        $givenUrl,
-        $expectedBundle,
-        $expectedController,
-        $expectedAction
-    ) {
+        string $givenUrl,
+        string $expectedBundle,
+        string $expectedController,
+        string $expectedAction
+    ): void {
         $application = new Application();
 
         $requestServiceProvider = new RequestServiceProvider();
@@ -59,7 +58,7 @@ class RequestServiceProviderTest extends Unit
     /**
      * @return array
      */
-    public function urlStack()
+    public function urlStack(): array
     {
         return [
             ['/foo', 'foo', 'index', 'index'],

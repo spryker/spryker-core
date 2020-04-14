@@ -33,7 +33,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstance()
+    public function testCreateInstance(): void
     {
         $loggerMock = $this->getLoggerMock();
         $kernelLogListener = new KernelLogListener($loggerMock);
@@ -44,7 +44,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelRequestLogRequestShouldCalledWhenMasterRequest()
+    public function testOnKernelRequestLogRequestShouldCalledWhenMasterRequest(): void
     {
         $requestMock = $this->getRequestMock();
         $requestMock->expects($this->once())->method('getRequestUri')->willReturn('/foo/bar');
@@ -66,7 +66,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelRequestLogRequestShouldNotCalledWhenNotMasterRequest()
+    public function testOnKernelRequestLogRequestShouldNotCalledWhenNotMasterRequest(): void
     {
         $event = new GetResponseEvent(
             $this->getKernelMock(),
@@ -84,7 +84,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseLogResponseShouldCalledWhenMasterRequest()
+    public function testOnKernelResponseLogResponseShouldCalledWhenMasterRequest(): void
     {
         $responseMock = $this->responseMock();
         $responseMock->expects($this->once())->method('getStatusCode');
@@ -106,7 +106,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseLogResponseShouldNotCalledWhenNotMasterRequest()
+    public function testOnKernelResponseLogResponseShouldNotCalledWhenNotMasterRequest(): void
     {
         $event = new FilterResponseEvent(
             $this->getKernelMock(),
@@ -125,7 +125,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testOnKernelResponseLogResponseWithRedirectResponseShouldCalledWhenMasterRequest()
+    public function testOnKernelResponseLogResponseWithRedirectResponseShouldCalledWhenMasterRequest(): void
     {
         $responseMock = $this->redirectResponseMock();
         $responseMock->expects($this->once())->method('getStatusCode');
@@ -148,7 +148,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return void
      */
-    public function testGetSubscribedEventsShouldReturnArray()
+    public function testGetSubscribedEventsShouldReturnArray(): void
     {
         $loggerMock = $this->getLoggerMock();
         $kernelLogListener = new KernelLogListener($loggerMock);
@@ -159,7 +159,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $loggerInterfaceMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -169,7 +169,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    protected function getKernelMock()
+    protected function getKernelMock(): HttpKernelInterface
     {
         $httpKernelInterfaceMock = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
 
@@ -179,7 +179,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequestMock()
+    protected function getRequestMock(): Request
     {
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
 
@@ -189,7 +189,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Response
      */
-    protected function responseMock()
+    protected function responseMock(): Response
     {
         $responseMock = $this->getMockBuilder(Response::class)->getMock();
 
@@ -199,7 +199,7 @@ class KernelLogListenerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseMock()
+    protected function redirectResponseMock(): RedirectResponse
     {
         $redirectResponseMock = $this->getMockBuilder(RedirectResponse::class)->disableOriginalConstructor()->getMock();
 

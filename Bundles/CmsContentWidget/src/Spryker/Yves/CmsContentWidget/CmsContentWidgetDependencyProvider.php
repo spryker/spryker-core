@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 
+/**
+ * @method \Spryker\Yves\CmsContentWidget\CmsContentWidgetConfig getConfig()
+ */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';

@@ -14,6 +14,8 @@ class MoneyConfig extends AbstractBundleConfig
     protected const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMoneyTableTemplatePath(): string

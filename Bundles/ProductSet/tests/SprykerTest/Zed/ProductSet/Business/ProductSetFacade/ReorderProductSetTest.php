@@ -29,7 +29,7 @@ class ReorderProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase()
+    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase(): void
     {
         $productSetTransfer1 = $this->tester->generateProductSetTransfer([
             ProductSetTransfer::WEIGHT => 10,

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
@@ -25,20 +24,11 @@ class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
     protected $salesQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
-     */
-    protected $productBundleQueryContainer;
-
-    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      */
-    public function __construct(
-        ProductBundleToSalesQueryContainerInterface $salesQueryContainer,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
-    ) {
+    public function __construct(ProductBundleToSalesQueryContainerInterface $salesQueryContainer)
+    {
         $this->salesQueryContainer = $salesQueryContainer;
-        $this->productBundleQueryContainer = $productBundleQueryContainer;
     }
 
     /**

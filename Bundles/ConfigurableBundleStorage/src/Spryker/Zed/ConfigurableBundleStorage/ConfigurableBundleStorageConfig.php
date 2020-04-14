@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ConfigurableBundleStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,10 +24,12 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getConfigurableBundleTemplateSynchronizationPoolName(): ?string
     {
-        return 'synchronizationPool';
+        return null;
     }
 }

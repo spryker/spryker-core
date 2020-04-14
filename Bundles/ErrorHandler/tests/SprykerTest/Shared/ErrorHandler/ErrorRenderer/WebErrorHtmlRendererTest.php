@@ -12,6 +12,7 @@ use Exception;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 /**
@@ -29,7 +30,7 @@ class WebErrorHtmlRendererTest extends Unit
     /**
      * @return void
      */
-    public function testWhenZedErrorPageCanRequiredRequireErrorPage()
+    public function testWhenZedErrorPageCanRequiredRequireErrorPage(): void
     {
         $this->setupConfigForZedErrorPage();
 
@@ -42,7 +43,7 @@ class WebErrorHtmlRendererTest extends Unit
     /**
      * @return void
      */
-    protected function setupConfigForZedErrorPage()
+    protected function setupConfigForZedErrorPage(): void
     {
         $configKey = ErrorHandlerConstants::ZED_ERROR_PAGE;
         $configValue = ErrorHandlerConstants::ZED_ERROR_PAGE;
@@ -53,7 +54,7 @@ class WebErrorHtmlRendererTest extends Unit
     /**
      * @return void
      */
-    public function testWhenYvesErrorPageCanRequiredRequireErrorPage()
+    public function testWhenYvesErrorPageCanRequiredRequireErrorPage(): void
     {
         $this->setupConfigForYvesErrorPage();
 
@@ -66,7 +67,7 @@ class WebErrorHtmlRendererTest extends Unit
     /**
      * @return void
      */
-    protected function setupConfigForYvesErrorPage()
+    protected function setupConfigForYvesErrorPage(): void
     {
         $configKey = ErrorHandlerConstants::YVES_ERROR_PAGE;
         $configValue = ErrorHandlerConstants::YVES_ERROR_PAGE;
@@ -80,7 +81,7 @@ class WebErrorHtmlRendererTest extends Unit
      *
      * @return void
      */
-    protected function prepareConfig($configKey, $configValue)
+    protected function prepareConfig(string $configKey, string $configValue): void
     {
         $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
@@ -97,7 +98,7 @@ class WebErrorHtmlRendererTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
-    protected function getErrorPageMock($application)
+    protected function getErrorPageMock(string $application): ErrorRendererInterface
     {
         $errorPageMock = $this->getMockBuilder(WebHtmlErrorRenderer::class)
             ->setMethods(['getHtmlErrorPageContent'])

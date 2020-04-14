@@ -28,11 +28,11 @@ class CustomerGroupViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupViewPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / View customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / View Customer Group');
     }
 }

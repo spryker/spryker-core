@@ -31,7 +31,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenConfigHasKeyAddShouldCreateNewProfileDataFromValue()
+    public function testWhenConfigHasKeyAddShouldCreateNewProfileDataFromValue(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, null, 'value');
@@ -45,7 +45,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenConfigValueIsObjectClassNameOfValueShouldBeUsed()
+    public function testWhenConfigValueIsObjectClassNameOfValueShouldBeUsed(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, null, $this);
@@ -59,7 +59,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testFormatValue()
+    public function testFormatValue(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, null, ['class' => $this, 'bool' => true, 'emptyArray' => []]);
@@ -84,7 +84,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenConfigNotHasKeyAddShouldCreateNewProfileDataFromDefaultValue()
+    public function testWhenConfigNotHasKeyAddShouldCreateNewProfileDataFromDefaultValue(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, 'default', null);
@@ -98,7 +98,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenConfigDefaultValueIsObjectClassNameOfDefaultValueShouldBeUsed()
+    public function testWhenConfigDefaultValueIsObjectClassNameOfDefaultValueShouldBeUsed(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, $this, null);
@@ -112,7 +112,7 @@ class ProfilerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenProfileDataForKeyExistsAddShouldIncreaseProfileDataCount()
+    public function testWhenProfileDataForKeyExistsAddShouldIncreaseProfileDataCount(): void
     {
         $profiler = new Profiler();
         $profiler->add(static::PROFILE_KEY, null, 'value');

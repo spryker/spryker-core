@@ -62,8 +62,10 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
             return true;
         }
 
-        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()
-            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if (
+            !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
+            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+        ) {
             return false;
         }
 

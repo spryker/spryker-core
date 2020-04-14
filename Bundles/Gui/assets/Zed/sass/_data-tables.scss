@@ -31,6 +31,24 @@ table.dataTable tbody > tr {
           border-right:  $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
         }
       }
+
+      .btn-outline {
+        &.btn-danger {
+          color: $btn-danger-bg;
+        }
+
+        &.btn-create {
+          color: #108548;
+        }
+
+        &.btn-view {
+          color: #1c84c6;
+        }
+
+        &:hover {
+          color: #fff;
+        }
+      }
     }
   }
 }

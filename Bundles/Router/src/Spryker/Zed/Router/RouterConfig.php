@@ -75,7 +75,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getControllerDirectories(): array
     {

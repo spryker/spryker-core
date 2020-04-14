@@ -54,7 +54,7 @@ class SalesStatisticsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOrderStatisticByCountDay()
+    public function testOrderStatisticByCountDay(): void
     {
         $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getOrderStatisticByCountDay(1);
 
@@ -66,7 +66,7 @@ class SalesStatisticsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStatusOrderStatistic()
+    public function testStatusOrderStatistic(): void
     {
         $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getStatusOrderStatistic();
 
@@ -83,7 +83,7 @@ class SalesStatisticsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTopOrderStatistic()
+    public function testTopOrderStatistic(): void
     {
         // Act
         $chartDataTraceTransfer = $this->tester->getLocator()

@@ -9,6 +9,12 @@
         <property name="idProductList" type="int"/>
     </transfer>
 
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="productListIds" type="int[]" singular="productListId"/>
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="Customer">
         <property name="customerProductListCollection" type="CustomerProductListCollection"/>
         <property name="companyUserTransfer" type="CompanyUser"/>
@@ -36,8 +42,22 @@
         <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
-    <transfer name="MerchantRelationship">
-        <property name="idMerchantRelationship" type="int"/>
+    <transfer name="MerchantRelationshipFilter">
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="ProductListResponse">
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Company">
     </transfer>
 
 </transfers>

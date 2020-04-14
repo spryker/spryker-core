@@ -21,6 +21,7 @@
             'name_underscore' => '{{ property.name_underscore }}',
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
+            'is_value_object' => {{ property.is_value_object ? 'true' : 'false' }},
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
@@ -83,6 +84,12 @@
         {% if method.typeHint == "array" -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
+        }
+
+        {% endif -%}
+        {% if method.valueObject -%}
+            if (${{ method.property }} !== null && !${{ method.property }} instanceof {{ method.valueObject }}) {
+            ${{ method.property }} = new {{ method.valueObject }}(${{ method.property }});
         }
 
         {% endif -%}
@@ -196,7 +203,7 @@
 {% endmacro -%}
 
 
-{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections)-%}
+{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
 
     /**
     * @return array
@@ -221,6 +228,9 @@
             switch ($property) {
 {% if primitives is not empty %}
 {% for value in primitives %}
+                case '{{ value.name }}':
+{% endfor %}
+{% for value in valueObjects %}
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value;
@@ -251,7 +261,7 @@
 
 {%- endmacro -%}
 
-{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections)-%}
+{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
 {%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
     /**
     * @return array
@@ -279,6 +289,9 @@
             {%- else -%}
                 $this->{{ prop.name }}
             {%- endif -%},
+{% endfor %}
+{% for prop in valueObjects %}
+            '{{ prop[nameKey] }}' => $this->{{ prop.name }},
 {% endfor %}
         ];
     }

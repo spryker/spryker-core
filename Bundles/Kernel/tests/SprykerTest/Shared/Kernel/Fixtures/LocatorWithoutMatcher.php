@@ -17,7 +17,7 @@ class LocatorWithoutMatcher implements LocatorInterface
      *
      * @return object
      */
-    public function locate($bundle)
+    public function locate($bundle): object
     {
         return new stdClass();
     }

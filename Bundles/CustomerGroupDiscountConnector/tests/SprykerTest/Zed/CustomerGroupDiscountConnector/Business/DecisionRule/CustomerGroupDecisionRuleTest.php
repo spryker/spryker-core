@@ -37,7 +37,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenCustomerIsNotSetShouldReturnFalse()
+    public function testIsSatisfiedWhenCustomerIsNotSetShouldReturnFalse(): void
     {
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule();
 
@@ -49,7 +49,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenCustomerGroupIsNotSetShouldReturnFalse()
+    public function testIsSatisfiedWhenCustomerGroupIsNotSetShouldReturnFalse(): void
     {
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule();
 
@@ -67,7 +67,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenAllDataIsPresentShouldExecuteDiscountQueryString()
+    public function testIsSatisfiedWhenAllDataIsPresentShouldExecuteDiscountQueryString(): void
     {
         $discountFacadeMock = $this->createDiscountFacadeMock();
         $customerGroupFacadeMock = $this->createCustomerGroupFacadeMock();
@@ -130,8 +130,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     protected function createCustomerGroupDecisionRule(
         ?CustomerGroupDiscountConnectorToDiscountFacadeInterface $discountFacadeMock = null,
         ?CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface $customerGroupFacadeMock = null
-    ) {
-
+    ): CustomerGroupDecisionRule {
         if ($discountFacadeMock === null) {
             $discountFacadeMock = $this->createDiscountFacadeMock();
         }
@@ -146,7 +145,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface
      */
-    protected function createDiscountFacadeMock()
+    protected function createDiscountFacadeMock(): CustomerGroupDiscountConnectorToDiscountFacadeInterface
     {
         return $this->getMockBuilder(CustomerGroupDiscountConnectorToDiscountFacadeInterface::class)->getMock();
     }
@@ -154,7 +153,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
      */
-    protected function createCustomerGroupFacadeMock()
+    protected function createCustomerGroupFacadeMock(): CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
     {
         return $this->getMockBuilder(CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface::class)->getMock();
     }
@@ -162,7 +161,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         return new QuoteTransfer();
     }
@@ -170,7 +169,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    protected function createClauseTransfer()
+    protected function createClauseTransfer(): ClauseTransfer
     {
         return new ClauseTransfer();
     }
@@ -178,7 +177,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer()
+    protected function createItemTransfer(): ItemTransfer
     {
         return new ItemTransfer();
     }
@@ -186,7 +185,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createCustomerTransfer()
+    protected function createCustomerTransfer(): CustomerTransfer
     {
         return new CustomerTransfer();
     }
@@ -194,7 +193,7 @@ class CustomerGroupDecisionRuleTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
-    protected function createCustomerGroupTransfer()
+    protected function createCustomerGroupTransfer(): CustomerGroupTransfer
     {
         return new CustomerGroupTransfer();
     }

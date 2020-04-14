@@ -21,6 +21,7 @@ class ConfiguredBundleOrderExpanderPlugin extends AbstractPlugin implements Orde
     /**
      * {@inheritDoc}
      * - Expands sales order by configured bundles.
+     * - Expands configured bundle items with translations for current locale.
      * - Expands ItemTransfer by configured bundle item.
      *
      * @api

@@ -29,7 +29,7 @@ class IsPayedPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCheckReturnAlwaysTrue()
+    public function testCheckReturnAlwaysTrue(): void
     {
         $isPayedPlugin = new IsPayedPlugin();
         $salesOrderItemEntity = new SpySalesOrderItem();

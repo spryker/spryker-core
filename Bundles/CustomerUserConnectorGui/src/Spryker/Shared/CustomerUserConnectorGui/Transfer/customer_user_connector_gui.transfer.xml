@@ -9,6 +9,8 @@
 
     <transfer name="CustomerUserConnectionUpdate">
         <property name="idUser" type="int"/>
+        <property name="idCustomersToAssign" type="array" singular="idCustomersToAssign"/>
+        <property name="idCustomersToDeAssign" type="array" singular="idCustomersToDeAssign"/>
     </transfer>
 
     <transfer name="Button">

@@ -29,12 +29,13 @@ interface ProductOptionValueReaderInterface
 
     /**
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue);
+    public function getProductOption($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer

@@ -8,8 +8,6 @@
 namespace Spryker\Client\ProductPackagingUnitStorage\Expander;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToProductMeasurementUnitStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReaderInterface;
@@ -47,37 +45,32 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     {
         $this->assertItemTransfer($itemTransfer);
 
-        $productAbstractPackagingStorageTransfer = $this->productPackagingUnitStorageReader
-            ->findProductAbstractPackagingById((int)$itemTransfer->getIdProductAbstract());
-        if ($productAbstractPackagingStorageTransfer === null) {
+        $productPackagingUnitStorageTransfer = $this->productPackagingUnitStorageReader->findProductPackagingUnitById(
+            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()
+        );
+
+        if ($productPackagingUnitStorageTransfer === null) {
             return $itemTransfer;
         }
 
-        $productConcretePackagingStorageTransfer = $this->selectProductConcretePackagingStorageTransfer(
-            $productAbstractPackagingStorageTransfer,
-            $itemTransfer
-        );
-        if ($productConcretePackagingStorageTransfer === null) {
-            return $itemTransfer;
-        }
-        if (!$this->hasAmount($productConcretePackagingStorageTransfer, $productAbstractPackagingStorageTransfer)) {
-            return $itemTransfer;
+        if ($productPackagingUnitStorageTransfer->getIdLeadProduct() !== $productPackagingUnitStorageTransfer->getIdProduct()) {
+            $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
+                (int)$productPackagingUnitStorageTransfer->getIdProduct()
+            );
+
+            $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
         }
 
-        $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productConcretePackagingStorageTransfer->getIdProduct()
-        );
         $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productAbstractPackagingStorageTransfer->getLeadProduct()
+            (int)$productPackagingUnitStorageTransfer->getIdLeadProduct()
         );
-        if ($quantityProductMeasurementSalesUnitTransfer === null || $amountProductMeasurementSalesUnitTransfer === null) {
-            return $itemTransfer;
+
+        if ($amountProductMeasurementSalesUnitTransfer !== null) {
+            $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         }
 
-        $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
-        $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         $itemTransfer->setAmount(
-            $productConcretePackagingStorageTransfer->getDefaultAmount() * $itemTransfer->getQuantity()
+            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
         );
 
         return $itemTransfer;
@@ -91,57 +84,9 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     protected function assertItemTransfer(ItemTransfer $itemTransfer): void
     {
         $itemTransfer
-            ->requireIdProductAbstract()
-            ->requireProductConcrete();
-
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $itemTransfer->getProductConcrete();
-        $productConcreteTransfer
-            ->requireIdProductConcrete();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
-     */
-    protected function selectProductConcretePackagingStorageTransfer(
-        ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer,
-        ItemTransfer $itemTransfer
-    ): ?ProductConcretePackagingStorageTransfer {
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $itemTransfer->getProductConcrete();
-        $idProduct = $productConcreteTransfer->getIdProductConcrete();
-
-        foreach ($productAbstractPackagingStorageTransfer->getTypes() as $productConcretePackagingStorageTransfer) {
-            if ($productConcretePackagingStorageTransfer->getIdProduct() === $idProduct) {
-                return $productConcretePackagingStorageTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
-     *
-     * @return bool
-     */
-    protected function hasAmount(
-        ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
-        ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
-    ): bool {
-        if ($productConcretePackagingStorageTransfer->getHasLeadProduct() !== true) {
-            return false;
-        }
-
-        if ($productConcretePackagingStorageTransfer->getIdProduct() === $productAbstractPackagingStorageTransfer->getLeadProduct()) {
-            return false;
-        }
-
-        return true;
+            ->requireProductConcrete()
+            ->getProductConcrete()
+                ->requireIdProductConcrete();
     }
 
     /**

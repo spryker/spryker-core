@@ -130,7 +130,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $mergeTargetXmlElement
-     * @param \ArrayObject $schemaXmlElements
+     * @param \ArrayObject|\SimpleXMLElement[] $schemaXmlElements
      * @param string $fileName
      *
      * @return void
@@ -171,15 +171,20 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $toXmlElement
-     * @param \ArrayObject $toXmlElements
+     * @param \ArrayObject|\SimpleXMLElement[] $toXmlElements
      * @param string $fromXmlElementName
      * @param string $fromXmlChildTagName
      * @param \SimpleXMLElement $fromXmlChildElement
      *
      * @return \SimpleXMLElement
      */
-    protected function getToXmlElementChild(SimpleXMLElement $toXmlElement, ArrayObject $toXmlElements, string $fromXmlElementName, string $fromXmlChildTagName, SimpleXMLElement $fromXmlChildElement): SimpleXMLElement
-    {
+    protected function getToXmlElementChild(
+        SimpleXMLElement $toXmlElement,
+        ArrayObject $toXmlElements,
+        string $fromXmlElementName,
+        string $fromXmlChildTagName,
+        SimpleXMLElement $fromXmlChildElement
+    ): SimpleXMLElement {
         if (isset($toXmlElements[$fromXmlElementName])) {
             return $toXmlElements[$fromXmlElementName];
         }
@@ -190,7 +195,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\SimpleXMLElement[]
      */
     protected function retrieveToXmlElements(SimpleXMLElement $toXmlElement): ArrayObject
     {

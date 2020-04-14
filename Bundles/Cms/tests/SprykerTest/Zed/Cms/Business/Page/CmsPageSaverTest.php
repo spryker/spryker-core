@@ -39,7 +39,7 @@ class CmsPageSaverTest extends CmsMocks
     /**
      * @return void
      */
-    public function testCreatePageShouldPersistGivenTransfer()
+    public function testCreatePageShouldPersistGivenTransfer(): void
     {
         $cmsPageSaverMock = $this->createCmsPageSaverMock();
 
@@ -71,7 +71,7 @@ class CmsPageSaverTest extends CmsMocks
     /**
      * @return void
      */
-    public function testUpdatePageShouldUpdateExistingEntityWithNewData()
+    public function testUpdatePageShouldUpdateExistingEntityWithNewData(): void
     {
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())
@@ -142,7 +142,7 @@ class CmsPageSaverTest extends CmsMocks
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
         ?TemplateManagerInterface $templateManagerMock = null,
         ?CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriterMock = null
-    ) {
+    ): CmsPageSaver {
         if ($urlFacadeMock === null) {
             $urlFacadeMock = $this->createUrlFacadeMock();
         }

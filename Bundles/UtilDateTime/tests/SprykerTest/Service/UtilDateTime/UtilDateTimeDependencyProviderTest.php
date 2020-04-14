@@ -25,7 +25,7 @@ class UtilDateTimeDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testProvideServiceDependenciesShouldAddConfigToContainer()
+    public function testProvideServiceDependenciesShouldAddConfigToContainer(): void
     {
         $container = new Container();
         $utilDateTimeDependencyProvider = new UtilDateTimeDependencyProvider();

@@ -20,7 +20,7 @@ class Request extends ClientRequest
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getTransfer()
+    public function getTransfer(): TransferInterface
     {
         if ($this->transfer) {
             return $this->transfer;
@@ -46,7 +46,7 @@ class Request extends ClientRequest
      *
      * @return void
      */
-    public function setFixtureTransfer($transfer)
+    public function setFixtureTransfer(TransferInterface $transfer): void
     {
         $this->transfer = $transfer;
     }

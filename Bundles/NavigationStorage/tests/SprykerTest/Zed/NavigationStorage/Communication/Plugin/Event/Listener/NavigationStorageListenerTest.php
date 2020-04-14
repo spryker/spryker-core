@@ -163,7 +163,7 @@ class NavigationStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacade
      */
-    protected function getNavigationStorageFacade()
+    protected function getNavigationStorageFacade(): NavigationStorageFacade
     {
         $factory = new NavigationStorageBusinessFactory();
         $factory->setConfig(new NavigationStorageConfigMock());
@@ -191,6 +191,6 @@ class NavigationStorageListenerTest extends Unit
 
         $data = $spyNavigationStorage->getData();
         $this->assertSame('MAIN_NAVIGATION', $data['key']);
-        $this->assertSame(7, count($data['nodes']));
+        $this->assertSame(8, count($data['nodes']));
     }
 }

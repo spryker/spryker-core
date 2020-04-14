@@ -5,7 +5,7 @@
           package="src.Orm.Zed.SharedCart.Persistence"
 >
 
-    <table name="spy_quote_company_user" idMethod="native" allowPkInsert="true" phpName="SpyQuoteCompanyUser">
+    <table name="spy_quote_company_user" idMethod="native" allowPkInsert="true">
         <column name="id_quote_company_user" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="fk_quote" required="true" type="INTEGER"/>
@@ -44,7 +44,7 @@
         </index>
     </table>
 
-    <table name="spy_quote_permission_group" idMethod="native" allowPkInsert="true" phpName="SpyQuotePermissionGroup">
+    <table name="spy_quote_permission_group" idMethod="native" allowPkInsert="true">
         <column name="id_quote_permission_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true" defaultValue="false"/>
@@ -52,7 +52,7 @@
         <id-method-parameter value="spy_quote_permission_group_pk_seq"/>
     </table>
 
-    <table name="spy_quote_permission_group_to_permission" idMethod="native" allowPkInsert="true" phpName="SpyQuotePermissionGroupToPermission">
+    <table name="spy_quote_permission_group_to_permission" idMethod="native" allowPkInsert="true">
         <column name="id_quote_permission_group_to_permission" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
         <column name="fk_quote_permission_group" type="INTEGER" required="true"/>
         <column name="fk_permission" type="INTEGER" required="true"/>

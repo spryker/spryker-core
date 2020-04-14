@@ -27,7 +27,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetFactoryShouldReturnInstanceIfExists()
+    public function testGetFactoryShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 
@@ -45,7 +45,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetClientShouldReturnInstanceIfExists()
+    public function testGetClientShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 
