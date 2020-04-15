@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateTime;
 use Exception;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -693,7 +694,8 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($sourceState === $targetState && $targetState->isReserved()) {
-                $this->reservation->updateReservationQuantity($orderItem->getSku());
+                $reservationRequestTransfer = (new ReservationRequestTransfer())->setSku($orderItem->getSku());
+                $this->reservation->updateReservation($reservationRequestTransfer);
             }
 
             if (
@@ -913,7 +915,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         $targetStateIsReserved = $process->getStateFromAllProcesses($targetStateId)->isReserved();
 
         if ($sourceStateIsReserved !== $targetStateIsReserved) {
-            $this->reservation->updateReservationQuantity($sku);
+            $reservationRequestTransfer = (new ReservationRequestTransfer())->setSku($sku);
+            $this->reservation->updateReservation($reservationRequestTransfer);
         }
     }
 

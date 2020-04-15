@@ -36,6 +36,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+    public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
+    public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
 
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_SALES = 'FACADE_SALES';
@@ -66,6 +68,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
         $container = $this->addOmsManualEventGrouperPlugins($container);
+        $container = $this->addOmsReservationWriterStrategyPlugins($container);
+        $container = $this->addReservationHandlerTerminationAwareStrategyPlugins($container);
 
         return $container;
     }
@@ -368,5 +372,49 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationWriterStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_WRITER_STRATEGY, function () {
+            return $this->getOmsReservationWriterStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     */
+    protected function getOmsReservationWriterStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReservationHandlerTerminationAwareStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY, function () {
+            return $this->getReservationHandlerTerminationAwareStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[]
+     */
+    protected function getReservationHandlerTerminationAwareStrategyPlugins(): array
+    {
+        return [];
     }
 }

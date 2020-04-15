@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -600,11 +601,25 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      *
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
+
+    /**
+     * Specification:
+     *  - Updates reservation quantity for a given ReservationRequest.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * Specification:

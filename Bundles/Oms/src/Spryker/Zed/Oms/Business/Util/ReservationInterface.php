@@ -8,12 +8,15 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface ReservationInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      *
      * @return void
@@ -21,6 +24,15 @@ interface ReservationInterface
     public function updateReservationQuantity($sku);
 
     /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\DecimalObject\Decimal $reservationQuantity

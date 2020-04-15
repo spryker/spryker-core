@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -36,5 +37,21 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         }
 
         return new Decimal($quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $productOfferReservationEntity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
+            ->filterByProductOfferReference($reservationRequestTransfer->getProductOfferReference())
+            ->filterByFkStore($reservationRequestTransfer->getStore()->getIdStore())
+            ->findOneOrCreate()
+            ->setReservationQuantity($reservationRequestTransfer->getReservationQuantity());
+
+        $productOfferReservationEntity->save();
     }
 }

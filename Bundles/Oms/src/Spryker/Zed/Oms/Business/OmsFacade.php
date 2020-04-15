@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -19,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsBusinessFactory getFactory()
  * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface getEntityManager()
  */
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
@@ -667,6 +669,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      *
      * @return void
@@ -676,6 +680,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         $this->getFactory()
             ->createUtilReservation()
             ->updateReservationQuantity($sku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $this->getFactory()
+            ->createUtilReservation()
+            ->updateReservation($reservationRequestTransfer);
     }
 
     /**

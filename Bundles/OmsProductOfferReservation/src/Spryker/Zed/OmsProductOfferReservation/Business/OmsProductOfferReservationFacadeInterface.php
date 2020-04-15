@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 
 interface OmsProductOfferReservationFacadeInterface
@@ -16,7 +17,7 @@ interface OmsProductOfferReservationFacadeInterface
      * Specification:
      * - Returns ReservationResponseTransfer with reserved quantity for product offer.
      * - Requires OmsProductOfferReservationCriteriaTransfer.productOfferReference.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.storeName.
+     * - Requires OmsProductOfferReservationCriteriaTransfer.idStore.
      *
      * @api
      *
@@ -27,4 +28,18 @@ interface OmsProductOfferReservationFacadeInterface
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Saves reservation data for provided ReservationRequestTransfer.item.
+     * - Requires ReservationRequestTransfer.item.productOfferReference.
+     * - Requires ReservationRequestTransfer.store.idStore.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 }

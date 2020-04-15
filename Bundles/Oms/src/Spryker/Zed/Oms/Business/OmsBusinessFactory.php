@@ -41,6 +41,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface getEntityManager()
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -245,7 +246,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getReservationAggregationStrategyPlugins()
+            $this->getEntityManager(),
+            $this->getReservationAggregationStrategyPlugins(),
+            $this->getOmsReservationWriterStrategyPlugins(),
+            $this->getReservationHandlerTerminationAwareStrategyPlugins()
         );
     }
 
@@ -404,5 +408,21 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getReservationAggregationStrategyPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_AGGREGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     */
+    public function getOmsReservationWriterStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_WRITER_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[]
+     */
+    public function getReservationHandlerTerminationAwareStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY);
     }
 }
