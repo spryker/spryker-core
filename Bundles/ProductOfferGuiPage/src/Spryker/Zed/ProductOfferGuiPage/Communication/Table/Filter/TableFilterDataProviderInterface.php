@@ -15,8 +15,6 @@ interface TableFilterDataProviderInterface
     public const OPTION_NAME_VALUES = 'values';
     public const OPTION_NAME_PLACEHOLDER_FROM = 'placeholderFrom';
     public const OPTION_NAME_PLACEHOLDER_TO = 'placeholderTo';
-    public const OPTION_NAME_FORMAT = 'format';
-    public const OPTION_NAME_TIME = 'time';
 
     public const OPTION_VALUE_KEY_VALUE = 'value';
     public const OPTION_VALUE_KEY_TITLE = 'title';

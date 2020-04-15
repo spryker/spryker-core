@@ -247,7 +247,6 @@ class ProductTable extends AbstractTable
     protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
-        $guiTableConfigurationTransfer->addSearchOption(static::CONFIG_ENABLED, true);
 
         return $guiTableConfigurationTransfer;
     }
