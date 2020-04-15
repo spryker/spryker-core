@@ -39,7 +39,7 @@ class TriggerEventFromCsvFileConsole extends Console
     /**
      * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
      */
-    public $output;
+    protected $output;
 
     /**
      * @var \Symfony\Component\Console\Helper\Table
@@ -60,7 +60,7 @@ class TriggerEventFromCsvFileConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
@@ -91,7 +91,7 @@ class TriggerEventFromCsvFileConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filePath = $this->resolveFilePath();
 
@@ -99,7 +99,7 @@ class TriggerEventFromCsvFileConsole extends Console
             return static::CODE_ERROR;
         }
 
-        $csvReader = $this->getCsvReader($filePath);
+        $csvReader = $this->findCsvReader($filePath);
 
         if (!$csvReader) {
             return static::CODE_ERROR;
@@ -174,18 +174,12 @@ class TriggerEventFromCsvFileConsole extends Console
      *
      * @return \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface|null
      */
-    protected function getCsvReader(string $filePath): ?CsvReaderInterface
+    protected function findCsvReader(string $filePath): ?CsvReaderInterface
     {
         $csvReader = $this->getFactory()->getUtilDataReaderService()->getCsvReader();
         $csvReader->load($filePath);
 
-        if (!$csvReader->valid()) {
-            $this->error('CSV file is invalid.');
-
-            return null;
-        }
-
-        if (!$this->validateHeaderColumns($csvReader)) {
+        if (!$this->isCsvReaderValid($csvReader)) {
             return null;
         }
 
@@ -193,6 +187,26 @@ class TriggerEventFromCsvFileConsole extends Console
         $csvReader->getFile()->seek($this->getStartFromOption());
 
         return $csvReader;
+    }
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface $csvReader
+     *
+     * @return bool
+     */
+    protected function isCsvReaderValid(CsvReaderInterface $csvReader): bool
+    {
+        if (!$csvReader->valid()) {
+            $this->error('CSV file is invalid.');
+
+            return false;
+        }
+
+        if (!$this->validateHeaderColumns($csvReader)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
