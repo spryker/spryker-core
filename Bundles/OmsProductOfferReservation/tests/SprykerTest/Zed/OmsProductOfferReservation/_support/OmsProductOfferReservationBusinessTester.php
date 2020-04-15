@@ -14,7 +14,10 @@ use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Inherited Methods
@@ -37,50 +40,26 @@ class OmsProductOfferReservationBusinessTester extends Actor
     use _generated\OmsProductOfferReservationBusinessTesterActions;
 
     /**
-     * @param int $quantity
-     * @param int $itemsCount
-     *
-     * @return array
-     */
-    public function haveProductOfferWithSalesOrderItems(int $quantity, int $itemsCount): array
-    {
-        $productOfferTransfer = $this->haveProductOffer();
-
-        $stateCollectionTransfer = $this->haveSalesOrderWithItems(
-            $productOfferTransfer,
-            $quantity,
-            $itemsCount
-        );
-
-        return [
-            $stateCollectionTransfer,
-            $productOfferTransfer,
-        ];
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param int $quantity
      * @param int $itemsCount
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function haveSalesOrderWithItems(
         ProductOfferTransfer $productOfferTransfer,
         int $quantity,
-        int $itemsCount
-    ): OmsStateCollectionTransfer {
-        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
-
+        int $itemsCount,
+        StoreTransfer $storeTransfer
+    ): SpySalesOrder {
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
             ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
             ItemTransfer::QUANTITY => $quantity,
         ]))->build();
 
-        $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
-
         $salesOrderEntity
             ->setStore($storeTransfer->getName())
             ->save();
@@ -91,7 +70,20 @@ class OmsProductOfferReservationBusinessTester extends Actor
                 ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->setQuantity($quantity)
                 ->save();
+        }
 
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity)
+    {
+        $stateCollectionTransfer = new OmsStateCollectionTransfer();
+        foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
             $stateName = $orderItemEntity->getState()->getName();
             $processName = $orderItemEntity->getProcess()->getName();
             $stateCollectionTransfer->addState(
@@ -110,7 +102,7 @@ class OmsProductOfferReservationBusinessTester extends Actor
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
+    public function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
     {
         return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
             return $result->add($salesAggregationTransfer->getSumAmount())->trim();

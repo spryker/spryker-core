@@ -120,10 +120,15 @@ class OmsProductOfferReservationFacadeTest extends Unit
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quantity = 2;
         $itemsCount = 5;
-        [
-            $stateCollectionTransfer,
+
+        $productOfferTransfer = $this->tester->haveProductOffer();
+
+        $salesOrderEntity = $this->tester->haveSalesOrderWithItems(
             $productOfferTransfer,
-        ] = $this->tester->haveProductOfferWithSalesOrderItems($quantity, $itemsCount);
+            $quantity,
+            $itemsCount,
+            $storeTransfer
+        );
 
         // Act
         $salesAggregationTransfers = $this->tester->getFacade()->getAggregatedReservations(
@@ -131,7 +136,9 @@ class OmsProductOfferReservationFacadeTest extends Unit
                 ->setItem(
                     (new ItemTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference())
                 )
-                ->setReservedStates($stateCollectionTransfer)
+                ->setReservedStates(
+                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
+                )
                 ->setStore($storeTransfer)
         );
 

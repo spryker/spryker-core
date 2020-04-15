@@ -13,10 +13,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -40,63 +39,25 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
     use _generated\ProductOfferPackagingUnitBusinessTesterActions;
 
     /**
-     * @param int $quantity
-     * @param \Spryker\DecimalObject\Decimal $amount
-     * @param int $itemsCount
-     * @param bool $selfLead
-     *
-     * @return array
-     */
-    public function haveProductOfferPackagingUnitWithSalesOrderItems(int $quantity, Decimal $amount, int $itemsCount, bool $selfLead = false): array
-    {
-        [$leadProductConcreteTransfer, $packagingUnitProductConcreteTransfer] = $this->havePackagingUnitAndLead($selfLead);
-
-        $packagingUnitProductPackagingUnitType = $this->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => 'packagingUnit']);
-
-        $this->haveProductPackagingUnit([
-            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $leadProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $packagingUnitProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $packagingUnitProductPackagingUnitType->getIdProductPackagingUnitType(),
-            SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => 1,
-        ]);
-
-        $productOfferTransfer = $this->haveProductOffer([ProductOfferTransfer::CONCRETE_SKU => $leadProductConcreteTransfer->getSku()]);
-
-        $stateCollectionTransfer = $this->haveSalesOrderWithItems(
-            $productOfferTransfer->getProductOfferReference(),
-            $itemsCount,
-            $quantity,
-            $packagingUnitProductConcreteTransfer->getSku(),
-            $amount,
-            $leadProductConcreteTransfer->getSku()
-        );
-
-        return [
-            $stateCollectionTransfer,
-            $productOfferTransfer,
-        ];
-    }
-
-    /**
      * @param string $productOfferReference
      * @param int $itemsCount
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string|null $sku
      * @param \Spryker\DecimalObject\Decimal|null $amount
      * @param string|null $amountSku
      *
-     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function haveSalesOrderWithItems(
         string $productOfferReference,
         int $itemsCount,
         int $quantity,
+        StoreTransfer $storeTransfer,
         ?string $sku = null,
         ?Decimal $amount = null,
         ?string $amountSku = null
-    ): OmsStateCollectionTransfer {
-        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
-
+    ): SpySalesOrder {
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::SKU => $sku,
             ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferReference,
@@ -106,7 +67,6 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
 
         $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
-
         $salesOrderEntity
             ->setStore($storeTransfer->getName())
             ->save();
@@ -119,35 +79,17 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
                 ->setAmountSku($amountSku)
                 ->setAmount($amount)
                 ->save();
-
-            $stateName = $orderItemEntity->getState()->getName();
-            $processName = $orderItemEntity->getProcess()->getName();
-            $stateCollectionTransfer->addState(
-                $stateName,
-                (new OmsStateTransfer())
-                    ->setName($stateName)
-                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName))
-            );
         }
 
-        return $stateCollectionTransfer;
+        return $salesOrderEntity;
     }
 
     /**
-     * @param bool $selfLead
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    protected function havePackagingUnitAndLead(bool $selfLead): array
+    protected function havePackagingUnitAndLead(): array
     {
         $leadProductConcreteTransfer = $this->haveProduct();
-        if ($selfLead) {
-            return [
-                $leadProductConcreteTransfer,
-                $leadProductConcreteTransfer,
-            ];
-        }
-
         $packagingUnitProductConcreteTransfer = $this->haveProduct();
 
         return [
@@ -161,10 +103,32 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
+    public function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
     {
         return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
             return $result->add($salesAggregationTransfer->getSumAmount())->trim();
         }, new Decimal(0));
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity)
+    {
+        $stateCollectionTransfer = new OmsStateCollectionTransfer();
+        foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
+            $stateName = $orderItemEntity->getState()->getName();
+            $processName = $orderItemEntity->getProcess()->getName();
+            $stateCollectionTransfer->addState(
+                $stateName,
+                (new OmsStateTransfer())
+                    ->setName($stateName)
+                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName))
+            );
+        }
+
+        return $stateCollectionTransfer;
     }
 }

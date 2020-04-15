@@ -23,6 +23,6 @@ class ProductOfferPackagingUnitPersistenceFactory extends AbstractPersistenceFac
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
-        return $this->getProvidedDependency(ProductOfferPackagingUnitDependencyProvider::SALES_ORDER_ITEM_PROPEL_QUERY);
+        return $this->getProvidedDependency(ProductOfferPackagingUnitDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
 }
