@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -19,44 +21,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductLabelRepository extends AbstractRepository implements ProductLabelRepositoryInterface
 {
     /**
-     * @param int $idProductLabel
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelById(int $idProductLabel): ?ProductLabelTransfer
+    public function findProductLabel(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): ?ProductLabelTransfer
     {
-        $productLabelEntity = $this->getFactory()
-            ->createProductLabelQuery()
-            ->filterByIdProductLabel($idProductLabel)
-            ->leftJoinWithProductLabelStore()
-            ->find()
-            ->getFirst();
+        $productLabelQuery = $this->getFactory()->createProductLabelQuery();
+        $productLabelQuery = $this->applyProductLabelFilters($productLabelQuery, $productLabelCriteriaTransfer);
+        $productLabelEntity = $productLabelQuery->findOne();
 
         if (!$productLabelEntity) {
             return null;
         }
 
-        return $this->getFactory()
-            ->createProductLabelMapper()
-            ->mapProductLabelEntityToProductLabelTransfer($productLabelEntity, new ProductLabelTransfer());
-    }
+        if ($productLabelCriteriaTransfer->getWithStores()) {
+            $productLabelEntity->getProductLabelStores();
+        }
 
-    /**
-     * @param string $productLabelName
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
-     */
-    public function findProductLabelByName(string $productLabelName): ?ProductLabelTransfer
-    {
-        $productLabelEntity = $this->getFactory()
-            ->createProductLabelQuery()
-            ->filterByName($productLabelName)
-            ->leftJoinWithProductLabelStore()
-            ->find()
-            ->getFirst();
-
-        if (!$productLabelEntity) {
-            return null;
+        if ($productLabelCriteriaTransfer->getWithLocalizedAttributes()) {
+            $productLabelEntity->getSpyProductLabelLocalizedAttributess();
         }
 
         return $this->getFactory()
@@ -157,5 +141,30 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         return $this->getFactory()
             ->createProductLabelStoreRelationMapper()
             ->mapProductLabelStoreEntitiesToStoreRelationTransfer($productLabelStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    protected function applyProductLabelFilters(
+        SpyProductLabelQuery $productLabelQuery,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): SpyProductLabelQuery {
+        if ($productLabelCriteriaTransfer->getIdProductLabel() !== null) {
+            $productLabelQuery->filterByIdProductLabel(
+                $productLabelCriteriaTransfer->getIdProductLabel()
+            );
+        }
+
+        if ($productLabelCriteriaTransfer->getName() !== null) {
+            $productLabelQuery->filterByName(
+                $productLabelCriteriaTransfer->getName()
+            );
+        }
+
+        return $productLabelQuery;
     }
 }

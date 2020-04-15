@@ -49,10 +49,12 @@ class ProductLabelMapper
             $productLabelEntity->getValidTo(ProductLabelConfig::VALIDITY_DATE_FORMAT)
         );
 
-        $storeRelationTransfer = new StoreRelationTransfer();
-        $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
+        $productLabelEntity->initProductLabelStores(false);
 
         if ($productLabelEntity->getProductLabelStores()->count()) {
+            $storeRelationTransfer = new StoreRelationTransfer();
+            $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
+
             $productLabelTransfer->setStoreRelation(
                 $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
                     $productLabelEntity->getProductLabelStores(),

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -54,18 +55,22 @@ class LabelDeleter implements LabelDeleterInterface
         $productLabelResponseTransfer = (new ProductLabelResponseTransfer())
             ->setIsSuccessful(true);
 
-        $productLabelId = $productLabelTransfer->getIdProductLabel();
-        $productLabelTransfer = $this->productLabelRepository
-            ->findProductLabelById($productLabelId);
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setIdProductLabel($productLabelTransfer->getIdProductLabel());
+        $existingProductLabelTransfer = $this->productLabelRepository->findProductLabel($productLabelCriteriaTransfer);
 
-        if ($productLabelTransfer === null) {
+        if ($existingProductLabelTransfer === null) {
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND)
+                ->setParameters([$productLabelTransfer->getIdProductLabel()]);
+
             return $productLabelResponseTransfer
                 ->setIsSuccessful(false)
-                ->addMessage($this->createMessageTransfer(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND, [$productLabelId]));
+                ->addMessage($messageTransfer);
         }
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
-            $this->executeProductLabelDeleteTransaction($productLabelTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($existingProductLabelTransfer) {
+            $this->executeProductLabelDeleteTransaction($existingProductLabelTransfer);
         });
 
         return $productLabelResponseTransfer;
@@ -93,18 +98,5 @@ class LabelDeleter implements LabelDeleterInterface
     {
         $productLabelTransfer
             ->requireIdProductLabel();
-    }
-
-    /**
-     * @param string $message
-     * @param array $parameters
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createMessageTransfer(string $message, array $parameters = []): MessageTransfer
-    {
-        return (new MessageTransfer())
-            ->setValue($message)
-            ->setParameters($parameters);
     }
 }

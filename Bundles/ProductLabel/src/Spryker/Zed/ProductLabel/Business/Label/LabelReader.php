@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
@@ -42,15 +43,12 @@ class LabelReader implements LabelReaderInterface
      */
     public function findByIdProductLabel($idProductLabel): ?ProductLabelTransfer
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelById($idProductLabel);
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setIdProductLabel($idProductLabel)
+            ->setWithStores(true)
+            ->setWithLocalizedAttributes(true);
 
-        if (!$productLabelTransfer) {
-            return null;
-        }
-
-        $this->addLocalizedAttributes($productLabelTransfer);
-
-        return $productLabelTransfer;
+        return $this->productLabelRepository->findProductLabel($productLabelCriteriaTransfer);
     }
 
     /**
@@ -60,15 +58,12 @@ class LabelReader implements LabelReaderInterface
      */
     public function findProductLabelByName($labelName): ?ProductLabelTransfer
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelByName($labelName);
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setName($labelName)
+            ->setWithStores(true)
+            ->setWithLocalizedAttributes(true);
 
-        if (!$productLabelTransfer) {
-            return null;
-        }
-
-        $this->addLocalizedAttributes($productLabelTransfer);
-
-        return $productLabelTransfer;
+        return $this->productLabelRepository->findProductLabel($productLabelCriteriaTransfer);
     }
 
     /**
@@ -107,19 +102,5 @@ class LabelReader implements LabelReaderInterface
     public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract): array
     {
         return $this->productLabelRepository->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer): void
-    {
-        $productLabelTransfer->setLocalizedAttributesCollection(
-            $this
-                ->localizedAttributesCollectionReader
-                ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
-        );
     }
 }
