@@ -340,6 +340,7 @@
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-search": "*",
+    "spryker/merchant-shipment": "*",
     "spryker/merchant-stock": "*",
     "spryker/merchant-stock-data-import": "*",
     "spryker/merchant-stock-gui": "*",
