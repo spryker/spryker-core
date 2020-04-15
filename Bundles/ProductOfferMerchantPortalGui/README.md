@@ -1,7 +1,7 @@
 # ProductOfferMerchantPortalGui Module
 [![Build Status](https://travis-ci.org/spryker/product-offer-merchant-portal-gui.svg)](https://travis-ci.org/spryker/product-offer-merchant-portal-gui)
 
-ProductOfferMerchantPortalGui modules provides components for product offers management.
+ProductOfferMerchantPortalGui module provides components for product offers management.
 
 ## Installation
 
