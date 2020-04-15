@@ -1,11 +1,31 @@
 Active,Aktiv
+Approved,Genehmigt
+"always in stock","always in stock"
+Created,Created
+"Created from","Created from"
+"Created to","Created to"
 "Create Offer","Angebot erstellen"
+Denied,Verweigert
+"Has stock","Has stock"
 Image,Bild
 Inactive,Inaktiv
+"Merchant SKU","Merchant SKU"
 Name,Name
 Offers,Angeboten
+Offline,Offline
+offline,offline
+Online,Online
+online,online
+"Out of stock","Out of stock"
+Pending,Pending
+Reference,Reference
 Sku,SKU
 Status,Status
+Stock,Stock
 Stores,Stores
+Updated,Updated
+"Updated from","Updated from"
+"Updated to","Updated to"
 "Valid From","Gültig Von"
 "Valid To","Gültig Bis"
+Visibility,Visibility
