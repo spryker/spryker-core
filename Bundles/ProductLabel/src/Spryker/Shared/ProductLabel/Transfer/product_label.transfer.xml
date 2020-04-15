@@ -24,13 +24,6 @@
         />
     </transfer>
 
-    <transfer name="ProductLabelCriteria">
-        <property name="idProductLabel" type="int"/>
-        <property name="name" type="string"/>
-        <property name="withStores" type="bool"/>
-        <property name="withLocalizedAttributes" type="bool"/>
-    </transfer>
-
     <transfer name="ProductLabelLocalizedAttributes">
         <property name="fkProductLabel" type="int"/>
         <property name="fkLocale" type="int"/>
