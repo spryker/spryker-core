@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
@@ -230,6 +232,33 @@ class OmsFacadeTest extends Unit
             $orderItems->offsetGet(1)->getFkOmsOrderItemState(),
             $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState(),
             'Order item state ID does not equal to an expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForProduct(): void
+    {
+        // Arrange
+        $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setSku($omsProductReservationTransfer->getSku())
+            ->setStore($storeTransfer);
+
+        // Act
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
+
+        // Assert
+        $this->assertSame(
+            $omsProductReservationTransfer->getReservationQuantity()->toInt(),
+            $reservationResponseTransfer->getReservationQuantity()->toInt()
         );
     }
 
