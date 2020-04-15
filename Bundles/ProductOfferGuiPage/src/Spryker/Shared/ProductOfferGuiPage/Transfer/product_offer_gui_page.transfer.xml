@@ -149,4 +149,24 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="attributes" type="array" singular="attribute"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
