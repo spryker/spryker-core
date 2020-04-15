@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -710,5 +711,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
         return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
+    {
+        return $this->getFactory()->createUtilReservation()->getOmsReservedProductQuantity($reservationRequestTransfer);
     }
 }

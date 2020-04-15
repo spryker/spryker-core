@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -52,6 +53,11 @@ class Reservation implements ReservationInterface
     protected $omsEntityManager;
 
     /**
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     */
+    protected $omsReservationReaderStrategyPlugins;
+
+    /**
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
     protected $reservationAggregationPlugins;
@@ -73,6 +79,7 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      * @param \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface $omsEntityManager
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[] $omsReservationReaderStrategyPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[] $omsReservationWriterStrategyPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[] $reservationHandlerTerminationAwareStrategyPlugins
@@ -84,6 +91,7 @@ class Reservation implements ReservationInterface
         OmsToStoreFacadeInterface $storeFacade,
         OmsRepositoryInterface $omsRepository,
         OmsEntityManagerInterface $omsEntityManager,
+        array $omsReservationReaderStrategyPlugins,
         array $reservationAggregationPlugins = [],
         array $omsReservationWriterStrategyPlugins = [],
         array $reservationHandlerTerminationAwareStrategyPlugins = []
@@ -95,6 +103,7 @@ class Reservation implements ReservationInterface
         $this->omsRepository = $omsRepository;
         $this->omsEntityManager = $omsEntityManager;
         $this->reservationAggregationPlugins = $reservationAggregationPlugins;
+        $this->omsReservationReaderStrategyPlugins = $omsReservationReaderStrategyPlugins;
         $this->omsReservationWriterStrategyPlugins = $omsReservationWriterStrategyPlugins;
         $this->reservationHandlerTerminationAwareStrategyPlugins = $reservationHandlerTerminationAwareStrategyPlugins;
     }
@@ -252,6 +261,27 @@ class Reservation implements ReservationInterface
         }
 
         return $reservedStatesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
+    {
+        foreach ($this->omsReservationReaderStrategyPlugins as $omsReservationReaderStrategyPlugin) {
+            if ($omsReservationReaderStrategyPlugin->isApplicable($reservationRequestTransfer)) {
+                return $omsReservationReaderStrategyPlugin->getReservationQuantity($reservationRequestTransfer);
+            }
+        }
+
+        $reservationQuantity = $this->getOmsReservedProductQuantityForSku(
+            $reservationRequestTransfer->requireSku()->getSku(),
+            $reservationRequestTransfer->requireStore()->getStore()
+        );
+
+        return (new ReservationResponseTransfer())->setReservationQuantity($reservationQuantity);
     }
 
     /**

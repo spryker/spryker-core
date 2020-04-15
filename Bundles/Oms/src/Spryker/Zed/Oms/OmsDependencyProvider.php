@@ -36,6 +36,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+    public const PLUGINS_OMS_RESERVATION_READER_STRATEGY = 'PLUGINS_OMS_RESERVATION_READER_STRATEGY';
     public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
     public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
 
@@ -64,6 +65,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGraphPlugin($container);
         $container = $this->addReservationHandlerPlugins($container);
         $container = $this->addReservationAggregationStrategyPlugins($container);
+        $container = $this->addOmsReservationReaderStrategyPlugins($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
@@ -372,6 +374,28 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationReaderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_READER_STRATEGY, function (Container $container) {
+            return $this->getOmsReservationReaderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     */
+    protected function getOmsReservationReaderStrategyPlugins(): array
+    {
+        return [];
     }
 
     /**
