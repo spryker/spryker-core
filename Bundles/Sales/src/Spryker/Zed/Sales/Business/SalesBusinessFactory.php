@@ -45,6 +45,8 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
+use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
@@ -227,8 +229,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getConfig(),
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
+            $this->getOrderItemExpanderPlugins(),
             $this->getCustomerOrderAccessCheckPlugins()
         );
     }
@@ -241,8 +245,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getConfig(),
             $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
+            $this->getOrderItemExpanderPlugins(),
             $this->getCustomerOrderAccessCheckPlugins()
         );
     }
@@ -482,6 +488,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface
+     */
+    public function createOrderItemReader(): OrderItemReaderInterface
+    {
+        return new OrderItemReader(
+            $this->getRepository(),
+            $this->getOrderItemExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
      */
     public function getCustomerFacade(): SalesToCustomerInterface
@@ -503,6 +520,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getUniqueOrderItemsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    public function getOrderItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER);
     }
 
     /**

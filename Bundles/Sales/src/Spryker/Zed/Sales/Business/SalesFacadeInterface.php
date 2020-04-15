@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -351,6 +353,19 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves order items from persistence by criteria from OrderItemFilterTransfer.
+     * - Executes OrderItemExpanderPluginInterface stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:

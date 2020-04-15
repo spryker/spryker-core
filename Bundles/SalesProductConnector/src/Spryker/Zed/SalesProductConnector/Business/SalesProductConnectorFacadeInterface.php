@@ -48,6 +48,8 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithMetadata()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -65,6 +67,18 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Expands order items with metadata information.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithMetadata(array $itemTransfers): array;
 
     /**
      * Specification:

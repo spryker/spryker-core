@@ -36,6 +36,8 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataHydratorInterface
      */
     public function createItemMetadataHydrator()

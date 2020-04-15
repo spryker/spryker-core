@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: Business
+        path: .
         class_name: SalesProductConnectorBusinessTester
         modules:
             enabled:

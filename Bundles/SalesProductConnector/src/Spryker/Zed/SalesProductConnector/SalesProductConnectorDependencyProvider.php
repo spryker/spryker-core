@@ -28,9 +28,9 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new SalesProductConnectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -48,7 +48,7 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
             return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
 
-        $this->addUtilEncodingService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -65,6 +65,8 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
                 $container->getLocator()->utilEncoding()->service()
             );
         });
+
+        $this->addUtilEncodingService($container);
 
         return $container;
     }

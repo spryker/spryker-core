@@ -10,13 +10,15 @@ namespace Spryker\Zed\Sales\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
@@ -65,6 +67,35 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTransfer(), $addressEntity);
+    }
+
+    /**
+     * @module Oms
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        $salesOrderItemQuery = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->innerJoinWithOrder()
+            ->leftJoinWithProcess()
+            ->leftJoinWithState();
+
+        $salesOrderItemQuery = $this->setOrderItemFilters($salesOrderItemQuery, $orderItemFilterTransfer);
+
+        $salesOrderItemQuery = $this->buildQueryFromCriteria(
+            $salesOrderItemQuery,
+            $orderItemFilterTransfer->getFilter()
+        );
+
+        $salesOrderItemQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
     }
 
     /**
@@ -291,6 +322,48 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $orderListQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function setOrderItemFilters(
+        SpySalesOrderItemQuery $salesOrderItemQuery,
+        OrderItemFilterTransfer $orderItemFilterTransfer
+    ): SpySalesOrderItemQuery {
+        if ($orderItemFilterTransfer->getSalesOrderItemIds()) {
+            $salesOrderItemQuery->filterByIdSalesOrderItem_In(array_unique($orderItemFilterTransfer->getSalesOrderItemIds()));
+        }
+
+        if ($orderItemFilterTransfer->getSalesOrderItemUuids()) {
+            $salesOrderItemQuery->filterByUuid_In(array_unique($orderItemFilterTransfer->getSalesOrderItemUuids()));
+        }
+
+        if ($orderItemFilterTransfer->getCustomerReferences()) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByCustomerReference_In(array_unique($orderItemFilterTransfer->getCustomerReferences()))
+                ->endUse();
+        }
+
+        if ($orderItemFilterTransfer->getOrderReferences()) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByOrderReference_In(array_unique($orderItemFilterTransfer->getOrderReferences()))
+                ->endUse();
+        }
+
+        if ($orderItemFilterTransfer->getItemStates()) {
+            $salesOrderItemQuery
+                ->useStateQuery()
+                    ->filterByName_In(array_unique($orderItemFilterTransfer->getItemStates()))
+                ->endUse();
+        }
+
+        return $salesOrderItemQuery;
     }
 
     /**
