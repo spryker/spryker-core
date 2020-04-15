@@ -36,6 +36,19 @@ class CustomerDeleteForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => CustomerTransfer::class,
+            'method' => Request::METHOD_POST,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -49,18 +62,5 @@ class CustomerDeleteForm extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => CustomerTransfer::class,
-            'method' => Request::METHOD_POST,
-        ]);
     }
 }

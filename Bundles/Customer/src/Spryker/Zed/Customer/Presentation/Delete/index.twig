@@ -18,7 +18,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            {{ form_start(customerDeleteForm, {'action': '/customer/delete/confirm'}) }}
+            {{ form_start(customerDeleteForm, {'action': url('/customer/delete/confirm')}) }}
                 {{ form_widget(customerDeleteForm.idCustomer) }}
 
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
