@@ -128,10 +128,14 @@
     </transfer>
 
     <transfer name="ReservationRequest">
-        <property name="reservationQuantity" type="decimal"/>
-        <property name="store" type="Store"/>
-        <property name="item" type="Item"/>
         <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
 </transfers>
