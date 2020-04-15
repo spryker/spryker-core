@@ -65,7 +65,6 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
             ItemTransfer::AMOUNT => $amount,
         ]))->build();
 
-        $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
         $salesOrderEntity
             ->setStore($storeTransfer->getName())
