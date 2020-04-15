@@ -21,12 +21,10 @@ class CustomerForgottenPasswordResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Create customer forgotten password."
+     *              "Sends password restoration email."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header",
-     *              "description": "Locale value relevant for the store."
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "204": "No content."

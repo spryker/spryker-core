@@ -18,6 +18,23 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CustomerRestorePasswordResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "patch": {
+     *          "path": "/customer-restore-password/{customerRestorePasswordId}",
+     *          "summary": [
+     *              "Restores customer password."
+     *          ],
+     *           "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responses": {
+     *              "204": "No content.",
+     *              "400": "Customer restore password id is not specified.",
+     *              "422": "Restore password key is not valid."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
      *
