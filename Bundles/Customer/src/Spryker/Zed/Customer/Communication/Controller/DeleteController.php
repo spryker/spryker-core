@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+    protected const URL_CUSTOMER_DELETE_PAGE = '/customer/delete';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -41,7 +44,7 @@ class DeleteController extends AbstractController
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 
         $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
@@ -82,12 +85,12 @@ class DeleteController extends AbstractController
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 
         $this->addSuccessMessage('Customer successfully deleted');
 
-        return $this->redirectResponse('/customer');
+        return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
     }
 
     /**
@@ -101,11 +104,14 @@ class DeleteController extends AbstractController
         $customerTransfer = $customerDeleteForm->getData();
 
         if ($customerTransfer && $customerTransfer->getIdCustomer()) {
-            return $this->redirectResponse(
-                Url::generate('/customer/delete', [CustomerConstants::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer()])
-            );
+            return $this->redirectResponse(Url::generate(
+                static::URL_CUSTOMER_DELETE_PAGE,
+                [
+                    CustomerConstants::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer(),
+                ]
+            ));
         }
 
-        return $this->redirectResponse('/customer');
+        return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
     }
 }
