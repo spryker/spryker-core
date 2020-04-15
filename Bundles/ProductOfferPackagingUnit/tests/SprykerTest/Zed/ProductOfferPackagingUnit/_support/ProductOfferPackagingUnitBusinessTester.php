@@ -84,20 +84,6 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    protected function havePackagingUnitAndLead(): array
-    {
-        $leadProductConcreteTransfer = $this->haveProduct();
-        $packagingUnitProductConcreteTransfer = $this->haveProduct();
-
-        return [
-            $leadProductConcreteTransfer,
-            $packagingUnitProductConcreteTransfer,
-        ];
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -114,7 +100,7 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity)
+    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity): OmsStateCollectionTransfer
     {
         $stateCollectionTransfer = new OmsStateCollectionTransfer();
         foreach ($salesOrderEntity->getItems() as $orderItemEntity) {

@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductOfferPackagingUnit\Business\Facade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
@@ -82,11 +81,8 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
         // Act
         $salesAggregationTransfers = $this->tester->getFacade()->getAggregatedReservations(
             (new ReservationRequestTransfer())
-                ->setItem(
-                    (new ItemTransfer())
-                        ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-                        ->setSku($productOfferTransfer->getConcreteSku())
-                )
+                ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->setSku($productOfferTransfer->getConcreteSku())
                 ->setReservedStates(
                     $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
                 )

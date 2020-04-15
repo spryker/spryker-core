@@ -14,7 +14,8 @@
     </transfer>
 
     <transfer name="ReservationRequest">
-        <property name="item" type="Item"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="sku" type="string"/>
         <property name="reservedStates" type="OmsStateCollection"/>
         <property name="store" type="Store"/>
     </transfer>

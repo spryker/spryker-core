@@ -31,9 +31,6 @@
     <transfer name="OmsStateCollection">
     </transfer>
 
-    <transfer name="Item">
-    </transfer>
-
     <transfer name="Store">
     </transfer>
 

@@ -80,7 +80,7 @@ class OmsProductOfferReservationBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity)
+    public function getOmsStateCollectionTransfer(SpySalesOrder $salesOrderEntity): OmsStateCollectionTransfer
     {
         $stateCollectionTransfer = new OmsStateCollectionTransfer();
         foreach ($salesOrderEntity->getItems() as $orderItemEntity) {

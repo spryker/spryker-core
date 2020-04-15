@@ -14,7 +14,7 @@ interface ProductOfferPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Aggregates reservations for product offers.
-     * - Requires ReservationRequestTransfer.item transfer field to be set.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api

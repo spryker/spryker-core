@@ -18,7 +18,7 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
     /**
      * {@inheritDoc}
      * - Checks if an item is a product offer.
-     * - Requires ReservationRequestTransfer.item transfer field to be set.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      *
      * @api
      *
@@ -28,15 +28,13 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
      */
     public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        $reservationRequestTransfer->requireItem();
-
-        return (bool)$reservationRequestTransfer->getItem()->getProductOfferReference();
+        return (bool)$reservationRequestTransfer->getProductOfferReference();
     }
 
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers packaging unit.
-     * - Requires ReservationRequestTransfer.item transfer field to be set.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api

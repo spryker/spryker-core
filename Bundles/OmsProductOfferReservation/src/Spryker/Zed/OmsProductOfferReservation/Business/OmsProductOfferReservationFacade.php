@@ -44,11 +44,11 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        $reservationRequestTransfer->requireItem();
+        $reservationRequestTransfer->requireProductOfferReference();
         $reservationRequestTransfer->requireReservedStates();
 
         return $this->getRepository()->getAggregatedReservations(
-            $reservationRequestTransfer->getItem()->getProductOfferReference(),
+            $reservationRequestTransfer->getProductOfferReference(),
             $reservationRequestTransfer->getReservedStates()->getStates(),
             $reservationRequestTransfer->getStore()
         );
