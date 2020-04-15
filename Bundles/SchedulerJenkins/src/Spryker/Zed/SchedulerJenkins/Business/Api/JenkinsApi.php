@@ -187,8 +187,8 @@ class JenkinsApi implements JenkinsApiInterface
     protected function extendRequestWithCsrfToken(RequestInterface $request, ConfigurationProviderInterface $configurationProvider): RequestInterface
     {
         if ($configurationProvider->isJenkinsCsrfProtectionEnabled()) {
-            $csrfProtectionToken = $this->getCrumbIssuer($configurationProvider);
-            $request = $request->withHeader($csrfProtectionToken['crumbRequestField'], $csrfProtectionToken['crumb']);
+            $crumbIssuer = $this->getCrumbIssuer($configurationProvider);
+            $request = $request->withHeader($crumbIssuer['crumbRequestField'], $crumbIssuer['crumb']);
         }
 
         return $request;
