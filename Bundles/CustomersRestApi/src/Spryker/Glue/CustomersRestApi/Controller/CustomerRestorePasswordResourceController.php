@@ -20,7 +20,6 @@ class CustomerRestorePasswordResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
-     *          "path": "/customer-restore-password/{customerRestorePasswordId}",
      *          "summary": [
      *              "Restores customer password."
      *          ],
