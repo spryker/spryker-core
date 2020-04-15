@@ -19,11 +19,25 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface $utilEncodingService
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
      */
-    public function __construct(OauthRevokeToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    protected $oauthUserIdentifierFilterPlugins;
+
+    /**
+     * @var array
+     */
+    protected $decodedUserIdentifier;
+
+    /**
+     * @param \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     */
+    public function __construct(
+        OauthRevokeToUtilEncodingServiceInterface $utilEncodingService,
+        array $oauthUserIdentifierFilterPlugins = []
+    ) {
         $this->utilEncodingService = $utilEncodingService;
+        $this->oauthUserIdentifierFilterPlugins = $oauthUserIdentifierFilterPlugins;
     }
 
     /**
@@ -37,7 +51,9 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
         $userIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
-        $customerReference = $this->getCustomerReference($userIdentifier);
+        $userIdentifier = $this->filterUserIdentifier($userIdentifier);
+
+        $customerReference = $this->getCustomerReference();
 
         $oauthRefreshTokenTransfer
             ->setIdentifier($refreshTokenEntity->getIdentifier())
@@ -51,15 +67,28 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     }
 
     /**
-     * @param string|null $userIdentifier
-     *
      * @return string|null
      */
-    protected function getCustomerReference(?string $userIdentifier): ?string
+    protected function getCustomerReference(): ?string
     {
-        $encodedUserIdentifier = $this->utilEncodingService
-            ->decodeJson($userIdentifier);
+        return $this->decodedUserIdentifier['customer_reference'] ?? null;
+    }
 
-        return $encodedUserIdentifier->customer_reference ?? null;
+    /**
+     * @param string $userIdentifier
+     *
+     * @return string
+     */
+    protected function filterUserIdentifier(string $userIdentifier): string
+    {
+        $this->decodedUserIdentifier = $this->utilEncodingService->decodeJson($userIdentifier, true);
+
+        if ($this->decodedUserIdentifier) {
+            foreach ($this->oauthUserIdentifierFilterPlugins as $oauthUserIdentifierFilterPlugin) {
+                $this->decodedUserIdentifier = $oauthUserIdentifierFilterPlugin->filter($this->decodedUserIdentifier);
+            }
+        }
+
+        return (string)$this->utilEncodingService->encodeJson($this->decodedUserIdentifier);
     }
 }

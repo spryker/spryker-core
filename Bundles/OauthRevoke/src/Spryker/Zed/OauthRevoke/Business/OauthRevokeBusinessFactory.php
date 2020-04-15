@@ -41,7 +41,8 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapperInterface
     {
         return new OauthRefreshTokenMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getOauthUserIdentifierFilterPlugins()
         );
     }
 
@@ -62,5 +63,13 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): OauthRevokeToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(OauthRevokeDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     */
+    public function getOauthUserIdentifierFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthRevokeDependencyProvider::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER);
     }
 }
