@@ -26,6 +26,7 @@
 
     <transfer name="CompanyUser">
         <property name="company" type="Company"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="FilterField">
@@ -41,10 +42,14 @@
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>
+        <property name="mergeWithCondition" type="string"/>
     </transfer>
 
     <transfer name="QueryJoin">
         <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+        <property name="withColumns" type="string[]" singular="withColumn"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

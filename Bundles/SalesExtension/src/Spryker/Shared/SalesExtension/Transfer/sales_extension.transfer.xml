@@ -21,4 +21,7 @@
     <transfer name="QueryJoinCollection">
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
