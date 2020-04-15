@@ -13,6 +13,7 @@ use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPlugi
 
 /**
  * @method \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservationFacadeInterface getFacade()
+ * @method \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservationBusinessFactory getFactory()
  * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
  */
 class ProductOfferOmsReservationWriterStrategyPlugin extends AbstractPlugin implements OmsReservationWriterStrategyPluginInterface
@@ -44,6 +45,6 @@ class ProductOfferOmsReservationWriterStrategyPlugin extends AbstractPlugin impl
      */
     public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFacade()->saveReservation($reservationRequestTransfer);
+        $this->getFactory()->createOmsProductOfferReservationWriter()->saveReservation($reservationRequestTransfer);
     }
 }

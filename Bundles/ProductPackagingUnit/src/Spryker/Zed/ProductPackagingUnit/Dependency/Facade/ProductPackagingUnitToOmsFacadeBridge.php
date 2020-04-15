@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+
 class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOmsFacadeInterface
 {
     /**
@@ -23,6 +25,8 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
+     * @deprecated Use `updateReservation` instead.
+     *
      * @param string $sku
      *
      * @return void
@@ -30,5 +34,15 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     public function updateReservationQuantity(string $sku): void
     {
         $this->omsFacade->updateReservationQuantity($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $this->omsFacade->updateReservation($reservationRequestTransfer);
     }
 }

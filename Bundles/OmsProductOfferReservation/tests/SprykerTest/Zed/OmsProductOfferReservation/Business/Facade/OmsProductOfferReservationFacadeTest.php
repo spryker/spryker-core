@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\OmsProductOfferReservation\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -103,5 +104,31 @@ class OmsProductOfferReservationFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
         $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveReservationSuccess(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setProductOfferReference('test')
+            ->setStore($storeTransfer)
+            ->setReservationQuantity(5);
+
+        $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
+            ->setProductOfferReference($reservationRequestTransfer->getProductOfferReference())
+            ->setIdStore($reservationRequestTransfer->getStore()->getIdStore());
+
+        // Act
+        $this->tester->getFacade()->saveReservation($reservationRequestTransfer);
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+
+        // Assert
+        // Assert
+        $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
+        $this->assertSame(5, $reservationResponseTransfer->getReservationQuantity()->toInt());
     }
 }
