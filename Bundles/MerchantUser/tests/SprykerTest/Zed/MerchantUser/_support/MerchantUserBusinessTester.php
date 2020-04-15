@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantUser;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 
@@ -36,26 +36,30 @@ class MerchantUserBusinessTester extends Actor
     /**
      * Define custom actions here
      *
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
      */
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser|null
      */
-    public function findMerchantUser(MerchantUserCriteriaFilterTransfer $merchantUserCriteriaFilterTransfer): ?SpyMerchantUser
+    public function findMerchantUser(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): ?SpyMerchantUser
     {
         $query = $this->createMerchantUserPropelQuery();
 
-        if ($merchantUserCriteriaFilterTransfer->getIdMerchant()) {
-            $query->filterByFkMerchant($merchantUserCriteriaFilterTransfer->getIdMerchant());
+        if ($merchantUserCriteriaTransfer->getIdMerchant()) {
+            $query->filterByFkMerchant($merchantUserCriteriaTransfer->getIdMerchant());
         }
 
-        if ($merchantUserCriteriaFilterTransfer->getIdUser()) {
-            $query->filterByFkUser($merchantUserCriteriaFilterTransfer->getIdUser());
+        if ($merchantUserCriteriaTransfer->getIdMerchantUser()) {
+            $query->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
+        }
+
+        if ($merchantUserCriteriaTransfer->getIdUser()) {
+            $query->filterByFkUser($merchantUserCriteriaTransfer->getIdUser());
         }
 
         return $query->findOne();

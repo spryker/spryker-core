@@ -1,0 +1,24 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create Product Relation' %}
+
+{% block section_title widget_title | trans %}
+{% block head_title widget_title | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-relation-gui/list/index', 'List Product relations' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% include '@ProductRelationGui/_partial/tabs-product-relation.twig' %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-product-relation-gui.css') }}" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-product-relation-gui.js') }}"></script>
+{% endblock %}
