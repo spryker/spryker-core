@@ -9,7 +9,7 @@ namespace Spryker\Shared\Kernel\CodeBucket\Context;
 
 use Spryker\Shared\Kernel\CodeBucket\Exception\InvalidCodeBucketException;
 
-abstract class AbstractCodeBucketContext
+abstract class AbstractCodeBucketContext implements CodeBucketContextInterface
 {
     protected const SPRYKER_CODE_BUCKET = 'SPRYKER_CODE_BUCKET';
 
@@ -43,7 +43,7 @@ abstract class AbstractCodeBucketContext
      */
     protected function assertCodeBucket(string $codeBucket): void
     {
-        if (!in_array($codeBucket, $this->getCodeBuckets())) {
+        if ($codeBucket !== '' && !in_array($codeBucket, $this->getCodeBuckets())) {
             throw new InvalidCodeBucketException(sprintf('CodeBucket "%s" is not a valid option!', $codeBucket));
         }
     }

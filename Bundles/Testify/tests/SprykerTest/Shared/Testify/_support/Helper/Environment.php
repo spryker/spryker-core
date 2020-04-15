@@ -50,11 +50,7 @@ class Environment extends Module
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . 'src/');
         defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . 'vendor/');
 
-        if (Store::isDynamicStoreMode()) {
-            $store = $this->getStore();
-            defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
-            putenv('APPLICATION_STORE=' . $store);
-        }
+        $this->defineStore();
 
         defined('APPLICATION_CODE_BUCKET') || define('APPLICATION_CODE_BUCKET', $this->getCodeBucket());
         putenv('APPLICATION_CODE_BUCKET=' . APPLICATION_CODE_BUCKET);
@@ -272,5 +268,17 @@ class Environment extends Module
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function defineStore(): void
+    {
+        if (!Store::isDynamicStoreMode()) {
+            $store = $this->getStore();
+            defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
+            putenv('APPLICATION_STORE=' . $store);
+        }
     }
 }

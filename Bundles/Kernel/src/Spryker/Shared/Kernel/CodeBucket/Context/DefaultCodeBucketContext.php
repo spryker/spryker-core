@@ -12,11 +12,24 @@ use Spryker\Shared\Kernel\Store;
 class DefaultCodeBucketContext extends AbstractCodeBucketContext implements CodeBucketContextInterface
 {
     /**
+     * @var bool
+     */
+    protected $isDynamicStoreMode;
+
+    /**
+     * @param bool|null $isDynamicStoreMode
+     */
+    public function __construct(?bool $isDynamicStoreMode = null)
+    {
+        $this->isDynamicStoreMode = $isDynamicStoreMode ?? Store::isDynamicStoreMode();
+    }
+
+    /**
      * @return string[]
      */
     public function getCodeBuckets(): array
     {
-        if (!Store::isDynamicStoreMode()) {
+        if (!$this->isDynamicStoreMode) {
             return Store::getInstance()->getAllowedStores();
         }
 
@@ -28,7 +41,7 @@ class DefaultCodeBucketContext extends AbstractCodeBucketContext implements Code
      */
     public function getCurrentCodeBucket(): string
     {
-        if (!Store::isDynamicStoreMode()) {
+        if (!$this->isDynamicStoreMode) {
             return Store::getInstance()->getStoreName();
         }
 
