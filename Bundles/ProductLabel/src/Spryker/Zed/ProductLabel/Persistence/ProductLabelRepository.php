@@ -29,6 +29,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->createProductLabelQuery()
             ->filterByIdProductLabel($idProductLabel)
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find()
             ->getFirst();
 
@@ -52,6 +53,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->createProductLabelQuery()
             ->filterByName($productLabelName)
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find()
             ->getFirst();
 

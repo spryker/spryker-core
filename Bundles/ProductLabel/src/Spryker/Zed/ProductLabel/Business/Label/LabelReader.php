@@ -42,15 +42,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findByIdProductLabel($idProductLabel): ?ProductLabelTransfer
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelById($idProductLabel);
-
-        if (!$productLabelTransfer) {
-            return null;
-        }
-
-        $this->addLocalizedAttributes($productLabelTransfer);
-
-        return $productLabelTransfer;
+        return $this->productLabelRepository->findProductLabelById($idProductLabel);
     }
 
     /**
@@ -60,15 +52,7 @@ class LabelReader implements LabelReaderInterface
      */
     public function findProductLabelByName($labelName): ?ProductLabelTransfer
     {
-        $productLabelTransfer = $this->productLabelRepository->findProductLabelByName($labelName);
-
-        if (!$productLabelTransfer) {
-            return null;
-        }
-
-        $this->addLocalizedAttributes($productLabelTransfer);
-
-        return $productLabelTransfer;
+        return $this->productLabelRepository->findProductLabelByName($labelName);
     }
 
     /**
@@ -107,19 +91,5 @@ class LabelReader implements LabelReaderInterface
     public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract): array
     {
         return $this->productLabelRepository->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributes(ProductLabelTransfer $productLabelTransfer): void
-    {
-        $productLabelTransfer->setLocalizedAttributesCollection(
-            $this
-                ->localizedAttributesCollectionReader
-                ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
-        );
     }
 }
