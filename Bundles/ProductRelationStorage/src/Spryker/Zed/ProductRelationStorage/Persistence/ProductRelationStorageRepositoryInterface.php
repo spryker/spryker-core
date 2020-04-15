@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductRelationStorageRepositoryInterface
 {
     /**
@@ -15,4 +17,19 @@ interface ProductRelationStorageRepositoryInterface
      * @return array
      */
     public function getProductRelationsWithProductAbstractByIdRelationIn(array $relationIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductRelationStorageDataTransferByIds(FilterTransfer $filterTransfer, array $ids): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string[]
+     */
+    public function getStoresByIdProductAbstractFromStorage(int $idProductAbstract): array;
 }

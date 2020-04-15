@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleBridge;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientBridge;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
@@ -22,6 +23,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'STORE';
@@ -51,6 +53,23 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductConcreteExpanderPlugins($container);
         $container = $this->addProductAbstractRestrictionFilterPlugins($container);
         $container = $this->addProductConcreteRestrictionFilterPlugins($container);
+        $container = $this->addStoreClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductStorageToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
+        });
 
         return $container;
     }

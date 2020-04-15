@@ -57,7 +57,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
             ->findOneOrCreate();
         $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT]);
         $productOfferEntity->setConcreteSku($dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU]);
-        $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU]);
+        $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU] ?: null);
         $productOfferEntity->setIsActive($dataSet[MerchantProductOfferDataSetInterface::IS_ACTIVE]);
         $productOfferEntity->setApprovalStatus($dataSet[MerchantProductOfferDataSetInterface::APPROVAL_STATUS]);
         $productOfferEntity->save();

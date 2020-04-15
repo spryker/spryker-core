@@ -269,6 +269,36 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateQuoteRequestSanitizesSourcePrices(): void
+    {
+        // Arrange
+        $sourcePrice = 322;
+        $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+        $quoteRequestTransfer->getLatestVersion()
+            ->getQuote()
+            ->setShipment($this->tester->createShipmentWithSourcePrice($sourcePrice));
+        $quoteRequestTransfer->getLatestVersion()
+            ->getQuote()
+            ->getItems()
+            ->getIterator()
+            ->current()
+            ->setShipment($this->tester->createShipmentWithSourcePrice($sourcePrice))
+            ->setSourceUnitGrossPrice(322);
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->updateQuoteRequest($quoteRequestTransfer);
+        $quoteTransfer = $quoteRequestResponseTransfer->getQuoteRequest()->getLatestVersion()->getQuote();
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
+
+        // Assert
+        $this->assertEmpty($quoteTransfer->getShipment()->getMethod()->getSourcePrice());
+        $this->assertEmpty($itemTransfer->getShipment()->getMethod()->getSourcePrice());
+        $this->assertEmpty($itemTransfer->getSourceUnitGrossPrice());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateQuoteRequestThrowsExceptionWithEmptyQuoteRequestReference(): void
     {
         // Arrange

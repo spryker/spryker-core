@@ -35,7 +35,7 @@ class AddressReader implements AddressReaderInterface
     public function getAddressesTransfer(QuoteTransfer $quoteTransfer): AddressesTransfer
     {
         $customerTransfer = $quoteTransfer->getCustomer();
-        if (!$customerTransfer || $customerTransfer->getIsGuest()) {
+        if (!$customerTransfer || $customerTransfer->getIsGuest() === true) {
             return new AddressesTransfer();
         }
 

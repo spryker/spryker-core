@@ -13,6 +13,10 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestPromotionalItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\DiscountPromotionsRestApi\DiscountPromotionsRestApiFactory getFactory()
  */
 class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

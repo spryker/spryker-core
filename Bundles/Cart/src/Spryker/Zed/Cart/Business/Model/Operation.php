@@ -588,7 +588,7 @@ class Operation implements OperationInterface
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculate($quoteTransfer, false);
     }
 
     /**

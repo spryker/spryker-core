@@ -131,6 +131,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItem((new ItemTransfer())
                 ->setSku($cartItemRequestTransfer->getSku())
+                ->setGroupKey($cartItemRequestTransfer->getGroupKey())
                 ->setQuantity($cartItemRequestTransfer->getQuantity()))
             ->setCustomer($cartItemRequestTransfer->getCustomer());
     }

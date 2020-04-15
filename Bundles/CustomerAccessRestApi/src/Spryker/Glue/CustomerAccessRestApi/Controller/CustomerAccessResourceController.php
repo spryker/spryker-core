@@ -23,8 +23,7 @@ class CustomerAccessResourceController extends AbstractController
      *              "Retrieves collection of restricted resources."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }]
      *     }
      * })

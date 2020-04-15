@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -98,6 +99,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::findUser()} instead.
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -107,6 +110,22 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
         return $this->getFactory()
             ->createUserModel()
             ->findUserById($idUser);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->findUser($userCriteriaTransfer);
     }
 
     /**
