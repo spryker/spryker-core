@@ -141,7 +141,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be remove in next major.
+     * @deprecated Use \Spryker\Zed\Oms\OmsDependencyProvider::getOmsReservationAggregationStrategyPlugins().
      *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */

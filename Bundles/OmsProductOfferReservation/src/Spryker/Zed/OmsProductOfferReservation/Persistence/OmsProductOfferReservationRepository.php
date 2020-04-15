@@ -52,7 +52,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
      *
      * @param string $productOfferReference
      * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers
-     * @param \Spryker\Zed\OmsProductOfferReservation\Persistence\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
@@ -61,9 +61,6 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         ArrayObject $omsStateTransfers,
         ?StoreTransfer $storeTransfer = null
     ): array {
-        $reservationRequestTransfer->requireItem();
-        $reservationRequestTransfer->requireReservedStates();
-
         $salesOrderItemQuery = $this->getFactory()->getSalesOrderItemPropelQuery();
         $salesOrderItemQuery
             ->filterByProductOfferReference($productOfferReference)

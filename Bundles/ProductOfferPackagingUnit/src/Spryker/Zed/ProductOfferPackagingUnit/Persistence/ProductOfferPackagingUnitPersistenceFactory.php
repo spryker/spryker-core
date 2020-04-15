@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOfferPackagingUnit\ProductOfferPackagingUnitDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferPackagingUnit\ProductOfferPackagingUnitConfig getConfig()
@@ -20,8 +21,8 @@ class ProductOfferPackagingUnitPersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function createSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
+    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
-        return SpySalesOrderItemQuery::create();
+        return $this->getProvidedDependency(ProductOfferPackagingUnitDependencyProvider::SALES_ORDER_ITEM_PROPEL_QUERY);
     }
 }

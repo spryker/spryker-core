@@ -10,6 +10,7 @@ namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
@@ -30,6 +31,6 @@ class OmsProductOfferReservationPersistenceFactory extends AbstractPersistenceFa
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
-        return SpySalesOrderItemQuery::create();
+        return $this->getProvidedDependency(OmsProductOfferReservationDependencyProvider::SALES_ORDER_ITEM_PROPEL_QUERY);
     }
 }

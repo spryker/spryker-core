@@ -21,7 +21,7 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
     /**
      * {@inheritDoc}
      * - Checks if an item is a product offer.
-     * - Required parameters in ReservationRequestTransfer: item.
+     * - Requires ReservationRequestTransfer.item transfer field to be set.
      *
      * @api
      *
@@ -39,7 +39,7 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers.
-     * - Required parameters in ReservationRequestTransfer: item, reservedStates.
+     * - Requires ReservationRequestTransfer.item, ReservationRequestTransfer.reservedStates transfer fields to be set.
      *
      * @api
      *

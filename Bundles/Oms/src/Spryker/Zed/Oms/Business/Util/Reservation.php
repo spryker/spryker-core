@@ -61,8 +61,8 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface[] $omsReservationAggregationStrategyPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface[] $omsReservationAggregationStrategyPlugins
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
@@ -70,8 +70,8 @@ class Reservation implements ReservationInterface
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade,
         OmsRepositoryInterface $omsRepository,
-        array $omsReservationAggregationStrategyPlugins,
-        array $reservationAggregationPlugins = []
+        array $reservationAggregationPlugins,
+        array $omsReservationAggregationStrategyPlugins
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
@@ -111,11 +111,11 @@ class Reservation implements ReservationInterface
 
         $reservationRequestTransfer->setReservedStates($reservedStates)
             ->setStore($this->storeFacade->getCurrentStore());
-        $SalesOrderItemStateAggregationTransfers = $this->aggregateReservations($reservationRequestTransfer);
+        $salesOrderItemStateAggregationTransfers = $this->aggregateReservations($reservationRequestTransfer);
 
         return $this->calculateReservationQuantity(
             $reservedStates,
-            $SalesOrderItemStateAggregationTransfers
+            $salesOrderItemStateAggregationTransfers
         );
     }
 

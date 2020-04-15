@@ -18,7 +18,7 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
     /**
      * {@inheritDoc}
      * - Checks if an item is a product offer.
-     * - Required parameters in ReservationRequestTransfer: item.
+     * - Requires ReservationRequestTransfer.item transfer field to be set.
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers packaging unit.
-     * - Required parameters in ReservationRequestTransfer: item, reservedStates.
+     * - Requires ReservationRequestTransfer.item, ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api
      *

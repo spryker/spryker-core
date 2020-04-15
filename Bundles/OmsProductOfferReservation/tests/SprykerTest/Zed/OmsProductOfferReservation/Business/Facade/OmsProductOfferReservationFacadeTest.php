@@ -8,8 +8,12 @@
 namespace SprykerTest\Zed\OmsProductOfferReservation\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -26,6 +30,8 @@ use Spryker\DecimalObject\Decimal;
  */
 class OmsProductOfferReservationFacadeTest extends Unit
 {
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\OmsProductOfferReservation\OmsProductOfferReservationBusinessTester
      */
@@ -103,5 +109,52 @@ class OmsProductOfferReservationFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
         $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAggregatedReservations(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $quantity = 2;
+        $itemsCount = 5;
+        [
+            $stateCollectionTransfer,
+            $productOfferTransfer,
+        ] = $this->tester->haveProductOfferWithSalesOrderItems($quantity, $itemsCount);
+
+        // Act
+        $salesAggregationTransfers = $this->tester->getFacade()->getAggregatedReservations(
+            (new ReservationRequestTransfer())
+                ->setItem(
+                    (new ItemTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+                )
+                ->setReservedStates($stateCollectionTransfer)
+                ->setStore($storeTransfer)
+        );
+
+        // Assert
+        $this->assertGreaterThan(1, $salesAggregationTransfers);
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+
+        // SUM(amount)
+        $this->assertSame(
+            $this->sumSalesAggregationTransfers($salesAggregationTransfers)->toString(),
+            (new Decimal($quantity * $itemsCount))->toString()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
+    {
+        return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
+            return $result->add($salesAggregationTransfer->getSumAmount())->trim();
+        }, new Decimal(0));
     }
 }

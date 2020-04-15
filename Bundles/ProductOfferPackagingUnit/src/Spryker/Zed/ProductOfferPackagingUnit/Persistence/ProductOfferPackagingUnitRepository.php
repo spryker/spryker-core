@@ -37,7 +37,7 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
         ArrayObject $omsStateTransfers,
         ?StoreTransfer $storeTransfer = null
     ): array {
-        $salesOrderItemQuery = $this->getFactory()->createSalesOrderItemPropelQuery();
+        $salesOrderItemQuery = $this->getFactory()->getSalesOrderItemPropelQuery();
         $salesOrderItemQuery->filterByProductOfferReference($productOfferReference)
             ->groupByAmountSku()
             ->useStateQuery()

@@ -10,6 +10,13 @@
     "spryker/sales": "^11.0.0"
   },
   "require-dev": {
+    "spryker/decimal-object": "*",
+    "spryker/product": "*",
+    "spryker/product-offer": "*",
+    "spryker/product-packaging-unit": "*",
+    "spryker/propel": "*",
+    "spryker/store": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
