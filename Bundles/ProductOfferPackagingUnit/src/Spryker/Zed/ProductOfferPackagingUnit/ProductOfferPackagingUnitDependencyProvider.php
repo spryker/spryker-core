@@ -42,6 +42,7 @@ class ProductOfferPackagingUnitDependencyProvider extends AbstractBundleDependen
         $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function () {
             return SpySalesOrderItemQuery::create();
         });
+
         return $container;
     }
 }
