@@ -1,0 +1,11 @@
+parameters:
+    ignoreErrors:
+        -
+            message: '#Call to an undefined method .+ModelCriteria::.+\(\).#'
+            path: 'vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Persistence/ProductOfferMerchantPortalGuiRepository.php'
+        -
+            message: '#Call to an undefined method .+Criteria::.+\(\).#'
+            path: 'vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Persistence/ProductOfferMerchantPortalGuiRepository.php'
+        -
+            message: '#Method .+ should return .+Query but returns .+Criteria#'
+            path: 'vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Persistence/ProductOfferMerchantPortalGuiRepository.php'
