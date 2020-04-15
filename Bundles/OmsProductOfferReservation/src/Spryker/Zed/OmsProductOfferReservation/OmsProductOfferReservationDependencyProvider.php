@@ -39,9 +39,9 @@ class OmsProductOfferReservationDependencyProvider extends AbstractBundleDepende
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function () {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        });
+        }));
 
         return $container;
     }
