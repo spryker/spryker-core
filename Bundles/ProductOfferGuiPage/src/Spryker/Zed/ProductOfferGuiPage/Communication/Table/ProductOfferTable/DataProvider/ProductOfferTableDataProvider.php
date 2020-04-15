@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
 class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInterface
@@ -41,18 +42,26 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected $productNameBuilder;
 
     /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface
+     */
+    protected $utilDateTimeService;
+
+    /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      */
     public function __construct(
         ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository,
         ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
+        ProductOfferGuiPageToUtilDateTimeServiceInterface $utilDateTimeService,
         ProductNameBuilderInterface $productNameBuilder
     ) {
         $this->productOfferGuiPageRepository = $productOfferGuiPageRepository;
         $this->translatorFacade = $translatorFacade;
         $this->productNameBuilder = $productNameBuilder;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -75,11 +84,11 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
                 ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_VALID_FROM => $productOfferTableRowDataTransfer->getValidFrom(),
-                ProductOfferTable::COL_KEY_VALID_TO => $productOfferTableRowDataTransfer->getValidTo(),
+                ProductOfferTable::COL_KEY_VALID_FROM => $this->getValidFromData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_VALID_TO => $this->getValidToData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_APPROVAL_STATUS => $productOfferTableRowDataTransfer->getApprovalStatus(),
-                ProductOfferTable::COL_KEY_CREATED_AT => $productOfferTableRowDataTransfer->getCreatedAt(),
-                ProductOfferTable::COL_KEY_UPDATED_AT => $productOfferTableRowDataTransfer->getUpdatedAt(),
+                ProductOfferTable::COL_KEY_CREATED_AT => $this->getCreatedAtData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_UPDATED_AT => $this->getUpdatedAtData($productOfferTableRowDataTransfer),
             ];
         }
 
@@ -184,5 +193,53 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
         }
 
         return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_OFFLINE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidFromData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    {
+        $validFrom = $productOfferTableRowDataTransfer->getValidFrom();
+
+        return $validFrom ? $this->utilDateTimeService->formatDateTimeToIso($validFrom) : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidToData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    {
+        $validTo = $productOfferTableRowDataTransfer->getValidTo();
+
+        return $validTo ? $this->utilDateTimeService->formatDateTimeToIso($validTo) : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getCreatedAtData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    {
+        $createdAt = $productOfferTableRowDataTransfer->getCreatedAt();
+
+        return $createdAt ? $this->utilDateTimeService->formatDateTimeToIso($createdAt) : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getUpdatedAtData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    {
+        $updatedAt = $productOfferTableRowDataTransfer->getUpdatedAt();
+
+        return $updatedAt ? $this->utilDateTimeService->formatDateTimeToIso($updatedAt) : null;
     }
 }

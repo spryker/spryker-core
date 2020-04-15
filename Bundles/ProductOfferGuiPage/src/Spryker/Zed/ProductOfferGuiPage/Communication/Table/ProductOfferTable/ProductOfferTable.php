@@ -33,7 +33,7 @@ class ProductOfferTable extends AbstractTable
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
-    protected const PATTERN_DATE_FORMAT = 'DD/MM/YYYY';
+    protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
 
     protected const SEARCH_PLACEHOLDER = 'Search';
 

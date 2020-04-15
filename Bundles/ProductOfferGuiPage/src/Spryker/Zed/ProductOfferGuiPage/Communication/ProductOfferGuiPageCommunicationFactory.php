@@ -124,6 +124,7 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
         return new ProductOfferTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
+            $this->getUtilDateTimeService(),
             $this->createProductNameBuilder()
         );
     }
