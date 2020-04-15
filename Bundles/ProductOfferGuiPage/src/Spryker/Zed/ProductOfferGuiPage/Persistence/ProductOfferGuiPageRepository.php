@@ -299,7 +299,7 @@ class ProductOfferGuiPageRepository extends AbstractRepository implements Produc
      */
     protected function addIsActiveFilter(SpyProductQuery $productConcreteQuery, ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
-        if (!$productTableCriteriaTransfer->isPropertyModified(ProductTableCriteriaTransfer::IS_ACTIVE)) {
+        if ($productTableCriteriaTransfer->getIsActive() === null) {
             return $productConcreteQuery;
         }
 
