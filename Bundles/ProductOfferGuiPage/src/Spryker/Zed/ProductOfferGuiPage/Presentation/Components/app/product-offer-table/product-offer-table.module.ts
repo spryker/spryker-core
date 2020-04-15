@@ -12,9 +12,11 @@ import {
 import { ProductOfferTableComponent } from './product-offer-table.component';
 import {
     TableSearchFeatureComponent,
-    TableSearchFeatureModule ,
+    TableSearchFeatureModule,
     TableFiltersFeatureComponent,
-    TableFiltersFeatureModule
+    TableFiltersFeatureModule,
+    TableSyncStateFeatureComponent,
+    TableSyncStateFeatureModule
 } from '@spryker/table/features';
 import {
     TableFilterSelectComponent,
@@ -30,6 +32,7 @@ import {
         TableSearchFeatureModule,
         TableFiltersFeatureModule,
         TableFilterSelectModule,
+        TableSyncStateFeatureModule,
         TableModule,
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,

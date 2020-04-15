@@ -18,6 +18,7 @@ use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocal
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToStoreFacadeBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeBridge;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceBridge;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceBridge;
 
 class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -29,6 +30,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
     public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
@@ -45,6 +47,7 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
         $container = $this->addStoreFacade($container);
@@ -95,6 +98,22 @@ class ProductOfferGuiPageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductOfferGuiPageToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
+            return new ProductOfferGuiPageToUtilDateTimeServiceBridge(
+                $container->getLocator()->utilDateTime()->service()
             );
         });
 

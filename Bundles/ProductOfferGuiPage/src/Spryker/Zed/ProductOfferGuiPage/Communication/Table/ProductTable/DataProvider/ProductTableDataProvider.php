@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductTableRowDataTransfer;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface;
 
 class ProductTableDataProvider implements ProductTableDataProviderInterface
@@ -35,6 +36,11 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface
+     */
+    protected $utilDateTimeService;
+
+    /**
      * @var \Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface
      */
     protected $productNameBuilder;
@@ -42,15 +48,18 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     /**
      * @param \Spryker\Zed\ProductOfferGuiPage\Persistence\ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository
      * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferGuiPage\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      */
     public function __construct(
         ProductOfferGuiPageRepositoryInterface $productOfferGuiPageRepository,
         ProductOfferGuiPageToTranslatorFacadeInterface $translatorFacade,
+        ProductOfferGuiPageToUtilDateTimeServiceInterface $utilDateTimeService,
         ProductNameBuilderInterface $productNameBuilder
     ) {
         $this->productOfferGuiPageRepository = $productOfferGuiPageRepository;
         $this->translatorFacade = $translatorFacade;
+        $this->utilDateTimeService = $utilDateTimeService;
         $this->productNameBuilder = $productNameBuilder;
     }
 
@@ -71,8 +80,8 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
                 ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
                 ProductTable::COL_KEY_STATUS => $this->getStatusColumnData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_VALID_FROM => $productTableRowDataTransfer->getValidFrom(),
-                ProductTable::COL_KEY_VALID_TO => $productTableRowDataTransfer->getValidTo(),
+                ProductTable::COL_KEY_VALID_FROM => $this->getValidFromData($productTableRowDataTransfer),
+                ProductTable::COL_KEY_VALID_TO => $this->getValidToData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount(),
             ];
         }
@@ -162,5 +171,37 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
             : static::COLUMN_DATA_STATUS_INACTIVE;
 
         return $this->translatorFacade->trans($isActiveColumnData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidFromData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
+    {
+        $validFrom = $productTableRowDataTransfer->getValidFrom();
+
+        if (!$validFrom) {
+            return null;
+        }
+
+        return $this->utilDateTimeService->formatDateTimeToIso($validFrom);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidToData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
+    {
+        $validTo = $productTableRowDataTransfer->getValidTo();
+
+        if (!$validTo) {
+            return null;
+        }
+
+        return $this->utilDateTimeService->formatDateTimeToIso($validTo);
     }
 }

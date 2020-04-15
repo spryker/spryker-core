@@ -143,7 +143,7 @@ abstract class AbstractTable
         $columnsData = [];
 
         foreach ($guiTableConfigurationTransfer->getColumns() as $columnTransfer) {
-            $columnsData[] = $columnTransfer->modifiedToArray();
+            $columnsData[] = $columnTransfer->modifiedToArray(true, true);
         }
 
         return $columnsData;
