@@ -74,6 +74,16 @@ interface ProductMeasurementUnitRepositoryInterface
     public function findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array;
 
     /**
+     * @module Product
+     *
+     * @param string[] $productConcreteSkus
+     * @param int $idStore
+     *
+     * @return int[][]
+     */
+    public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array;
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]

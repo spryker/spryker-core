@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OauthEntityManager extends AbstractEntityManager implements OauthEntityManagerInterface
 {
+    protected const COLUMN_REVOKED_AT = 'RevokedAt';
+
     /**
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
      *
@@ -64,12 +66,12 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
     public function deleteAccessTokenByIdentifier(string $identifier): void
     {
         /** @var \Orm\Zed\Oauth\Persistence\SpyOauthAccessToken|null $authAccessTokenEntity */
-        $authAccessTokenEntity = $this->getFactory()
+        $oauthAccessTokenEntity = $this->getFactory()
             ->createAccessTokenQuery()
             ->findOneByIdentifier($identifier);
 
-        if ($authAccessTokenEntity) {
-            $authAccessTokenEntity->delete();
+        if ($oauthAccessTokenEntity) {
+            $oauthAccessTokenEntity->delete();
         }
     }
 }
