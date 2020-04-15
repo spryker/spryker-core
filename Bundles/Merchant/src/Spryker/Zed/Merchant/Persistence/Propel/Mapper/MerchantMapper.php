@@ -18,14 +18,14 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantMapper implements MerchantMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapperInterface
+     * @var \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper
      */
     protected $merchantStoreMapper;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapperInterface $merchantStoreMapper
+     * @param \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper $merchantStoreMapper
      */
-    public function __construct(MerchantStoreMapperInterface $merchantStoreMapper)
+    public function __construct(MerchantStoreMapper $merchantStoreMapper)
     {
         $this->merchantStoreMapper = $merchantStoreMapper;
     }

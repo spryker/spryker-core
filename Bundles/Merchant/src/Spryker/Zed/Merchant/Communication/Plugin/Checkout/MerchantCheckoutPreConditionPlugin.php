@@ -92,7 +92,6 @@ class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements Check
                     $this->getFactory()
                         ->getStoreFacade()
                         ->getCurrentStore()
-                        ->getName()
                 )
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {

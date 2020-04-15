@@ -97,8 +97,9 @@ class MerchantCreator implements MerchantCreatorInterface
     {
         $storeRelationTransfer = $merchantTransfer->getStoreRelation();
         $urlTransfers = $merchantTransfer->getUrlCollection();
+
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant())));
+        $merchantTransfer = $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer));
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer->setUrlCollection($urlTransfers));
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
 
@@ -108,13 +109,18 @@ class MerchantCreator implements MerchantCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function createMerchantStores(MerchantTransfer $merchantTransfer): void
+    protected function createMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
-            $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+            $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
         }
+
+        $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
+
+        return $merchantTransfer;
     }
 
     /**

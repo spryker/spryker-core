@@ -46,14 +46,19 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): StoreTransfer
     {
-        (new SpyMerchantStore())
+        $merchantStoreEntity = (new SpyMerchantStore())
             ->setFkStore($storeTransfer->getIdStore())
-            ->setFkMerchant($merchantTransfer->getIdMerchant())
-            ->save();
+            ->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        $merchantStoreEntity->save();
+
+        return $this->getFactory()
+            ->createMerchantStoreMapper()
+            ->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, (new StoreTransfer()));
     }
 
     /**

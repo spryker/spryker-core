@@ -116,7 +116,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             foreach ($this->getStoreTransfers() as $storeTransfer) {
-                if ($this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer) && $merchantTransfer->getIsActive()) {
+                if ($merchantTransfer->getIsActive() && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)) {
                     $this->merchantStorageEntityManager->saveMerchantStorage(
                         $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
                         $storeTransfer

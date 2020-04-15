@@ -27,9 +27,7 @@
 
 {% do merchantForm.urlCollection.setRendered %}
 
-{% if (merchantForm.storeRelation is defined) %}
-    {{ form_row(merchantForm.storeRelation) }}
-{% endif %}
+{{ form_row(merchantForm.storeRelation) }}
 
 {% if (merchantForm.stocks is defined) %}
     {{ form_row(merchantForm.stocks) }}

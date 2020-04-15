@@ -45,6 +45,8 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
     }
 
     /**
+     * @module Merchant
+     *
      * @param string $merchantKey
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException

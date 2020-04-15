@@ -66,15 +66,13 @@ class MerchantHelper extends Module
     protected function createStoreRelationTransfer(array $seedData): StoreRelationTransfer
     {
         if (isset($seedData[MerchantTransfer::STORE_RELATION])) {
-            $storeRelationSeedData = $seedData[MerchantTransfer::STORE_RELATION];
-        } else {
-            $storeRelationSeedData = [
-                StoreRelationTransfer::ID_STORES => [],
-                StoreRelationTransfer::STORES => new ArrayObject(),
-            ];
+            return (new StoreRelationBuilder())->seed($seedData[MerchantTransfer::STORE_RELATION])->build();
         }
 
-        return (new StoreRelationBuilder())->seed($storeRelationSeedData)->build();
+        return (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [],
+            StoreRelationTransfer::STORES => new ArrayObject(),
+        ])->build();
     }
 
     /**

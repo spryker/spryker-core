@@ -126,7 +126,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer);
-        $this->updateMerchantStores($merchantTransfer);
+        $merchantTransfer = $this->updateMerchantStores($merchantTransfer);
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
@@ -136,33 +136,58 @@ class MerchantUpdater implements MerchantUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function updateMerchantStores(MerchantTransfer $merchantTransfer): void
+    protected function updateMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer->requireStoreRelation();
 
         $currentStoreRelationTransfer = $this->merchantRepository->getMerchantStoresByIdMerchant($merchantTransfer->getIdMerchant());
 
         if (count($currentStoreRelationTransfer->getIdStores()) === 0) {
-            foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
-                $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
-            }
-
-            return;
+            return $this->createMerchantStores(
+                $merchantTransfer,
+                $merchantTransfer->getStoreRelation()->getIdStores()
+            );
         }
 
         $currentStoreIds = $currentStoreRelationTransfer->getIdStores();
         $requestedStoreIds = $merchantTransfer->getStoreRelation()->getIdStores();
 
-        $storeIdsToCreate = array_diff($requestedStoreIds, $currentStoreIds);
-        $storesIdsToDelete = array_diff($currentStoreIds, $requestedStoreIds);
+        $merchantTransfer = $this->createMerchantStores($merchantTransfer, array_diff($requestedStoreIds, $currentStoreIds));
+        $this->deleteMerchantStores($merchantTransfer, array_diff($currentStoreIds, $requestedStoreIds));
 
-        foreach ($storeIdsToCreate as $idStore) {
-            $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int[] $storeIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function createMerchantStores(MerchantTransfer $merchantTransfer, array $storeIds): MerchantTransfer
+    {
+        foreach ($storeIds as $idStore) {
+            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+            $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
         }
 
-        foreach ($storesIdsToDelete as $idStore) {
+        $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
+        $merchantTransfer->getStoreRelation()->setIdStores($storeIds);
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    protected function deleteMerchantStores(MerchantTransfer $merchantTransfer, array $storeIds): void
+    {
+        foreach ($storeIds as $idStore) {
             $this->merchantEntityManager->deleteMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
         }
     }

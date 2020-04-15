@@ -38,6 +38,8 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     }
 
     /**
+     * @module Store
+     *
      * @param string $storeName
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException

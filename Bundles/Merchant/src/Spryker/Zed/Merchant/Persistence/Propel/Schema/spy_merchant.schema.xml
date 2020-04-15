@@ -40,7 +40,7 @@
         <foreign-key name="spy_merchant_store-fk_merchant" foreignTable="spy_merchant">
             <reference local="fk_merchant" foreign="id_merchant"/>
         </foreign-key>
-        <foreign-key name="spy_merchant_storen-fk_store" foreignTable="spy_store">
+        <foreign-key name="spy_merchant_store-fk_store" foreignTable="spy_store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 

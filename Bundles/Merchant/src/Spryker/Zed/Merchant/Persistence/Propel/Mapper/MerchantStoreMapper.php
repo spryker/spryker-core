@@ -10,9 +10,10 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class MerchantStoreMapper implements MerchantStoreMapperInterface
+class MerchantStoreMapper
 {
     /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantStore[]|\Propel\Runtime\Collection\ObjectCollection $merchantStoreEntities
@@ -45,14 +46,28 @@ class MerchantStoreMapper implements MerchantStoreMapperInterface
         ArrayObject $storeTransfers,
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
-        $idStores = array_map(function (StoreTransfer $storeTransfer) {
+        $storeIds = array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
         }, $storeTransfers->getArrayCopy());
 
         $storeRelationTransfer
             ->setStores($storeTransfers)
-            ->setIdStores($idStores);
+            ->setIdStores($storeIds);
 
         return $storeRelationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantStore $merchantStoreEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function mapMerchantStoreEntityToStoreTransfer(
+        SpyMerchantStore $merchantStoreEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer {
+        return $storeTransfer->setIdStore($merchantStoreEntity->getFkStore())
+            ->setName($merchantStoreEntity->getSpyStore()->getName());
     }
 }

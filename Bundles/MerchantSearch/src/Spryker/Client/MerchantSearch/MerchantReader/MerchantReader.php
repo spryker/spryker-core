@@ -51,10 +51,6 @@ class MerchantReader implements MerchantReaderInterface
     {
         return (new MerchantCriteriaTransfer())
             ->setIsActive(true)
-            ->setStore(
-                $this->storeClient
-                    ->getCurrentStore()
-                    ->getName()
-            );
+            ->setStore($this->storeClient->getCurrentStore());
     }
 }

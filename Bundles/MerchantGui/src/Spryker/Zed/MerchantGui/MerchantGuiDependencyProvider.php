@@ -11,10 +11,10 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeBridge;
-use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -228,11 +228,20 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @throws \Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException
+     *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
     protected function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
-        return new StoreRelationToggleFormTypePlugin();
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own MerchantGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage merchants.',
+                FormTypeInterface::class
+            )
+        );
     }
 
     /**

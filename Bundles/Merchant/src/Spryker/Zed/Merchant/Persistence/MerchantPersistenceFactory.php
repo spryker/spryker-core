@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapper;
 use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapperInterface;
 use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper;
-use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapperInterface;
 
 /**
  * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
@@ -39,9 +38,9 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapperInterface
+     * @return \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper
      */
-    public function createMerchantStoreMapper(): MerchantStoreMapperInterface
+    public function createMerchantStoreMapper(): MerchantStoreMapper
     {
         return new MerchantStoreMapper();
     }

@@ -92,7 +92,6 @@ class MerchantCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckP
                     $this->getFactory()
                         ->getStoreFacade()
                         ->getCurrentStore()
-                        ->getName()
                 )
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {

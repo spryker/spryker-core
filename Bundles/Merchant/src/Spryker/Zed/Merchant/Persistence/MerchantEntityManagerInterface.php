@@ -23,9 +23,9 @@ interface MerchantEntityManagerInterface
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void;
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): StoreTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
