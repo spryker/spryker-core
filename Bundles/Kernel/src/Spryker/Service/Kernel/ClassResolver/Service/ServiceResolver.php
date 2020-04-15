@@ -31,17 +31,4 @@ class ServiceResolver extends AbstractClassResolver
 
         throw new ServiceNotFoundException($this->getClassInfo());
     }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            static::KEY_CODE_BUCKET
-        );
-    }
 }

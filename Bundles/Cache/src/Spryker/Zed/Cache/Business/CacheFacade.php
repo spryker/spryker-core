@@ -62,7 +62,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use emptyAutoLoaderCache() instead
      *
-     * @return string
+     * @return string[]
      */
     public function deleteAllAutoloaderFiles()
     {
