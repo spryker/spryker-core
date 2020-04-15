@@ -104,12 +104,11 @@ class DeleteController extends AbstractController
         $customerTransfer = $customerDeleteForm->getData();
 
         if ($customerTransfer && $customerTransfer->getIdCustomer()) {
-            return $this->redirectResponse(Url::generate(
-                static::URL_CUSTOMER_DELETE_PAGE,
-                [
+            return $this->redirectResponse(
+                Url::generate(static::URL_CUSTOMER_DELETE_PAGE, [
                     CustomerConstants::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer(),
-                ]
-            ));
+                ])
+            );
         }
 
         return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
