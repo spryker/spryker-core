@@ -41,6 +41,15 @@ interface UtilDateTimeConstants
 
     /**
      * Specification:
+     * - Configures the ISO format for date and time.
+     * - @see http://php.net/manual/en/datetime.formats.php
+     *
+     * @api
+     */
+    public const DATE_TIME_FORMAT_DATE_TIME_ISO = 'DATE_TIME_FORMAT_DATE_TIME_ISO';
+
+    /**
+     * Specification:
      * - Configures the used format for time
      * - @see http://php.net/manual/en/datetime.formats.php
      *

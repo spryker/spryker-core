@@ -19,6 +19,7 @@ use Spryker\Zed\ProductOfferGuiPage\Communication\Table\ProductTable\ProductTabl
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Facade\ProductOfferGuiPageToTranslatorFacadeInterface;
+use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferGuiPage\ProductOfferGuiPageDependencyProvider;
 
@@ -59,7 +60,8 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductTableDataProvider(
             $this->getRepository(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getUtilDateTimeService()
         );
     }
 
@@ -104,6 +106,14 @@ class ProductOfferGuiPageCommunicationFactory extends AbstractCommunicationFacto
     public function getUtilEncodingService(): ProductOfferGuiPageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiPage\Dependency\Service\ProductOfferGuiPageToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): ProductOfferGuiPageToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(ProductOfferGuiPageDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**
