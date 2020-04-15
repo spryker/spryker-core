@@ -17,6 +17,11 @@ class AuthConfig extends AbstractBundleConfig
     public const DEFAULT_URL_LOGIN = '/auth/login';
 
     /**
+     * @uses \Spryker\Shared\Session\SessionConstants::ZED_SESSION_TIME_TO_LIVE
+     */
+    protected const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
+
+    /**
      * @api
      *
      * @return string
@@ -108,6 +113,19 @@ class AuthConfig extends AbstractBundleConfig
         }
 
         return $response;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getSystemUserSessionRedisLifeTime(): int
+    {
+        return (int)$this->get(
+            AuthConstants::SYSTEM_USER_SESSION_REDIS_LIFE_TIME,
+            $this->get(static::ZED_SESSION_TIME_TO_LIVE)
+        );
     }
 
     /**

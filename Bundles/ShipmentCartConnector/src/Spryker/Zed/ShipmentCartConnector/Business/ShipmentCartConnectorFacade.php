@@ -48,4 +48,20 @@ class ShipmentCartConnectorFacade extends AbstractFacade implements ShipmentCart
             ->resolve($cartChangeTransfer->getQuote()->getItems())
             ->validateShipment($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function clearShipmentMethod(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentSanitizer()
+            ->clearShipmentMethod($cartChangeTransfer);
+    }
 }

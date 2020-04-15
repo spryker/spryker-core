@@ -197,6 +197,7 @@ class ShipmentCartExpanderTest extends Test
             ->withQuote(
                 (new QuoteBuilder([QuoteTransfer::PRICE_MODE => ShipmentConstants::PRICE_MODE_NET]))
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                    ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     ->withExpense(
                         (new ExpenseBuilder([
                             ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,

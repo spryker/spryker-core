@@ -8,36 +8,113 @@
 namespace Spryker\Zed\ProductRelation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilder;
+use Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilderInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreator;
+use Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreatorInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleter;
+use Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface;
 use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationActivator;
-use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReader;
-use Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriter;
-use Spryker\Zed\ProductRelation\Business\Updater\ProductRelationUpdater;
+use Spryker\Zed\ProductRelation\Business\Relation\Reader\ProductRelationReader;
+use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReader;
+use Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdater;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdaterInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdater;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdater;
+use Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdaterInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface;
+use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationEntityManagerInterface getEntityManager()
  */
 class ProductRelationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Reader\RelatedProductReaderInterface
      */
-    public function createProductRelationWriter()
+    public function createRelatedProductReader(): RelatedProductReaderInterface
     {
-        return new ProductRelationWriter(
-            $this->getTouchFacade(),
-            $this->getQueryContainer(),
-            $this->getUtilEncodingService()
+        return new RelatedProductReader(
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationReaderInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Updater\RelatedProductUpdaterInterface
+     */
+    public function createRelatedProductUpdater(): RelatedProductUpdaterInterface
+    {
+        return new RelatedProductUpdater(
+            $this->createRelatedProductReader(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Creator\ProductRelationCreatorInterface
+     */
+    public function createProductRelationCreator(): ProductRelationCreatorInterface
+    {
+        return new ProductRelationCreator(
+            $this->getEntityManager(),
+            $this->getTouchFacade(),
+            $this->createRelatedProductUpdater(),
+            $this->createProductRelationStoreRelationUpdater()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface
+     */
+    public function createProductRelationUpdater(): ProductRelationUpdaterInterface
+    {
+        return new ProductRelationUpdater(
+            $this->getEntityManager(),
+            $this->createRelatedProductUpdater(),
+            $this->getTouchFacade(),
+            $this->createProductRelationStoreRelationUpdater()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Deleter\ProductRelationDeleterInterface
+     */
+    public function createProductRelationDeleter(): ProductRelationDeleterInterface
+    {
+        return new ProductRelationDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getTouchFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationStoreRelationUpdaterInterface
+     */
+    public function createProductRelationStoreRelationUpdater(): ProductRelationStoreRelationUpdaterInterface
+    {
+        return new ProductRelationStoreRelationUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Business\Relation\Reader\ProductRelationReaderInterface
      */
     public function createProductRelationReader()
     {
-        return new ProductRelationReader($this->getQueryContainer(), $this->getUtilEncodingService());
+        return new ProductRelationReader(
+            $this->getRepository()
+        );
     }
 
     /**
@@ -49,21 +126,20 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Business\Updater\ProductRelationUpdaterInterface
+     * @return \Spryker\Zed\ProductRelation\Business\Builder\ProductRelationBuilderInterface
      */
-    public function createProductRelationUpdater()
+    public function createProductRelationBuilder(): ProductRelationBuilderInterface
     {
-        return new ProductRelationUpdater(
-            $this->getQueryContainer(),
-            $this->getUtilEncodingService(),
-            $this->createProductRelationWriter()
+        return new ProductRelationBuilder(
+            $this->createProductRelationUpdater(),
+            $this->getRepository()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface
      */
-    protected function getTouchFacade()
+    protected function getTouchFacade(): ProductRelationToTouchInterface
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_TOUCH);
     }
@@ -71,7 +147,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    protected function getUtilEncodingService(): ProductRelationToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::SERVICE_UTIL_ENCODING);
     }

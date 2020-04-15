@@ -8,6 +8,7 @@
 namespace Spryker\Zed\StateMachine\Business;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 /**
@@ -254,4 +255,19 @@ interface StateMachineFacadeInterface
      * @return void
      */
     public function clearLocks();
+
+    /**
+     * Specification:
+     * - Returns StateMachineProcess transfer based on criteria.
+     * - Returns null if not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer|null
+     */
+    public function findStateMachineProcess(
+        StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
+    ): ?StateMachineProcessTransfer;
 }

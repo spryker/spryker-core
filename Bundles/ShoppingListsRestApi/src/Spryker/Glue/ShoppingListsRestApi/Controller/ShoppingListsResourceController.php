@@ -24,8 +24,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "Retrieves a shopping list by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
@@ -38,8 +37,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "Retrieves list of all customer's shopping lists."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request."
@@ -75,8 +73,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "Creates a shopping list."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
@@ -107,8 +104,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "Updates a shopping list by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shopping list id not specified.",
@@ -141,8 +137,7 @@ class ShoppingListsResourceController extends AbstractController
      *              "Deletes a shopping list by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Shopping list id not specified.",
