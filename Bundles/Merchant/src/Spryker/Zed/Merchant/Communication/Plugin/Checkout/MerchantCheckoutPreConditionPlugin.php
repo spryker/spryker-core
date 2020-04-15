@@ -19,9 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
-    protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
-    protected const GLOSSARY_PARAM_SKU = '%sku%';
-
     /**
      * {@inheritDoc}
      * - Returns `false` response if at least one quote item transfer has items with inactive merchant.
