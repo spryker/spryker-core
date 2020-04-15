@@ -44,3 +44,4 @@ suites:
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantSalesOrder\Helper\MerchantSalesHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

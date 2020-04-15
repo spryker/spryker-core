@@ -70,7 +70,7 @@ class MerchantOmsFacadeTest extends Unit
 
         $processEntity = $this->tester->haveStateMachineProcess();
 
-        $stateEntity = $this->tester->createStateMachineItemState($processEntity);
+        $stateEntity = $this->tester->haveStateMachineItemState($processEntity);
 
         $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
             MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
@@ -79,7 +79,6 @@ class MerchantOmsFacadeTest extends Unit
         ]);
 
         // Act
-
         $stateMachineItemTransfers = $this->tester->getFacade()->getStateMachineItemsByStateIds([$stateEntity->getIdStateMachineItemState()]);
         $stateMachineItemTransfer = $stateMachineItemTransfers[0] ?? null;
 
@@ -106,7 +105,7 @@ class MerchantOmsFacadeTest extends Unit
 
         $processEntity = $this->tester->haveStateMachineProcess();
 
-        $stateEntity = $this->tester->createStateMachineItemState($processEntity);
+        $stateEntity = $this->tester->haveStateMachineItemState($processEntity);
 
         $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
             MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),

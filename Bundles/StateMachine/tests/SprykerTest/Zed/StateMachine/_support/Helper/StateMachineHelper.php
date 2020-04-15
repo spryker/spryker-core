@@ -49,7 +49,7 @@ class StateMachineHelper extends Module
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
      */
-    public function createStateMachineItemState(SpyStateMachineProcess $stateMachineProcessEntity): SpyStateMachineItemState
+    public function haveStateMachineItemState(SpyStateMachineProcess $stateMachineProcessEntity): SpyStateMachineItemState
     {
         $stateMachineItemStateTransfer = (new StateMachineItemBuilder())->build();
 
