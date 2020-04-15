@@ -72,6 +72,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->orderByPosition(Criteria::ASC)
             ->find();
 
@@ -93,6 +94,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find();
 
         return $this->getFactory()

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductLabel\ProductLabelConfig;
 
@@ -59,7 +61,33 @@ class ProductLabelMapper
             );
         }
 
+        $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
+
+        foreach ($productLabelEntity->getSpyProductLabelLocalizedAttributess() as $productLabelLocalizedAttributesEntity) {
+            $productLabelLocalizedAttributesTransfer = $this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+                $productLabelLocalizedAttributesEntity,
+                new ProductLabelLocalizedAttributesTransfer()
+            );
+            $productLabelTransfer->addLocalizedAttributes(
+                $productLabelLocalizedAttributesTransfer
+            );
+        }
+
         return $productLabelTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+        SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
+        ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+    ): ProductLabelLocalizedAttributesTransfer {
+        return $productLabelLocalizedAttributesTransfer
+            ->fromArray($productLabelLocalizedAttributesEntity->toArray(), true);
     }
 
     /**
@@ -73,7 +101,10 @@ class ProductLabelMapper
         array $transferCollection = []
     ): array {
         foreach ($productLabelEntities as $productLabelEntity) {
-            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer($productLabelEntity, new ProductLabelTransfer());
+            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer(
+                $productLabelEntity,
+                new ProductLabelTransfer()
+            );
         }
 
         return $transferCollection;
