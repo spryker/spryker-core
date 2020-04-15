@@ -15,7 +15,7 @@ use Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilter
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
  * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
  */
-class OauthUserIdentifierFilterPermissionForOauthRevokePlugin extends AbstractPlugin implements OauthUserIdentifierFilterPluginInterface
+class RefreshTokenPermissionOauthUserIdentifierFilterPlugin extends AbstractPlugin implements OauthUserIdentifierFilterPluginInterface
 {
     /**
      * {@inheritDoc}
