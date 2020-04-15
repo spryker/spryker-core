@@ -15,7 +15,7 @@ use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
-* @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
 class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
