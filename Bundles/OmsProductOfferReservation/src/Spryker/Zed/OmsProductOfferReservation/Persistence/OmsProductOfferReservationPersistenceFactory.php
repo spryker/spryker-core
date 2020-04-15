@@ -31,6 +31,6 @@ class OmsProductOfferReservationPersistenceFactory extends AbstractPersistenceFa
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
-        return $this->getProvidedDependency(OmsProductOfferReservationDependencyProvider::SALES_ORDER_ITEM_PROPEL_QUERY);
+        return $this->getProvidedDependency(OmsProductOfferReservationDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductOfferPackagingUnit\Business\ProductOfferPackagingUnitFacade getFacade()
+ * @method \Spryker\Zed\ProductOfferPackagingUnit\Business\ProductOfferPackagingUnitFacadeInterface getFacade()
  */
 class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implements OmsReservationAggregationStrategyPluginInterface
 {
@@ -36,7 +36,8 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
     /**
      * {@inheritDoc}
      * - Aggregates reservations for product offers packaging unit.
-     * - Requires ReservationRequestTransfer.item, ReservationRequestTransfer.reservedStates transfer field to be set.
+     * - Requires ReservationRequestTransfer.item transfer field to be set.
+     * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api
      *

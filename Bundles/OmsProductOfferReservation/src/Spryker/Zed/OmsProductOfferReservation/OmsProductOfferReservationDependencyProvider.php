@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class OmsProductOfferReservationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SALES_ORDER_ITEM_PROPEL_QUERY = 'SALES_ORDER_ITEM_PROPEL_QUERY';
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,9 +39,9 @@ class OmsProductOfferReservationDependencyProvider extends AbstractBundleDepende
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container[static::SALES_ORDER_ITEM_PROPEL_QUERY] = function () {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function () {
             return SpySalesOrderItemQuery::create();
-        };
+        });
 
         return $container;
     }

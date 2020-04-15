@@ -141,20 +141,8 @@ class OmsProductOfferReservationFacadeTest extends Unit
 
         // SUM(amount)
         $this->assertSame(
-            $this->sumSalesAggregationTransfers($salesAggregationTransfers)->toString(),
+            $this->tester->sumSalesAggregationTransfers($salesAggregationTransfers)->toString(),
             (new Decimal($quantity * $itemsCount))->toString()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
-    {
-        return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
-            return $result->add($salesAggregationTransfer->getSumAmount())->trim();
-        }, new Decimal(0));
     }
 }

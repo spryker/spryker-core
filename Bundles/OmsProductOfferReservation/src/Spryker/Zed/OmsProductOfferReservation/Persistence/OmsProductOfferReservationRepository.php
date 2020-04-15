@@ -45,8 +45,6 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     }
 
     /**
-     * @TODO Needs to check it without filter by sku. If all is ok just remove this TODO.
-     *
      * @module Oms
      * @module Sales
      *

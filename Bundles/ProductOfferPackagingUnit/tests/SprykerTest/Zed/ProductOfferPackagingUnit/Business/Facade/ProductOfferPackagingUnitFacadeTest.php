@@ -78,23 +78,11 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
-        $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
+        $result = $this->tester->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(amount in PU) + SUM(quantity)
         $this->assertEquals(
             $result->toString(),
             $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
-    {
-        return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
-            return $result->add($salesAggregationTransfer->getSumAmount())->trim();
-        }, new Decimal(0));
     }
 }
