@@ -11,7 +11,7 @@ interface OauthUserIdentifierFilterPluginInterface
 {
     /**
      * Specification:
-     * - Filters user identifier array to remove keys.
+     * - Executes plugins before a refresh token is saved.
      * - Returns filtered array.
      *
      * @api
