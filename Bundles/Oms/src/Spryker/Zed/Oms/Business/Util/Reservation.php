@@ -272,7 +272,7 @@ class Reservation implements ReservationInterface
 
         return $this->aggregateSalesOrderItemReservations(
             $reservationRequestTransfer->getReservedStates(),
-            $reservationRequestTransfer->getItem()->getSku(),
+            $reservationRequestTransfer->getSku(),
             $reservationRequestTransfer->getStore()
         );
     }
