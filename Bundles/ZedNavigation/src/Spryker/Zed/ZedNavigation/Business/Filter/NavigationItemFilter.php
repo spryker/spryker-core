@@ -105,7 +105,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
 
             $navigationItemKey = $this->getNavigationItemKey($navigationItem);
 
-            if (!$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
+            if (!$navigationItemKey || !$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
                 continue;
             }
 
@@ -140,11 +140,15 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 continue;
             }
 
+            $navigationItemKey = $this->getNavigationItemKey($navigationItem);
+            if (!$navigationItemKey) {
+                continue;
+            }
             $navigationItemTransfer = (new NavigationItemTransfer())
                 ->fromArray($navigationItem, true)
                 ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null);
             $navigationItemCollectionTransfer->addNavigationItem(
-                $this->getNavigationItemKey($navigationItem),
+                $navigationItemKey,
                 $navigationItemTransfer
             );
         }
@@ -181,9 +185,9 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     /**
      * @param string[] $navigationItem
      *
-     * @return string
+     * @return string|null
      */
-    protected function getNavigationItemKey(array $navigationItem): string
+    protected function getNavigationItemKey(array $navigationItem): ?string
     {
         if (
             isset($navigationItem[MenuFormatter::BUNDLE])
@@ -198,6 +202,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
             );
         }
 
-        return $navigationItem[MenuFormatter::URI];
+        return $navigationItem[MenuFormatter::URI] ?? null;
     }
 }
