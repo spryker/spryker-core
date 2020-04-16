@@ -41,4 +41,11 @@ interface OrderRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createOrderNotFoundErrorResponse(): RestResponseInterface;
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array;
 }
