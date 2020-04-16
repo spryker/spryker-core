@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
-use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;

@@ -17,8 +17,7 @@ class ProductOfferPackagingUnitOmsReservationAggregationStrategyPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Checks if an item is a product offer.
-     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
+     * - Checks if ReservationRequestTransfer.productOfferReference isn't empty.
      *
      * @api
      *

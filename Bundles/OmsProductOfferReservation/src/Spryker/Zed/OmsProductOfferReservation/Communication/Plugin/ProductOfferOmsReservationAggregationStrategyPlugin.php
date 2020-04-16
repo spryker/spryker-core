@@ -20,7 +20,7 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Checks if an item is a product offer.
+     * - Checks if ReservationRequestTransfer.productOfferReference isn't empty.
      *
      * @api
      *

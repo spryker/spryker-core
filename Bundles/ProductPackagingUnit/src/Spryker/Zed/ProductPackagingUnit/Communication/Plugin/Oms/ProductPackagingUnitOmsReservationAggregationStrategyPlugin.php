@@ -37,7 +37,6 @@ class ProductPackagingUnitOmsReservationAggregationStrategyPlugin extends Abstra
      * {@inheritDoc}
      * - Aggregates reservations for product offers.
      * - Requires ReservationRequestTransfer.sku transfer field to be set.
-     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api
