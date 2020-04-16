@@ -8,8 +8,9 @@
 namespace SprykerTest\Zed\StateMachine\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\StateMachineItemBuilder;
+use Generated\Shared\DataBuilder\StateMachineItemStateBuilder;
 use Generated\Shared\DataBuilder\StateMachineProcessBuilder;
+use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -45,17 +46,16 @@ class StateMachineHelper extends Module
     }
 
     /**
-     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess $stateMachineProcessEntity
+     * @param array $seedData = []
      *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
+     * @return \Generated\Shared\Transfer\StateMachineItemStateTransfer
      */
-    public function haveStateMachineItemState(SpyStateMachineProcess $stateMachineProcessEntity): SpyStateMachineItemState
+    public function haveStateMachineItemState(array $seedData = []): StateMachineItemStateTransfer
     {
-        $stateMachineItemStateTransfer = (new StateMachineItemBuilder())->build();
+        $stateMachineItemStateTransfer = (new StateMachineItemStateBuilder($seedData))->build();
 
         $stateMachineItemStateEntity = $this->createStateMachineItemStatePropelEntity();
-        $stateMachineItemStateEntity->setName($stateMachineItemStateTransfer->getEventName());
-        $stateMachineItemStateEntity->setFkStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+        $stateMachineItemStateEntity->fromArray($stateMachineItemStateTransfer->modifiedToArray());
 
         $stateMachineItemStateEntity->save();
 
@@ -63,7 +63,7 @@ class StateMachineHelper extends Module
             $stateMachineItemStateEntity->delete();
         });
 
-        return $stateMachineItemStateEntity;
+        return $stateMachineItemStateTransfer->fromArray($stateMachineItemStateEntity->toArray());
     }
 
     /**
