@@ -21,6 +21,9 @@ class PaymentExistsPreCheckPlugin extends AbstractPlugin implements CheckoutPreC
 {
     /**
      * {@inheritDoc}
+     * - Finds available payment methods of QuoteTransfer and check if they exists in config.
+     * - If methods are not exists the plugin adds an error message inside CheckoutResponseTransfer and returns false.
+     * - If methods are exists the plugin returns true.
      *
      * @api
      *

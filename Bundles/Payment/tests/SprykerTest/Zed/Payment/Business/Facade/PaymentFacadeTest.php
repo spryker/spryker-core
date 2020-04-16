@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Payment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
@@ -296,5 +297,55 @@ class PaymentFacadeTest extends Unit
             $paymentMethods,
             'Amount of payment methods does not match the expected value'
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPaymentExistsShouldReturnTrueIfPaymentExists(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withPayment(['payment_selection' => 'dummyPaymentInvoice'])
+            ->build();
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+        $configMock = $this->createMock(PaymentConfig::class);
+        $configMock->method('getPaymentStatemachineMappings')->willReturn([
+            'dummyPaymentInvoice' => 'statemachine1',
+        ]);
+        $factory = new PaymentBusinessFactory();
+        $factory->setConfig($configMock);
+        $this->paymentFacade->setFactory($factory);
+
+        // Act
+        $isPaymentExists = $this->paymentFacade->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($isPaymentExists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPaymentExistsShouldReturnFalseIfPaymentNotExists(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withPayment(['payment_selection' => 'NotExists'])
+            ->build();
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+        $configMock = $this->createMock(PaymentConfig::class);
+        $configMock->method('getPaymentStatemachineMappings')->willReturn([
+            'dummyPaymentInvoice' => 'statemachine1',
+        ]);
+        $factory = new PaymentBusinessFactory();
+        $factory->setConfig($configMock);
+        $this->paymentFacade->setFactory($factory);
+
+        // Act
+        $isPaymentExists = $this->paymentFacade->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($isPaymentExists);
     }
 }

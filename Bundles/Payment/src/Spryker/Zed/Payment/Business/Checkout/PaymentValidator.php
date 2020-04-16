@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payment\PaymentConfig;
 
-class PaymentPluginValidator implements PaymentPluginValidatorInterface
+class PaymentValidator implements PaymentPluginValidatorInterface
 {
     /**
      * @var \Spryker\Zed\Payment\PaymentConfig
@@ -36,14 +36,36 @@ class PaymentPluginValidator implements PaymentPluginValidatorInterface
     public function isPaymentExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $paymentMethodStatemachineMapping = $this->paymentConfig->getPaymentStatemachineMappings();
+        $paymentMethodsKeys = $this->getQuotePaymentMethodsKeys($quoteTransfer);
 
-        if (!array_key_exists($quoteTransfer->getPayment()->getPaymentSelection(), $paymentMethodStatemachineMapping)) {
-            $this->addCheckoutError($checkoutResponseTransfer, 'checkout.payment.not_found');
+        foreach ($paymentMethodsKeys as $paymentMethodsKey) {
+            if (!array_key_exists($paymentMethodsKey, $paymentMethodStatemachineMapping)) {
+                $this->addCheckoutError($checkoutResponseTransfer, 'checkout.payment.not_found');
 
-            return false;
+                return false;
+            }
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    protected function getQuotePaymentMethodsKeys(QuoteTransfer $quoteTransfer): array
+    {
+        $paymentMethodsKeys = [];
+        if ($quoteTransfer->getPayment()) {
+            $paymentMethodsKeys[] = $quoteTransfer->getPayment()->getPaymentSelection();
+        }
+
+        foreach ($quoteTransfer->getPayments() as $payment) {
+            $paymentMethodsKeys[] = $payment->getPaymentSelection();
+        }
+
+        return $paymentMethodsKeys;
     }
 
     /**
