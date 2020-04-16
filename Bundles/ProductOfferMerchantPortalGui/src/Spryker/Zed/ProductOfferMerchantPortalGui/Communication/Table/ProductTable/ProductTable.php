@@ -109,7 +109,7 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_SKU)
-                ->setTitle('Sku')
+                ->setTitle('SKU')
                 ->setType('text')
                 ->setSortable(true)
                 ->setHideable(false)
