@@ -71,13 +71,23 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     protected function filterUserIdentifier(array $decodedUserIdentifier): string
     {
         if (!$decodedUserIdentifier) {
-            return (string)$this->utilEncodingService->encodeJson($decodedUserIdentifier);
+            return $this->encodeUserIdentifier($decodedUserIdentifier);
         }
 
         foreach ($this->oauthUserIdentifierFilterPlugins as $oauthUserIdentifierFilterPlugin) {
             $decodedUserIdentifier = $oauthUserIdentifierFilterPlugin->filter($decodedUserIdentifier);
         }
 
+        return $this->encodeUserIdentifier($decodedUserIdentifier);
+    }
+
+    /**
+     * @param array $decodedUserIdentifier
+     *
+     * @return string
+     */
+    protected function encodeUserIdentifier(array $decodedUserIdentifier): string
+    {
         return (string)$this->utilEncodingService->encodeJson($decodedUserIdentifier);
     }
 }
