@@ -459,9 +459,14 @@ class Customer implements CustomerInterface
     {
         if (!empty($customerTransfer->getNewPassword())) {
             $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
+
             if ($customerResponseTransfer->getIsSuccess() === false) {
                 return $customerResponseTransfer;
             }
+
+            $updatedPasswordCustomerTransfer = $customerResponseTransfer->getCustomerTransfer();
+            $customerTransfer->setNewPassword($updatedPasswordCustomerTransfer->getNewPassword())
+                ->setPassword($updatedPasswordCustomerTransfer->getPassword());
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
