@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
-use Generated\Shared\Transfer\ReservationRequestTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -30,6 +28,13 @@ interface ReservationInterface
      * @return void
      */
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function sumReservedProductQuantities(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
 
     /**
      * @param string $sku

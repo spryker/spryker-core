@@ -5,45 +5,21 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
+namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
-use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
- * @method \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationPersistenceFactory getFactory()
+ * @method \Spryker\Zed\ProductOfferPackagingUnit\Persistence\ProductOfferPackagingUnitPersistenceFactory getFactory()
  */
-class OmsProductOfferReservationRepository extends AbstractRepository implements OmsProductOfferReservationRepositoryInterface
+class ProductOfferPackagingUnitRepository extends AbstractRepository implements ProductOfferPackagingUnitRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function getQuantity(
-        OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): Decimal {
-        $quantity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
-            ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
-            ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())
-            ->select([SpyOmsProductOfferReservationTableMap::COL_RESERVATION_QUANTITY])
-            ->findOne();
-
-        if (!$quantity) {
-            return new Decimal(0);
-        }
-
-        return new Decimal($quantity);
-    }
-
     /**
      * @module Oms
      * @module Sales
@@ -60,21 +36,26 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         ?StoreTransfer $storeTransfer = null
     ): array {
         $salesOrderItemQuery = $this->getFactory()->getSalesOrderItemPropelQuery();
-        $salesOrderItemQuery
-            ->filterByProductOfferReference($productOfferReference)
+        $salesOrderItemQuery->filterByProductOfferReference($productOfferReference)
+            ->groupByAmountSku()
             ->useStateQuery()
                 ->filterByName_In(array_keys($omsStateTransfers->getArrayCopy()))
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
-            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
+            ->select([SpySalesOrderItemTableMap::COL_SKU])
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT)
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ]);
+            ->withColumn(
+                sprintf(
+                    "CASE WHEN %s IS NOT NULL THEN SUM(%s) ELSE SUM(%s) END",
+                    SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    SpySalesOrderItemTableMap::COL_AMOUNT,
+                    SpySalesOrderItemTableMap::COL_QUANTITY
+                ),
+                SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
+            );
 
         if ($storeTransfer !== null) {
             $salesOrderItemQuery

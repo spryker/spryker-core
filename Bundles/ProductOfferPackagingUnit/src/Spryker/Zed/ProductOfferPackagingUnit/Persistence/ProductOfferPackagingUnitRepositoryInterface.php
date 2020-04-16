@@ -5,24 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
+namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
 
-interface OmsProductOfferReservationRepositoryInterface
+interface ProductOfferPackagingUnitRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function getQuantity(
-        OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
-    ): Decimal;
-
     /**
      * @param string $productOfferReference
      * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers

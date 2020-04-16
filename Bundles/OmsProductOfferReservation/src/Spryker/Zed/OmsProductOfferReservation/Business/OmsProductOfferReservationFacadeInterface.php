@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 
 interface OmsProductOfferReservationFacadeInterface
@@ -27,4 +28,18 @@ interface OmsProductOfferReservationFacadeInterface
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Aggregates reservations for product offers.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
+     * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
 }

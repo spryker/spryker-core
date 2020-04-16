@@ -1,0 +1,37 @@
+{
+  "name": "spryker/product-offer-packaging-unit",
+  "description": "ProductOfferPackagingUnit module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/kernel": "^3.33.0",
+    "spryker/oms": "^11.3.0",
+    "spryker/oms-extension": "^1.2.0",
+    "spryker/sales": "^11.0.0"
+  },
+  "require-dev": {
+    "spryker/decimal-object": "*",
+    "spryker/product": "*",
+    "spryker/product-offer": "*",
+    "spryker/product-packaging-unit": "*",
+    "spryker/propel": "*",
+    "spryker/store": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
