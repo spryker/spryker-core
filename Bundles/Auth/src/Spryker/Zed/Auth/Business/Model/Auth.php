@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Auth\Business\Model;
 
 use DateTime;
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Auth\AuthConstants;
@@ -261,6 +262,22 @@ class Auth implements AuthInterface
         }
 
         throw new UserNotFoundException();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return bool
+     */
+    public function isSystemUserRequest(HttpRequestTransfer $httpRequestTransfer): bool
+    {
+        $headers = $httpRequestTransfer->getHeaders();
+
+        if (!isset($headers[strtolower(AuthConstants::AUTH_TOKEN)])) {
+            return false;
+        }
+
+        return $this->hasSystemUserByHash($headers[strtolower(AuthConstants::AUTH_TOKEN)]);
     }
 
     /**

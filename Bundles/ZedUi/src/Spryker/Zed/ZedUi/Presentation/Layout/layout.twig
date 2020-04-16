@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            [cloak] {
+            [cloak]:not([ng-version]) {
                 display: none;
             }
         </style>
@@ -19,10 +19,13 @@
     <body>
         {% block body %}{% endblock %}
 
-        {% block footerJs %}
+        {% block polyfillsJs %}
             <script src="{{ assetsPath('js/zed-ui/polyfills-es2015.js') }}" type="module"></script>
-            <script src="{{ assetsPath('js/zed-ui/main-es2015.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/zed-ui/polyfills-es5.js') }}" nomodule defer></script>
+        {% endblock %}
+
+        {% block footerJs %}
+            <script src="{{ assetsPath('js/zed-ui/main-es2015.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/zed-ui/main-es5.js') }}" nomodule defer></script>
         {% endblock %}
     </body>
