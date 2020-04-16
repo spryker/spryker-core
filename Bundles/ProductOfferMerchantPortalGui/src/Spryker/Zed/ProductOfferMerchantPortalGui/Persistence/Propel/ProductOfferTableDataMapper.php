@@ -132,10 +132,24 @@ class ProductOfferTableDataMapper
                 $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES] ?? null,
                 true
             );
-            $productTableRowDataTransfer = (new ProductOfferTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
-            $productTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
-            $productTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
-            $rowsData[] = $productTableRowDataTransfer;
+            $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
+                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES] ?? null,
+                true
+            );
+            $productAbstractLocalizedAttributes = $this->utilEncodingService->decodeJson(
+                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES] ?? null,
+                true
+            );
+            $productOfferTableRowDataTransfer = (new ProductOfferTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
+            $productOfferTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
+            $productOfferTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
+            $productOfferTableRowDataTransfer->setProductConcreteLocalizedAttributes(
+                is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : []
+            );
+            $productOfferTableRowDataTransfer->setProductAbstractLocalizedAttributes(
+                is_array($productAbstractLocalizedAttributes) ? $productAbstractLocalizedAttributes : []
+            );
+            $rowsData[] = $productOfferTableRowDataTransfer;
         }
 
         $productOfferTableDataTransfer->setRows(new ArrayObject($rowsData));

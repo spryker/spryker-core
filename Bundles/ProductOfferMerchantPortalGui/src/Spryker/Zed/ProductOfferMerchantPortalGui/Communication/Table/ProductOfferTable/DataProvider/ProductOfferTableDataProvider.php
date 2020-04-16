@@ -122,7 +122,7 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
         ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
     ): ProductConcreteTransfer {
         $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->addAttribute($productOfferTableRowDataTransfer->getProductConcreteLocalizedAttributes())
+            ->setAttributes($productOfferTableRowDataTransfer->getProductConcreteLocalizedAttributes())
             ->setName($productOfferTableRowDataTransfer->getProductConcreteName());
 
         $productConcreteTransfer = (new ProductConcreteTransfer())
@@ -141,7 +141,7 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
         ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
     ): ProductAbstractTransfer {
         $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->addAttribute($productOfferTableRowDataTransfer->getProductAbstractLocalizedAttributes());
+            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractLocalizedAttributes());
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractAttributes())
