@@ -152,7 +152,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Validates payment
+     * - Checks if payment methods of QuoteTransfer are exist in config.
      *
      * @api
      *

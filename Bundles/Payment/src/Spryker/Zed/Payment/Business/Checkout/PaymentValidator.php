@@ -14,6 +14,8 @@ use Spryker\Zed\Payment\PaymentConfig;
 
 class PaymentValidator implements PaymentPluginValidatorInterface
 {
+    protected const CHECKOUT_PAYMENT_NOT_FOUND = 'checkout.payment.not_found';
+
     /**
      * @var \Spryker\Zed\Payment\PaymentConfig
      */
@@ -40,7 +42,7 @@ class PaymentValidator implements PaymentPluginValidatorInterface
 
         foreach ($paymentMethodsKeys as $paymentMethodsKey) {
             if (!array_key_exists($paymentMethodsKey, $paymentMethodStatemachineMapping)) {
-                $this->addCheckoutError($checkoutResponseTransfer, 'checkout.payment.not_found');
+                $this->addCheckoutError($checkoutResponseTransfer, static::CHECKOUT_PAYMENT_NOT_FOUND);
 
                 return false;
             }
