@@ -187,7 +187,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
      *
      * @return string|null
      */
-    protected function getNavigationItemKey(array $navigationItem): ?string
+    protected function findNavigationItemKey(array $navigationItem): ?string
     {
         if (
             isset($navigationItem[MenuFormatter::BUNDLE])
