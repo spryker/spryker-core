@@ -66,8 +66,6 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
             );
         });
 
-        $this->addUtilEncodingService($container);
-
         return $container;
     }
 }
