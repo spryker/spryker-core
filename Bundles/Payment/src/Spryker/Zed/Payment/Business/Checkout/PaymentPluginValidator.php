@@ -14,8 +14,6 @@ use Spryker\Zed\Payment\PaymentConfig;
 
 class PaymentPluginValidator implements PaymentPluginValidatorInterface
 {
-    protected const PAYMENT_SELECTION_NOT_EXISTS = 'payment.selection.not_exists';
-
     /**
      * @var \Spryker\Zed\Payment\PaymentConfig
      */
@@ -40,7 +38,7 @@ class PaymentPluginValidator implements PaymentPluginValidatorInterface
         $paymentMethodStatemachineMapping = $this->paymentConfig->getPaymentStatemachineMappings();
 
         if (!array_key_exists($quoteTransfer->getPayment()->getPaymentSelection(), $paymentMethodStatemachineMapping)) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::PAYMENT_SELECTION_NOT_EXISTS);
+            $this->addCheckoutError($checkoutResponseTransfer, 'checkout.payment.not_found');
 
             return false;
         }
