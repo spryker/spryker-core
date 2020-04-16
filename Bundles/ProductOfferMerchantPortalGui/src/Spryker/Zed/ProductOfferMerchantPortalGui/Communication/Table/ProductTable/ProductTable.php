@@ -36,7 +36,7 @@ class ProductTable extends AbstractTable
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductTableController::getDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/product-table/get-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/product/get-table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface

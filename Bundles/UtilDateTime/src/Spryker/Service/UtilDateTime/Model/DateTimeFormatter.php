@@ -59,7 +59,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      */
     public function formatDateTimeToIso($dateTime): string
     {
-        return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME, DateTime::ATOM);
+        return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM);
     }
 
     /**
