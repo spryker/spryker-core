@@ -57,9 +57,21 @@ class MerchantDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function truncateMerchantStoreRelations(): void
+    public function ensureMerchantStoreTableIsEmpty(): void
     {
-        $this->truncateTableRelations($this->getMerchantStoreQuery());
+        $merchantStoreQuery = $this->getMerchantStoreQuery();
+        $merchantStoreQuery->deleteAll();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
+    public function deleteMerchantByKey(string $key): void
+    {
+        $merchantQuery = $this->getMerchantQuery()->filterByMerchantKey($key);
+        $merchantQuery->delete();
     }
 
     /**

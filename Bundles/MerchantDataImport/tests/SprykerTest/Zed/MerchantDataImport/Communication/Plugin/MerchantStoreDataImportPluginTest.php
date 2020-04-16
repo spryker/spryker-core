@@ -39,8 +39,9 @@ class MerchantStoreDataImportPluginTest extends Unit
     public function testImportImportsMerchantStoreData(): void
     {
         // Arrange
-        $this->tester->truncateMerchantRelations();
-        $this->tester->truncateMerchantStoreRelations();
+        $this->tester->ensureMerchantStoreTableIsEmpty();
+        $this->tester->deleteMerchantByKey(static::MERCHANT_KEY);
+
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::MERCHANT_KEY => static::MERCHANT_KEY]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
