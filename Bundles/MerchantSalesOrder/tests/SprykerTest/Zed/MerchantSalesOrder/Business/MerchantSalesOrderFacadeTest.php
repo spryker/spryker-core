@@ -276,6 +276,69 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandOrderWithMerchantOrderDataReturnsExpandedItemWithExistingMerchantOrder(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
+            $saveOrderTransfer->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer,
+            $itemTransfer,
+            $merchantOrderReference
+        );
+
+        $orderTransfer = (new OrderTransfer())->setItems($saveOrderTransfer->getOrderItems());
+
+        //Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchantOrderData($orderTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->offsetGet(0);
+
+        //Assert
+        $this->assertNotNull($itemTransfer);
+        $this->assertSame($itemTransfer->getMerchantOrderReference(), $merchantOrderTransfer->getMerchantOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithMerchantOrderDataReturnsNotExpandedItemWithNotExistingMerchantOrder(): void
+    {
+        //Arrange
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer(
+            $this->tester->haveMerchant(),
+            static::TEST_STATE_MACHINE
+        );
+
+        $orderTransfer = (new OrderTransfer())->setItems($saveOrderTransfer->getOrderItems());
+
+        //Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchantOrderData($orderTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->offsetGet(0);
+
+        //Assert
+        $this->assertNotNull($itemTransfer);
+        $this->assertNull($itemTransfer->getMerchantOrderReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testFindMerchantOrderItemReturnsNullWithIncorrectCriteria(): void
     {
         //Arrange

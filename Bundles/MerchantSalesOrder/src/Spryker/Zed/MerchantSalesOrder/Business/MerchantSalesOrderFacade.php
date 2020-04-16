@@ -138,4 +138,18 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     {
         return $this->getRepository()->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchantOrderData(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()->createOrderExpander()->expandOrderWithMerchantOrderData($orderTransfer);
+    }
 }
