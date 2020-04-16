@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\%2$sConfig';
+    protected const RESOLVABLE_TYPE = 'YvesConfig';
 
     /**
      * @param object|string $callerClass
@@ -22,27 +22,13 @@ class BundleConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Yves\Kernel\AbstractBundleConfig $class */
-            $class = $this->getResolvedClassInstance();
+        /** @var \Spryker\Yves\Kernel\AbstractBundleConfig $resolved */
+        $resolved = parent::doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new BundleConfigNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
     }
 }

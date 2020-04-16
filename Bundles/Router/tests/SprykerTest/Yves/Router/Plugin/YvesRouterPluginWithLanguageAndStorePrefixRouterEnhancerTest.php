@@ -92,8 +92,12 @@ class YvesRouterPluginWithLanguageAndStorePrefixRouterEnhancerTest extends Unit
      *
      * @return void
      */
-    public function testGenerateReturnsUrlWithLanguageAndStoreWhenLanguageAndStoreAreInContext(string $url, string $routeName, string $language, string $store): void
-    {
+    public function testGenerateReturnsUrlWithLanguageAndStoreWhenLanguageAndStoreAreInContext(
+        string $url,
+        string $routeName,
+        string $language,
+        string $store
+    ): void {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 

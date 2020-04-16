@@ -17,5 +17,7 @@ interface CustomerForgottenPasswordResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerForgottenPasswordAttributesToCustomerTransfer(RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): CustomerTransfer;
+    public function mapCustomerForgottenPasswordAttributesToCustomerTransfer(
+        RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
+    ): CustomerTransfer;
 }

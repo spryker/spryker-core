@@ -36,6 +36,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getCmsPagePaginationConfigTransfer(): PaginationConfigTransfer
@@ -48,6 +50,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function getAscendingNameSortConfigTransfer(): SortConfigTransfer
@@ -60,6 +64,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function getDescendingNameSortConfigTransfer(): SortConfigTransfer
@@ -72,6 +78,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFullTextBoostedBoostingValue(): int

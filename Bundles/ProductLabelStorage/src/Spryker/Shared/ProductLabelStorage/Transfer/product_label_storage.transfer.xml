@@ -5,7 +5,7 @@
 
     <transfer name="ProductAbstractLabelStorage">
         <property name="idProductAbstract" type="int"/>
-        <property name="productLabelIds" type="array" singular="productLabelIds"/>
+        <property name="productLabelIds" type="int[]" singular="idProductLabel"/>
     </transfer>
 
     <transfer name="ProductLabelDictionaryStorage">
@@ -23,6 +23,29 @@
         <property name="isExclusive" type="bool"/>
         <property name="position" type="int"/>
         <property name="frontEndReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstract">
+        <property name="idProductLabelProductAbstract" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="fkProductLabel" type="int"/>
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkProductLabel" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="productLabel" type="ProductLabel"/>
+    </transfer>
+
+    <transfer name="ProductLabel">
+        <property name="name" type="string"/>
+        <property name="isExclusive" type="bool"/>
+        <property name="frontEndReference" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="position" type="int"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -47,6 +70,15 @@
 
     <transfer name="StorageProductLabel">
         <property name="idProductLabel" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

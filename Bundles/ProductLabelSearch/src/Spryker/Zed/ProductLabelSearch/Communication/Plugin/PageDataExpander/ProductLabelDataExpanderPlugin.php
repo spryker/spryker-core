@@ -25,6 +25,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData

@@ -7,13 +7,35 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Persistence\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
 
 class ProductLabelDictionaryStorageMapper
 {
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage[] $productLabelDictionaryStorageEntities
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageTransfers
+     *
+     * @return array
+     */
+    public function mapProductLabelDictionaryStorageEntitiesToProductLabelDictionaryStorageTransfers(
+        ObjectCollection $productLabelDictionaryStorageEntities,
+        array $productLabelDictionaryStorageTransfers
+    ): array {
+        foreach ($productLabelDictionaryStorageEntities as $productLabelDictionaryStorageEntity) {
+            $productLabelDictionaryStorageTransfers[] = $this->mapProductLabelDictionaryStorageEntityToProductLabelDictionaryStorageTransfer(
+                $productLabelDictionaryStorageEntity,
+                new ProductLabelDictionaryStorageTransfer()
+            );
+        }
+
+        return $productLabelDictionaryStorageTransfers;
+    }
+
     /**
      * @param \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage $productLabelDictionaryStorageEntity
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer

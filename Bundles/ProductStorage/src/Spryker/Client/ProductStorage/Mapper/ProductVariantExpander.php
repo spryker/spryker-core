@@ -189,7 +189,10 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      */
     protected function mergeAbstractAndConcreteProducts(ProductViewTransfer $productViewTransfer, array $productConcreteStorageData)
     {
-        $productConcreteStorageData = array_filter($productConcreteStorageData);
+        $productConcreteStorageData = array_filter($productConcreteStorageData, function ($value) {
+            return $value !== null;
+        });
+
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         return $productViewTransfer;

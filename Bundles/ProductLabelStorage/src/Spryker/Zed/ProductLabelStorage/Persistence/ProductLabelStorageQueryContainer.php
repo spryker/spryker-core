@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductLabelStorageQueryContainer extends AbstractQueryContainer implements ProductLabelStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -34,6 +36,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery
@@ -45,6 +49,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -62,6 +68,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -71,7 +79,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinWithSpyProductLabel()
@@ -80,6 +88,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed in the next major.
@@ -91,7 +101,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds)
             ->joinWithSpyProductLabel()
@@ -111,12 +121,14 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstractByPrimaryIds(array $productLabelProductAbstractIds): SpyProductLabelProductAbstractQuery
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
@@ -124,11 +136,13 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstract()
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations();
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
@@ -136,7 +150,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelLocalizedAttributes()
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllLocalizedAttributesLabels()
             ->joinWithSpyLocale()
             ->joinWithSpyProductLabel()

@@ -24,8 +24,7 @@ class RefreshTokensResourceController extends AbstractController
      *              "Refreshes customer's auth token."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
@@ -42,8 +41,10 @@ class RefreshTokensResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestRefreshTokensAttributesTransfer $restRefreshTokensAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestRefreshTokensAttributesTransfer $restRefreshTokensAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createRefreshTokensReader()
             ->processAccessTokenRequest($restRefreshTokensAttributesTransfer);

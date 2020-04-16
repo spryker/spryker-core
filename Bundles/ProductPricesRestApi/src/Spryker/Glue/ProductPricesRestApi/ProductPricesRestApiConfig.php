@@ -29,6 +29,8 @@ class ProductPricesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_INVALID_PRICE_MODE = 'Price mode is invalid.';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getPermissionCheckEnabled(): bool

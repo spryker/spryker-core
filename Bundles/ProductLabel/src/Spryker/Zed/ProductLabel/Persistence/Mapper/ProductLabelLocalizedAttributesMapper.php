@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
@@ -48,6 +53,50 @@ class ProductLabelLocalizedAttributesMapper
         }
 
         return $productLabelLocalizedAttributesTransferCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+        SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
+        ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+    ): ProductLabelLocalizedAttributesTransfer {
+        $productLabelLocalizedAttributesTransfer->fromArray(
+            $productLabelLocalizedAttributesEntity->toArray(),
+            true
+        );
+
+        return $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntity->toArray(), true)
+            ->setLocale($this->mapLocaleEntityToLocaleTransfer($productLabelLocalizedAttributesEntity->getSpyLocale(), new LocaleTransfer()))
+            ->setProductLabel($this->mapProductLabelEntityToProductLabelTransfer($productLabelLocalizedAttributesEntity->getSpyProductLabel(), new ProductLabelTransfer()));
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected function mapProductLabelEntityToProductLabelTransfer(
+        SpyProductLabel $productLabelEntity,
+        ProductLabelTransfer $productLabelTransfer
+    ): ProductLabelTransfer {
+        return $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function mapLocaleEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
+    {
+        return $localeTransfer->fromArray($localeEntity->toArray(), true);
     }
 
     /**

@@ -20,6 +20,8 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
     public const GRANT_TYPE_PASSWORD = 'password';
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
@@ -32,6 +34,8 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * The client id as is store in spy_oauth_client database table
@@ -44,6 +48,8 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCustomerScopes(): array

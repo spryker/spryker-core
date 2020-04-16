@@ -46,12 +46,17 @@
     </transfer>
 
     <transfer name="GroupCriteria">
+        <property name="idAclGroup" type="int"/>
     </transfer>
 
     <transfer name="NavigationItem">
         <property name="module" type="string"/>
         <property name="controller" type="string"/>
         <property name="action" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationItemCollection">
+        <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
     </transfer>
 
 </transfers>

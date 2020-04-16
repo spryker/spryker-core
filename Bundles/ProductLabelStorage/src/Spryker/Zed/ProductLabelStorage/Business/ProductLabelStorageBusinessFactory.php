@@ -8,6 +8,16 @@
 namespace Spryker\Zed\ProductLabelStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductAbstractLabelStorageDeleter;
+use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductAbstractLabelStorageDeleterInterface;
+use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleter;
+use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriter;
+use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriterInterface;
@@ -15,41 +25,67 @@ use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriter;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepository getRepository()
- * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManager getEntityManager()
  */
 class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriterInterface
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface
      */
     public function createProductLabelDictionaryStorageWriter(): ProductLabelDictionaryStorageWriterInterface
     {
         return new ProductLabelDictionaryStorageWriter(
+            $this->getProductLabelFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getProductLabelFacade(),
             $this->createProductLabelDictionaryItemMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriterInterface
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface
      */
-    public function createProductLabelStorageWriter()
+    public function createProductLabelDictionaryStorageDeleter(): ProductLabelDictionaryStorageDeleterInterface
     {
-        return new ProductLabelStorageWriter(
-            $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+        return new ProductLabelDictionaryStorageDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface
+     */
+    public function createProductAbstractLabelStorageWriter(): ProductAbstractLabelStorageWriterInterface
+    {
+        return new ProductAbstractLabelStorageWriter(
+            $this->getEventBehaviorFacade(),
+            $this->getProductLabelFacade(),
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelBridge
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductAbstractLabelStorageDeleterInterface
      */
-    public function getProductLabelFacade()
+    public function createProductAbstractLabelStorageDeleter(): ProductAbstractLabelStorageDeleterInterface
+    {
+        return new ProductAbstractLabelStorageDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface
+     */
+    public function getProductLabelFacade(): ProductLabelStorageToProductLabelFacadeInterface
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_PRODUCT_LABEL);
     }

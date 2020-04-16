@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business;
 
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -16,6 +17,34 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductLabelSearchFacade extends AbstractFacade implements ProductLabelSearchFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelEvents(array $eventTransfers): void
+    {
+        $this->getFactory()->createProductLabelSearchWriter()->writeCollectionByProductLabelEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void
+    {
+        $this->getFactory()->createProductLabelSearchWriter()->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
+    }
+
     /**
      * {@inheritDoc}
      *

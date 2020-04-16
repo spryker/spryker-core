@@ -66,7 +66,7 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
-     * @uses ProcessInterface::getManuallyExecutableEventsBySource()
+     * @uses \Spryker\Zed\StateMachine\Business\Process\ProcessInterface::getManuallyExecutableEventsBySource()
      *
      * @return void
      */

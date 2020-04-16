@@ -12,12 +12,18 @@ use DateTime;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugin;
 
 /**
  * Auto-generated group annotations
@@ -178,6 +184,56 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTriggerEventWillNotThrowAnExceptionWhenExceptionWasThrownDuringOrderItemHandling(): void
+    {
+        //Arrange
+        $testStateMachineProcessName = 'Test04';
+        $omsFacade = $this->createOmsFacadeWithErroredTestStateMachine([$testStateMachineProcessName]);
+
+        $saveOrderTransfer1 = $this->tester->haveOrder([
+            'unitPrice' => 100,
+            'sumPrice' => 100,
+        ], $testStateMachineProcessName);
+        $saveOrderTransfer2 = $this->tester->haveOrder([
+            'unitPrice' => 100,
+            'sumPrice' => 100,
+        ], $testStateMachineProcessName);
+
+        $orderItems = SpySalesOrderItemQuery::create()
+            ->filterByFkSalesOrder_In([
+                $saveOrderTransfer1->getIdSalesOrder(),
+                $saveOrderTransfer2->getIdSalesOrder(),
+            ])
+            ->orderByIdSalesOrderItem(Criteria::ASC)
+            ->find();
+
+        //Act
+        $omsFacade->triggerEvent('authorize', clone $orderItems, []);
+
+        //Assert
+        $processedOrderItems = SpySalesOrderItemQuery::create()
+            ->filterByFkSalesOrder_In([
+                $saveOrderTransfer1->getIdSalesOrder(),
+                $saveOrderTransfer2->getIdSalesOrder(),
+            ])
+            ->orderByIdSalesOrderItem(Criteria::ASC)
+            ->find();
+
+        $this->assertEquals(
+            $orderItems->offsetGet(0)->getFkOmsOrderItemState(),
+            $processedOrderItems->offsetGet(0)->getFkOmsOrderItemState(),
+            'Order item state ID does not equal to an expected value.'
+        );
+        $this->assertNotEquals(
+            $orderItems->offsetGet(1)->getFkOmsOrderItemState(),
+            $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState(),
+            'Order item state ID does not equal to an expected value.'
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade(): OmsFacadeInterface
@@ -203,5 +259,32 @@ class OmsFacadeTest extends Unit
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 
         return new OmsFacade();
+    }
+
+    /**
+     * @param array $activeProcesses
+     * @param string|null $xmlFolder
+     *
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     */
+    protected function createOmsFacadeWithErroredTestStateMachine(array $activeProcesses = [], ?string $xmlFolder = null): OmsFacadeInterface
+    {
+        $this->tester->configureTestStateMachine($activeProcesses);
+
+        $omsDependencyProvider = new OmsDependencyProvider();
+        $container = new Container();
+        $container = $omsDependencyProvider->provideBusinessLayerDependencies($container);
+        $container = $omsDependencyProvider->providePersistenceLayerDependencies($container);
+        $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+            return $commandCollection->add(new TestAuthPlugin(), 'TestPayment/Authorize');
+        });
+
+        $omsBusinessFactory = new OmsBusinessFactory();
+        $omsBusinessFactory->setContainer($container);
+
+        $omsFacade = new OmsFacade();
+        $omsFacade->setFactory($omsBusinessFactory);
+
+        return $omsFacade;
     }
 }

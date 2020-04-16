@@ -118,6 +118,14 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface[]
+     */
+    public function getMerchantUpdateFormViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
      */
     public function getMerchantTableDataExpanderPlugins(): array

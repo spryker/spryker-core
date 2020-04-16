@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
@@ -270,5 +271,46 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
         $this->getFactory()
             ->createProductAbstractRelationUpdater($logger)
             ->updateProductLabelRelations();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getRepository()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getProductLabelProductAbstractsByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
+     */
+    public function getProductLabelLocalizedAttributes(): array
+    {
+        return $this->getRepository()->getProductLabelLocalizedAttributes();
     }
 }

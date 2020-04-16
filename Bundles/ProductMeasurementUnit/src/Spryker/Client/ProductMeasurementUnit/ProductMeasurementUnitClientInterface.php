@@ -26,7 +26,10 @@ interface ProductMeasurementUnitClientInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer;
+    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(
+        PersistentCartChangeTransfer $cartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer;
 
     /**
      * Specification:

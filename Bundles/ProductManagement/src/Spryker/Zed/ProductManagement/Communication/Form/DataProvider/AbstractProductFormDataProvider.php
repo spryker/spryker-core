@@ -463,7 +463,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */
@@ -493,8 +493,10 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
-    {
+    protected function convertAbstractLocalizedAttributesToFormOptions(
+        ?ProductAbstractTransfer $productAbstractTransfer = null,
+        ?LocaleTransfer $localeTransfer = null
+    ) {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;
@@ -574,7 +576,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */

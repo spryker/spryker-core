@@ -19,6 +19,7 @@ use Symfony\Component\Routing\RouterInterface;
 class ZedDevelopmentRouterPlugin extends AbstractPlugin implements RouterPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Returns a Router which can be used as fallback, when no other (cached) router was able to match.
      *

@@ -14,6 +14,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAn
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\OpenApiSpecificationSchemaBuilder;
@@ -24,14 +26,24 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFind
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\DocumentationGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationPathGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSchemaGenerator;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationSecuritySchemeGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGenerator;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessor;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessor;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathMethodSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathParameterSpecificationComponent;
@@ -40,18 +52,24 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRe
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathRequestSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\PathResponseSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponent;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaPropertySpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponent;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SecuritySchemeSpecificationComponentInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRenderer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\PathMethodRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRenderer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiDocumentationWriter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface;
@@ -84,10 +102,10 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createOpenApiSpecificationSchemaGenerator(): SchemaGeneratorInterface
     {
         return new OpenApiSpecificationSchemaGenerator(
-            $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
-            $this->createSchemaRenderer()
+            $this->createSchemaRenderer(),
+            $this->createResourceRelationshipProcessor()
         );
     }
 
@@ -100,11 +118,27 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface
+     */
+    public function createOpenApiSpecificationParameterSchemeGenerator(): OpenApiSpecificationParameterGeneratorInterface
+    {
+        return new OpenApiSpecificationParameterGenerator($this->createParameterSchemeRenderer());
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface
      */
     public function createOpenApiSpecificationPathGenerator(): PathGeneratorInterface
     {
         return new OpenApiSpecificationPathGenerator($this->createPathMethodRenderer());
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface
+     */
+    public function createOpenApiTagGenerator(): OpenApiTagGeneratorInterface
+    {
+        return new OpenApiTagGenerator();
     }
 
     /**
@@ -131,6 +165,16 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
+     */
+    public function createResourceRelationshipsPluginAnnotationAnalyzer(): ResourceRelationshipsPluginAnnotationAnalyzerInterface
+    {
+        return new ResourceRelationshipsPluginAnnotationAnalyzer(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface
      */
     public function createResourcePluginAnalyzer(): ResourcePluginAnalyzerInterface
@@ -139,7 +183,8 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createRestApiMethodProcessor(),
             $this->getResourceRoutesPluginProviderPlugins(),
             $this->createGlueAnnotationAnalyzer(),
-            $this->getTextInflector()
+            $this->getTextInflector(),
+            $this->createResourceSchemaNameStorageProcessor()
         );
     }
 
@@ -148,7 +193,9 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return new ResourceRelationshipsPluginAnalyzer($this->getResourceRelationshipCollectionProviderPlugin());
+        return new ResourceRelationshipsPluginAnalyzer(
+            $this->getResourceRelationshipCollectionProviderPlugin()
+        );
     }
 
     /**
@@ -167,7 +214,9 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
         return new HttpMethodProcessor(
             $this->createOpenApiSpecificationPathGenerator(),
             $this->createOpenApiSpecificationSchemaGenerator(),
-            $this->createOpenApiSpecificationSecuritySchemeGenerator()
+            $this->createOpenApiSpecificationSecuritySchemeGenerator(),
+            $this->createOpenApiSpecificationParameterSchemeGenerator(),
+            $this->createOpenApiTagGenerator()
         );
     }
 
@@ -191,7 +240,8 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new SchemaRenderer(
             $this->createSchemaSpecificationComponent(),
-            $this->createSchemaPropertySpecificationComponent()
+            $this->createSchemaPropertySpecificationComponent(),
+            $this->createSchemaItemsSpecificationComponent()
         );
     }
 
@@ -201,6 +251,14 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     public function createSecuritySchemeRenderer(): SecuritySchemeRendererInterface
     {
         return new SecuritySchemeRenderer($this->createSecuritySchemeSpecificationComponent());
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendererInterface
+     */
+    public function createParameterSchemeRenderer(): ParameterRendererInterface
+    {
+        return new ParameterRenderer($this->createParameterSpecificationComponent());
     }
 
     /**
@@ -244,11 +302,27 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaItemsSpecificationComponentInterface
+     */
+    public function createSchemaItemsSpecificationComponent(): SchemaItemsSpecificationComponentInterface
+    {
+        return new SchemaItemsSpecificationComponent();
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\SchemaSpecificationComponentInterface
      */
     public function createSchemaSpecificationComponent(): SchemaSpecificationComponentInterface
     {
         return new SchemaSpecificationComponent();
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component\ParameterSpecificationComponentInterface
+     */
+    public function createParameterSpecificationComponent(): ParameterSpecificationComponentInterface
+    {
+        return new ParameterSpecificationComponent();
     }
 
     /**
@@ -272,6 +346,27 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface
+     */
+    public function createResourceRelationshipProcessor(): ResourceRelationshipProcessorInterface
+    {
+        return new ResourceRelationshipProcessor(
+            $this->createResourceRelationshipsPluginAnalyzer(),
+            $this->createResourceTransferAnalyzer(),
+            $this->createOpenApiSpecificationSchemaBuilder(),
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface
+     */
+    public function createResourceSchemaNameStorage(): ResourceSchemaNameStorageInterface
+    {
+        return new ResourceSchemaNameStorage();
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface
      */
     public function createOpenApiSpecificationSchemaBuilder(): SchemaBuilderInterface
@@ -284,7 +379,24 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
      */
     public function createOpenApiSpecificationSchemaComponentBuilder(): SchemaComponentBuilderInterface
     {
-        return new OpenApiSpecificationSchemaComponentBuilder($this->createResourceTransferAnalyzer());
+        return new OpenApiSpecificationSchemaComponentBuilder(
+            $this->createResourceTransferAnalyzer(),
+            $this->createResourceSchemaNameStorage()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface
+     */
+    public function createResourceSchemaNameStorageProcessor(): ResourceSchemaNameStorageProcessorInterface
+    {
+        return new ResourceSchemaNameStorageProcessor(
+            $this->createResourceSchemaNameStorage(),
+            $this->createResourceTransferAnalyzer(),
+            $this->createResourceRelationshipsPluginAnalyzer(),
+            $this->createGlueAnnotationAnalyzer(),
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer()
+        );
     }
 
     /**
