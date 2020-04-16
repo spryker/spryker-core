@@ -23,7 +23,7 @@ class UniqueMerchantReferenceValidator extends AbstractConstraintValidator
      *
      * @return void
      */
-    public function validate(string $value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$value) {
             return;

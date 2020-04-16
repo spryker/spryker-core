@@ -30,7 +30,7 @@ class UniqueEmailValidator extends AbstractConstraintValidator
      *
      * @return void
      */
-    public function validate(string $email, Constraint $uniqueEmailConstraint): void
+    public function validate($email, Constraint $uniqueEmailConstraint): void
     {
         if (empty($email)) {
             return;

@@ -25,7 +25,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig
      */
-    protected $MerchantProfileMerchantPortalGuiConfig;
+    protected $merchantProfileMerchantPortalGuiConfig;
 
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToMerchantFacadeInterface
@@ -43,19 +43,19 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig $MerchantProfileMerchantPortalGuiConfig
+     * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig $merchantProfileMerchantPortalGuiConfig
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        MerchantProfileMerchantPortalGuiConfig $MerchantProfileMerchantPortalGuiConfig,
+        MerchantProfileMerchantPortalGuiConfig $merchantProfileMerchantPortalGuiConfig,
         MerchantProfileMerchantPortalGuiToMerchantFacadeInterface $merchantFacade,
         MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface $glossaryFacade,
         MerchantProfileMerchantPortalGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->merchantFacade = $merchantFacade;
-        $this->MerchantProfileMerchantPortalGuiConfig = $MerchantProfileMerchantPortalGuiConfig;
+        $this->merchantProfileMerchantPortalGuiConfig = $merchantProfileMerchantPortalGuiConfig;
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
     }
@@ -155,7 +155,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
         $localeNameParts = explode('_', $localeTransfer->getLocaleName());
         $languageCode = $localeNameParts[0];
 
-        return '/' . $languageCode . '/' . $this->MerchantProfileMerchantPortalGuiConfig->getMerchantUrlPrefix() . '/';
+        return '/' . $languageCode . '/' . $this->merchantProfileMerchantPortalGuiConfig->getMerchantUrlPrefix() . '/';
     }
 
     /**

@@ -17,7 +17,7 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function transform(array $value): ArrayObject
+    public function transform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
         if (empty($value)) {
@@ -38,10 +38,9 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function reverseTransform(array $value): ArrayObject
+    public function reverseTransform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
-
         if (empty($value)) {
             return $merchantProfileUrlCollection;
         }

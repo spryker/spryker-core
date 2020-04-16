@@ -30,7 +30,7 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      *
      * @return void
      */
-    public function validate(UrlTransfer $value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$value->getUrl()) {
             return;
