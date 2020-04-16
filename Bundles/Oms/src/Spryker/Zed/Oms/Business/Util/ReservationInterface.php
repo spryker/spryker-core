@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 

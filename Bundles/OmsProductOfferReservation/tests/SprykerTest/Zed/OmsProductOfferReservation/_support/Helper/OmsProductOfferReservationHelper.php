@@ -27,8 +27,9 @@ class OmsProductOfferReservationHelper extends Module
             ->setFkStore($omsProductOfferReservationTransfer->getIdStore());
 
         $omsProductOfferReservationEntity->fromArray($omsProductOfferReservationTransfer->toArray());
-
         $omsProductOfferReservationEntity->save();
+
+        $omsProductOfferReservationTransfer->setIdProductOfferReservation($omsProductOfferReservationEntity->getIdOmsProductOfferReservation());
 
         return $omsProductOfferReservationTransfer;
     }

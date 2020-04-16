@@ -21,7 +21,7 @@ interface ProductOfferAvailabilityStorageFacadeInterface
      *
      * @return void
      */
-    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void;
+    public function writeCollectionByOmsProductOfferReservationIdEvents(array $eventTransfers): void;
 
     /**
      * Specification:

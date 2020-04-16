@@ -9,6 +9,7 @@
     </transfer>
 
     <transfer name="OmsProductOfferReservation">
+        <property name="idProductOfferReservation" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="idStore" type="int"/>
         <property name="reservationQuantity" type="decimal"/>
