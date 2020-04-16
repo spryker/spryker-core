@@ -73,12 +73,4 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     {
         return $this->userFacade->hasUserByUsername($username);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getCurrentUser()
-    {
-        return $this->userFacade->getCurrentUser();
-    }
 }
