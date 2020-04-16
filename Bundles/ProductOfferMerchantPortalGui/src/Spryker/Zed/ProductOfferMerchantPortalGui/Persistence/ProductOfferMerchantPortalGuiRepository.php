@@ -648,7 +648,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         if (!$productOfferTableCriteriaTransfer->getHasStock()) {
             $productOfferQuery->_or()
                 ->useProductOfferStockQuery()
-                    ->filterByIdProductOfferStock(null, Criteria::ISNULL)
+                ->filterByIdProductOfferStock(null, Criteria::ISNULL)
                 ->endUse();
         }
 
@@ -691,7 +691,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         }
 
         $productOfferQuery->useSpyProductOfferStoreQuery()
-                ->filterByFkStore_In($productOfferTableCriteriaTransfer->getInStores())
+            ->filterByFkStore_In($productOfferTableCriteriaTransfer->getInStores())
             ->endUse()
             ->distinct();
 
@@ -710,13 +710,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     ): SpyProductOfferQuery {
         if ($productOfferTableCriteriaTransfer->getValidFrom()) {
             $productOfferQuery->useSpyProductOfferValidityQuery()
-                    ->filterByValidFrom($productOfferTableCriteriaTransfer->getValidFrom(), Criteria::GREATER_EQUAL)
+                ->filterByValidFrom($productOfferTableCriteriaTransfer->getValidFrom(), Criteria::GREATER_EQUAL)
                 ->endUse();
         }
 
         if ($productOfferTableCriteriaTransfer->getValidTo()) {
             $productOfferQuery->useSpyProductOfferValidityQuery()
-                    ->filterByValidTo($productOfferTableCriteriaTransfer->getValidTo(), Criteria::LESS_EQUAL)
+                ->filterByValidTo($productOfferTableCriteriaTransfer->getValidTo(), Criteria::LESS_EQUAL)
                 ->endUse();
         }
 

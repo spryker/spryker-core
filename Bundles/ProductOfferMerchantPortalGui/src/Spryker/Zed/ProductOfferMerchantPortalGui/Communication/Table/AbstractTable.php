@@ -40,7 +40,7 @@ abstract class AbstractTable
     protected const PARAM_SORT_BY = 'sortBy';
     protected const PARAM_SORT_DIRECTION = 'sortDirection';
     protected const PARAM_SEARCH_TERM = 'search';
-    protected const PARAM_FILTERS = 'filters';
+    protected const PARAM_FILTERS = 'filter';
 
     protected const DEFAULT_PAGE = 1;
     protected const DEFAULT_PAGE_SIZE = 10;
