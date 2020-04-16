@@ -511,4 +511,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
             ->createProductPackagingUnitCartOperation()
             ->removeItemFromQuote($itemTransfer, $quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartItemProductPackagingUnitChecker()
+            ->checkCartItemProductPackagingUnit($cartChangeTransfer);
+    }
 }

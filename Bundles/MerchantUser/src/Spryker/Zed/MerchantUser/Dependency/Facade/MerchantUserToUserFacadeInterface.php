@@ -46,4 +46,9 @@ interface MerchantUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser();
 }

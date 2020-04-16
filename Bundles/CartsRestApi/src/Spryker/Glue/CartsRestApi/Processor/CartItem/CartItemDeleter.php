@@ -134,6 +134,7 @@ class CartItemDeleter implements CartItemDeleterInterface
         return (new CartItemRequestTransfer())
             ->setQuoteUuid($uuidQuote)
             ->setSku($itemIdentifier)
+            ->setGroupKey($itemIdentifier)
             ->setCustomer($customerTransfer);
     }
 }

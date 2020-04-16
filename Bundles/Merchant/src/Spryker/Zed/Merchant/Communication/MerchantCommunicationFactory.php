@@ -8,17 +8,37 @@
 namespace Spryker\Zed\Merchant\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Merchant\Communication\Plugin\Cart\Validator\MerchantCartValidator;
+use Spryker\Zed\Merchant\Communication\Plugin\Cart\Validator\MerchantCartValidatorInterface;
+use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidator;
+use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidatorInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\Merchant\Business\MerchantFacade getFacade()
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  * @method \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
  * @method \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface getRepository()
- * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  */
 class MerchantCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\Merchant\Communication\Plugin\Cart\Validator\MerchantCartValidatorInterface
+     */
+    public function createMerchantCartValidator(): MerchantCartValidatorInterface
+    {
+        return new MerchantCartValidator($this->getFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidatorInterface
+     */
+    public function createMerchantCheckoutValidator(): MerchantCheckoutValidatorInterface
+    {
+        return new MerchantCheckoutValidator($this->getFacade());
+    }
+
     /**
      * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
      */

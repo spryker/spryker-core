@@ -20,6 +20,15 @@ interface ProductConcreteStorageReaderInterface
     public function getProductConcreteStorageData($idProductConcrete, $localeName);
 
     /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
      * @param int $idProductConcrete
      * @param string $localeName
      *

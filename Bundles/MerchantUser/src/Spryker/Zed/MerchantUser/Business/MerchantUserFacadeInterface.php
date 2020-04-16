@@ -97,4 +97,16 @@ interface MerchantUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
+
+    /**
+     * Specification:
+     * - Returns effective merchant user.
+     * - Should not be used when user is not logged in.
+     * - Throws MerchantUserNotFoundException exception if no Merchant users exist for current logged in user.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function getCurrentMerchantUser(): MerchantUserTransfer;
 }
