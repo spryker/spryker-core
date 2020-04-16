@@ -103,7 +103,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 continue;
             }
 
-            $navigationItemKey = $this->getNavigationItemKey($navigationItem);
+            $navigationItemKey = $this->findNavigationItemKey($navigationItem);
 
             if (!$navigationItemKey || !$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
                 continue;
@@ -140,7 +140,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
                 continue;
             }
 
-            $navigationItemKey = $this->getNavigationItemKey($navigationItem);
+            $navigationItemKey = $this->findNavigationItemKey($navigationItem);
             if (!$navigationItemKey) {
                 continue;
             }
