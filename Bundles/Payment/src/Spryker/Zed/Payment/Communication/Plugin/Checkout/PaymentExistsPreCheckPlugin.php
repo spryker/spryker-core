@@ -34,6 +34,6 @@ class PaymentExistsPreCheckPlugin extends AbstractPlugin implements CheckoutPreC
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->isPaymentMethodExists($quoteTransfer, $checkoutResponseTransfer);
     }
 }

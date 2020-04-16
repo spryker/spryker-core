@@ -302,7 +302,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsPaymentExistsShouldReturnTrueIfPaymentExists(): void
+    public function testIsPaymentMethodExistsShouldReturnTrueIfPaymentExists(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -318,16 +318,16 @@ class PaymentFacadeTest extends Unit
         $this->paymentFacade->setFactory($factory);
 
         // Act
-        $isPaymentExists = $this->paymentFacade->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+        $isPaymentMethodExists = $this->paymentFacade->isPaymentMethodExists($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($isPaymentExists);
+        $this->assertTrue($isPaymentMethodExists);
     }
 
     /**
      * @return void
      */
-    public function testIsPaymentExistsShouldReturnFalseIfPaymentNotExists(): void
+    public function testIsPaymentMethodExistsShouldReturnFalseIfPaymentNotExists(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -343,9 +343,9 @@ class PaymentFacadeTest extends Unit
         $this->paymentFacade->setFactory($factory);
 
         // Act
-        $isPaymentExists = $this->paymentFacade->isPaymentExists($quoteTransfer, $checkoutResponseTransfer);
+        $isPaymentMethodExists = $this->paymentFacade->isPaymentMethodExists($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($isPaymentExists);
+        $this->assertFalse($isPaymentMethodExists);
     }
 }

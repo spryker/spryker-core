@@ -18,5 +18,5 @@ interface PaymentPluginValidatorInterface
      *
      * @return bool
      */
-    public function isPaymentExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function isPaymentMethodExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }
