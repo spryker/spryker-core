@@ -28,7 +28,10 @@ class MerchantCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantCartValidator(): MerchantCartValidatorInterface
     {
-        return new MerchantCartValidator($this->getFacade());
+        return new MerchantCartValidator(
+            $this->getFacade(),
+            $this->getStoreFacade()
+        );
     }
 
     /**
@@ -36,7 +39,10 @@ class MerchantCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantCheckoutValidator(): MerchantCheckoutValidatorInterface
     {
-        return new MerchantCheckoutValidator($this->getFacade());
+        return new MerchantCheckoutValidator(
+            $this->getFacade(),
+            $this->getStoreFacade()
+        );
     }
 
     /**

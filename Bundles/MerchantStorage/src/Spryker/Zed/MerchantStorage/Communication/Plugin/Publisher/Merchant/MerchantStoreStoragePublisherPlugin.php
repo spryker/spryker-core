@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantStorage\Business\MerchantStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantStorage\MerchantStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantStorage\Communication\MerchantStorageCommunicationFactory getFactory()
  */
-class MerchantStoreStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantStoreStoragePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -32,5 +33,21 @@ class MerchantStoreStoragePublishListener extends AbstractPlugin implements Even
     public function handleBulk(array $transfers, $eventName): void
     {
         $this->getFacade()->writeCollectionByMerchantStoreEvents($transfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            MerchantEvents::MERCHANT_STORE_PUBLISH,
+            MerchantEvents::ENTITY_SPY_MERCHANT_STORE_CREATE,
+            MerchantEvents::ENTITY_SPY_MERCHANT_STORE_DELETE,
+        ];
     }
 }
