@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  */
 class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
 {
@@ -210,5 +211,24 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationNodeUrlCleaner()
             ->detachUrlFromNavigationNodes($urlTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
+     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function duplicateNavigation(
+        NavigationTransfer $newNavigationElement,
+        NavigationTransfer $baseNavigationElement
+    ): NavigationTransfer {
+        return $this->getFactory()
+            ->createNavigationDuplicator()
+            ->duplicateNavigation($newNavigationElement, $baseNavigationElement);
     }
 }

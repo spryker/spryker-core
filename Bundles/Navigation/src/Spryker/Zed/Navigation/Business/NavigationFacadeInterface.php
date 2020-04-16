@@ -177,4 +177,22 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
+
+    /**
+     * Specification:
+     * - Duplicates navigation.
+     * - Persists new navigation entity to database.
+     * - Touches navigation entity as active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
+     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function duplicateNavigation(
+        NavigationTransfer $newNavigationElement,
+        NavigationTransfer $baseNavigationElement
+    ): NavigationTransfer;
 }

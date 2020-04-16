@@ -10,6 +10,8 @@ namespace Spryker\Zed\Navigation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationCreator;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationDeleter;
+use Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator;
+use Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicatorInterface;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationReader;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationTouch;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationUpdater;
@@ -24,6 +26,7 @@ use Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleaner;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
@@ -35,6 +38,18 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationCreator()
     {
         return new NavigationCreator($this->getQueryContainer(), $this->createNavigationTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicatorInterface
+     */
+    public function createNavigationDuplicator(): NavigationDuplicatorInterface
+    {
+        return new NavigationDuplicator(
+            $this->getRepository(),
+            $this->createNavigationTouch(),
+            $this->createNavigationNodeCreator()
+        );
     }
 
     /**

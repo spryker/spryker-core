@@ -8,10 +8,13 @@
 namespace SprykerTest\Zed\Navigation\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
+use Spryker\Zed\Navigation\Persistence\NavigationRepository;
 
 /**
  * Auto-generated group annotations
@@ -37,6 +40,16 @@ class NavigationCRUDTest extends Unit
     protected $navigationQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface
+     */
+    protected $navigationRepository;
+
+    /**
+     * @var \SprykerTest\Zed\Navigation\NavigationBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -45,6 +58,7 @@ class NavigationCRUDTest extends Unit
 
         $this->navigationFacade = new NavigationFacade();
         $this->navigationQueryContainer = new NavigationQueryContainer();
+        $this->navigationRepository = new NavigationRepository();
     }
 
     /**
@@ -114,6 +128,66 @@ class NavigationCRUDTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDuplicateNavigationWillPersistTheSameNavigationAsExistingOne(): void
+    {
+        // Arrange
+        $baseNavigationEntity = $this->createNavigationEntity(
+            'test-navigation-for-duplication',
+            'Test navigation for duplication',
+            true
+        );
+        $newNavigationName = 'new navigation name';
+        $newNavigationKey = 'new navigation key';
+        $baseNavigationTransfer = (new NavigationTransfer())
+            ->setKey($baseNavigationEntity->getKey())
+            ->setName($baseNavigationEntity->getName())
+            ->setIdNavigation($baseNavigationEntity->getIdNavigation());
+        $newNavigationTransfer = (new NavigationTransfer())
+            ->setName($newNavigationName)
+            ->setKey($newNavigationKey);
+
+        $navigationNodeTransfer = new NavigationNodeTransfer();
+        $navigationNodeTransfer
+            ->setFkNavigation($baseNavigationTransfer->getIdNavigation())
+            ->setIsActive(true);
+
+        $idLocale1 = $this->tester->haveLocale(['localeName' => 'ab_CD'])->getIdLocale();
+        $navigationNodeLocalizedAttributesTransfer1 = $this->createNavigationNodeLocalizedAttributesTransfer(
+            $idLocale1,
+            'Node 1 (ab_CD)',
+            'http://example.com/ab/1'
+        );
+
+        $idLocale2 = $this->tester->haveLocale(['localeName' => 'ef_GH'])->getIdLocale();
+        $navigationNodeLocalizedAttributesTransfer2 = $this->createNavigationNodeLocalizedAttributesTransfer(
+            $idLocale2,
+            'Node 1 (ef_GH)',
+            'http://example.com/ef/1'
+        );
+
+        $navigationNodeTransfer
+            ->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer1)
+            ->addNavigationNodeLocalizedAttribute($navigationNodeLocalizedAttributesTransfer2);
+
+        $navigationNodeTransfer = $this->navigationFacade->createNavigationNode($navigationNodeTransfer);
+
+        // Act
+        $duplicatedNavigationTransfer = $this->navigationFacade->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
+
+        // Assert
+        $duplicatedNavigationNodeTransfer = $this->navigationRepository
+            ->getNavigationNodesByNavigationId($duplicatedNavigationTransfer->getIdNavigation())[0];
+        $duplicatedNavigationNodeLocalizedAttributesTransfers = $duplicatedNavigationNodeTransfer->getNavigationNodeLocalizedAttributes();
+        $navigationNodeLocalizedAttributesTransfers = $navigationNodeTransfer->getNavigationNodeLocalizedAttributes();
+        $this->assertEquals($newNavigationTransfer->getName(), $duplicatedNavigationTransfer->getName());
+        $this->assertEquals($newNavigationTransfer->getKey(), $duplicatedNavigationTransfer->getKey());
+        $this->assertEquals($duplicatedNavigationNodeTransfer->getIsActive(), $navigationNodeTransfer->getIsActive());
+        $this->assertEquals($duplicatedNavigationNodeLocalizedAttributesTransfers[0]->getUrl(), $navigationNodeLocalizedAttributesTransfers[0]->getUrl());
+    }
+
+    /**
      * @param string $key
      * @param string $name
      * @param bool $isActive
@@ -148,5 +222,26 @@ class NavigationCRUDTest extends Unit
             ->save();
 
         return $navigationEntity;
+    }
+
+    /**
+     * @param int $idLocale
+     * @param string $nodeTitle
+     * @param string $externalUrl
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
+     */
+    protected function createNavigationNodeLocalizedAttributesTransfer(
+        int $idLocale,
+        string $nodeTitle,
+        string $externalUrl
+    ): NavigationNodeLocalizedAttributesTransfer {
+        $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
+        $navigationNodeLocalizedAttributesTransfer
+            ->setFkLocale($idLocale)
+            ->setTitle($nodeTitle)
+            ->setExternalUrl($externalUrl);
+
+        return $navigationNodeLocalizedAttributesTransfer;
     }
 }
