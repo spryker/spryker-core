@@ -5,4 +5,5 @@ parameters:
     - '#Parameter \#1 \$v of method .+SpyCustomerAddress::setIdCustomerAddress\(\) expects int, null given.#'
     - '#Parameter \#1 \$v of method .+SpyCustomer::setRegistrationKey\(\) expects string, null given.#'
     - '#Parameter \#1 \$v of method .+SpyCustomer::setRestorePasswordKey\(\) expects string, null given.#'
+    - '#Parameter \#1 \$v of method .+SpyCustomerAddress::setUuid\(\) expects string, null given.#'
     - '#Strict comparison using === between .+SpyCountry and null will always evaluate to false.#'
