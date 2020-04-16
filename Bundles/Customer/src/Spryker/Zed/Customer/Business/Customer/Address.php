@@ -626,6 +626,7 @@ class Address implements AddressInterface
         $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
         $addressEntity->setIdCustomerAddress(null);
+        $addressEntity->setUuid(null);
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
         $addressEntity->setFkCountry($fkCountry);
