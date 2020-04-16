@@ -29,7 +29,14 @@ interface KernelConstants
     public const DEPENDENCY_INJECTOR_YVES = 'DEPENDENCY_INJECTOR_YVES';
     public const DEPENDENCY_INJECTOR_ZED = 'DEPENDENCY_INJECTOR_ZED';
 
+    /**
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+     */
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED = 'ENABLE_AUTO_LOADER_UNRESOLVABLE_CACHE';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+     */
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     public const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
     public const AUTO_LOADER_CACHE_FILE_PATH = 'KERNEL:AUTO_LOADER_CACHE_FILE_PATH';
@@ -37,7 +44,7 @@ interface KernelConstants
     /**
      * Specification:
      * - When enabled the ClassResolver tries to use a pre-build cache for resolvable class names.
-     * - Run cache builder and enable this to improve performance.
+     * - Use {@link \Spryker\Zed\Kernel\Communication\Console\ResolvableClassCacheConsole} and set this configuration to `true` to improve performance.
      *
      * @api
      */
