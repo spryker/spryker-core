@@ -30,7 +30,7 @@ class IsActiveProductTableFilterDataProvider implements ProductTableFilterDataPr
     }
 
     /**
-     * @return int[][]
+     * @return array
      */
     protected function getIsActiveOptions(): array
     {

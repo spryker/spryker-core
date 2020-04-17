@@ -4,8 +4,11 @@ Image,Image
 Inactive,Inactive
 Name,Name
 Offers,Offers
+"Search by SKU, Name","Search by SKU, Name"
 Sku,SKU
 Status,Status
 Stores,Stores
 "Valid From","Valid From"
 "Valid To","Valid To"
+"With Offers","With Offers"
+"Without Offers","Without Offers"

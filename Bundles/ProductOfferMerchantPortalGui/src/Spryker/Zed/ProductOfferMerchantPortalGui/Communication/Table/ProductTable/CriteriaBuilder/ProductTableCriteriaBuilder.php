@@ -68,10 +68,11 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
      */
     public function build(): ProductTableCriteriaTransfer
     {
-        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
-        $productTableCriteriaTransfer->setSearchTerm($this->searchTerm);
-        $productTableCriteriaTransfer->setOrderBy($this->sorting);
-        $productTableCriteriaTransfer->setPagination($this->buildPaginationTransfer());
+        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer()
+            ->setSearchTerm($this->searchTerm)
+            ->setOrderBy($this->sorting)
+            ->setPagination($this->buildPaginationTransfer());
+
         $productTableCriteriaTransfer = $this->addFilterData($productTableCriteriaTransfer);
 
         return $productTableCriteriaTransfer;

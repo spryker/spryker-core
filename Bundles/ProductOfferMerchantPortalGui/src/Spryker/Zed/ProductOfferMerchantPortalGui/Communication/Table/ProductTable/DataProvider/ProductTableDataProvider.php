@@ -124,18 +124,14 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
      *
-     * @return string[]|string
+     * @return string
      */
     protected function getStoresColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer)
     {
         $storesString = $productTableRowDataTransfer->getStores();
         $stores = explode(',', $storesString);
 
-        if (count($stores) === 1) {
-            return trim($stores[0]);
-        }
-
-        return $stores;
+        return implode(', ', $stores);
     }
 
     /**

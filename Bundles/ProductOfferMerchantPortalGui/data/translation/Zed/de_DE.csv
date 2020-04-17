@@ -4,8 +4,11 @@ Image,Bild
 Inactive,Inaktiv
 Name,Name
 Offers,Angeboten
+"Search by SKU, Name","Suche nach SKU, Name"
 Sku,SKU
 Status,Status
 Stores,Stores
 "Valid From","Gültig Von"
 "Valid To","Gültig Bis"
+"With Offers","Mit Angeboten"
+"Without Offers","Ohne Angeboten"
