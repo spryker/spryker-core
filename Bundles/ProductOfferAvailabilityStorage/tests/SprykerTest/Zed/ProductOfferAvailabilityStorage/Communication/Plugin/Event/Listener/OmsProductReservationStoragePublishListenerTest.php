@@ -86,7 +86,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $omsProductReservationStoragePublishListener = new OmsProductReservationStoragePublishListener();
         $omsProductReservationStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $this->setProductOfferOmsReservationReaderStrategyPluginReturn($reservedQuantity);
+        $this->setProductOfferOmsReservationReaderStrategyPluginDependency($reservedQuantity);
 
         $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($omsProductOfferReservationTransfer->getIdProductOfferReservation()),
@@ -109,7 +109,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
      *
      * @return void
      */
-    protected function setProductOfferOmsReservationReaderStrategyPluginReturn(int $reservedQuantity): void
+    protected function setProductOfferOmsReservationReaderStrategyPluginDependency(int $reservedQuantity): void
     {
         $reservationResponseTransfer = (new ReservationResponseTransfer())
             ->setReservationQuantity($reservedQuantity);
