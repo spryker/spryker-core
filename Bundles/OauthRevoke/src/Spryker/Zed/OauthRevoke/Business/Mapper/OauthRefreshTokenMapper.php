@@ -47,15 +47,15 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         RefreshTokenEntityInterface $refreshTokenEntity,
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
-        $userIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
-        $decodedUserIdentifier = $this->utilEncodingService->decodeJson($userIdentifier, true);
-        $customerReference = $decodedUserIdentifier[static::CUSTOMER_REFERENCE] ?? null;
-        $filteredUserIdentifier = $this->filterUserIdentifier($decodedUserIdentifier);
+        $encodedUserIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
+        $userIdentifier = $this->utilEncodingService->decodeJson($encodedUserIdentifier, true);
+        $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);
+        $encodedUserIdentifier = (string)$this->utilEncodingService->encodeJson($filteredUserIdentifier);
 
         $oauthRefreshTokenTransfer
             ->setIdentifier($refreshTokenEntity->getIdentifier())
-            ->setCustomerReference($customerReference)
-            ->setUserIdentifier($filteredUserIdentifier)
+            ->setCustomerReference($userIdentifier[static::CUSTOMER_REFERENCE] ?? null)
+            ->setUserIdentifier($encodedUserIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
             ->setScopes($this->utilEncodingService->encodeJson($refreshTokenEntity->getAccessToken()->getScopes()));
@@ -64,30 +64,16 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     }
 
     /**
-     * @param array $decodedUserIdentifier
+     * @param array $userIdentifier
      *
-     * @return string
+     * @return array
      */
-    protected function filterUserIdentifier(array $decodedUserIdentifier): string
+    protected function filterUserIdentifier(array $userIdentifier): array
     {
-        if (!$decodedUserIdentifier) {
-            return $this->encodeUserIdentifier($decodedUserIdentifier);
-        }
-
         foreach ($this->oauthUserIdentifierFilterPlugins as $oauthUserIdentifierFilterPlugin) {
-            $decodedUserIdentifier = $oauthUserIdentifierFilterPlugin->filter($decodedUserIdentifier);
+            $userIdentifier = $oauthUserIdentifierFilterPlugin->filter($userIdentifier);
         }
 
-        return $this->encodeUserIdentifier($decodedUserIdentifier);
-    }
-
-    /**
-     * @param array $decodedUserIdentifier
-     *
-     * @return string
-     */
-    protected function encodeUserIdentifier(array $decodedUserIdentifier): string
-    {
-        return (string)$this->utilEncodingService->encodeJson($decodedUserIdentifier);
+        return $userIdentifier;
     }
 }
