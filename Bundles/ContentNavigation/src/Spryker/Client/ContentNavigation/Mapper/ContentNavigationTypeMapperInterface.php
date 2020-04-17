@@ -5,19 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentNavigation;
+namespace Spryker\Client\ContentNavigation\Mapper;
 
 use Generated\Shared\Transfer\ContentNavigationTypeTransfer;
 
-interface ContentNavigationClientInterface
+interface ContentNavigationTypeMapperInterface
 {
     /**
-     * Specification
-     * - Fetches Navigation by ID.
-     * - Executes the term for the navigation, resulting in the navigation.
-     *
-     * @api
-     *
      * @param string $contentKey
      * @param string $localeName
      *

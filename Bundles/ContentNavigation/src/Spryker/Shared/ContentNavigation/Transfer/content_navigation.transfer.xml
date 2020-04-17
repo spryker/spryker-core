@@ -32,4 +32,9 @@
     <transfer name="Navigation">
     </transfer>
 
+    <transfer name="ContentTypeContext">
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="term" type="string"/>
+    </transfer>
+
 </transfers>

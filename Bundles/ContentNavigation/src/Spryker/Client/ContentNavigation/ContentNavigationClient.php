@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ContentNavigation;
 
+use Generated\Shared\Transfer\ContentNavigationTypeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,4 +15,20 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ContentNavigationClient extends AbstractClient implements ContentNavigationClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $contentKey
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentNavigationTypeTransfer|null
+     */
+    public function executeNavigationTypeByKey(string $contentKey, string $localeName): ?ContentNavigationTypeTransfer
+    {
+        return $this->getFactory()
+            ->createContentNavigationTypeMapper()
+            ->executeNavigationTypeByKey($contentKey, $localeName);
+    }
 }
