@@ -74,13 +74,15 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
+     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
      */
     public function installYvesDependencies(LoggerInterface $logger)
     {
-        return $this->getFactory()->createYvesDependencyInstaller()->install($logger);
+        return $this->installProjectDependencies($logger);
     }
 
     /**
@@ -100,13 +102,15 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
+     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
      */
     public function installZedDependencies(LoggerInterface $logger)
     {
-        return $this->getFactory()->createZedDependencyInstaller()->install($logger);
+        return $this->installProjectDependencies($logger);
     }
 
     /**

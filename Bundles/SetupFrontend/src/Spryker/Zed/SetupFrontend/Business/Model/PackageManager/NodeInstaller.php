@@ -22,7 +22,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $version = $this->getNodeJsVersion($logger);
 
         if (preg_match('/^v[0-7]/', $version)) {
-            return $this->installNodeJs($logger);
+            return $this->installNodeJs($logger) && $this->installYarn($logger);
         }
 
         return true;
@@ -85,5 +85,30 @@ class NodeInstaller implements PackageManagerInstallerInterface
     protected function getDownloadCommand()
     {
         return 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -';
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    protected function installYarn(LoggerInterface $logger)
+    {
+        $logger->info('Installing Yarn');
+
+        $process = $this->getProcess($this->getYarnInstallCommand());
+        $process->run(function ($type, $buffer) use ($logger) {
+            $logger->info($buffer);
+        });
+
+        return $process->isSuccessful();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getYarnInstallCommand()
+    {
+        return 'npm install -g yarn';
     }
 }

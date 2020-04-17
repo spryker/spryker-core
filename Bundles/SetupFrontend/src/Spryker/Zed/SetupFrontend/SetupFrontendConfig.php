@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SetupFrontend;
 
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
@@ -31,7 +30,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getProjectInstallCommand()
     {
-        return 'npm ci --prefer-offline';
+        return 'yarn install';
     }
 
     /**
@@ -47,40 +46,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
         return [
             APPLICATION_ROOT_DIR . '/public/Yves/assets',
         ];
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
-     *
-     * @return string
-     */
-    public function getYvesInstallerDirectoryPattern()
-    {
-        return $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves';
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getYvesInstallMultiPathDirectoryPatterns(): array
-    {
-        return [
-            $this->getYvesInstallerDirectoryPattern(),
-        ];
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getYvesInstallCommand()
-    {
-        return 'npm ci --prefer-offline';
     }
 
     /**
@@ -106,40 +71,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
         return [
             APPLICATION_ROOT_DIR . '/public/Zed/assets',
         ];
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
-     *
-     * @return string
-     */
-    public function getZedInstallerDirectoryPattern()
-    {
-        return $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed';
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getZedInstallMultiPathDirectoryPatterns(): array
-    {
-        return [
-            $this->getZedInstallerDirectoryPattern(),
-        ];
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getZedInstallCommand()
-    {
-        return 'npm ci --prefer-offline';
     }
 
     /**

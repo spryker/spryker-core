@@ -63,6 +63,8 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
+     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
@@ -84,6 +86,8 @@ interface SetupFrontendFacadeInterface
      * - Installs needed Zed dependencies.
      *
      * @api
+     *
+     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
