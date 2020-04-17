@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Transfer;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use ReflectionClass;
 use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -16,6 +17,8 @@ use Spryker\Zed\Transfer\Business\EntityTransfer\Definition\EntityTransferDefini
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
 use Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
+use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeBridge;
+use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 
 /**
  * Inherited Methods
@@ -72,9 +75,14 @@ class TransferBusinessTester extends Actor
             return [$entityTransferDirectory . '/entity-transfer'];
         });
 
+        $propelFacadeBridge = Stub::make(TransferToPropelFacadeBridge::class, [
+            'getSchemaDirectory' => $entityTransferDirectory . '/entity-transfer',
+        ]);
+
         return new EntityTransferDefinitionFinder(
             $this->getModuleConfig(),
-            $this->getFactory()->getUtilGlobService()
+            $this->getFactory()->getUtilGlobService(),
+            $propelFacadeBridge
         );
     }
 
@@ -104,6 +112,16 @@ class TransferBusinessTester extends Actor
         $facade->setFactory($this->getTransferBusinessFactory());
 
         return $facade;
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface
+     */
+    protected function getPropelFacadeBridge(): TransferToPropelFacadeInterface
+    {
+        return new TransferToPropelFacadeBridge(
+            $this->getLocator()->propel()->facade()
+        );
     }
 
     /**

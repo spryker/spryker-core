@@ -49,7 +49,7 @@ class TwigConfig extends AbstractBundleConfig
             if ($themeName !== '' && $themeName !== $themeNameDefault) {
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . '/Theme/' . $themeName . APPLICATION_CODE_BUCKET;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeName . APPLICATION_CODE_BUCKET;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
             }
 

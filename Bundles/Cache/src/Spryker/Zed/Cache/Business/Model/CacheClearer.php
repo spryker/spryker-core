@@ -58,7 +58,9 @@ class CacheClearer implements CacheClearerInterface
     {
         $directory = $this->config->getCodeBucketCachePath();
 
-        $this->clearDirectory($directory);
+        if ($this->fileSystem->exists($directory)) {
+            $this->clearDirectory($directory);
+        }
 
         return $directory;
     }
@@ -116,9 +118,7 @@ class CacheClearer implements CacheClearerInterface
      */
     protected function clearDirectory($directory)
     {
-        if ($this->fileSystem->exists($directory)) {
-            $this->fileSystem->remove($this->findFiles($directory));
-        }
+        $this->fileSystem->remove($this->findFiles($directory));
     }
 
     /**
