@@ -29,6 +29,9 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  */
 class ProductMeasurementUnitFacadeTest extends Unit
 {
+    protected const PRODUCT_MEASUREMENT_SALES_UNIT_ID = 777;
+    protected const NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID = 9999;
+
     /**
      * @var \SprykerTest\Zed\ProductMeasurementUnit\ProductMeasurementUnitBusinessTester
      */
@@ -396,5 +399,96 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         //Assert
         $this->assertCount(1, $productMeasurementSalesUnitTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    {
+        // Arrange
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnSuccessfulResponseWithCorrectSalesUnitId(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $sku = $productConcreteTransfer->getSku();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productConcreteTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $this->tester->haveProductMeasurementSalesUnit(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
+            [
+                ProductMeasurementSalesUnitTransfer::ID_PRODUCT_MEASUREMENT_SALES_UNIT => static::PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+                ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
+            ]
+        );
+
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
+            static::PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+            $sku
+        );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $sku = $productConcreteTransfer->getSku();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productConcreteTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $this->tester->haveProductMeasurementSalesUnit(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
+            [
+                ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
+            ]
+        );
+
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
+            static::NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+            $sku
+        );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
     }
 }

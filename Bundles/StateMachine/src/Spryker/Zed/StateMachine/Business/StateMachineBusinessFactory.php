@@ -31,6 +31,7 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class StateMachineBusinessFactory extends AbstractBusinessFactory
 {

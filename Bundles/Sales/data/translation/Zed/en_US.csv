@@ -19,6 +19,7 @@ Items,Items
 Legend,Legend
 "List of orders","List of orders"
 Matrix,Matrix
+Note,Note
 "Number of Items","Number of Items"
 Option,Option
 "Order Matrix","Order Matrix"
@@ -39,6 +40,7 @@ Shipment,Shipment
 "Show more","Show more"
 Sku,SKU
 State,State
+"Sub total","Sub Total"
 Subtotal,Subtotal
 Totals,Totals
 "Trigger all matching states","Trigger all matching states"
@@ -48,4 +50,3 @@ Totals,Totals
 "Variant Details","Variant Details"
 "View Order","View Order"
 "View Order:","View Order:"
-Note,Note

@@ -24,4 +24,11 @@ interface ProductBundleReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     */
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array;
 }
