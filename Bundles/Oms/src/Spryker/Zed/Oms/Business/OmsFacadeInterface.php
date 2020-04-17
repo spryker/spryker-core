@@ -602,7 +602,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacadeInterface::updateReservation()` instead.
      *
      * @param string $sku
      *

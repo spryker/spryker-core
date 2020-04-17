@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 
 /**
- * @deprecated Use `ProductBundleReservationHandlerTerminationAwareStrategyPlugin` instead.
+ * @deprecated Use `\Spryker\Zed\ProductBundle\Communication\Plugin\Oms\ProductBundleReservationHandlerTerminationAwareStrategyPlugin` instead.
  *
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()

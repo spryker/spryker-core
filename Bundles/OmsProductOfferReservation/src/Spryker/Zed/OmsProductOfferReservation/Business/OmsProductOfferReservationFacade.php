@@ -31,7 +31,25 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
-        return $this->getFactory()->createOmsProductOfferReservationReader()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+        return $this->getFactory()
+            ->createOmsProductOfferReservationReader()
+            ->getQuantity($omsProductOfferReservationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
+    {
+        return $this->getFactory()
+            ->createOmsProductOfferReservationReader()
+            ->getAggregatedReservations($reservationRequestTransfer);
     }
 
     /**
@@ -45,6 +63,8 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      */
     public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getRepository()->saveReservation($reservationRequestTransfer);
+        $this->getFactory()
+            ->createOmsProductOfferReservationWriter()
+            ->saveReservation($reservationRequestTransfer);
     }
 }

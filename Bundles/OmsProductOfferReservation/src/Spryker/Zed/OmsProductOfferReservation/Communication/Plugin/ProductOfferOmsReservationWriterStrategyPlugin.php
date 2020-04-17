@@ -20,7 +20,7 @@ class ProductOfferOmsReservationWriterStrategyPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequestTransfer.productOfferReference not null.
+     * - Checks if ReservationRequestTransfer.productOfferReference is not null.
      *
      * @api
      *

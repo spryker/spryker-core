@@ -670,7 +670,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacade::updateReservation()` instead.
      *
      * @param string $sku
      *

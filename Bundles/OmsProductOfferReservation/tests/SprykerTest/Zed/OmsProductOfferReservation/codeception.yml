@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Zed\OmsProductOfferReservation\Helper\OmsProductOfferReservationHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper

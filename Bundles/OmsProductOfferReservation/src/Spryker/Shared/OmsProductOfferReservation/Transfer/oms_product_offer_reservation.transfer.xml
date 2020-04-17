@@ -25,4 +25,13 @@
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
+    <transfer name="SalesOrderItemStateAggregation">
+    </transfer>
+
+    <transfer name="OmsStateCollection">
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
 </transfers>

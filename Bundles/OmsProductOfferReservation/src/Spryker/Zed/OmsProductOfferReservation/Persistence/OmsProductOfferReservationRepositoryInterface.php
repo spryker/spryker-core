@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
-use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface OmsProductOfferReservationRepositoryInterface
@@ -23,9 +24,15 @@ interface OmsProductOfferReservationRepositoryInterface
     ): Decimal;
 
     /**
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     * @param string $productOfferReference
+     * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function getAggregatedReservations(
+        string $productOfferReference,
+        ArrayObject $omsStateTransfers,
+        ?StoreTransfer $storeTransfer = null
+    ): array;
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
 interface ProductPackagingUnitToOmsFacadeInterface
 {
     /**
-     * @deprecated Use `updateReservation` instead.
+     * @deprecated Use `\Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface::updateReservation()` instead.` instead.
      *
      * @param string $sku
      *

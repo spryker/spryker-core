@@ -16,7 +16,7 @@ use Spryker\DecimalObject\Decimal;
 interface ReservationInterface
 {
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\ReservationInterface::updateReservation()` instead.
      *
      * @param string $sku
      *
@@ -41,6 +41,13 @@ interface ReservationInterface
      * @return void
      */
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function sumReservedProductQuantities(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
 
     /**
      * @param string $sku

@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -27,6 +29,8 @@ use Spryker\DecimalObject\Decimal;
  */
 class OmsProductOfferReservationFacadeTest extends Unit
 {
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\OmsProductOfferReservation\OmsProductOfferReservationBusinessTester
      */
@@ -104,6 +108,46 @@ class OmsProductOfferReservationFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
         $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAggregatedReservations(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $quantity = 2;
+        $itemsCount = 5;
+
+        $productOfferTransfer = $this->tester->haveProductOffer();
+
+        $salesOrderEntity = $this->tester->haveSalesOrderWithItems(
+            $productOfferTransfer,
+            $quantity,
+            $itemsCount,
+            $storeTransfer
+        );
+
+        // Act
+        $salesAggregationTransfers = $this->tester->getFacade()->getAggregatedReservations(
+            (new ReservationRequestTransfer())
+                ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->setReservedStates(
+                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
+                )
+                ->setStore($storeTransfer)
+        );
+
+        // Assert
+        $this->assertGreaterThan(1, $salesAggregationTransfers);
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+
+        // SUM(amount)
+        $this->assertSame(
+            $this->tester->sumSalesAggregationTransfers($salesAggregationTransfers)->toString(),
+            (new Decimal($quantity * $itemsCount))->toString()
+        );
     }
 
     /**

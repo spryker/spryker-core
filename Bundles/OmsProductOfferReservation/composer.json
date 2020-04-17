@@ -8,7 +8,9 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/oms-extension": "^1.2.0",
-    "spryker/store": "^1.0.0"
+    "spryker/store": "^1.0.0",
+    "spryker/sales": "^11.0.0",
+    "spryker/oms": "^11.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -31,8 +31,22 @@ interface OmsProductOfferReservationFacadeInterface
 
     /**
      * Specification:
-     * - Saves reservation data for provided ReservationRequestTransfer.item.
-     * - Requires ReservationRequestTransfer.item.productOfferReference.
+     * - Aggregates reservations for product offers.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
+     * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
+
+    /**
+     * Specification:
+     * - Saves reservation quantity for provided ReservationRequestTransfer.
+     * - Requires ReservationRequestTransfer.productOfferReference.
      * - Requires ReservationRequestTransfer.store.idStore.
      *
      * @api

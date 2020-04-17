@@ -34,7 +34,7 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.sku not null;
+     * - Checks if ReservationRequest.sku is not null;
      *
      * @api
      *

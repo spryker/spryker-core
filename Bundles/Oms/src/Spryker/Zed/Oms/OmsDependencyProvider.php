@@ -33,6 +33,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
     public const PLUGINS_RESERVATION_AGGREGATION = 'PLUGINS_RESERVATION_AGGREGATION';
+    public const PLUGINS_OMS_RESERVATION_AGGREGATION_STRATEGY = 'PLUGINS_OMS_RESERVATION_AGGREGATION_STRATEGY';
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
@@ -66,6 +67,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addReservationHandlerPlugins($container);
         $container = $this->addReservationAggregationStrategyPlugins($container);
         $container = $this->addOmsReservationReaderStrategyPlugins($container);
+        $container = $this->addOmsReservationAggregationStrategyPlugins($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
@@ -145,9 +147,19 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Oms\OmsDependencyProvider::getOmsReservationAggregationStrategyPlugins().
+     *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
     protected function getReservationAggregationStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationStrategyPluginInterface[]
+     */
+    protected function getOmsReservationAggregationStrategyPlugins(): array
     {
         return [];
     }
@@ -323,6 +335,20 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_RESERVATION_AGGREGATION, function () {
             return $this->getReservationAggregationStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationAggregationStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_AGGREGATION_STRATEGY, function () {
+            return $this->getOmsReservationAggregationStrategyPlugins();
         });
 
         return $container;

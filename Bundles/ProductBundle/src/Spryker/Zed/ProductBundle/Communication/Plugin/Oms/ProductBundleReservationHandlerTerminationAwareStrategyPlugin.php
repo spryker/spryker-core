@@ -35,7 +35,7 @@ class ProductBundleReservationHandlerTerminationAwareStrategyPlugin extends Abst
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.sku not null;
+     * - Checks if ReservationRequest.sku is not null;
      *
      * @api
      *

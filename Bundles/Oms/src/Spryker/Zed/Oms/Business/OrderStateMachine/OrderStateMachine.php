@@ -694,7 +694,9 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($sourceState === $targetState && $targetState->isReserved()) {
-                $reservationRequestTransfer = (new ReservationRequestTransfer())->setSku($orderItem->getSku());
+                $reservationRequestTransfer = (new ReservationRequestTransfer())
+                    ->setSku($orderItem->getSku())
+                    ->setProductOfferReference($orderItem->getProductOfferReference());
                 $this->reservation->updateReservation($reservationRequestTransfer);
             }
 
