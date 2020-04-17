@@ -7,13 +7,28 @@
 
 namespace Spryker\Zed\ContentNavigation\Business;
 
+use Generated\Shared\Transfer\ContentNavigationTermTransfer;
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ContentNavigation\Business\ContentNavigationBusinessFactory getFactory()
- * @method \Spryker\Zed\ContentNavigation\Persistence\ContentNavigationRepositoryInterface getRepository()
- * @method \Spryker\Zed\ContentNavigation\Persistence\ContentNavigationEntityManagerInterface getEntityManager()
  */
 class ContentNavigationFacade extends AbstractFacade implements ContentNavigationFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ContentNavigationTermTransfer $contentNavigationTermTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
+     */
+    public function validateContentNavigationTerm(ContentNavigationTermTransfer $contentNavigationTermTransfer): ContentValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createContentNavigationValidator()
+            ->validateContentNavigationTerm($contentNavigationTermTransfer);
+    }
 }

@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentNavigation\Business;
+namespace Spryker\Zed\ContentNavigation\Business\Validator;
 
 use Generated\Shared\Transfer\ContentNavigationTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-interface ContentNavigationFacadeInterface
+interface ContentNavigationValidatorInterface
 {
     /**
-     * Specification:
-     * - Validates Content Navigation.
-     * - Returns ContentValidationResponseTransfer with success status and error messages if validation failed.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ContentNavigationTermTransfer $contentNavigationTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer

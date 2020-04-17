@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Navigation\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
@@ -177,4 +178,17 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
+
+    /**
+     * Specification
+     * - Finds navigation entity in database filtered by data provided in criteria transfer.
+     * - Returns navigation transfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
 }

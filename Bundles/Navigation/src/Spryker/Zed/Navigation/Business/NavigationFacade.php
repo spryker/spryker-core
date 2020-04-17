@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Navigation\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  */
 class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
 {
@@ -210,5 +212,19 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationNodeUrlCleaner()
             ->detachUrlFromNavigationNodes($urlTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer
+    {
+        return $this->getRepository()->findNavigationByCriteria($navigationCriteriaTransfer);
     }
 }
