@@ -36,8 +36,6 @@
         <property name="hideable" type="bool"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-        <property name="multiRenderMode" type="bool"/>
-        <property name="multiRenderModeLimit" type="int"/>
     </transfer>
 
     <transfer name="GuiTableFilter">
