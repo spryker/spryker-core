@@ -17,5 +17,5 @@ interface MerchantSearchStubInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchantCollection(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
 }

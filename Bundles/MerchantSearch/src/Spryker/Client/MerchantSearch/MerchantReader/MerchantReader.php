@@ -39,9 +39,9 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchantCollection(): MerchantCollectionTransfer
+    public function get(): MerchantCollectionTransfer
     {
-        return $this->merchantSearchStub->getMerchantCollection($this->createMerchantCriteriaTransfer());
+        return $this->merchantSearchStub->get($this->createMerchantCriteriaTransfer());
     }
 
     /**

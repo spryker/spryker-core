@@ -26,6 +26,6 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
     {
         return $this->getFactory()
             ->createMerchantReader()
-            ->getMerchantCollection();
+            ->get();
     }
 }

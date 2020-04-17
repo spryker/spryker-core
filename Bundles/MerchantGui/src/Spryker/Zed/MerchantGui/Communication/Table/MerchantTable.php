@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -22,7 +23,6 @@ class MerchantTable extends AbstractTable
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
     public const COL_ACTIONS = 'actions';
-    public const COL_STORE = 'store_relation';
 
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
@@ -110,7 +110,7 @@ class MerchantTable extends AbstractTable
             static::COL_ACTIONS,
             SpyMerchantTableMap::COL_STATUS,
             SpyMerchantTableMap::COL_IS_ACTIVE,
-            static::COL_STORE,
+            SpyMerchantStoreTableMap::COL_FK_STORE,
         ]);
         $config->setDefaultSortField(SpyMerchantTableMap::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
@@ -166,7 +166,7 @@ class MerchantTable extends AbstractTable
             SpyMerchantTableMap::COL_NAME => 'Name',
             SpyMerchantTableMap::COL_STATUS => 'Status',
             SpyMerchantTableMap::COL_IS_ACTIVE => 'active',
-            static::COL_STORE => 'Stores',
+            SpyMerchantStoreTableMap::COL_FK_STORE => 'Stores',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
@@ -206,7 +206,7 @@ class MerchantTable extends AbstractTable
                 SpyMerchantTableMap::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 SpyMerchantTableMap::COL_STATUS => $this->createStatusLabel($item),
                 SpyMerchantTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
-                static::COL_STORE => $this->createStoresLabel($item),
+                SpyMerchantStoreTableMap::COL_FK_STORE => $this->createStoresLabel($item),
             ], $this->executeDataExpanderPlugins($item));
             $rowData[static::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;

@@ -26,5 +26,5 @@ interface MerchantStorageEntityManagerInterface
      *
      * @return void
      */
-    public function deleteMerchantStorageByIdMerchantAndStore(int $idMerchant, string $store): void;
+    public function deleteMerchantStorage(int $idMerchant, string $store): void;
 }

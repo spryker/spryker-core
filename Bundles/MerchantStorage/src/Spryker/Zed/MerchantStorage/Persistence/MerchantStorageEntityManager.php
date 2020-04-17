@@ -45,7 +45,7 @@ class MerchantStorageEntityManager extends AbstractEntityManager implements Merc
      *
      * @return void
      */
-    public function deleteMerchantStorageByIdMerchantAndStore(int $idMerchant, string $store): void
+    public function deleteMerchantStorage(int $idMerchant, string $store): void
     {
         $this->getFactory()
             ->createMerchantStorageQuery()

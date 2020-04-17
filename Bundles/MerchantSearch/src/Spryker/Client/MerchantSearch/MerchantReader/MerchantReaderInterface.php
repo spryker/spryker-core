@@ -14,5 +14,5 @@ interface MerchantReaderInterface
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchantCollection(): MerchantCollectionTransfer;
+    public function get(): MerchantCollectionTransfer;
 }

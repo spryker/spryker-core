@@ -125,7 +125,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
                     continue;
                 }
 
-                $this->merchantStorageEntityManager->deleteMerchantStorageByIdMerchantAndStore($merchantTransfer->getIdMerchant(), $storeTransfer->getName());
+                $this->merchantStorageEntityManager->deleteMerchantStorage($merchantTransfer->getIdMerchant(), $storeTransfer->getName());
             }
         }
     }
@@ -167,12 +167,10 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
      */
     protected function getStoreTransfers(): array
     {
-        if ($this->storeTransfers) {
-            return $this->storeTransfers;
-        }
-
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $this->storeTransfers[] = $storeTransfer;
+        if (!$this->storeTransfers) {
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $this->storeTransfers[] = $storeTransfer;
+            }
         }
 
         return $this->storeTransfers;
