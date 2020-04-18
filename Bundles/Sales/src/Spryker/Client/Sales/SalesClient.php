@@ -147,18 +147,4 @@ class SalesClient extends AbstractClient implements SalesClientInterface
             ->createZedSalesStub()
             ->searchOrders($orderListTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getOrderSearchTypes(): array
-    {
-        return $this->getFactory()
-            ->getConfig()
-            ->getOrderSearchTypes();
-    }
 }

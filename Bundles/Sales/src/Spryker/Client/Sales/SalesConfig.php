@@ -9,18 +9,6 @@ namespace Spryker\Client\Sales;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\Sales\SalesConfig getSharedConfig()
- */
 class SalesConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getOrderSearchTypes(): array
-    {
-        return $this->getSharedConfig()->getOrderSearchTypes();
-    }
 }
