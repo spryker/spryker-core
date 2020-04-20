@@ -19,13 +19,21 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     public function install(LoggerInterface $logger)
     {
-        $version = $this->getNodeJsVersion($logger);
+        $nodeVersion = $this->getNodeJsVersion($logger);
+        $nodeInstalled = true;
 
-        if (preg_match('/^v[0-7]/', $version)) {
-            return $this->installNodeJs($logger) && $this->installYarn($logger);
+        if (preg_match('/^v[0-7]/', $nodeVersion)) {
+            $nodeInstalled = $this->installNodeJs($logger);
         }
 
-        return true;
+        $yarnVersion = $this->getYarnVersion($logger);
+        $yarnInstalled = true;
+
+        if (empty($yarnVersion)) {
+            $yarnInstalled = $this->installYarn($logger);
+        }
+
+        return $nodeInstalled && $yarnInstalled;
     }
 
     /**
@@ -110,5 +118,21 @@ class NodeInstaller implements PackageManagerInstallerInterface
     protected function getYarnInstallCommand()
     {
         return 'npm install -g yarn';
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return string
+     */
+    protected function getYarnVersion(LoggerInterface $logger)
+    {
+        $process = $this->getProcess('yarn -v');
+        $process->run();
+
+        $version = trim(preg_replace('/^\s+$/', ' ', $process->getOutput()));
+        $logger->info(sprintf('Yarn Version "%s"', $version));
+
+        return $version;
     }
 }
