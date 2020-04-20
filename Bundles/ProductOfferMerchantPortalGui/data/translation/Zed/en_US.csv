@@ -19,6 +19,7 @@ online,online
 "Out of stock","Out of stock"
 Pending,Pending
 Reference,Reference
+"Search by SKU, Name","Search by SKU, Name"
 Sku,SKU
 Status,Status
 Stock,Stock
@@ -29,3 +30,5 @@ Updated,Updated
 "Valid From","Valid From"
 "Valid To","Valid To"
 Visibility,Visibility
+"With Offers","With Offers"
+"Without Offers","Without Offers"

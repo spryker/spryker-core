@@ -47,6 +47,10 @@ abstract class AbstractTable
     protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
     protected const DEFAULT_SORT_DIRECTION = 'ASC';
 
+    protected const COLUMN_TYPE_TEXT = 'text';
+    protected const COLUMN_TYPE_IMAGE = 'image';
+    protected const COLUMN_TYPE_DATE = 'date';
+
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
      */

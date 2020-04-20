@@ -98,12 +98,14 @@ class MerchantSalesOrderBusinessTester extends Actor
             MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
         ]);
 
-        $this->haveMerchantOrderItem([
+        $merchantOrderItemTransfer = $this->haveMerchantOrderItem([
             MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
             MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
         ]);
+        $merchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
 
-        $this->haveMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder());
+        $merchantOrderTotalsTransfer = $this->haveMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder());
+        $merchantOrderTransfer->setTotals($merchantOrderTotalsTransfer);
 
         return $merchantOrderTransfer;
     }

@@ -26,7 +26,8 @@ class GuestCartsResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
-     *              "required": true
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *          }],
      *          "responses": {
      *              "404": "Cart not found."
@@ -39,7 +40,8 @@ class GuestCartsResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
-     *              "required": true
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *          }]
      *     }
      * })
@@ -68,7 +70,8 @@ class GuestCartsResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "X-Anonymous-Customer-Unique-Id",
      *              "in": "header",
-     *              "required": true
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",

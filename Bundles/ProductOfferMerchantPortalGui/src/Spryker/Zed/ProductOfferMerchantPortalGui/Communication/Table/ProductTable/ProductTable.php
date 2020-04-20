@@ -36,7 +36,7 @@ class ProductTable extends AbstractTable
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductTableController::getDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/product-table/get-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/product/get-table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
@@ -109,76 +109,60 @@ class ProductTable extends AbstractTable
         $guiTableConfigurationTransfer->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_SKU)
-                ->setTitle('Sku')
-                ->setType('text')
+                ->setTitle('SKU')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_IMAGE)
                 ->setTitle('Image')
-                ->setType('image')
+                ->setType(static::COLUMN_TYPE_IMAGE)
                 ->setSortable(false)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_NAME)
                 ->setTitle('Name')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STORES)
                 ->setTitle('Stores')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(false)
                 ->setHideable(false)
-                ->setMultiRenderMode(true)
-                ->setMultiRenderModeLimit(2)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STATUS)
                 ->setTitle('Status')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_FROM)
                 ->setTitle('Valid From')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_TO)
                 ->setTitle('Valid To')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(false)
-                ->setMultiRenderMode(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_OFFERS)
                 ->setTitle('Offers')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
-                ->setMultiRenderMode(false)
         );
 
         return $guiTableConfigurationTransfer;

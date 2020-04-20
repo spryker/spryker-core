@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\TestEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -62,8 +63,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testIsTransferValidShouldReturnTrueForValidTransferClassName(): void
     {
+        //Act
         $result = $this->resourceTransferAnalyzer->isTransferValid(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertTrue($result);
     }
 
@@ -72,18 +75,34 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testIsTransferValidShouldReturnFalseForInvalidTransferClassName(): void
     {
+        //Act
         $result = $this->resourceTransferAnalyzer->isTransferValid('RestTestAttributesTransfer');
 
+        //Assert
         $this->assertFalse($result);
     }
 
     /**
      * @return void
      */
-    public function testGetTransferMetadataShouldReturnArrayWithCorrectTransferMetada(): void
+    public function testIsTransferValidShouldReturnFalseForEntityTransferClass(): void
     {
+        //Act
+        $result = $this->resourceTransferAnalyzer->isTransferValid(TestEntityTransfer::class);
+
+        //Assert
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTransferMetadataShouldReturnArrayWithCorrectTransferMetadata(): void
+    {
+        //Act
         $metadata = $this->resourceTransferAnalyzer->getTransferMetadata(new RestTestAttributesTransfer());
 
+        //Assert
         $this->assertArraySubset($this->tester->getTestAttributesTransferMetadataExpectedData(), $metadata);
     }
 
@@ -92,8 +111,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateRequestSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createRequestSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::REQUEST_SCHEMA_NAME, $schemaName);
     }
 
@@ -102,8 +123,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateRequestDataSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createRequestDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::REQUEST_DATA_SCHEMA_NAME, $schemaName);
     }
 
@@ -112,8 +135,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateRequestAttributesSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::REQUEST_ATTRIBUTES_SCHEMA_NAME, $schemaName);
     }
 
@@ -122,8 +147,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResponseCollectionSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::RESPONSE_COLLECTION_SCHEMA_NAME, $schemaName);
     }
 
@@ -132,8 +159,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResponseCollectionDataSchemaNameFromTransferClassNameWillGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::RESPONSE_COLLECTION_DATA_SCHEMA_NAME, $schemaName);
     }
 
@@ -142,8 +171,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResponseResourceSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::RESPONSE_RESOURCE_SCHEMA_NAME, $schemaName);
     }
 
@@ -152,8 +183,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResponseResourceDataSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::RESPONSE_RESOURCE_DATA_SCHEMA_NAME, $schemaName);
     }
 
@@ -162,6 +195,7 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResponseAttributesSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         $this->assertEquals(static::RESPONSE_ATTRIBUTES_SCHEMA_NAME, $schemaName);
@@ -172,8 +206,10 @@ class ResourceTransferAnalyzerTest extends Unit
      */
     public function testCreateResourceRelationshipSchemaNameFromTransferClassNameShouldGenerateCorrectSchemaName(): void
     {
+        //Act
         $schemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
+        //Assert
         $this->assertEquals(static::RESOURCE_RELATIONSHIP_SCHEMA_NAME, $schemaName);
     }
 }

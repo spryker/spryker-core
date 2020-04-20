@@ -80,8 +80,8 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
                 ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productTableRowDataTransfer),
                 ProductTable::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
                 ProductTable::COL_KEY_STATUS => $this->getStatusColumnData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_VALID_FROM => $this->getValidFromData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_VALID_TO => $this->getValidToData($productTableRowDataTransfer),
+                ProductTable::COL_KEY_VALID_FROM => $this->getFormattedDateTime($productTableRowDataTransfer->getValidFrom()),
+                ProductTable::COL_KEY_VALID_TO => $this->getFormattedDateTime($productTableRowDataTransfer->getValidTo()),
                 ProductTable::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount(),
             ];
         }
@@ -145,18 +145,14 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
      *
-     * @return string[]|string
+     * @return string
      */
     protected function getStoresColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer)
     {
         $storesString = $productTableRowDataTransfer->getStores();
         $stores = explode(',', $storesString);
 
-        if (count($stores) === 1) {
-            return trim($stores[0]);
-        }
-
-        return $stores;
+        return implode(', ', $stores);
     }
 
     /**
@@ -174,34 +170,12 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     * @param string|null $dateTime
      *
      * @return string|null
      */
-    protected function getValidFromData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
+    protected function getFormattedDateTime(?string $dateTime): ?string
     {
-        $validFrom = $productTableRowDataTransfer->getValidFrom();
-
-        if (!$validFrom) {
-            return null;
-        }
-
-        return $this->utilDateTimeService->formatDateTimeToIso($validFrom);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function getValidToData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
-    {
-        $validTo = $productTableRowDataTransfer->getValidTo();
-
-        if (!$validTo) {
-            return null;
-        }
-
-        return $this->utilDateTimeService->formatDateTimeToIso($validTo);
+        return $dateTime ? $this->utilDateTimeService->formatDateTimeToIso($dateTime) : null;
     }
 }

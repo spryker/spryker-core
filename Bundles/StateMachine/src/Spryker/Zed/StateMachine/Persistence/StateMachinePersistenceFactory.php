@@ -14,10 +14,12 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\StateMachine\Persistence\Propel\Mapper\StateMachineMapper;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class StateMachinePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -67,5 +69,13 @@ class StateMachinePersistenceFactory extends AbstractPersistenceFactory
     public function createStateMachineLockQuery()
     {
         return SpyStateMachineLockQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Persistence\Propel\Mapper\StateMachineMapper
+     */
+    public function createStateMachineMapper(): StateMachineMapper
+    {
+        return new StateMachineMapper();
     }
 }
