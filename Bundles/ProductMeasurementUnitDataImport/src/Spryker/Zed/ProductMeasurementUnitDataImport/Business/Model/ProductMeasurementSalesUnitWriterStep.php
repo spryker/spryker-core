@@ -97,11 +97,11 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
      */
     protected function filterDataSet(DataSetInterface $dataSet): DataSetInterface
     {
-        if ($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_CONVERSION] === "") {
+        if ($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_CONVERSION] === '') {
             $dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_CONVERSION] = null;
         }
 
-        if ($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_PRECISION] === "") {
+        if ($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_PRECISION] === '') {
             $dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_PRECISION] = null;
         }
 
