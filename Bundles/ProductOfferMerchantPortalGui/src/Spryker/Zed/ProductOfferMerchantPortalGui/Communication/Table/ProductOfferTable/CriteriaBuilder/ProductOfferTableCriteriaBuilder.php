@@ -75,10 +75,11 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
      */
     public function build(): ProductOfferTableCriteriaTransfer
     {
-        $productOfferTableCriteriaTransfer = $this->buildProductOfferTableCriteriaTransfer();
-        $productOfferTableCriteriaTransfer->setSearchTerm($this->searchTerm);
-        $productOfferTableCriteriaTransfer->setOrderBy($this->sorting);
-        $productOfferTableCriteriaTransfer->setPagination($this->buildPaginationTransfer());
+        $productOfferTableCriteriaTransfer = $this->buildProductOfferTableCriteriaTransfer()
+            ->setSearchTerm($this->searchTerm)
+            ->setOrderBy($this->sorting)
+            ->setPagination($this->buildPaginationTransfer());
+
         $productOfferTableCriteriaTransfer = $this->addFilterData($productOfferTableCriteriaTransfer);
 
         return $productOfferTableCriteriaTransfer;

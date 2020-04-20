@@ -66,7 +66,6 @@
     <transfer name="ProductOfferTableCriteria">
         <property name="isVisible" type="bool"/>
         <property name="hasStock" type="bool"/>
-        <property name="approvalStatus" type="string"/>
         <property name="inStores" type="int[]" singular="inStore"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
@@ -114,7 +113,6 @@
         <property name="image" type="string"/>
         <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
-        <property name="approvalStatus" type="string"/>
         <property name="productConcreteName" type="string"/>
         <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>

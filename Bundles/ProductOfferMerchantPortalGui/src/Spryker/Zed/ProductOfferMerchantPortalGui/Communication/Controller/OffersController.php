@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
  */
-class ProductOfferTableController extends AbstractController
+class OffersController extends AbstractController
 {
     /**
      * @return array
@@ -34,7 +34,7 @@ class ProductOfferTableController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDataAction(Request $request): JsonResponse
+    public function getTableDataAction(Request $request): JsonResponse
     {
         $productOfferTable = $this->getFactory()->createProductOfferTable();
 

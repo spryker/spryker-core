@@ -424,7 +424,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductOfferTableRowDataTransfer::CONCRETE_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU)
             ->addAsColumn(ProductOfferTableRowDataTransfer::IMAGE, sprintf('(%s)', $this->createProductImagesSubquery($localeId)))
             ->addAsColumn(ProductOfferTableRowDataTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
-            ->addAsColumn(ProductOfferTableRowDataTransfer::APPROVAL_STATUS, SpyProductOfferTableMap::COL_APPROVAL_STATUS)
             ->addAsColumn(ProductOfferTableRowDataTransfer::QUANTITY, SpyProductOfferStockTableMap::COL_QUANTITY)
             ->addAsColumn(ProductOfferTableRowDataTransfer::IS_NEVER_OUT_OF_STOCK, SpyProductOfferStockTableMap::COL_IS_NEVER_OUT_OF_STOCK)
             ->addAsColumn(ProductOfferTableRowDataTransfer::IS_ACTIVE, SpyProductOfferTableMap::COL_IS_ACTIVE)
@@ -444,7 +443,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 ProductOfferTableRowDataTransfer::CONCRETE_SKU,
                 ProductOfferTableRowDataTransfer::IMAGE,
                 ProductOfferTableRowDataTransfer::STORES,
-                ProductOfferTableRowDataTransfer::APPROVAL_STATUS,
                 ProductOfferTableRowDataTransfer::QUANTITY,
                 ProductOfferTableRowDataTransfer::IS_NEVER_OUT_OF_STOCK,
                 ProductOfferTableRowDataTransfer::IS_ACTIVE,
@@ -593,7 +591,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     ): SpyProductOfferQuery {
         $productOfferQuery = $this->addIsVisibleProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addStockProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
-        $productOfferQuery = $this->addStatusProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addStoresProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addValidityProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addCreationProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
@@ -651,27 +648,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 ->filterByIdProductOfferStock(null, Criteria::ISNULL)
                 ->endUse();
         }
-
-        return $productOfferQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-     *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
-     */
-    protected function addStatusProductOfferFilter(
-        SpyProductOfferQuery $productOfferQuery,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): SpyProductOfferQuery {
-        if ($productOfferTableCriteriaTransfer->getApprovalStatus() === null) {
-            return $productOfferQuery;
-        }
-
-        $productOfferQuery->filterByApprovalStatus(
-            $productOfferTableCriteriaTransfer->getApprovalStatus()
-        );
 
         return $productOfferQuery;
     }

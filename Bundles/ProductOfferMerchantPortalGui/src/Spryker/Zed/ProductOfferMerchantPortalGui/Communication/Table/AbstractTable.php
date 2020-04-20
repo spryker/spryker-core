@@ -50,6 +50,7 @@ abstract class AbstractTable
     protected const COLUMN_TYPE_TEXT = 'text';
     protected const COLUMN_TYPE_IMAGE = 'image';
     protected const COLUMN_TYPE_DATE = 'date';
+    protected const COLUMN_TYPE_CHIP = 'chip';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface

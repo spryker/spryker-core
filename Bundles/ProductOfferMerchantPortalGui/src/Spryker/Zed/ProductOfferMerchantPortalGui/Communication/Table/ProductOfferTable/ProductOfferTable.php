@@ -29,7 +29,6 @@ class ProductOfferTable extends AbstractTable
     public const COL_KEY_VISIBILITY = 'visibility';
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
-    public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
@@ -40,7 +39,7 @@ class ProductOfferTable extends AbstractTable
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductTableController::getDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/product-offer-table/get-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/get-table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface
@@ -113,106 +112,87 @@ class ProductOfferTable extends AbstractTable
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_OFFER_REFERENCE)
                 ->setTitle('Reference')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(false)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_MERCHANT_SKU)
                 ->setTitle('Merchant SKU')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_CONCRETE_SKU)
-                ->setTitle('Sku')
-                ->setType('text')
+                ->setTitle('SKU')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_IMAGE)
                 ->setTitle('Image')
-                ->setType('image')
+                ->setType(static::COLUMN_TYPE_IMAGE)
                 ->setSortable(false)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_PRODUCT_NAME)
                 ->setTitle('Name')
-                ->setType('text')
+                ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STORES)
                 ->setTitle('Stores')
-                ->setType('chip')
+                ->setType(static::COLUMN_TYPE_CHIP)
                 ->setSortable(false)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_STOCK)
                 ->setTitle('Stock')
-                ->setType('chip')
+                ->setType(static::COLUMN_TYPE_CHIP)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VISIBILITY)
                 ->setTitle('Visibility')
-                ->setType('chip')
+                ->setType(static::COLUMN_TYPE_CHIP)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_FROM)
                 ->setTitle('Valid From')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_VALID_TO)
                 ->setTitle('Valid To')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_APPROVAL_STATUS)
-                ->setTitle('Status')
-                ->setType('chip')
-                ->setSortable(true)
-                ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_CREATED_AT)
                 ->setTitle('Created')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(true)
-        );
-        $guiTableConfigurationTransfer->addColumn(
+        )->addColumn(
             (new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_UPDATED_AT)
                 ->setTitle('Updated')
-                ->setType('date')
+                ->setType(static::COLUMN_TYPE_DATE)
                 ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
                 ->setSortable(true)
                 ->setHideable(true)

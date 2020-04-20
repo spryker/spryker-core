@@ -84,11 +84,10 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
                 ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
                 ProductOfferTable::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_VALID_FROM => $this->getValidFromData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_VALID_TO => $this->getValidToData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_APPROVAL_STATUS => $productOfferTableRowDataTransfer->getApprovalStatus(),
-                ProductOfferTable::COL_KEY_CREATED_AT => $this->getCreatedAtData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_UPDATED_AT => $this->getUpdatedAtData($productOfferTableRowDataTransfer),
+                ProductOfferTable::COL_KEY_VALID_FROM => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getValidFrom()),
+                ProductOfferTable::COL_KEY_VALID_TO => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getValidTo()),
+                ProductOfferTable::COL_KEY_CREATED_AT => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getCreatedAt()),
+                ProductOfferTable::COL_KEY_UPDATED_AT => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getUpdatedAt()),
             ];
         }
 
@@ -153,18 +152,14 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
      *
-     * @return string[]|string
+     * @return string
      */
     protected function getStoresColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer)
     {
         $storesString = $productOfferTableRowDataTransfer->getStores();
         $stores = explode(',', $storesString);
 
-        if (count($stores) === 1) {
-            return trim($stores[0]);
-        }
-
-        return $stores;
+        return implode(', ', $stores);
     }
 
     /**
@@ -196,50 +191,12 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     * @param string|null $dateTime
      *
      * @return string|null
      */
-    protected function getValidFromData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    protected function getFormattedDateTime(?string $dateTime): ?string
     {
-        $validFrom = $productOfferTableRowDataTransfer->getValidFrom();
-
-        return $validFrom ? $this->utilDateTimeService->formatDateTimeToIso($validFrom) : null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function getValidToData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
-    {
-        $validTo = $productOfferTableRowDataTransfer->getValidTo();
-
-        return $validTo ? $this->utilDateTimeService->formatDateTimeToIso($validTo) : null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function getCreatedAtData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
-    {
-        $createdAt = $productOfferTableRowDataTransfer->getCreatedAt();
-
-        return $createdAt ? $this->utilDateTimeService->formatDateTimeToIso($createdAt) : null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function getUpdatedAtData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
-    {
-        $updatedAt = $productOfferTableRowDataTransfer->getUpdatedAt();
-
-        return $updatedAt ? $this->utilDateTimeService->formatDateTimeToIso($updatedAt) : null;
+        return $dateTime ? $this->utilDateTimeService->formatDateTimeToIso($dateTime) : null;
     }
 }

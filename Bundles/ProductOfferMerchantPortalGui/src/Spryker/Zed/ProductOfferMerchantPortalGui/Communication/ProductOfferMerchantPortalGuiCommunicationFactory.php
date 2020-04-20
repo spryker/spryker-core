@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTa
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\CreationFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\IsVisibleFilterProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StatusFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StockFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StoresFilterProductOfferTableCriteriaExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\UpdateFilterProductOfferTableCriteriaExpander;
@@ -26,7 +25,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTa
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\CreationProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StatusProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StoresProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\UpdateProductOfferTableFilterDataProvider;
@@ -175,14 +173,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     /**
      * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
      */
-    public function createStatusProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
-    {
-        return new StatusProductOfferTableFilterDataProvider();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
     public function createStoresProductOfferTableFilterDataProvider(): TableFilterDataProviderInterface
     {
         return new StoresProductOfferTableFilterDataProvider($this->getStoreFacade());
@@ -220,7 +210,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return [
             $this->createIsVisibleProductOfferTableFilterDataProvider(),
             $this->createStockProductOfferTableFilterDataProvider(),
-            $this->createStatusProductOfferTableFilterDataProvider(),
             $this->createStoresProductOfferTableFilterDataProvider(),
             $this->createValidityProductOfferTableFilterDataProvider(),
             $this->createCreationProductOfferTableFilterDataProvider(),
@@ -245,16 +234,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new StockFilterProductOfferTableCriteriaExpander(
             $this->createStockProductOfferTableFilterDataProvider()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\FilterProductOfferTableCriteriaExpanderInterface
-     */
-    public function createStatusFilterProductOfferTableCriteriaExpander(): FilterProductOfferTableCriteriaExpanderInterface
-    {
-        return new StatusFilterProductOfferTableCriteriaExpander(
-            $this->createStatusProductOfferTableFilterDataProvider()
         );
     }
 
@@ -306,7 +285,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return [
             $this->createIsVisibleFilterProductOfferTableCriteriaExpander(),
             $this->createStockFilterProductOfferTableCriteriaExpander(),
-            $this->createStatusFilterProductOfferTableCriteriaExpander(),
             $this->createStoresFilterProductOfferTableCriteriaExpander(),
             $this->createValidityFilterProductOfferTableCriteriaExpander(),
             $this->createCreationFilterProductOfferTableCriteriaExpander(),
