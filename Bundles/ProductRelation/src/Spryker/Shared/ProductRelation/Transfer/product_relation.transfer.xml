@@ -14,6 +14,25 @@
         <property name="relatedProducts" type="ProductRelationRelatedProduct[]" singular="relatedProduct"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="productRelationKey" type="string"/>
+    </transfer>
+
+    <transfer name="ProductRelationCriteria">
+        <property name="fkProductAbstract" type="int"/>
+        <property name="relationTypeKey" type="string"/>
+        <property name="productRelationKey" type="string"/>
+        <property name="querySet" type="PropelQueryBuilderRuleSet"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="ProductRelationType">
@@ -112,7 +131,25 @@
     <transfer name="ProductAbstract">
     </transfer>
 
-    <transfer name="Money">
+    <transfer name="ProductRelationCriteriaFilter">
+        <property name="productRelation" type="ProductRelation"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="ProductRelationResponse">
+        <property name="productRelation" type="ProductRelation"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

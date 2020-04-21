@@ -35,8 +35,9 @@ class ShoppingListAddItemPreCheck implements ShoppingListAddItemPreCheckInterfac
      *
      * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
      */
-    public function checkShoppingListItemProductIsNotDiscontinued(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer
-    {
+    public function checkShoppingListItemProductIsNotDiscontinued(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
         $cartPreCheckResponseTransfer = new ShoppingListPreAddItemCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 

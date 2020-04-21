@@ -13,7 +13,7 @@ interface TemplatePathMapBuilderInterface
      * Returns an array where the key is the template name
      * and the value is the path to this template.
      *
-     * @return array
+     * @return string[]
      */
     public function build();
 }

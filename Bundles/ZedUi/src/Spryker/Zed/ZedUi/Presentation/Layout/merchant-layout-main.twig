@@ -1,0 +1,15 @@
+{% extends '@ZedUi/Layout/layout.twig' %}
+
+{% block body %}
+    {% if navigation is defined %}
+        {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+
+        <mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
+            <mp-header name="header"></mp-header>
+
+            {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+
+            {% block content %}{% endblock %}
+        </mp-merchant-layout-main>
+    {% endif %}
+{% endblock %}

@@ -92,6 +92,7 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
+        <property name="priceData" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 

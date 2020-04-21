@@ -32,8 +32,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterMock(string $importType, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null): DataImporterInterface
-    {
+    public function getDataImporterMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImporterInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
@@ -61,8 +64,12 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
      */
-    public function getDataImporterImportGroupAwareMock(string $importType, string $importGroup, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
-    {
+    public function getDataImporterImportGroupAwareMock(
+        string $importType,
+        string $importGroup,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ) {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
@@ -92,8 +99,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
      */
-    public function getDataImporterPluginMock(string $importType, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null): DataImportPluginInterface
-    {
+    public function getDataImporterPluginMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImportPluginInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)

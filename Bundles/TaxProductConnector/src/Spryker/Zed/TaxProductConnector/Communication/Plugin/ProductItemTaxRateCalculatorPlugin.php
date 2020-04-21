@@ -12,6 +12,8 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\TaxProductConnector\Communication\Plugin\Calculation\ProductItemTaxRateCalculatorPlugin} instead.
+ *
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
@@ -19,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface;
 use Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface;
@@ -16,6 +17,8 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterface, UrlUpdaterAfterSaveObserverInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -43,11 +46,9 @@ class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterfa
      */
     public function handleUrlCreation(UrlTransfer $urlTransfer)
     {
-        $this->urlQueryContainer->getConnection()->beginTransaction();
-
-        $this->handleRedirectInjection($urlTransfer);
-
-        $this->urlQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer): void {
+            $this->handleRedirectInjection($urlTransfer);
+        });
     }
 
     /**
@@ -62,11 +63,9 @@ class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterfa
             return;
         }
 
-        $this->urlQueryContainer->getConnection()->beginTransaction();
-
-        $this->handleRedirectInjection($urlTransfer);
-
-        $this->urlQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer): void {
+            $this->handleRedirectInjection($urlTransfer);
+        });
     }
 
     /**

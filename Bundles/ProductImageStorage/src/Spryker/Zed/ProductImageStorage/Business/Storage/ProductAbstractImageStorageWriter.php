@@ -220,8 +220,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $imageSets, ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $imageSets,
+        ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null
+    ) {
         if ($spyProductAbstractImageStorage === null) {
             $spyProductAbstractImageStorage = new SpyProductAbstractImageStorage();
         }
@@ -248,7 +251,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
      */
     protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
