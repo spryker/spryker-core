@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
@@ -38,6 +38,9 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
             ->filterByNetPrice((int)$dataSet[PriceProductOfferDataSetInterface::VALUE_NET])
             ->filterByGrossPrice((int)$dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS])
             ->findOneOrCreate();
+
+        $priceProductStoreEntity->setPriceData($dataSet[PriceProductOfferDataSetInterface::KEY_PRICE_DATA]);
+        $priceProductStoreEntity->setPriceDataChecksum($dataSet[PriceProductOfferDataSetInterface::KEY_PRICE_DATA_CHECKSUM]);
 
         $priceProductStoreEntity->save();
 

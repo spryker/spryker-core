@@ -13,6 +13,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
 use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ItemMetadataHydrator implements ItemMetadataHydratorInterface
 {
     /**
