@@ -41,6 +41,7 @@ class ProductLabelMapExpanderPlugin extends AbstractPlugin implements ProductAbs
         LocaleTransfer $localeTransfer
     ) {
         $productLabels = $productData['label_ids'];
+
         $pageMapBuilder->addSearchResultData($pageMapTransfer, 'id_product_labels', $productLabels);
 
         foreach ($productLabels as $idProductLabel) {

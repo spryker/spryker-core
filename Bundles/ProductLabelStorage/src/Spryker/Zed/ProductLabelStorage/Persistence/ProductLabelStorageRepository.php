@@ -8,16 +8,14 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
-use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
-use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
-use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
-use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStoragePersistenceFactory getFactory()

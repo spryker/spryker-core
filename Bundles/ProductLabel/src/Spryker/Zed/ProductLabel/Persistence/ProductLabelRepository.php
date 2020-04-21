@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
-use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -248,8 +247,6 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @module Locale
-     *
      * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
      */
     public function getProductLabelLocalizedAttributes(): array

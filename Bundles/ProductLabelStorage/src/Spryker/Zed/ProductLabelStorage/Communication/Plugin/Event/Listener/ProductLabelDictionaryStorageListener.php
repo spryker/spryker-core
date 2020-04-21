@@ -38,19 +38,16 @@ class ProductLabelDictionaryStorageListener extends AbstractPlugin implements Ev
     {
         $this->preventTransaction();
         $productLabelsCount = SpyProductLabelQuery::create()->count();
-        $productLabelIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
 
         if (
             ($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
             $productLabelsCount === 0
         ) {
-            $this->getFacade()->unpublishLabelDictionary($productLabelIds);
+            $this->getFacade()->unpublishLabelDictionary();
 
             return;
         }
 
-        $this->getFacade()->publishLabelDictionary($productLabelIds);
+        $this->getFacade()->publishLabelDictionary();
     }
 }

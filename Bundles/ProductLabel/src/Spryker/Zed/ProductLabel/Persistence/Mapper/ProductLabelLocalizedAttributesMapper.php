@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
-use ArrayObject;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -23,7 +20,7 @@ class ProductLabelLocalizedAttributesMapper
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper
      */
-    private $localeMapper;
+    protected $localeMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper $localeMapper
@@ -35,24 +32,22 @@ class ProductLabelLocalizedAttributesMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[] $productLabelLocalizedAttributesEntities
-     * @param \ArrayObject $productLabelLocalizedAttributesTransferCollection
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $productLabelLocalizedAttributesTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
      */
-    public function mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransferCollection(
+    public function mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
         ObjectCollection $productLabelLocalizedAttributesEntities,
-        ArrayObject $productLabelLocalizedAttributesTransferCollection
-    ): ArrayObject {
+        array $productLabelLocalizedAttributesTransfers
+    ): array {
         foreach ($productLabelLocalizedAttributesEntities as $productLabelLocalizedAttributesEntity) {
-            $productLabelLocalizedAttributesTransferCollection->append(
-                $this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
-                    $productLabelLocalizedAttributesEntity,
-                    new ProductLabelLocalizedAttributesTransfer()
-                )
+            $productLabelLocalizedAttributesTransfers[] = $this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+                $productLabelLocalizedAttributesEntity,
+                new ProductLabelLocalizedAttributesTransfer()
             );
         }
 
-        return $productLabelLocalizedAttributesTransferCollection;
+        return $productLabelLocalizedAttributesTransfers;
     }
 
     /**
@@ -97,27 +92,5 @@ class ProductLabelLocalizedAttributesMapper
     protected function mapLocaleEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
     {
         return $localeTransfer->fromArray($localeEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
-     */
-    public function mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
-        SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
-        ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
-    ): ProductLabelLocalizedAttributesTransfer {
-        $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntity->toArray(), true);
-
-        $productLabelLocalizedAttributesTransfer->setLocale(
-            $this->localeMapper->mapLocaleEntityToLocaleTransfer(
-                $productLabelLocalizedAttributesEntity->getSpyLocale(),
-                new LocaleTransfer()
-            )
-        );
-
-        return $productLabelLocalizedAttributesTransfer;
     }
 }

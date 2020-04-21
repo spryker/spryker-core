@@ -12,6 +12,17 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuer
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * Auto-generated group annotations
+ *
+ * @group SprykerTest
+ * @group Zed
+ * @group ProductLabelStorage
+ * @group Business
+ * @group Facade
+ * @group ProductLabelStorageFacadeTest
+ * Add your own group annotations below this line
+ */
 class ProductLabelStorageFacadeTest extends Unit
 {
     protected const ID_PRODUCT_LABEL_DICTIONARY_STORAGE = 1;

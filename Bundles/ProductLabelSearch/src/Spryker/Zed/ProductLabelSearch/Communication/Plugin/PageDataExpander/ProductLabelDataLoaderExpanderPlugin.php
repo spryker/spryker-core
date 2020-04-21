@@ -48,7 +48,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
     {
         $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
 
-        return $productPayloadTransfer->getLabelIds()[$productPayloadTransfer->getIdProductAbstract()][$productAbstractPageSearchTransfer->getStore()] ?? [];
+        return $productPayloadTransfer->getLabelIds()[$productAbstractPageSearchTransfer->getStore()] ?? [];
     }
 
     /**

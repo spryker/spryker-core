@@ -13,7 +13,6 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuer
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
-use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
@@ -87,13 +86,5 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createProductLabelLocalizedAttributesMapper()
     {
         return new ProductLabelLocalizedAttributesMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper
-     */
-    public function createProductLabelDictionaryStorageMapper()
-    {
-        return new ProductLabelDictionaryStorageMapper();
     }
 }

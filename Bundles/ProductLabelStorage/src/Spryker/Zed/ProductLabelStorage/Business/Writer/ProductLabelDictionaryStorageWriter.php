@@ -8,11 +8,12 @@
 namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 use ArrayObject;
-use DateTime;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface;
@@ -35,18 +36,247 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $productLabelStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper
+     */
+    protected $productLabelDictionaryItemMapper;
+
+    /**
      * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface $productLabelStorageRepository
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
+     * @param \Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper $productLabelDictionaryItemMapper
      */
     public function __construct(
         ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade,
         ProductLabelStorageRepositoryInterface $productLabelStorageRepository,
-        ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
+        ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager,
+        ProductLabelDictionaryItemMapper $productLabelDictionaryItemMapper
     ) {
         $this->productLabelFacade = $productLabelFacade;
         $this->productLabelStorageRepository = $productLabelStorageRepository;
         $this->productLabelStorageEntityManager = $productLabelStorageEntityManager;
+        $this->productLabelDictionaryItemMapper = $productLabelDictionaryItemMapper;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unpublish(array $productLabelIds = [])
+    {
+        $productLabelDictionaryStorageItems = $this->productLabelStorageRepository->getProductLabelDictionaryStorageTransfers();
+
+        $this->deleteStorageData($productLabelIds, $productLabelDictionaryStorageItems);
+    }
+
+    /**
+     * @param int[] $productLabelIds
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[][] $productLabelDictionaryStorageItems
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $productLabelIds, array $productLabelDictionaryStorageItems)
+    {
+        foreach ($productLabelDictionaryStorageItems as $productLabelDictionaryStorage) {
+            $storageItems = new ArrayObject();
+
+            /** @var \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer $productLabelDictionaryStorageItem */
+            foreach ($productLabelDictionaryStorage->getItems() as $productLabelDictionaryStorageItem) {
+                if (!in_array($productLabelDictionaryStorageItem->getIdProductLabel(), $productLabelIds)) {
+                    $storageItems->append($productLabelDictionaryStorageItem);
+                }
+            }
+
+            if (!$storageItems->count()) {
+                $this->productLabelStorageEntityManager->deleteProductLabelDictionaryStorageById(
+                    $productLabelDictionaryStorage->getIdProductLabelDictionaryStorage()
+                );
+
+                continue;
+            }
+
+            $this->productLabelStorageEntityManager->updateProductLabelDictionaryStorage(
+                $productLabelDictionaryStorage->setItems($storageItems)
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    protected function createProductLabelDictionaryItems(array $productLabelTransfers): array
+    {
+        $productLabelDictionaryItems = [];
+
+        foreach ($productLabelTransfers as $productLabelTransfer) {
+            $this->fillProductLabelDictionaryItems($productLabelDictionaryItems, $productLabelTransfer);
+        }
+
+        return $productLabelDictionaryItems;
+    }
+
+    /**
+     * @param array $productLabelDictionaryItemTransfers
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function fillProductLabelDictionaryItems(
+        array &$productLabelDictionaryItemTransfers,
+        ProductLabelTransfer $productLabelTransfer
+    ): void {
+        foreach ($productLabelTransfer->getStoreRelation()->getStores() as $store) {
+            $productLabelDictionaryItemTransfers = array_merge(
+                $productLabelDictionaryItemTransfers,
+                $this->productLabelDictionaryItemMapper
+                    ->mapProductLabelTransferToProductLabelDictionaryItemTransfersForStoreByLocale(
+                        $productLabelTransfer,
+                        $productLabelDictionaryItemTransfers,
+                        $store->getName()
+                    )
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageCollectionForPersist
+     *
+     * @return void
+     */
+    protected function batchPersistProductLabelDictionaries(array $productLabelDictionaryStorageCollectionForPersist)
+    {
+        foreach ($productLabelDictionaryStorageCollectionForPersist as $productLabelDictionaryStorageItem) {
+            $productLabelDictionaryStorageItemId = $productLabelDictionaryStorageItem->getIdProductLabelDictionaryStorage();
+
+            if (!$productLabelDictionaryStorageItemId) {
+                $this->productLabelStorageEntityManager->createProductLabelDictionaryStorage($productLabelDictionaryStorageItem);
+
+                continue;
+            }
+
+            if ($productLabelDictionaryStorageItemId && $productLabelDictionaryStorageItem->getItems()->count() == 0) {
+                $this->productLabelStorageEntityManager->deleteProductLabelDictionaryStorageById($productLabelDictionaryStorageItem->getIdProductLabelDictionaryStorage());
+
+                continue;
+            }
+
+            $this->productLabelStorageEntityManager->updateProductLabelDictionaryStorage($productLabelDictionaryStorageItem);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $batchProductLabelDictionaryStorageTransferCollectionForPersist
+     * @param string $storeName
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItemsForCheck
+     *
+     * @return void
+     */
+    protected function updateProductLabelDictionaryItemInCollectionForPersist(
+        array &$batchProductLabelDictionaryStorageTransferCollectionForPersist,
+        string $storeName,
+        string $localeName,
+        array $productLabelDictionaryItemsForCheck
+    ) {
+        foreach ($batchProductLabelDictionaryStorageTransferCollectionForPersist as $productLabelDictionaryStorageTransfer) {
+            if (
+                $productLabelDictionaryStorageTransfer->getStore() == $storeName
+                && $productLabelDictionaryStorageTransfer->getLocale() == $localeName
+            ) {
+                foreach ($productLabelDictionaryItemsForCheck as $productLabelDictionaryItemForCheck) {
+                    foreach ($productLabelDictionaryStorageTransfer->getItems() as $offsetKey => $productLabelDictionaryItemTransfer) {
+                        if (
+                            $this->replaceProductLabelDictionaryItemIfNeed(
+                                $productLabelDictionaryStorageTransfer,
+                                $offsetKey,
+                                $productLabelDictionaryItemTransfer,
+                                $productLabelDictionaryItemForCheck
+                            )
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            $this->appendProductLabelDictionaryItemTransfersIfNeed(
+                                $productLabelDictionaryStorageTransfer,
+                                $productLabelDictionaryItemForCheck
+                            )
+                        ) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageItems
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer|null
+     */
+    protected function extractProductLabelDictionaryItemByStoreAndLocale(
+        array $productLabelDictionaryStorageItems,
+        string $storeName,
+        string $localeName
+    ): ?ProductLabelDictionaryStorageTransfer {
+        foreach ($productLabelDictionaryStorageItems as $productLabelDictionaryStorageItem) {
+            if (
+                $productLabelDictionaryStorageItem->getStore() == $storeName
+                && $productLabelDictionaryStorageItem->getLocale() == $localeName
+            ) {
+                return $productLabelDictionaryStorageItem;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+     * @param int $offsetKey
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer $productLabelDictionaryItemForCheck
+     *
+     * @return bool
+     */
+    protected function replaceProductLabelDictionaryItemIfNeed(
+        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer,
+        int $offsetKey,
+        ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer,
+        ProductLabelDictionaryItemTransfer $productLabelDictionaryItemForCheck
+    ): bool {
+        if ($productLabelDictionaryItemTransfer->getIdProductLabel() == $productLabelDictionaryItemForCheck->getIdProductLabel()) {
+            $productLabelDictionaryStorageTransfer->getItems()->offsetUnset($offsetKey);
+            $productLabelDictionaryStorageTransfer->getItems()->offsetSet($offsetKey, $productLabelDictionaryItemForCheck);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer $productLabelDictionaryItemForCheck
+     *
+     * @return bool
+     */
+    protected function appendProductLabelDictionaryItemTransfersIfNeed(
+        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer,
+        ProductLabelDictionaryItemTransfer $productLabelDictionaryItemForCheck
+    ): bool {
+        foreach ($productLabelDictionaryStorageTransfer->getItems() as $productLabelDictionaryItemTransfer) {
+            if ($productLabelDictionaryItemTransfer->getIdProductLabel() == $productLabelDictionaryItemForCheck->getIdProductLabel()) {
+                return false;
+            }
+        }
+        $productLabelDictionaryStorageTransfer->getItems()->append($productLabelDictionaryItemForCheck);
+
+        return true;
     }
 
     /**
@@ -60,49 +290,76 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
+     * @param array $productLabelIds
+     *
      * @return void
      */
-    public function writeProductLabelDictionaryStorageCollection(): void
+    public function writeProductLabelDictionaryStorageCollection(array $productLabelIds = []): void
     {
-        $productLabelLocalizedAttributeTransfers = $this->productLabelFacade->getProductLabelLocalizedAttributes();
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setIdProductLabels($productLabelIds);
 
-        $productLabelDictionaryItems = [];
-        foreach ($productLabelLocalizedAttributeTransfers as $productLabelLocalizedAttributesTransfer) {
-            $productLabelLocalizedAttributesTransfer
-                ->requireLocale()
-                ->requireProductLabel();
+        $productLabelTransfers = $this->productLabelFacade
+            ->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
 
-            $localeName = $productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName();
-            if ($this->isValidByDate($productLabelLocalizedAttributesTransfer->getProductLabel())) {
-                $productLabelDictionaryItems[$localeName][] = $this->mapProductLabelDictionaryItem($productLabelLocalizedAttributesTransfer);
-            }
-        }
+        $productLabelDictionaryItems = $this->createProductLabelDictionaryItems($productLabelTransfers);
+        $productLabelDictionaryStorageItems = $this->productLabelStorageRepository->getProductLabelDictionaryStorageTransfers();
 
-        if ($productLabelDictionaryItems === []) {
+        if (!$productLabelDictionaryItems) {
             $this->productLabelStorageEntityManager->deleteAllProductLabelDictionaryStorageEntities();
 
             return;
         }
 
-        $this->storeData($productLabelDictionaryItems);
+        $productLabelDictionaryItems = $this->createProductLabelDictionaryItems($productLabelTransfers);
+
+        $this->storeData($productLabelDictionaryItems, $productLabelDictionaryStorageItems);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][] $productLabelDictionaryItems
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageItems
      *
      * @return void
      */
-    protected function storeData(array $productLabelDictionaryItems)
+    protected function storeData(array $productLabelDictionaryItems, array $productLabelDictionaryStorageItems)
     {
-        $productLabelStorageTransfers = $this->productLabelStorageRepository->getProductLabelDictionaryStorageTransfers();
-        $indexedProductLabelStorageTransfers = $this->indexProductLabelDictionaryTransfersByLocale($productLabelStorageTransfers);
+        $productLabelDictionaryStorageCollectionForPersist = [];
+        foreach ($productLabelDictionaryItems as $storeName => $productLabelDictionaryLocaleItems) {
+            /** @var \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems */
+            foreach ($productLabelDictionaryLocaleItems as $localeName => $productLabelDictionaryItems) {
+                $foundProductLabelDictionaryStorageItem = $this->extractProductLabelDictionaryItemByStoreAndLocale(
+                    $productLabelDictionaryStorageItems,
+                    $storeName,
+                    $localeName
+                );
 
-        foreach ($productLabelDictionaryItems as $localeName => $productLabelDictionaryItemTransfers) {
-            $productLabelDictionaryStorageTransfer = $indexedProductLabelStorageTransfers[$localeName] ?? new ProductLabelDictionaryStorageTransfer();
-            $productLabelDictionaryStorageTransfer->setItems(new ArrayObject($productLabelDictionaryItemTransfers));
+                if (!$foundProductLabelDictionaryStorageItem) {
+                    $productLabelDictionaryStorageCollectionForPersist[] = (new ProductLabelDictionaryStorageTransfer())
+                        ->setStore($storeName)
+                        ->setLocale($localeName)
+                        ->setItems(
+                            new ArrayObject(
+                                array_map(function (ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer) {
+                                    return $productLabelDictionaryItemTransfer->modifiedToArray();
+                                }, $productLabelDictionaryItems)
+                            )
+                        );
 
-            $this->productLabelStorageEntityManager->saveProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer, $localeName);
+                    continue;
+                }
+
+                $productLabelDictionaryStorageCollectionForPersist[] = $foundProductLabelDictionaryStorageItem;
+
+                $this->updateProductLabelDictionaryItemInCollectionForPersist(
+                    $productLabelDictionaryStorageCollectionForPersist,
+                    $storeName,
+                    $localeName,
+                    $productLabelDictionaryItems
+                );
+            }
         }
+        $this->batchPersistProductLabelDictionaries($productLabelDictionaryStorageCollectionForPersist);
     }
 
     /**
@@ -137,47 +394,5 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
         }
 
         return $indexedProductLabelDictionaryTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return bool
-     */
-    protected function isValidByDate(ProductLabelTransfer $productLabelTransfer): bool
-    {
-        return $this->isValidByDateFrom($productLabelTransfer) && $this->isValidByDateTo($productLabelTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return bool
-     */
-    protected function isValidByDateFrom(ProductLabelTransfer $productLabelTransfer): bool
-    {
-        if (!$productLabelTransfer->getValidFrom()) {
-            return true;
-        }
-
-        $now = new DateTime();
-
-        return $now > new DateTime($productLabelTransfer->getValidFrom());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return bool
-     */
-    protected function isValidByDateTo(ProductLabelTransfer $productLabelTransfer): bool
-    {
-        if (!$productLabelTransfer->getValidTo()) {
-            return true;
-        }
-
-        $now = new DateTime();
-
-        return $now < new DateTime($productLabelTransfer->getValidTo());
     }
 }

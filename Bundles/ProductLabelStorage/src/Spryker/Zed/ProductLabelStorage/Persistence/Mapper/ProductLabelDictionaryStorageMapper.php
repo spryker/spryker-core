@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Persistence\Mapper;
 
-use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
-use Propel\Runtime\Collection\ObjectCollection;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductLabelDictionaryStorageMapper
 {

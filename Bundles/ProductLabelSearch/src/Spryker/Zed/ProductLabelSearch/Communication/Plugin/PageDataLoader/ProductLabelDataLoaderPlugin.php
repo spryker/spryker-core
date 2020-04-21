@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacade getFacade()
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchRepositoryInterface getRepository()()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()

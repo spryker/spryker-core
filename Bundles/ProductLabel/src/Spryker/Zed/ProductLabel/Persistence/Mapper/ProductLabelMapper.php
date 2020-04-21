@@ -91,12 +91,14 @@ class ProductLabelMapper
             )
         );
 
+        $productLabelLocalizedAttributesTransfers = $this->productLabelLocalizedAttributesMapper
+            ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
+                $productLabelEntity->getSpyProductLabelLocalizedAttributessJoinSpyLocale(),
+                []
+            );
+
         $productLabelTransfer->setLocalizedAttributesCollection(
-            $this->productLabelLocalizedAttributesMapper
-                ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransferCollection(
-                    $productLabelEntity->getSpyProductLabelLocalizedAttributessJoinSpyLocale(),
-                    new ArrayObject()
-                )
+            new ArrayObject($productLabelLocalizedAttributesTransfers)
         );
 
         $productLabelTransfer->setProductLabelProductAbstracts(

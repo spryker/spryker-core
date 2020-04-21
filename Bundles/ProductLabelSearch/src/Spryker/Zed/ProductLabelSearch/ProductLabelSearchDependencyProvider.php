@@ -55,6 +55,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductLabelFacade($container);
         $container = $this->addProductPageSearchFacade($container);
 
         return $container;

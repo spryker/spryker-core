@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEvent
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
-use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerBridge;
@@ -75,7 +74,6 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

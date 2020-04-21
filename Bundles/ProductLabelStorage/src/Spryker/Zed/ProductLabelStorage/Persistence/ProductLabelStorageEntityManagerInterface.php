@@ -17,15 +17,18 @@ interface ProductLabelStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductAbstractLabelStorage(ProductAbstractLabelStorageTransfer $productAbstractLabelStorageTransfer): void;
+    public function saveProductAbstractLabelStorage(
+        ProductAbstractLabelStorageTransfer $productAbstractLabelStorageTransfer
+    ): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-     * @param string $locale
      *
      * @return void
      */
-    public function saveProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer, string $locale): void;
+    public function saveProductLabelDictionaryStorage(
+        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+    ): void;
 
     /**
      * @return void

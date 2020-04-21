@@ -12,16 +12,12 @@ use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductAbstractLabelStorage
 use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductAbstractLabelStorageDeleterInterface;
 use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleter;
 use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface;
+use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
-use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
-use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
-use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriter;
-use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriterInterface;
-use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriter;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**

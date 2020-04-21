@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabelSearch\Business\PageData\ProductPageDataTransferExpander;
-use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 use Spryker\Zed\ProductLabelSearch\Business\Writer\ProductLabelSearchWriter;
 use Spryker\Zed\ProductLabelSearch\Business\Writer\ProductLabelSearchWriterInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface;

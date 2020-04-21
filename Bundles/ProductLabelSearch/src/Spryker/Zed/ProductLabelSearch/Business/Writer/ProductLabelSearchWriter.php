@@ -57,8 +57,8 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     public function writeCollectionByProductLabelEvents(array $eventTransfers): void
     {
         $productLabelIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-        $productAbstractIds = $this->productLabelSearchRepository->getProductAbstractIdsByProductLabelIds($productLabelIds);
-
+        $productAbstractIds = $this->productLabelSearchRepository
+            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
         $this->writeCollection($productAbstractIds);
     }
 

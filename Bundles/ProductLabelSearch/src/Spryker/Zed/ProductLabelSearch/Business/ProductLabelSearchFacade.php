@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
