@@ -135,7 +135,7 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setStore(new StoreTransfer());
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
         $quoteTransfer->setItems(new ArrayObject([
             (new ItemTransfer())->setProductOfferReference('test1')->setSku('sku1'),
             (new ItemTransfer())->setProductOfferReference('test2')->setSku('sku2'),
