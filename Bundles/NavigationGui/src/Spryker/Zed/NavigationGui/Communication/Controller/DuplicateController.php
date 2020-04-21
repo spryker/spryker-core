@@ -48,6 +48,6 @@ class DuplicateController extends AbstractController
             return $this->redirectResponse('/navigation-gui');
         }
 
-        return $this->viewResponse(['duplicateNavigationForm' => $duplicateNavigationForm->createView(),]);
+        return $this->viewResponse(['duplicateNavigationForm' => $duplicateNavigationForm->createView()]);
     }
 }
