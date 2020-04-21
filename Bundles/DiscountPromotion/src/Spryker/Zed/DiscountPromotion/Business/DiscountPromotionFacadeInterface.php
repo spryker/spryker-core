@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -124,4 +126,17 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer;
+
+    /**
+     * Specification:
+     * - Validates cart items discount promotions if they are sellable for the current cart.
+     * - Returns pre-check transfer with error messages in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateCartDiscountPromotions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }
