@@ -37,10 +37,6 @@ class ProductLabelDictionaryStorageUnpublishListener extends AbstractPlugin impl
     {
         $this->preventTransaction();
 
-        $productLabelIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
-
-        $this->getFacade()->unpublishLabelDictionary($productLabelIds);
+        $this->getFacade()->unpublishLabelDictionary();
     }
 }
