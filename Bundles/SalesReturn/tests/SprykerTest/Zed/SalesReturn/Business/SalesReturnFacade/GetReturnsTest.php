@@ -286,6 +286,8 @@ class GetReturnsTest extends Unit
         $this->assertEquals($lastReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
         $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getNextPage());
         $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getLastPage());
+        $this->assertEquals(1, $returnCollectionTransfer->getPagination()->getPage());
+        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getMaxPerPage());
     }
 
     /**
