@@ -162,6 +162,51 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetOffsetPaginatedCustomerOrderListByOrderReference(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $orderEntity = $this->tester->haveSalesOrderEntity();
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            OrderListRequestTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
+        ]);
+
+        //Act
+        $orderListTransfer = $salesFacade->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
+
+        //Assert
+        $this->assertNotNull($orderListTransfer);
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+        $this->assertNotEmpty($orderListTransfer->getOrders());
+        $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOffsetPaginatedCustomerOrderListByNonExistingOrderReference(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $orderEntity = $this->tester->haveSalesOrderEntity();
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            OrderListRequestTransfer::ORDER_REFERENCE => 'test--111',
+        ]);
+
+        //Act
+        $orderListTransfer = $salesFacade->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
+
+        //Assert
+        $this->assertNotNull($orderListTransfer);
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+        $this->assertEmpty($orderListTransfer->getOrders());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCustomerOrderByNonExistingOrderReference(): void
     {
         $salesFacade = $this->createSalesFacade();
