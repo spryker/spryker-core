@@ -28,7 +28,8 @@ class CustomerForgottenPasswordResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "204": "No content."
-     *          }
+     *          },
+     *          "isEmptyResponse": true
      *     }
      * })
      *

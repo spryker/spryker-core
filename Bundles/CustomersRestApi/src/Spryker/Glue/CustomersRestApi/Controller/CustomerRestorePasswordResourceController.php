@@ -30,7 +30,8 @@ class CustomerRestorePasswordResourceController extends AbstractController
      *              "204": "No content.",
      *              "400": "Customer restore password id is not specified.",
      *              "422": "Restore password key is not valid."
-     *          }
+     *          },
+     *          "isEmptyResponse": true
      *     }
      * })
      *
