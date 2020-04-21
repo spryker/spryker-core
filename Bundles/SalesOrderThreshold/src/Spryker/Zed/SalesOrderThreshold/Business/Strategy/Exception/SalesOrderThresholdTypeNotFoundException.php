@@ -20,7 +20,7 @@ class SalesOrderThresholdTypeNotFoundException extends Exception
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $salesOrderThresholdTypeKey, string $message = "", int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $salesOrderThresholdTypeKey, string $message = '', int $code = 0, ?Throwable $previous = null)
     {
         $this->message = sprintf(static::MESSAGE, $salesOrderThresholdTypeKey);
 
