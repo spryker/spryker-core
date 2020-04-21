@@ -234,6 +234,9 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createProductLabelDeleteForm(): FormInterface
     {
         return $this->getFormFactory()->create(ProductLabelDeleteForm::class);
