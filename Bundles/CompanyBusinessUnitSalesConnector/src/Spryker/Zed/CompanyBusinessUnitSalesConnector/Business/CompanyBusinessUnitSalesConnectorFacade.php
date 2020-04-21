@@ -109,7 +109,7 @@ class CompanyBusinessUnitSalesConnectorFacade extends AbstractFacade implements 
     public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
     {
         return $this->getFactory()
-            ->createOrderSearchQueryExpander()
+            ->createFilterFieldChecker()
             ->isFilterFieldSet($filterFieldTransfers, $type);
     }
 

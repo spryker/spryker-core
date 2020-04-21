@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanySalesConnector\Business\Checker;
+namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker;
 
 use Generated\Shared\Transfer\FilterFieldTransfer;
 

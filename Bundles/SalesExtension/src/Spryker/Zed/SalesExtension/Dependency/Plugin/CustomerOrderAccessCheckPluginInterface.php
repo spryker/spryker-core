@@ -10,6 +10,9 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * Use this plugins to check access for provided customer.
+ */
 interface CustomerOrderAccessCheckPluginInterface
 {
     /**

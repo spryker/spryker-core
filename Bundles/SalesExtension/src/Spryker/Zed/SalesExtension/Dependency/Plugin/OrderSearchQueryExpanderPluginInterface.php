@@ -9,6 +9,11 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 
+/**
+ * Provides expansion capabilities.
+ *
+ * Use this plugin for expanding QueryJoinCollectionTransfer with additional QueryJoinTransfers.
+ */
 interface OrderSearchQueryExpanderPluginInterface
 {
     /**

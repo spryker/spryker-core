@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Persistence;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,31 +16,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CompanyBusinessUnitSalesConnectorEntityManager extends AbstractEntityManager implements CompanyBusinessUnitSalesConnectorEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     * @param string $companyBusinessUnitUuid
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
-    public function updateOrder(OrderTransfer $orderTransfer): OrderTransfer
+    public function updateOrderCompanyBusinessUnitUuid(int $idSalesOrder, string $companyBusinessUnitUuid): void
     {
-        $orderTransfer->requireIdSalesOrder();
-
-        $salesOrderEntity = $this->getFactory()
+        $this->getFactory()
             ->getSalesOrderPropelQuery()
-            ->findOneByIdSalesOrder($orderTransfer->getIdSalesOrder());
-
-        if (!$salesOrderEntity) {
-            return $orderTransfer;
-        }
-
-        $salesOrderEntity->fromArray(
-            $orderTransfer->modifiedToArray()
-        );
-
-        $salesOrderEntity->save();
-
-        return $orderTransfer->fromArray(
-            $salesOrderEntity->toArray(),
-            true
-        );
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->update([ucfirst(SpySalesOrderEntityTransfer::COMPANY_BUSINESS_UNIT_UUID) => $companyBusinessUnitUuid]);
     }
 }

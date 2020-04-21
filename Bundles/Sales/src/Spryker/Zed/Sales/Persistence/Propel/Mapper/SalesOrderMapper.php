@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -37,111 +34,34 @@ class SalesOrderMapper
 
     /**
      * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function mapSalesOrderEntityCollectionToOrderTransfers(
-        Collection $salesOrderEntityCollection,
-        ArrayObject $orderTransfers
-    ): ArrayObject {
-        foreach ($salesOrderEntityCollection as $salesOrderEntity) {
-            $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
-
-            $orderTransfers->offsetSet($orderTransfer->getIdSalesOrder(), $orderTransfer);
-        }
-
-        return $orderTransfers;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function mapSalesOrderItemEntityCollectionToOrderTransfers(
-        ObjectCollection $salesOrderItemEntityCollection,
-        ArrayObject $orderTransfers
-    ): ArrayObject {
-        foreach ($salesOrderItemEntityCollection as $salesOrderItemEntity) {
-            $idSalesOrder = $salesOrderItemEntity->getFkSalesOrder();
-
-            if ($orderTransfers->offsetExists($idSalesOrder)) {
-                /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-                $orderTransfer = $orderTransfers->offsetGet($idSalesOrder);
-
-                $orderTransfer->addItem(
-                    $this->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer())
-                );
-            }
-        }
-
-        return $orderTransfers;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function mapSalesOrderTotalsEntityCollectionToOrderTransfers(
-        ObjectCollection $salesOrderTotalsEntityCollection,
-        ArrayObject $orderTransfers
-    ): ArrayObject {
-        $salesOrderTotalsEntities = $this->indexSalesOrderTotalsEntitiesByIdSalesOrder($salesOrderTotalsEntityCollection);
-
-        foreach ($orderTransfers as $orderTransfer) {
-            $salesOrderTotalsEntity = $salesOrderTotalsEntities[$orderTransfer->getIdSalesOrder()] ?? null;
-
-            if ($salesOrderTotalsEntity) {
-                $orderTransfer->setTotals(
-                    (new TotalsTransfer())->fromArray($salesOrderTotalsEntity->toArray(), true)
-                );
-            }
-        }
-
-        return $orderTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function mapSalesOrderItemEntityToItemTransfer(
-        SpySalesOrderItem $salesOrderItemEntity,
-        ItemTransfer $itemTransfer
-    ): ItemTransfer {
-        $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
-
-        $itemTransfer->setSumNetPrice($salesOrderItemEntity->getNetPrice());
-        $itemTransfer->setSumGrossPrice($salesOrderItemEntity->getGrossPrice());
-        $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
-
-        return $itemTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals[]
-     */
-    protected function indexSalesOrderTotalsEntitiesByIdSalesOrder(ObjectCollection $salesOrderTotalsEntityCollection): array
+    public function mapSalesOrderEntityCollectionToOrderTransfers(Collection $salesOrderEntityCollection): array
     {
-        $salesOrderTotalsEntities = [];
+        $orderTransfers = [];
+
+        foreach ($salesOrderEntityCollection as $salesOrderEntity) {
+            $orderTransfers[] = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
+        }
+
+        return $orderTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     */
+    public function mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder(
+        ObjectCollection $salesOrderTotalsEntityCollection
+    ): array {
+        $mappedTotalsTransfers = [];
 
         foreach ($salesOrderTotalsEntityCollection as $salesOrderTotalsEntity) {
-            $idSalesOrder = $salesOrderTotalsEntity->getFkSalesOrder();
-
-            if (!isset($salesOrderTotalsEntities[$idSalesOrder])) {
-                $salesOrderTotalsEntities[$idSalesOrder] = $salesOrderTotalsEntity;
-            }
+            $mappedTotalsTransfers[$salesOrderTotalsEntity->getFkSalesOrder()] = (new TotalsTransfer())->fromArray($salesOrderTotalsEntity->toArray(), true);
         }
 
-        return $salesOrderTotalsEntities;
+        return $mappedTotalsTransfers;
     }
 }

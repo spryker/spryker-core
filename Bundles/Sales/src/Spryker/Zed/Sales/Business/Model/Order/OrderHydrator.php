@@ -130,11 +130,7 @@ class OrderHydrator implements OrderHydratorInterface
             ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
             ->findOne();
 
-        if (
-            $orderEntity === null
-            || (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference())
-            || !$this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer())
-        ) {
+        if (!$this->isOrderApplicableForRetrieval($orderTransfer, $customerTransfer, $orderEntity)) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
@@ -143,6 +139,29 @@ class OrderHydrator implements OrderHydratorInterface
         }
 
         return $orderEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder|null $orderEntity
+     *
+     * @return bool
+     */
+    protected function isOrderApplicableForRetrieval(
+        OrderTransfer $orderTransfer,
+        CustomerTransfer $customerTransfer,
+        ?SpySalesOrder $orderEntity
+    ): bool {
+        if (!$orderEntity) {
+            return false;
+        }
+
+        if (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference()) {
+            return false;
+        }
+
+        return $this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer());
     }
 
     /**

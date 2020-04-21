@@ -77,6 +77,8 @@ interface CompanyBusinessUnitClientInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
+     * - Returns company business units collection without relations if CompanyBusinessUnitCriteriaFilterTransfer::withoutExpanders=true.
+     * - Executes company business unit transfer expander plugins on each item in the collection.
      *
      * @api
      *
@@ -85,20 +87,6 @@ interface CompanyBusinessUnitClientInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Returns company business units collection without relations.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getRawCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
 

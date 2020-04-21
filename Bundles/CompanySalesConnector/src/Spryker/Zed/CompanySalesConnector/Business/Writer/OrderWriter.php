@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business\Writer;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\CompanySalesConnector\Persistence\CompanySalesConnectorEntityManagerInterface;
@@ -43,11 +42,10 @@ class OrderWriter implements OrderWriterInterface
             return;
         }
 
-        $orderTransfer = (new OrderTransfer())
-            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setCompanyUuid($companyUuid);
-
-        $this->companySalesConnectorEntityManager->updateOrder($orderTransfer);
+        $this->companySalesConnectorEntityManager->updateOrderCompanyUuid(
+            $saveOrderTransfer->getIdSalesOrder(),
+            $companyUuid
+        );
     }
 
     /**

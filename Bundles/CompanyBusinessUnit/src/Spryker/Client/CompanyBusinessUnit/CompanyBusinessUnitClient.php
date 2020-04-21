@@ -59,23 +59,6 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getRawCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()
-            ->createZedCompanyBusinessUnitStub()
-            ->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer

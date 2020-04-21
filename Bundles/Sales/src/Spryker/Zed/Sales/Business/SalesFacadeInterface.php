@@ -369,11 +369,12 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Finds orders by criteria from OrderListTransfer.
+     * - Requires OrderListTransfer::pagination to be set.
      * - Requires OrderListTransfer::format to be set.
      * - Filters orders by OrderListTransfer::filterFields if provided.
      * - Filters orders by OrderListTransfer::filter if provided.
      * - Executes OrderSearchQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
      *
      * @api
      *

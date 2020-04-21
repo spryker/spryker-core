@@ -23,12 +23,7 @@ class PermissionChecker implements PermissionCheckerInterface
      */
     public function checkOrderAccessByCustomerCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if (
-            !$orderTransfer->getCompanyUuid()
-            || !$customerTransfer->getCompanyUserTransfer()
-            || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
-            || !$customerTransfer->getCompanyUserTransfer()->getCompany()
-        ) {
+        if (!$this->hasCompany($orderTransfer, $customerTransfer)) {
             return false;
         }
 
@@ -37,5 +32,28 @@ class PermissionChecker implements PermissionCheckerInterface
         }
 
         return $this->can('SeeCompanyOrdersPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function hasCompany(OrderTransfer $orderTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        if (!$orderTransfer->getCompanyUuid()) {
+            return false;
+        }
+
+        if (
+            !$customerTransfer->getCompanyUserTransfer()
+            || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+            || !$customerTransfer->getCompanyUserTransfer()->getCompany()
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

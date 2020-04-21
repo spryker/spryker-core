@@ -20,10 +20,10 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
  * @group CompanyBusinessUnit
  * @group Business
  * @group CompanyBusinessUnitFacade
- * @group GetRawCompanyBusinessUnitCollectionTest
+ * @group GetCompanyBusinessUnitCollectionTest
  * Add your own group annotations below this line
  */
-class GetRawCompanyBusinessUnitCollectionTest extends Test
+class GetCompanyBusinessUnitCollectionTest extends Test
 {
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
@@ -33,7 +33,7 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
     /**
      * @return void
      */
-    public function testGetRawCompanyBusinessUnitCollectionReturnsTransfersCollectionByIdCompany(): void
+    public function testGetCompanyBusinessUnitCollectionReturnsTransfersCollectionByIdCompany(): void
     {
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
@@ -41,12 +41,13 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
         ]);
 
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany($companyBusinessUnitTransfer->getFkCompany());
+            ->setIdCompany($companyBusinessUnitTransfer->getFkCompany())
+            ->setWithoutExpanders(true);
 
         // Act
         $companyBusinessUnitCollection = $this->tester
             ->getFacade()
-            ->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(1, $companyBusinessUnitCollection->getCompanyBusinessUnits());
@@ -55,7 +56,7 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
     /**
      * @return void
      */
-    public function testGetRawCompanyBusinessUnitCollectionReturnsEmptyCollectionByFakeIdCompany(): void
+    public function testGetCompanyBusinessUnitCollectionReturnsEmptyCollectionByFakeIdCompany(): void
     {
         // Arrange
         $this->tester->haveCompanyBusinessUnit([
@@ -63,12 +64,13 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
         ]);
 
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany(-1);
+            ->setIdCompany(-1)
+            ->setWithoutExpanders(true);
 
         // Act
         $companyBusinessUnitCollection = $this->tester
             ->getFacade()
-            ->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertEmpty($companyBusinessUnitCollection->getCompanyBusinessUnits());
@@ -77,7 +79,7 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
     /**
      * @return void
      */
-    public function testGetRawCompanyBusinessUnitCollectionReturnsTransfersCollectionByIdCompanyUser(): void
+    public function testGetCompanyBusinessUnitCollectionReturnsTransfersCollectionByIdCompanyUser(): void
     {
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
@@ -91,12 +93,13 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
         ]);
 
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setWithoutExpanders(true);
 
         // Act
         $companyBusinessUnitCollection = $this->tester
             ->getFacade()
-            ->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(1, $companyBusinessUnitCollection->getCompanyBusinessUnits());
@@ -105,7 +108,7 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
     /**
      * @return void
      */
-    public function testGetRawCompanyBusinessUnitCollectionReturnsEmptyCollectionByFakeIdCompanyUser(): void
+    public function testGetCompanyBusinessUnitCollectionReturnsEmptyCollectionByFakeIdCompanyUser(): void
     {
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
@@ -119,12 +122,13 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
         ]);
 
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany(-1);
+            ->setIdCompany(-1)
+            ->setWithoutExpanders(true);
 
         // Act
         $companyBusinessUnitCollection = $this->tester
             ->getFacade()
-            ->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertEmpty($companyBusinessUnitCollection->getCompanyBusinessUnits());
@@ -133,7 +137,7 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
     /**
      * @return void
      */
-    public function testGetRawCompanyBusinessUnitCollectionReturnsAllAvailableTransfers(): void
+    public function testGetCompanyBusinessUnitCollectionReturnsAllAvailableTransfers(): void
     {
         // Arrange
         $this->tester->haveCompanyBusinessUnit([
@@ -143,10 +147,13 @@ class GetRawCompanyBusinessUnitCollectionTest extends Test
             CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
         ]);
 
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setWithoutExpanders(true);
+
         // Act
         $companyBusinessUnitCollection = $this->tester
             ->getFacade()
-            ->getRawCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer());
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount($this->tester->getBusinessUnitsCount(), $companyBusinessUnitCollection->getCompanyBusinessUnits());

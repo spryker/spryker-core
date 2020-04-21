@@ -43,12 +43,4 @@ interface OrderSearchQueryExpanderInterface
         array $filterFieldTransfers,
         QueryJoinCollectionTransfer $queryJoinCollectionTransfer
     ): QueryJoinCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool;
 }

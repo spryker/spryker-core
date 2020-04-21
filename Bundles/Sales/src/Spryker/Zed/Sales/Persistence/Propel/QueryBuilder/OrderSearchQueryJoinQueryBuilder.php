@@ -202,7 +202,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $salesOrderQuery->addCond(
                 $conditionName,
                 $column,
-                $comparison === Criteria::ILIKE ? sprintf('%%%s%%', $value) : $value,
+                $comparison === Criteria::ILIKE ? $this->formatFilterValue($value) : $value,
                 $comparison
             );
 
@@ -222,5 +222,15 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         }
 
         return $conditions;
+    }
+
+    /**
+     * @param string|null $value
+     *
+     * @return string
+     */
+    protected function formatFilterValue(?string $value): string
+    {
+        return sprintf('%%%s%%', $value);
     }
 }

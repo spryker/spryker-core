@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Business;
 
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldChecker;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldCheckerInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\PermissionChecker;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\PermissionCheckerInterface;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander;
@@ -45,5 +47,13 @@ class CompanyBusinessUnitSalesConnectorBusinessFactory extends AbstractBusinessF
     public function createOrderSearchQueryExpander(): OrderSearchQueryExpanderInterface
     {
         return new OrderSearchQueryExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Checker\FilterFieldCheckerInterface
+     */
+    public function createFilterFieldChecker(): FilterFieldCheckerInterface
+    {
+        return new FilterFieldChecker();
     }
 }

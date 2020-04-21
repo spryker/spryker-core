@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Persistence;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 interface CompanySalesConnectorEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     * @param string $companyUuid
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
-    public function updateOrder(OrderTransfer $orderTransfer): OrderTransfer;
+    public function updateOrderCompanyUuid(int $idSalesOrder, string $companyUuid): void;
 }

@@ -114,11 +114,13 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     * - Finds orders by criteria from OrderListTransfer.
-     * - Requires OrderListTransfer::customer to be set.
+     * - Makes Zed request.
+     * - Requires OrderListTransfer::pagination to be set.
      * - Requires OrderListTransfer::format to be set.
-     * - Filters orders by OrderListTransfer::customer::customerReference if provided.
+     * - Filters orders by OrderListTransfer::filterFields if provided.
      * - Filters orders by OrderListTransfer::filter if provided.
+     * - Executes OrderSearchQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
      *
      * @api
      *

@@ -17,9 +17,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
@@ -113,20 +111,48 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->groupByIdSalesOrder();
 
-        $salesOrderQuery = $this->setSalesOrderQuerySearchFilters(
-            $salesOrderQuery,
-            $orderListTransfer
-        );
+        $salesOrderQuery = $this->setSalesOrderQuerySearchFilters($salesOrderQuery, $orderListTransfer);
+        $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPagination());
 
-        $salesOrderQuery = $this->preparePagination(
-            $salesOrderQuery,
-            $orderListTransfer->getPagination()
-        );
+        $orderTransfers = $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderEntityCollectionToOrderTransfers($salesOrderQuery->find());
 
-        return $this->mapSalesOrderEntityCollectionToOrderListTransfer(
-            $salesOrderQuery->find(),
-            $orderListTransfer
-        );
+        return $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
+    }
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getSalesOrderItemsByOrderIds(array $salesOrderIds): array
+    {
+        $salesOrderItemQuery = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder_In($salesOrderIds);
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     */
+    public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array
+    {
+        $salesOrderTotalsQuery = $this->getFactory()
+            ->getSalesOrderTotalsPropelQuery()
+            ->filterByFkSalesOrder_In($salesOrderIds)
+            ->groupByFkSalesOrder()
+            ->orderByCreatedAt();
+
+        return $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder($salesOrderTotalsQuery->find());
     }
 
     /**
@@ -159,44 +185,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderEntityCollection
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function mapSalesOrderEntityCollectionToOrderListTransfer(
-        ObjectCollection $salesOrderEntityCollection,
-        OrderListTransfer $orderListTransfer
-    ): OrderListTransfer {
-        $salesOrderMapper = $this->getFactory()->createSalesOrderMapper();
-
-        $orderTransfers = $salesOrderMapper->mapSalesOrderEntityCollectionToOrderTransfers(
-            $salesOrderEntityCollection,
-            new ArrayObject()
-        );
-
-        $salesOrderIds = $this->getSalesOrderIdsFromOrderTransfers($orderTransfers);
-
-        $salesOrderTotalsEntityCollection = $this->getSalesOrderTotalsBySalesOrderIds($salesOrderIds);
-
-        $orderTransfers = $salesOrderMapper->mapSalesOrderTotalsEntityCollectionToOrderTransfers(
-            $salesOrderTotalsEntityCollection,
-            $orderTransfers
-        );
-
-        if ($orderListTransfer->getFormat()->getExpandWithItems()) {
-            $salesOrderItemEntityCollection = $this->getSalesOrderItemsByOrderIds($salesOrderIds);
-
-            $orderTransfers = $salesOrderMapper->mapSalesOrderItemEntityCollectionToOrderTransfers(
-                $salesOrderItemEntityCollection,
-                $orderTransfers
-            );
-        }
-
-        return $orderListTransfer->setOrders($orderTransfers);
-    }
-
-    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
@@ -225,35 +213,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->setPreviousPage($propelModelPager->getPreviousPage());
 
         return $propelModelPager->getQuery();
-    }
-
-    /**
-     * @param int[] $salesOrderIds
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
-     */
-    protected function getSalesOrderItemsByOrderIds(array $salesOrderIds): ObjectCollection
-    {
-        $salesOrderItemQuery = $this->getFactory()
-            ->createSalesOrderItemQuery()
-            ->filterByFkSalesOrder_In($salesOrderIds);
-
-        return $salesOrderItemQuery->find();
-    }
-
-    /**
-     * @param int[] $salesOrderIds
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[]
-     */
-    protected function getSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): ObjectCollection
-    {
-        $salesOrderTotalsQuery = $this->getFactory()
-            ->getSalesOrderTotalsPropelQuery()
-            ->filterByFkSalesOrder_In($salesOrderIds)
-            ->orderByCreatedAt(Criteria::DESC);
-
-        return $salesOrderTotalsQuery->find();
     }
 
     /**
@@ -364,22 +323,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $salesOrderItemQuery;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     *
-     * @return int[]
-     */
-    protected function getSalesOrderIdsFromOrderTransfers(ArrayObject $orderTransfers): array
-    {
-        $salesOrderIds = [];
-
-        foreach ($orderTransfers as $orderTransfer) {
-            $salesOrderIds[] = $orderTransfer->getIdSalesOrder();
-        }
-
-        return $salesOrderIds;
     }
 
     /**

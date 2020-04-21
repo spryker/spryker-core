@@ -48,7 +48,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     protected const COLUMN_EMAIL = 'email';
 
     /**
-     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
      */
     protected const COMPARISON_EQUAL = '=';
 
@@ -136,17 +136,6 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         return $queryJoinCollectionTransfer->addQueryJoin(
             $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection)
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
-    {
-        return $this->extractFilterFieldByType($filterFieldTransfers, $type) !== null;
     }
 
     /**
