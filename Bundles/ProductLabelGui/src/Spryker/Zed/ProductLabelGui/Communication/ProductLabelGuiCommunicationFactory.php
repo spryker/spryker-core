@@ -15,7 +15,6 @@ use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggr
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelAggregateFormType;
-use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelDeleteForm;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelLocalizedAttributesFormType;
 use Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType;
@@ -26,7 +25,6 @@ use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
@@ -232,11 +230,6 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $idProductLabel,
             $this->getPriceProductFacade()
         );
-    }
-
-    public function createProductLabelDeleteForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductLabelDeleteForm::class);
     }
 
     /**

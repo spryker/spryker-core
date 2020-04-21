@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface ProductLabelGuiToProductLabelInterface
@@ -53,11 +52,4 @@ interface ProductLabelGuiToProductLabelInterface
      * @return void
      */
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
-     */
-    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer;
 }

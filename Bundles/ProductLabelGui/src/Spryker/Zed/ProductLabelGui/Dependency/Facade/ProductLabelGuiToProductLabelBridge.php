@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLabelInterface
@@ -83,15 +82,5 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
-     */
-    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
-    {
-        return $this->productLabelFacade->removeLabel($productLabelTransfer);
     }
 }

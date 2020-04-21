@@ -16,8 +16,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
+use Spryker\Zed\ProductLabelGui\Communication\Controller\SetStatusController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 
@@ -34,11 +34,6 @@ class ProductLabelTable extends AbstractTable
     public const COL_ACTIONS = 'actions';
 
     public const TABLE_IDENTIFIER = 'product-label-table';
-
-    public const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
-    public const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
-    public const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
-    public const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface
@@ -245,7 +240,7 @@ class ProductLabelTable extends AbstractTable
         $actionButtons = [
             $this->createViewButton($idProductLabel),
             $this->createEditButton($idProductLabel),
-            $this->createDeleteButton($idProductLabel),
+            $this->createStatusToggleButton($idProductLabel, $productLabelEntity->getIsActive()),
         ];
 
         return implode(' ', $actionButtons);
@@ -260,7 +255,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(
-                static::URL_PRODUCT_LABEL_VIEW,
+                '/product-label-gui/view',
                 [
                     ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
@@ -278,7 +273,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                static::URL_PRODUCT_LABEL_EDIT,
+                '/product-label-gui/edit',
                 [
                     EditController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
@@ -289,20 +284,55 @@ class ProductLabelTable extends AbstractTable
 
     /**
      * @param int $idProductLabel
+     * @param bool $isActive
      *
      * @return string
      */
-    protected function createDeleteButton(int $idProductLabel): string
+    protected function createStatusToggleButton($idProductLabel, $isActive)
+    {
+        if ($isActive) {
+            return $this->createDeactivateButton($idProductLabel);
+        }
+
+        return $this->createActivateButton($idProductLabel);
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return string
+     */
+    protected function createDeactivateButton($idProductLabel)
     {
         return $this->generateRemoveButton(
             Url::generate(
-                static::URL_PRODUCT_LABEL_DELETE,
+                '/product-label-gui/set-status/inactive',
                 [
-                    DeleteController::URL_PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                    DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_LABEL_LIST,
+                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
-            'Delete'
+            'Deactivate'
+        );
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return string
+     */
+    protected function createActivateButton($idProductLabel)
+    {
+        return $this->generateViewButton(
+            Url::generate(
+                'product-label-gui/set-status/active',
+                [
+                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
+                ]
+            ),
+            'Activate',
+            [
+                static::BUTTON_ICON => '',
+            ]
         );
     }
 }
