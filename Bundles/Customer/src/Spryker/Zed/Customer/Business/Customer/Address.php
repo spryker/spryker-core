@@ -623,10 +623,11 @@ class Address implements AddressInterface
      */
     protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
+        $addressTransfer->setUuid(null);
+        $addressTransfer->setIdCustomerAddress(null);
+
         $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
-        $addressEntity->setIdCustomerAddress(null);
-        $addressEntity->setUuid(null);
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
         $addressEntity->setFkCountry($fkCountry);
