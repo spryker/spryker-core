@@ -59,7 +59,7 @@ class CartValidator implements CartValidatorInterface
     {
         $promotionItemTransfers = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getIdDiscountPromotion()) {
+            if ($itemTransfer->getIdDiscountPromotion() !== null) {
                 $promotionItemTransfers[] = $itemTransfer;
             }
         }
