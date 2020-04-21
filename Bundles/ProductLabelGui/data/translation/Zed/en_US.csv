@@ -47,3 +47,9 @@ General,General
 "Applied Products","Applied Products"
 Yes,Yes
 No,No
+Delete,Delete
+"Yes, delete this product label","Yes, delete this product label"
+"Product label #%d was successfully deleted.","Product label #%d was successfully deleted."
+"Are you sure you want to delete this product label?","Are you sure you want to delete this product label?"
+"No, I want to keep this product label","No, I want to keep this product label"
+"Delete Product Label","Delete Product Label"
