@@ -59,11 +59,17 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     {
         $productOfferReferences = $this->getProductOfferReferencesFromQuoteTransfer($quoteTransfer);
 
-        $productOfferCollectionTransfer = (new ProductOfferCriteriaFilterTransfer())
+        if (!$productOfferReferences) {
+            return $quoteTransfer;
+        }
+
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true)
-            ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
-        $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCollectionTransfer);
+            ->setIdStore(
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+            );
+        $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCriteriaFilterTransfer);
 
         $indexedProductConcreteTransfers = $this->indexByProductOfferReferences($productOfferCollectionTransfer);
 
