@@ -205,19 +205,19 @@ class ProductFacadeTest extends Unit
         // Arrange
         $productConcreteIds = $this->tester->getProductConcreteIds();
         $productConcreteTransfer = $this->productFacade->findProductConcreteById($productConcreteIds[0]);
-        $ProductCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
-        $ProductCriteriaTransferWithExistingStore->setIdStore(
+        $productCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
+        $productCriteriaTransferWithExistingStore->setIdStore(
             $this->tester->getStoreFacade()->getCurrentStore()->getIdStore()
         );
-        $ProductCriteriaTransferWithExistingStore->setIsActive(true);
-        $ProductCriteriaTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
+        $productCriteriaTransferWithExistingStore->setIsActive(true);
+        $productCriteriaTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
 
-        $ProductCriteriaTransferWithNotExistingStore = clone $ProductCriteriaTransferWithExistingStore;
-        $ProductCriteriaTransferWithNotExistingStore->setIdStore(9999);
+        $productCriteriaTransferWithNotExistingStore = clone $productCriteriaTransferWithExistingStore;
+        $productCriteriaTransferWithNotExistingStore->setIdStore(9999);
 
         // Act
-        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransferWithExistingStore);
-        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransferWithNotExistingStore);
+        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransferWithExistingStore);
+        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransferWithNotExistingStore);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfersWithStore);

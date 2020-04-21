@@ -155,9 +155,9 @@ interface ProductRepositoryInterface
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $ProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $ProductCriteriaTransfer): array;
+    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $productCriteriaTransfer): array;
 }

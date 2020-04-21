@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 interface ProductCartConnectorToStoreFacadeInterface
 {
     /**
+     * @param string $storeName
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getStoreByName($storeName);
 }

@@ -23,10 +23,12 @@ class ProductCartConnectorToStoreFacadeBridge implements ProductCartConnectorToS
     }
 
     /**
+     * @param string $storeName
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getStoreByName($storeName)
     {
-        return $this->storeFacade->getCurrentStore();
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

@@ -57,12 +57,14 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $skus = $this->getProductSkusFromQuoteTransfer($quoteTransfer);
-        $ProductCriteriaTransfer = (new ProductCriteriaTransfer())
+        $productCriteriaTransfer = (new ProductCriteriaTransfer())
             ->setSkus($skus)
             ->setIsActive(true)
-            ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
+            ->setIdStore(
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+            );
 
-        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransfer);
+        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransfer);
         $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {

@@ -101,13 +101,13 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $ProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $ProductCriteriaTransfer): array
+    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
-        return $this->productFacade->getProductConcretesByCriteriaFilter($ProductCriteriaTransfer);
+        return $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransfer);
     }
 
     /**
