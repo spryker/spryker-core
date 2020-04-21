@@ -163,7 +163,7 @@ class UpdateMerchantTest extends Unit
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
         // Assert
-        $this->assertEquals(count($storesIds), $merchantTransfer->getStoreRelation()->getStores()->count());
+        $this->assertCount(count($storesIds), $merchantTransfer->getStoreRelation()->getStores());
         foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
             $this->assertTrue(in_array($idStore, $storesIds));
         }

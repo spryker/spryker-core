@@ -50,6 +50,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addStoreFacade($container);
 
         return $container;

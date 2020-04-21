@@ -11,31 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantStoreMapper
 {
-    /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantStore[]|\Propel\Runtime\Collection\ObjectCollection $merchantStoreEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storesTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function mapMerchantStoreEntitiesToStoreTransferCollection(ObjectCollection $merchantStoreEntities, ArrayObject $storesTransfers): ArrayObject
-    {
-        foreach ($merchantStoreEntities as $merchantStoreEntity) {
-            $storesTransfers->append(
-                (new StoreTransfer())
-                    ->fromArray(
-                        $merchantStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
-            );
-        }
-
-        return $storesTransfers;
-    }
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer

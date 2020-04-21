@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantKeyToIdMerchantStep;
 use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantStoreWriterStep;
@@ -45,9 +46,9 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createMerchantStoreDataImport()
+    public function createMerchantStoreDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getMerchantStoreDataImporterConfiguration()

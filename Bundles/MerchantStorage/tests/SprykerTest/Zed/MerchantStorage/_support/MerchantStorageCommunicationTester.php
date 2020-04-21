@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\MerchantStorage;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorage;
 use Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -60,5 +63,17 @@ class MerchantStorageCommunicationTester extends Actor
     protected function getMerchantStorageQuery(): SpyMerchantStorageQuery
     {
         return SpyMerchantStorageQuery::create();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function createStoreRelationTransfer(): StoreRelationTransfer
+    {
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
+
+        return (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
     }
 }

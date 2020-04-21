@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
@@ -144,7 +143,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
         $currentStoreRelationTransfer = $this->merchantRepository->getMerchantStoresByIdMerchant($merchantTransfer->getIdMerchant());
 
-        if (count($currentStoreRelationTransfer->getIdStores()) === 0) {
+        if (!$currentStoreRelationTransfer->getIdStores()) {
             return $this->createMerchantStores(
                 $merchantTransfer,
                 $merchantTransfer->getStoreRelation()->getIdStores()
@@ -169,12 +168,13 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function createMerchantStores(MerchantTransfer $merchantTransfer, array $storeIds): MerchantTransfer
     {
         foreach ($storeIds as $idStore) {
-            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
             $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
         }
 
-        $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
-        $merchantTransfer->getStoreRelation()->setIdStores($storeIds);
+        $merchantTransfer->getStoreRelation()
+            ->setIdEntity($merchantTransfer->getIdMerchant())
+            ->setIdStores($storeIds);
 
         return $merchantTransfer;
     }
@@ -188,7 +188,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function deleteMerchantStores(MerchantTransfer $merchantTransfer, array $storeIds): void
     {
         foreach ($storeIds as $idStore) {
-            $this->merchantEntityManager->deleteMerchantStore($merchantTransfer, (new StoreTransfer())->setIdStore($idStore));
+            $this->merchantEntityManager->deleteMerchantStore($merchantTransfer, $idStore);
         }
     }
 

@@ -44,35 +44,35 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): StoreTransfer
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): StoreTransfer
     {
         $merchantStoreEntity = (new SpyMerchantStore())
-            ->setFkStore($storeTransfer->getIdStore())
+            ->setFkStore($idStore)
             ->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantStoreEntity->save();
 
         return $this->getFactory()
             ->createMerchantStoreMapper()
-            ->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, (new StoreTransfer()));
+            ->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, new StoreTransfer());
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idStore
      *
      * @return void
      */
-    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void
+    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): void
     {
         $merchantStoreEntity = $this->getFactory()
             ->createMerchantStoreQuery()
             ->filterByFkMerchant($merchantTransfer->getIdMerchant())
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkStore($idStore)
             ->findOne();
 
         $merchantStoreEntity->delete();

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -119,7 +120,10 @@ class MerchantMapper implements MerchantMapperInterface
      */
     protected function mapStoreEntitiesToMerchantTransfer(ObjectCollection $merchantStoreEntities, MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $storeTransfers = $this->merchantStoreMapper->mapMerchantStoreEntitiesToStoreTransferCollection($merchantStoreEntities, (new ArrayObject()));
+        $storeTransfers = new ArrayObject();
+        foreach ($merchantStoreEntities as $merchantStoreEntity) {
+            $storeTransfers->append($this->merchantStoreMapper->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, new StoreTransfer()));
+        }
 
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdEntity($merchantTransfer->getIdMerchant());

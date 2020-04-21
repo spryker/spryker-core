@@ -47,5 +47,5 @@ class MerchantEvents
      *
      * @api
      */
-    public const MERCHANT_STORE_PUBLISH = 'MerchantStore.spy_merchant_store.publish';
+    public const MERCHANT_STORE_PUBLISH = 'Merchant.merchant_store.publish';
 }

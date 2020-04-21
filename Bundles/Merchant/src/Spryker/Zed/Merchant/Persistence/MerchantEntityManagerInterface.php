@@ -21,17 +21,17 @@ interface MerchantEntityManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function createMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): StoreTransfer;
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): StoreTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idStore
      *
      * @return void
      */
-    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): void;
+    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): void;
 }

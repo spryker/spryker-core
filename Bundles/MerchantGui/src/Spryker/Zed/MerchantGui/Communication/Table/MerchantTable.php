@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -23,6 +24,7 @@ class MerchantTable extends AbstractTable
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
     public const COL_ACTIONS = 'actions';
+    protected const COL_STORES = 'stores';
 
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
@@ -191,13 +193,31 @@ class MerchantTable extends AbstractTable
     }
 
     /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function prepareQuery(): SpyMerchantQuery
+    {
+        $this->merchantQuery
+            ->groupByIdMerchant()
+            ->useSpyMerchantStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinSpyStore()
+                ->withColumn(
+                    sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
+                    static::COL_STORES
+                )
+            ->endUse();
+
+        return $this->merchantQuery;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryResults = $this->runQuery($this->merchantQuery, $config);
+        $queryResults = $this->runQuery($this->prepareQuery(), $config);
         $results = [];
 
         foreach ($queryResults as $item) {
@@ -374,14 +394,11 @@ class MerchantTable extends AbstractTable
      */
     protected function createStoresLabel(array $merchant): string
     {
-        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
-            ->setIdMerchant($merchant[SpyMerchantTableMap::COL_ID_MERCHANT]);
-
-        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
+        $stores = explode(',', $merchant[static::COL_STORES]);
 
         $storeLabels = [];
-        foreach ($merchantTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-            $storeLabels[] = $this->generateLabel($storeTransfer->getName(), static::STORE_CLASS_LABEL);
+        foreach ($stores as $storeName) {
+            $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
         }
 
         return implode(" ", $storeLabels);

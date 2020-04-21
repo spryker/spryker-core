@@ -59,7 +59,7 @@ class MerchantDataImportCommunicationTester extends Actor
      */
     public function ensureMerchantStoreTableIsEmpty(): void
     {
-        $merchantStoreQuery = $this->getMerchantStoreQuery();
+        $merchantStoreQuery = $this->createMerchantStoreQuery();
         $merchantStoreQuery->deleteAll();
     }
 
@@ -85,7 +85,7 @@ class MerchantDataImportCommunicationTester extends Actor
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery
      */
-    protected function getMerchantStoreQuery(): SpyMerchantStoreQuery
+    protected function createMerchantStoreQuery(): SpyMerchantStoreQuery
     {
         return SpyMerchantStoreQuery::create();
     }

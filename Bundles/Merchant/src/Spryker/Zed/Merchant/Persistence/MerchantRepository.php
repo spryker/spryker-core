@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -169,9 +170,14 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             return $storeRelationTransfer;
         }
 
-        $storeTransfers = $this->getFactory()
-            ->createMerchantStoreMapper()
-            ->mapMerchantStoreEntitiesToStoreTransferCollection($merchantStoreEntities, (new ArrayObject()));
+        $storeTransfers = new ArrayObject();
+        foreach ($merchantStoreEntities as $merchantStoreEntity) {
+            $storeTransfers->append(
+                $this->getFactory()
+                    ->createMerchantStoreMapper()
+                    ->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, new StoreTransfer())
+            );
+        }
 
         $storeRelationTransfer = $this->getFactory()
             ->createMerchantStoreMapper()

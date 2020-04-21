@@ -11,8 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
@@ -58,7 +56,7 @@ class MerchantStorageListenerTest extends Unit
     public function testMerchantPublishStorageListenerStoreData(): void
     {
         // Arrange
-        $storeRelationTransfer = $this->createStoreRelationTransfer();
+        $storeRelationTransfer = $this->tester->createStoreRelationTransfer();
         $merchantTransfer = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
@@ -85,7 +83,7 @@ class MerchantStorageListenerTest extends Unit
     public function testMerchantPublishStorageListenerDeleteData(): void
     {
         // Arrange
-        $storeRelationTransfer = $this->createStoreRelationTransfer();
+        $storeRelationTransfer = $this->tester->createStoreRelationTransfer();
         $merchantTransfer1 = $this->tester->haveMerchant([
             MerchantTransfer::IS_ACTIVE => true,
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
@@ -125,17 +123,5 @@ class MerchantStorageListenerTest extends Unit
 
         $this->assertCount(1, $merchantStorageEntities);
         $this->assertArrayHasKey('id_merchant', $merchantStorageEntities[0]->getData());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    protected function createStoreRelationTransfer(): StoreRelationTransfer
-    {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-
-        return (new StoreRelationBuilder())->seed([
-            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
-        ])->build();
     }
 }

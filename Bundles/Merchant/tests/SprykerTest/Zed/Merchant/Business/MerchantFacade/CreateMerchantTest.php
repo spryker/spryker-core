@@ -60,15 +60,14 @@ class CreateMerchantTest extends Unit
         $storeRelationTransfer = (new StoreRelationBuilder())->seed([
             StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
         ])->build();
+        $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
 
         // Act
-        $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
         $merchantTransfer = $this->tester->getFacade()->findOne((new MerchantCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
 
         // Assert
         $this->assertIsIterable($merchantTransfer->getStoreRelation()->getStores());
-        $this->assertIsArray($merchantTransfer->getStoreRelation()->getIdStores());
-        $this->assertEquals([$storeTransfer->getIdStore()], $merchantTransfer->getStoreRelation()->getIdStores());
+        $this->assertCount(1, $merchantTransfer->getStoreRelation()->getIdStores());
     }
 
     /**

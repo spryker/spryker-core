@@ -218,7 +218,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreRelationFormTypePlugin(Container $container)
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return $this->getStoreRelationFormTypePlugin();

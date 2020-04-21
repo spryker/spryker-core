@@ -25,6 +25,7 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
+     *   - storeRelation
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
      * - Calls a stack of `MerchantPostCreatePluginInterface` after merchant is created.
@@ -51,6 +52,7 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
+     *   - storeRelation
      * - Calls a stack of `MerchantPostUpdatePluginInterface` after merchant is updated.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
