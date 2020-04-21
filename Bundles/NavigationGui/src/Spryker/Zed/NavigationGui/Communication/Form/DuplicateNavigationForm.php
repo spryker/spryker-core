@@ -34,7 +34,7 @@ class DuplicateNavigationForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -120,7 +120,7 @@ class DuplicateNavigationForm extends AbstractType
      *
      * @return void
      */
-    public function uniqueKeyCheck($key, ExecutionContextInterface $context)
+    public function uniqueKeyCheck($key, ExecutionContextInterface $context): void
     {
         $navigationTransfer = $context->getRoot()->getData();
 
@@ -134,7 +134,7 @@ class DuplicateNavigationForm extends AbstractType
      *
      * @return int|null
      */
-    protected function getIdNavigation(?NavigationTransfer $navigationTransfer = null)
+    protected function getIdNavigation(?NavigationTransfer $navigationTransfer = null): ?int
     {
         if (!$navigationTransfer) {
             return null;
@@ -149,7 +149,7 @@ class DuplicateNavigationForm extends AbstractType
      *
      * @return bool
      */
-    protected function hasExistingNavigationKey($key, $idNavigation = null)
+    protected function hasExistingNavigationKey($key, $idNavigation = null): bool
     {
         $query = $this->getQueryContainer()
             ->queryNavigation()
@@ -165,7 +165,7 @@ class DuplicateNavigationForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'duplicate_navigation';
     }

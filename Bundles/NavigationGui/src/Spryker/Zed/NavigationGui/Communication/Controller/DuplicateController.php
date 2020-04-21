@@ -40,13 +40,14 @@ class DuplicateController extends AbstractController
                 ->getNavigationFacade()
                 ->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
 
-            $this->addSuccessMessage('Navigation element %d was duplicated successfully.', ['%d' => $navigationTransfer->getIdNavigation()]);
+            $this->addSuccessMessage(
+                'Navigation element %d was duplicated successfully.',
+                ['%d' => $navigationTransfer->getIdNavigation()]
+            );
 
             return $this->redirectResponse('/navigation-gui');
         }
 
-        return $this->viewResponse([
-            'duplicateNavigationForm' => $duplicateNavigationForm->createView(),
-        ]);
+        return $this->viewResponse(['duplicateNavigationForm' => $duplicateNavigationForm->createView(),]);
     }
 }

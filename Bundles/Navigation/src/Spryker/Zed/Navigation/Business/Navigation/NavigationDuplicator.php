@@ -89,7 +89,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
      *
      * @return void
      */
-    protected function assertNavigationForCreate(NavigationTransfer $navigationTransfer)
+    protected function assertNavigationForCreate(NavigationTransfer $navigationTransfer): void
     {
         $navigationTransfer
             ->requireKey()
@@ -138,7 +138,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    protected function hydrateNavigationTransfer(NavigationTransfer $navigationTransfer, SpyNavigation $navigationEntity)
+    protected function hydrateNavigationTransfer(NavigationTransfer $navigationTransfer, SpyNavigation $navigationEntity): NavigationTransfer
     {
         $navigationTransfer->fromArray($navigationEntity->toArray(), true);
 
