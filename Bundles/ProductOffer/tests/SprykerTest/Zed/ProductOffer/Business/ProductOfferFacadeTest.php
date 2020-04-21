@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOffer\Business\ProductOfferBusinessFactory;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
@@ -134,6 +135,7 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore(new StoreTransfer());
         $quoteTransfer->setItems(new ArrayObject([
             (new ItemTransfer())->setProductOfferReference('test1')->setSku('sku1'),
             (new ItemTransfer())->setProductOfferReference('test2')->setSku('sku2'),
