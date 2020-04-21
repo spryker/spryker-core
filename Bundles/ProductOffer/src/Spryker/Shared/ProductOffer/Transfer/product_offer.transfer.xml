@@ -70,6 +70,7 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Store">
