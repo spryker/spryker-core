@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
-use ArrayObject;
-use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
+use Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface;
 use Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -36,18 +34,26 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected $navigationNodeCreator;
 
     /**
+     * @var \Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface
+     */
+    protected $navigationNodeMapper;
+
+    /**
      * @param \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface $navigationRepository
      * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
      * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface $navigationNodeCreator
+     * @param \Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface $navigationNodeMapper
      */
     public function __construct(
         NavigationRepositoryInterface $navigationRepository,
         NavigationTouchInterface $navigationTouch,
-        NavigationNodeCreatorInterface $navigationNodeCreator
+        NavigationNodeCreatorInterface $navigationNodeCreator,
+        NavigationNodeMapperInterface $navigationNodeMapper
     ) {
         $this->navigationRepository = $navigationRepository;
         $this->navigationTouch = $navigationTouch;
         $this->navigationNodeCreator = $navigationNodeCreator;
+        $this->navigationNodeMapper = $navigationNodeMapper;
     }
 
     /**
@@ -67,61 +73,15 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             ->setName($baseNavigationElement->getName())
             ->setIsActive($baseNavigationElement->getIsActive());
 
-        $navigationNodeTransfers = $this->navigationRepository->getNavigationNodesByNavigationId($baseNavigationElement->getIdNavigation());
-        $newNavigationNodeTransfers = $this->mapToNavigationNodeTransfers($navigationNodeTransfers);
+        $navigationNodeTransfers = $this->navigationRepository->getNavigationNodesByNavigationId(
+            $baseNavigationElement->getIdNavigation()
+        );
+
+        $newNavigationNodeTransfers = $this->navigationNodeMapper->mapToNavigationNodeTransfers($navigationNodeTransfers);
 
         return $this->handleDatabaseTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
             return $this->executeCreateNavigationTransaction($newNavigationElement, $newNavigationNodeTransfers);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
-     *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
-     */
-    protected function mapToNavigationNodeTransfers(array $navigationNodeTransfers): array
-    {
-        $newNavigationNodeTransfers = [];
-        foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
-            $newNavigationNodeTransfers[] = (new NavigationNodeTransfer())
-                ->setIsActive($navigationNodeTransfer->getIsActive())
-                ->setValidFrom($navigationNodeTransfer->getValidFrom())
-                ->setValidTo($navigationNodeTransfer->getValidTo())
-                ->setNodeType($navigationNodeTransfer->getNodeType())
-                ->setPosition($navigationNodeTransfer->getPosition())
-                ->setNavigationNodeLocalizedAttributes(
-                    $this->mapToNavigationNodeLocalizedAttributesTransfers($navigationNodeTransfer->getNavigationNodeLocalizedAttributes())
-                )
-                ->setFkParentNavigationNode($navigationNodeTransfer->getFkParentNavigationNode());
-        }
-
-        return $newNavigationNodeTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[] $navigationNodeLocalizedAttributesTransfers
-     *
-     * @return \ArrayObject
-     */
-    protected function mapToNavigationNodeLocalizedAttributesTransfers(ArrayObject $navigationNodeLocalizedAttributesTransfers): ArrayObject
-    {
-        $newNavigationNodeLocalizedAttributesTransfers = [];
-        foreach ($navigationNodeLocalizedAttributesTransfers as $navigationNodeLocalizedAttributesTransfer) {
-            $newNavigationNodeLocalizedAttributesTransfers[] = (new NavigationNodeLocalizedAttributesTransfer())
-                ->setCategoryUrl($navigationNodeLocalizedAttributesTransfer->getCategoryUrl())
-                ->setCmsPageUrl($navigationNodeLocalizedAttributesTransfer->getCmsPageUrl())
-                ->setCssClass($navigationNodeLocalizedAttributesTransfer->getCssClass())
-                ->setExternalUrl($navigationNodeLocalizedAttributesTransfer->getExternalUrl())
-                ->setFkLocale($navigationNodeLocalizedAttributesTransfer->getFkLocale())
-                ->setFkNavigationNode($navigationNodeLocalizedAttributesTransfer->getFkNavigationNode())
-                ->setFkUrl($navigationNodeLocalizedAttributesTransfer->getFkUrl())
-                ->setLink($navigationNodeLocalizedAttributesTransfer->getLink())
-                ->setTitle($navigationNodeLocalizedAttributesTransfer->getTitle())
-                ->setUrl($navigationNodeLocalizedAttributesTransfer->getUrl());
-        }
-
-        return new ArrayObject($newNavigationNodeLocalizedAttributesTransfers);
     }
 
     /**
@@ -150,7 +110,9 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         $this->navigationTouch->touchActive($navigationTransfer);
 
         foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
-            $this->navigationNodeCreator->createNavigationNode($navigationNodeTransfer->setFkNavigation($navigationTransfer->getIdNavigation()));
+            $this->navigationNodeCreator->createNavigationNode(
+                $navigationNodeTransfer->setFkNavigation($navigationTransfer->getIdNavigation())
+            );
         }
 
         return $navigationTransfer;

@@ -88,6 +88,19 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
+     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function duplicateNavigation(
+        NavigationTransfer $newNavigationElement,
+        NavigationTransfer $baseNavigationElement
+    ): NavigationTransfer {
+        return $this->navigationFacade->duplicateNavigation($newNavigationElement, $baseNavigationElement);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null

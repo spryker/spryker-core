@@ -57,6 +57,17 @@ interface NavigationGuiToNavigationInterface
     public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
+     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function duplicateNavigation(
+        NavigationTransfer $newNavigationElement,
+        NavigationTransfer $baseNavigationElement
+    ): NavigationTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
