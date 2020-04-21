@@ -9,7 +9,7 @@ namespace Spryker\Shared\Kernel\CodeBucket\Context;
 
 use Spryker\Shared\Kernel\Store;
 
-class DefaultCodeBucketContext extends AbstractCodeBucketContext implements CodeBucketContextInterface
+class DefaultCodeBucketContext extends AbstractCodeBucketContext
 {
     /**
      * @return string[]
