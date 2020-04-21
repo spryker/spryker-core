@@ -491,6 +491,7 @@
     "spryker/product-offer": "*",
     "spryker/product-offer-availability": "*",
     "spryker/product-offer-availability-storage": "*",
+    "spryker/product-offer-merchant-portal-gui": "*",
     "spryker/product-offer-sales": "*",
     "spryker/product-offer-stock": "*",
     "spryker/product-offer-stock-data-import": "*",
