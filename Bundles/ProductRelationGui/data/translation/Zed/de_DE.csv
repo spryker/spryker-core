@@ -1,22 +1,37 @@
 "Abstract product name","Name des abstrakten Produktes"
 "Abstract product name:","Abstrakter Produktname:"
 Activate,Aktivieren
+Active,
 "Add Product Relations","Produktrelationen hinzufügen"
+"Are you sure about deleting this product relation?",
 "Assign related products","Ähnliche Produkte zuweisen"
+"Create Product Relation",
 "Create relation","Beziehung erstellen"
 Deactivate,Deaktivieren
+"Delete Product Relation",
 Edit,Bearbeiten
 "Edit Product Relations","Produktrelationen bearbeiten"
 "Failed to delete relation.","Relation konnte nicht gelöscht werden."
+General,
+Inactive,
 "Is active:","Ist aktiv:"
+"It is impossible to update product relation #%d",
+"List of Product Relations",
 "List Product relations","Liste der Produktbeziehungen"
+"No, I want to keep this product relation",
 "Number of products","Anzahl der Produkte"
 "Please select product from the list below","Bitte wählen Sie ein Produkt aus der untenstehenden Liste aus"
+"Please select product from the list below *",
+"Product owning the relation",
+"Product relation #%d not found",
+"Product relation key",
 "Product relation successfully created","Produktbeziehung erfolgreich erstellt"
 "Product relation successfully modified","Produktbeziehung erfolgreich geändert"
 "Product relation with id ""%d"" not found.","Produktbeziehung mit der ID ""%d"" nicht gefunden"
+"Product Relations",
 "Related products","Ähnliche Produkte"
 related-products,"Ähnliche Produkte"
+"Relation #%d successfully deleted.",
 "Relation successfully activated.","Beziehung erfolgreich aktiviert."
 "Relation successfully deactivated.","Beziehung erfolgreich deaktiviert."
 "Relation successfully deleted.","Beziehung erfolgreich gelöscht."
@@ -25,10 +40,16 @@ related-products,"Ähnliche Produkte"
 Save,Speichern
 Select,select
 "Select product","Produkt auswählen"
+"Select Stores",
 "Selected product","Ausgewähltes Produkt"
 "Selected product already has ""%s"" relation type.","Das ausgewählte Produkt hat bereits Beziehungsart ""%s""."
 Sku:,Sku:
+Status,
+"Store relation",
+Stores,
 up-selling,Upselling
+"Update regularly",
 "Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions.","Regelmäßig aktualisieren: Wenn dies eingestellt ist, wird diese Produktbeziehung gemäß der Beziehungsbedingungen regelmäßig automatisch aktualisiert."
 "View in Shop","Im Shop ansehen"
+"View Product Relation: %s",
 "View relations","Beziehungen ansehen"
