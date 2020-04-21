@@ -1,5 +1,9 @@
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
 
+{% block headTitle %}
+    {{ 'Create Offer' | trans }}
+{% endblock %}
+
 {% block content %}
     {% set config = {
         dataUrl: dataUrl,
@@ -11,7 +15,7 @@
         filters: filters
     } %}
 
-    <mp-product-offer table-config="{{ config | json_encode() }}"></mp-product-offer>
+    <mp-product-offer title="{{ 'Create Offer' | trans }}" table-config="{{ config | json_encode() }}"></mp-product-offer>
 {% endblock %}
 
 {% block footerJs %}
