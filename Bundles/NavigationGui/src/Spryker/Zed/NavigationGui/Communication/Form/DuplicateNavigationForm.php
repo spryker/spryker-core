@@ -10,7 +10,6 @@ namespace Spryker\Zed\NavigationGui\Communication\Form;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class DuplicateNavigationForm extends AbstractType
 {
-    public const FIELD_ID_BASE_NAVIGATION = 'idNavigation';
     public const FIELD_NAME = 'name';
     public const FIELD_KEY = 'key';
 
@@ -53,8 +51,7 @@ class DuplicateNavigationForm extends AbstractType
     {
         $this
             ->addNameField($builder)
-            ->addKeyField($builder)
-            ->addIdBaseNavigationField($builder);
+            ->addKeyField($builder);
     }
 
     /**
@@ -93,22 +90,6 @@ class DuplicateNavigationForm extends AbstractType
                         'callback' => [$this, 'uniqueKeyCheck'],
                     ]),
                 ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdBaseNavigationField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_ID_BASE_NAVIGATION, CheckboxType::class, [
-                'label' => 'Active',
-                'required' => true,
             ]);
 
         return $this;

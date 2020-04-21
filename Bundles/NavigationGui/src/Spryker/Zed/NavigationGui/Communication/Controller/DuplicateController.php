@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DuplicateController extends AbstractController
 {
+    public const PARAM_ID_NAVIGATION = 'id-navigation';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,19 +32,20 @@ class DuplicateController extends AbstractController
 
         if ($duplicateNavigationForm->isSubmitted() && $duplicateNavigationForm->isValid()) {
             $navigationTransfer = $duplicateNavigationForm->getData();
+            $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
             $baseNavigationTransfer = $this->getFactory()
                 ->getNavigationFacade()
-                ->findNavigation((new NavigationTransfer())->setIdNavigation($navigationTransfer->getIdNavigation()));
+                ->findNavigation((new NavigationTransfer())->setIdNavigation($idNavigation));
             $newNavigationTransfer = (new NavigationTransfer())
                 ->setName($navigationTransfer->getName())
                 ->setKey($navigationTransfer->getKey());
-            $navigationTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getNavigationFacade()
                 ->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
 
             $this->addSuccessMessage(
                 'Navigation element %d was duplicated successfully.',
-                ['%d' => $navigationTransfer->getIdNavigation()]
+                ['%d' => $idNavigation]
             );
 
             return $this->redirectResponse('/navigation-gui');

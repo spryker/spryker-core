@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\NavigationGui\Communication\Controller\DeleteController;
+use Spryker\Zed\NavigationGui\Communication\Controller\DuplicateController;
 use Spryker\Zed\NavigationGui\Communication\Controller\UpdateController;
 use Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface;
 
@@ -110,7 +111,7 @@ class NavigationTable extends AbstractTable
 
         $urls[] = $this->createEditButton($navigationEntity->getIdNavigation());
         $urls[] = $this->createRemoveButton($navigationEntity->getIdNavigation());
-        $urls[] = $this->createDuplicateButton();
+        $urls[] = $this->createDuplicateButton($navigationEntity->getIdNavigation());
 
         return $urls;
     }
@@ -142,12 +143,14 @@ class NavigationTable extends AbstractTable
     }
 
     /**
+     * @param int $idNavigation
+     *
      * @return string
      */
-    protected function createDuplicateButton()
+    protected function createDuplicateButton(int $idNavigation): string
     {
         return $this->generateViewButton(
-            Url::generate('/navigation-gui/duplicate'),
+            Url::generate('/navigation-gui/duplicate', [DuplicateController::PARAM_ID_NAVIGATION => $idNavigation]),
             'Duplicate'
         );
     }
