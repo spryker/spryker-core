@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PaymentPluginValidatorInterface
+interface PaymentMethodValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -9,24 +9,25 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Payment\PaymentConfig;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface;
 
-class PaymentValidator implements PaymentPluginValidatorInterface
+class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
-    protected const CHECKOUT_PAYMENT_NOT_FOUND = 'checkout.payment.not_found';
+    protected const CHECKOUT_PAYMENT_METHOD_NOT_FOUND = 'checkout.payment_method.not_found';
 
     /**
-     * @var \Spryker\Zed\Payment\PaymentConfig
+     * @var \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
      */
-    protected $paymentConfig;
+    protected $paymentMethodReader;
 
     /**
-     * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
+     * @param \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface $paymentMethodReader
      */
-    public function __construct(PaymentConfig $paymentConfig)
+    public function __construct(PaymentMethodReaderInterface $paymentMethodReader)
     {
-        $this->paymentConfig = $paymentConfig;
+        $this->paymentMethodReader = $paymentMethodReader;
     }
 
     /**
@@ -37,15 +38,17 @@ class PaymentValidator implements PaymentPluginValidatorInterface
      */
     public function isPaymentMethodExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        $paymentMethodStatemachineMapping = $this->paymentConfig->getPaymentStatemachineMappings();
-        $paymentMethodsKeys = $this->getQuotePaymentMethodsKeys($quoteTransfer);
+        $availablePaymentMethods = $this->paymentMethodReader->getAvailableMethods($quoteTransfer);
+        $availablePaymentMethodsKeys = $this->getPaymentSelections($availablePaymentMethods);
+        $usedPaymentMethodsKeys = $this->getQuotePaymentMethodsKeys($quoteTransfer);
 
-        foreach ($paymentMethodsKeys as $paymentMethodsKey) {
-            if (!array_key_exists($paymentMethodsKey, $paymentMethodStatemachineMapping)) {
-                $this->addCheckoutError($checkoutResponseTransfer, static::CHECKOUT_PAYMENT_NOT_FOUND);
+        if (array_diff($usedPaymentMethodsKeys, $availablePaymentMethodsKeys)) {
+            $this->addCheckoutError(
+                $checkoutResponseTransfer,
+                static::CHECKOUT_PAYMENT_METHOD_NOT_FOUND
+            );
 
-                return false;
-            }
+            return false;
         }
 
         return true;
@@ -82,5 +85,22 @@ class PaymentValidator implements PaymentPluginValidatorInterface
             ->addError(
                 (new CheckoutErrorTransfer())->setMessage($message)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
+     *
+     * @return string[]
+     */
+    protected function getPaymentSelections(PaymentMethodsTransfer $availablePaymentMethods): array
+    {
+        $paymentMethods = $availablePaymentMethods->getMethods();
+
+        $paymentSelections = [];
+        foreach ($paymentMethods as $paymentMethod) {
+            $paymentSelections[] = $paymentMethod->getMethodName();
+        }
+
+        return $paymentSelections;
     }
 }
