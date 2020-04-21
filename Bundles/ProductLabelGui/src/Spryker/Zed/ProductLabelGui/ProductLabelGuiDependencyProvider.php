@@ -139,7 +139,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreRelationFormTypePlugin(Container $container)
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return $this->getStoreRelationFormTypePlugin();
@@ -149,11 +149,11 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException
+     * @throws \Spryker\Zed\ProductLabelGui\Exception\MissingStoreRelationFormTypePluginException
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    protected function getStoreRelationFormTypePlugin()
+    protected function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         throw new MissingStoreRelationFormTypePluginException(
             sprintf(

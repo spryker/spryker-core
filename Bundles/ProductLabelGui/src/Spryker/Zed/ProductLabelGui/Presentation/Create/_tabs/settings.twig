@@ -37,7 +37,7 @@
     </div>
     <div class="panel-body">
         {% for localizedAttributes in productLabelForm.localizedAttributes %}
-            {% set localeName = localizedAttributes.vars.value.getLocale().getLocaleName() %}
+            {% set localeName = localizedAttributes.vars.value.locale().localeName() %}
 
             {% embed '@Gui/Partials/localized-ibox.twig' with {
                 localeName: localeName,

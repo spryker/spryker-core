@@ -20,11 +20,11 @@ interface ProductLabelRepositoryInterface
     public function findProductLabelById(int $idProductLabel): ?ProductLabelTransfer;
 
     /**
-     * @param string $labelName
+     * @param string $productLabelName
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByNameProductLabel(string $labelName): ?ProductLabelTransfer;
+    public function findProductLabelByName(string $productLabelName): ?ProductLabelTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
@@ -36,21 +36,21 @@ interface ProductLabelRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function getAllProductLabelsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductLabelsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return array
      */
-    public function getAllLabelIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getProductLabelIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function getAllActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array;
+    public function getActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductLabel

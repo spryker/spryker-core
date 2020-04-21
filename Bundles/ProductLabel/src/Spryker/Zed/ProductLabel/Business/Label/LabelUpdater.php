@@ -8,20 +8,22 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
-use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
-use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
 
 class LabelUpdater implements LabelUpdaterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
+
+    /**
+     * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap::COL_IS_ACTIVE
+     */
+    protected const COL_IS_ACTIVE = 'spy_product_label.is_active';
 
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface
@@ -29,9 +31,9 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $localizedAttributesCollectionWriter;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
+     * @var \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface
      */
-    protected $queryContainer;
+    protected $productAbstractRelationReader;
 
     /**
      * @var \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface
@@ -44,28 +46,36 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $productAbstractRelationTouchManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
+     */
+    protected $productLabelEntityManager;
+
+    /**
      * @var \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface
      */
     protected $storeRelationUpdater;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface $productAbstractRelationReader
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
-        ProductLabelQueryContainerInterface $queryContainer,
+        ProductAbstractRelationReaderInterface $productAbstractRelationReader,
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
         ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager,
+        ProductLabelEntityManagerInterface $productLabelEntityManager,
         ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
-        $this->queryContainer = $queryContainer;
+        $this->productAbstractRelationReader = $productAbstractRelationReader;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
         $this->productAbstractRelationTouchManager = $productAbstractRelationTouchManager;
+        $this->productLabelEntityManager = $productLabelEntityManager;
         $this->storeRelationUpdater = $storeRelationUpdater;
     }
 
@@ -74,11 +84,11 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return void
      */
-    public function update(ProductLabelTransfer $productLabelTransfer)
+    public function update(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->assertProductLabel($productLabelTransfer);
 
-        $this->handleDatabaseTransaction(function () use ($productLabelTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
             $this->executeUpdateTransaction($productLabelTransfer);
         });
     }
@@ -88,7 +98,7 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return void
      */
-    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer)
+    protected function assertProductLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $productLabelTransfer
             ->requireIdProductLabel()
@@ -103,104 +113,20 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return void
      */
-    protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
+    protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer): void
     {
-        $isModified = $this->persistLabel($productLabelTransfer);
+        $modifiedColumns = $this->productLabelEntityManager->updateProductLabel($productLabelTransfer);
 
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
         $this->persistStoreRelation($productLabelTransfer);
 
-        if ($isModified) {
+        if ($modifiedColumns !== []) {
             $this->touchDictionary();
         }
-    }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return bool
-     */
-    protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
-    {
-        $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
-
-        if ($productLabelEntity->isColumnModified(SpyProductLabelTableMap::COL_IS_ACTIVE)) {
+        if (in_array(static::COL_IS_ACTIVE, $modifiedColumns, true)) {
             $this->touchLabelProducts($productLabelTransfer->getIdProductLabel());
         }
-
-        if (!$productLabelEntity->isModified()) {
-            return false;
-        }
-
-        $productLabelEntity->save();
-        $this->updateTransferFromEntity($productLabelTransfer, $productLabelEntity);
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function getUpdatedLabelEntity(ProductLabelTransfer $productLabelTransfer)
-    {
-        $productLabelEntity = $this->getEntityByIdProductLabel($productLabelTransfer->getIdProductLabel());
-        $productLabelEntity = $this->updateEntityFromTransfer($productLabelEntity, $productLabelTransfer);
-
-        return $productLabelEntity;
-    }
-
-    /**
-     * @param int $idProductLabel
-     *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function getEntityByIdProductLabel($idProductLabel)
-    {
-        $productLabelEntity = $this
-            ->queryContainer
-            ->queryProductLabelById($idProductLabel)
-            ->findOne();
-
-        if (!($productLabelEntity instanceof SpyProductLabel)) {
-            throw new MissingProductLabelException(sprintf(
-                'Could not find product label for id "%s"',
-                $idProductLabel
-            ));
-        }
-
-        return $productLabelEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function updateEntityFromTransfer(
-        SpyProductLabel $productLabelEntity,
-        ProductLabelTransfer $productLabelTransfer
-    ) {
-        $productLabelEntity->fromArray($productLabelTransfer->toArray());
-
-        return $productLabelEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
-     *
-     * @return void
-     */
-    protected function updateTransferFromEntity(
-        ProductLabelTransfer $productLabelTransfer,
-        SpyProductLabel $productLabelEntity
-    ) {
-        $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
     }
 
     /**
@@ -208,7 +134,7 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return void
      */
-    protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer)
+    protected function persistLocalizedAttributesCollection(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->localizedAttributesCollectionWriter->save($productLabelTransfer->getLocalizedAttributesCollection());
     }
@@ -236,7 +162,7 @@ class LabelUpdater implements LabelUpdaterInterface
     /**
      * @return void
      */
-    protected function touchDictionary()
+    protected function touchDictionary(): void
     {
         $this->dictionaryTouchManager->touchActive();
     }
@@ -246,14 +172,11 @@ class LabelUpdater implements LabelUpdaterInterface
      *
      * @return void
      */
-    protected function touchLabelProducts($idProductLabel)
+    protected function touchLabelProducts(int $idProductLabel): void
     {
-        $idProductAbstractList = $this->queryContainer
-            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
-            ->select([SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find();
+        $productAbstractIds = $this->productAbstractRelationReader->findIdsProductAbstractByIdProductLabel($idProductLabel);
 
-        foreach ($idProductAbstractList as $idProductAbstract) {
+        foreach ($productAbstractIds as $idProductAbstract) {
             $this->productAbstractRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
         }
     }

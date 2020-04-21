@@ -29,6 +29,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->createProductLabelQuery()
             ->filterByIdProductLabel($idProductLabel)
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find()
             ->getFirst();
 
@@ -42,16 +43,17 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @param string $labelName
+     * @param string $productLabelName
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByNameProductLabel(string $labelName): ?ProductLabelTransfer
+    public function findProductLabelByName(string $productLabelName): ?ProductLabelTransfer
     {
         $productLabelEntity = $this->getFactory()
             ->createProductLabelQuery()
-            ->filterByName($labelName)
+            ->filterByName($productLabelName)
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find()
             ->getFirst();
 
@@ -72,6 +74,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->orderByPosition(Criteria::ASC)
             ->find();
 
@@ -85,7 +88,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function getAllProductLabelsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductLabelsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
@@ -93,6 +96,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
             ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find();
 
         return $this->getFactory()
@@ -105,7 +109,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return int[]
      */
-    public function getAllLabelIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
@@ -123,7 +127,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return int[]
      */
-    public function getAllActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getActiveProductLabelIdsByIdProductAbstract(int $idProductAbstract): array
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()

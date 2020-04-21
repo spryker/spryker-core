@@ -94,8 +94,11 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Persists new product-label entity to database
-     * - Touches product-label dictionary active
+     * - Requires ProductLabelTransfer.name, ProductLabelTransfer.isActive and ProductLabelTransfer.isExclusive properties to be set.
+     * - Persists new product label entity to database.
+     * - Persists product label localized attributes to database.
+     * - Persists product label to store relation to database.
+     * - Touches product label dictionary active.
      *
      * @api
      *
@@ -107,14 +110,15 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Persists product-label changes to database
-     * - Touches product-label dictionary active
+     * - Persists product label changes to database.
+     * - Persists product label localized attributes to database.
+     * - Persists product label to store relation to database.
+     * - Touches product label dictionary active if product label was changed.
+     * - Touches product abstract active if product label was activated/deactivated.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
      *
      * @return void
      */
@@ -126,6 +130,7 @@ interface ProductLabelFacadeInterface
      * - Removes provided product label from Persistence.
      * - Removes assigned localized attributes in Persistence.
      * - Removes relations between product label and abstract products.
+     * - Removes relations between product label and store.
      * - Returns 'isSuccessful=true' if the product label was removed.
      * - Returns 'isSuccessful=false' with error messages otherwise.
      *
