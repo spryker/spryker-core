@@ -9,6 +9,9 @@ namespace Spryker\Glue\Kernel\ClassResolver;
 
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo as SharedClassInfo;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\ClassResolver\ClassInfo} instead.
+ */
 class ClassInfo extends SharedClassInfo
 {
     public const KEY_LAYER = 3;
@@ -16,7 +19,7 @@ class ClassInfo extends SharedClassInfo
     /**
      * @return string
      */
-    public function getLayer()
+    public function getLayer(): string
     {
         return $this->callerClassParts[self::KEY_LAYER];
     }

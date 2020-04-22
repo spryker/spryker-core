@@ -93,8 +93,10 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
      *
      * @return void
      */
-    protected function storeDataSet(ProductSearchConfigStorageTransfer $searchConfigExtensionTransfer, ?SpyProductSearchConfigStorage $spyProductSearchConfigStorageEntity = null)
-    {
+    protected function storeDataSet(
+        ProductSearchConfigStorageTransfer $searchConfigExtensionTransfer,
+        ?SpyProductSearchConfigStorage $spyProductSearchConfigStorageEntity = null
+    ) {
         if ($spyProductSearchConfigStorageEntity === null) {
             $spyProductSearchConfigStorageEntity = new SpyProductSearchConfigStorage();
         }

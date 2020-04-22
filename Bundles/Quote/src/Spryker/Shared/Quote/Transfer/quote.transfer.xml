@@ -79,5 +79,11 @@
         <property name="isOrdered" type="bool"/>
     </transfer>
 
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+
 </transfers>
 

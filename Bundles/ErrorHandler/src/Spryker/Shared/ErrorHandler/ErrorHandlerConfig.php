@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class ErrorHandlerConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isPrettyErrorHandlerEnabled(): bool
@@ -20,6 +22,8 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUserBasePath(): string
@@ -28,6 +32,8 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getServerBasePath(): string
@@ -36,6 +42,8 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getIdeLink(): string
@@ -44,6 +52,8 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isAjaxRequiredByIde(): bool

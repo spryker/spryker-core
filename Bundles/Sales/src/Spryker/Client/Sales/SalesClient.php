@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Sales;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -46,6 +49,22 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getPaginatedOrders($orderListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
     }
 
     /**
@@ -94,5 +113,21 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getCustomerOrderByOrderReference($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getOrderItems($orderItemFilterTransfer);
     }
 }

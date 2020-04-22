@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\DataImport;
 
 use Codeception\Actor;
-use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
  * Inherited Methods
@@ -29,12 +28,4 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 class DataImportBusinessTester extends Actor
 {
     use _generated\DataImportBusinessTesterActions;
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
-     */
-    public function getFactory(): DataImportBusinessFactory
-    {
-        return new DataImportBusinessFactory();
-    }
 }

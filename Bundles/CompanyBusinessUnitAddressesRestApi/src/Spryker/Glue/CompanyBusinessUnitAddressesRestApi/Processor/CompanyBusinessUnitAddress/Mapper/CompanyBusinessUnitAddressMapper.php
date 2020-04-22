@@ -37,7 +37,8 @@ class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapp
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
-        if (!$companyBusinessUnitTransfer->getDefaultBillingAddress()
+        if (
+            !$companyBusinessUnitTransfer->getDefaultBillingAddress()
             || !$this->hasAddressCollection($companyBusinessUnitTransfer)
         ) {
             return $restCompanyBusinessUnitAttributesTransfer->setDefaultBillingAddress(null);

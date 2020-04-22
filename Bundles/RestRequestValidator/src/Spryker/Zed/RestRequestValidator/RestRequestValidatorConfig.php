@@ -19,6 +19,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     protected const PATH_PATTERN_CORE_VALIDATION = '/*/*/*/*/Glue/*/Validation';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getValidationSchemaPathPattern(): array
@@ -31,6 +33,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getValidationSchemaFileNamePattern(): string
@@ -39,6 +43,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorePathPattern(): string
@@ -47,6 +53,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProjectPathPattern(): string
@@ -55,6 +63,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCorePathPattern(): string
@@ -63,6 +73,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCacheFilePathPattern(): string
@@ -71,6 +83,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStoreModulesPattern(): string

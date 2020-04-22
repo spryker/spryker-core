@@ -97,6 +97,6 @@ class CategoryNodeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getCategoryNodeSynchronizationPoolName();
+        return $this->getConfig()->getCategoryNodeSynchronizationPoolName();
     }
 }

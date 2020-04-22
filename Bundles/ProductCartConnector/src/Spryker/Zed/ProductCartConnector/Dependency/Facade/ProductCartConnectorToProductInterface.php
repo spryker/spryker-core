@@ -71,4 +71,11 @@ interface ProductCartConnectorToProductInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
+
+    /**
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

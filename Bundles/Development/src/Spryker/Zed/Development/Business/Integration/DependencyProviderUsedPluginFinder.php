@@ -67,8 +67,10 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsageInModuleApplications(ModuleTransfer $moduleTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer): DependencyProviderCollectionTransfer
-    {
+    protected function addPluginUsageInModuleApplications(
+        ModuleTransfer $moduleTransfer,
+        DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+    ): DependencyProviderCollectionTransfer {
         foreach ($moduleTransfer->getApplications() as $applicationTransfer) {
             $dependencyProviderCollectionTransfer = $this->addPluginUsageInModule($moduleTransfer, $applicationTransfer, $dependencyProviderCollectionTransfer);
         }
@@ -83,8 +85,11 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsageInModule(ModuleTransfer $moduleTransfer, ApplicationTransfer $applicationTransfer, DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer)
-    {
+    protected function addPluginUsageInModule(
+        ModuleTransfer $moduleTransfer,
+        ApplicationTransfer $applicationTransfer,
+        DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+    ) {
         $finder = $this->getFinderForModule(
             $this->getPath($moduleTransfer, $applicationTransfer)
         );
@@ -168,8 +173,11 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsages(DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer, DependencyProviderTransfer $dependencyProviderTransfer, SplFileInfo $splFileInfo): DependencyProviderCollectionTransfer
-    {
+    protected function addPluginUsages(
+        DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer,
+        DependencyProviderTransfer $dependencyProviderTransfer,
+        SplFileInfo $splFileInfo
+    ): DependencyProviderCollectionTransfer {
         preg_match_all('/use (.*?);/', $splFileInfo->getContents(), $matches, PREG_SET_ORDER);
         if (count($matches) === 0) {
             return $dependencyProviderCollectionTransfer;

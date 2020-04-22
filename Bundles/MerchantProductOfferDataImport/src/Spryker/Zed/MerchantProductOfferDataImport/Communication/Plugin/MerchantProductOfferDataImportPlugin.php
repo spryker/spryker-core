@@ -35,7 +35,7 @@ class MerchantProductOfferDataImportPlugin extends AbstractPlugin implements Dat
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->import($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importMerchantProductOfferData($dataImporterConfigurationTransfer);
     }
 
     /**

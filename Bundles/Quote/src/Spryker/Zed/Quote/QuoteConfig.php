@@ -20,6 +20,8 @@ class QuoteConfig extends AbstractBundleConfig
     protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageStrategy()
@@ -28,6 +30,8 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving()
@@ -41,6 +45,8 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getQuoteItemFieldsAllowedForSaving(): array
@@ -63,6 +69,8 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGuestQuoteLifetime(): string

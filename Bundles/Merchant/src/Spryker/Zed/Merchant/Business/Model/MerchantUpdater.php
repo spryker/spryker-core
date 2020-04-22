@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -39,7 +40,12 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantStatusValidator;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[]
+     */
+    protected $merchantPostUpdatePlugins;
+
+    /**
+     * @var array|\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
     protected $merchantPostSavePlugins;
 
@@ -48,16 +54,19 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
         MerchantStatusValidatorInterface $merchantStatusValidator,
-        array $merchantPostSavePlugins
+        array $merchantPostSavePlugins,
+        array $merchantPostUpdatePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
         $this->merchantStatusValidator = $merchantStatusValidator;
+        $this->merchantPostUpdatePlugins = $merchantPostUpdatePlugins;
         $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
 
@@ -89,9 +98,16 @@ class MerchantUpdater implements MerchantUpdaterInterface
             return $merchantResponseTransfer;
         }
 
-        $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            return $this->executeUpdateTransaction($merchantTransfer);
-        });
+        try {
+            $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
+                return $this->executeUpdateTransaction($merchantTransfer);
+            });
+        } catch (MerchantNotSavedException $merchantNotSavedException) {
+            return $merchantResponseTransfer
+                ->setIsSuccess(false)
+                ->setErrors($merchantNotSavedException->getErrors())
+                ->setMerchant($merchantTransfer);
+        }
 
         $merchantResponseTransfer = $merchantResponseTransfer
             ->setIsSuccess(true)
@@ -108,7 +124,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
+        $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -116,10 +132,19 @@ class MerchantUpdater implements MerchantUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
+     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException
+     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantPostSavePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function executeMerchantPostUpdatePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
+        foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
+            $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($merchantTransfer);
+            if (!$merchantResponseTransfer->getIsSuccess()) {
+                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
+            }
+        }
+
         foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
             $merchantTransfer = $merchantPostSavePlugin->execute($merchantTransfer);
         }

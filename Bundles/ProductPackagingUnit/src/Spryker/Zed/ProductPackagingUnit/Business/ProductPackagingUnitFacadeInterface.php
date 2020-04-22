@@ -233,7 +233,10 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+    public function expandSalesOrderItemWithAmountSalesUnit(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:
@@ -246,7 +249,10 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+    public function expandSalesOrderItemWithAmountAndAmountSku(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:
@@ -319,7 +325,11 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array;
+    public function aggregateProductPackagingUnitReservation(
+        string $sku,
+        OmsStateCollectionTransfer $reservedStates,
+        ?StoreTransfer $storeTransfer = null
+    ): array;
 
     /**
      * Specification:
@@ -413,4 +423,18 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Checks if packaging units are found for items in `CartChangeTransfer`.
+     * - Checks items with amount set.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case packaging unit not found for item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

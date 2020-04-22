@@ -19,6 +19,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku

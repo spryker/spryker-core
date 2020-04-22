@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TaxConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return float
      */
     public function getDefaultTaxRate()

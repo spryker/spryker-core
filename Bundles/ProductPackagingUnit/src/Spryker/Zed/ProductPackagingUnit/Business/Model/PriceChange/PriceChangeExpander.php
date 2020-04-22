@@ -15,7 +15,7 @@ use Spryker\DecimalObject\Decimal;
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
     /**
-     * @uses CalculationPriceMode::PRICE_MODE_NET
+     * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_NET
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
     protected const DIVISION_SCALE = 10;
@@ -28,7 +28,8 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     public function setCustomAmountPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmount()
+            if (
+                !$itemTransfer->getAmount()
                 || !$itemTransfer->getProductPackagingUnit()
                 || !$itemTransfer->getProductPackagingUnit()
                     ->getProductPackagingUnitAmount()

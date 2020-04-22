@@ -26,6 +26,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     public const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -36,6 +38,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -50,6 +54,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -68,6 +74,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -83,6 +91,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -147,6 +157,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $term
@@ -173,6 +185,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $term
@@ -232,6 +246,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -253,6 +269,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

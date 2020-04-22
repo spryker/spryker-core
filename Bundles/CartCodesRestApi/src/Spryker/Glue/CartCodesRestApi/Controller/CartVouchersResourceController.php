@@ -24,8 +24,7 @@ class CartVouchersResourceController extends AbstractController
      *              "Adds a code to cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",
@@ -52,13 +51,12 @@ class CartVouchersResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/vouchers",
+     *          "path": "/carts/{cartId}/vouchers/{voucherCode}",
      *          "summary": [
      *              "Deletes a code from cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",

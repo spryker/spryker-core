@@ -72,7 +72,8 @@ class UserForm extends AbstractType
                 $defaultData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (array_key_exists(self::FIELD_USERNAME, $defaultData) === false ||
+                if (
+                    array_key_exists(self::FIELD_USERNAME, $defaultData) === false ||
                     $defaultData[self::FIELD_USERNAME] !== $submittedData[self::FIELD_USERNAME]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_USERNAME_CHECK];

@@ -30,7 +30,8 @@ class ProductConcretePageSearchProductLocalizedAttributesListener extends Abstra
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE
+        if (
+            $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE
             || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE
             || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE
         ) {

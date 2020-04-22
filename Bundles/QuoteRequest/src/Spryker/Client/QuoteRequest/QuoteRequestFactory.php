@@ -8,6 +8,8 @@
 namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteRequest\Checker\QuoteChecker;
+use Spryker\Client\QuoteRequest\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
 use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreator;
@@ -76,6 +78,14 @@ class QuoteRequestFactory extends AbstractFactory
     public function createQuoteRequestStub(): QuoteRequestStubInterface
     {
         return new QuoteRequestStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
     }
 
     /**

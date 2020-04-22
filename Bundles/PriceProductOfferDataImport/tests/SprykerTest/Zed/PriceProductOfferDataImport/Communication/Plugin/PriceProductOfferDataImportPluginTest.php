@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\PriceProductOfferDataImport\Communication\Plugin;
@@ -29,7 +29,8 @@ use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
  */
 class PriceProductOfferDataImportPluginTest extends Unit
 {
-    protected const PRODUCT_OFFER_REFERENCE = 'test';
+    protected const PRODUCT_OFFER_REFERENCE = 'offer-1';
+
     /**
      * @var \SprykerTest\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportCommunicationTester
      */
@@ -40,12 +41,13 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     public function testPriceProductOfferDataImportFacade(): void
     {
-        //Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+
         $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
-            ProductOfferTransfer::CONCRETE_SKU => '',
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE,
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
+
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/price_product_offer.csv');
 
@@ -81,8 +83,6 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     protected function hasPriceProductOffers(): bool
     {
-        $priceProductOfferQuery = new SpyPriceProductOfferQuery();
-
-        return $priceProductOfferQuery->exists();
+        return SpyPriceProductOfferQuery::create()->exists();
     }
 }
