@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payment\Business\Checkout;
+namespace Spryker\Zed\Payment\Business\Method;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
@@ -36,17 +35,18 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
      *
      * @return bool
      */
-    public function isPaymentMethodExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
+    public function isQuotePaymentMethodValid(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
         $availablePaymentMethods = $this->paymentMethodReader->getAvailableMethods($quoteTransfer);
         $availablePaymentMethodsKeys = $this->getPaymentSelections($availablePaymentMethods);
         $usedPaymentMethodsKeys = $this->getQuotePaymentMethodsKeys($quoteTransfer);
 
         if (array_diff($usedPaymentMethodsKeys, $availablePaymentMethodsKeys)) {
-            $this->addCheckoutError(
-                $checkoutResponseTransfer,
-                static::CHECKOUT_PAYMENT_METHOD_NOT_FOUND
-            );
+            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+                ->setMessage(static::CHECKOUT_PAYMENT_METHOD_NOT_FOUND);
+            $checkoutResponseTransfer->setIsSuccess(false)->addError($checkoutErrorTransfer);
 
             return false;
         }
@@ -71,20 +71,6 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
         }
 
         return $paymentMethodsKeys;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param string $message
-     *
-     * @return void
-     */
-    protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): void
-    {
-        $checkoutResponseTransfer->setIsSuccess(false)
-            ->addError(
-                (new CheckoutErrorTransfer())->setMessage($message)
-            );
     }
 
     /**

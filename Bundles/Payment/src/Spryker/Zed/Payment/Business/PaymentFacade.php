@@ -196,10 +196,12 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return bool
      */
-    public function isPaymentMethodExists(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
+    public function isQuotePaymentMethodValid(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
         return $this->getFactory()
-            ->createPaymentValidator()
-            ->isPaymentMethodExists($quoteTransfer, $checkoutResponseTransfer);
+            ->createPaymentMethodValidator()
+            ->isQuotePaymentMethodValid($quoteTransfer, $checkoutResponseTransfer);
     }
 }

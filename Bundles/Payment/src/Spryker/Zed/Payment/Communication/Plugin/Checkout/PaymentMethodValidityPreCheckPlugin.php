@@ -17,11 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  */
-class PaymentExistsPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class PaymentMethodValidityPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks if selected payment methods exist.
+     * - Checks if selected payment methods exist and are available for the `QuoteTransfer`.
      *
      * @api
      *
@@ -30,8 +30,10 @@ class PaymentExistsPreCheckPlugin extends AbstractPlugin implements CheckoutPreC
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        return $this->getFacade()->isPaymentMethodExists($quoteTransfer, $checkoutResponseTransfer);
+    public function checkCondition(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFacade()->isQuotePaymentMethodValid($quoteTransfer, $checkoutResponseTransfer);
     }
 }
