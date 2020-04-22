@@ -1,4 +1,5 @@
 "# of Other Labels","# of Other Labels"
+"# of Products","# of Products"
 Activate,Activate
 "Assigned products","Assigned products"
 "Available products","Available products"
@@ -10,6 +11,9 @@ Categories,Categories
 Deactivate,Deactivate
 Edit,Edit
 "Edit Product Label","Edit Product Label"
+ID,ID
+"Is Active","Is Active"
+"Is Dynamic","Is Dynamic"
 "Is Exclusive","Is Exclusive"
 "Front-end Reference","Front-end Reference"
 General,General
@@ -40,14 +44,10 @@ Save,Save
 "Select all","Select all"
 "Selected products to assign","Selected products to assign"
 "Selected products to de-assign","Selected products to de-assign"
+Settings,Settings
 Translations,Translations
 "Valid from","Valid from"
 "Valid to","Valid to"
 Validity,Validity
 View,View
 "View Product Label","View Product Label"
-"Is Active","Is Active"
-"Is Dynamic","Is Dynamic"
-ID,ID
-"# of Products","# of Products"
-Settings,Settings
