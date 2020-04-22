@@ -35,7 +35,7 @@ class MerchantDataImportHelper extends Module
      */
     public function assertMerchantStoreDatabaseTableContainsData(int $idMerchant): void
     {
-        $query = $this->createMerchantStoreQuery()->filterByFkMerchant($idMerchant);
+        $query = $this->getMerchantStoreQuery()->filterByFkMerchant($idMerchant);
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 
@@ -50,7 +50,7 @@ class MerchantDataImportHelper extends Module
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery
      */
-    protected function createMerchantStoreQuery(): SpyMerchantStoreQuery
+    protected function getMerchantStoreQuery(): SpyMerchantStoreQuery
     {
         return SpyMerchantStoreQuery::create();
     }

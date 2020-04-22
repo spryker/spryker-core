@@ -113,9 +113,10 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
 
         $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaTransfer);
+        $storeTransfers = $this->storeFacade->getAllStores();
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            foreach ($this->getStoreTransfers() as $storeTransfer) {
+            foreach ($storeTransfers as $storeTransfer) {
                 if ($merchantTransfer->getIsActive() && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)) {
                     $this->merchantStorageEntityManager->saveMerchantStorage(
                         $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
@@ -160,19 +161,5 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
         $merchantStorageTransfer = $merchantStorageTransfer->fromArray($merchantTransfer->modifiedToArray(), true);
 
         return $merchantStorageTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected function getStoreTransfers(): array
-    {
-        if (!$this->storeTransfers) {
-            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-                $this->storeTransfers[] = $storeTransfer;
-            }
-        }
-
-        return $this->storeTransfers;
     }
 }

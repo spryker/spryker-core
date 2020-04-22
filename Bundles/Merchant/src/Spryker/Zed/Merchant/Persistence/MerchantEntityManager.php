@@ -58,7 +58,7 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
 
         return $this->getFactory()
             ->createMerchantStoreMapper()
-            ->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, new StoreTransfer());
+            ->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer());
     }
 
     /**

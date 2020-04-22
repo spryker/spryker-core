@@ -10,7 +10,7 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
+use Orm\Zed\Store\Persistence\SpyStore;
 
 class MerchantStoreMapper
 {
@@ -36,16 +36,15 @@ class MerchantStoreMapper
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchantStore $merchantStoreEntity
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function mapMerchantStoreEntityToStoreTransfer(
-        SpyMerchantStore $merchantStoreEntity,
+    public function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
         StoreTransfer $storeTransfer
     ): StoreTransfer {
-        return $storeTransfer->setIdStore($merchantStoreEntity->getFkStore())
-            ->setName($merchantStoreEntity->getSpyStore()->getName());
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 }

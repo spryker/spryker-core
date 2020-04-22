@@ -122,7 +122,7 @@ class MerchantMapper implements MerchantMapperInterface
     {
         $storeTransfers = new ArrayObject();
         foreach ($merchantStoreEntities as $merchantStoreEntity) {
-            $storeTransfers->append($this->merchantStoreMapper->mapMerchantStoreEntityToStoreTransfer($merchantStoreEntity, new StoreTransfer()));
+            $storeTransfers->append($this->merchantStoreMapper->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer()));
         }
 
         $storeRelationTransfer = (new StoreRelationTransfer())
