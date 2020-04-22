@@ -141,7 +141,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if non auto-increment but using sequence, get the id first
-        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
+        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === 'native') {
             /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if (!$column) {
@@ -188,7 +188,7 @@ class ObjectBuilder extends PropelObjectBuilder
             $columnNameCase = var_export($this->quoteIdentifier($column->getName()), true);
             $script .= "
                     case $columnNameCase:";
-            $script .= $platform->getColumnBindingPHP($column, "\$identifier", '$this->' . $column->getLowercasedName(), '                        ');
+            $script .= $platform->getColumnBindingPHP($column, '$identifier', '$this->' . $column->getLowercasedName(), '                        ');
             $script .= "
                         break;";
         }
@@ -220,7 +220,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if auto-increment, get the id after
-        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
+        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === 'native') {
             $script .= "
         try {";
             $script .= $platform->getIdentifierPhp('$pk', '$con', $primaryKeyMethodInfo);
@@ -238,7 +238,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }";
                 } else {
                     $script .= "
-        \$this->set" . $column->getPhpName() . "(\$pk);";
+        \$this->set" . $column->getPhpName() . '($pk);';
                 }
             }
             $script .= "
@@ -282,7 +282,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray(\$keyType = TableMap::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
+    public function toArray(\$keyType = TableMap::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ', $includeForeignObjects = false' : '') . ")
     {
 
         if (isset(\$alreadyDumpedObjects['$objectClassName'][\$this->hashCode()])) {
@@ -294,10 +294,10 @@ class ObjectBuilder extends PropelObjectBuilder
         foreach ($this->getTable()->getColumns() as $num => $col) {
             if ($col->isLazyLoad()) {
                 $script .= "
-            \$keys[$num] => (\$includeLazyLoadColumns) ? \$this->get" . $col->getPhpName() . "() : null,";
+            \$keys[$num] => (\$includeLazyLoadColumns) ? \$this->get" . $col->getPhpName() . '() : null,';
             } else {
                 $script .= "
-            \$keys[$num] => \$this->get" . $col->getPhpName() . "(),";
+            \$keys[$num] => \$this->get" . $col->getPhpName() . '(),';
             }
         }
         $script .= "
@@ -396,19 +396,19 @@ class ObjectBuilder extends PropelObjectBuilder
             if ($rightValueOrColumn instanceof Column) {
                 $localColumns[$rightValueOrColumn->getPosition()] = '$this->' . $clo;
 
-                if ($cptype === "int" || $cptype === "float" || $cptype === "double") {
-                    $conditional .= $and . "\$this->" . $clo . " != 0";
-                } elseif ($cptype === "string") {
-                    $conditional .= $and . "(\$this->" . $clo . " !== \"\" && \$this->" . $clo . " !== null)";
+                if ($cptype === 'int' || $cptype === 'float' || $cptype === 'double') {
+                    $conditional .= $and . '$this->' . $clo . ' != 0';
+                } elseif ($cptype === 'string') {
+                    $conditional .= $and . '($this->' . $clo . ' !== "" && $this->' . $clo . ' !== null)';
                 } else {
-                    $conditional .= $and . "\$this->" . $clo . " !== null";
+                    $conditional .= $and . '$this->' . $clo . ' !== null';
                 }
             } else {
                 $val = var_export($rightValueOrColumn, true);
-                $conditional .= $and . "\$this->" . $clo . " === " . $val;
+                $conditional .= $and . '$this->' . $clo . ' === ' . $val;
             }
 
-            $and = " && ";
+            $and = ' && ';
         }
 
         ksort($localColumns); // restoring the order of the foreign PK
@@ -440,7 +440,7 @@ class ObjectBuilder extends PropelObjectBuilder
         if ($fk->isLocalPrimaryKey()) {
             $script .= "
             // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . "(\$this);";
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . '($this);';
         } else {
             $script .= "
             /* The following can be used additionally to

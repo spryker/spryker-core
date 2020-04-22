@@ -19,8 +19,8 @@ use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
 class GlobalThresholdDataProvider
 {
-    protected const FORMAT_STORE_CURRENCY_ROW_LABEL = "%s - %s [%s]";
-    protected const FORMAT_STORE_CURRENCY_ROW_VALUE = "%s%s%s";
+    protected const FORMAT_STORE_CURRENCY_ROW_LABEL = '%s - %s [%s]';
+    protected const FORMAT_STORE_CURRENCY_ROW_VALUE = '%s%s%s';
 
     /**
      * @var \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface
