@@ -16,5 +16,5 @@ interface OmsProductOfferReservationWriterInterface
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 }

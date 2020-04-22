@@ -35,7 +35,7 @@ class ReservationVersionHandlerTerminationAwareStrategyPlugin extends AbstractPl
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.sku not null;
+     * - Checks if request is applicable for the concrete products.
      *
      * @api
      *

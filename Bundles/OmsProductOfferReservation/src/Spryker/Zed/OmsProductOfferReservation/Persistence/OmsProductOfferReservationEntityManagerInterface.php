@@ -16,5 +16,12 @@ interface OmsProductOfferReservationEntityManagerInterface
      *
      * @return void
      */
-    public function saveReservation(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void;
+    public function create(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer
+     *
+     * @return void
+     */
+    public function update(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void;
 }

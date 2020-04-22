@@ -16,8 +16,8 @@ interface OmsProductOfferReservationFacadeInterface
     /**
      * Specification:
      * - Returns ReservationResponseTransfer with reserved quantity for product offer.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.productOfferReference.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.idStore.
+     * - Requires OmsProductOfferReservationCriteriaTransfer.productOfferReference transfer field to be set.
+     * - Requires OmsProductOfferReservationCriteriaTransfer.idStore transfer field to be set.
      *
      * @api
      *
@@ -46,8 +46,8 @@ interface OmsProductOfferReservationFacadeInterface
     /**
      * Specification:
      * - Saves reservation quantity for provided ReservationRequestTransfer.
-     * - Requires ReservationRequestTransfer.productOfferReference.
-     * - Requires ReservationRequestTransfer.store.idStore.
+     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
+     * - Requires ReservationRequestTransfer.store.idStore transfer field to be set.
      *
      * @api
      *
@@ -55,5 +55,5 @@ interface OmsProductOfferReservationFacadeInterface
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 }

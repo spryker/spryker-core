@@ -147,12 +147,12 @@ class Reservation implements ReservationInterface
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
         $reservationRequestTransfer->setReservationQuantity($reservationQuantity)
             ->setStore($currentStoreTransfer);
-        $this->saveReservationQuantity($reservationRequestTransfer);
+        $this->writeReservation($reservationRequestTransfer);
 
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $reservationRequestTransfer->setStore($storeTransfer);
-            $this->saveReservationQuantity($reservationRequestTransfer);
+            $this->writeReservation($reservationRequestTransfer);
         }
 
         foreach ($this->reservationHandlerTerminationAwareStrategyPlugins as $reservationHandlerTerminationAwareStrategyPlugin) {
@@ -188,7 +188,7 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\Reservation::sumReservedProductQuantities()` instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
@@ -417,7 +417,7 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\Reservation::saveReservationQuantity()` instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -442,17 +442,25 @@ class Reservation implements ReservationInterface
      *
      * @return void
      */
-    protected function saveReservationQuantity(ReservationRequestTransfer $reservationRequestTransfer): void
+    protected function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
         foreach ($this->omsReservationWriterStrategyPlugins as $omsReservationWriterStrategyPlugin) {
             if ($omsReservationWriterStrategyPlugin->isApplicable($reservationRequestTransfer)) {
-                $omsReservationWriterStrategyPlugin->saveReservation($reservationRequestTransfer);
+                $omsReservationWriterStrategyPlugin->writeReservation($reservationRequestTransfer);
 
                 return;
             }
         }
 
-        $this->omsEntityManager->saveReservation($reservationRequestTransfer);
+        $omsProductReservationTransfer = $this->omsRepository->findProductReservation($reservationRequestTransfer);
+
+        if (!$omsProductReservationTransfer) {
+            $this->omsEntityManager->createReservation($reservationRequestTransfer);
+
+            return;
+        }
+
+        $this->omsEntityManager->updateReservation($omsProductReservationTransfer);
     }
 
     /**

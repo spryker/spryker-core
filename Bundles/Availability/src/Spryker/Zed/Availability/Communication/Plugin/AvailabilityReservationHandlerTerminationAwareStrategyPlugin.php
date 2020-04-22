@@ -35,7 +35,7 @@ class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.sku not null;
+     * - Checks if request is applicable for concrete products.
      *
      * @api
      *
@@ -50,7 +50,7 @@ class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Updates availability for provider ReservationRequest.sku.
+     * - Updates availability for the concrete product.
      *
      * @api
      *

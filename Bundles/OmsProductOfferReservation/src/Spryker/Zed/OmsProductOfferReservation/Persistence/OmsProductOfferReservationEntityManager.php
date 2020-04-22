@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,12 +21,30 @@ class OmsProductOfferReservationEntityManager extends AbstractEntityManager impl
      *
      * @return void
      */
-    public function saveReservation(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void
+    public function create(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void
     {
-        $productOfferReservationEntity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
+        $productOfferReservationEntity = $this->getFactory()
+            ->createOmsProductOfferReservationMapper()
+            ->mapOmsProductOfferReservationTransferToOmsProductOfferReservationEntity(
+                $omsProductOfferReservationTransfer,
+                new SpyOmsProductOfferReservation()
+            );
+
+        $productOfferReservationEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer
+     *
+     * @return void
+     */
+    public function update(OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer): void
+    {
+        $productOfferReservationEntity = $this->getFactory()
+            ->getOmsProductOfferReservationPropelQuery()
             ->filterByProductOfferReference($omsProductOfferReservationTransfer->getProductOfferReference())
             ->filterByFkStore($omsProductOfferReservationTransfer->getIdStore())
-            ->findOneOrCreate();
+            ->findOne();
 
         $productOfferReservationEntity->setReservationQuantity($omsProductOfferReservationTransfer->getReservationQuantity());
         $productOfferReservationEntity->save();

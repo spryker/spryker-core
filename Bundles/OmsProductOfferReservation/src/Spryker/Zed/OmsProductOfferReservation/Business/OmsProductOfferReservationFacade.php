@@ -61,10 +61,10 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
         $this->getFactory()
             ->createOmsProductOfferReservationWriter()
-            ->saveReservation($reservationRequestTransfer);
+            ->writeReservation($reservationRequestTransfer);
     }
 }

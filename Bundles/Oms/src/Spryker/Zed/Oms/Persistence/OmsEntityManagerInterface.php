@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 interface OmsEntityManagerInterface
@@ -16,5 +17,12 @@ interface OmsEntityManagerInterface
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function createReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsProductReservationTransfer $omsProductReservationTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(OmsProductReservationTransfer $omsProductReservationTransfer): void;
 }

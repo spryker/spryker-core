@@ -11,6 +11,7 @@ use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationDependencyProvider;
+use Spryker\Zed\OmsProductOfferReservation\Persistence\Mapper\OmsProductOfferReservationMapper;
 
 /**
  * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
@@ -25,6 +26,14 @@ class OmsProductOfferReservationPersistenceFactory extends AbstractPersistenceFa
     public function getOmsProductOfferReservationPropelQuery(): SpyOmsProductOfferReservationQuery
     {
         return SpyOmsProductOfferReservationQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsProductOfferReservation\Persistence\Mapper\OmsProductOfferReservationMapper
+     */
+    public function createOmsProductOfferReservationMapper(): OmsProductOfferReservationMapper
+    {
+        return new OmsProductOfferReservationMapper();
     }
 
     /**

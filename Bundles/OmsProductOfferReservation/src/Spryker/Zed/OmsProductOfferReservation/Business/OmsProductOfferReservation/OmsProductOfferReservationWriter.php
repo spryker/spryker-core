@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationBusinessMapper;
 use Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationEntityManagerInterface;
+use Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface;
 
 class OmsProductOfferReservationWriter implements OmsProductOfferReservationWriterInterface
 {
@@ -20,19 +21,27 @@ class OmsProductOfferReservationWriter implements OmsProductOfferReservationWrit
     protected $omsProductOfferReservationEntityManager;
 
     /**
+     * @var \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface
+     */
+    protected $omsProductOfferReservationRepository;
+
+    /**
      * @var \Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationBusinessMapper
      */
     protected $omsProductOfferReservationBusinessMapper;
 
     /**
      * @param \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationEntityManagerInterface $omsProductOfferReservationEntityManager
+     * @param \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface $omsProductOfferReservationRepository
      * @param \Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationBusinessMapper $omsProductOfferReservationBusinessMapper
      */
     public function __construct(
         OmsProductOfferReservationEntityManagerInterface $omsProductOfferReservationEntityManager,
+        OmsProductOfferReservationRepositoryInterface $omsProductOfferReservationRepository,
         OmsProductOfferReservationBusinessMapper $omsProductOfferReservationBusinessMapper
     ) {
         $this->omsProductOfferReservationEntityManager = $omsProductOfferReservationEntityManager;
+        $this->omsProductOfferReservationRepository = $omsProductOfferReservationRepository;
         $this->omsProductOfferReservationBusinessMapper = $omsProductOfferReservationBusinessMapper;
     }
 
@@ -41,18 +50,23 @@ class OmsProductOfferReservationWriter implements OmsProductOfferReservationWrit
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $reservationRequestTransfer->requireProductOfferReference();
-        $reservationRequestTransfer->requireStore()->getStore()->requireIdStore();
-        $reservationRequestTransfer->requireReservationQuantity();
+        $omsProductOfferReservationTransfer = $this->omsProductOfferReservationRepository
+            ->find($reservationRequestTransfer);
 
-        $omsProductOfferReservationTransfer = $this->omsProductOfferReservationBusinessMapper
-            ->mapReservationRequestTransferToOmsProductOfferReservationTransfer(
-                $reservationRequestTransfer,
-                new OmsProductOfferReservationTransfer()
-            );
+        if (!$omsProductOfferReservationTransfer) {
+            $omsProductOfferReservationTransfer = $this->omsProductOfferReservationBusinessMapper
+                ->mapReservationRequestTransferToOmsProductOfferReservationTransfer(
+                    $reservationRequestTransfer,
+                    new OmsProductOfferReservationTransfer()
+                );
 
-        $this->omsProductOfferReservationEntityManager->saveReservation($omsProductOfferReservationTransfer);
+            $this->omsProductOfferReservationEntityManager->create($omsProductOfferReservationTransfer);
+
+            return;
+        }
+
+        $this->omsProductOfferReservationEntityManager->update($omsProductOfferReservationTransfer);
     }
 }

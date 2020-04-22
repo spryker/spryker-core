@@ -153,7 +153,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveReservationSuccess(): void
+    public function testWriteReservationUpdatesReservationQuantityForProductOffer(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
@@ -167,11 +167,10 @@ class OmsProductOfferReservationFacadeTest extends Unit
             ->setIdStore($reservationRequestTransfer->getStore()->getIdStore());
 
         // Act
-        $this->tester->getFacade()->saveReservation($reservationRequestTransfer);
-        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+        $this->tester->getFacade()->writeReservation($reservationRequestTransfer);
 
         // Assert
-        // Assert
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
         $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
         $this->assertSame(5, $reservationResponseTransfer->getReservationQuantity()->toInt());
     }

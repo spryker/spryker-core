@@ -10,7 +10,7 @@ namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 /**
- * Provides the ability to save reservation data about product.
+ * Provides the ability to save reservation data for product.
  */
 interface OmsReservationWriterStrategyPluginInterface
 {
@@ -28,7 +28,7 @@ interface OmsReservationWriterStrategyPluginInterface
 
     /**
      * Specification:
-     * - Saves reservation data from provided ReservationRequest.
+     * - Saves reservation data for provided ReservationRequest.
      *
      * @api
      *
@@ -36,5 +36,5 @@ interface OmsReservationWriterStrategyPluginInterface
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 }

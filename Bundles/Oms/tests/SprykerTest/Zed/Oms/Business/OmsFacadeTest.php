@@ -238,7 +238,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateReservationForProduct(): void
+    public function testUpdateReservationUpdatesExistingReservationQuantity(): void
     {
         // Arrange
         $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
@@ -250,13 +250,14 @@ class OmsFacadeTest extends Unit
         $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
         $reservationRequestTransfer = (new ReservationRequestTransfer())
             ->setSku($omsProductReservationTransfer->getSku())
-            ->setStore($storeTransfer);
+            ->setStore($storeTransfer)
+            ->setReservationQuantity(5);
 
         // Act
         $this->createOmsFacade()->updateReservation($reservationRequestTransfer);
-        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
 
         // Assert
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
         $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
     }
 

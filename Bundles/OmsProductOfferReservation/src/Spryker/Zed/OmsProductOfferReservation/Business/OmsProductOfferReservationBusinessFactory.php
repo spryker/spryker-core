@@ -36,6 +36,7 @@ class OmsProductOfferReservationBusinessFactory extends AbstractBusinessFactory
     {
         return new OmsProductOfferReservationWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createOmsProductOfferReservationBusinessMapper()
         );
     }

@@ -34,7 +34,7 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.sku is not null;
+     * - Checks if the request is applicable for concrete products.
      *
      * @api
      *
@@ -51,7 +51,6 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
      * {@inheritDoc}
      * - Updates the lead product's reservation for the provided product packaging unit SKU.
      * - Skips updating if the product packaging unit has self as lead product.
-     * - Oms Reservation plugins is expected to update availability.
      *
      * @api
      *

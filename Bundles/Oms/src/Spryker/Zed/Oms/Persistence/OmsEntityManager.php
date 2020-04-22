@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,18 +22,35 @@ class OmsEntityManager extends AbstractEntityManager implements OmsEntityManager
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    public function createReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
         $reservationRequestTransfer->requireSku();
         $reservationRequestTransfer->requireStore();
-        $storeTransfer = $reservationRequestTransfer->getStore();
 
-        $reservationEntity = $this->getFactory()->createOmsProductReservationQuery()
-            ->filterBySku($reservationRequestTransfer->getSku())
-            ->filterByFkStore($storeTransfer->requireIdStore()->getIdStore())
-            ->findOneOrCreate();
+        $omsProductReservationEntity = $this->getFactory()
+            ->createOmsMapper()
+            ->mapReservationRequestTransferToOmsProductReservationEntity(
+                $reservationRequestTransfer,
+                new SpyOmsProductReservation()
+            );
 
-        $reservationEntity->setReservationQuantity($reservationRequestTransfer->getReservationQuantity());
-        $reservationEntity->save();
+        $omsProductReservationEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsProductReservationTransfer $omsProductReservationTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(OmsProductReservationTransfer $omsProductReservationTransfer): void
+    {
+        $omsProductReservationEntity = $this->getFactory()
+            ->createOmsMapper()
+            ->mapOmsProductReservationTransferToOmsProductReservationEntity(
+                $omsProductReservationTransfer,
+                new SpyOmsProductReservation()
+            );
+
+        $omsProductReservationEntity->save();
     }
 }

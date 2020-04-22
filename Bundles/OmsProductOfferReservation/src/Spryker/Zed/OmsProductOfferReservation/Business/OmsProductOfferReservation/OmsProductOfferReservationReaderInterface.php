@@ -25,7 +25,7 @@ interface OmsProductOfferReservationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
 }

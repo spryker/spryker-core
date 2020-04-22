@@ -33,7 +33,7 @@ class ProductOfferReservationHandlerTerminationAwareStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequest.productOfferReference is not null.
+     * - Checks if the request is applicable for product offers.
      *
      * @api
      *

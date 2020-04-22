@@ -20,7 +20,7 @@ class ProductOfferOmsReservationWriterStrategyPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequestTransfer.productOfferReference is not null.
+     * - Checks if the request is applicable for product offers.
      *
      * @api
      *
@@ -43,8 +43,8 @@ class ProductOfferOmsReservationWriterStrategyPlugin extends AbstractPlugin impl
      *
      * @return void
      */
-    public function saveReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFactory()->createOmsProductOfferReservationWriter()->saveReservation($reservationRequestTransfer);
+        $this->getFacade()->writeReservation($reservationRequestTransfer);
     }
 }
