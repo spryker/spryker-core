@@ -44,7 +44,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
      */
     protected function filterDefaultPrecision($defaultPrecision): int
     {
-        if ($defaultPrecision === "") {
+        if ($defaultPrecision === '') {
             return static::DEFAULT_PRECISION;
         }
 
