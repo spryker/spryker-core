@@ -73,7 +73,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     public function seeDataTable(): void
     {
         if (!isset($this->currentData['recordsTotal'])) {
-            $this->fail("recordsTotal value not set; Run successful ->listDataTable before");
+            $this->fail('recordsTotal value not set; Run successful ->listDataTable before');
         }
     }
 
@@ -85,7 +85,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     public function seeNumRecordsInTable(int $num): void
     {
         if (!isset($this->currentData['recordsTotal'])) {
-            $this->fail("recordsTotal value not set; Run successful ->listDataTable before");
+            $this->fail('recordsTotal value not set; Run successful ->listDataTable before');
         }
         $this->assertEquals($num, $this->currentData['recordsTotal'], 'records in table');
     }
@@ -99,7 +99,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     public function seeInTable(int $row, array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
-            $this->fail("data for table not set; Run successful ->listDataTable before");
+            $this->fail('data for table not set; Run successful ->listDataTable before');
         }
         $data = $this->currentData['data'];
         if (!isset($data[$row])) {
@@ -110,8 +110,8 @@ class ZedControllerTable extends Module implements DependsOnModule
             count($expectedRow),
             count(array_intersect_assoc($expectedRow, $actualRow)),
             "Row does not contain the provided data\n"
-            . "- <info>" . var_export($expectedRow, true) . "</info>\n"
-            . "+ " . var_export($actualRow, true)
+            . '- <info>' . var_export($expectedRow, true) . "</info>\n"
+            . '+ ' . var_export($actualRow, true)
         );
     }
 
@@ -202,7 +202,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     public function seeInLastRow(array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
-            $this->fail("data for table not set; Run successful ->listDataTable before");
+            $this->fail('data for table not set; Run successful ->listDataTable before');
         }
         $rowNum = count($this->currentData['data']) - 1;
 
@@ -243,8 +243,8 @@ class ZedControllerTable extends Module implements DependsOnModule
             count($expectedRow),
             count(array_intersect_assoc($expectedRow, $actualRow)),
             "Row accidentally contains the provided data\n"
-            . "- <info>" . var_export($expectedRow, true) . "</info>\n"
-            . "+ " . var_export($actualRow, true)
+            . '- <info>' . var_export($expectedRow, true) . "</info>\n"
+            . '+ ' . var_export($actualRow, true)
         );
     }
 

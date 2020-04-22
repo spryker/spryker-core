@@ -457,7 +457,7 @@ class CmsFacadeTest extends Unit
     public function testExtractCmsVersionDataTransferPopulatesCmsVersionDataTransfer(): void
     {
         // Assign
-        $expectedResult = "dummyTestValue";
+        $expectedResult = 'dummyTestValue';
         $input = sprintf('{"cmsPage":{"templateName": "%s"}}', $expectedResult);
 
         // Act
