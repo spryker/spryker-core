@@ -10,8 +10,10 @@ namespace Spryker\Zed\ProductLabel\Persistence;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelMapper;
+use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
@@ -50,6 +52,22 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createProductLabelMapper(): ProductLabelMapper
     {
-        return new ProductLabelMapper();
+        return new ProductLabelMapper($this->createProductLabelStoreRelationMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper
+     */
+    public function createProductLabelStoreRelationMapper()
+    {
+        return new ProductLabelStoreRelationMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery
+     */
+    public function createProductLabelStoreQuery(): SpyProductLabelStoreQuery
+    {
+        return SpyProductLabelStoreQuery::create();
     }
 }

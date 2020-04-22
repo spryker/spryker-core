@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabel;
+namespace Spryker\Zed\ProductLabelGui\Exception;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Exception;
 
-class ProductLabelConfig extends AbstractBundleConfig
+class MissingStoreRelationFormTypePluginException extends Exception
 {
-    public const VALIDITY_DATE_FORMAT = 'Y-m-d';
 }

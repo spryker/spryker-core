@@ -10,12 +10,17 @@ namespace Spryker\Zed\ProductLabel\Business;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
+use Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
+use Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
+use Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
+use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
+use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
@@ -36,36 +41,39 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface
      */
-    public function createLabelCreator()
+    public function createLabelCreator(): LabelCreatorInterface
     {
         return new LabelCreator(
             $this->createLocalizedAttributesCollectionWriter(),
-            $this->getQueryContainer(),
-            $this->createLabelDictionaryTouchManager()
+            $this->getEntityManager(),
+            $this->createLabelDictionaryTouchManager(),
+            $this->createProductLabelStoreRelationUpdater()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface
      */
-    public function createLabelUpdater()
+    public function createLabelUpdater(): LabelUpdaterInterface
     {
         return new LabelUpdater(
             $this->createLocalizedAttributesCollectionWriter(),
-            $this->getQueryContainer(),
+            $this->createProductAbstractRelationReader(),
             $this->createLabelDictionaryTouchManager(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $this->getEntityManager(),
+            $this->createProductLabelStoreRelationUpdater()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface
      */
-    public function createLabelReader()
+    public function createLabelReader(): LabelReaderInterface
     {
         return new LabelReader(
-            $this->getQueryContainer(),
-            $this->createLocalizedAttributesCollectionReader()
+            $this->createLocalizedAttributesCollectionReader(),
+            $this->getRepository()
         );
     }
 
@@ -193,5 +201,13 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     protected function getProductLabelRelationUpdaterPlugins()
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface
+     */
+    public function createProductLabelStoreRelationUpdater(): ProductLabelStoreRelationUpdaterInterface
+    {
+        return new ProductLabelStoreRelationUpdater($this->getRepository(), $this->getEntityManager());
     }
 }

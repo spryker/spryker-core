@@ -13,6 +13,7 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
 {
     protected const PRODUCT_DISCONTINUE_LABEL_NAME = 'Discontinued';
     protected const PRODUCT_DISCONTINUE_LABEL_FRONT_END_REFERENCE = 'discontinued';
+    protected const PRODUCT_LABEL_DEFAULT_PRIORITY = 0;
 
     /**
      * Specification:
@@ -38,5 +39,18 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
     public function getProductDiscontinueLabelFrontEndReference(): string
     {
         return static::PRODUCT_DISCONTINUE_LABEL_FRONT_END_REFERENCE;
+    }
+
+    /**
+     * Specification:
+     * - Returns default priority for product label.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getProductLabelDefaultPriority(): int
+    {
+        return static::PRODUCT_LABEL_DEFAULT_PRIORITY;
     }
 }

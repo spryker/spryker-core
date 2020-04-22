@@ -7,11 +7,29 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 
 class ProductLabelMapper
 {
+    /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper
+     */
+    protected $productLabelStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper $productLabelStoreRelationMapper
+     */
+    public function __construct(ProductLabelStoreRelationMapper $productLabelStoreRelationMapper)
+    {
+        $this->productLabelStoreRelationMapper = $productLabelStoreRelationMapper;
+    }
+
     /**
      * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
@@ -22,6 +40,88 @@ class ProductLabelMapper
         SpyProductLabel $productLabelEntity,
         ProductLabelTransfer $productLabelTransfer
     ): ProductLabelTransfer {
-        return $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+        $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+
+        $productLabelTransfer->setValidFrom(
+            $productLabelEntity->getValidFrom(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+        );
+        $productLabelTransfer->setValidTo(
+            $productLabelEntity->getValidTo(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+        );
+
+        $storeRelationTransfer = new StoreRelationTransfer();
+        $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
+
+        if ($productLabelEntity->getProductLabelStores()->count()) {
+            $productLabelTransfer->setStoreRelation(
+                $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
+                    $productLabelEntity->getProductLabelStores(),
+                    $storeRelationTransfer
+                )
+            );
+        }
+
+        $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
+
+        foreach ($productLabelEntity->getSpyProductLabelLocalizedAttributess() as $productLabelLocalizedAttributesEntity) {
+            $productLabelLocalizedAttributesTransfer = $this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+                $productLabelLocalizedAttributesEntity,
+                new ProductLabelLocalizedAttributesTransfer()
+            );
+            $productLabelTransfer->addLocalizedAttributes(
+                $productLabelLocalizedAttributesTransfer
+            );
+        }
+
+        return $productLabelTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
+        SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
+        ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+    ): ProductLabelLocalizedAttributesTransfer {
+        return $productLabelLocalizedAttributesTransfer
+            ->fromArray($productLabelLocalizedAttributesEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
+     * @param array $transferCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function mapProductLabelEntitiesToProductLabelTransfers(
+        ObjectCollection $productLabelEntities,
+        array $transferCollection = []
+    ): array {
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer(
+                $productLabelEntity,
+                new ProductLabelTransfer()
+            );
+        }
+
+        return $transferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     */
+    public function mapProductLabelTransferToProductLabelEntity(
+        ProductLabelTransfer $productLabelTransfer,
+        SpyProductLabel $productLabelEntity
+    ): SpyProductLabel {
+        $productLabelEntity->fromArray($productLabelTransfer->toArray());
+
+        return $productLabelEntity;
     }
 }

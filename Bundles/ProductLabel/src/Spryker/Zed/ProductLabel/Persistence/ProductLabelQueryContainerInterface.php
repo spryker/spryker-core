@@ -12,12 +12,16 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getAllProductLabelsSortedByPosition()} instead.
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function queryProductLabelsSortedByPosition();
 
     /**
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelById} instead.
      *
      * @param int $idProductLabel
      *
@@ -28,6 +32,8 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelByName} instead.
+     *
      * @param string $labelName
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -37,6 +43,8 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelsByIdProductAbstract} instead.
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -45,6 +53,8 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * @api
+     *
+     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getActiveProductLabelIdsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
@@ -80,6 +90,8 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */

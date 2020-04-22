@@ -16,7 +16,7 @@ interface LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findByIdProductLabel($idProductLabel);
+    public function findByIdProductLabel($idProductLabel): ?ProductLabelTransfer;
 
     /**
      * @param string $labelName
@@ -35,19 +35,19 @@ interface LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function findAllByIdProductAbstract($idProductAbstract);
+    public function findAllByIdProductAbstract($idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function findAllLabelIdsByIdProductAbstract($idProductAbstract);
+    public function findAllLabelIdsByIdProductAbstract($idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
-    public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract);
+    public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract): array;
 }
