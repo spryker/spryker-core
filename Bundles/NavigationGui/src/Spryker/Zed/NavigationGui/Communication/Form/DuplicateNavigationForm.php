@@ -23,8 +23,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class DuplicateNavigationForm extends AbstractType
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_KEY = 'key';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_KEY = 'key';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
