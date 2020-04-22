@@ -373,7 +373,7 @@ interface SalesFacadeInterface
      * - Requires OrderListTransfer::format to be set.
      * - Filters orders by OrderListTransfer::filterFields if provided.
      * - Filters orders by OrderListTransfer::filter if provided.
-     * - Executes OrderSearchQueryExpanderPluginInterface plugin stack.
+     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
      * - Finds orders by criteria from OrderListTransfer.
      *
      * @api

@@ -16,7 +16,7 @@ interface SearchOrderExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands OrderTransfers with additional data.
+     * - Expands result OrderTransfers with additional data.
      *
      * @api
      *

@@ -10,13 +10,13 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Sal
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\CompanyBusinessUnitSalesConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig getConfig()
  */
-class CompanyBusinessUnitFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements OrderSearchQueryExpanderPluginInterface
+class CompanyBusinessUnitFilterOrderSearchQueryExpanderPlugin extends AbstractPlugin implements SearchOrderQueryExpanderPluginInterface
 {
     /**
      * {@inheritDoc}

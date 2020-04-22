@@ -17,14 +17,4 @@ class SalesConfig extends AbstractBundleConfig
         'itemName',
         'itemSku',
     ];
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getOrderSearchTypes(): array
-    {
-        return static::ORDER_SEARCH_TYPES;
-    }
 }

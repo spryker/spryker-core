@@ -20,7 +20,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface[]
      */
     protected $orderSearchQueryExpanderPlugins;
 
@@ -32,7 +32,7 @@ class OrderSearchReader implements OrderSearchReaderInterface
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderSearchQueryExpanderPluginInterface[] $orderSearchQueryExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface[] $orderSearchQueryExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,

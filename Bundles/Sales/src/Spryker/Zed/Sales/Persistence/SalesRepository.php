@@ -111,7 +111,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->groupByIdSalesOrder();
 
-        $salesOrderQuery = $this->setSalesOrderQuerySearchFilters($salesOrderQuery, $orderListTransfer);
+        $salesOrderQuery = $this->buildSearchOrdersQuery($salesOrderQuery, $orderListTransfer);
         $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPagination());
 
         $orderTransfers = $this->getFactory()
@@ -161,7 +161,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    protected function setSalesOrderQuerySearchFilters(
+    protected function buildSearchOrdersQuery(
         SpySalesOrderQuery $salesOrderQuery,
         OrderListTransfer $orderListTransfer
     ): SpySalesOrderQuery {
