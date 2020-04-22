@@ -90,7 +90,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_NAME,
             TextType::class,
             [
-                'label' => 'Name *',
+                'label' => 'Name',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -112,7 +112,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_EXCLUSIVE_FLAG,
             CheckboxType::class,
             [
-                'label' => 'Is exclusive',
+                'label' => 'Is Exclusive',
                 'required' => false,
             ]
         );
@@ -131,7 +131,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_STATUS_FLAG,
             CheckboxType::class,
             [
-                'label' => 'Is active',
+                'label' => 'Is Active',
                 'required' => false,
             ]
         );
@@ -150,7 +150,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_DYNAMIC_FLAG,
             CheckboxType::class,
             [
-              'label' => 'Is dynamic',
+              'label' => 'Is Dynamic',
               'required' => false,
               'disabled' => true,
               'attr' => [

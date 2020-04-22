@@ -149,7 +149,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException
+     * @throws \Spryker\Zed\ProductLabelGui\Exception\MissingStoreRelationFormTypePluginException
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */

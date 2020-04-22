@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ProductOptionOrderHydrateInterface
 {
     /**

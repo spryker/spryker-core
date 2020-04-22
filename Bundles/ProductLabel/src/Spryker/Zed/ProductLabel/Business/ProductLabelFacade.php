@@ -161,8 +161,6 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
      * @return void
      */
     public function updateLabel(ProductLabelTransfer $productLabelTransfer)

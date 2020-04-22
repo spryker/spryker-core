@@ -10,10 +10,13 @@ namespace Spryker\Zed\ProductLabel\Business;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
+use Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
+use Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
+use Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
@@ -38,11 +41,11 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface
      */
-    public function createLabelCreator()
+    public function createLabelCreator(): LabelCreatorInterface
     {
         return new LabelCreator(
             $this->createLocalizedAttributesCollectionWriter(),
-            $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createLabelDictionaryTouchManager(),
             $this->createProductLabelStoreRelationUpdater()
         );
@@ -51,13 +54,14 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface
      */
-    public function createLabelUpdater()
+    public function createLabelUpdater(): LabelUpdaterInterface
     {
         return new LabelUpdater(
             $this->createLocalizedAttributesCollectionWriter(),
-            $this->getQueryContainer(),
+            $this->createProductAbstractRelationReader(),
             $this->createLabelDictionaryTouchManager(),
             $this->createProductAbstractRelationTouchManager(),
+            $this->getEntityManager(),
             $this->createProductLabelStoreRelationUpdater()
         );
     }
@@ -65,7 +69,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface
      */
-    public function createLabelReader()
+    public function createLabelReader(): LabelReaderInterface
     {
         return new LabelReader(
             $this->createLocalizedAttributesCollectionReader(),

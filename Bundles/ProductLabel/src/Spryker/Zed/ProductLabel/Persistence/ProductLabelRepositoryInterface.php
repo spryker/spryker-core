@@ -41,11 +41,11 @@ interface ProductLabelRepositoryInterface
     public function getProductLabelLocalizedAttributes(): array;
 
     /**
-     * @param string $labelName
+     * @param string $productLabelName
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findProductLabelByNameProductLabel(string $labelName): ?ProductLabelTransfer;
+    public function findProductLabelByName(string $productLabelName): ?ProductLabelTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
