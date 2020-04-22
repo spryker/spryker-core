@@ -33,7 +33,7 @@ class CartValidator implements CartValidatorInterface
         $groupedByIdAvailablePromotionItemTransfer = $this->groupAvailableQuotePromotionItemsById($cartChangeTransfer);
 
         foreach ($promotionItemTransfers as $promotionItemTransfer) {
-            if (isset($groupedByIdAvailablePromotionItemTransfer[$promotionItemTransfer->getIdDiscountPromotion()])) {
+            if (!empty($groupedByIdAvailablePromotionItemTransfer[$promotionItemTransfer->getIdDiscountPromotion()])) {
                 continue;
             }
 
@@ -70,13 +70,13 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PromotionItemTransfer[]
+     * @return array
      */
     protected function groupAvailableQuotePromotionItemsById(CartChangeTransfer $cartChangeTransfer): array
     {
         $groupedByIdAvailablePromotionItemTransfers = [];
         foreach ($cartChangeTransfer->getQuote()->getPromotionItems() as $promotionItemTransfer) {
-            $groupedByIdAvailablePromotionItemTransfers[$promotionItemTransfer->getIdDiscountPromotion()] = $promotionItemTransfer;
+            $groupedByIdAvailablePromotionItemTransfers[$promotionItemTransfer->getIdDiscountPromotion()][] = $promotionItemTransfer;
         }
 
         return $groupedByIdAvailablePromotionItemTransfers;
