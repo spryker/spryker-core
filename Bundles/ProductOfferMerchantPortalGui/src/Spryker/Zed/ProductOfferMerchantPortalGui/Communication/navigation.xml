@@ -4,7 +4,7 @@
         <label>Offers</label>
         <title>Offers</title>
         <bundle>product-offer-merchant-portal-gui</bundle>
-        <controller>product-offer-table</controller>
+        <controller>offers</controller>
         <action>index</action>
     </product-offer-merchant-portal-gui>
 </config>
