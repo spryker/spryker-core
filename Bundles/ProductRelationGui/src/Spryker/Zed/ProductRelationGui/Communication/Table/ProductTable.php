@@ -275,7 +275,7 @@ class ProductTable extends AbstractProductTable
             ])
             ->withColumn(
                 sprintf(
-                    'GROUP_CONCAT(%s)',
+                    'GROUP_CONCAT(DISTINCT %s)',
                     SpyCategoryAttributeTableMap::COL_NAME
                 ),
                 static::COL_ASSIGNED_CATEGORIES
