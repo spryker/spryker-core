@@ -63,10 +63,10 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             );
         }
 
-        if ($queryJoinTransfer->getQueryWhereConditions()->count()) {
+        if ($queryJoinTransfer->getWhereConditions()->count()) {
             $salesOrderQuery = $this->addSalesOrderQueryWhereConditionGroup(
                 $salesOrderQuery,
-                $queryJoinTransfer->getQueryWhereConditions(),
+                $queryJoinTransfer->getWhereConditions(),
                 $whereConditionGroups
             );
         }

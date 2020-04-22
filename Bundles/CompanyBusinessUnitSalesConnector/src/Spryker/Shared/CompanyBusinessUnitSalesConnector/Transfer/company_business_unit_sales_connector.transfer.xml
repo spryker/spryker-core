@@ -55,7 +55,7 @@
     </transfer>
 
     <transfer name="QueryJoin">
-        <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+        <property name="whereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
         <property name="withColumns" type="string[]" singular="withColumn"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>

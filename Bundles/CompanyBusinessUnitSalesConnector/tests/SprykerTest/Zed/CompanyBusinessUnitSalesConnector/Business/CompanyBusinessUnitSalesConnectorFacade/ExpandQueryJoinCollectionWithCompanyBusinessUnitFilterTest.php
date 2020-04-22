@@ -68,12 +68,12 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
          */
         $queryJoinTransfer = $queryJoinCollectionTransfer->getQueryJoins()->getIterator()->current();
 
-        $this->assertCount(1, $queryJoinTransfer->getQueryWhereConditions());
+        $this->assertCount(1, $queryJoinTransfer->getWhereConditions());
 
         /**
          * @var \Generated\Shared\Transfer\QueryWhereConditionTransfer $queryWhereConditionTransfer
          */
-        $queryWhereConditionTransfer = $queryJoinTransfer->getQueryWhereConditions()->getIterator()->current();
+        $queryWhereConditionTransfer = $queryJoinTransfer->getWhereConditions()->getIterator()->current();
 
         $this->assertSame(static::COMPANY_BUSINESS_UNIT_UUID, $queryWhereConditionTransfer->getValue());
         $this->assertSame(static::COLUMN_COMPANY_BUSINESS_UNIT_UUID, $queryWhereConditionTransfer->getColumn());

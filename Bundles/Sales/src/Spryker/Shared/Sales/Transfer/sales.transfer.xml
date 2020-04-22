@@ -364,7 +364,7 @@
         <property name="right" type="array" singular="right"/>
         <property name="joinType" type="string"/>
         <property name="condition" type="string"/>
-        <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+        <property name="whereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
         <property name="withColumns" type="string[]" singular="withColumn"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>

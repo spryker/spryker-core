@@ -79,13 +79,13 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
          */
         $queryJoinTransfer = $queryJoinCollectionTransfer->getQueryJoins()->getIterator()->current();
 
-        $this->assertCount(2, $queryJoinTransfer->getQueryWhereConditions());
+        $this->assertCount(2, $queryJoinTransfer->getWhereConditions());
         $this->assertSame(
             [static::COLUMN_FULL_NAME => static::COLUMN_FULL_NAME_EXPRESSION],
             $queryJoinTransfer->getWithColumns()
         );
 
-        $queryWhereConditionIterator = $queryJoinTransfer->getQueryWhereConditions()->getIterator();
+        $queryWhereConditionIterator = $queryJoinTransfer->getWhereConditions()->getIterator();
 
         /**
          * @var \Generated\Shared\Transfer\QueryWhereConditionTransfer $queryWhereConditionTransfer
