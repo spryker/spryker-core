@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
-    protected const CHECKOUT_PAYMENT_METHOD_NOT_FOUND = 'checkout.payment_method.not_found';
+    protected const CHECKOUT_PAYMENT_METHOD_INVALID = 'checkout.payment_method.invalid';
 
     /**
      * @var \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
@@ -45,8 +45,10 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
 
         if (array_diff($usedPaymentMethodsKeys, $availablePaymentMethodsKeys)) {
             $checkoutErrorTransfer = (new CheckoutErrorTransfer())
-                ->setMessage(static::CHECKOUT_PAYMENT_METHOD_NOT_FOUND);
-            $checkoutResponseTransfer->setIsSuccess(false)->addError($checkoutErrorTransfer);
+                ->setMessage(static::CHECKOUT_PAYMENT_METHOD_INVALID);
+            $checkoutResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($checkoutErrorTransfer);
 
             return false;
         }
