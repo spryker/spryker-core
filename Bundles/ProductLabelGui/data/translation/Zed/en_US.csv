@@ -11,8 +11,6 @@ Deactivate,Deactivate
 Edit,Edit
 "Edit Product Label","Edit Product Label"
 "Is Exclusive","Is Exclusive"
-"Is exclusive","Is exclusive"
-"Is dynamic","Is dynamic"
 "Front-end Reference","Front-end Reference"
 General,General
 Behavior,Behavior
@@ -50,13 +48,6 @@ View,View
 "View Product Label","View Product Label"
 "Is Active","Is Active"
 "Is Dynamic","Is Dynamic"
-"Front-end Reference","Front-end Reference"
 ID,ID
 "# of Products","# of Products"
 Settings,Settings
-Behavior,Behavior
-General,General
-"Store relation","Store relation"
-"Applied Products","Applied Products"
-Yes,Yes
-No,No
