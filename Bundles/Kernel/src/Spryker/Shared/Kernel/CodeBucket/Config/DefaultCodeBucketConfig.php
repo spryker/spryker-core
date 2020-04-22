@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Kernel\CodeBucket\Context;
+namespace Spryker\Shared\Kernel\CodeBucket\Config;
 
 use Spryker\Shared\Kernel\Store;
 
-class DefaultCodeBucketContext extends AbstractCodeBucketContext
+class DefaultCodeBucketConfig extends AbstractCodeBucketConfig
 {
     /**
      * @return string[]

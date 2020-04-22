@@ -33,7 +33,7 @@ class CacheConfig extends AbstractBundleConfig
      */
     public function getCodeBucketCachePath(): string
     {
-        return sprintf(APPLICATION_ROOT_DIR . '/data/cache%s', APPLICATION_CODE_BUCKET);
+        return sprintf(APPLICATION_ROOT_DIR . '/data/cache/cache%s', APPLICATION_CODE_BUCKET);
     }
 
     /**

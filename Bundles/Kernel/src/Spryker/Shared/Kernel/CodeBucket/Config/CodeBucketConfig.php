@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Kernel\CodeBucket\Context;
+namespace Spryker\Shared\Kernel\CodeBucket\Config;
 
-use SprykerCodeBucketContext;
+use SprykerConfig\CodeBucketConfig as SprykerCodeBucketConfig;
 
-class CodeBucketContext implements CodeBucketContextInterface
+class CodeBucketConfig implements CodeBucketConfigInterface
 {
     /**
      * @return string[]
@@ -28,10 +28,10 @@ class CodeBucketContext implements CodeBucketContextInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\CodeBucket\Context\CodeBucketContextInterface
+     * @return \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
      */
-    protected function resolveCodeBucket(): CodeBucketContextInterface
+    protected function resolveCodeBucket(): CodeBucketConfigInterface
     {
-        return class_exists(SprykerCodeBucketContext::class) ? new SprykerCodeBucketContext() : new DefaultCodeBucketContext();
+        return class_exists(SprykerCodeBucketConfig::class) ? new SprykerCodeBucketConfig() : new DefaultCodeBucketConfig();
     }
 }

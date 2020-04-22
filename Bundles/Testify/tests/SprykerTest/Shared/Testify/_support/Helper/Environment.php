@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
-use Spryker\Shared\Kernel\CodeBucket\Context\CodeBucketContext;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
 use Spryker\Shared\Kernel\Store;
 use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
@@ -229,7 +229,7 @@ class Environment extends Module
      */
     protected function getCodeBucket(): string
     {
-        return (new CodeBucketContext())->getCurrentCodeBucket();
+        return (new CodeBucketConfig())->getCurrentCodeBucket();
     }
 
     /**
