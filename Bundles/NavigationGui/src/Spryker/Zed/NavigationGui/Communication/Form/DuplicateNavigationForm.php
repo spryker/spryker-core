@@ -8,19 +8,18 @@
 namespace Spryker\Zed\NavigationGui\Communication\Form;
 
 use Generated\Shared\Transfer\NavigationTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiRepositoryInterface getRepository()
  */
 class DuplicateNavigationForm extends AbstractType
 {
@@ -67,6 +66,7 @@ class DuplicateNavigationForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
+                    new Length(['max' => 255]),
                 ],
             ]);
 
@@ -86,61 +86,12 @@ class DuplicateNavigationForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                    new Callback([
-                        'callback' => [$this, 'uniqueKeyCheck'],
-                    ]),
+                    new Length(['max' => 255]),
+                    $this->getFactory()->createUniqueKeyConstraint(),
                 ],
             ]);
 
         return $this;
-    }
-
-    /**
-     * @param string $key
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     *
-     * @return void
-     */
-    public function uniqueKeyCheck($key, ExecutionContextInterface $context): void
-    {
-        $navigationTransfer = $context->getRoot()->getData();
-
-        if ($this->hasExistingNavigationKey($key, $this->getIdNavigation($navigationTransfer))) {
-            $context->addViolation('Navigation with the same key already exists.');
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer|null $navigationTransfer
-     *
-     * @return int|null
-     */
-    protected function getIdNavigation(?NavigationTransfer $navigationTransfer = null): ?int
-    {
-        if (!$navigationTransfer) {
-            return null;
-        }
-
-        return $navigationTransfer->getIdNavigation();
-    }
-
-    /**
-     * @param string $key
-     * @param int|null $idNavigation
-     *
-     * @return bool
-     */
-    protected function hasExistingNavigationKey($key, $idNavigation = null): bool
-    {
-        $query = $this->getQueryContainer()
-            ->queryNavigation()
-            ->filterByKey($key);
-
-        if ($idNavigation) {
-            $query->filterByIdNavigation($idNavigation, Criteria::NOT_EQUAL);
-        }
-
-        return $query->count() > 0;
     }
 
     /**

@@ -50,8 +50,8 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
         return new NavigationDuplicator(
             $this->getRepository(),
             $this->createNavigationTouch(),
-            $this->createNavigationNodeCreator(),
-            $this->createNavigationNodeMapper()
+            $this->createNavigationCreator(),
+            $this->createNavigationNodeCreator()
         );
     }
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\NavigationGui\Communication;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\NavigationGui\Communication\Form\Constraint\UniqueKeyConstraint;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DuplicateNavigationForm;
@@ -24,6 +25,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiRepositoryInterface getRepository()
  */
 class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -75,7 +77,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createMerchantProfileForm(?NavigationTransfer $data = null, array $options = []): FormInterface
+    public function createDuplicateNavigationForm(?NavigationTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(DuplicateNavigationForm::class, $data, $options);
     }
@@ -91,6 +93,14 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createUpdateNavigationForm(?NavigationTransfer $data = null, array $options = [])
     {
         return $this->getFormFactory()->create($this->createUpdateNavigationFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\Constraint\UniqueKeyConstraint
+     */
+    public function createUniqueKeyConstraint(): UniqueKeyConstraint
+    {
+        return new UniqueKeyConstraint([UniqueKeyConstraint::OPTION_NAVIGATION_GUI_REPOSITORY => $this->getRepository()]);
     }
 
     /**

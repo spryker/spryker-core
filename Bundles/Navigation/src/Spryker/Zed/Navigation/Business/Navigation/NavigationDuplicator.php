@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
+use ArrayObject;
+use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
-use Orm\Zed\Navigation\Persistence\SpyNavigation;
-use Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface;
 use Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -29,31 +30,31 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected $navigationTouch;
 
     /**
+     * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface
+     */
+    protected $navigationCreator;
+
+    /**
      * @var \Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface
      */
     protected $navigationNodeCreator;
 
     /**
-     * @var \Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface
-     */
-    protected $navigationNodeMapper;
-
-    /**
      * @param \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface $navigationRepository
      * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
+     * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface $navigationCreator
      * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface $navigationNodeCreator
-     * @param \Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface $navigationNodeMapper
      */
     public function __construct(
         NavigationRepositoryInterface $navigationRepository,
         NavigationTouchInterface $navigationTouch,
-        NavigationNodeCreatorInterface $navigationNodeCreator,
-        NavigationNodeMapperInterface $navigationNodeMapper
+        NavigationCreatorInterface $navigationCreator,
+        NavigationNodeCreatorInterface $navigationNodeCreator
     ) {
         $this->navigationRepository = $navigationRepository;
         $this->navigationTouch = $navigationTouch;
+        $this->navigationCreator = $navigationCreator;
         $this->navigationNodeCreator = $navigationNodeCreator;
-        $this->navigationNodeMapper = $navigationNodeMapper;
     }
 
     /**
@@ -67,17 +68,14 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         NavigationTransfer $baseNavigationElement
     ): NavigationTransfer {
         $this->assertNavigationForCreate($newNavigationElement);
-        $this->assertNavigationForCreate($baseNavigationElement);
 
-        $newNavigationElement
-            ->setName($baseNavigationElement->getName())
-            ->setIsActive($baseNavigationElement->getIsActive());
+        $newNavigationElement->setIsActive($baseNavigationElement->getIsActive());
 
         $navigationNodeTransfers = $this->navigationRepository->getNavigationNodesByNavigationId(
             $baseNavigationElement->getIdNavigation()
         );
 
-        $newNavigationNodeTransfers = $this->navigationNodeMapper->mapToNavigationNodeTransfers($navigationNodeTransfers);
+        $newNavigationNodeTransfers = $this->duplicateNavigationNodeTransfers($navigationNodeTransfers);
 
         return $this->handleDatabaseTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
             return $this->executeCreateNavigationTransaction($newNavigationElement, $newNavigationNodeTransfers);
@@ -106,7 +104,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         NavigationTransfer $navigationTransfer,
         array $navigationNodeTransfers
     ): NavigationTransfer {
-        $navigationTransfer = $this->persistNavigation($navigationTransfer);
+        $navigationTransfer = $this->navigationCreator->createNavigation($navigationTransfer);
         $this->navigationTouch->touchActive($navigationTransfer);
 
         foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
@@ -119,29 +117,46 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
      */
-    protected function persistNavigation(NavigationTransfer $navigationTransfer): NavigationTransfer
+    protected function duplicateNavigationNodeTransfers(array $navigationNodeTransfers): array
     {
-        $navigationEntity = new SpyNavigation();
-        $navigationEntity->fromArray($navigationTransfer->modifiedToArray());
-        $navigationEntity->save();
+        $newNavigationNodeTransfers = [];
+        foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
+            $newNavigationNodeLocalizedAttributesTransfers = $this->duplicateNavigationNodeLocalizedAttributesTransfers(
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
+            );
+            $navigationNodeData = $navigationNodeTransfer->toArray();
+            unset($navigationNodeData['id_navigation_node']);
+            unset($navigationNodeData['navigation_node_localized_attributes']);
+            $newNavigationNodeTransfers[] = (new NavigationNodeTransfer())->fromArray(
+                $navigationNodeData,
+                true
+            )->setNavigationNodeLocalizedAttributes($newNavigationNodeLocalizedAttributesTransfers);
+        }
 
-        return $this->hydrateNavigationTransfer($navigationTransfer, $navigationEntity);
+        return $newNavigationNodeTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[] $navigationNodeLocalizedAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
+     * @return \ArrayObject
      */
-    protected function hydrateNavigationTransfer(NavigationTransfer $navigationTransfer, SpyNavigation $navigationEntity): NavigationTransfer
+    protected function duplicateNavigationNodeLocalizedAttributesTransfers(ArrayObject $navigationNodeLocalizedAttributesTransfers): ArrayObject
     {
-        $navigationTransfer->fromArray($navigationEntity->toArray(), true);
+        $newNavigationNodeLocalizedAttributesTransfers = [];
+        foreach ($navigationNodeLocalizedAttributesTransfers as $navigationNodeLocalizedAttributesTransfer) {
+            $newNavigationNodeLocalizedAttributesData = $navigationNodeLocalizedAttributesTransfer->toArray();
+            unset($newNavigationNodeLocalizedAttributesData['id_navigation_node_localized_attributes']);
+            $newNavigationNodeLocalizedAttributesTransfers[] = (new NavigationNodeLocalizedAttributesTransfer())->fromArray(
+                $newNavigationNodeLocalizedAttributesData,
+                true
+            );
+        }
 
-        return $navigationTransfer;
+        return new ArrayObject($newNavigationNodeLocalizedAttributesTransfers);
     }
 }

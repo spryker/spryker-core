@@ -9,15 +9,22 @@ namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiRepositoryInterface getRepository()
  */
 class DuplicateController extends AbstractController
 {
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+
+    /**
+     * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
+     */
+    protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,9 +34,20 @@ class DuplicateController extends AbstractController
     public function indexAction(Request $request)
     {
         $duplicateNavigationForm = $this->getFactory()
-            ->createMerchantProfileForm()
+            ->createDuplicateNavigationForm()
             ->handleRequest($request);
 
+        return $this->handleDuplicateNavigationForm($duplicateNavigationForm, $request);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $duplicateNavigationForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleDuplicateNavigationForm(FormInterface $duplicateNavigationForm, Request $request)
+    {
         if ($duplicateNavigationForm->isSubmitted() && $duplicateNavigationForm->isValid()) {
             $navigationTransfer = $duplicateNavigationForm->getData();
             $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
@@ -48,7 +66,7 @@ class DuplicateController extends AbstractController
                 ['%d' => $idNavigation]
             );
 
-            return $this->redirectResponse('/navigation-gui');
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
         return $this->viewResponse(['duplicateNavigationForm' => $duplicateNavigationForm->createView()]);

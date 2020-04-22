@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Navigation\Persistence;
 
-use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -28,17 +27,8 @@ class NavigationRepository extends AbstractRepository implements NavigationRepos
             ->joinWithSpyNavigationNodeLocalizedAttributes()
             ->find();
 
-        if (!$navigationNodeEntities->count()) {
-            return [];
-        }
-
-        $navigationNodeTransfers = [];
-        foreach ($navigationNodeEntities as $navigationNodeEntity) {
-            $navigationNodeTransfers[] = $this->getFactory()
-                ->createProductMapper()
-                ->mapNavigationNodeEntityToNavigationNodeTransfer($navigationNodeEntity, new NavigationNodeTransfer());
-        }
-
-        return $navigationNodeTransfers;
+        return $this->getFactory()
+            ->createNavigationMapper()
+            ->mapNavigationNodeEntitiesToNavigationNodeTransfers($navigationNodeEntities->getArrayCopy());
     }
 }

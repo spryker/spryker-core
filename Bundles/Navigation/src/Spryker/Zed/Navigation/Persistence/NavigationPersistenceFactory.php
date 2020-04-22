@@ -47,7 +47,7 @@ class NavigationPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Navigation\Persistence\Mapper\NavigationMapper
      */
-    public function createProductMapper(): NavigationMapper
+    public function createNavigationMapper(): NavigationMapper
     {
         return new NavigationMapper();
     }
