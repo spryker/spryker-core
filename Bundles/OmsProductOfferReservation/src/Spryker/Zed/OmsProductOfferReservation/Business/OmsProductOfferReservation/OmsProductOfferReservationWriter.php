@@ -67,6 +67,7 @@ class OmsProductOfferReservationWriter implements OmsProductOfferReservationWrit
             return;
         }
 
+        $omsProductOfferReservationTransfer->setReservationQuantity($reservationRequestTransfer->getReservationQuantity());
         $this->omsProductOfferReservationEntityManager->update($omsProductOfferReservationTransfer);
     }
 }

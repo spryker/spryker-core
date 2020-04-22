@@ -460,7 +460,7 @@ class Reservation implements ReservationInterface
             return;
         }
 
-        $this->omsEntityManager->updateReservation($omsProductReservationTransfer);
+        $this->omsEntityManager->updateReservation($reservationRequestTransfer);
     }
 
     /**

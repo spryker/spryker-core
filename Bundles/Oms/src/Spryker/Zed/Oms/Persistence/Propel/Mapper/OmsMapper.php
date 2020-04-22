@@ -41,19 +41,4 @@ class OmsMapper
     ): OmsProductReservationTransfer {
         return $omsProductReservationTransfer->fromArray($omsProductReservationEntity->toArray());
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsProductReservationTransfer $omsProductReservationTransfer
-     * @param \Orm\Zed\Oms\Persistence\SpyOmsProductReservation $omsProductReservationEntity
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservation
-     */
-    public function mapOmsProductReservationTransferToOmsProductReservationEntity(
-        OmsProductReservationTransfer $omsProductReservationTransfer,
-        SpyOmsProductReservation $omsProductReservationEntity
-    ): SpyOmsProductReservation {
-        $omsProductReservationEntity->fromArray($omsProductReservationTransfer->toArray());
-
-        return $omsProductReservationEntity;
-    }
 }
