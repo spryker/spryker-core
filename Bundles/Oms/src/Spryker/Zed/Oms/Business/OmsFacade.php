@@ -528,6 +528,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -540,6 +542,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -686,5 +690,21 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
         return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createStateHistoryExpander()
+            ->expandOrderItemsWithStateHistory($itemTransfers);
     }
 }

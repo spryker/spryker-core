@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -61,6 +63,19 @@ interface AclFacadeInterface
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupByName($name);
+
+    /**
+     * Specification:
+     * - Returns group transfer by criteria.
+     * - Returns NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupCriteriaTransfer $groupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer|null
+     */
+    public function findGroup(GroupCriteriaTransfer $groupCriteriaTransfer): ?GroupTransfer;
 
     /**
      * @api
@@ -240,7 +255,7 @@ interface AclFacadeInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
-     * @param int $type
+     * @param string $type
      *
      * @return bool
      */
@@ -313,6 +328,23 @@ interface AclFacadeInterface
      * @return bool
      */
     public function checkAccess(UserTransfer $user, $bundle, $controller, $action);
+
+    /**
+     * Specification:
+     * - Iterates through the navigation items collection.
+     * - Checks if the navigation item can be accessed by the current user.
+     * - Returns the navigation items collection without inaccessible items.
+     * - Returns the empty collection in case there is no authorized user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
+     */
+    public function filterNavigationItemCollectionByAccessibility(
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): NavigationItemCollectionTransfer;
 
     /**
      * @api

@@ -72,6 +72,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                         if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
+
                             continue;
                         }
 
@@ -88,12 +89,16 @@ class PriceProductMapper implements PriceProductMapperInterface
      * @param int $idMerchantRelationship
      * @param string $currencyCode
      * @param string $priceType
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function findProductTransferInCollection(int $idMerchantRelationship, string $currencyCode, string $priceType, array &$priceProductTransfers): PriceProductTransfer
-    {
+    protected function findProductTransferInCollection(
+        int $idMerchantRelationship,
+        string $currencyCode,
+        string $priceType,
+        array &$priceProductTransfers
+    ): PriceProductTransfer {
         $index = implode(static::INDEX_SEPARATOR, [
             $idMerchantRelationship,
             $currencyCode,

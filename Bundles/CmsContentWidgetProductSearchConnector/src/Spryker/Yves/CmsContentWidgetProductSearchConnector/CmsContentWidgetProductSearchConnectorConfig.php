@@ -14,6 +14,8 @@ class CmsContentWidgetProductSearchConnectorConfig extends AbstractBundleConfig
     public const SEARCH_LIMIT = 8;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSearchLimit()

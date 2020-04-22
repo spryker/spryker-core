@@ -8,9 +8,11 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
@@ -38,11 +40,20 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     protected $resourceTransferAnalyzer;
 
     /**
-     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface
      */
-    public function __construct(ResourceTransferAnalyzerInterface $resourceTransferAnalyzer)
-    {
+    protected $resourceSchemaNameStorage;
+
+    /**
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+     */
+    public function __construct(
+        ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
+        ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
+    ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
+        $this->resourceSchemaNameStorage = $resourceSchemaNameStorage;
     }
 
     /**
@@ -195,6 +206,35 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaItemsTransfer
+     */
+    public function createRelationshipSchemaItemsTransfer(array $resourceRelationships): SchemaItemsTransfer
+    {
+        $schema = new SchemaItemsTransfer();
+
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $schemaName = $this
+                ->resourceSchemaNameStorage
+                ->getResourceSchemaNameByResourceType($resourceRelationship->getRelationshipResourceType());
+
+            if (!$schemaName) {
+                continue;
+            }
+
+            $schema->addOneOf(
+                sprintf(
+                    static::PATTERN_SCHEMA_REFERENCE,
+                    $schemaName
+                )
+            );
+        }
+
+        return $schema;
+    }
+
+    /**
      * @param string $metadataKey
      * @param array $metadataValue
      *
@@ -227,6 +267,6 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
      */
     protected function isScalarType(string $type): bool
     {
-        return !(class_exists($type) && is_a($type, AbstractTransfer::class));
+        return !(class_exists($type) && is_a($type, AbstractTransfer::class, true));
     }
 }

@@ -21,6 +21,8 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
@@ -52,6 +54,8 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

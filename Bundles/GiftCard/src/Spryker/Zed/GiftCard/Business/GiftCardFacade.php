@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory getFactory()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 {

@@ -78,8 +78,10 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function expandProductListByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
-    {
+    protected function expandProductListByIdProductConcrete(
+        int $idProductConcrete,
+        ProductListResponseTransfer $productListResponseTransfer
+    ): ProductListResponseTransfer {
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setIdBundledProduct($idProductConcrete);
 

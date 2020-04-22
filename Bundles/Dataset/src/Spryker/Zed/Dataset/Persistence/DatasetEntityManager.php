@@ -267,7 +267,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \ArrayObject $localizedAttributesToSave
+     * @param \ArrayObject|\Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer[] $localizedAttributesToSave
      * @param array $existingDatasetLocalizedAttributes
      *
      * @return void
@@ -281,6 +281,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
             $idLocale = $localizedAttribute->getLocale()->getIdLocale();
             if (!empty($existingDatasetLocalizedAttributes[$idLocale])) {
                 $this->updateLocalizedAttribute($existingDatasetLocalizedAttributes[$idLocale], $localizedAttribute);
+
                 continue;
             }
             $this->createLocalizedAttributes($datasetEntity, (new ArrayObject([$localizedAttribute])));
@@ -289,7 +290,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \ArrayObject $localizedAttributesToSave
+     * @param \ArrayObject|\Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer[] $localizedAttributesToSave
      *
      * @return void
      */

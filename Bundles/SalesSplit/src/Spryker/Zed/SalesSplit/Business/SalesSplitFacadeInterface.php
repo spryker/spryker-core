@@ -13,6 +13,12 @@ namespace Spryker\Zed\SalesSplit\Business;
 interface SalesSplitFacadeInterface
 {
     /**
+     * Specification:
+     * - Validate if split is possible. (Otherwise return $response->getSuccess() === false and add validation messages)
+     * - Create a copy of the given order item with given quantity
+     * - Decrement the quantity of the original given order item (including all options)
+     * - Return $response->getSuccess() === true
+     *
      * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
      * the other part with the rest.
      *
@@ -21,12 +27,6 @@ interface SalesSplitFacadeInterface
      * Split(20)
      *   Item A with quantity = 80
      *   New Item B with quantity = 20
-     *
-     * Specification:
-     * - Validate if split is possible. (Otherwise return $response->getSuccess() === false and add validation messages)
-     * - Create a copy of the given order item with given quantity
-     * - Decrement the quantity of the original given order item (including all options)
-     * - Return $response->getSuccess() === true
      *
      * @api
      *

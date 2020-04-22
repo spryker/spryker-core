@@ -208,8 +208,8 @@ class Customer implements CustomerInterface
         $customerTransfer->setIdCustomer($customerEntity->getPrimaryKey());
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
-        $customerTransfer->setCreatedAt($customerEntity->getCreatedAt()->format("Y-m-d H:i:s.u"));
-        $customerTransfer->setUpdatedAt($customerEntity->getUpdatedAt()->format("Y-m-d H:i:s.u"));
+        $customerTransfer->setCreatedAt($customerEntity->getCreatedAt()->format('Y-m-d H:i:s.u'));
+        $customerTransfer->setUpdatedAt($customerEntity->getUpdatedAt()->format('Y-m-d H:i:s.u'));
 
         $customerResponseTransfer
             ->setIsSuccess(true)
@@ -459,9 +459,14 @@ class Customer implements CustomerInterface
     {
         if (!empty($customerTransfer->getNewPassword())) {
             $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
+
             if ($customerResponseTransfer->getIsSuccess() === false) {
                 return $customerResponseTransfer;
             }
+
+            $updatedPasswordCustomerTransfer = $customerResponseTransfer->getCustomerTransfer();
+            $customerTransfer->setNewPassword($updatedPasswordCustomerTransfer->getNewPassword())
+                ->setPassword($updatedPasswordCustomerTransfer->getPassword());
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -475,15 +480,19 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
-        if (!$customerEntity->isModified() || $customerResponseTransfer->getIsSuccess() !== true) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
-
-        $customerEntity->save();
 
         if ($customerTransfer->getSendPasswordToken()) {
             $this->sendPasswordRestoreMail($customerTransfer);
         }
+
+        if (!$customerEntity->isModified()) {
+            return $customerResponseTransfer;
+        }
+
+        $customerEntity->save();
 
         return $customerResponseTransfer;
     }

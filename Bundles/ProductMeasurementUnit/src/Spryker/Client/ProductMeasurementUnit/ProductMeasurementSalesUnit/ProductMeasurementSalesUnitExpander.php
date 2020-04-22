@@ -23,8 +23,10 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
-    {
+    public function expandSingleItemQuantitySalesUnitForPersistentCartChange(
+        PersistentCartChangeTransfer $cartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer {
         $idSalesUnit = $this->getIdSalesUnit($params);
         if ($idSalesUnit < 1) {
             return $cartChangeTransfer;
@@ -77,7 +79,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
     }
 
     /**
-     * @param \ArrayObject $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @throws \Spryker\Client\ProductMeasurementUnit\Exception\InvalidItemCountException
      *

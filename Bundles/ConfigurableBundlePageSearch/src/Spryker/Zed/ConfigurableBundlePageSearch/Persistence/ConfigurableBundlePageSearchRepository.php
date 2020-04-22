@@ -29,8 +29,9 @@ class ConfigurableBundlePageSearchRepository extends AbstractRepository implemen
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer
      */
-    public function getConfigurableBundleTemplatePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer
-    {
+    public function getConfigurableBundleTemplatePageSearchCollection(
+        ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
+    ): ConfigurableBundleTemplatePageSearchCollectionTransfer {
         $configurableBundleTemplatePageSearchQuery = $this->getFactory()->getConfigurableBundlePageSearchQuery();
         $configurableBundleTemplatePageSearchQuery = $this->setConfigurableBundlePageSearchFilters(
             $configurableBundleTemplatePageSearchQuery,

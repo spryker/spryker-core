@@ -82,5 +82,11 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
 </transfers>
 

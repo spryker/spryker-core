@@ -12,16 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductRelationStorageConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @api
      *
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
-
-    /**
      * @return string|null
      */
     public function getProductAbstractRelationSynchronizationPoolName(): ?string

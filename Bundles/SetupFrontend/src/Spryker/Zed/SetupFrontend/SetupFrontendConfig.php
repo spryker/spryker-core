@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SetupFrontendConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getProjectFrontendDependencyDirectories()
@@ -23,6 +25,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProjectInstallCommand()
@@ -46,6 +50,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
      *
      * @return string
@@ -56,6 +62,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getYvesInstallMultiPathDirectoryPatterns(): array
@@ -66,6 +74,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesInstallCommand()
@@ -87,6 +97,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getZedAssetsDirectories()
@@ -97,6 +109,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
      *
      * @return string
@@ -107,6 +121,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getZedInstallMultiPathDirectoryPatterns(): array
@@ -117,6 +133,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZedInstallCommand()
@@ -125,6 +143,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZedBuildCommand()

@@ -114,8 +114,9 @@ class ResponseProcessor implements ResponseProcessorInterface
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    protected function updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus(HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
-    {
+    protected function updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus(
+        HealthCheckResponseTransfer $healthCheckResponseTransfer
+    ): HealthCheckResponseTransfer {
         return $healthCheckResponseTransfer
             ->setStatusCode(static::HEALTH_CHECK_UNAVAILABLE_STATUS_CODE)
             ->setStatus(static::HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE);

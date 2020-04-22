@@ -13,8 +13,9 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\ProductOfferStockDataImport\Communication\ProductOfferStockDataImportPlugin;
+use Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin\ProductOfferStockDataImportPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +31,8 @@ use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
  */
 class ProductOfferStockDataImportPluginTest extends Unit
 {
+    use DataCleanupHelperTrait;
+
     protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer-1';
     protected const STOCK_NAME_VALUE = 'stock-name-1';
 
@@ -51,6 +54,18 @@ class ProductOfferStockDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () {
+            $this->tester->ensureProductOfferStockTableIsEmpty();
+        });
+    }
+
+    /**
+     * @return void
+     */
     public function testImportImportsData(): void
     {
         // Arrange
@@ -58,8 +73,11 @@ class ProductOfferStockDataImportPluginTest extends Unit
             TypeTransfer::NAME => static::STOCK_NAME_VALUE,
         ]);
 
+        $merchantTransfer = $this->tester->haveMerchant();
+
         $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_VALUE,
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
         ]);
 
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())

@@ -16,6 +16,8 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION = 'company-unit-address-label-relation';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyUnitAddressLabelDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -26,6 +28,8 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyUnitAddressLabelRelationDataImporterConfiguration(): DataImporterConfigurationTransfer

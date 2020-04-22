@@ -31,6 +31,8 @@ class GuiConfig extends AbstractBundleConfig
     protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFormResourcesPath(): string
@@ -39,6 +41,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTemplatePaths(): array
@@ -49,6 +53,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getDefaultTemplateFileNames(): array
@@ -57,6 +63,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZedAssetsPath(): string
@@ -65,6 +73,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTabsDefaultTemplatePath(): string
@@ -73,6 +83,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSubmitButtonDefaultTemplatePath(): string
@@ -81,6 +93,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultModalTemplatePath(): string
@@ -89,6 +103,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultPanelTemplatePath(): string
@@ -97,6 +113,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultListGroupTemplatePath(): string
@@ -105,6 +123,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultMultiListGroupTemplatePath(): string

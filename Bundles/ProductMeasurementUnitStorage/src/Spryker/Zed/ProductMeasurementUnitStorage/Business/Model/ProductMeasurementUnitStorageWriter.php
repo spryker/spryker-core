@@ -96,8 +96,10 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer
      */
-    protected function selectStorageEntity(array $mappedProductMeasurementUnitStorageEntities, int $idProductMeasurementUnit): SpyProductMeasurementUnitStorageEntityTransfer
-    {
+    protected function selectStorageEntity(
+        array $mappedProductMeasurementUnitStorageEntities,
+        int $idProductMeasurementUnit
+    ): SpyProductMeasurementUnitStorageEntityTransfer {
         if (isset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit])) {
             return $mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit];
         }

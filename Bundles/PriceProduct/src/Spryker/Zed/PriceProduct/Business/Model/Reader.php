@@ -312,10 +312,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param array $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
      * @param string $abstractKey
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -556,13 +556,20 @@ class Reader implements ReaderInterface
      */
     protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfersBySku = $this
+        $priceProductCriteriaTransfers = $this
             ->priceProductCriteriaBuilder
-            ->buildCriteriaTransfersFromFilterTransfersIndexedBySku($priceProductFilterTransfers);
+            ->buildCriteriaTransfersFromFilterTransfers($priceProductFilterTransfers);
 
         $resolvedPriceProductTransfers = [];
-        foreach ($priceProductTransfers as $sku => $pricesBySku) {
-            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
+        foreach ($priceProductCriteriaTransfers as $priceProductCriteriaTransfer) {
+            if (!isset($priceProductTransfers[$priceProductCriteriaTransfer->getSku()])) {
+                continue;
+            }
+
+            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+                $priceProductTransfers[$priceProductCriteriaTransfer->getSku()],
+                $priceProductCriteriaTransfer
+            );
 
             if ($this->isPriceProductHasValidMoneyValue($resolvedItemPrice, $priceProductFilterTransfers)) {
                 $resolvedPriceProductTransfers[] = $resolvedItemPrice;
@@ -574,7 +581,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer|null $priceProductTransfer
-     * @param array $priceProductFilterTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
      * @return bool
      */
@@ -591,6 +598,7 @@ class Reader implements ReaderInterface
                 if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
                     return false;
                 }
+
                 continue;
             }
 

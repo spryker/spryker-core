@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -89,9 +92,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns a list of of orders for the given customer id and (optional) filters.
-     *  - Aggregates order totals calls -> SalesAggregator
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,6 +123,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createPaginatedCustomerOrderReader()
             ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
+    {
+        return $this->getFactory()
+            ->createOffsetPaginatedCustomerOrderListReader()
+            ->getOrders($orderListRequestTransfer);
     }
 
     /**
@@ -195,9 +212,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Adds username to comment
-     * - Saves comment to database
+     * {@inheritDoc}
      *
      * @CR check why return wrong
      *
@@ -231,8 +246,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns all comments for the given order id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -248,9 +262,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification
-     * - Updates sales order with data from order transfer
-     * - Returns true if order was successfully updated
+     * {@inheritDoc}
      *
      * @api
      *
@@ -396,5 +408,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createSalesOrderItemGrouper()
             ->getUniqueItemsFromOrder($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createOrderItemReader()
+            ->getOrderItems($orderItemFilterTransfer);
     }
 }

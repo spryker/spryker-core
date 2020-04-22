@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
@@ -24,6 +29,7 @@ use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -40,5 +46,51 @@ class OmsBusinessTester extends Actor
         $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue([]);
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderByStateMachineProcessName(string $stateMachineProcessName): OrderTransfer
+    {
+        $quoteTransfer = $this->buildFakeQuote(
+            $this->haveCustomer(),
+            $this->haveStore([StoreTransfer::NAME => 'DE'])
+        );
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->setCustomer($customerTransfer)
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
     }
 }

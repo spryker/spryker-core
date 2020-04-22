@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
@@ -124,14 +125,54 @@ class ProductPackagingUnitBusinessTester extends Actor
     }
 
     /**
+     * @param string $sku
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithItem(string $sku, int $amount): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setAmount($amount)
+                ->setProductPackagingUnit(new ProductPackagingUnitTransfer())
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string $sku
+     * @param int $idProductPackagingUnit
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addProductPackagingUnitToCartChangeTransfer(
+        CartChangeTransfer $cartChangeTransfer,
+        string $sku,
+        int $idProductPackagingUnit
+    ): CartChangeTransfer {
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setProductPackagingUnit((new ProductPackagingUnitTransfer())->setIdProductPackagingUnit($idProductPackagingUnit))
+        );
+
+        return $cartChangeTransfer;
+    }
+
+    /**
      * @param string $dummyGroupKey
      * @param int $dummyAmount
      * @param int $dummyQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummyQuantity): CartChangeTransfer
-    {
+    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(
+        string $dummyGroupKey,
+        int $dummyAmount,
+        int $dummyQuantity
+    ): CartChangeTransfer {
         return (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
@@ -150,8 +191,12 @@ class ProductPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummyQuantity, int $dummySalesUnitId): CartChangeTransfer
-    {
+    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(
+        string $dummyGroupKey,
+        int $dummyAmount,
+        int $dummyQuantity,
+        int $dummySalesUnitId
+    ): CartChangeTransfer {
         return (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
@@ -232,8 +277,13 @@ class ProductPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function haveSalesOrderWithItems(int $itemsCount, int $quantity, string $sku, ?Decimal $amount = null, ?string $amountSku = null): OmsStateCollectionTransfer
-    {
+    public function haveSalesOrderWithItems(
+        int $itemsCount,
+        int $quantity,
+        string $sku,
+        ?Decimal $amount = null,
+        ?string $amountSku = null
+    ): OmsStateCollectionTransfer {
         $this->haveStore([StoreTransfer::NAME => 'DE']);
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::SKU => $sku,

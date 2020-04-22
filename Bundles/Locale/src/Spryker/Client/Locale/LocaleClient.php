@@ -16,6 +16,8 @@ use Spryker\Shared\Kernel\Store;
 class LocaleClient extends AbstractClient implements LocaleClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

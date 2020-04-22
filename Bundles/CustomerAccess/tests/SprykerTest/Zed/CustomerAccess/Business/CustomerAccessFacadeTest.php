@@ -157,6 +157,7 @@ class CustomerAccessFacadeTest extends Unit
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
                 $this->assertTrue($removedContentTypeAccess->getIsRestricted());
+
                 continue;
             }
 
@@ -170,8 +171,10 @@ class CustomerAccessFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer): void
-    {
+    protected function assertCustomerAccessTransferContainsContentTypeAccess(
+        CustomerAccessTransfer $customerAccessTransfer,
+        ContentTypeAccessTransfer $contentTypeAccessTransfer
+    ): void {
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer->getContentType()) {
                 $this->assertEquals($contentTypeAccess, $contentTypeAccessTransfer);

@@ -35,6 +35,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
     public const SHIPMENT_GROUPS_SANITIZER_PLUGINS = 'SHIPMENT_GROUPS_SANITIZER_PLUGINS';
 
+    public const PLUGINS_SHIPMENT_EXPENSE_EXPANDER = 'PLUGINS_SHIPMENT_EXPENSE_EXPANDER';
+
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
@@ -195,6 +197,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPricePlugins($container);
         $container = $this->addDeliveryTimePlugins($container);
         $container = $this->addShipmentGroupsSanitizerPlugins($container);
+        $container = $this->addShipmentExpenseExpanderPlugins($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addCalculationFacade($container);
 
@@ -224,6 +227,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SHIPMENT_GROUPS_SANITIZER_PLUGINS, function () {
             return $this->getShipmentGroupsSanitizerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentExpenseExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPMENT_EXPENSE_EXPANDER, function () {
+            return $this->getShipmentExpenseExpanderPlugins();
         });
 
         return $container;
@@ -273,6 +290,14 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
      */
     protected function getShipmentGroupsSanitizerPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     */
+    protected function getShipmentExpenseExpanderPlugins(): array
     {
         return [];
     }

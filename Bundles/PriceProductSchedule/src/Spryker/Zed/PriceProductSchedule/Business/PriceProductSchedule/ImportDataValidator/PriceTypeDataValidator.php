@@ -23,9 +23,8 @@ class PriceTypeDataValidator extends AbstractImportDataValidator
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface $priceTypeFinder
      */
-    public function __construct(
-        PriceTypeFinderInterface $priceTypeFinder
-    ) {
+    public function __construct(PriceTypeFinderInterface $priceTypeFinder)
+    {
         $this->priceTypeFinder = $priceTypeFinder;
     }
 

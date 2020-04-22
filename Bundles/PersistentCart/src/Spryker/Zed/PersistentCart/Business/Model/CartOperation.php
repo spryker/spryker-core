@@ -140,7 +140,10 @@ class CartOperation implements CartOperationInterface
 
         $itemTransferList = [];
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransferList[] = $this->findItemInQuote($itemTransfer, $quoteTransfer);
+            $item = $this->findItemInQuote($itemTransfer, $quoteTransfer);
+            if ($item) {
+                $itemTransferList[] = $item;
+            }
         }
 
         return $this->quoteItemOperation->removeItems($itemTransferList, $quoteTransfer);
@@ -317,6 +320,7 @@ class CartOperation implements CartOperationInterface
 
             if ($changeItem->getQuantity() === 0) {
                 $itemsToRemove[] = $quoteItem;
+
                 continue;
             }
 
@@ -464,7 +468,7 @@ class CartOperation implements CartOperationInterface
             return $persistentQuoteTransfer;
         }
 
-        $quoteTransfer->fromArray($persistentQuoteTransfer->toArray(), true);
+        $quoteTransfer->fromArray($persistentQuoteTransfer->modifiedToArray(), true);
 
         return $quoteTransfer;
     }

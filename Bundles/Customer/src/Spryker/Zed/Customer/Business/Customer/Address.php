@@ -278,7 +278,7 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getFormattedAddressArray(AddressTransfer $addressTransfer)
     {
@@ -558,6 +558,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -591,6 +592,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -621,9 +623,11 @@ class Address implements AddressInterface
      */
     protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
+        $addressTransfer->setUuid(null);
+        $addressTransfer->setIdCustomerAddress(null);
+
         $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
-        $addressEntity->setIdCustomerAddress(null);
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
         $addressEntity->setFkCountry($fkCountry);

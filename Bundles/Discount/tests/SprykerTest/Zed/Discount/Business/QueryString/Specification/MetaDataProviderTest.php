@@ -171,8 +171,11 @@ class MetaDataProviderTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
-    protected function createMetaDataProvider(?DecisionRulePluginInterface $decisionRulePluginMock = null, ?ComparatorOperators $comparatorOperators = null, ?LogicalComparators $logicalComparatorsMock = null): MetaDataProvider
-    {
+    protected function createMetaDataProvider(
+        ?DecisionRulePluginInterface $decisionRulePluginMock = null,
+        ?ComparatorOperators $comparatorOperators = null,
+        ?LogicalComparators $logicalComparatorsMock = null
+    ): MetaDataProvider {
         if (!isset($decisionRulePluginMock)) {
             $decisionRulePluginMock = $this->createDecisionRulePluginMock();
         }

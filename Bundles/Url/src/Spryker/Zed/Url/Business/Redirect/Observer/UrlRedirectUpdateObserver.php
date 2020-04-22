@@ -9,12 +9,15 @@ namespace Spryker\Zed\Url\Business\Redirect\Observer;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
 use Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -47,11 +50,9 @@ class UrlRedirectUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
             return;
         }
 
-        $this->urlQueryContainer->getConnection()->beginTransaction();
-
-        $this->maintainOutdatedRedirectTargetUrls($urlTransfer, $originalUrlTransfer);
-
-        $this->urlQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer, $originalUrlTransfer): void {
+            $this->maintainOutdatedRedirectTargetUrls($urlTransfer, $originalUrlTransfer);
+        });
     }
 
     /**
