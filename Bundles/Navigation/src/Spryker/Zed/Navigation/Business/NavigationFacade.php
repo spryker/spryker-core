@@ -58,6 +58,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Navigation\Business\NavigationFacade::findNavigationByCriteria()} instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
@@ -226,5 +228,17 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
     public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer
     {
         return $this->getRepository()->findNavigationByCriteria($navigationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array
+    {
+        return $this->getRepository()->getAllNavigations();
     }
 }

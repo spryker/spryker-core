@@ -52,6 +52,8 @@ interface NavigationFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Navigation\Business\NavigationFacadeInterface::findNavigationByCriteria()} instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
@@ -191,4 +193,14 @@ interface NavigationFacadeInterface
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
      */
     public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
+
+    /**
+     * Specification
+     * - Finds all navigation entities in database.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array;
 }

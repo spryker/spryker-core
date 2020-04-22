@@ -158,6 +158,26 @@ class NavigationCRUDTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindAllNavigationsWillReturnACollectionOfNavigationTransfers(): void
+    {
+        //Arrange
+        $this->createNavigationEntity(static::TEST_NAVIGATION_KEY, static::TEST_NAVIGATION_NAME, true);
+
+        //Act
+        $navigationTransfers = $this->navigationFacade->getAllNavigations();
+
+        //Arrange
+        $this->assertGreaterThanOrEqual(1, count($navigationTransfers), 'Collection count does not match an expected value.');
+        $this->assertInstanceOf(
+            NavigationTransfer::class,
+            $navigationTransfers[0],
+            sprintf('Collection elements expected to be an instance of %s', NavigationTransfer::class)
+        );
+    }
+
+    /**
      * @param string $key
      * @param string $name
      * @param bool $isActive

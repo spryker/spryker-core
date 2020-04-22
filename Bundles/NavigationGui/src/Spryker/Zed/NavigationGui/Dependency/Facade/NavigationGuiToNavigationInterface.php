@@ -8,6 +8,7 @@
 namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
@@ -20,13 +21,6 @@ interface NavigationGuiToNavigationInterface
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
     public function createNavigation(NavigationTransfer $navigationTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationTransfer|null
-     */
-    public function findNavigation(NavigationTransfer $navigationTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -84,4 +78,11 @@ interface NavigationGuiToNavigationInterface
      * @return void
      */
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
 }

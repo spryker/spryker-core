@@ -18,4 +18,9 @@ interface NavigationRepositoryInterface
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
      */
     public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array;
 }

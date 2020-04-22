@@ -38,4 +38,8 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="NavigationCriteria">
+        <property name="idNavigation" type="int"/>
+    </transfer>
+
 </transfers>

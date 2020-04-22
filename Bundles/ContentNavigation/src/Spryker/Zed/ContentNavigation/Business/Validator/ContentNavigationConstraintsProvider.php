@@ -9,6 +9,7 @@ namespace Spryker\Zed\ContentNavigation\Business\Validator;
 
 use Generated\Shared\Transfer\ContentNavigationTermTransfer;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 class ContentNavigationConstraintsProvider implements ContentNavigationConstraintsProviderInterface
@@ -43,6 +44,7 @@ class ContentNavigationConstraintsProvider implements ContentNavigationConstrain
     {
         return [
             new Required(),
+            new NotBlank(),
             $this->navigationKeyExistsConstraint,
         ];
     }

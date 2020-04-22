@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -35,11 +35,11 @@ class DeleteController extends AbstractController
 
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($idNavigation);
+        $navigationCriteriaTransfer = new NavigationCriteriaTransfer();
+        $navigationCriteriaTransfer->setIdNavigation($idNavigation);
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
-            ->findNavigation($navigationTransfer);
+            ->findNavigationByCriteria($navigationCriteriaTransfer);
 
         if ($navigationTransfer) {
             $this->getFactory()

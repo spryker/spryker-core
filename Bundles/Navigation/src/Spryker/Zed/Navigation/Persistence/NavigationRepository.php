@@ -39,6 +39,24 @@ class NavigationRepository extends AbstractRepository implements NavigationRepos
     }
 
     /**
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array
+    {
+        $navigationEntities = $this->getFactory()
+            ->createNavigationQuery()
+            ->find();
+
+        if ($navigationEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createNavigationMapper()
+            ->mapNavigationEntitiesToNavigationTransfers($navigationEntities, []);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationQuery $navigationQuery
      *
