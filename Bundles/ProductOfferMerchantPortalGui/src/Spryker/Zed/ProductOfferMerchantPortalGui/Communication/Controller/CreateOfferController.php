@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
  */
-class ProductController extends AbstractController
+class CreateOfferController extends AbstractController
 {
     /**
      * @return array
