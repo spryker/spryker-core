@@ -27,8 +27,12 @@ class NavigationRepository extends AbstractRepository implements NavigationRepos
             ->joinWithSpyNavigationNodeLocalizedAttributes()
             ->find();
 
+        if ($navigationNodeEntities->count() === 0) {
+            return [];
+        }
+
         return $this->getFactory()
             ->createNavigationMapper()
-            ->mapNavigationNodeEntitiesToNavigationNodeTransfers($navigationNodeEntities->getArrayCopy());
+            ->mapNavigationNodeEntitiesToNavigationNodeTransfers($navigationNodeEntities->getArrayCopy(), []);
     }
 }

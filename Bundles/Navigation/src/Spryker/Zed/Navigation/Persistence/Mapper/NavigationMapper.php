@@ -14,12 +14,14 @@ class NavigationMapper
 {
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode[] $navigationNodeEntities
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
      */
-    public function mapNavigationNodeEntitiesToNavigationNodeTransfers(array $navigationNodeEntities): array
-    {
-        $navigationNodeTransfers = [];
+    public function mapNavigationNodeEntitiesToNavigationNodeTransfers(
+        array $navigationNodeEntities,
+        array $navigationNodeTransfers
+    ): array {
         foreach ($navigationNodeEntities as $navigationNodeEntity) {
             $navigationNodeTransfer = (new NavigationNodeTransfer())->fromArray($navigationNodeEntity->toArray(), true);
             foreach ($navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess() as $navigationNodeLocalizedAttributes) {

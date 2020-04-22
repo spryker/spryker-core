@@ -14,5 +14,5 @@ interface NavigationGuiRepositoryInterface
      *
      * @return bool
      */
-    public function hasKey(string $key): bool;
+    public function hasNavigationKey(string $key): bool;
 }

@@ -19,7 +19,7 @@ class NavigationGuiRepository extends AbstractRepository implements NavigationGu
      *
      * @return bool
      */
-    public function hasKey(string $key): bool
+    public function hasNavigationKey(string $key): bool
     {
         return $this->getFactory()
             ->createNavigationQuery()

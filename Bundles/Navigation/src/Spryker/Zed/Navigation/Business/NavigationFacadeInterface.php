@@ -180,7 +180,7 @@ interface NavigationFacadeInterface
 
     /**
      * Specification:
-     * - Duplicates navigation.
+     * - Duplicates navigation with all navigation nodes.
      * - Persists new navigation entity to database.
      * - Touches navigation entity as active.
      *

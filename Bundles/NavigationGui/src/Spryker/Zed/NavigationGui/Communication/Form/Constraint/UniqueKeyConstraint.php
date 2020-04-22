@@ -43,6 +43,6 @@ class UniqueKeyConstraint extends SymfonyConstraint
      */
     public function hasKey(string $key): bool
     {
-        return $this->navigationGuiRepository->hasKey($key);
+        return $this->navigationGuiRepository->hasNavigationKey($key);
     }
 }

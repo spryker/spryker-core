@@ -119,8 +119,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
                 $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
             );
             $navigationNodeData = $navigationNodeTransfer->toArray();
-            unset($navigationNodeData['id_navigation_node']);
-            unset($navigationNodeData['navigation_node_localized_attributes']);
+            unset($navigationNodeData['id_navigation_node'], $navigationNodeData['navigation_node_localized_attributes']);
             $newNavigationNodeTransfers[] = (new NavigationNodeTransfer())->fromArray(
                 $navigationNodeData,
                 true
