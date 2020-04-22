@@ -11,13 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
-use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\OmsReservation\ProductOfferOmsReservationReaderStrategyPlugin;
 use Spryker\Zed\OmsProductOfferReservation\Dependency\OmsProductOfferReservationEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\OmsProductReservationStoragePublishListener;
 
@@ -53,6 +52,10 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [
+            new ProductOfferOmsReservationReaderStrategyPlugin(),
+        ]);
     }
 
     /**
@@ -86,8 +89,6 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $omsProductReservationStoragePublishListener = new OmsProductReservationStoragePublishListener();
         $omsProductReservationStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $this->setProductOfferOmsReservationReaderStrategyPluginDependency($reservedQuantity);
-
         $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($omsProductOfferReservationTransfer->getIdProductOfferReservation()),
         ];
@@ -102,21 +103,5 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());
-    }
-
-    /**
-     * @param int $reservedQuantity
-     *
-     * @return void
-     */
-    protected function setProductOfferOmsReservationReaderStrategyPluginDependency(int $reservedQuantity): void
-    {
-        $reservationResponseTransfer = (new ReservationResponseTransfer())
-            ->setReservationQuantity($reservedQuantity);
-
-        $productOfferOmsReservationReaderStrategyPlugin = $this->getMockBuilder(OmsReservationReaderStrategyPluginInterface::class)->getMock();
-        $productOfferOmsReservationReaderStrategyPlugin->method('isApplicable')->willReturn(true);
-        $productOfferOmsReservationReaderStrategyPlugin->method('getReservationQuantity')->willReturn($reservationResponseTransfer);
-        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [$productOfferOmsReservationReaderStrategyPlugin]);
     }
 }

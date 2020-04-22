@@ -37,9 +37,9 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addOmsProductReservationCreateListener($eventCollection)
-            ->addOmsProductReservationUpdateListener($eventCollection)
-            ->addOmsProductReservationDeleteListener($eventCollection)
+        $this->addOmsProductOfferReservationCreateListener($eventCollection)
+            ->addOmsProductOfferReservationUpdateListener($eventCollection)
+            ->addOmsProductOfferReservationDeleteListener($eventCollection)
             ->addProductOfferPublishListener($eventCollection)
             ->addProductOfferStockPublishListener($eventCollection)
             ->addProductOfferStockCreateListener($eventCollection)
@@ -55,7 +55,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      *
      * @return $this
      */
-    protected function addOmsProductReservationCreateListener(EventCollectionInterface $eventCollection)
+    protected function addOmsProductOfferReservationCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(OmsProductOfferReservationEvents::ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener());
 
@@ -67,7 +67,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      *
      * @return $this
      */
-    protected function addOmsProductReservationDeleteListener(EventCollectionInterface $eventCollection)
+    protected function addOmsProductOfferReservationDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(OmsProductOfferReservationEvents::ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_DELETE, new OmsProductReservationStorageUnpublishListener());
 
@@ -79,7 +79,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      *
      * @return $this
      */
-    protected function addOmsProductReservationUpdateListener(EventCollectionInterface $eventCollection)
+    protected function addOmsProductOfferReservationUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(OmsProductOfferReservationEvents::ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener());
 

@@ -11,9 +11,12 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\OmsProductOfferReservationBuilder;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class OmsProductOfferReservationHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
      * @param array $seedData
      *
@@ -30,6 +33,10 @@ class OmsProductOfferReservationHelper extends Module
         $omsProductOfferReservationEntity->save();
 
         $omsProductOfferReservationTransfer->setIdProductOfferReservation($omsProductOfferReservationEntity->getIdOmsProductOfferReservation());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($omsProductOfferReservationEntity): void {
+            $omsProductOfferReservationEntity->delete();
+        });
 
         return $omsProductOfferReservationTransfer;
     }
