@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ProductLabelDeleteForm extends AbstractType
 {
-    public const FIELD_SUBMIT = 'submit';
+    protected const FIELD_SUBMIT = 'submit';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -40,7 +40,7 @@ class ProductLabelDeleteForm extends AbstractType
     protected function addSubmitField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SUBMIT, SubmitType::class, [
+            ->add(static::FIELD_SUBMIT, SubmitType::class, [
                 'label' => 'Yes, delete this product label',
                 'attr' => [
                     'class' => 'btn btn-danger safe-submit',

@@ -35,10 +35,25 @@ class ProductLabelTable extends AbstractTable
 
     public const TABLE_IDENTIFIER = 'product-label-table';
 
-    public const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
-    public const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
-    public const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
-    public const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\IndexController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\EditController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface
