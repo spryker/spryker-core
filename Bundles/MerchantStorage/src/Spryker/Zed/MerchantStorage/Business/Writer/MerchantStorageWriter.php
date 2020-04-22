@@ -46,11 +46,6 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     protected $merchantStorageRepository;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected $storeTransfers;
-
-    /**
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface $storeFacade
