@@ -214,6 +214,8 @@
     "spryker/content-file-gui": "*",
     "spryker/content-gui": "*",
     "spryker/content-gui-extension": "*",
+    "spryker/content-navigation": "*",
+    "spryker/content-navigation-gui": "*",
     "spryker/content-product": "*",
     "spryker/content-product-abstract-lists-rest-api": "*",
     "spryker/content-product-data-import": "*",
