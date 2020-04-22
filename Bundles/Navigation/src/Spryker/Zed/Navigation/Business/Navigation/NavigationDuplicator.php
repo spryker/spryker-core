@@ -67,7 +67,9 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         NavigationTransfer $newNavigationElement,
         NavigationTransfer $baseNavigationElement
     ): NavigationTransfer {
-        $this->assertNavigationForCreate($newNavigationElement);
+        $newNavigationElement
+            ->requireKey()
+            ->requireName();
 
         $newNavigationElement->setIsActive($baseNavigationElement->getIsActive());
 
@@ -80,18 +82,6 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         return $this->handleDatabaseTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
             return $this->executeCreateNavigationTransaction($newNavigationElement, $newNavigationNodeTransfers);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     *
-     * @return void
-     */
-    protected function assertNavigationForCreate(NavigationTransfer $navigationTransfer): void
-    {
-        $navigationTransfer
-            ->requireKey()
-            ->requireName();
     }
 
     /**

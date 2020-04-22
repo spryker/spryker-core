@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Navigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapper;
-use Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationCreator;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationDeleter;
 use Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator;
@@ -117,14 +115,6 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationTreeReader()
     {
         return new NavigationTreeReader($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Navigation\Business\Mapper\NavigationNodeMapperInterface
-     */
-    public function createNavigationNodeMapper(): NavigationNodeMapperInterface
-    {
-        return new NavigationNodeMapper();
     }
 
     /**
