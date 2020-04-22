@@ -15,8 +15,6 @@ use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\Prod
 
 class ProductLabelWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    public const DEFAULT_PRIORITY = 0;
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -33,7 +31,7 @@ class ProductLabelWriterStep extends PublishAwareStep implements DataImportStepI
             ->setIsDynamic($dataSet[ProductLabelDataSetInterface::COL_IS_DYNAMIC])
             ->setIsExclusive($dataSet[ProductLabelDataSetInterface::COL_IS_EXCLUSIVE])
             ->setFrontEndReference($dataSet[ProductLabelDataSetInterface::COL_FRONT_END_REFERENCE])
-            ->setPosition($dataSet[ProductLabelDataSetInterface::COL_PRIORITY] ?? static::DEFAULT_PRIORITY);
+            ->setPosition($dataSet[ProductLabelDataSetInterface::COL_PRIORITY] ?? 0);
 
         if ($dataSet[ProductLabelDataSetInterface::COL_VALID_FROM]) {
             $productLabelEntity->setValidFrom($dataSet[ProductLabelDataSetInterface::COL_VALID_FROM]);

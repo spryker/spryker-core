@@ -49,14 +49,15 @@ class ProductLabelSearchFacade extends AbstractFacade implements ProductLabelSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageData(ProductPageLoadTransfer $loadTransfer)
-    {
+    public function expandProductPageDataTransferWithProductLabelIds(
+        ProductPageLoadTransfer $productPageLoadTransfer
+    ): ProductPageLoadTransfer {
         return $this->getFactory()
             ->createProductPageDataTransferExpander()
-            ->expandProductPageDataTransfer($loadTransfer);
+            ->expandProductPageDataTransferWithProductLabelIds($productPageLoadTransfer);
     }
 }

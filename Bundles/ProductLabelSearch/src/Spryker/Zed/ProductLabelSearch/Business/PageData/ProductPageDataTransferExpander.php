@@ -9,79 +9,74 @@ namespace Spryker\Zed\ProductLabelSearch\Business\PageData;
 
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface;
 
 class ProductPageDataTransferExpander implements ProductPageDataTransferExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface
+     */
+    protected $productLabelMapper;
+
     /**
      * @var \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface
      */
     protected $productLabelFacade;
 
     /**
+     * @param \Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface $productLabelMapper
      * @param \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface $productLabelFacade
      */
-    public function __construct(ProductLabelSearchToProductLabelInterface $productLabelFacade)
-    {
+    public function __construct(
+        ProductLabelMapperInterface $productLabelMapper,
+        ProductLabelSearchToProductLabelInterface $productLabelFacade
+    ) {
+        $this->productLabelMapper = $productLabelMapper;
         $this->productLabelFacade = $productLabelFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransferWithProductLabelIds(ProductPageLoadTransfer $productPageLoadTransfer)
     {
         $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
-            ->setIdProductAbstracts($loadTransfer->getProductAbstractIds());
-
+            ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
         $productLabelTransfers = $this->productLabelFacade
             ->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
 
-        $productLabelIdsByIdProductAbstractMap = $this->getProductLabelIdsByIdProductAbstractAndStoreNameMap($productLabelTransfers);
+        $productLabelIdsMappedByIdProductAbstract = $this->productLabelMapper
+            ->getProductLabelIdsMappedByIdProductAbstractAndStoreName($productLabelTransfers);
 
-        $updatedPayloadTransfers = $this->updatePayloadTransfers(
-            $loadTransfer->getPayloadTransfers(),
-            $productLabelIdsByIdProductAbstractMap
+        $payloadTransfers = $this->expandPayloadTransfersWithProductLabelIds(
+            $productPageLoadTransfer->getPayloadTransfers(),
+            $productLabelIdsMappedByIdProductAbstract
         );
 
-        $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
-
-        return $loadTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
-     *
-     * @return array
-     */
-    protected function getProductLabelIdsByIdProductAbstractAndStoreNameMap(array $productLabelTransfers): array
-    {
-        $map = [];
-        foreach ($productLabelTransfers as $productLabelTransfer) {
-            foreach ($productLabelTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-                foreach ($productLabelTransfer->getProductLabelProductAbstracts() as $productLabelProductAbstract) {
-                    $map[$productLabelProductAbstract->getFkProductAbstract()][$storeTransfer->getName()][] = $productLabelTransfer->getIdProductLabel();
-                }
-            }
-        }
-
-        return $map;
+        return $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
-     * @param array $productLabelIdsByIdProductAbstractMap
+     * @param int[][] $productLabelIdsMappedByIdProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
      */
-    protected function updatePayloadTransfers(array $payloadTransfers, array $productLabelIdsByIdProductAbstractMap): array
-    {
+    protected function expandPayloadTransfersWithProductLabelIds(
+        array $payloadTransfers,
+        array $productLabelIdsMappedByIdProductAbstract
+    ): array {
         foreach ($payloadTransfers as $payloadTransfer) {
-            $labelIdsGroupedByProductAbstractIdAndStoreName = $productLabelIdsByIdProductAbstractMap[$payloadTransfer->getIdProductAbstract()] ?? [];
+            if (!isset($productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()])) {
+                continue;
+            }
 
-            $payloadTransfer->setLabelIds($labelIdsGroupedByProductAbstractIdAndStoreName);
+            $payloadTransfer->setLabelIds(
+                $productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]
+            );
         }
 
         return $payloadTransfers;

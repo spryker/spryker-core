@@ -8,10 +8,14 @@
 namespace Spryker\Zed\ProductLabelSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapper;
+use Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface;
 use Spryker\Zed\ProductLabelSearch\Business\PageData\ProductPageDataTransferExpander;
+use Spryker\Zed\ProductLabelSearch\Business\PageData\ProductPageDataTransferExpanderInterface;
 use Spryker\Zed\ProductLabelSearch\Business\Writer\ProductLabelSearchWriter;
 use Spryker\Zed\ProductLabelSearch\Business\Writer\ProductLabelSearchWriterInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchInterface;
 use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
@@ -35,6 +39,25 @@ class ProductLabelSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductLabelSearch\Business\PageData\ProductPageDataTransferExpanderInterface
+     */
+    public function createProductPageDataTransferExpander(): ProductPageDataTransferExpanderInterface
+    {
+        return new ProductPageDataTransferExpander(
+            $this->createProductLabelMapper(),
+            $this->getProductLabelFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface
+     */
+    public function createProductLabelMapper(): ProductLabelMapperInterface
+    {
+        return new ProductLabelMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade(): ProductLabelSearchToEventBehaviorFacadeInterface
@@ -51,17 +74,9 @@ class ProductLabelSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelSearch\Business\PageData\ProductPageDataTransferExpanderInterface
-     */
-    public function createProductPageDataTransferExpander()
-    {
-        return new ProductPageDataTransferExpander($this->getProductLabelFacade());
-    }
-
-    /**
      * @return \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface
      */
-    public function getProductLabelFacade()
+    public function getProductLabelFacade(): ProductLabelSearchToProductLabelInterface
     {
         return $this->getProvidedDependency(ProductLabelSearchDependencyProvider::FACADE_PRODUCT_LABEL);
     }

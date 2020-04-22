@@ -22,6 +22,6 @@ class ProductLabelLocalizedAttributesMapper
         SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
         ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
     ): ProductLabelLocalizedAttributesTransfer {
-        return $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntity->toArray());
+        return $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntity->toArray(), true);
     }
 }

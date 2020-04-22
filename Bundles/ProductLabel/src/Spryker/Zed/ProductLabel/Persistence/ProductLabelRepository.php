@@ -113,24 +113,27 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {
-        $productLabelEntities = $this->getFactory()
-            ->createProductLabelQuery()
-            ->_if(count($productLabelCriteriaTransfer->getIdProductLabels()))
-                ->filterByIdProductLabel_In($productLabelCriteriaTransfer->getIdProductLabels())
-            ->_endif()
-            ->_if(count($productLabelCriteriaTransfer->getIdProductAbstracts()))
-                ->useSpyProductLabelProductAbstractQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getIdProductAbstracts())
-                ->endUse()
-            ->_endIf()
-            ->_if($productLabelCriteriaTransfer->getStoreName())
-                ->useProductLabelStoreQuery(null, Criteria::LEFT_JOIN)
-                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+        $productLabelQuery = $this->getFactory()->createProductLabelQuery();
+
+        if ($productLabelCriteriaTransfer->getProductLabelIds()) {
+            $productLabelQuery->filterByIdProductLabel_In($productLabelCriteriaTransfer->getProductLabelIds());
+        }
+
+        if ($productLabelCriteriaTransfer->getProductAbstractIds()) {
+            $productLabelQuery->useSpyProductLabelProductAbstractQuery()
+                    ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getProductAbstractIds())
+                ->endUse();
+        }
+
+        if ($productLabelCriteriaTransfer->getStoreName() !== null) {
+            $productLabelQuery->useProductLabelStoreQuery()
+                    ->useStoreQuery()
                         ->filterByName($productLabelCriteriaTransfer->getStoreName())
                     ->endUse()
-                ->endUse()
-            ->_endIf()
-            ->leftJoinSpyProductLabelLocalizedAttributes()
+                ->endUse();
+        }
+
+        $productLabelEntities = $productLabelQuery->leftJoinSpyProductLabelLocalizedAttributes()
             ->filterByIsActive(true)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->_or()

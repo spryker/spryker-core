@@ -106,6 +106,6 @@ class ProductLabelDictionaryStorageMapper
         array $productLabelDictionaryItem,
         ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer
     ): ProductLabelDictionaryItemTransfer {
-        return $productLabelDictionaryItemTransfer->fromArray($productLabelDictionaryItem);
+        return $productLabelDictionaryItemTransfer->fromArray($productLabelDictionaryItem, true);
     }
 }

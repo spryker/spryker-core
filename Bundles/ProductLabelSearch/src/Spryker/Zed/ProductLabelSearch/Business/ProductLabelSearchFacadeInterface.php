@@ -44,14 +44,15 @@ interface ProductLabelSearchFacadeInterface
 
     /**
      * Specification:
-     * - Expand product page load transfer with product label ids mapped by id product abstract and store name
-     * - Returns a product page load transfer
+     * - Expands product page load transfer with product label ids mapped by id product abstract and store name.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageData(ProductPageLoadTransfer $loadTransfer);
+    public function expandProductPageDataTransferWithProductLabelIds(
+        ProductPageLoadTransfer $productPageLoadTransfer
+    ): ProductPageLoadTransfer;
 }

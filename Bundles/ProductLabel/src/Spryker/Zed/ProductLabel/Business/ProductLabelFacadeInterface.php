@@ -96,12 +96,8 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Finds product labels by the given criteria.
-     * - Expects store name to be provided.
-     * - Expects product abstract ids to be provided.
-     * - Expects product label ids to be provided.
-     * - Returns a collection of product-label transfers.
-     * - Returns an empty collection if either store name or product label ids or product abstract ids are missing.
+     * - Finds all the active product labels using ProductLabelCriteria transfer.
+     * - Returns a collection of found product labels.
      *
      * @api
      *

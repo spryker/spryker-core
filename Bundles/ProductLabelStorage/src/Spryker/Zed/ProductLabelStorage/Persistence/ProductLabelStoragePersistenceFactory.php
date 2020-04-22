@@ -11,6 +11,8 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
@@ -59,7 +61,7 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface
      */
-    public function getProductLabelQueryContainer()
+    public function getProductLabelQueryContainer(): ProductLabelStorageToProductLabelQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
     }
@@ -67,7 +69,7 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface
      */
-    public function getProductQueryContainer()
+    public function getProductQueryContainer(): ProductLabelStorageToProductQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
@@ -83,7 +85,7 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
      */
-    public function createProductLabelLocalizedAttributesMapper()
+    public function createProductLabelLocalizedAttributesMapper(): ProductLabelLocalizedAttributesMapper
     {
         return new ProductLabelLocalizedAttributesMapper();
     }
