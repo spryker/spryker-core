@@ -8,7 +8,6 @@
                 <bundle>navigation-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
-                <icon>fa-list</icon>
                 <pages>
                     <create>
                         <label>Create Navigation Element</label>
