@@ -11,9 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -47,11 +45,13 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
     public function getProductLabelLocalizedAttributes(): array
     {
         $productLabelLocalizedAttributesEntities = $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllLocalizedAttributesLabels()
             ->joinWithSpyLocale()
             ->joinWithSpyProductLabel()
-            ->addAnd(SpyProductLabelTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL)
+            ->useSpyProductLabelQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->find();
 
         $productLabelLocalizedAttributesTransfers = [];

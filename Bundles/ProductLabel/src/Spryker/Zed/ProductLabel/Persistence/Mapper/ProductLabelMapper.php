@@ -48,19 +48,21 @@ class ProductLabelMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
-     * @param array $transferCollection
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
-    public function mapProductLabelEntitiesToProductLabelTransfers(
-        ObjectCollection $productLabelEntities,
-        array $transferCollection = []
-    ): array {
+    public function mapProductLabelEntitiesToProductLabelTransfers(ObjectCollection $productLabelEntities): array
+    {
+        $productLabelTransfers = [];
+
         foreach ($productLabelEntities as $productLabelEntity) {
-            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer($productLabelEntity, new ProductLabelTransfer());
+            $productLabelTransfers[] = $this->mapProductLabelEntityToProductLabelTransfer(
+                $productLabelEntity,
+                new ProductLabelTransfer()
+            );
         }
 
-        return $transferCollection;
+        return $productLabelTransfers;
     }
 
     /**
@@ -103,7 +105,7 @@ class ProductLabelMapper
 
         $productLabelTransfer->setProductLabelProductAbstracts(
             $this->productLabelProductAbstractsMapper
-                ->mapProductLabelProductAbstractsEntitiesToProductLabelProductAbstractsTransferCollection(
+                ->mapProductLabelProductAbstractEntitiesToProductLabelProductAbstractTransferCollection(
                     $productLabelEntity->getSpyProductLabelProductAbstracts(),
                     new ArrayObject()
                 )

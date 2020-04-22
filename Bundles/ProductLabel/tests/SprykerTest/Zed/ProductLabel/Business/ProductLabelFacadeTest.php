@@ -113,10 +113,9 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
 
         $productLabelCriteria = (new ProductLabelCriteriaBuilder())->seed([
-            ProductLabelCriteriaTransfer::ID_PRODUCT_ABSTRACTS => [$idProductAbstract],
-            ProductLabelCriteriaTransfer::ID_PRODUCT_LABELS => [$idProductLabel],
+            ProductLabelCriteriaTransfer::PRODUCT_ABSTRACT_IDS => [$idProductAbstract],
+            ProductLabelCriteriaTransfer::PRODUCT_LABEL_IDS => [$idProductLabel],
             ProductLabelCriteriaTransfer::STORE_NAME => $storeTransferDE->getName(),
-
         ])->build();
 
         //Act

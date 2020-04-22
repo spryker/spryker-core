@@ -3,6 +3,25 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="FacetConfig">
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="name" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+        <property name="valueTransformer" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
     <transfer name="ProductAbstractLabelStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="productLabelIds" type="int[]" singular="idProductLabel"/>
@@ -46,6 +65,12 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="position" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="localizedAttributesCollection" type="ProductLabelLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="ProductLabelCriteria">
+        <property name="productLabelIds" type="int[]" singular="productLabelId"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -53,32 +78,22 @@
         <property name="labels" type="ProductLabelDictionaryItem[]" singular="label"/>
     </transfer>
 
-    <transfer name="FacetConfig">
-        <property name="parameterName" type="string"/>
-        <property name="fieldName" type="string"/>
-        <property name="type" type="string"/>
+    <transfer name="StorageProductLabel">
+        <property name="idProductLabel" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
         <property name="name" type="string"/>
-        <property name="isMultiValued" type="bool"/>
-        <property name="valueTransformer" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="SynchronizationData">
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
         <property name="store" type="string"/>
-    </transfer>
-
-    <transfer name="StorageProductLabel">
-        <property name="idProductLabel" type="int"/>
-    </transfer>
-
-    <transfer name="Locale">
-        <property name="localeName" type="string"/>
-    </transfer>
-
-    <transfer name="Filter">
-        <property name="offset" type="int"/>
-        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

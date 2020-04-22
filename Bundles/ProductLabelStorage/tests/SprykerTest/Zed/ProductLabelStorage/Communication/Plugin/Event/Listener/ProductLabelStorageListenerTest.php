@@ -156,7 +156,6 @@ class ProductLabelStorageListenerTest extends Unit
             ],
         ];
 
-        //Act
         $productLabelTransfer = $this->tester->haveProductLabel([
             ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
         ]);

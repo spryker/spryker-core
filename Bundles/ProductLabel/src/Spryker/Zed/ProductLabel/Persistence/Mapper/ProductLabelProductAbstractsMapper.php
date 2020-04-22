@@ -20,7 +20,7 @@ class ProductLabelProductAbstractsMapper
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
      */
-    public function mapProductLabelProductAbstractsEntitiesToProductLabelProductAbstractsTransferCollection(
+    public function mapProductLabelProductAbstractEntitiesToProductLabelProductAbstractTransferCollection(
         ObjectCollection $productLabelProductAbstractsEntities,
         ArrayObject $productLabelProductAbstractsTransferCollection
     ): ArrayObject {
@@ -46,6 +46,6 @@ class ProductLabelProductAbstractsMapper
         SpyProductLabelProductAbstract $productLabelProductAbstractEntity,
         ProductLabelProductAbstractTransfer $productLabelProductAbstractTransfer
     ): ProductLabelProductAbstractTransfer {
-        return $productLabelProductAbstractTransfer->fromArray($productLabelProductAbstractEntity->toArray());
+        return $productLabelProductAbstractTransfer->fromArray($productLabelProductAbstractEntity->toArray(), true);
     }
 }

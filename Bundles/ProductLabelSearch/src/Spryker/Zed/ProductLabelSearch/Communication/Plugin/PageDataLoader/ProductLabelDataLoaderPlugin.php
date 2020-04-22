@@ -31,6 +31,6 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
-        return $this->getFacade()->expandProductPageData($loadTransfer);
+        return $this->getFacade()->expandProductPageDataTransferWithProductLabelIds($loadTransfer);
     }
 }
