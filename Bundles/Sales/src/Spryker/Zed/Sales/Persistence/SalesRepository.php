@@ -26,6 +26,7 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
 class SalesRepository extends AbstractRepository implements SalesRepositoryInterface
 {
     protected const ID_SALES_ORDER = 'id_sales_order';
+    protected const CURRENCY_ISO_CODE = 'currency_iso_code';
 
     /**
      * @param string $customerReference
@@ -92,6 +93,21 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         return $this->getFactory()
             ->createSalesOrderItemMapper()
             ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return string[]
+     */
+    public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array
+    {
+        return $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByIdSalesOrder_In($salesOrderIds)
+            ->select([static::ID_SALES_ORDER, static::CURRENCY_ISO_CODE])
+            ->find()
+            ->toKeyValue(static::ID_SALES_ORDER, static::CURRENCY_ISO_CODE);
     }
 
     /**

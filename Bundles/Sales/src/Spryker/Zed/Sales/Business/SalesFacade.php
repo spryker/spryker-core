@@ -425,4 +425,20 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderItemReader()
             ->getOrderItems($orderItemFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createItemExpander()
+            ->expandItemsWithCurrencyIsoCode($itemTransfers);
+    }
 }

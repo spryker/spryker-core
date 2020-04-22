@@ -173,6 +173,7 @@
         <property name="orderReference" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">

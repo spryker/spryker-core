@@ -365,4 +365,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with currency ISO code.
+     * - Requires ItemTransfer::FK_SALES_ORDER to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }

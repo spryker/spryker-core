@@ -42,4 +42,11 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return string[]
+     */
+    public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array;
 }
