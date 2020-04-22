@@ -1,4 +1,2 @@
 parameters:
     ignoreErrors:
-    - '#Parameter \#1 \$v of method .+SpyCustomerAddress::setIdCustomerAddress\(\) expects int, null given.#'
-
