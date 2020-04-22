@@ -43,4 +43,46 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
             ->createProductOptionMapper()
             ->mapProductAbstractOptionGroupStatusesToTransfers($productAbstractOptionGroupStatuses);
     }
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItemsWithProductOptions(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemOptionQuery = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->leftJoinWithOption();
+
+        return $this->getFactory()
+            ->createProductOptionMapper()
+            ->mapSalesOrderItemEntityCollectionToItemTransfers($salesOrderItemOptionQuery->find());
+    }
+
+    /**
+     * @param string[] $productOptionSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
+     */
+    public function getProductOptionValuesBySkus(array $productOptionSkus): array
+    {
+        if (!$productOptionSkus) {
+            return [];
+        }
+
+        $productOptionValueQuery = $this->getFactory()
+            ->createProductOptionValueQuery()
+            ->filterBySku_In($productOptionSkus);
+
+        return $this->getFactory()
+            ->createProductOptionMapper()
+            ->mapProductOptionValueEntityCollectionToProductOptionValueTransfers($productOptionValueQuery->find());
+    }
 }

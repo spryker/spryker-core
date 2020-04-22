@@ -15,6 +15,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 {
     /**
