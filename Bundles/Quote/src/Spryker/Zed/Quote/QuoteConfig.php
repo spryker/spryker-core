@@ -65,6 +65,7 @@ class QuoteConfig extends AbstractBundleConfig
             ItemTransfer::UNIT_GROSS_PRICE,
             ItemTransfer::SUM_GROSS_PRICE,
             ItemTransfer::IS_ORDERED,
+            ItemTransfer::CONFIGURED_BUNDLE,
         ];
     }
 

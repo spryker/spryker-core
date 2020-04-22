@@ -77,12 +77,19 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="isOrdered" type="bool"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
     </transfer>
 
     <transfer name="Totals">
     </transfer>
 
     <transfer name="Filter">
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="ConfiguredBundle">
     </transfer>
 
 </transfers>
