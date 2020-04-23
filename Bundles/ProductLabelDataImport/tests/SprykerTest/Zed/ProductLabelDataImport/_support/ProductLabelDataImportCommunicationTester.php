@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\ProductLabelDataImport;
 
 use Codeception\Actor;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 
 /**

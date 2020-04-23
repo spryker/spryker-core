@@ -24,27 +24,19 @@ class ProductLabelMapper
     protected $productLabelStoreRelationMapper;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
-     */
-    private $productLabelLocalizedAttributesMapper;
-
-    /**
      * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper
      */
     private $productLabelProductAbstractsMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper $productLabelStoreRelationMapper
-     * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
      */
     public function __construct(
         ProductLabelStoreRelationMapper $productLabelStoreRelationMapper,
-        ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper,
         ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
     ) {
         $this->productLabelStoreRelationMapper = $productLabelStoreRelationMapper;
-        $this->productLabelLocalizedAttributesMapper = $productLabelLocalizedAttributesMapper;
         $this->productLabelProductAbstractsMapper = $productLabelProductAbstractsMapper;
     }
 
@@ -133,26 +125,6 @@ class ProductLabelMapper
     ): ProductLabelLocalizedAttributesTransfer {
         return $productLabelLocalizedAttributesTransfer
             ->fromArray($productLabelLocalizedAttributesEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities
-     * @param array $transferCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function mapProductLabelEntitiesToProductLabelTransfers(
-        ObjectCollection $productLabelEntities,
-        array $transferCollection = []
-    ): array {
-        foreach ($productLabelEntities as $productLabelEntity) {
-            $transferCollection[] = $this->mapProductLabelEntityToProductLabelTransfer(
-                $productLabelEntity,
-                new ProductLabelTransfer()
-            );
-        }
-
-        return $transferCollection;
     }
 
     /**
