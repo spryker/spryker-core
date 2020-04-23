@@ -36,7 +36,7 @@ class QuoteMapperTest extends Unit
     protected $tester;
 
     /**
-     * @dataProvider mapTransferToEntityProvider
+     * @dataProvider mapTransferToEntityDataProvider
      *
      * @param array $quoteAllowedFields
      * @param array $quoteItemAllowedFields
@@ -94,7 +94,7 @@ class QuoteMapperTest extends Unit
     /**
      * @return array
      */
-    public function mapTransferToEntityProvider(): array
+    public function mapTransferToEntityDataProvider(): array
     {
         return [
             [
