@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <merchant-portal-profile>
+        <label>Profile</label>
+        <title>Profile</title>
+        <icon>profile</icon>
+        <bundle>merchant-profile-merchant-portal-gui</bundle>
+        <controller>profile</controller>
+        <action>index</action>
+    </merchant-portal-profile>
+</config>

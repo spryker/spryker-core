@@ -95,7 +95,7 @@ class CalculationFacadeTest extends Unit
         $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
         $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumGrossPrice());
         $this->assertSame($calculatedItemProductOptionTransfer->getUnitPrice(), $calculatedItemProductOptionTransfer->getUnitPrice());
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), "Product option sum price is not set.");
+        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), 'Product option sum price is not set.');
         $this->assertSame($calculatedItemProductOptionTransfer->getSumPrice(), $calculatedItemProductOptionTransfer->getSumGrossPrice());
 
         //order.expense

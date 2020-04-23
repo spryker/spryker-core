@@ -85,9 +85,9 @@ abstract class AbstractProductAbstractTable extends AbstractTable
         return array_reduce(
             $productAbstractStoreEntities,
             function (string $accumulator, SpyProductAbstractStore $productAbstractStoreEntity): string {
-                return $accumulator . " " . $this->generateLabel($productAbstractStoreEntity->getSpyStore()->getName(), 'label-info');
+                return $accumulator . ' ' . $this->generateLabel($productAbstractStoreEntity->getSpyStore()->getName(), 'label-info');
             },
-            ""
+            ''
         );
     }
 
