@@ -58,7 +58,6 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     {
         return new ProductLabelMapper(
             $this->createProductLabelStoreRelationMapper(),
-            $this->createProductLabelLocalizedAttributesMapper(),
             $this->createProductLabelProductAbstractsMapper()
         );
     }

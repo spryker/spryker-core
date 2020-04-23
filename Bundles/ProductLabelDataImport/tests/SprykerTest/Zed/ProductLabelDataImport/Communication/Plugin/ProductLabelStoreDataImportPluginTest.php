@@ -43,12 +43,13 @@ class ProductLabelStoreDataImportPluginTest extends Unit
     public function testImportImportsProductLabelStore(): void
     {
         //Arrange
+        $this->tester->truncateProductLabelStoreRelations();
+
         $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
 
         $this->tester->haveProductLabel([ProductLabelTransfer::NAME => 'TEST']);
 
-        $this->tester->ensureProductLabelStoreTableIsEmpty();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_label_store.csv');
 

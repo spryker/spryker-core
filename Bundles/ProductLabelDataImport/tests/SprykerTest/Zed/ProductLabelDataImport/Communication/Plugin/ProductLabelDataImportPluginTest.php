@@ -39,13 +39,15 @@ class ProductLabelDataImportPluginTest extends Unit
     public function testImportImportsProductLabel(): void
     {
         //Arrange
+        $this->tester->truncateProductLabelProductAbstractRelations();
+
         $this->tester->haveProductAbstract([
             ProductAbstractTransfer::SKU => '0001',
         ]);
         $this->tester->haveProductAbstract([
             ProductAbstractTransfer::SKU => '0002',
         ]);
-        $this->tester->ensureProductLabelTableIsEmpty();
+
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_label.csv');
 
@@ -69,5 +71,14 @@ class ProductLabelDataImportPluginTest extends Unit
                 static::EXPECTED_IMPORT_COUNT
             )
         );
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->tester->truncateProductLabelProductAbstractRelations();
+        parent::tearDown();
     }
 }
