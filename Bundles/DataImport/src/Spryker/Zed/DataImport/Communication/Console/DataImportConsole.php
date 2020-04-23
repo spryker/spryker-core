@@ -279,7 +279,7 @@ class DataImportConsole extends Console
             . '%s'
             . 'Importable DataSets: <fg=green>%s</>' . PHP_EOL
             . 'Imported DataSets: <fg=green>%s</>' . PHP_EOL
-            . 'Import Time Used: <fg=green>%.2f ms</>' . PHP_EOL
+            . 'Import Time Used: <fg=green>%.2f s</>' . PHP_EOL
             . 'Import status: %s</>';
 
         $this->info(sprintf(
