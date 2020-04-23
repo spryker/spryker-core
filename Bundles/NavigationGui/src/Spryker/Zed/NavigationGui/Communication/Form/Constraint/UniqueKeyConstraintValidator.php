@@ -28,10 +28,12 @@ class UniqueKeyConstraintValidator extends ConstraintValidator
         }
 
         $hasKey = $constraint->hasKey($value);
-        if ($hasKey) {
-            $this->context
-                ->buildViolation($constraint->getMessage())
-                ->addViolation();
+        if (!$hasKey) {
+            return;
         }
+
+        $this->context
+            ->buildViolation($constraint->getMessage())
+            ->addViolation();
     }
 }

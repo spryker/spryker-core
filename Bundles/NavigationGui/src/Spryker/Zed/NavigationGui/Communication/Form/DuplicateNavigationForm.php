@@ -61,7 +61,7 @@ class DuplicateNavigationForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAME, TextType::class, [
+            ->add(static::FIELD_NAME, TextType::class, [
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
@@ -81,7 +81,7 @@ class DuplicateNavigationForm extends AbstractType
     protected function addKeyField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_KEY, TextType::class, [
+            ->add(static::FIELD_KEY, TextType::class, [
                 'label' => 'Key',
                 'required' => true,
                 'constraints' => [

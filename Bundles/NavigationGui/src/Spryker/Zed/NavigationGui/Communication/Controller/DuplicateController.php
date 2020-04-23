@@ -50,16 +50,13 @@ class DuplicateController extends AbstractController
     {
         if ($duplicateNavigationForm->isSubmitted() && $duplicateNavigationForm->isValid()) {
             $navigationTransfer = $duplicateNavigationForm->getData();
-            $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
-            $baseNavigationTransfer = $this->getFactory()
-                ->getNavigationFacade()
-                ->findNavigation((new NavigationTransfer())->setIdNavigation($idNavigation));
+            $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
             $newNavigationTransfer = (new NavigationTransfer())
                 ->setName($navigationTransfer->getName())
                 ->setKey($navigationTransfer->getKey());
             $this->getFactory()
                 ->getNavigationFacade()
-                ->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
+                ->duplicateNavigation($newNavigationTransfer, (new NavigationTransfer())->setIdNavigation($idNavigation));
 
             $this->addSuccessMessage(
                 'Navigation element %d was duplicated successfully.',
