@@ -74,8 +74,8 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         $newNavigationElement->setIsActive($baseNavigationElement->getIsActive());
 
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree($baseNavigationElement);
-        $navigationNodeTransfers = $this->getNavigationNodeTransfersRecursively($navigationTreeTransfer->getNodes());
-        $newNavigationNodeTransfers = $this->duplicateNavigationNodeTransfers($navigationNodeTransfers);
+        $baseNavigationNodeTransfers = $this->getNavigationNodeTransfersRecursively($navigationTreeTransfer->getNodes());
+        $newNavigationNodeTransfers = $this->duplicateNavigationNodeTransfers($baseNavigationNodeTransfers);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
             return $this->executeCreateNavigationTransaction($newNavigationElement, $newNavigationNodeTransfers);
