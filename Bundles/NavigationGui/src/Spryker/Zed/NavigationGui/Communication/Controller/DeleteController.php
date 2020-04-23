@@ -20,7 +20,7 @@ class DeleteController extends AbstractController
     public const PARAM_ID_NAVIGATION = 'id-navigation';
 
     protected const MESSAGE_NAVIGATION_REMOVAL_SUCCESS = 'Navigation element %d was deleted successfully.';
-    protected const MESSAGE_NAVIGATION_REMOVAL_FAIL = 'Navigation element %d was not found..';
+    protected const MESSAGE_NAVIGATION_REMOVAL_FAIL = 'Navigation element %d was not found.';
 
     /**
      * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
