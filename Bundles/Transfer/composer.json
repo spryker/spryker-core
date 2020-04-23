@@ -9,7 +9,7 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.42.0",
     "spryker/log": "^3.0.0",
-    "spryker/propel": "^3.20.0",
+    "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
     "spryker/util-glob": "^1.0.0",
