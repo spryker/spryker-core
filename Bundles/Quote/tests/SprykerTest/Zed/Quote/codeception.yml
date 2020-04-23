@@ -31,3 +31,5 @@ suites:
         class_name: QuotePersistenceTester
         modules:
             enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

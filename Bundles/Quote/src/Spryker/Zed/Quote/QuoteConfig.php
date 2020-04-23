@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Quote;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Quote\QuoteConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -45,28 +44,17 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Write all properties that should be stored in the quota table.
+     * - Leave an empty array if you want to store all the Item transfer properties.
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getQuoteItemFieldsAllowedForSaving(): array
     {
-        return [
-            ItemTransfer::ID,
-            ItemTransfer::SKU,
-            ItemTransfer::GROUP_KEY,
-            ItemTransfer::GROUP_KEY_PREFIX,
-            ItemTransfer::QUANTITY,
-            ItemTransfer::ID_PRODUCT_ABSTRACT,
-            ItemTransfer::IMAGES,
-            ItemTransfer::NAME,
-            ItemTransfer::UNIT_PRICE,
-            ItemTransfer::SUM_PRICE,
-            ItemTransfer::UNIT_GROSS_PRICE,
-            ItemTransfer::SUM_GROSS_PRICE,
-            ItemTransfer::IS_ORDERED,
-            ItemTransfer::CONFIGURED_BUNDLE,
-        ];
+        return [];
     }
 
     /**
