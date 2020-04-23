@@ -27,6 +27,6 @@ class VaultConfig extends AbstractSharedConfig
             return $encryptionKey;
         }
 
-        throw new EncryptionKeyNotPreConfigured("Encryption key is not pre-configured, please update VAULT:ENCRYPTION_KEY env variable.");
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update VAULT:ENCRYPTION_KEY env variable.');
     }
 }
