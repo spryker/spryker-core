@@ -1,0 +1,26 @@
+"Add New User","Add Merchant User"
+Back,Back
+"Back to Merchant Users","Back to Merchant Users"
+Deactivate,Deactivate
+Deactivated,Deactivated
+Delete,Delete
+Deleted,Deleted
+Create,Create
+"It will be deleted from everywhere","It will be deleted from everywhere"
+"Merchant user ID is incorrect.","Merchant user ID is incorrect."
+"Merchant user was deleted successfully.","Merchant user was deleted successfully."
+"Merchant user was not deleted.","Merchant user was not deleted."
+"No users can be added till the merchant has been created. Please, add the required merchant information and save it.","No users can be added till the merchant has been created. Please, add the required merchant information and save it."
+Save,Save
+"User status can't be updated.","User status can't be updated."
+"User status has been updated.","User status has been updated."
+Users,Users
+"You are trying to delete merchant user","You are trying to delete merchant user"
+"Merchant user was successfully created.","Merchant user was successfully created."
+Edit,Edit
+Activate,Activate
+Active,Active
+E-mail,E-mail
+Status,Status
+"Last Name","Last Name"
+"First Name","First Name"

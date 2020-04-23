@@ -9,9 +9,9 @@ namespace Spryker\Zed\Oauth\Business\Model\League;
 
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface;
 
 interface RepositoryBuilderInterface
 {
@@ -36,7 +36,7 @@ interface RepositoryBuilderInterface
     public function createUserRepository(): UserRepositoryInterface;
 
     /**
-     * @return \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface
      */
     public function createRefreshTokenRepository(): RefreshTokenRepositoryInterface;
 }

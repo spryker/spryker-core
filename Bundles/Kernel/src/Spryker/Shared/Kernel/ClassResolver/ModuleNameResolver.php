@@ -10,11 +10,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 class ModuleNameResolver
 {
     /**
-     * @var string|null
-     */
-    protected $store;
-
-    /**
      * @param string $moduleName
      *
      * @return string

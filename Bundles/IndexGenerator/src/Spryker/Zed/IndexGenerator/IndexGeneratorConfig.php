@@ -47,7 +47,7 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacade::getSchemaDirectory()} instead.
      *
      * @return string
      */

@@ -7,7 +7,10 @@
 
 namespace SprykerTest\Zed\IndexGenerator\Business;
 
+use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeBridge;
+use Spryker\Zed\IndexGenerator\IndexGeneratorDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -32,6 +35,13 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testGeneratesSchemaFileWithIndexWhenIndexIsMissing(): void
     {
+        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSchemaDirectory'])
+            ->getMock();
+        $propelFacadeBridge->method('getSchemaDirectory')
+            ->willReturn(Configuration::dataDir() . 'SchemaWithMissingIndex');
+        $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex');
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
@@ -44,6 +54,13 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenIndexIsDefined(): void
     {
+        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSchemaDirectory'])
+            ->getMock();
+        $propelFacadeBridge->method('getSchemaDirectory')
+            ->willReturn(Configuration::dataDir() . 'SchemaWithIndex');
+        $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithIndex');
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
@@ -56,6 +73,13 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenTableNotIndexable(): void
     {
+        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSchemaDirectory'])
+            ->getMock();
+        $propelFacadeBridge->method('getSchemaDirectory')
+            ->willReturn(Configuration::dataDir() . 'SchemaWithArchivableBehavior');
+        $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithArchivableBehavior');
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
@@ -68,6 +92,12 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenTableIsExcluded(): void
     {
+        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSchemaDirectory'])
+            ->getMock();
+        $propelFacadeBridge->method('getSchemaDirectory')
+            ->willReturn(Configuration::dataDir() . 'SchemaWithMissingIndex');
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex', ['spy_foo_bar']);
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();

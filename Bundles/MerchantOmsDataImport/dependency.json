@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/merchant-oms": "Provides an extended merchant table."
+  }
+}

@@ -24,8 +24,7 @@ class RefreshTokensResourceController extends AbstractController
      *              "Refreshes customer's auth token."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
@@ -59,5 +58,31 @@ class RefreshTokensResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()->getResourceBuilder()->createRestResponse();
+    }
+
+    /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Revokes customer's refresh token."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header",
+     *              "description": "Locale value relevant for the store."
+     *          }],
+     *          "responses": {
+     *              "204": "No content."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->createRefreshTokenRevoker()->revokeRefreshToken($restRequest);
     }
 }

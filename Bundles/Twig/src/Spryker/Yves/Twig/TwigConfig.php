@@ -47,15 +47,15 @@ class TwigConfig extends AbstractBundleConfig
 
         foreach ($namespaces as $namespace) {
             if ($themeName !== '' && $themeName !== $themeNameDefault) {
-                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . '/Theme/' . $themeName . APPLICATION_CODE_BUCKET;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeName;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeName;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
             }
 
-            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . '/Theme/' . $themeNameDefault . APPLICATION_CODE_BUCKET;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeNameDefault;
             $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeNameDefault;
-            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . '/Theme/' . $themeNameDefault . APPLICATION_CODE_BUCKET;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeNameDefault;
             $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeNameDefault;
         }
 

@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Config\Application;
 
 use Exception;
-use Spryker\Shared\Kernel\CodeBucket\Context\CodeBucketContext;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
 use Spryker\Shared\Kernel\Store;
 
 class Environment
@@ -90,7 +90,7 @@ class Environment
     protected static function defineCodeBucket(): void
     {
         if (!defined('APPLICATION_CODE_BUCKET')) {
-            $currentCodeBucket = (new CodeBucketContext())->getCurrentCodeBucket();
+            $currentCodeBucket = (new CodeBucketConfig())->getCurrentCodeBucket();
 
             define('APPLICATION_CODE_BUCKET', $currentCodeBucket);
         }
