@@ -1,9 +1,9 @@
 Actions,Aktionen
 "Are you sure about deleting this delivery method?","Sind Sie sicher, diese Versandmethode zu löschen?"
-"Availability plugin","Verfügbarkeits-Plugin"
+"Availability plugin",Verfügbarkeits-Plugin
 "Available in Store","Im Store erhältlich"
 Carrier,Träger
-"Carrier Company","Transportunternehmen"
+"Carrier Company",Transportunternehmen
 "Carrier was created successfully.","Träger wurde erfolgreich erstellt."
 "Carrier with the same name already exists.","Träger mit dem gleichen Namen existiert bereits."
 Configuration,Konfiguration
@@ -13,10 +13,10 @@ Configuration,Konfiguration
 Delete,Löschen
 "Delete Delivery Method","Versandart löschen"
 "Delete Delivery Method: %s","Versandart löschen: %s"
-"Delivery Method Key","Liefermethodenschlüssel"
+"Delivery Method Key",Liefermethodenschlüssel
 "Delivery method not found.","Versandart nicht gefunden."
 "Delivery method was deleted successfully.","Versandart wurde erfolgreich gelöscht."
-"Delivery Methods","Liefermethoden"
+"Delivery Methods",Liefermethoden
 "Delivery Time plugin","Lieferzeit Plugin"
 Edit,Bearbeiten
 "Edit Delivery Method: %s","Zustellmethode bearbeiten: %s"
@@ -24,7 +24,7 @@ Enabled?,Aktiviert?
 "Is this delivery method active?","Ist diese Versandmethode aktiv?"
 "List of delivery methods","Liste der Versandarten"
 "List Shipment Methods","Versandmethoden auflisten"
-"Method Name","Methodenname"
+"Method Name",Methodenname
 Name,Name
 "New address","Neue Adresse"
 "No, I want to keep this delivery method","Nein, ich möchte diese Versandart beibehalten"
@@ -39,7 +39,7 @@ Save,Speichern
 "Shipment method not found","Versandart nicht gefunden"
 "Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
 Status,Status
-"Store relation","Store-Beziehung"
+"Store relation",Store-Beziehung
 "Tax set",Steuer-Set
 "This name is already in use.","Dieser Name wird schon benutzt."
 "This shipment method key is already in use.","Dieser Versandmethodenschlüssel wird bereits verwendet."

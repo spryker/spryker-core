@@ -24,14 +24,14 @@ Inactive,Inaktiv
 "Please select product from the list below *","Bitte wählen Sie ein Produkt aus der untenstehenden Liste aus"
 "Product owning the relation","Produkt, das die Beziehung besitzt"
 "Product relation #%d not found","Produktbeziehung #%d nicht gefunden"
-"Product relation key","Produktbeziehungsschlüssel"
+"Product relation key",Produktbeziehungsschlüssel
 "Product relation successfully created","Produktbeziehung erfolgreich erstellt"
 "Product relation successfully modified","Produktbeziehung erfolgreich geändert"
 "Product relation with id ""%d"" not found.","Produktbeziehung mit der ID ""%d"" nicht gefunden"
-"Product Relations","Produktbeziehungen"
+"Product Relations",Produktbeziehungen
 "Related products","Ähnliche Produkte"
 related-products,"Ähnliche Produkte"
-"Relation #%d successfully deleted.",Beziehung #%d erfolgreich gelöscht.
+"Relation #%d successfully deleted.","Beziehung #%d erfolgreich gelöscht."
 "Relation successfully activated.","Beziehung erfolgreich aktiviert."
 "Relation successfully deactivated.","Beziehung erfolgreich deaktiviert."
 "Relation successfully deleted.","Beziehung erfolgreich gelöscht."
@@ -45,7 +45,7 @@ Select,select
 "Selected product already has ""%s"" relation type.","Das ausgewählte Produkt hat bereits Beziehungsart ""%s""."
 Sku:,Sku:
 Status,Status
-"Store relation","Store-Beziehung"
+"Store relation",Store-Beziehung
 Stores,Stores
 up-selling,Upselling
 "Update regularly","Regelmäßig aktualisieren"
