@@ -23,6 +23,20 @@ interface RestRequestValidatorFacadeInterface
 
     /**
      * Specification:
+     * - Collects the validation rules declarations from all the modules for the given code bucket.
+     * - Stores the rules in the cache.
+     * - Removes outdated validation rules cache file.
+     *
+     * @api
+     *
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function buildNavigationCacheForCodeBucket(string $codeBucket): void;
+
+    /**
+     * Specification:
      * - Removes outdated validation rules cache file.
      *
      * @api

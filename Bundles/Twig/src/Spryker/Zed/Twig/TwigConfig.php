@@ -54,7 +54,7 @@ class TwigConfig extends AbstractBundleConfig
         $storeName = $this->getStoreName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
         }
 

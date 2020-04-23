@@ -1,2 +1,3 @@
 parameters:
-    ignoreErrors:
+    dynamicConstantNames:
+        - APPLICATION_CODE_BUCKET

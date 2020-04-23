@@ -10,6 +10,8 @@ namespace Spryker\Yves\Router;
 use Spryker\Shared\Router\Cache\CacheInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Cache\Cache;
+use Spryker\Yves\Router\Dependency\Client\RouterToLocaleStorageClientInterface;
+use Spryker\Yves\Router\Dependency\Client\RouterToStoreStorageClientInterface;
 use Spryker\Yves\Router\Loader\ClosureLoader;
 use Spryker\Yves\Router\Loader\LoaderInterface;
 use Spryker\Yves\Router\Resolver\RequestRequestValueResolver;
@@ -218,5 +220,21 @@ class RouterFactory extends AbstractFactory
     public function createCache(): CacheInterface
     {
         return new Cache($this->createRouter(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Dependency\Client\RouterToLocaleStorageClientInterface
+     */
+    public function getLocaleStorageClient(): RouterToLocaleStorageClientInterface
+    {
+        return $this->getProvidedDependency(RouterDependencyProvider::CLIENT_LOCALE_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Dependency\Client\RouterToStoreStorageClientInterface
+     */
+    public function getStoreStorageClient(): RouterToStoreStorageClientInterface
+    {
+        return $this->getProvidedDependency(RouterDependencyProvider::CLIENT_STORE_STORAGE);
     }
 }

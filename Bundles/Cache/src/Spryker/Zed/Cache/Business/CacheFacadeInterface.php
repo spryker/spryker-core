@@ -29,6 +29,16 @@ interface CacheFacadeInterface
     public function emptyCache();
 
     /**
+     * Specification:
+     * - Empties configured cache directory for codebucket directory structure.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyCodeBucketCache(): string;
+
+    /**
      * @api
      *
      * @deprecated Use emptyAutoLoaderCache() instead

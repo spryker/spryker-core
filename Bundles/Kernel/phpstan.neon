@@ -3,6 +3,7 @@ parameters:
         - APPLICATION
         - APPLICATION_ENV
         - APPLICATION_STORE
+        - APPLICATION_CODE_BUCKET
 
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'

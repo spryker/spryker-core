@@ -140,6 +140,8 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getEntitiesSourceDirectories()

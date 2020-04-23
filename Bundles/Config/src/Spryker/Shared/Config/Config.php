@@ -9,7 +9,6 @@ namespace Spryker\Shared\Config;
 
 use ArrayObject;
 use Exception;
-use Spryker\Shared\Kernel\Store;
 
 class Config
 {
@@ -131,7 +130,6 @@ class Config
     {
         $config = new ArrayObject();
         $environmentName = $environmentName ?? static::getEnvironmentName();
-        $storeName = static::getStore()->getStoreName();
 
         /*
          * e.g. config_default.php
@@ -146,12 +144,16 @@ class Config
         /*
          * e.g. config_default_DE.php
          */
-        static::buildConfig('default_' . $storeName, $config);
+        if (APPLICATION_CODE_BUCKET !== '') {
+            static::buildConfig('default_' . APPLICATION_CODE_BUCKET, $config);
+        }
 
         /*
          * e.g. config_default-production_DE.php
          */
-        static::buildConfig('default-' . $environmentName . '_' . $storeName, $config);
+        if (APPLICATION_CODE_BUCKET !== '') {
+            static::buildConfig('default-' . $environmentName . '_' . APPLICATION_CODE_BUCKET, $config);
+        }
 
         /*
          * e.g. config_local_test.php
@@ -166,7 +168,9 @@ class Config
         /*
          * e.g. config_local_DE.php
          */
-        static::buildConfig('local_' . $storeName, $config);
+        if (APPLICATION_CODE_BUCKET !== '') {
+            static::buildConfig('local_' . APPLICATION_CODE_BUCKET, $config);
+        }
 
         /*
          * e.g. config_propel.php
@@ -198,13 +202,5 @@ class Config
     private static function getEnvironmentName(): string
     {
         return APPLICATION_ENV;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    private static function getStore(): Store
-    {
-        return Store::getInstance();
     }
 }

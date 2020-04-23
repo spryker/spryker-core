@@ -13,6 +13,7 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
+ * @method \Spryker\Yves\Router\RouterFactory getFactory()
  */
 class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
@@ -33,8 +34,12 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
             return $pathinfo;
         }
 
+        $allowedLanguages = $this->getFactory()
+            ->getLocaleStorageClient()
+            ->getLanguagesForStore(APPLICATION_STORE);
+
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedLanguages(), true)) {
+        if (in_array($pathinfoFragments[0], $allowedLanguages, true)) {
             $this->currentLanguage = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);

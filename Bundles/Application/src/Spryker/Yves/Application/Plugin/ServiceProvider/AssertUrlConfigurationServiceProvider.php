@@ -62,7 +62,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
         }
 
         throw new InvalidUrlConfigurationException(sprintf(
-            'Incorrect HOST_YVES config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.',
+            'Incorrect HOST_YVES config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default.php or env specific config files. Current store - %s',
             $hostName,
             $configuredHostName,
             Store::getInstance()->getStoreName()

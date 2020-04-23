@@ -13,4 +13,11 @@ interface RestRequestValidatorCacheBuilderInterface
      * @return void
      */
     public function build(): void;
+
+    /**
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function buildCacheForCodeBucket(string $codeBucket): void;
 }
