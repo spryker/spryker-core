@@ -1,0 +1,35 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Navigation element removal confirmation' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ parent() }}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back to Navigation Elements' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <span>{{ 'Are you sure about deleting this navigation?' | trans }}</span>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this navigation' | trans }}</a>
+                    <a href="{{ url('/navigation-gui/delete/confirm', {'id-navigation': idNavigation}) }}" class="btn btn-danger safe-submit">{{ 'Yes, delete this navigation' | trans }}</a>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

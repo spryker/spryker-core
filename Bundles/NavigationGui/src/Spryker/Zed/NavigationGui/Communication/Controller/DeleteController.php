@@ -10,7 +10,6 @@ namespace Spryker\Zed\NavigationGui\Communication\Controller;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
@@ -23,33 +22,39 @@ class DeleteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        if (!$request->isMethod(Request::METHOD_DELETE)) {
-            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
-        }
-
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($idNavigation);
+        return $this->viewResponse([
+            'idNavigation' => $idNavigation,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmAction(Request $request)
+    {
+        $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
-            ->findNavigation($navigationTransfer);
-
-        if ($navigationTransfer) {
-            $this->getFactory()
-                ->getNavigationFacade()
-                ->deleteNavigation($navigationTransfer);
-
-            $this->addSuccessMessage('Navigation element %d was deleted successfully.', ['%d' => $idNavigation]);
-        } else {
+            ->findNavigation((new NavigationTransfer())->setIdNavigation($idNavigation));
+        if (!$navigationTransfer) {
             $this->addErrorMessage('Navigation element %d was not found.', ['%d' => $idNavigation]);
+
+            return $this->redirectResponse('/navigation-gui');
         }
+
+        $this->getFactory()
+            ->getNavigationFacade()
+            ->deleteNavigation($navigationTransfer);
+
+        $this->addSuccessMessage('Navigation element %d was deleted successfully.', ['%d' => $idNavigation]);
 
         return $this->redirectResponse('/navigation-gui');
     }
