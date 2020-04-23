@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  */
-class PaymentMethodValidityPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class PaymentMethodValidityCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
      * {@inheritDoc}
