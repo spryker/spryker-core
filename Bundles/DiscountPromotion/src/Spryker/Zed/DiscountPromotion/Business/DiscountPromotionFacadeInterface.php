@@ -129,7 +129,7 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
-     * - Validates cart items discount promotions if they are sellable for the current cart.
+     * - If cart change operation is 'add', then validates cart items discount promotions on availability for the current cart.
      * - Returns pre-check transfer with error messages in case of error.
      *
      * @api

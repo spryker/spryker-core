@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class CartValidator implements CartValidatorInterface
 {
-    protected const MESSAGE_ERROR_INVALID_PROMOTIONAL_ITEM = 'cart.promotion.items.invalid_for_quote';
-    protected const MESSAGE_PARAM_SKU = '%sku%';
+    protected const GLOSSARY_KEY_ERROR_INVALID_PROMOTIONAL_ITEM = 'cart.promotion.items.invalid_for_quote';
+    protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     */
     protected const CART_CHANGE_OPERATION_ADD = 'add';
 
     /**
@@ -25,8 +28,10 @@ class CartValidator implements CartValidatorInterface
      */
     public function validateCartDiscountPromotions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+
         if ($cartChangeTransfer->getOperation() !== static::CART_CHANGE_OPERATION_ADD) {
-            return (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+            return $cartPreCheckResponseTransfer;
         }
 
         $promotionItemTransfers = $this->getItemsWithDiscountPromotion($cartChangeTransfer);
@@ -37,17 +42,16 @@ class CartValidator implements CartValidatorInterface
                 continue;
             }
 
-            return (new CartPreCheckResponseTransfer())
-                ->setIsSuccess(false)
+            $cartPreCheckResponseTransfer->setIsSuccess(false)
                 ->addMessage(
                     (new MessageTransfer())
                         ->setType(static::MESSAGE_TYPE_ERROR)
-                        ->setValue(static::MESSAGE_ERROR_INVALID_PROMOTIONAL_ITEM)
-                        ->setParameters([static::MESSAGE_PARAM_SKU => $promotionItemTransfer->getSku()])
+                        ->setValue(static::GLOSSARY_KEY_ERROR_INVALID_PROMOTIONAL_ITEM)
+                        ->setParameters([static::GLOSSARY_KEY_PARAM_SKU => $promotionItemTransfer->getSku()])
                 );
         }
 
-        return (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+        return $cartPreCheckResponseTransfer;
     }
 
     /**
@@ -70,7 +74,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PromotionItemTransfer[][]
      */
     protected function groupAvailableQuotePromotionItemsById(CartChangeTransfer $cartChangeTransfer): array
     {
