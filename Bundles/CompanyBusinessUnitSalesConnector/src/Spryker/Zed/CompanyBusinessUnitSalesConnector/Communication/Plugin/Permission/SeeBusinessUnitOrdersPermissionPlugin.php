@@ -9,13 +9,15 @@ namespace Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Per
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
+/**
+ * Use this plugin for checking if customer is allowed to see orders from same company business unit.
+ */
 class SeeBusinessUnitOrdersPermissionPlugin implements PermissionPluginInterface
 {
     protected const KEY = 'SeeBusinessUnitOrdersPermissionPlugin';
 
     /**
      * {@inheritDoc}
-     * - Checks if customer is allowed to see orders from same company business unit.
      *
      * @api
      *

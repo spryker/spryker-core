@@ -9,13 +9,15 @@ namespace Spryker\Client\CompanySalesConnector\Plugin\Permission;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
+/**
+ * Use this plugin for checking if customer is allowed to see orders from same company.
+ */
 class SeeCompanyOrdersPermissionPlugin implements PermissionPluginInterface
 {
     protected const KEY = 'SeeCompanyOrdersPermissionPlugin';
 
     /**
      * {@inheritDoc}
-     * - Checks if customer is allowed to see orders from same company.
      *
      * @api
      *
