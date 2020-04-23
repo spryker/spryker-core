@@ -768,7 +768,6 @@ class ProductLabelFacadeTest extends Unit
             $expectedProductLabelLocalizedAttributesTransferCount,
             $updatedProductLabelLocalizedAttributesTransfers
         );
-
     }
 
     /**
