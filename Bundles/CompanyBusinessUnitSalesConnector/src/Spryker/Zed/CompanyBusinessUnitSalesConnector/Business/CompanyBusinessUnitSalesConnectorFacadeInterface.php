@@ -17,8 +17,9 @@ interface CompanyBusinessUnitSalesConnectorFacadeInterface
 {
     /**
      * Specification:
-     * - Expands sales order with company business unit uuid and persists updated entity.
      * - Requires SaveOrderTransfer::idSalesOrder to be set.
+     * - Executed only if QuoteTransfer::customer::companyUser::companyBusinessUnit::uuid is provided.
+     * - Expands sales order with company business unit uuid and persists updated entity.
      *
      * @api
      *

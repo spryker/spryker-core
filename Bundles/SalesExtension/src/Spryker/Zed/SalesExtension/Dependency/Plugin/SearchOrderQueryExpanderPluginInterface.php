@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 /**
  * Provides expansion capabilities.
  *
- * Use this plugin for expanding QueryJoinCollectionTransfer with additional QueryJoinTransfers.
+ * Use this plugin interface for expanding QueryJoinCollectionTransfer with additional QueryJoinTransfers.
  */
 interface SearchOrderQueryExpanderPluginInterface
 {

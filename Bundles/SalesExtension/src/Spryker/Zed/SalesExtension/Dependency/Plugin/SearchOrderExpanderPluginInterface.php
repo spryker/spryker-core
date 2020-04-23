@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 /**
  * Provides expansion capabilities.
  *
- * Use this plugin for expanding $orderTransfers with additional data.
+ * Use this plugin interface for expanding $orderTransfers with additional data.
  */
 interface SearchOrderExpanderPluginInterface
 {

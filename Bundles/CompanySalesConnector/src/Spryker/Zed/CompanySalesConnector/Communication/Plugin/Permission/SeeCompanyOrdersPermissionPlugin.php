@@ -15,6 +15,7 @@ class SeeCompanyOrdersPermissionPlugin implements PermissionPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Checks if customer is allowed to see orders from same company.
      *
      * @api
      *
