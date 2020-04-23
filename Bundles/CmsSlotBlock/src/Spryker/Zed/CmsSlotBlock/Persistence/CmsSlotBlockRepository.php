@@ -80,7 +80,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
             ->leftJoinWithSpyCmsSlotBlock()
             ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyStore('stores')
-                ->withColumn("GROUP_CONCAT(stores.name)", CmsBlockTransfer::STORE_NAMES)
+                ->withColumn('GROUP_CONCAT(stores.name)', CmsBlockTransfer::STORE_NAMES)
             ->endUse()
             ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())
             ->find();
