@@ -32,7 +32,7 @@ interface ReservationInterface
     public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\ReservationInterface::saveReservationQuantity()` instead.
+     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\ReservationInterface::writeReservation()` instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -41,6 +41,13 @@ interface ReservationInterface
      * @return void
      */
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
