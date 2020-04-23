@@ -45,7 +45,7 @@ class QuoteConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Write all properties that should be stored in the quota table.
+     * - Returns item properties that should be stored in the quote table.
      * - Leave an empty array if you want to store all the Item transfer properties.
      *
      * @api
