@@ -1,23 +1,23 @@
 Actions,Aktionen
 Active,Aktiv
-Administration,
-"Available in store",
-"Available in the following store(s)",
-Configuration,
-"Create Warehouse",
-"Edit Warehouse",
+Administration,Administration
+"Available in store","Im Store erhältlich"
+"Available in the following store(s)","Erhältlich im folgenden Store"
+Configuration,Konfiguration
+"Create Warehouse","Warenhäuser erstellen"
+"Edit Warehouse","Warenhäuser bearbeiten"
 Inactive,Inaktiv
-"Is this warehouse available?",
+"Is this warehouse available?","Ist dieses Warenhäuser verfügbar?"
 Name,Name
 No,Nein
 Status,Status
-"Stock not found",
-"Store relation",
+"Stock not found","Lager nicht gefunden"
+"Store relation","Beziehung speichern"
 "This name is already in use.","Dieser Name wird schon benutzt."
 View,Ansicht
-"View Warehouse: ",
-"Warehouse has been successfully saved",
-"Warehouse has been successfully updated",
+"View Warehouse: ","Lager anzeigen: "
+"Warehouse has been successfully saved","Das Lager wurde erfolgreich gespeichert"
+"Warehouse has been successfully updated","Das Lager wurde erfolgreich aktualisiert"
 "Warehouse ID","Warenhaus ID"
 Warehouses,Warenhäuser
 Yes,Ja
