@@ -417,7 +417,7 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\Reservation::writeReservation()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -442,7 +442,7 @@ class Reservation implements ReservationInterface
      *
      * @return void
      */
-    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    protected function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
     {
         foreach ($this->omsReservationWriterStrategyPlugins as $omsReservationWriterStrategyPlugin) {
             if ($omsReservationWriterStrategyPlugin->isApplicable($reservationRequestTransfer)) {
