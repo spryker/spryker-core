@@ -11,18 +11,18 @@ use ArrayObject;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface;
-use Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface;
 
 class NavigationDuplicator implements NavigationDuplicatorInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface
+     * @var \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface
      */
-    protected $navigationRepository;
+    protected $navigationTreeReader;
 
     /**
      * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
@@ -40,18 +40,18 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected $navigationNodeCreator;
 
     /**
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface $navigationRepository
+     * @param \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface $navigationTreeReader
      * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface $navigationTouch
      * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface $navigationCreator
      * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface $navigationNodeCreator
      */
     public function __construct(
-        NavigationRepositoryInterface $navigationRepository,
+        NavigationTreeReaderInterface $navigationTreeReader,
         NavigationTouchInterface $navigationTouch,
         NavigationCreatorInterface $navigationCreator,
         NavigationNodeCreatorInterface $navigationNodeCreator
     ) {
-        $this->navigationRepository = $navigationRepository;
+        $this->navigationTreeReader = $navigationTreeReader;
         $this->navigationTouch = $navigationTouch;
         $this->navigationCreator = $navigationCreator;
         $this->navigationNodeCreator = $navigationNodeCreator;
@@ -73,15 +73,34 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 
         $newNavigationElement->setIsActive($baseNavigationElement->getIsActive());
 
-        $navigationNodeTransfers = $this->navigationRepository->getNavigationNodesByNavigationId(
-            $baseNavigationElement->getIdNavigation()
-        );
-
+        $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree($baseNavigationElement);
+        $navigationNodeTransfers = $this->getNavigationNodeTransfersRecursively($navigationTreeTransfer->getNodes());
         $newNavigationNodeTransfers = $this->duplicateNavigationNodeTransfers($navigationNodeTransfers);
 
-        return $this->handleDatabaseTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $newNavigationNodeTransfers) {
             return $this->executeCreateNavigationTransaction($newNavigationElement, $newNavigationNodeTransfers);
         });
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationTreeNodeTransfer[] $navigationTreeNodeTransfers
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
+     */
+    protected function getNavigationNodeTransfersRecursively(
+        ArrayObject $navigationTreeNodeTransfers,
+        array $navigationNodeTransfers = []
+    ): array {
+        foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
+            $navigationNodeTransfers[] = $navigationTreeNodeTransfer->getNavigationNode();
+            $navigationNodeTransfers = $this->getNavigationNodeTransfersRecursively(
+                $navigationTreeNodeTransfer->getChildren(),
+                $navigationNodeTransfers
+            );
+        }
+
+        return $navigationNodeTransfers;
     }
 
     /**
@@ -95,8 +114,6 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         array $navigationNodeTransfers
     ): NavigationTransfer {
         $navigationTransfer = $this->navigationCreator->createNavigation($navigationTransfer);
-        $this->navigationTouch->touchActive($navigationTransfer);
-
         foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
             $this->navigationNodeCreator->createNavigationNode(
                 $navigationNodeTransfer->setFkNavigation($navigationTransfer->getIdNavigation())

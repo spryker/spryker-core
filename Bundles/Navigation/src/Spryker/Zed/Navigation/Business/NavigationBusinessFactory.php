@@ -26,7 +26,6 @@ use Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleaner;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
@@ -46,7 +45,7 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationDuplicator(): NavigationDuplicatorInterface
     {
         return new NavigationDuplicator(
-            $this->getRepository(),
+            $this->createNavigationTreeReader(),
             $this->createNavigationTouch(),
             $this->createNavigationCreator(),
             $this->createNavigationNodeCreator()
