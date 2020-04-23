@@ -64,6 +64,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 import 'core-js/features/reflect';
 import 'core-js/features/array/flat';
 import cssVars from 'css-vars-ponyfill';
+import 'url-search-params-polyfill';
 
 cssVars({
     preserveStatic: false,
