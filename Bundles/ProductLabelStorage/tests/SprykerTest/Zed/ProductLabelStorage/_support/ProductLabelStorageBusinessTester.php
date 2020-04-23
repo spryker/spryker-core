@@ -8,6 +8,12 @@
 namespace SprykerTest\Zed\ProductLabelStorage;
 
 use Codeception\Actor;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
+use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 /**
  * Inherited Methods
@@ -33,4 +39,86 @@ class ProductLabelStorageBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @param int $idProductLabelDictionaryStorage
+     *
+     * @return void
+     */
+    public function cleanupProductLabelDictionaryStorage(int $idProductLabelDictionaryStorage): void
+    {
+        $this->createProductLabelDictionaryStorageQuery()
+            ->filterByIdProductLabelDictionaryStorage($idProductLabelDictionaryStorage)
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function cleanupProductAbstractLabelStorage(int $idProductAbstract): void
+    {
+        $this->createProductAbstractLabelStorageQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->delete();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractLabelStorageRecordExists(int $idProductAbstract): bool
+    {
+        return $this->createProductAbstractLabelStorageQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->exists();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractLAbelStorageIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->createProductAbstractLabelStorageQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->select([SpyProductAbstractLabelStorageTableMap::COL_ID_PRODUCT_ABSTRACT_LABEL_STORAGE])
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery
+     */
+    public function createProductLabelDictionaryStorageQuery(): SpyProductLabelDictionaryStorageQuery
+    {
+        return SpyProductLabelDictionaryStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
+     */
+    public function createProductAbstractLabelStorageQuery(): SpyProductAbstractLabelStorageQuery
+    {
+        return SpyProductAbstractLabelStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function createProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
+    {
+        return SpyProductLabelProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    public function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
+    }
 }

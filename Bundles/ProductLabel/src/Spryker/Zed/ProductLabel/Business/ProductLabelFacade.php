@@ -299,16 +299,4 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     {
         return $this->getRepository()->getProductLabelProductAbstractsByFilter($filterTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array
-    {
-        return $this->getRepository()->getProductLabelLocalizedAttributes();
-    }
 }

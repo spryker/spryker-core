@@ -24,19 +24,27 @@ class ProductLabelMapper
     protected $productLabelStoreRelationMapper;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
+     */
+    protected $productLabelLocalizedAttributesMapper;
+
+    /**
      * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper
      */
     protected $productLabelProductAbstractsMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper $productLabelStoreRelationMapper
+     * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
      */
     public function __construct(
         ProductLabelStoreRelationMapper $productLabelStoreRelationMapper,
+        ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper,
         ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
     ) {
         $this->productLabelStoreRelationMapper = $productLabelStoreRelationMapper;
+        $this->productLabelLocalizedAttributesMapper = $productLabelLocalizedAttributesMapper;
         $this->productLabelProductAbstractsMapper = $productLabelProductAbstractsMapper;
     }
 
@@ -82,25 +90,19 @@ class ProductLabelMapper
         $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
 
         if ($productLabelEntity->getProductLabelStores()->count()) {
-            $productLabelTransfer->setStoreRelation(
-                $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
-                    $productLabelEntity->getProductLabelStores(),
-                    $storeRelationTransfer
-                )
+            $storeRelationTransfer = $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
+                $productLabelEntity->getProductLabelStores(),
+                $storeRelationTransfer
             );
         }
+        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
 
-        $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
-
-        foreach ($productLabelEntity->getSpyProductLabelLocalizedAttributess() as $productLabelLocalizedAttributesEntity) {
-            $productLabelLocalizedAttributesTransfer = $this->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
-                $productLabelLocalizedAttributesEntity,
-                new ProductLabelLocalizedAttributesTransfer()
+        $productLabelLocalizedAttributesTransfers = $this->productLabelLocalizedAttributesMapper
+            ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
+                $productLabelEntity->getSpyProductLabelLocalizedAttributess(),
+                $productLabelTransfer->getLocalizedAttributesCollection()
             );
-            $productLabelTransfer->addLocalizedAttributes(
-                $productLabelLocalizedAttributesTransfer
-            );
-        }
+        $productLabelTransfer->setLocalizedAttributesCollection(new ArrayObject($productLabelLocalizedAttributesTransfers));
 
         $productLabelTransfer->setProductLabelProductAbstracts(
             $this->productLabelProductAbstractsMapper

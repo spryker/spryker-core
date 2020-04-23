@@ -248,15 +248,4 @@ interface ProductLabelFacadeInterface
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
      */
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * Specification:
-     * - Gets all product label localized attributes.
-     * - Adds `ProductLabelTransfer` and `LocaleTransfer` to `ProductLabelLocalizedAttributesTransfer`.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array;
 }

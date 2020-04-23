@@ -274,15 +274,15 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][] $productLabelDictionaryItems
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][] $indexedProductLabelDictionaryItems
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[] $productLabelDictionaryStorageItems
      *
      * @return void
      */
-    protected function storeData(array $productLabelDictionaryItems, array $productLabelDictionaryStorageItems)
+    protected function storeData(array $indexedProductLabelDictionaryItems, array $productLabelDictionaryStorageItems)
     {
         $productLabelDictionaryStorageCollectionForPersist = [];
-        foreach ($productLabelDictionaryItems as $storeName => $productLabelDictionaryLocaleItems) {
+        foreach ($indexedProductLabelDictionaryItems as $storeName => $productLabelDictionaryLocaleItems) {
             /** @var \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems */
             foreach ($productLabelDictionaryLocaleItems as $localeName => $productLabelDictionaryItems) {
                 $foundProductLabelDictionaryStorageItem = $this->extractProductLabelDictionaryItemByStoreAndLocale(

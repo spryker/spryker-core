@@ -63,13 +63,12 @@ class ProductLabelStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param int $idProductLabel
      * @param string $storeName
      * @param string $localeName
      *
      * @return int
      */
-    public function getProductLabelsCountByIdProductLabelAndStoreNameAndLocaleName(int $idProductLabel, string $storeName, string $localeName): int
+    public function getProductLabelsCountByAndStoreNameAndLocaleName(string $storeName, string $localeName): int
     {
         return SpyProductLabelQuery::create()
             ->filterByValidTo(null)
@@ -85,7 +84,6 @@ class ProductLabelStorageCommunicationTester extends Actor
                     ->filterByName($storeName)
                 ->endUse()
             ->endUse()
-            ->filterByIdProductLabel($idProductLabel)
             ->count();
     }
 }

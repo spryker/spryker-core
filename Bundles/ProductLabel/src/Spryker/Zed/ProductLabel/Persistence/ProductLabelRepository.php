@@ -133,7 +133,10 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->endUse();
         }
 
-        $productLabelEntities = $productLabelQuery->leftJoinSpyProductLabelLocalizedAttributes()
+        $productLabelEntities = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes(Criteria::LEFT_JOIN)
+            ->useSpyProductLabelLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
+                ->joinSpyLocale()
+            ->endUse()
             ->filterByIsActive(true)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->_or()
@@ -251,28 +254,5 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         return $this->getFactory()
             ->createProductLabelProductAbstractMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array
-    {
-        $productLabelLocalizedAttributesEntities = $this->getFactory()
-            ->createLocalizedAttributesQuery()
-            ->joinWithSpyProductLabel()
-            ->joinWithSpyLocale()
-            ->find();
-
-        if (!$productLabelLocalizedAttributesEntities->count()) {
-            return [];
-        }
-
-        return $this->getFactory()
-            ->createProductLabelLocalizedAttributesMapper()
-            ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
-                $productLabelLocalizedAttributesEntities,
-                []
-            );
     }
 }

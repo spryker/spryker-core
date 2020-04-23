@@ -8,9 +8,14 @@
 namespace SprykerTest\Zed\ProductLabelStorage\Business;
 
 use Codeception\Test\Unit;
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +31,10 @@ use Spryker\Zed\Kernel\Container;
 class ProductLabelStorageFacadeTest extends Unit
 {
     protected const ID_PRODUCT_LABEL_DICTIONARY_STORAGE = 1;
+
+    protected const STORE_NAME_DE = 'DE';
+    protected const LOCALE_NAME_EN = 'en_US';
+
 
     /**
      * @var \SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageBusinessTester
@@ -49,41 +58,180 @@ class ProductLabelStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteProductLabelDictionaryStorageCollection(): void
+    public function testWriteProductLabelDictionaryStorageCollectionPersistsStorageEntity(): void
     {
         //Arrange
-        $this->cleanupProductLabelDictionaryStorage(static::ID_PRODUCT_LABEL_DICTIONARY_STORAGE);
-        $productLabelDictionaryStorageBeforeCount = $this->createProductLabelDictionaryStorageQuery()->count();
+        $this->tester->cleanupProductLabelDictionaryStorage(static::ID_PRODUCT_LABEL_DICTIONARY_STORAGE);
+        $productLabelDictionaryStorageBeforeCount = $this->tester->createProductLabelDictionaryStorageQuery()->count();
 
         //Act
         $this->tester->getFacade()->writeProductLabelDictionaryStorageCollection();
 
         //Assert
-        $productLabelDictionaryStorageAfterCount = $this->createProductLabelDictionaryStorageQuery()->count();
+        $productLabelDictionaryStorageAfterCount = $this->tester->createProductLabelDictionaryStorageQuery()->count();
         $this->tester->assertGreaterThan(
-            $productLabelDictionaryStorageAfterCount,
             $productLabelDictionaryStorageBeforeCount,
-            'Product Label Dictionary Storage record count does is less then expected value.'
+            $productLabelDictionaryStorageAfterCount,
+            'Product Label Dictionary Storage record count is less then expected value.'
         );
     }
 
     /**
-     * @param int $idProductLabelDictionaryStorage
-     *
      * @return void
      */
-    protected function cleanupProductLabelDictionaryStorage(int $idProductLabelDictionaryStorage): void
+    public function testDeleteProductLabelDictionaryStorageCollectionEmptiesStorageTable(): void
     {
-        $this->createProductLabelDictionaryStorageQuery()
-            ->filterByIdProductLabelDictionaryStorage($idProductLabelDictionaryStorage)
-            ->delete();
+        //Arrange
+        $this->tester->haveProductLabelDictionaryStorage([
+            ProductLabelDictionaryStorageTransfer::STORE => static::STORE_NAME_DE,
+            ProductLabelDictionaryStorageTransfer::LOCALE => static::LOCALE_NAME_EN,
+        ]);
+
+        //Act
+        $this->tester->getFacade()->deleteProductLabelDictionaryStorageCollection();
+
+        //Assert
+        $productLabelDictionaryStorageAfterCount = $this->tester->createProductLabelDictionaryStorageQuery()->count();
+        $this->tester->assertEquals(
+            0,
+            $productLabelDictionaryStorageAfterCount,
+            'Product Label Dictionary Storage record count does not equals to an expected value.'
+        );
     }
 
     /**
-     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery
+     * @return void
      */
-    protected function createProductLabelDictionaryStorageQuery(): SpyProductLabelDictionaryStorageQuery
+    public function testWriteProductAbstractLabelStorageCollectionByProductAbstractLabelEventsPersistStorageEntity(): void
     {
-        return SpyProductLabelDictionaryStorageQuery::create();
+        //Arrange
+        $productAbstractTransfer = $this->prepareProductAbstractData();
+
+        $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($productAbstractTransfer->getIdProductAbstract()),
+        ];
+
+        //Act
+        $this->tester->getFacade()->writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents($eventTransfers);
+
+        //Assert
+        $this->assertTrue(
+            $this->tester->isProductAbstractLabelStorageRecordExists($productAbstractTransfer->getIdProductAbstract()),
+            'Product abstract label storage record should exists.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteProductAbstractLabelStorageCollectionByProductLabelProductAbstractEventsPersistStorageEntity(): void
+    {
+        //Arrange
+        $productAbstractTransfer = $this->prepareProductAbstractData();
+
+        $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+            ]),
+        ];
+
+        //Act
+        $this->tester->getFacade()->writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents($eventTransfers);
+
+        //Assert
+        $this->assertTrue(
+            $this->tester->isProductAbstractLabelStorageRecordExists($productAbstractTransfer->getIdProductAbstract()),
+            'Product abstract label storage record should exists.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractLabelStorageDataTransfersByIdsWillReturnSynchronizationDataTransfers(): void
+    {
+        //Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $productAbstractLabelTransfer = $this->tester->haveProductAbstractLabelStorage([
+            ProductAbstractLabelStorageTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $productAbstractLabelStorageIds = $this->tester->getProductAbstractLAbelStorageIdsByIdProductAbstract(
+            $productAbstractLabelTransfer->getIdProductAbstract()
+        );
+
+        $filterTransfer = $this->createFilterTransfer();
+
+        //Act
+        $synchronizationDataTransfers = $this->tester->getFacade()->getProductAbstractLabelStorageDataTransfersByIds(
+            $filterTransfer,
+            $productAbstractLabelStorageIds
+        );
+
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Number of synchronisation data transfers is not equals to an expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testgetProductLabelDictionaryStorageDataTransfersByIdsWillReturnSynchronizationDataTransfers(): void
+    {
+        //Arrange
+        $productLabelDictionaryStorageTransfer = $this->tester->haveProductLabelDictionaryStorage([
+            ProductLabelDictionaryStorageTransfer::STORE => static::STORE_NAME_DE,
+            ProductLabelDictionaryStorageTransfer::LOCALE => static::LOCALE_NAME_EN,
+        ]);
+
+        $filterTransfer = $this->createFilterTransfer();
+
+        //Act
+        $synchronizationDataTransfers = $this->tester->getFacade()->getProductLabelDictionaryStorageDataTransfersByIds(
+            $filterTransfer,
+            [$productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage()]
+        );
+
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Number of synchronisation data transfers is not equals to an expected value.');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function prepareProductAbstractData(): ProductAbstractTransfer
+    {
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $localizedAttributes = $this->tester->generateLocalizedAttributes(
+            $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale()
+        );
+        $this->tester->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
+
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset = 0, int $limit = 100): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

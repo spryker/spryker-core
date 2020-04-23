@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
@@ -30,8 +31,6 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryAllProductAbstractLocalizedAttributes()
-            ->joinWithLocale()
-            ->joinWithSpyProductAbstract()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->select(SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->distinct()
@@ -122,7 +121,7 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
     public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
     {
         if (!$filterTransfer->getOrderBy()) {
-            $filterTransfer->setOrderBy(SpyProductLabelProductAbstractTableMap::COL_ID_PRODUCT_LABEL_PRODUCT_ABSTRACT);
+            $filterTransfer->setOrderBy(SpyProductAbstractLabelStorageTableMap::COL_ID_PRODUCT_ABSTRACT_LABEL_STORAGE);
         }
 
         $query = $this->getFactory()->createSpyProductAbstractLabelStorageQuery();

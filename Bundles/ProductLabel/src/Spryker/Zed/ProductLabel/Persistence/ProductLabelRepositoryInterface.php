@@ -36,11 +36,6 @@ interface ProductLabelRepositoryInterface
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array;
-
-    /**
      * @param string $productLabelName
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null

@@ -103,7 +103,6 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     {
         $uniqueProductAbstractIds = $this->productLabelStorageRepository
             ->getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds($productAbstractIds);
-
         $productAbstractLabelStorageTransfers = $this->productLabelStorageRepository->getProductAbstractLabelStorageTransfersByProductAbstractIds($uniqueProductAbstractIds);
         $indexedProductAbstractLabelStorageTransfers = $this->indexProductAbstractLabelTransfersByProductAbstractIds($productAbstractLabelStorageTransfers);
 
@@ -156,6 +155,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
         $productAbstractLabelStorageTransfer->setIdProductAbstract($productAbstractId);
         $productAbstractLabelStorageTransfer->setProductLabelIds($productLabelIds[$productAbstractId]);
+
 
         $this->productLabelStorageEntityManager->saveProductAbstractLabelStorage($productAbstractLabelStorageTransfer);
     }

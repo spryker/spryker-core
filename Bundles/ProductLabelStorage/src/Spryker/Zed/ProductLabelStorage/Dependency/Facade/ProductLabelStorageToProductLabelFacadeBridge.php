@@ -46,14 +46,6 @@ class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStora
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array
-    {
-        return $this->productLabelFacade->getProductLabelLocalizedAttributes();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

@@ -27,11 +27,6 @@ interface ProductLabelStorageToProductLabelFacadeInterface
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]

@@ -736,39 +736,6 @@ class ProductLabelFacadeTest extends Unit
         $this->assertCount(1, $productLabelProductAbstracts);
     }
 
-    /**
-     * @return void
-     */
-    public function testGetProductLabelLocalizedAttributesReturnsCorrectData(): void
-    {
-        // Arrange
-        $initialProductLabelLocalizedAttributesTransfers = $this->getProductLabelFacade()
-            ->getProductLabelLocalizedAttributes();
-
-        $productTransfer = $this->tester->haveProduct();
-        $productLabelTransfer = $this->tester->haveProductLabel();
-        $this->tester->haveProductLabelToAbstractProductRelation(
-            $productLabelTransfer->getIdProductLabel(),
-            $productTransfer->getFkProductAbstract()
-        );
-
-        $expectedProductLabelLocalizedAttributesTransferCount = count($initialProductLabelLocalizedAttributesTransfers) +
-            $productLabelTransfer->getLocalizedAttributesCollection()->count();
-
-        // Act
-        $updatedProductLabelLocalizedAttributesTransfers = $this->getProductLabelFacade()
-            ->getProductLabelLocalizedAttributes();
-
-        // Assert
-        $this->assertContainsOnlyInstancesOf(
-            ProductLabelLocalizedAttributesTransfer::class,
-            $updatedProductLabelLocalizedAttributesTransfers
-        );
-        $this->assertCount(
-            $expectedProductLabelLocalizedAttributesTransferCount,
-            $updatedProductLabelLocalizedAttributesTransfers
-        );
-    }
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
