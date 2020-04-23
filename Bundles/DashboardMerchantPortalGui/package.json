@@ -8,8 +8,7 @@
         "postbuild": "run-s copy:*",
         "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/mp-dashboard",
         "test": "ng test",
-        "lint": "ng lint",
-        "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points || exit 0"
+        "lint": "ng lint"
     },
     "private": true,
     "dependencies": {

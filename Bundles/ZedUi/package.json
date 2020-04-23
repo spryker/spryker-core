@@ -9,8 +9,7 @@
         "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/zed-ui",
         "copy:reset": "copyfiles -u 7 src/Spryker/Zed/ZedUi/Presentation/Components/assets/**/*.css $FE_ROOT_DIR/public/Zed/assets/css",
         "test": "ng test",
-        "lint": "ng lint",
-        "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points || exit 0"
+        "lint": "ng lint"
     },
     "private": true,
     "dependencies": {
