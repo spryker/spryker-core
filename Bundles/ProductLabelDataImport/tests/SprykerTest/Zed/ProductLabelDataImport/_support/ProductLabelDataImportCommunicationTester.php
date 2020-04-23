@@ -40,19 +40,32 @@ class ProductLabelDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function ensureProductLabelTableIsEmpty(): void
+    public function truncateProductLabelProductAbstractRelations(): void
     {
-        SpyProductLabelProductAbstractQuery::create()->deleteAll();
-        SpyProductLabelLocalizedAttributesQuery::create()->deleteAll();
-        SpyProductLabelStoreQuery::create()->deleteAll();
-        SpyProductLabelQuery::create()->deleteAll();
+        $this->truncateTableRelations($this->createProductLabelProductAbstractQuery());
     }
 
     /**
      * @return void
      */
-    public function ensureProductLabelStoreTableIsEmpty(): void
+    public function truncateProductLabelStoreRelations(): void
     {
-        SpyProductLabelStoreQuery::create()->deleteAll();
+        $this->truncateTableRelations($this->createProductLabelStoreQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    protected function createProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
+    {
+        return SpyProductLabelProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery
+     */
+    protected function createProductLabelStoreQuery(): SpyProductLabelStoreQuery
+    {
+        return SpyProductLabelStoreQuery::create();
     }
 }
