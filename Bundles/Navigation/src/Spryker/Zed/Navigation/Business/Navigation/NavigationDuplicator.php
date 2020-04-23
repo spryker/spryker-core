@@ -135,10 +135,10 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             $newNavigationNodeLocalizedAttributesTransfers = $this->duplicateNavigationNodeLocalizedAttributesTransfers(
                 $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
             );
-            $navigationNodeData = $navigationNodeTransfer->toArray();
-            unset($navigationNodeData['id_navigation_node'], $navigationNodeData['navigation_node_localized_attributes']);
+            $navigationNodeTransfer->setIdNavigationNode(null);
+            $navigationNodeTransfer->setNavigationNodeLocalizedAttributes(new ArrayObject());
             $newNavigationNodeTransfers[] = (new NavigationNodeTransfer())->fromArray(
-                $navigationNodeData,
+                $navigationNodeTransfer->toArray(),
                 true
             )->setNavigationNodeLocalizedAttributes($newNavigationNodeLocalizedAttributesTransfers);
         }
@@ -149,16 +149,15 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[] $navigationNodeLocalizedAttributesTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer[]
      */
     protected function duplicateNavigationNodeLocalizedAttributesTransfers(ArrayObject $navigationNodeLocalizedAttributesTransfers): ArrayObject
     {
         $newNavigationNodeLocalizedAttributesTransfers = [];
         foreach ($navigationNodeLocalizedAttributesTransfers as $navigationNodeLocalizedAttributesTransfer) {
-            $newNavigationNodeLocalizedAttributesData = $navigationNodeLocalizedAttributesTransfer->toArray();
-            unset($newNavigationNodeLocalizedAttributesData['id_navigation_node_localized_attributes']);
+            $navigationNodeLocalizedAttributesTransfer->setIdNavigationNodeLocalizedAttributes(null);
             $newNavigationNodeLocalizedAttributesTransfers[] = (new NavigationNodeLocalizedAttributesTransfer())->fromArray(
-                $newNavigationNodeLocalizedAttributesData,
+                $navigationNodeLocalizedAttributesTransfer->toArray(),
                 true
             );
         }

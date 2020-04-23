@@ -11,10 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
-use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
 /**
  * Auto-generated group annotations
@@ -172,7 +170,7 @@ class NavigationCRUDTest extends Unit
     {
         // Arrange
         $baseNavigationTransfer = $this->tester->createNavigation('test-key', 'Test navigation', true);
-        $newNavigationTransfer = $this->createNavigationTransfer($baseNavigationTransfer->getKey(), 'test-navigation-1' , true);
+        $newNavigationTransfer = $this->createNavigationTransfer($baseNavigationTransfer->getKey(), 'test-navigation-1', true);
 
         // Assert
         $this->expectException(PropelException::class);
