@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
-    protected const CHECKOUT_PAYMENT_METHOD_INVALID = 'checkout.payment_method.invalid';
+    protected const GLOSSARY_KEY_CHECKOUT_PAYMENT_METHOD_INVALID = 'checkout.payment_method.invalid';
 
     /**
      * @var \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
@@ -43,17 +43,17 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
         $availablePaymentMethodsKeys = $this->getPaymentSelections($availablePaymentMethods);
         $usedPaymentMethodsKeys = $this->getQuotePaymentMethodsKeys($quoteTransfer);
 
-        if (array_diff($usedPaymentMethodsKeys, $availablePaymentMethodsKeys)) {
-            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
-                ->setMessage(static::CHECKOUT_PAYMENT_METHOD_INVALID);
-            $checkoutResponseTransfer
-                ->setIsSuccess(false)
-                ->addError($checkoutErrorTransfer);
-
-            return false;
+        if (!array_diff($usedPaymentMethodsKeys, $availablePaymentMethodsKeys)) {
+            return true;
         }
 
-        return true;
+        $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+            ->setMessage(static::GLOSSARY_KEY_CHECKOUT_PAYMENT_METHOD_INVALID);
+        $checkoutResponseTransfer
+            ->setIsSuccess(false)
+            ->addError($checkoutErrorTransfer);
+
+        return false;
     }
 
     /**
