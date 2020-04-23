@@ -165,7 +165,7 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal|string|null
+     * @return int|string|null
      */
     protected function getStockColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer)
     {
@@ -173,7 +173,9 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
             return $this->translatorFacade->trans(static::COLUMN_DATA_IS_NEVER_OUT_OF_STOCK);
         }
 
-        return $productOfferTableRowDataTransfer->getQuantity();
+        $quantity = $productOfferTableRowDataTransfer->getQuantity();
+
+        return $quantity === null ? $quantity : $quantity->toInt();
     }
 
     /**

@@ -180,6 +180,10 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
         }
 
         foreach ($this->filters as $filterName => $filterValue) {
+            if (!isset($filterValue)) {
+                continue;
+            }
+
             $productOfferTableCriteriaExpander = $this->findApplicableProductOfferTableCriteriaExpander($filterName);
 
             if ($productOfferTableCriteriaExpander) {

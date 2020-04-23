@@ -644,8 +644,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         if (!$productOfferTableCriteriaTransfer->getHasStock()) {
             $productOfferQuery->_or()
-                ->useProductOfferStockQuery()
-                ->filterByIdProductOfferStock(null, Criteria::ISNULL)
+                ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIdProductOfferStock(null, Criteria::ISNULL)
                 ->endUse();
         }
 
