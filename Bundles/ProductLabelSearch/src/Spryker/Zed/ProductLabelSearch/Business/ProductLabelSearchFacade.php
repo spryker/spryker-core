@@ -27,7 +27,9 @@ class ProductLabelSearchFacade extends AbstractFacade implements ProductLabelSea
      */
     public function writeCollectionByProductLabelEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createProductLabelSearchWriter()->writeCollectionByProductLabelEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductLabelSearchWriter()
+            ->writeCollectionByProductLabelEvents($eventTransfers);
     }
 
     /**
@@ -41,7 +43,9 @@ class ProductLabelSearchFacade extends AbstractFacade implements ProductLabelSea
      */
     public function writeCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createProductLabelSearchWriter()->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductLabelSearchWriter()
+            ->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
     }
 
     /**

@@ -37,7 +37,7 @@
         <property name="validTo" type="string"/>
         <property name="position" type="int"/>
         <property name="storeRelation" type="StoreRelation"/>
-        <property name="productLabelProductAbstracts" type="ProductLabelProductAbstract[]" singular="ProductLabelProductAbstract"/>
+        <property name="productLabelProductAbstracts" type="ProductLabelProductAbstract[]" singular="productLabelProductAbstract"/>
         <property name="localizedAttributesCollection" type="ProductLabelLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 

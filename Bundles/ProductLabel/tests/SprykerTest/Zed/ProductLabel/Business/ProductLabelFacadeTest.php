@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ProductLabelCriteriaBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
@@ -643,6 +644,131 @@ class ProductLabelFacadeTest extends Unit
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,
             $productTransfer1->getFkProductAbstract()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByProductAbstractIdsReturnsCorrectData(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer1->getFkProductAbstract()
+        );
+
+        $productTransfer2 = $this->tester->haveProduct();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract()
+        );
+
+        $productAbstractIds = [
+            $productTransfer1->getFkProductAbstract(),
+            $productTransfer2->getFkProductAbstract(),
+        ];
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+
+        // Assert
+        $this->assertCount(count($productAbstractIds), $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByProductAbstractIdsReturnsEmptyCollectionIfDataIsNotCorrect(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract()
+        );
+
+        $productAbstractIds = [
+            $productTransfer->getFkProductAbstract() + 1,
+        ];
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+
+        // Assert
+        $this->assertCount(0, $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByFilterReturnsCorrectData(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer1->getFkProductAbstract()
+        );
+
+        $productTransfer2 = $this->tester->haveProduct();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract()
+        );
+
+        $filterTransfer = (new FilterTransfer())
+            ->setLimit(1)
+            ->setOffset(0);
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByFilter($filterTransfer);
+
+        // Assert
+        $this->assertCount(1, $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelLocalizedAttributesReturnsCorrectData(): void
+    {
+        // Arrange
+        $initialProductLabelLocalizedAttributesTransfers = $this->getProductLabelFacade()
+            ->getProductLabelLocalizedAttributes();
+
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract()
+        );
+
+        $expectedProductLabelLocalizedAttributesTransferCount = count($initialProductLabelLocalizedAttributesTransfers) +
+            $productLabelTransfer->getLocalizedAttributesCollection()->count();
+
+        // Act
+        $updatedProductLabelLocalizedAttributesTransfers = $this->getProductLabelFacade()
+            ->getProductLabelLocalizedAttributes();
+
+        // Assert
+        $this->assertContainsOnlyInstancesOf(
+            ProductLabelLocalizedAttributesTransfer::class,
+            $updatedProductLabelLocalizedAttributesTransfers
+        );
+        $this->assertCount(
+            $expectedProductLabelLocalizedAttributesTransferCount,
+            $updatedProductLabelLocalizedAttributesTransfers
+        );
+
     }
 
     /**

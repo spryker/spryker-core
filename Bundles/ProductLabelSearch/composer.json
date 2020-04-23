@@ -16,9 +16,12 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/search": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {

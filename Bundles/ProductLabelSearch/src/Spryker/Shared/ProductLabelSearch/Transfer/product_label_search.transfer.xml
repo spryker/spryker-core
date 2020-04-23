@@ -26,7 +26,7 @@
 
     <transfer name="ProductLabel">
         <property name="storeRelation" type="StoreRelation"/>
-        <property name="productLabelProductAbstracts" type="ProductLabelProductAbstract[]" singular="ProductLabelProductAbstract"/>
+        <property name="productLabelProductAbstracts" type="ProductLabelProductAbstract[]" singular="productLabelProductAbstract"/>
         <property name="idProductLabel" type="int"/>
     </transfer>
 

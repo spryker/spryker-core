@@ -78,12 +78,19 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     protected function writeCollection(array $productAbstractIds): void
     {
-        $this->productPageSearchFacade->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);
+        if (!$productAbstractIds) {
+            return;
+        }
+
+        $this->productPageSearchFacade->refresh(
+            $productAbstractIds,
+            [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]
+        );
     }
 }
