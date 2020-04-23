@@ -71,7 +71,7 @@ class VersionRollback implements VersionRollbackInterface
         if ($originVersionEntity === null || $targetVersionEntity === null) {
             throw new MissingPageException(
                 sprintf(
-                    "There is no valid Cms page with this id: %d or Cms version with this version: %d for rollback",
+                    'There is no valid Cms page with this id: %d or Cms version with this version: %d for rollback',
                     $idCmsPage,
                     $version
                 )
@@ -136,7 +136,7 @@ class VersionRollback implements VersionRollbackInterface
         if ($versionEntity === null) {
             throw new MissingPageException(
                 sprintf(
-                    "There is no valid Cms version with this id: %d for reverting",
+                    'There is no valid Cms version with this id: %d for reverting',
                     $idCmsPage
                 )
             );

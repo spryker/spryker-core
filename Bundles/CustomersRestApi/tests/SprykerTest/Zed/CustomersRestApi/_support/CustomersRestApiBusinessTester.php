@@ -52,7 +52,7 @@ class CustomersRestApiBusinessTester extends Actor
         'lastName' => 'hopkin',
         'address1' => 'West road',
         'address2' => '212',
-        'address3' => "",
+        'address3' => '',
         'zipCode' => '61000',
         'city' => 'Berlin',
         'iso2Code' => 'DE',
