@@ -37,9 +37,11 @@ class ProductOfferTable extends AbstractTable
     protected const SEARCH_PLACEHOLDER = 'Search';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductTableController::getDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::getTableDataAction()
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/get-table-data';
+
+    protected const DEFAULT_PAGE_SIZE = 25;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface
