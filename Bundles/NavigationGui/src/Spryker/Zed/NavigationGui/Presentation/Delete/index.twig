@@ -21,12 +21,16 @@
                 </div>
             </div>
             <hr/>
-            <div class="row">
-                <div class="col-sm-12">
+            <ul class="list-inline m-b-none">
+                <li>
                     <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this navigation' | trans }}</a>
-                    <a href="{{ url('/navigation-gui/delete/confirm', {'id-navigation': idNavigation}) }}" class="btn btn-danger safe-submit">{{ 'Yes, delete this navigation' | trans }}</a>
-                </div>
-            </div>
+                </li>
+                <li>
+                    {{ form_start(deleteNavigationForm) }}
+                    {{ form_widget(deleteNavigationForm.submit) }}
+                    {{ form_end(deleteNavigationForm) }}
+                </li>
+            </ul>
 
         {% endblock %}
 

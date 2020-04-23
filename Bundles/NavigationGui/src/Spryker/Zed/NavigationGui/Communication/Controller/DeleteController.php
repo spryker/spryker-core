@@ -9,6 +9,7 @@ namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,10 +23,7 @@ class DeleteController extends AbstractController
     protected const MESSAGE_NAVIGATION_REMOVAL_SUCCESS = 'Navigation element %d was deleted successfully.';
     protected const MESSAGE_NAVIGATION_REMOVAL_FAIL = 'Navigation element %d was not found.';
 
-    /**
-     * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
-     */
-    protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
+    protected const MESSAGE_PARAM = '%d';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,34 +34,41 @@ class DeleteController extends AbstractController
     {
         $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
 
-        return $this->viewResponse([
-            'idNavigation' => $idNavigation,
-        ]);
-    }
+        $deleteNavigationForm = $this->getFactory()->createDeleteNavigationForm();
+        $deleteNavigationForm->handleRequest($request);
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function confirmAction(Request $request)
-    {
-        $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
             ->findNavigation((new NavigationTransfer())->setIdNavigation($idNavigation));
         if (!$navigationTransfer) {
-            $this->addErrorMessage(static::MESSAGE_NAVIGATION_REMOVAL_FAIL, ['%d' => $idNavigation]);
+            $this->addErrorMessage(static::MESSAGE_NAVIGATION_REMOVAL_FAIL, [static::MESSAGE_PARAM => $idNavigation]);
 
-            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
-        $this->getFactory()
-            ->getNavigationFacade()
-            ->deleteNavigation($navigationTransfer);
+        if ($deleteNavigationForm->isSubmitted() && $deleteNavigationForm->isValid()) {
+            return $this->handleSubmitForm($navigationTransfer);
+        }
 
-        $this->addSuccessMessage(static::MESSAGE_NAVIGATION_REMOVAL_SUCCESS, ['%d' => $idNavigation]);
+        return $this->viewResponse([
+            'idNavigation' => $idNavigation,
+            'deleteNavigationForm' => $deleteNavigationForm->createView(),
+        ]);
+    }
 
-        return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubmitForm(NavigationTransfer $navigationTransfer): RedirectResponse
+    {
+        $this->getFactory()->getNavigationFacade()->deleteNavigation($navigationTransfer);
+        $this->addSuccessMessage(
+            static::MESSAGE_NAVIGATION_REMOVAL_SUCCESS,
+            [static::MESSAGE_PARAM => $navigationTransfer->getIdNavigation()]
+        );
+
+        return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
     }
 }
