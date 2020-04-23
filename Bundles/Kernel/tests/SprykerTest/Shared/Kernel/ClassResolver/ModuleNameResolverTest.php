@@ -27,8 +27,8 @@ class ModuleNameResolverTest extends Unit
      */
     public function testResolveShouldRemoveStoreName(): void
     {
-        $moduleNameResolver = $this->getModuleNameResolver('DE');
-        $resolvedModuleName = $moduleNameResolver->resolve('CartDE');
+        $moduleNameResolver = $this->getModuleNameResolver('TEST');
+        $resolvedModuleName = $moduleNameResolver->resolve('CartTEST');
 
         $this->assertSame('Cart', $resolvedModuleName);
     }

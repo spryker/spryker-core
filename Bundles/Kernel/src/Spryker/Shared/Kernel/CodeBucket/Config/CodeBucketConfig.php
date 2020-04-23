@@ -12,6 +12,19 @@ use SprykerConfig\CodeBucketConfig as SprykerCodeBucketConfig;
 class CodeBucketConfig implements CodeBucketConfigInterface
 {
     /**
+     * @var \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
+     */
+    protected $customCodeBucketContext;
+
+    /**
+     * @param \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface|null $customCodeBucketConfig
+     */
+    public function __construct(?CodeBucketConfigInterface $customCodeBucketConfig = null)
+    {
+        $this->customCodeBucketContext = $customCodeBucketConfig ?? new SprykerCodeBucketConfig();
+    }
+
+    /**
      * @return string[]
      */
     public function getCodeBuckets(): array
@@ -32,6 +45,6 @@ class CodeBucketConfig implements CodeBucketConfigInterface
      */
     protected function resolveCodeBucket(): CodeBucketConfigInterface
     {
-        return class_exists(SprykerCodeBucketConfig::class) ? new SprykerCodeBucketConfig() : new DefaultCodeBucketConfig();
+        return $this->customCodeBucketContext;
     }
 }
