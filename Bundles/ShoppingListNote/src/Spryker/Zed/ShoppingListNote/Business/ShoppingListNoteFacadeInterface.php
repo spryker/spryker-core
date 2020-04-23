@@ -52,7 +52,8 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     * - Saves current state of shopping list item note in bulk, if the note is empty, it gets deleted.
+     * - Saves current state of shopping list item note in bulk.
+     * - Deletes empty notes.
      *
      * @api
      *

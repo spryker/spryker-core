@@ -64,12 +64,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     public function saveShoppingListItemNoteForShoppingListItemBulk(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): ShoppingListItemCollectionTransfer {
-        $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItem) {
-            $savedShoppingListItemCollectionTransfer->addItem($this->saveShoppingListItemNoteForShoppingListItem($shoppingListItem));
-        }
-
-        return $savedShoppingListItemCollectionTransfer;
+        return $this->saveShoppingListItemNoteTransfersInBulk($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -98,5 +93,38 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
         if ($shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
             $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer->getIdShoppingListItemNote());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return void
+     */
+    protected function deleteShoppingListItemNotesWithoutNoteValueInBulk(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    {
+        $shoppingListItemNoteIds = [];
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemNoteTransfer = $shoppingListItemTransfer->getShoppingListItemNote();
+            if (!$shoppingListItemNoteTransfer || !$shoppingListItemNoteTransfer->getNote() || !$shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
+                continue;
+            }
+
+            $shoppingListItemIds[] = $shoppingListItemNoteTransfer->getIdShoppingListItemNote();
+        }
+
+        $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteByShoppingListItemNoteIds($shoppingListItemNoteIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function saveShoppingListItemNoteTransfersInBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        $this->deleteShoppingListItemNotesWithoutNoteValueInBulk($shoppingListItemCollectionTransfer);
+
+        return $this->shoppingListNoteEntityManager->saveShoppingListItemNoteInBulk($shoppingListItemCollectionTransfer);
     }
 }

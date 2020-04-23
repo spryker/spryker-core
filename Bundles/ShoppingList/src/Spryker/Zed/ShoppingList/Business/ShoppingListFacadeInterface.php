@@ -166,7 +166,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Loads shopping list by id.
-     * - Expands shopping list items with currency iso code and price mode data.
+     * - Expands shopping list items with currency ISO code and price mode data.
      * - Executes `ShoppingListItemExpanderPluginInterface` plugin stack.
      * - Executes `ShoppingListItemCollectionExpanderPluginInterface` plugin stack.
      *

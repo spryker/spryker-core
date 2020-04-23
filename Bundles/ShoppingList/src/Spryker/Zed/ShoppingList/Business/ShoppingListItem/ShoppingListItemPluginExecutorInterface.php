@@ -35,7 +35,7 @@ interface ShoppingListItemPluginExecutorInterface
     public function executeBulkPostSavePlugins(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
-     * @deprecated Use `ShoppingListItemPluginExecutorInterface::executeShoppingListItemCollectionExpanderPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface::executeShoppingListItemCollectionExpanderPlugins()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

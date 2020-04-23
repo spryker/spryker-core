@@ -472,14 +472,26 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         }
         $shoppingListItemEntityCollection->save();
 
+        return $this->mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer($shoppingListItemEntityCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $shoppingListItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer(
+        ObjectCollection $shoppingListItemEntityCollection
+    ): ShoppingListItemCollectionTransfer {
+        $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
+
         $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
         foreach ($shoppingListItemEntityCollection as $shoppingListItemEntity) {
-            $savedShoppingListItemCollectionTransfer->addItem(
-                $shoppingListItemMapper->mapSpyShoppingListItemEntityToShoppingListItemTransfer(
-                    $shoppingListItemEntity,
-                    new ShoppingListItemTransfer()
-                )
+            $shoppingListItemTransfer = $shoppingListItemMapper->mapSpyShoppingListItemEntityToShoppingListItemTransfer(
+                $shoppingListItemEntity,
+                new ShoppingListItemTransfer()
             );
+            $savedShoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
         }
 
         return $savedShoppingListItemCollectionTransfer;

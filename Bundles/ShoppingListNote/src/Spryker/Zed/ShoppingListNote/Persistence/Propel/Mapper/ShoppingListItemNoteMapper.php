@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -61,5 +62,47 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         }
 
         return $shoppingListItemNoteTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[] $shoppingListItemNoteEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function mapShoppingListItemNoteEntityCollectionToShoppingListItemCollectionTransfer(
+        ObjectCollection $shoppingListItemNoteEntityCollection,
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        $shoppingListItemNoteTransfers = $this->mapShoppingListItemEntityCollectionToTransferCollection($shoppingListItemNoteEntityCollection);
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemNoteTransfer = $this
+                ->findShoppingListItemNoteTransferByIdShoppingListItem($shoppingListItemNoteTransfers, $shoppingListItemTransfer->getIdShoppingListItem());
+            if ($shoppingListItemNoteTransfer) {
+                $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
+            }
+        }
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \ArrayObject $shoppingListItemNoteTransfers
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     */
+    protected function findShoppingListItemNoteTransferByIdShoppingListItem(
+        ArrayObject $shoppingListItemNoteTransfers,
+        int $idShoppingListItem
+    ): ?ShoppingListItemNoteTransfer {
+        foreach ($shoppingListItemNoteTransfers as $shoppingListItemNoteTransfer) {
+            if ($shoppingListItemNoteTransfer->getFkShoppingListItem() === $idShoppingListItem) {
+                return $shoppingListItemNoteTransfer;
+            }
+        }
+
+        return null;
     }
 }
