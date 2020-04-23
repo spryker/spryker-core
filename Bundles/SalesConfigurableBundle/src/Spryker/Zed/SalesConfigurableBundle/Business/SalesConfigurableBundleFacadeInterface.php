@@ -76,4 +76,17 @@ interface SalesConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands items with sales order configured bundle items.
+     * - Expands items with sales order configured bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

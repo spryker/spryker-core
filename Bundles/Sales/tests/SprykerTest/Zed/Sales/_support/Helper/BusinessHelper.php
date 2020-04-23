@@ -28,6 +28,7 @@ class BusinessHelper extends Module
 {
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     public const DEFAULT_ITEM_STATE = 'test';
+    public const DEFAULT_CURRENCY_ISO_CODE = 'TEST';
 
     protected const ORDER_ITEM_QTY = 1;
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
@@ -213,6 +214,7 @@ class BusinessHelper extends Module
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference(md5(time() + rand()));
+        $salesOrderEntity->setCurrencyIsoCode(static::DEFAULT_CURRENCY_ISO_CODE);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
