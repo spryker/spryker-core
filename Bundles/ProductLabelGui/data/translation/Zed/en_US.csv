@@ -1,22 +1,39 @@
 "# of Other Labels","# of Other Labels"
+"# of Products","# of Products"
 Activate,Activate
+Active,Active
+"Applied Products","Applied Products"
+"Are you sure you want to delete this product label?","Are you sure you want to delete this product label?"
 "Assigned products","Assigned products"
 "Available products","Available products"
 "Back to Product Labels","Back to Product Labels"
+Behavior,Behavior
 Categories,Categories
 "Create a Product Label","Create a Product Label"
 "Create Product Label","Create Product Label"
 "De-select all","De-select all"
-Deactivate,Deactivate
-Edit,Edit
+Deactivated,Deactivated
+"Delete Product Label","Delete Product Label"
+Delete,Delete
 "Edit Product Label","Edit Product Label"
+Edit,Edit
+"Front-end Reference","Front-end Reference"
+General,General
+ID,ID
+"Is Active","Is Active"
+"Is Dynamic","Is Dynamic"
 "Is Exclusive","Is Exclusive"
 "List of Product Labels","List of Product Labels"
 "Missing or wrong request data","Missing or wrong request data"
+N/A,N/A
+Name,Name
+"No, I want to keep this product label","No, I want to keep this product label"
+No,No
+"Overview of Product Labels","Overview of Product Labels"
+"Prioritize Product Labels","Prioritize Product Labels"
 Priority,Priority
-"Product label #%d successfully activated.","Product label #%d successfully activated."
-"Product label #%d successfully deactivated.","Product label #%d successfully deactivated."
 "Product label #%d successfully updated.","Product label #%d successfully updated."
+"Product label #%d was successfully deleted.","Product label #%d was successfully deleted."
 "Product label priority updated successfully.","Product label priority updated successfully."
 "Product Labels","Product Labels"
 "Products Applied to","Products Applied to"
@@ -26,29 +43,15 @@ Save,Save
 "Select all","Select all"
 "Selected products to assign","Selected products to assign"
 "Selected products to de-assign","Selected products to de-assign"
+Settings,Settings
+Status,Status
+"Store relation","Store relation"
+Stores,Stores
 Translations,Translations
 "Valid from","Valid from"
 "Valid to","Valid to"
 Validity,Validity
-View,View
 "View Product Label","View Product Label"
-Name,Name
-"Is Active","Is Active"
-"Is Dynamic","Is Dynamic"
-"Front-end Reference","Front-end Reference"
-ID,ID
-Stores,Stores
-"# of Products","# of Products"
-Settings,Settings
-Behavior,Behavior
-General,General
-"Store relation","Store relation"
-"Applied Products","Applied Products"
-Yes,Yes
-No,No
-Delete,Delete
+View,View
 "Yes, delete this product label","Yes, delete this product label"
-"Product label #%d was successfully deleted.","Product label #%d was successfully deleted."
-"Are you sure you want to delete this product label?","Are you sure you want to delete this product label?"
-"No, I want to keep this product label","No, I want to keep this product label"
-"Delete Product Label","Delete Product Label"
+Yes,Yes

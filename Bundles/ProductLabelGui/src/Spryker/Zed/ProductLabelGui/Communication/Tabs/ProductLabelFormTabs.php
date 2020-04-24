@@ -31,28 +31,6 @@ class ProductLabelFormTabs extends AbstractTabs
     }
 
     /**
-     * @deprecated Use `ProductLabelFormTabs::addSettingsTab()` instead.
-     *
-     * @see \Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs::addSettingsTab()
-     *
-     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
-     *
-     * @return $this
-     */
-    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer)
-    {
-        $tabItemTransfer = new TabItemTransfer();
-        $tabItemTransfer
-            ->setName('general')
-            ->setTitle('General Information')
-            ->setTemplate('@ProductLabelGui/Create/_tabs/general-information.twig');
-
-        $tabsViewTransfer->addTab($tabItemTransfer);
-
-        return $this;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return $this
