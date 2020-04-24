@@ -56,4 +56,14 @@ interface CacheFacadeInterface
      * @return string[]
      */
     public function emptyAutoLoaderCache();
+
+    /**
+     * Specification:
+     * - Empties configured auto-loader cache directory for codebucket directory structure.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyCodeBucketAutoloaderCache(): string;
 }

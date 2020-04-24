@@ -41,6 +41,7 @@ class EmptyAllCachesConsole extends Console
         $this->emptyCache($output);
         $this->emptyCodeBucketCache($output);
         $this->emptyAutoLoadCache($output);
+        $this->emptyCodeBucketAutoLoadCache($output);
     }
 
     /**
@@ -77,6 +78,19 @@ class EmptyAllCachesConsole extends Console
     protected function emptyAutoLoadCache(OutputInterface $output)
     {
         $emptiedDirectories = $this->getFacade()->emptyAutoLoaderCache();
+
+        $this->info('Removed auto-load cache files', true);
+        $output->writeln($emptiedDirectories);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function emptyCodeBucketAutoLoadCache(OutputInterface $output): void
+    {
+        $emptiedDirectories = $this->getFacade()->emptyCodeBucketAutoloaderCache();
 
         $this->info('Removed auto-load cache files', true);
         $output->writeln($emptiedDirectories);

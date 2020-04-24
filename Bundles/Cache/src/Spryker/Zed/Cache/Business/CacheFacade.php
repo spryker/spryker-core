@@ -80,4 +80,16 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     {
         return $this->getFactory()->createCacheClearer()->clearAutoLoaderCache();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyCodeBucketAutoloaderCache(): string
+    {
+        return $this->getFactory()->createCacheClearer()->clearCodeBucketAutoLoaderCache();
+    }
 }
