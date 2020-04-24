@@ -344,12 +344,19 @@ class PaymentFacadeTest extends Unit
      */
     protected function mockPaymentMethodReader(): void
     {
-        $paymentMethodReaderMock = $this->createMock(PaymentMethodReader::class);
+        $paymentMethodReaderMock = $this->getMockBuilder(PaymentMethodReader::class)
+            ->onlyMethods(['getAvailableMethods'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $paymentMethodReaderMock->method('getAvailableMethods')->willReturn(
             (new PaymentMethodsTransfer())
                 ->addMethod((new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice'))
         );
-        $paymentBusinessFactoryMock = $this->createMock(PaymentBusinessFactory::class);
+
+        /** @var \Spryker\Zed\Payment\Business\PaymentBusinessFactory $paymentBusinessFactoryMock */
+        $paymentBusinessFactoryMock = $this->getMockBuilder(PaymentBusinessFactory::class)
+            ->onlyMethods(['createPaymentMethodReader'])
+            ->getMock();
         $paymentBusinessFactoryMock->method('createPaymentMethodReader')
             ->willReturn($paymentMethodReaderMock);
 
