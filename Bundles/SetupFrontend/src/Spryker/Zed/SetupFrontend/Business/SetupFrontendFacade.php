@@ -138,4 +138,18 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     {
         return $this->getFactory()->createZedAssetsCleaner()->clean();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function buildMpFrontend(LoggerInterface $logger)
+    {
+        return $this->getFactory()->createMpBuilder()->build($logger);
+    }
 }

@@ -116,4 +116,16 @@ interface SetupFrontendFacadeInterface
      * @return bool
      */
     public function removeZedAssets();
+
+    /**
+     * Specification:
+     * - Runs Merchant Portal frontend builder.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function buildMpFrontend(LoggerInterface $logger);
 }

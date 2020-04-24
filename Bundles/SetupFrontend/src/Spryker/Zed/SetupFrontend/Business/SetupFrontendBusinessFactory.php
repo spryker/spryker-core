@@ -83,4 +83,12 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new PathPatternValidator();
     }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
+     */
+    public function createMpBuilder()
+    {
+        return new Builder($this->getConfig()->getMpBuildCommand());
+    }
 }

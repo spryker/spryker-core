@@ -82,4 +82,14 @@ class SetupFrontendConfig extends AbstractBundleConfig
     {
         return 'npm run zed';
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMpBuildCommand()
+    {
+        return 'npm run mp:build';
+    }
 }
