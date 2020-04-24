@@ -60,7 +60,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::ZED_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/cache/cache%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
+            $defaultCachePath = sprintf('%s/data/cache/codeBucket%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
 
             return $this->get(RouterConstants::ZED_CACHE_PATH, $defaultCachePath);
         }
