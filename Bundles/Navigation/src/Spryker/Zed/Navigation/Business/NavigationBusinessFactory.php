@@ -27,6 +27,7 @@ use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationBusinessFactory extends AbstractBusinessFactory
@@ -46,9 +47,9 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new NavigationDuplicator(
             $this->createNavigationTreeReader(),
-            $this->createNavigationTouch(),
             $this->createNavigationCreator(),
-            $this->createNavigationNodeCreator()
+            $this->createNavigationNodeCreator(),
+            $this->getEntityManager()
         );
     }
 

@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationEntityManagerInterface getEntityManager()
  */
 class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
 {
