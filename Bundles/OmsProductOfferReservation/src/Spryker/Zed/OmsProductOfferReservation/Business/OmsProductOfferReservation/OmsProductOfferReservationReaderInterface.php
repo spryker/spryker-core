@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 
 interface OmsProductOfferReservationReaderInterface
@@ -20,4 +21,11 @@ interface OmsProductOfferReservationReaderInterface
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
 }

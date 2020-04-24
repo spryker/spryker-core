@@ -9,6 +9,8 @@ namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
@@ -23,6 +25,37 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsProductOfferReservationRepository extends AbstractRepository implements OmsProductOfferReservationRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsProductOfferReservationTransfer|null
+     */
+    public function find(
+        ReservationRequestTransfer $reservationRequestTransfer
+    ): ?OmsProductOfferReservationTransfer {
+        $reservationRequestTransfer->requireProductOfferReference()
+            ->requireReservationQuantity()
+            ->requireStore()
+            ->getStore()
+            ->requireIdStore();
+
+        $omsProductOfferReservationEntity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
+            ->filterByProductOfferReference($reservationRequestTransfer->getProductOfferReference())
+            ->filterByFkStore($reservationRequestTransfer->getStore()->getIdStore())
+            ->findOne();
+
+        if (!$omsProductOfferReservationEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createOmsProductOfferReservationMapper()
+            ->mapOmsProductOfferReservationEntityToOmsProductOfferReservationTransfer(
+                $omsProductOfferReservationEntity,
+                new OmsProductOfferReservationTransfer()
+            );
+    }
+
     /**
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *

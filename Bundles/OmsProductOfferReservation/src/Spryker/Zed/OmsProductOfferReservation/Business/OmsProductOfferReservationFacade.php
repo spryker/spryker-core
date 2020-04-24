@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservationBusinessFactory getFactory()()
  * @method \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\OmsProductOfferReservation\Persistence\OmsProductOfferReservationEntityManagerInterface getEntityManager()
  */
 class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProductOfferReservationFacadeInterface
 {
@@ -30,7 +31,9 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
-        return $this->getFactory()->createOmsProductOfferReservationReader()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+        return $this->getFactory()
+            ->createOmsProductOfferReservationReader()
+            ->getQuantity($omsProductOfferReservationCriteriaTransfer);
     }
 
     /**
@@ -44,13 +47,24 @@ class OmsProductOfferReservationFacade extends AbstractFacade implements OmsProd
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        $reservationRequestTransfer->requireProductOfferReference();
-        $reservationRequestTransfer->requireReservedStates();
+        return $this->getFactory()
+            ->createOmsProductOfferReservationReader()
+            ->getAggregatedReservations($reservationRequestTransfer);
+    }
 
-        return $this->getRepository()->getAggregatedReservations(
-            $reservationRequestTransfer->getProductOfferReference(),
-            $reservationRequestTransfer->getReservedStates()->getStates(),
-            $reservationRequestTransfer->getStore()
-        );
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function writeReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $this->getFactory()
+            ->createOmsProductOfferReservationWriter()
+            ->writeReservation($reservationRequestTransfer);
     }
 }

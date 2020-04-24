@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
@@ -102,5 +104,35 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->findOne();
 
         return new Decimal($productReservationTotalQuantity ?? 0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsProductReservationTransfer|null
+     */
+    public function findProductReservation(ReservationRequestTransfer $reservationRequestTransfer): ?OmsProductReservationTransfer
+    {
+        $reservationRequestTransfer->requireSku()
+            ->requireStore()
+            ->getStore()
+                ->requireIdStore();
+
+        $omsProductReservationEntity = $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->filterBySku($reservationRequestTransfer->getSku())
+            ->filterByFkStore($reservationRequestTransfer->getStore()->getIdStore())
+            ->findOne();
+
+        if (!$omsProductReservationEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createOmsMapper()
+            ->mapOmsProductReservationEntityToOmsProductReservationTransfer(
+                $omsProductReservationEntity,
+                new OmsProductReservationTransfer()
+            );
     }
 }
