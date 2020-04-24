@@ -74,6 +74,7 @@
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="returnPolicyMessages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
@@ -94,6 +95,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="CalculableObject">

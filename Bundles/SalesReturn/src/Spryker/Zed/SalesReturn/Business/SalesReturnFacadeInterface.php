@@ -96,6 +96,7 @@ interface SalesReturnFacadeInterface
      * Specification:
      * - Verifies difference between order item creation date and config const.
      * - If difference more than config const, sets `Item::isReturnable=false`.
+     * - Sets `Item::returnPolicyMessages`.
      *
      * @api
      *

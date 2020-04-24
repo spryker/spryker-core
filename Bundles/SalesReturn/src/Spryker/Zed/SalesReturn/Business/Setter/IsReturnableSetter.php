@@ -9,10 +9,14 @@ namespace Spryker\Zed\SalesReturn\Business\Setter;
 
 use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class IsReturnableSetter implements IsReturnableSetterInterface
 {
+    protected const GLOSSARY_KEY_RETURNABLE_TILL_DATE = 'return.return_item.returnable_till.message';
+    protected const GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE = '%date%';
+
     /**
      * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
      */
@@ -37,9 +41,30 @@ class IsReturnableSetter implements IsReturnableSetterInterface
             if ($this->isOrderItemPassedGlobalReturnableNumberOfDays($itemTransfer)) {
                 $itemTransfer->setIsReturnable(false);
             }
+
+            $this->setOrderItemreturnPolicyMessages($itemTransfer);
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function setOrderItemreturnPolicyMessages(ItemTransfer $itemTransfer): void
+    {
+        $retunrableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
+            ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
+
+        $messageTransfer = (new MessageTransfer())
+            ->setValue(static::GLOSSARY_KEY_RETURNABLE_TILL_DATE)
+            ->setParameters([
+                static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $retunrableTillDateTime,
+            ]);
+
+        $itemTransfer->addMessage($messageTransfer);
     }
 
     /**
