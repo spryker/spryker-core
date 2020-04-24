@@ -12,12 +12,14 @@ use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
+use Spryker\Zed\NavigationGui\Communication\Form\DeleteNavigationForm;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\UpdateNavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
@@ -65,6 +67,14 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createNavigationFormType()
     {
         return NavigationFormType::class;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteNavigationForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteNavigationForm::class);
     }
 
     /**

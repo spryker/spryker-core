@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ContentParameterMessageTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ContentNavigation\Dependency\External\ContentNavigationToValidationAdapterInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ContentNavigationValidator implements ContentNavigationValidatorInterface
 {
@@ -55,19 +56,31 @@ class ContentNavigationValidator implements ContentNavigationValidatorInterface
                 $constraintCollection
             );
             if (count($violations) !== 0) {
-                $contentParameterMessageTransfer = new ContentParameterMessageTransfer();
-                $contentParameterMessageTransfer->setParameter($parameter);
-
-                foreach ($violations as $violation) {
-                    $contentParameterMessageTransfer->addMessage(
-                        (new MessageTransfer())->setValue($violation->getMessage())
-                    );
-                }
+                $contentParameterMessageTransfer = $this->createContentParameterMessageTransfer($parameter, $violations);
                 $contentValidationResponseTransfer->addParameterMessages($contentParameterMessageTransfer);
                 $isSuccess = false;
             }
         }
 
         return $contentValidationResponseTransfer->setIsSuccess($isSuccess);
+    }
+
+    /**
+     * @param string $parameter
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+     *
+     * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
+     */
+    protected function createContentParameterMessageTransfer(string $parameter, ConstraintViolationListInterface $violations): ContentParameterMessageTransfer
+    {
+        $contentParameterMessageTransfer = (new ContentParameterMessageTransfer())->setParameter($parameter);
+
+        foreach ($violations as $violation) {
+            $contentParameterMessageTransfer->addMessage(
+                (new MessageTransfer())->setValue($violation->getMessage())
+            );
+        }
+
+        return $contentParameterMessageTransfer;
     }
 }
