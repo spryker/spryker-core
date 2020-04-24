@@ -36,6 +36,7 @@ class SalesFacadeTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
     protected const ITEM_NAME = 'ITEM_NAME';
+    protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
 
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
@@ -195,7 +196,7 @@ class SalesFacadeTest extends Unit
         $orderEntity = $this->tester->haveSalesOrderEntity();
         $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
             OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
-            OrderListRequestTransfer::ORDER_REFERENCE => 'test--111',
+            OrderListRequestTransfer::ORDER_REFERENCE => static::NON_EXISTING_ORDER_REFERENCE,
         ]);
 
         //Act
