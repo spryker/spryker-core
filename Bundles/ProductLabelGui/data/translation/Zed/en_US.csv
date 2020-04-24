@@ -35,6 +35,7 @@ Priority,Priority
 "Product label #%d successfully updated.","Product label #%d successfully updated."
 "Product label #%d was successfully deleted.","Product label #%d was successfully deleted."
 "Product label priority updated successfully.","Product label priority updated successfully."
+"Product Labels","Product Labels"
 "Products Applied to","Products Applied to"
 "Products for this label are assigned dynamically, you can't manage relations manually.","Products for this label are assigned dynamically, you can't manage relations manually."
 "Products to which this label applies","Products to which this label applies"

@@ -280,7 +280,10 @@ class ProductLabelTable extends AbstractTable
                     ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
-            'View'
+            'View',
+            [
+                'icon' => 'fa-eye',
+            ]
         );
     }
 
