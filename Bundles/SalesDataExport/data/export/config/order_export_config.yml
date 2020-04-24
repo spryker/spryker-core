@@ -1,0 +1,25 @@
+version: 1
+
+actions:
+    - data_entity: order
+      destination: '{timestamp}/orders_{store_name}_{split_counter}.{extension}' # self-note: everything from this file are available only on the last merge!!!!! (pre-parsing is invalid)
+      split:
+          size: 10
+          fields: ['store_name']
+      fields:
+          - order_reference
+          - created_at
+          - locale_name
+          - billing_address_first_name
+          - billing_address_country
+          - billing_address_region
+          - store_name
+          - order_totals_grand_total
+          - order_item_id:
+                format: comma-separated-list
+          - order_comments:
+                format: json-list
+      sort:
+          order_id: ASC
+      filter_criteria:
+          locale_is_active: true
