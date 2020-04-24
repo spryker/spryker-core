@@ -140,7 +140,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostUpdatePlugins($merchantTransfer);
 
-        $this->triggerUpdateEvent($merchantTransfer);
+        $this->triggerPublishEvent($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -263,11 +263,11 @@ class MerchantUpdater implements MerchantUpdaterInterface
      *
      * @return void
      */
-    protected function triggerUpdateEvent(MerchantTransfer $merchantTransfer): void
+    protected function triggerPublishEvent(MerchantTransfer $merchantTransfer): void
     {
         $eventEntityTransfer = new EventEntityTransfer();
         $eventEntityTransfer->setId($merchantTransfer->getIdMerchant());
 
-        $this->eventFacade->trigger(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, $eventEntityTransfer);
+        $this->eventFacade->trigger(MerchantEvents::MERCHANT_PUBLISH, $eventEntityTransfer);
     }
 }
