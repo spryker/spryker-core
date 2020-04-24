@@ -73,7 +73,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider
      */
-    protected function createProductLabelFormDataProvider()
+    public function createProductLabelFormDataProvider()
     {
         return new ProductLabelFormDataProvider(
             $this->getLocaleFacade(),
@@ -84,7 +84,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider
      */
-    protected function createRelatedProductFormDataProvider()
+    public function createRelatedProductFormDataProvider()
     {
         return new RelatedProductFormDataProvider();
     }
@@ -169,7 +169,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface
      */
-    protected function createRelatedProductTableQueryBuilder()
+    public function createRelatedProductTableQueryBuilder()
     {
         return new RelatedProductTableQueryBuilder(
             $this->getProductQueryContainer(),
@@ -182,7 +182,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
      */
-    protected function getProductQueryContainer()
+    public function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
@@ -190,7 +190,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
      */
-    protected function getMoneyFacade()
+    public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
     }
@@ -198,7 +198,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
      */
-    protected function getPriceProductFacade()
+    public function getPriceProductFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
