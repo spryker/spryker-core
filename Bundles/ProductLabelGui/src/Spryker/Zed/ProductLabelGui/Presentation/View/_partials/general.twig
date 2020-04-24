@@ -2,23 +2,23 @@
     {% block widget_content %}
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Name' | trans }}</b></div>
-            <div class="col-xs-10">{{ productLabelTransfer.getName() }}</div>
+            <div class="col-xs-10">{{ productLabelTransfer.name }}</div>
         </div>
 
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Front-end Reference' | trans }}</b></div>
-            <div class="col-xs-10">{{ productLabelTransfer.getFrontendReference() }}</div>
+            <div class="col-xs-10">{{ productLabelTransfer.frontendReference }}</div>
         </div>
 
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Priority' | trans }}</b></div>
-            <div class="col-xs-10">{{ productLabelTransfer.getPosition() }}</div>
+            <div class="col-xs-10">{{ productLabelTransfer.position }}</div>
         </div>
 
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
             <div class="col-xs-10">
-                {% if productLabelTransfer.getIsActive() %}
+                {% if productLabelTransfer.isActive %}
                     <span class="label label-info">{{ 'Active' | trans }}</span>
                 {% else %}
                     <span class="label label-danger">{{ 'Deactivated' | trans }}</span>

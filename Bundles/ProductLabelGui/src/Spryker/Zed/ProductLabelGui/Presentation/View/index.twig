@@ -1,13 +1,13 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'View Product Label' | trans ~ ': "' ~ productLabelTransfer.getName() ~ '"' %}
+{% set widget_title = 'View Product Label' | trans ~ ': "' ~ productLabelTransfer.name ~ '"' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
     {{ editActionButton(
         url(
             '/product-label-gui/edit',
-            {'id-product-label': productLabelTransfer.getIdProductLabel()}
+            { 'id-product-label': productLabelTransfer.idProductLabel }
         ),
         'Edit' | trans
     ) }}

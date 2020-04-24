@@ -53,13 +53,12 @@ class ProductLabelMapper
         $storeRelationTransfer->setIdEntity($productLabelEntity->getIdProductLabel());
 
         if ($productLabelEntity->getProductLabelStores()->count()) {
-            $productLabelTransfer->setStoreRelation(
-                $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
-                    $productLabelEntity->getProductLabelStores(),
-                    $storeRelationTransfer
-                )
+            $storeRelationTransfer = $this->productLabelStoreRelationMapper->mapProductLabelStoreEntitiesToStoreRelationTransfer(
+                $productLabelEntity->getProductLabelStores(),
+                $storeRelationTransfer
             );
         }
+        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
 
         $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
 
