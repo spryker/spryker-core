@@ -1,11 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Overview of Product Labels' | trans %}
+{% set widget_title = 'Product Labels' | trans %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
     {{ createActionButton('/product-label-gui/create', 'Create Product Label' | trans) }}
-    {{ editActionButton('/product-label-gui/re-sort', 'Prioritize Product Labels') }}
 {% endblock %}
 
 {% block content %}
