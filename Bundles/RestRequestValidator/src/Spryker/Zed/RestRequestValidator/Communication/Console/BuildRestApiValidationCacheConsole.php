@@ -41,6 +41,6 @@ class BuildRestApiValidationCacheConsole extends Console
         $this->getMessenger()->info(static::DESCRIPTION);
         $this->getFacade()->buildValidationCacheForCodeBucket(APPLICATION_CODE_BUCKET);
 
-        return 0;
+        return static::CODE_SUCCESS;
     }
 }

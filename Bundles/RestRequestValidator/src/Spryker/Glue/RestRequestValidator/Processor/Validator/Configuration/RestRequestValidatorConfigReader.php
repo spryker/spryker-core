@@ -86,6 +86,6 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
      */
     protected function getValidationConfigPath(): string
     {
-        return sprintf($this->config->getValidationCacheFilenamePattern(), $this->storeClient->getCurrentStore()->getName());
+        return sprintf($this->config->getValidationCodeBucketCacheFilenamePattern(), APPLICATION_CODE_BUCKET);
     }
 }

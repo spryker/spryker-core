@@ -74,6 +74,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
+     * @deprecated Use emptyCodeBucketAutoloaderCache instead.
+     *
      * @return string[]
      */
     public function emptyAutoLoaderCache()
