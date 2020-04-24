@@ -7,7 +7,6 @@ Categories,Kategorien
 "Create a Product Label","Produktlabel erstellen"
 "Create Product Label","Produkt-Label erstellen"
 "De-select all","Alle Markierungen aufheben"
-Deactivate,Deaktivieren
 Edit,Bearbeiten
 "Edit Product Label","Produktlabel bearbeiten"
 "Is Exclusive","Ist exklusiv."
@@ -16,8 +15,6 @@ Edit,Bearbeiten
 "Overview of Product Labels","Übersicht der Produktlabels"
 "Prioritize Product Labels","Produktlabels priorisieren"
 Priority,Priorität
-"Product label #%d successfully activated.","Produktlabel #%d erfolgreich aktiviert."
-"Product label #%d successfully deactivated.","Produktlabel #%d erfolgreich deaktiviert"
 "Product label #%d successfully updated.","Produktlabel #%d erfolgreich aktualisiert."
 "Product label priority updated successfully.","Priorität des Produktlabels erfolgreich aktualisiert."
 "Products Applied to","Zutreffende Produkte"

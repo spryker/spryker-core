@@ -4,37 +4,6 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {% if (productLabelTransfer.getIsActive()) %}
-        {{ removeActionButton(
-            url(
-                '/product-label-gui/set-status/inactive',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/view',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Deactivate' | trans,
-            {'icon': ''}
-        ) }}
-    {% else %}
-        {{ viewActionButton(
-            url(
-                '/product-label-gui/set-status/active',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/view',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Activate' | trans,
-            {'icon': ''}
-        ) }}
-    {% endif %}
     {{ editActionButton(
         url(
             '/product-label-gui/edit',

@@ -1,41 +1,39 @@
 "# of Other Labels","# of Other Labels"
 "# of Products","# of Products"
 Activate,Activate
+Active,Active
+"Applied Products","Applied Products"
+"Are you sure you want to delete this product label?","Are you sure you want to delete this product label?"
 "Assigned products","Assigned products"
 "Available products","Available products"
 "Back to Product Labels","Back to Product Labels"
+Behavior,Behavior
 Categories,Categories
 "Create a Product Label","Create a Product Label"
 "Create Product Label","Create Product Label"
 "De-select all","De-select all"
-Deactivate,Deactivate
-Edit,Edit
+Deactivated,Deactivated
+"Delete Product Label","Delete Product Label"
+Delete,Delete
 "Edit Product Label","Edit Product Label"
+Edit,Edit
+"Front-end Reference","Front-end Reference"
+General,General
 ID,ID
 "Is Active","Is Active"
 "Is Dynamic","Is Dynamic"
 "Is Exclusive","Is Exclusive"
-"Front-end Reference","Front-end Reference"
-General,General
-Behavior,Behavior
-"Store relation","Store relation"
-"Applied Products","Applied Products"
-Name,Name
-Status,Status
-Stores,Stores
-Yes,Yes
-No,No
-N/A,N/A
-Active,Active
-Deactivated,Deactivated
 "List of Product Labels","List of Product Labels"
 "Missing or wrong request data","Missing or wrong request data"
+N/A,N/A
+Name,Name
+"No, I want to keep this product label","No, I want to keep this product label"
+No,No
 "Overview of Product Labels","Overview of Product Labels"
 "Prioritize Product Labels","Prioritize Product Labels"
 Priority,Priority
-"Product label #%d successfully activated.","Product label #%d successfully activated."
-"Product label #%d successfully deactivated.","Product label #%d successfully deactivated."
 "Product label #%d successfully updated.","Product label #%d successfully updated."
+"Product label #%d was successfully deleted.","Product label #%d was successfully deleted."
 "Product label priority updated successfully.","Product label priority updated successfully."
 "Products Applied to","Products Applied to"
 "Products for this label are assigned dynamically, you can't manage relations manually.","Products for this label are assigned dynamically, you can't manage relations manually."
@@ -45,9 +43,16 @@ Save,Save
 "Selected products to assign","Selected products to assign"
 "Selected products to de-assign","Selected products to de-assign"
 Settings,Settings
+Settings,Settings
+Status,Status
+"Store relation","Store relation"
+Stores,Stores
+Stores,Stores
 Translations,Translations
 "Valid from","Valid from"
 "Valid to","Valid to"
 Validity,Validity
-View,View
 "View Product Label","View Product Label"
+View,View
+"Yes, delete this product label","Yes, delete this product label"
+Yes,Yes

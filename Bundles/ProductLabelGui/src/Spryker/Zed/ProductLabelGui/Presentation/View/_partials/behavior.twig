@@ -2,7 +2,7 @@
     {% set isDynamic = (productLabelTransfer.isDynamic()) ? ('Yes' | trans) : ('No' | trans) %}
     {% set isExclusive = (productLabelTransfer.getIsExclusive()) ? ('Yes' | trans) : ('No' | trans) %}
     {% set validFrom = (productLabelTransfer.getValidFrom()) ? (productLabelTransfer.getValidFrom() | formatDate) : ('N/A' | trans) %}
-    {% set validTo = (productLabelTransfer.getValidFrom()) ? (productLabelTransfer.getValidFrom() | formatDate) : ('N/A' | trans) %}
+    {% set validTo = (productLabelTransfer.getValidTo()) ? (productLabelTransfer.getValidTo() | formatDate) : ('N/A' | trans) %}
 
     {% block widget_content %}
         <div class="row form-group">

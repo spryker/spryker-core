@@ -15,6 +15,7 @@ use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggr
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelAggregateFormType;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelDeleteForm;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
@@ -164,6 +165,14 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $idProductLabel,
             $this->getPriceProductFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductLabelDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductLabelDeleteForm::class);
     }
 
     /**
