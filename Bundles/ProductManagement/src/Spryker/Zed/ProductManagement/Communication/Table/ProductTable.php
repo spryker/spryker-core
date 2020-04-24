@@ -173,7 +173,7 @@ class ProductTable extends AbstractProductTable
             );
         }
 
-        return implode(" ", $storeNames);
+        return implode(' ', $storeNames);
     }
 
     /**

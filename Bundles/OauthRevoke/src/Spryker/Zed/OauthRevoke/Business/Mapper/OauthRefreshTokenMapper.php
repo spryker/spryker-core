@@ -13,17 +13,28 @@ use Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceI
 
 class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
 {
+    protected const CUSTOMER_REFERENCE = 'customer_reference';
+
     /**
      * @var \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface $utilEncodingService
+     * @var \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
      */
-    public function __construct(OauthRevokeToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    protected $oauthUserIdentifierFilterPlugins;
+
+    /**
+     * @param \Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     */
+    public function __construct(
+        OauthRevokeToUtilEncodingServiceInterface $utilEncodingService,
+        array $oauthUserIdentifierFilterPlugins = []
+    ) {
         $this->utilEncodingService = $utilEncodingService;
+        $this->oauthUserIdentifierFilterPlugins = $oauthUserIdentifierFilterPlugins;
     }
 
     /**
@@ -36,13 +47,15 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         RefreshTokenEntityInterface $refreshTokenEntity,
         OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
     ): OauthRefreshTokenTransfer {
-        $userIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
-        $customerReference = $this->getCustomerReference($userIdentifier);
+        $encodedUserIdentifier = $refreshTokenEntity->getAccessToken()->getUserIdentifier();
+        $userIdentifier = $this->utilEncodingService->decodeJson($encodedUserIdentifier, true);
+        $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);
+        $encodedUserIdentifier = (string)$this->utilEncodingService->encodeJson($filteredUserIdentifier);
 
         $oauthRefreshTokenTransfer
             ->setIdentifier($refreshTokenEntity->getIdentifier())
-            ->setCustomerReference($customerReference)
-            ->setUserIdentifier($userIdentifier)
+            ->setCustomerReference($userIdentifier[static::CUSTOMER_REFERENCE] ?? null)
+            ->setUserIdentifier($encodedUserIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setIdOauthClient($refreshTokenEntity->getAccessToken()->getClient()->getIdentifier())
             ->setScopes($this->utilEncodingService->encodeJson($refreshTokenEntity->getAccessToken()->getScopes()));
@@ -51,15 +64,16 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     }
 
     /**
-     * @param string|null $userIdentifier
+     * @param array $userIdentifier
      *
-     * @return string|null
+     * @return array
      */
-    protected function getCustomerReference(?string $userIdentifier): ?string
+    protected function filterUserIdentifier(array $userIdentifier): array
     {
-        $encodedUserIdentifier = $this->utilEncodingService
-            ->decodeJson($userIdentifier);
+        foreach ($this->oauthUserIdentifierFilterPlugins as $oauthUserIdentifierFilterPlugin) {
+            $userIdentifier = $oauthUserIdentifierFilterPlugin->filter($userIdentifier);
+        }
 
-        return $encodedUserIdentifier->customer_reference ?? null;
+        return $userIdentifier;
     }
 }
