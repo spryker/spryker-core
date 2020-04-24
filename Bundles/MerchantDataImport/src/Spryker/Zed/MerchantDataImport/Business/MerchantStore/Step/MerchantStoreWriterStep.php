@@ -30,6 +30,6 @@ class MerchantStoreWriterStep extends PublishAwareStep implements DataImportStep
 
         $merchantStoreEntity->save();
 
-        $this->addPublishEvents(MerchantEvents::MERCHANT_STORE_PUBLISH, $merchantStoreEntity->getIdMerchantStore());
+        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantStoreEntity->getFkMerchant());
     }
 }

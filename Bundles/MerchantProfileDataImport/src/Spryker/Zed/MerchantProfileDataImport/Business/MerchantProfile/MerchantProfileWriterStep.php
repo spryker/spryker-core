@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
 
 class MerchantProfileWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -45,7 +45,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
 
         $merchantProfileEntity->save();
 
-        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileEntity->getIdMerchantProfile());
+        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantProfileEntity->getFkMerchant());
     }
 
     /**

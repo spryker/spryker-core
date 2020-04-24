@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface;
@@ -74,22 +73,6 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
-        if (!$merchantIds) {
-            return;
-        }
-
-        $this->writeCollectionByMerchantIds($merchantIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByMerchantStoreEvents(array $eventTransfers): void
-    {
-        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyMerchantStoreTableMap::COL_FK_MERCHANT);
 
         if (!$merchantIds) {
             return;

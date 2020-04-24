@@ -20,16 +20,4 @@ interface MerchantStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
-
-    /**
-     * Specification:
-     * - Publishes merchant data to storage based on merchant store events.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByMerchantStoreEvents(array $eventTransfers): void;
 }

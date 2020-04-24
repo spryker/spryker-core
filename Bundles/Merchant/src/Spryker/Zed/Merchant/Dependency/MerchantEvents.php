@@ -24,28 +24,4 @@ class MerchantEvents
      * @api
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
-
-    /**
-     * Specification
-     * - This events will be used for spy_merchant_store entity creation.
-     *
-     * @api
-     */
-    public const ENTITY_SPY_MERCHANT_STORE_CREATE = 'Entity.spy_merchant_store.create';
-
-    /**
-     * Specification
-     * - This events will be used for spy_merchant_store entity deletion.
-     *
-     * @api
-     */
-    public const ENTITY_SPY_MERCHANT_STORE_DELETE = 'Entity.spy_merchant_store.delete';
-
-    /**
-     * Specification
-     * - This events will be used for spy_merchant_store publishing.
-     *
-     * @api
-     */
-    public const MERCHANT_STORE_PUBLISH = 'Merchant.merchant_store.publish';
 }

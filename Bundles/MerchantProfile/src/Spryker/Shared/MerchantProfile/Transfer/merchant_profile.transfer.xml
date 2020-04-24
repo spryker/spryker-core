@@ -93,9 +93,6 @@
     <transfer name="Translation">
     </transfer>
 
-    <transfer name="EventEntity">
-    </transfer>
-
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>

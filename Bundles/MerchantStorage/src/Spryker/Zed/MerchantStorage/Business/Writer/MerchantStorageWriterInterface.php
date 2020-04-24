@@ -15,11 +15,4 @@ interface MerchantStorageWriterInterface
      * @return void
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByMerchantStoreEvents(array $eventTransfers): void;
 }

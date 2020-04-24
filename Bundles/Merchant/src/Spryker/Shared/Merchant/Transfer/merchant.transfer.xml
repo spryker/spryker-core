@@ -116,4 +116,8 @@
         <property name="merchantReference" type="string"/>
         <property name="sku" type="string"/>
     </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

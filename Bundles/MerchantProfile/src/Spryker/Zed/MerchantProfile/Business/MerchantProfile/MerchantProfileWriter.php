@@ -7,13 +7,10 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
-use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
-use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface;
-use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface;
 
 class MerchantProfileWriter implements MerchantProfileWriterInterface
@@ -36,26 +33,18 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     protected $merchantProfileAddressWriter;
 
     /**
-     * @var \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface
-     */
-    protected $eventFacade;
-
-    /**
      * @param \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface $merchantProfileEntityManager
      * @param \Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface $merchantProfileGlossaryWriter
      * @param \Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface $merchantProfileAddressWriter
-     * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface $eventFacade
      */
     public function __construct(
         MerchantProfileEntityManagerInterface $merchantProfileEntityManager,
         MerchantProfileGlossaryWriterInterface $merchantProfileGlossaryWriter,
-        MerchantProfileAddressWriterInterface $merchantProfileAddressWriter,
-        MerchantProfileToEventFacadeInterface $eventFacade
+        MerchantProfileAddressWriterInterface $merchantProfileAddressWriter
     ) {
         $this->merchantProfileEntityManager = $merchantProfileEntityManager;
         $this->merchantProfileGlossaryWriter = $merchantProfileGlossaryWriter;
         $this->merchantProfileAddressWriter = $merchantProfileAddressWriter;
-        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -68,8 +57,6 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         $merchantProfileTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileTransfer) {
             return $this->executeCreateTransaction($merchantProfileTransfer);
         });
-
-        $this->triggerPublishEvent($merchantProfileTransfer);
 
         return $merchantProfileTransfer;
     }
@@ -84,8 +71,6 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         $merchantProfileTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileTransfer) {
             return $this->executeUpdateTransaction($merchantProfileTransfer);
         });
-
-        $this->triggerPublishEvent($merchantProfileTransfer);
 
         return $merchantProfileTransfer;
     }
@@ -133,18 +118,5 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         $merchantProfileTransfer->setAddressCollection($merchantProfileAddressCollectionTransfer);
 
         return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return void
-     */
-    protected function triggerPublishEvent(MerchantProfileTransfer $merchantProfileTransfer): void
-    {
-        $eventEntityTransfer = new EventEntityTransfer();
-        $eventEntityTransfer->setId($merchantProfileTransfer->getIdMerchantProfile());
-
-        $this->eventFacade->trigger(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $eventEntityTransfer);
     }
 }
