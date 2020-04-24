@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Kernel\CodeBucket\Config;
 
-use SprykerConfig\CodeBucketConfig as SprykerCodeBucketConfig;
+use SprykerConfig\CodeBucketConfig as ProjectCodeBucketConfig;
 
 class CodeBucketConfig implements CodeBucketConfigInterface
 {
@@ -21,7 +21,7 @@ class CodeBucketConfig implements CodeBucketConfigInterface
      */
     public function __construct(?CodeBucketConfigInterface $customCodeBucketConfig = null)
     {
-        $this->customCodeBucketContext = $customCodeBucketConfig ?? new SprykerCodeBucketConfig();
+        $this->customCodeBucketContext = $customCodeBucketConfig ?? new ProjectCodeBucketConfig();
     }
 
     /**

@@ -12,13 +12,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Communication\Console\RemoveRestApiValidationCacheConsole} instead.
- *
  * @method \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorFacadeInterface getFacade()
  */
-class RemoveValidationCacheConsole extends Console
+class RemoveRestApiValidationCacheConsole extends Console
 {
-    protected const COMMAND_NAME = 'glue:rest-request-validation-cache:remove';
+    protected const COMMAND_NAME = 'rest-api:remove-validation-cache';
     protected const DESCRIPTION = 'Removes the cache for rest request validation rules.';
 
     /**
@@ -41,7 +39,7 @@ class RemoveValidationCacheConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getMessenger()->info(static::DESCRIPTION);
-        $this->getFacade()->removeValidationCache();
+        $this->getFacade()->removeValidationCacheForCodeBucket(APPLICATION_CODE_BUCKET);
 
         return static::CODE_SUCCESS;
     }

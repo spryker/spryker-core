@@ -37,20 +37,6 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
-     */
-    public function getValidationSchemaPathPatterns(): array
-    {
-        return [
-            $this->getCorePathPattern(),
-            $this->getProjectPathPattern(),
-            $this->getStorePathPattern(),
-        ];
-    }
-
-    /**
-     * @api
-     *
      * @return string
      */
     public function getValidationSchemaFileNamePattern(): string

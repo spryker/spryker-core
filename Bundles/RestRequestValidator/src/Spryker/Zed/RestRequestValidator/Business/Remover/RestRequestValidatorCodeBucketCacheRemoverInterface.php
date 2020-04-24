@@ -5,12 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Builder;
+namespace Spryker\Zed\RestRequestValidator\Business\Remover;
 
-interface RestRequestValidatorCacheBuilderInterface
+interface RestRequestValidatorCodeBucketCacheRemoverInterface
 {
     /**
+     * @param string $codeBucket
+     *
      * @return void
      */
-    public function build(): void;
+    public function remove(string $codeBucket): void;
 }

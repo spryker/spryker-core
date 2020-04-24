@@ -59,7 +59,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::YVES_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/cache/%s/routing%s', APPLICATION_ROOT_DIR, APPLICATION, APPLICATION_CODE_BUCKET);
+            $defaultCachePath = sprintf('%s/data/cache/cache%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
 
             return $this->get(RouterConstants::YVES_CACHE_PATH, $defaultCachePath);
         }
@@ -104,9 +104,6 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Use LocaleStorageClient::getLanguagesForStore() instead.
-     *
-     * @see \Spryker\Client\LocaleStorage\LocaleStorageClientInterface::getLanguagesForStore()
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
      * @return string[]
@@ -128,9 +125,6 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
      *
-     * @deprecated Use StoreStorageClient::getAllStores() instead.
-     *
-     * @see \Spryker\Client\StoreStorage\StoreStorageClientInterface::getAllStores()
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin
      *
      * @return string[]

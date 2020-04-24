@@ -19,6 +19,8 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @api
      *
+     * @deprecated Use buildValidationCacheForCodeBucket() instead.
+     *
      * @return void
      */
     public function buildValidationCache(): void
@@ -36,9 +38,12 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @return void
      */
-    public function buildNavigationCacheForCodeBucket(string $codeBucket): void
+    public function buildValidationCacheForCodeBucket(string $codeBucket): void
     {
-        $this->getFactory()->createRestRequestValidatorCacheBuilder()->buildCacheForCodeBucket($codeBucket);
+        $this->removeValidationCacheForCodeBucket($codeBucket);
+        $this->getFactory()
+            ->createRestRequestValidatorCodeBucketCacheBuilder()
+            ->buildCacheForCodeBucket($codeBucket);
     }
 
     /**
@@ -46,10 +51,28 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @api
      *
+     * @deprecated Use removeValidationCacheForCodeBucket() instead.
+     *
      * @return void
      */
     public function removeValidationCache(): void
     {
         $this->getFactory()->createRestRequestValidatorCacheRemover()->remove();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function removeValidationCacheForCodeBucket(string $codeBucket): void
+    {
+        $this->getFactory()
+            ->createRestRequestValidatorCodeBucketCacheRemover()
+            ->remove($codeBucket);
     }
 }

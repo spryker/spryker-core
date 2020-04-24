@@ -33,7 +33,7 @@ interface RestRequestValidatorFacadeInterface
      *
      * @return void
      */
-    public function buildNavigationCacheForCodeBucket(string $codeBucket): void;
+    public function buildValidationCacheForCodeBucket(string $codeBucket): void;
 
     /**
      * Specification:
@@ -44,4 +44,16 @@ interface RestRequestValidatorFacadeInterface
      * @return void
      */
     public function removeValidationCache(): void;
+
+    /**
+     * Specification:
+     * - Removes outdated validation rules cache file for the given code bucket.
+     *
+     * @api
+     *
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function removeValidationCacheForCodeBucket(string $codeBucket): void;
 }

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 
-interface RestRequestValidatorCacheBuilderInterface
+interface RestRequestValidatorCodeBucketCacheBuilderInterface
 {
     /**
+     * @param string $codeBucket
+     *
      * @return void
      */
-    public function build(): void;
+    public function buildCacheForCodeBucket(string $codeBucket): void;
 }

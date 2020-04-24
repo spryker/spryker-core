@@ -39,7 +39,7 @@ class BuildRestApiValidationCacheConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $this->getMessenger()->info(static::DESCRIPTION);
-        $this->getFacade()->buildNavigationCacheForCodeBucket(APPLICATION_CODE_BUCKET);
+        $this->getFacade()->buildValidationCacheForCodeBucket(APPLICATION_CODE_BUCKET);
 
         return 0;
     }

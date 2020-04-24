@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Twig;
 
 use ReflectionClass;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -40,7 +39,6 @@ class TwigConfig extends AbstractBundleConfig
     protected function addProjectTemplatePaths(array $paths)
     {
         $namespaces = $this->getProjectNamespaces();
-        $storeName = $this->getStoreName();
 
         $themeName = $this->getThemeName();
         $themeNameDefault = $this->getThemeNameDefault();
@@ -117,14 +115,6 @@ class TwigConfig extends AbstractBundleConfig
     public function getThemeNameDefault(): string
     {
         return $this->getSharedConfig()->getYvesThemeNameDefault();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
     }
 
     /**

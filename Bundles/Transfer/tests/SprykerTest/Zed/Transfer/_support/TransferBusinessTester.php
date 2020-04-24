@@ -18,7 +18,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
 use Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeBridge;
-use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 
 /**
  * Inherited Methods
@@ -112,16 +111,6 @@ class TransferBusinessTester extends Actor
         $facade->setFactory($this->getTransferBusinessFactory());
 
         return $facade;
-    }
-
-    /**
-     * @return \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface
-     */
-    protected function getPropelFacadeBridge(): TransferToPropelFacadeInterface
-    {
-        return new TransferToPropelFacadeBridge(
-            $this->getLocator()->propel()->facade()
-        );
     }
 
     /**

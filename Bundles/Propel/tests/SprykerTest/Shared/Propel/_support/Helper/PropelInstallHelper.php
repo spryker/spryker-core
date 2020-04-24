@@ -81,7 +81,6 @@ class PropelInstallHelper extends Module
     {
         return 'APPLICATION_ENV=' . APPLICATION_ENV
         . ' APPLICATION_STORE=' . APPLICATION_STORE
-        . ' APPLICATION_CODE_BUCKET=' . APPLICATION_CODE_BUCKET
         . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
         . ' APPLICATION=' . APPLICATION;
     }

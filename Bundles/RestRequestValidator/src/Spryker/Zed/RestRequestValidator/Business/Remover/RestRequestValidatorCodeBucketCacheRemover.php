@@ -8,64 +8,52 @@
 namespace Spryker\Zed\RestRequestValidator\Business\Remover;
 
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCodeBucketCacheRemover} instead.
- */
-class RestRequestValidatorCacheRemover implements RestRequestValidatorCacheRemoverInterface
+class RestRequestValidatorCodeBucketCacheRemover implements RestRequestValidatorCodeBucketCacheRemoverInterface
 {
-    /**
-     * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
-     */
-    protected $store;
-
     /**
      * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig
      */
-    private $config;
+    protected $config;
 
     /**
-     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
      * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
-        RestRequestValidatorToStoreInterface $store,
         RestRequestValidatorToFilesystemAdapterInterface $filesystem,
         RestRequestValidatorConfig $config
     ) {
-        $this->store = $store;
         $this->filesystem = $filesystem;
         $this->config = $config;
     }
 
     /**
+     * @param string $codeBucket
+     *
      * @return void
      */
-    public function remove(): void
+    public function remove(string $codeBucket): void
     {
-        foreach ($this->store->getAllowedStores() as $storeName) {
-            $outdatedConfigFiles = $this->getOutdatedConfig($storeName);
-            if (!empty($outdatedConfigFiles)) {
-                $this->filesystem->remove($outdatedConfigFiles);
-            }
+        $outdatedConfigFiles = $this->getOutdatedConfig($codeBucket);
+        if (!empty($outdatedConfigFiles)) {
+            $this->filesystem->remove($outdatedConfigFiles);
         }
     }
 
     /**
-     * @param string $storeName
+     * @param string $codeBucket
      *
      * @return string[]
      */
-    protected function getOutdatedConfig(string $storeName): array
+    protected function getOutdatedConfig(string $codeBucket): array
     {
-        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName), GLOB_NOSORT) ?: [];
+        return glob(sprintf($this->config->getCodeBucketCacheFilePathPattern(), $codeBucket), GLOB_NOSORT) ?: [];
     }
 }

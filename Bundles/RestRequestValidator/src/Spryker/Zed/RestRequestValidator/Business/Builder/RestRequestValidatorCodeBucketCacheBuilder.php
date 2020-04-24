@@ -10,12 +10,8 @@ namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilder} instead.
- */
-class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuilderInterface
+class RestRequestValidatorCodeBucketCacheBuilder implements RestRequestValidatorCodeBucketCacheBuilderInterface
 {
     /**
      * @var \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface
@@ -33,38 +29,29 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
     protected $restRequestValidatorCacheSaver;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector
      * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger
      * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver
-     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
      */
     public function __construct(
         RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector,
         RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger,
-        RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver,
-        RestRequestValidatorToStoreInterface $store
+        RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver
     ) {
         $this->restRequestValidatorCacheCollector = $restRequestValidatorCacheCollector;
         $this->restRequestValidatorSchemaMerger = $restRequestValidatorSchemaMerger;
         $this->restRequestValidatorCacheSaver = $restRequestValidatorCacheSaver;
-        $this->store = $store;
     }
 
     /**
+     * @param string $codeBucket
+     *
      * @return void
      */
-    public function build(): void
+    public function buildCacheForCodeBucket(string $codeBucket): void
     {
-        foreach ($this->store->getAllowedStores() as $storeName) {
-            $config = $this->restRequestValidatorCacheCollector->collect($storeName);
-            $config = $this->restRequestValidatorSchemaMerger->merge($config);
-
-            $this->restRequestValidatorCacheSaver->save($config, $storeName);
-        }
+        $config = $this->restRequestValidatorCacheCollector->collect($codeBucket);
+        $config = $this->restRequestValidatorSchemaMerger->merge($config);
+        $this->restRequestValidatorCacheSaver->saveCacheForCodeBucket($config, $codeBucket);
     }
 }

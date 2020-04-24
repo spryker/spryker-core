@@ -13,7 +13,6 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
- * @method \Spryker\Yves\Router\RouterFactory getFactory()
  */
 class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
@@ -34,13 +33,8 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
             return $pathinfo;
         }
 
-        $stores = $this->getFactory()
-            ->getStoreStorageClient()
-            ->getAllStores();
-
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-
-        if (in_array($pathinfoFragments[0], $stores, true)) {
+        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedStores(), true)) {
             $this->currentStore = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);

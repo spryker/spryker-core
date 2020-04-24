@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\IndexGenerator\Business;
 use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeBridge;
+use Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeInterface;
 use Spryker\Zed\IndexGenerator\IndexGeneratorDependencyProvider;
 
 /**
@@ -35,12 +36,7 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testGeneratesSchemaFileWithIndexWhenIndexIsMissing(): void
     {
-        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getSchemaDirectory'])
-            ->getMock();
-        $propelFacadeBridge->method('getSchemaDirectory')
-            ->willReturn(Configuration::dataDir() . 'SchemaWithMissingIndex');
+        $propelFacadeBridge = $this->mockPropelFacadeBridge('SchemaWithMissingIndex');
         $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex');
         $indexGeneratorFacade->removeIndexSchemaFiles();
@@ -54,12 +50,7 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenIndexIsDefined(): void
     {
-        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getSchemaDirectory'])
-            ->getMock();
-        $propelFacadeBridge->method('getSchemaDirectory')
-            ->willReturn(Configuration::dataDir() . 'SchemaWithIndex');
+        $propelFacadeBridge = $this->mockPropelFacadeBridge('SchemaWithIndex');
         $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithIndex');
         $indexGeneratorFacade->removeIndexSchemaFiles();
@@ -73,12 +64,7 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenTableNotIndexable(): void
     {
-        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getSchemaDirectory'])
-            ->getMock();
-        $propelFacadeBridge->method('getSchemaDirectory')
-            ->willReturn(Configuration::dataDir() . 'SchemaWithArchivableBehavior');
+        $propelFacadeBridge = $this->mockPropelFacadeBridge('SchemaWithArchivableBehavior');
         $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithArchivableBehavior');
         $indexGeneratorFacade->removeIndexSchemaFiles();
@@ -92,16 +78,29 @@ class IndexGeneratorFacadeTest extends Unit
      */
     public function testDoesNotGenerateSchemaFileWhenTableIsExcluded(): void
     {
-        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getSchemaDirectory'])
-            ->getMock();
-        $propelFacadeBridge->method('getSchemaDirectory')
-            ->willReturn(Configuration::dataDir() . 'SchemaWithMissingIndex');
+        $propelFacadeBridge = $this->mockPropelFacadeBridge('SchemaWithMissingIndex');
+        $this->tester->setDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL, $propelFacadeBridge);
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex', ['spy_foo_bar']);
         $indexGeneratorFacade->removeIndexSchemaFiles();
         $indexGeneratorFacade->generateIndexSchemaFiles();
 
         $this->tester->assertSchemaFileNotExists();
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeInterface
+     */
+    protected function mockPropelFacadeBridge(string $directory): IndexGeneratorToPropelFacadeInterface
+    {
+        $propelFacadeBridge = $this->getMockBuilder(IndexGeneratorToPropelFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSchemaDirectory'])
+            ->getMock();
+        $propelFacadeBridge->method('getSchemaDirectory')
+            ->willReturn(Configuration::dataDir() . $directory);
+
+        return $propelFacadeBridge;
     }
 }
