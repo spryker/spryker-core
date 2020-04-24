@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -33,21 +33,21 @@ class GuestCartCodesResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCartCodeToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()->createCartCodeAdder()->addCartCodeToGuestCart($restRequest, $restCartCodeRequestAttributesTransfer);
     }
 
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/guest-carts/{guestCartId}/vouchers/{voucherCode}",
+     *          "path": "/guest-carts/{guestCartId}/cart-codes/{code}",
      *          "summary": [
      *              "Deletes a code from guest cart."
      *          ],

@@ -45,7 +45,7 @@ class CartVouchersResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCartCodeAdder()
-            ->addCartCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
+            ->addDiscountCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 
     /**
