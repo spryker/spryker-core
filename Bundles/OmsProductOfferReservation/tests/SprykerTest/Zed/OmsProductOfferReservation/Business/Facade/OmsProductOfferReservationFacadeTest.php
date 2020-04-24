@@ -149,4 +149,29 @@ class OmsProductOfferReservationFacadeTest extends Unit
             (new Decimal($quantity * $itemsCount))->toString()
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testWriteReservationUpdatesReservationQuantityForProductOffer(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setProductOfferReference('test')
+            ->setStore($storeTransfer)
+            ->setReservationQuantity(5);
+
+        // Act
+        $this->tester->getFacade()->writeReservation($reservationRequestTransfer);
+
+        // Assert
+        $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
+            ->setProductOfferReference($reservationRequestTransfer->getProductOfferReference())
+            ->setIdStore($reservationRequestTransfer->getStore()->getIdStore());
+
+        $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
+        $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());
+        $this->assertSame(5, $reservationResponseTransfer->getReservationQuantity()->toInt());
+    }
 }

@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
+namespace Spryker\Zed\Oms\Persistence;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
-interface ProductPackagingUnitToOmsFacadeInterface
+interface OmsEntityManagerInterface
 {
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface::updateReservation()` instead.` instead.
-     *
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function updateReservationQuantity(string $sku): void;
+    public function createReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer

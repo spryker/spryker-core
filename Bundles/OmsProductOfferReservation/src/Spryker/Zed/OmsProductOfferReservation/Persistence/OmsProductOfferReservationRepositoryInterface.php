@@ -9,11 +9,22 @@ namespace Spryker\Zed\OmsProductOfferReservation\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
+use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface OmsProductOfferReservationRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsProductOfferReservationTransfer|null
+     */
+    public function find(
+        ReservationRequestTransfer $reservationRequestTransfer
+    ): ?OmsProductOfferReservationTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *

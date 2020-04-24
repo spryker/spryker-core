@@ -602,11 +602,25 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacadeInterface::updateReservation()` instead.
+     *
      * @param string $sku
      *
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
+
+    /**
+     * Specification:
+     *  - Updates reservation quantity for a given ReservationRequest.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * Specification:
