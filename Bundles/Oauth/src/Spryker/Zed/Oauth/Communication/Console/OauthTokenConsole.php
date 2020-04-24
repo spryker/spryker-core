@@ -54,7 +54,7 @@ class OauthTokenConsole extends Console
             return static::CODE_ERROR;
         }
 
-        $output->writeln(sprintf("<fg=white>Removed %s expired refresh tokens </fg=white>", $deleteCount));
+        $output->writeln(sprintf('<fg=white>Removed %s expired refresh tokens </fg=white>', $deleteCount));
         $output->writeln('');
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
     }
