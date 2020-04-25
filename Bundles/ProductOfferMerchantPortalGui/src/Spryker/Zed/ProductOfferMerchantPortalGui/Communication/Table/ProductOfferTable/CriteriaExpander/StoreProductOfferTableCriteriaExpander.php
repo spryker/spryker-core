@@ -8,15 +8,19 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StoreProductOfferTableFilter;
 
-interface FilterProductOfferTableCriteriaExpanderInterface
+class StoreProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
     /**
      * @param string $filterName
      *
      * @return bool
      */
-    public function isApplicable(string $filterName): bool;
+    public function isApplicable(string $filterName): bool
+    {
+        return $filterName === StoreProductOfferTableFilter::FILTER_NAME;
+    }
 
     /**
      * @param mixed $filterValue
@@ -27,5 +31,13 @@ interface FilterProductOfferTableCriteriaExpanderInterface
     public function expandProductOfferTableCriteria(
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer;
+    ): ProductOfferTableCriteriaTransfer {
+        $storeIds = array_map(function ($storeId) {
+            return (int)$storeId;
+        }, $filterValue);
+
+        $productOfferTableCriteriaTransfer->setInStores($storeIds);
+
+        return $productOfferTableCriteriaTransfer;
+    }
 }

@@ -35,9 +35,9 @@ class ProductOfferTable extends AbstractTable
     protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::getTableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::tableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/get-table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/table-data';
 
     protected const DEFAULT_PAGE_SIZE = 25;
 
@@ -47,9 +47,9 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableDataProvider;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface[]
+     * @var array|\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface[]
      */
-    protected $productOfferTableFilterDataProviders;
+    protected $productOfferTableFilters;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface
@@ -60,19 +60,19 @@ class ProductOfferTable extends AbstractTable
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface $productTableDataProvider
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface[] $productOfferTableFilterDataProviders
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface[] $productOfferTableFilters
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         ProductOfferTableDataProviderInterface $productTableDataProvider,
-        array $productOfferTableFilterDataProviders,
+        array $productOfferTableFilters,
         ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
     ) {
         parent::__construct($utilEncodingService, $translatorFacade);
         $this->productOfferTableDataProvider = $productTableDataProvider;
-        $this->productOfferTableFilterDataProviders = $productOfferTableFilterDataProviders;
+        $this->productOfferTableFilters = $productOfferTableFilters;
         $this->productOfferTableCriteriaBuilder = $productOfferTableCriteriaBuilder;
     }
 
@@ -242,8 +242,8 @@ class ProductOfferTable extends AbstractTable
      */
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        foreach ($this->productOfferTableFilterDataProviders as $productOfferTableFilterDataProvider) {
-            $guiTableConfigurationTransfer->addFilter($productOfferTableFilterDataProvider->getFilterData());
+        foreach ($this->productOfferTableFilters as $productOfferTableFilter) {
+            $guiTableConfigurationTransfer->addFilter($productOfferTableFilter->getFilter());
         }
 
         return $guiTableConfigurationTransfer;

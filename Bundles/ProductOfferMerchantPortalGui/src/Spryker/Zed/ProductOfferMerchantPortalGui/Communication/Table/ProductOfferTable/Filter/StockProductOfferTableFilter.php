@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
 
-class StockProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
+class StockProductOfferTableFilter implements TableFilterInterface
 {
-    protected const FILTER_NAME = 'stock';
+    public const FILTER_NAME = 'stock';
 
     protected const OPTION_HAS_STOCK = 'Has stock';
     protected const OPTION_OUT_OF_STOCK = 'Out of stock';
@@ -23,7 +23,7 @@ class StockProductOfferTableFilterDataProvider implements TableFilterDataProvide
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): GuiTableFilterTransfer
+    public function getFilter(): GuiTableFilterTransfer
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)

@@ -8,40 +8,40 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
 
-class HasOffersProductTableFilterDataProvider implements TableFilterDataProviderInterface
+class IsActiveProductTableFilter implements TableFilterInterface
 {
-    public const FILTER_NAME = 'offers';
+    public const FILTER_NAME = 'status';
 
-    protected const OPTION_NAME_WITH_OFFERS = 'With Offers';
-    protected const OPTION_NAME_WITHOUT_OFFERS = 'Without Offers';
+    protected const OPTION_NAME_ACTIVE = 'Active';
+    protected const OPTION_NAME_INACTIVE = 'Inactive';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): GuiTableFilterTransfer
+    public function getFilter(): GuiTableFilterTransfer
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
-            ->setTitle('Offers')
+            ->setTitle('Status')
             ->setType('select')
             ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsActiveValues());
+            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsActiveOptions());
     }
 
     /**
      * @return array
      */
-    protected function getIsActiveValues(): array
+    protected function getIsActiveOptions(): array
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_WITH_OFFERS,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_ACTIVE,
                 static::OPTION_VALUE_KEY_VALUE => 1,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_WITHOUT_OFFERS,
+                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_INACTIVE,
                 static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];

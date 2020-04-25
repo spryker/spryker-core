@@ -589,12 +589,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $productOfferQuery = $this->addIsVisibleProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addIsActiveProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addStockProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
-        $productOfferQuery = $this->addStoresProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addStoreProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
         $productOfferQuery = $this->addValidityProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
-        $productOfferQuery = $this->addCreationProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
-        $productOfferQuery = $this->addUpdateProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addCreatedAtProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
+        $productOfferQuery = $this->addUpdatedAtProductOfferFilter($productOfferQuery, $productOfferTableCriteriaTransfer);
 
         return $productOfferQuery;
     }
@@ -605,16 +605,16 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    protected function addIsVisibleProductOfferFilter(
+    protected function addIsActiveProductOfferFilter(
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        if ($productOfferTableCriteriaTransfer->getIsVisible() === null) {
+        if ($productOfferTableCriteriaTransfer->getIsActive() === null) {
             return $productOfferQuery;
         }
 
         $productOfferQuery->filterByIsActive(
-            $productOfferTableCriteriaTransfer->getIsVisible()
+            $productOfferTableCriteriaTransfer->getIsActive()
         );
 
         return $productOfferQuery;
@@ -658,7 +658,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    protected function addStoresProductOfferFilter(
+    protected function addStoreProductOfferFilter(
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
@@ -705,7 +705,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    protected function addCreationProductOfferFilter(
+    protected function addCreatedAtProductOfferFilter(
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
@@ -726,7 +726,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    protected function addUpdateProductOfferFilter(
+    protected function addUpdatedAtProductOfferFilter(
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {

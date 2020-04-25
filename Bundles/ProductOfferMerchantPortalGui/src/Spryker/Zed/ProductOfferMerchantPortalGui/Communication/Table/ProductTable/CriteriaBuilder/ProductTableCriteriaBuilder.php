@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductT
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\HasOffersProductTableFilter;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\IsActiveProductTableFilter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 
@@ -73,7 +73,7 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
             ->setOrderBy($this->sorting)
             ->setPagination($this->buildPaginationTransfer());
 
-        $productTableCriteriaTransfer = $this->addFilterData($productTableCriteriaTransfer);
+        $productTableCriteriaTransfer = $this->applyFilters($productTableCriteriaTransfer);
 
         return $productTableCriteriaTransfer;
     }
@@ -165,19 +165,19 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
      */
-    protected function addFilterData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableCriteriaTransfer
+    protected function applyFilters(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableCriteriaTransfer
     {
         if (!$this->filters) {
             return $productTableCriteriaTransfer;
         }
 
-        if (isset($this->filters[IsActiveProductTableFilterDataProvider::FILTER_NAME])) {
-            $isActive = (bool)$this->filters[IsActiveProductTableFilterDataProvider::FILTER_NAME];
+        if (isset($this->filters[IsActiveProductTableFilter::FILTER_NAME])) {
+            $isActive = (bool)$this->filters[IsActiveProductTableFilter::FILTER_NAME];
             $productTableCriteriaTransfer->setIsActive($isActive);
         }
 
-        if (isset($this->filters[HasOffersProductTableFilterDataProvider::FILTER_NAME])) {
-            $hasOffers = (bool)$this->filters[HasOffersProductTableFilterDataProvider::FILTER_NAME];
+        if (isset($this->filters[HasOffersProductTableFilter::FILTER_NAME])) {
+            $hasOffers = (bool)$this->filters[HasOffersProductTableFilter::FILTER_NAME];
             $productTableCriteriaTransfer->setHasOffers($hasOffers);
         }
 

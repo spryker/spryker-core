@@ -8,23 +8,10 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\UpdatedAtProductOfferTableFilter;
 
-class ValidityFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class UpdatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
-    protected $tableFilterDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
-     */
-    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
-    {
-        $this->tableFilterDataProvider = $tableFilterDataProvider;
-    }
-
     /**
      * @param string $filterName
      *
@@ -32,7 +19,7 @@ class ValidityFilterProductOfferTableCriteriaExpander implements FilterProductOf
      */
     public function isApplicable(string $filterName): bool
     {
-        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+        return $filterName === UpdatedAtProductOfferTableFilter::FILTER_NAME;
     }
 
     /**
@@ -45,8 +32,8 @@ class ValidityFilterProductOfferTableCriteriaExpander implements FilterProductOf
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setValidFrom($filterValue['from'] ?? null);
-        $productOfferTableCriteriaTransfer->setValidTo($filterValue['to'] ?? null);
+        $productOfferTableCriteriaTransfer->setUpdatedFrom($filterValue['from'] ?? null);
+        $productOfferTableCriteriaTransfer->setUpdatedTo($filterValue['to'] ?? null);
 
         return $productOfferTableCriteriaTransfer;
     }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 
-interface TableFilterDataProviderInterface
+interface TableFilterInterface
 {
     public const OPTION_NAME_MULTISELECT = 'multiselect';
     public const OPTION_NAME_VALUES = 'values';
@@ -22,5 +22,5 @@ interface TableFilterDataProviderInterface
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): GuiTableFilterTransfer;
+    public function getFilter(): GuiTableFilterTransfer;
 }

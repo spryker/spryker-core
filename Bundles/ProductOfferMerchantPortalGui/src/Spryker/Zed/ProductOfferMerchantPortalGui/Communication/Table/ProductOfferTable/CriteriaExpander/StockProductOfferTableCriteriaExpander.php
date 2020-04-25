@@ -8,23 +8,10 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilter;
 
-class UpdateFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class StockProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
-    protected $tableFilterDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
-     */
-    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
-    {
-        $this->tableFilterDataProvider = $tableFilterDataProvider;
-    }
-
     /**
      * @param string $filterName
      *
@@ -32,7 +19,7 @@ class UpdateFilterProductOfferTableCriteriaExpander implements FilterProductOffe
      */
     public function isApplicable(string $filterName): bool
     {
-        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+        return $filterName === StockProductOfferTableFilter::FILTER_NAME;
     }
 
     /**
@@ -45,8 +32,8 @@ class UpdateFilterProductOfferTableCriteriaExpander implements FilterProductOffe
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setUpdatedFrom($filterValue['from'] ?? null);
-        $productOfferTableCriteriaTransfer->setUpdatedTo($filterValue['to'] ?? null);
+        $hasStock = (bool)$filterValue;
+        $productOfferTableCriteriaTransfer->setHasStock($hasStock);
 
         return $productOfferTableCriteriaTransfer;
     }

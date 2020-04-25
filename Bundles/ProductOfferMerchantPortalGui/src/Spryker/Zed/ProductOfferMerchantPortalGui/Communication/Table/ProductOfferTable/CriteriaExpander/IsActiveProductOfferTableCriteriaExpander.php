@@ -8,23 +8,10 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\IsActiveProductOfferTableFilter;
 
-class IsVisibleFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class IsActiveProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
-    protected $tableFilterDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
-     */
-    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
-    {
-        $this->tableFilterDataProvider = $tableFilterDataProvider;
-    }
-
     /**
      * @param string $filterName
      *
@@ -32,7 +19,7 @@ class IsVisibleFilterProductOfferTableCriteriaExpander implements FilterProductO
      */
     public function isApplicable(string $filterName): bool
     {
-        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+        return $filterName === IsActiveProductOfferTableFilter::FILTER_NAME;
     }
 
     /**
@@ -45,8 +32,8 @@ class IsVisibleFilterProductOfferTableCriteriaExpander implements FilterProductO
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $isVisible = (bool)$filterValue;
-        $productOfferTableCriteriaTransfer->setIsVisible($isVisible);
+        $isActive = (bool)$filterValue;
+        $productOfferTableCriteriaTransfer->setIsActive($isActive);
 
         return $productOfferTableCriteriaTransfer;
     }

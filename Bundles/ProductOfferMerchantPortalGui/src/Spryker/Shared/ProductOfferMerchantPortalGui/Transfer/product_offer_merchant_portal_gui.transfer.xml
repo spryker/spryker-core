@@ -64,7 +64,7 @@
     </transfer>
 
     <transfer name="ProductOfferTableCriteria">
-        <property name="isVisible" type="bool"/>
+        <property name="isActive" type="bool"/>
         <property name="hasStock" type="bool"/>
         <property name="inStores" type="int[]" singular="inStore"/>
         <property name="validFrom" type="string"/>

@@ -8,23 +8,10 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\CreatedAtProductOfferTableFilter;
 
-class StockFilterProductOfferTableCriteriaExpander implements FilterProductOfferTableCriteriaExpanderInterface
+class CreatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface
-     */
-    protected $tableFilterDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface $tableFilterDataProvider
-     */
-    public function __construct(TableFilterDataProviderInterface $tableFilterDataProvider)
-    {
-        $this->tableFilterDataProvider = $tableFilterDataProvider;
-    }
-
     /**
      * @param string $filterName
      *
@@ -32,7 +19,7 @@ class StockFilterProductOfferTableCriteriaExpander implements FilterProductOffer
      */
     public function isApplicable(string $filterName): bool
     {
-        return $filterName === $this->tableFilterDataProvider->getFilterData()->getId();
+        return $filterName === CreatedAtProductOfferTableFilter::FILTER_NAME;
     }
 
     /**
@@ -45,8 +32,8 @@ class StockFilterProductOfferTableCriteriaExpander implements FilterProductOffer
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $hasStock = (bool)$filterValue;
-        $productOfferTableCriteriaTransfer->setHasStock($hasStock);
+        $productOfferTableCriteriaTransfer->setCreatedFrom($filterValue['from'] ?? null);
+        $productOfferTableCriteriaTransfer->setCreatedTo($filterValue['to'] ?? null);
 
         return $productOfferTableCriteriaTransfer;
     }
