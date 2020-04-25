@@ -581,7 +581,7 @@ class CustomerFacadeTest extends Unit
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setPassword("other password");
+        $customerTransfer->setPassword('other password');
         $this->mockUtilValidateService(true);
 
         // Act

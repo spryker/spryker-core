@@ -175,7 +175,7 @@ SCRIPT;
                 foreach ($col->getForeignKeys() as $fk) {
                     $script .= "
      *
-     * @see       filterBy" . $this->getFKPhpNameAffix($fk) . "()";
+     * @see       filterBy" . $this->getFKPhpNameAffix($fk) . '()';
                 }
             }
             $script .= "
@@ -315,7 +315,7 @@ SCRIPT;
                 'Propel\Common\Exception\SetColumnConverterException'
             );
             $script .= "
-        \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
+        \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");
         try {
             \${$variableName} = SetColumnConverter::convertToInt(\${$variableName}, \$valueSet);
         } catch (SetColumnConverterException \$e) {
@@ -342,7 +342,7 @@ SCRIPT;
         }";
         } elseif ($col->getType() == PropelTypes::ENUM) {
             $script .= "
-        \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
+        \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");
         if (is_scalar(\$$variableName)) {
             if (!in_array(\$$variableName, \$valueSet)) {
                 throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$$variableName));
