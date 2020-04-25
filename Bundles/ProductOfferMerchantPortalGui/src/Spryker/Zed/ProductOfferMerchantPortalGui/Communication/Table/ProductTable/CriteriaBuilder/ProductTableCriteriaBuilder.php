@@ -143,9 +143,9 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
      */
     protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
     {
-        $productTableCriteriaTransfer = new ProductTableCriteriaTransfer();
-        $productTableCriteriaTransfer->setMerchantUser($this->merchantUserFacade->getCurrentMerchantUser());
-        $productTableCriteriaTransfer->setLocale($this->localeFacade->getCurrentLocale());
+        $productTableCriteriaTransfer = (new ProductTableCriteriaTransfer())
+            ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
         return $productTableCriteriaTransfer;
     }

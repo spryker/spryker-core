@@ -150,9 +150,9 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
      */
     protected function buildProductOfferTableCriteriaTransfer(): ProductOfferTableCriteriaTransfer
     {
-        $productOfferTableCriteriaTransfer = new ProductOfferTableCriteriaTransfer();
-        $productOfferTableCriteriaTransfer->setMerchantUser($this->merchantUserFacade->getCurrentMerchantUser());
-        $productOfferTableCriteriaTransfer->setLocale($this->localeFacade->getCurrentLocale());
+        $productOfferTableCriteriaTransfer = (new ProductOfferTableCriteriaTransfer())
+            ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
         return $productOfferTableCriteriaTransfer;
     }

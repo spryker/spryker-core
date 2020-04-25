@@ -166,7 +166,7 @@ abstract class AbstractTable
             : static::DEFAULT_AVAILABLE_PAGE_SIZES;
 
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizedEnabled() ?? true,
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizeEnabled() ?? true,
             static::CONFIG_SIZES => $sizes,
         ];
     }

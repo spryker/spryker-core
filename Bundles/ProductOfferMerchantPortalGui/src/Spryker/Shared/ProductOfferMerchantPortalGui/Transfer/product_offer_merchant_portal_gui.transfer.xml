@@ -14,7 +14,7 @@
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
         <property name="dataUrl" type="string"/>
         <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
-        <property name="isPageSizedEnabled" type="bool"/>
+        <property name="isPageSizeEnabled" type="bool"/>
         <property name="filters" type="GuiTableFilter[]" singular="filter"/>
         <property name="isFiltersEnabled" type="bool"/>
         <property name="defaultSortColumn" type="string"/>
@@ -57,8 +57,8 @@
         <property name="isActive" type="bool"/>
         <property name="hasOffers" type="bool"/>
         <property name="searchTerm" type="string"/>
-        <property name="locale" type="Locale"/>
-        <property name="merchantUser" type="MerchantUser"/>
+        <property name="idLocale" type="int"/>
+        <property name="idMerchant" type="int"/>
         <property name="pagination" type="Pagination"/>
         <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
     </transfer>
@@ -74,8 +74,8 @@
         <property name="updatedFrom" type="string"/>
         <property name="updatedTo" type="string"/>
         <property name="searchTerm" type="string"/>
-        <property name="locale" type="Locale"/>
-        <property name="merchantUser" type="MerchantUser"/>
+        <property name="idLocale" type="int"/>
+        <property name="idMerchant" type="int"/>
         <property name="pagination" type="Pagination"/>
         <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
     </transfer>
