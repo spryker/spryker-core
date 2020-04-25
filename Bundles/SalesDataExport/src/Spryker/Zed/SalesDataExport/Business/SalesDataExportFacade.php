@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\SalesDataExport\Business\Exporter\OrderExpenseSequencialExporter;
 use Spryker\Zed\SalesDataExport\Business\Exporter\OrderItemSequencialExporter;
 use Spryker\Zed\SalesDataExport\Business\Exporter\OrderSequencialExporter;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
 
@@ -64,6 +66,28 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
         );
 
         $exporter = new OrderItemSequencialExporter(new OrderItemReader(), new DataExportService());
+
+        return $exporter->exportBatch($finalExportConfiguration);
+    }
+
+
+    /**
+     * Specification
+     * - Exports order expense in various formats (writer)
+     * - Returns results of export
+     *
+     * @param array $exportConfiguration
+     *
+     * @return DataExportResultTransfer
+     */
+    public function exportOrderExpenseBatch(array $exportConfiguration): DataExportResultTransfer
+    {
+        $finalExportConfiguration = $this->getFactory()->getDataExportService()->mergeExportConfigurationByDataEntity(
+            $exportConfiguration,
+            $this->getFactory()->getDataExportService()->readConfiguration($this->getConfig()->getDefaultExportConfigurationPath())
+        );
+
+        $exporter = new OrderExpenseSequencialExporter(new OrderExpenseReader(), new DataExportService());
 
         return $exporter->exportBatch($finalExportConfiguration);
     }

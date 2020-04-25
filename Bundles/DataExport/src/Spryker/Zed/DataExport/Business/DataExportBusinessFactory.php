@@ -13,6 +13,7 @@ use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportWriterPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExpenseExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderItemExporterPlugin;
 
@@ -48,6 +49,7 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
     protected function getDataEntityExporterPlugins(): array
     {
         return [
+            new OrderExpenseExporterPlugin(),
             new OrderExporterPlugin(),
             new OrderItemExporterPlugin(),
         ];

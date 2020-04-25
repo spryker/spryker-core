@@ -28,3 +28,8 @@ actions:
       destiantion: '{timestamp}/{data_entity}s.{extension}'
       sort:
           order_item_id: ASC
+
+    - data_entity: order_expense
+      destiantion: '{timestamp}/{data_entity}s.{extension}'
+      sort:
+          order_id: ASC
