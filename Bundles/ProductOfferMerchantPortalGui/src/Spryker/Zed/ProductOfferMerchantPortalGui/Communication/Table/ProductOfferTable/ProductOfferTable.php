@@ -34,8 +34,6 @@ class ProductOfferTable extends AbstractTable
 
     protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
 
-    protected const SEARCH_PLACEHOLDER = 'Search';
-
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::getTableDataAction()
      */
@@ -232,7 +230,7 @@ class ProductOfferTable extends AbstractTable
      */
     protected function addSearchOptionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER);
+        $guiTableConfigurationTransfer->addSearchOption('placeholder', 'Search');
 
         return $guiTableConfigurationTransfer;
     }
