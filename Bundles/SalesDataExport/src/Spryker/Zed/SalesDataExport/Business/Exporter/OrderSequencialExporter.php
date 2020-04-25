@@ -44,10 +44,10 @@ class OrderSequencialExporter
         $offset = 0;
         do {
             $orders = $this->orderReader->sequencialRead($exportConfiguration, $offset, static::READ_BATCH_SIZE);
-            if ($offset === 0) {
-                $this->dataExportService->write($exportConfiguration, ['mode' => 'w'], ['rows' => array_keys($orders[0])]);
+
+            if ($offset === 0 && count($orders)) {
+                $this->dataExportService->write($exportConfiguration, ['mode' => 'w'], ['rows' => [array_keys($orders[0])]]);
             }
-            $offset += count($orders);
 
             list($destination, $objectCount) = $this->dataExportService->write($exportConfiguration, ['mode' => 'a'], ['rows' => $orders]);
             $result->addDocuments(
@@ -56,6 +56,7 @@ class OrderSequencialExporter
                     ->setObjectCount($objectCount)
             );
 
+            $offset += count($orders);
         } while (count($orders) == static::READ_BATCH_SIZE);
 
         return $result;

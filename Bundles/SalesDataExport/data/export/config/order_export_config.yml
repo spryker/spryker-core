@@ -2,7 +2,7 @@ version: 1
 
 actions:
     - data_entity: order
-      destination: '{timestamp}/orders_{store_name}_{split_counter}.{extension}' # self-note: everything from this file are available only on the last merge!!!!! (pre-parsing is invalid)
+      destination: '{timestamp}/orders_{store_name}_{split_counter}.{extension}'
       split:
           size: 10
           fields: ['store_name']

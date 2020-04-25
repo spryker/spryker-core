@@ -4,7 +4,6 @@ namespace Spryker\Zed\DataExport\Business\Exporter;
 
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Service\DataExport\DataExportService;
-use Spryker\Service\UtilDataReader\UtilDataReaderService;
 use Spryker\Zed\DataExport\DataExportConfig;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
@@ -48,13 +47,13 @@ class DataExportHandler
      *
      */
     public function exportBatch(array $exportConfigurations): DataExportReportTransfer {
-        $exportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
-        $exportConfigurations = $this->applyExportConfigurationDefaults($exportConfigurations, $exportConfigurationDefaults);
-        $this->assertExportConfigurationBatch($exportConfigurations);
-
         $dataExportResultTransfer = (new DataExportReportTransfer())
             ->setIsSuccess(true);
 
+        $exportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
+        $exportConfigurations = $this->applyExportConfigurationDefaults($exportConfigurations, $exportConfigurationDefaults);
+
+        $this->assertExportConfigurationBatch($exportConfigurations);
         foreach($exportConfigurations['actions'] as $exportConfiguration) {
             $dataEntityExporter = $this->pickDataEntityExporter($exportConfiguration);
 

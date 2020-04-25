@@ -2,7 +2,7 @@ version: 1
 
 defaults:
     destination: '{timestamp}/{data_entity}{split_hook}.{extension}'
-    overwrite: true,
+    overwrite: true
     operation: export
     writer:
       type: csv

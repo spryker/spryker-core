@@ -2,10 +2,7 @@
 
 namespace Spryker\Zed\DataExport\Communication\Console;
 
-use Generated\Shared\Transfer\DataExportConfigurationBatchTransfer;
-use Spryker\Service\DataExport\DataExportService;
-use Spryker\Service\UtilDataReader\UtilDataReaderService;
-use Spryker\Zed\DataExport\DataExportConfig;
+use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,9 +48,22 @@ class DataExportConsole extends Console
         $exportConfigurations = $this->getFactory()->getService()->readConfiguration($exportConfigurationsPath);
 
         $dataExportReportTransfer = $this->getFacade()->exportBatch($exportConfigurations);
-        var_dump($dataExportReportTransfer->getResults());
+
+        $this->printDataExportReport($output, $dataExportReportTransfer);
 
         return $dataExportReportTransfer->getIsSuccess() ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 
+    /**
+     * @param OutputInterface $output
+     * @param DataExportReportTransfer $dataExportReportTransfer
+     */
+    protected function printDataExportReport(OutputInterface $output, DataExportReportTransfer $dataExportReportTransfer): void
+    {
+        foreach($dataExportReportTransfer->getResults() as $dataExportResultTransfer) {
+            foreach($dataExportResultTransfer->getDocuments() as $dataExportResultDocumentTransfer) {
+                $output->writeln(sprintf("<fg=white>Document: %s (Objects: %d)</fg=white>", $dataExportResultDocumentTransfer->getName(), $dataExportResultDocumentTransfer->getObjectCount()));
+            }
+        }
+    }
 }
