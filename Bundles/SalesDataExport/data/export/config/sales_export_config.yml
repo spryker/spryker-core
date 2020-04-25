@@ -1,0 +1,30 @@
+version: 1
+
+actions:
+    - data_entity: order
+      destination: '{timestamp}/{data_entity}s.{extension}'  #{timestamp}/orders_{store_name}_{split_counter}.{extension}'
+#      split:
+#          size: 10
+#          fields: ['store_name']
+#      fields:
+#          - order_reference
+#          - created_at
+#          - locale_name
+#          - billing_address_first_name
+#          - billing_address_country
+#          - billing_address_region
+#          - store_name
+#          - order_totals_grand_total
+#          - order_item_id:
+#                format: comma-separated-list
+#          - order_comments:
+#                format: json-list
+      sort:
+          order_id: ASC
+#      filter_criteria:
+#          locale_is_active: true
+
+    - data_entity: order_item
+      destiantion: '{timestamp}/{data_entity}s.{extension}'
+      sort:
+          order_item_id: ASC

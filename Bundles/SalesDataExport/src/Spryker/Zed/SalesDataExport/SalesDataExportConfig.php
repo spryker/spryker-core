@@ -14,9 +14,9 @@ class SalesDataExportConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDefaultOrderExportConfigurationPath(): string
+    public function getDefaultExportConfigurationPath(): string
     {
-        // Bundles/SalesDataExport/data/export/config/order_export_config.yml
-        return realpath(sprintf('%s/../../../../data/export/config/order_export_config.yml', __DIR__));
+        // Bundles/SalesDataExport/data/export/config/sales_export_config.yml
+        return realpath(sprintf('%s/../../../../data/export/config/sales_export_config.yml', __DIR__));
     }
 }

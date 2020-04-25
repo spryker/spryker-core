@@ -14,6 +14,7 @@ use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportWriterPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExporterPlugin;
+use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderItemExporterPlugin;
 
 /**
  * @method \Spryker\Zed\DataExport\DataExportConfig getConfig()
@@ -48,6 +49,7 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
     {
         return [
             new OrderExporterPlugin(),
+            new OrderItemExporterPlugin(),
         ];
     }
 
