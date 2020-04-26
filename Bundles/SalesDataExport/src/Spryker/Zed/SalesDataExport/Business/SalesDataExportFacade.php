@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\SalesDataExport\Business\Exporter\OrderExpenseSequencialExporter;
-use Spryker\Zed\SalesDataExport\Business\Exporter\OrderItemSequencialExporter;
-use Spryker\Zed\SalesDataExport\Business\Exporter\OrderSequencialExporter;
+use Spryker\Zed\SalesDataExport\Business\Exporter\OrderExpenseCsvExporter;
+use Spryker\Zed\SalesDataExport\Business\Exporter\OrderItemCsvExporter;
+use Spryker\Zed\SalesDataExport\Business\Exporter\OrderCsvExporter;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
@@ -39,14 +39,8 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      */
     public function exportOrderBatch(array $exportConfiguration): DataExportResultTransfer
     {
-        $finalExportConfiguration = $this->getFactory()->getDataExportService()->mergeExportConfigurationByDataEntity(
-            $exportConfiguration,
-            $this->getFactory()->getDataExportService()->readConfiguration($this->getConfig()->getDefaultExportConfigurationPath())
-        );
-
-        $exporter = new OrderSequencialExporter(new OrderReader(), new DataExportService());
-
-        return $exporter->exportBatch($finalExportConfiguration);
+        return (new OrderCsvExporter(new OrderReader(), new DataExportService()))
+            ->exportBatch(($exportConfiguration));
     }
 
     /**
@@ -60,14 +54,8 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      */
     public function exportOrderItemBatch(array $exportConfiguration): DataExportResultTransfer
     {
-        $finalExportConfiguration = $this->getFactory()->getDataExportService()->mergeExportConfigurationByDataEntity(
-            $exportConfiguration,
-            $this->getFactory()->getDataExportService()->readConfiguration($this->getConfig()->getDefaultExportConfigurationPath())
-        );
-
-        $exporter = new OrderItemSequencialExporter(new OrderItemReader(), new DataExportService());
-
-        return $exporter->exportBatch($finalExportConfiguration);
+        return (new OrderItemCsvExporter(new OrderItemReader(), new DataExportService()))
+            ->exportBatch($exportConfiguration);
     }
 
 
@@ -82,13 +70,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      */
     public function exportOrderExpenseBatch(array $exportConfiguration): DataExportResultTransfer
     {
-        $finalExportConfiguration = $this->getFactory()->getDataExportService()->mergeExportConfigurationByDataEntity(
-            $exportConfiguration,
-            $this->getFactory()->getDataExportService()->readConfiguration($this->getConfig()->getDefaultExportConfigurationPath())
-        );
-
-        $exporter = new OrderExpenseSequencialExporter(new OrderExpenseReader(), new DataExportService());
-
-        return $exporter->exportBatch($finalExportConfiguration);
+        return (new OrderExpenseCsvExporter(new OrderExpenseReader(), new DataExportService()))
+            ->exportBatch($exportConfiguration);
     }
 }

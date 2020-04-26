@@ -9,6 +9,7 @@ namespace Spryker\Zed\DataExport\Business;
 
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\DataExport\Business\Exporter\DataExportHandler;
+use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConfigurationAdjusterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportWriterPluginInterface;
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExpenseExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderItemExporterPlugin;
+use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\SalesDataExportConfigurationAdjusterPlugin;
 
 /**
  * @method \Spryker\Zed\DataExport\DataExportConfig getConfig()
@@ -33,6 +35,7 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
             $this->getDataEntityExporterPlugins(),
             $this->getDataExportConnectionPlugins(),
             $this->getDataExportWriterPlugins(),
+            $this->getDataExportConfigurationAdjusterPlugins(),
             $this->getService(),
             $this->getConfig()
         );
@@ -70,6 +73,16 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
     protected function getDataExportWriterPlugins(): array
     {
         return [
+        ];
+    }
+
+    /**
+     * @return DataExportConfigurationAdjusterPluginInterface[]
+     */
+    protected function getDataExportConfigurationAdjusterPlugins(): array
+    {
+        return [
+            new SalesDataExportConfigurationAdjusterPlugin(),
         ];
     }
 }

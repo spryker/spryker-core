@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesDataExport\Business;
 
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
 
 /**
  * @method \Spryker\Zed\SalesDataExport\SalesDataExportConfig getConfig()

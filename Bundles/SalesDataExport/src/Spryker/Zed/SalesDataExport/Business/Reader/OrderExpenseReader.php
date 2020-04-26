@@ -27,7 +27,7 @@ class OrderExpenseReader
         'expense_updated_at' => 'SpySalesExpense.UpdatedAt',
     ];
 
-    public function sequencialRead(array $exportConfiguration, $offset, $limit) : array
+    public function csvReadBatch(array $exportConfiguration, $offset, $limit) : array
     {
             $orderExpenses = SpySalesExpenseQuery::create()
                 ->joinOrder()

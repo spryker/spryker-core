@@ -55,7 +55,7 @@ class DataExportService extends AbstractService implements DataExportServiceInte
      *
      * @return array
      */
-    public function write(array $exportConfiguration, array $writeConfiguration, array $data): array
+    public function writeBatch(array $exportConfiguration, array $writeConfiguration, array $data): array
     {
 
         if ($exportConfiguration['connection']['type'] === 'local') { // FlySystem => spryker/flysystem

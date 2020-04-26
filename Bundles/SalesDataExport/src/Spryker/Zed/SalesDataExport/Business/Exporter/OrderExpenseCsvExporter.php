@@ -10,7 +10,7 @@ use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
 use Spryker\Zed\SalesDataExport\Business\Writer\CsvWriter;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
 
-class OrderExpenseSequencialExporter
+class OrderExpenseCsvExporter
 {
     /**
      * @var OrderExpenseReader
@@ -45,13 +45,13 @@ class OrderExpenseSequencialExporter
 
         $offset = 0;
         do {
-            $orderExpenses = $this->orderExpenseReader->sequencialRead($exportConfiguration, $offset, static::READ_BATCH_SIZE);
+            $orderExpenses = $this->orderExpenseReader->csvReadBatch($exportConfiguration, $offset, static::READ_BATCH_SIZE);
 
             if ($offset === 0 && count($orderExpenses)) {
-                $this->dataExportService->write($exportConfiguration, ['mode' => 'w'], ['rows' => [array_keys($orderExpenses[0])]]);
+                $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'w'], ['rows' => [array_keys($orderExpenses[0])]]);
             }
 
-            list($destination, $objectCount) = $this->dataExportService->write($exportConfiguration, ['mode' => 'a'], ['rows' => $orderExpenses]);
+            list($destination, $objectCount) = $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'a'], ['rows' => $orderExpenses]);
             $result->addDocuments(
                 (new DataExportResultDocumentTransfer())
                     ->setName($destination)

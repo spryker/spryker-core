@@ -5,6 +5,7 @@ namespace Spryker\Zed\DataExport\Business\Exporter;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\DataExport\DataExportConfig;
+use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConfigurationAdjusterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportWriterPluginInterface;
@@ -22,6 +23,9 @@ class DataExportHandler
     /** @var DataExportWriterPluginInterface[] */
     protected $dataExportWriterPlugins;
 
+    /** @var DataExportConfigurationAdjusterPluginInterface[] */
+    protected $dataExportConfigurationAdjusterPlugins;
+
     /** @var DataExportService */
     protected $dataExportService;
 
@@ -30,11 +34,12 @@ class DataExportHandler
      */
     protected $dataExportConfig;
 
-    public function __construct(array $dataEntityExporterPlugins, array $dataExportConnectionPlugins, array $dataExportWriterPlugins, DataExportService $dataExportService, DataExportConfig $dataExportConfig)
+    public function __construct(array $dataEntityExporterPlugins, array $dataExportConnectionPlugins, array $dataExportWriterPlugins, array $dataExportConfigurationAdjusterPlugins, DataExportService $dataExportService, DataExportConfig $dataExportConfig)
     {
         $this->dataEntityExporterPlugins = $dataEntityExporterPlugins;
         $this->dataExportConnectionPlugins = $dataExportConnectionPlugins;
         $this->dataExportWriterPlugins = $dataExportWriterPlugins;
+        $this->dataExportConfigurationAdjusterPlugins = $dataExportConfigurationAdjusterPlugins;
         $this->dataExportService = $dataExportService;
         $this->dataExportConfig = $dataExportConfig;
     }
@@ -50,11 +55,12 @@ class DataExportHandler
         $dataExportResultTransfer = (new DataExportReportTransfer())
             ->setIsSuccess(true);
 
-        $exportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
-        $exportConfigurations = $this->applyExportConfigurationDefaults($exportConfigurations, $exportConfigurationDefaults);
-
         $this->assertExportConfigurationBatch($exportConfigurations);
+
+        $exportConfigurations = $this->applyGlobalDataExportConfigurationsAdjuster($exportConfigurations);
         foreach($exportConfigurations['actions'] as $exportConfiguration) {
+            $exportConfiguration = $this->applyDataExportConfigurationAdjusterPlugins($exportConfiguration);
+
             $dataEntityExporter = $this->pickDataEntityExporter($exportConfiguration);
 
             $dataExportResultTransfer->addResults(
@@ -99,17 +105,18 @@ class DataExportHandler
     }
 
     /**
-     * @param array $exportConfigurationBatch
-     * @param array $exportConfigurationDefaults
-     *
-     * @throws \Exception
+     * @param array $exportConfigurations
      *
      * @return array
+     *@throws \Exception
+     *
      */
-    protected function applyExportConfigurationDefaults(array $exportConfigurationBatch, array $exportConfigurationDefaults): array {
-        $exportConfigurationBatch['defaults'] = ($exportConfigurationBatch['defaults'] ?? []) + ($exportConfigurationDefaults['defaults'] ?? []);
-        foreach($exportConfigurationBatch['actions'] as &$exportConfiguration) {
-            $exportConfiguration += $exportConfigurationBatch['defaults'];
+    protected function applyGlobalDataExportConfigurationsAdjuster(array $exportConfigurations): array {
+        $exportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
+
+        $exportConfigurations['defaults'] = ($exportConfigurations['defaults'] ?? []) + ($exportConfigurationDefaults['defaults'] ?? []);
+        foreach($exportConfigurations['actions'] as &$exportConfiguration) {
+            $exportConfiguration += $exportConfigurations['defaults'];
             $exportConfiguration['hidden'] = [
                 'timestamp' => time(),
                 'application_root_dir' => APPLICATION_ROOT_DIR,
@@ -117,7 +124,22 @@ class DataExportHandler
             ];
         }
 
-        return $exportConfigurationBatch;
+        return $exportConfigurations;
+    }
+
+    /**
+     * @param array $exportConfigurations
+     *
+     * @return array
+     */
+    protected function applyDataExportConfigurationAdjusterPlugins(array $exportConfigurations): array{
+        foreach($this->dataExportConfigurationAdjusterPlugins as $dataEntityConfigurationDefaultsPlugin) {
+            if ($dataEntityConfigurationDefaultsPlugin->isApplicable($exportConfigurations)) {
+                $exportConfigurations = $dataEntityConfigurationDefaultsPlugin->adjustExportConfiguration($exportConfigurations);
+            }
+        }
+
+        return $exportConfigurations;
     }
 
     /**

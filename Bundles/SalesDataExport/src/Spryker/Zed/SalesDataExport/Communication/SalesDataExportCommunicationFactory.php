@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesDataExport\Communication;
 
+use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -15,4 +16,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SalesDataExportCommunicationFactory extends AbstractCommunicationFactory
 {
+    public function getDataExportService(): DataExportService
+    {
+        return new DataExportService();
+    }
 }

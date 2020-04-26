@@ -66,7 +66,7 @@ class OrderItemReader
         'shipping_address_region' => 'Region.Name',
     ];
 
-    public function sequencialRead(array $exportConfiguration, $offset, $limit) : array
+    public function csvReadBatch(array $exportConfiguration, $offset, $limit) : array
     {
             $orderItems = SpySalesOrderItemQuery::create()
                 ->joinOrder()
