@@ -22,20 +22,6 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function publishLabelDictionary()
-    {
-        $this->getFactory()->createProductLabelDictionaryStorageWriter()->publish();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function writeProductLabelDictionaryStorageCollection(): void
@@ -50,20 +36,6 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::deleteProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function unpublishLabelDictionary()
-    {
-        $this->getFactory()->createProductLabelDictionaryStorageDeleter()->unpublish();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function deleteProductLabelDictionaryStorageCollection(): void
@@ -71,23 +43,6 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
         $this->getFactory()
             ->createProductLabelDictionaryStorageDeleter()
             ->deleteProductLabelDictionaryStorageCollection();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function publishProductLabel(array $productAbstractIds)
-    {
-        $this->getFactory()->createProductAbstractLabelStorageWriter()->publish($productAbstractIds);
     }
 
     /**
@@ -120,23 +75,6 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
         $this->getFactory()
             ->createProductAbstractLabelStorageWriter()
             ->writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents($eventTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function unpublishProductLabel(array $productAbstractIds)
-    {
-        $this->getFactory()->createProductAbstractLabelStorageDeleter()->unpublish($productAbstractIds);
     }
 
     /**

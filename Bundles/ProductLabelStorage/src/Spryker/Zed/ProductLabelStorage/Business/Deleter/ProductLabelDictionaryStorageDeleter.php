@@ -25,16 +25,6 @@ class ProductLabelDictionaryStorageDeleter implements ProductLabelDictionaryStor
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleter::deleteProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function unpublish(): void
-    {
-        $this->deleteProductLabelDictionaryStorageCollection();
-    }
-
-    /**
      * @return void
      */
     public function deleteProductLabelDictionaryStorageCollection(): void

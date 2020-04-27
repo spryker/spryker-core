@@ -22,15 +22,6 @@ interface ProductLabelStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-     *
-     * @return void
-     */
-    public function saveProductLabelDictionaryStorage(
-        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-    ): void;
-
-    /**
      * @return void
      */
     public function deleteAllProductLabelDictionaryStorageEntities(): void;
@@ -41,13 +32,6 @@ interface ProductLabelStorageEntityManagerInterface
      * @return void
      */
     public function deleteProductAbstractLabelStorageByProductAbstractId(int $productAbstractId): void;
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return void
-     */
-    public function deleteProductAbstractLabelStorageEntitiesByProductAbstractIds(array $productAbstractIds): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer

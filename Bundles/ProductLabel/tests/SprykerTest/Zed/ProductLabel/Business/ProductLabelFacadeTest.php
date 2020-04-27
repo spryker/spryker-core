@@ -103,7 +103,6 @@ class ProductLabelFacadeTest extends Unit
             StoreRelationTransfer::STORES => [
                 $storeTransferDE,
                 $storeTransferAT,
-
             ],
         ];
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -735,7 +734,6 @@ class ProductLabelFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productLabelProductAbstracts);
     }
-
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface

@@ -34,24 +34,6 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-     *
-     * @return void
-     */
-    public function saveProductLabelDictionaryStorage(
-        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-    ): void {
-        $productLabelDictionaryStorageEntity = $this->getFactory()
-            ->createSpyProductLabelDictionaryStorageQuery()
-            ->filterByLocale($productLabelDictionaryStorageTransfer->getLocale())
-            ->filterByStore($productLabelDictionaryStorageTransfer->getStore())
-            ->findOneOrCreate();
-
-        $productLabelDictionaryStorageEntity->setData($productLabelDictionaryStorageTransfer->toArray());
-        $productLabelDictionaryStorageEntity->save();
-    }
-
-    /**
      * @return void
      */
     public function deleteAllProductLabelDictionaryStorageEntities(): void
@@ -72,20 +54,6 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
         $this->getFactory()
             ->createSpyProductAbstractLabelStorageQuery()
             ->filterByFkProductAbstract($productAbstractId)
-            ->find()
-            ->delete();
-    }
-
-    /**
-     * @param array $productAbstractIds
-     *
-     * @return void
-     */
-    public function deleteProductAbstractLabelStorageEntitiesByProductAbstractIds(array $productAbstractIds): void
-    {
-        $this->getFactory()
-            ->createSpyProductAbstractLabelStorageQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
             ->find()
             ->delete();
     }

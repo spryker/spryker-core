@@ -8,9 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -36,35 +34,6 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
             ->distinct()
             ->find()
             ->getData();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array
-    {
-        $productLabelLocalizedAttributesEntities = $this->getFactory()
-            ->getProductLabelQueryContainer()
-            ->queryAllLocalizedAttributesLabels()
-            ->joinWithSpyLocale()
-            ->joinWithSpyProductLabel()
-            ->useSpyProductLabelQuery()
-                ->filterByIsActive(true)
-            ->endUse()
-            ->find();
-
-        $productLabelLocalizedAttributesTransfers = [];
-
-        foreach ($productLabelLocalizedAttributesEntities as $productLabelLocalizedAttributesEntity) {
-            $productLabelLocalizedAttributesTransfers[] = $this->getFactory()
-                ->createProductLabelLocalizedAttributesMapper()
-                ->mapProductLabelLocalizedAttributesEntityToProductLabelLocalizedAttributesTransfer(
-                    $productLabelLocalizedAttributesEntity,
-                    new ProductLabelLocalizedAttributesTransfer()
-                );
-        }
-
-        return $productLabelLocalizedAttributesTransfers;
     }
 
     /**
@@ -114,19 +83,21 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAbstractLabelStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
-    {
+    public function getProductAbstractLabelStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productAbstractLabelStorageIds
+    ): array {
         if (!$filterTransfer->getOrderBy()) {
             $filterTransfer->setOrderBy(SpyProductAbstractLabelStorageTableMap::COL_ID_PRODUCT_ABSTRACT_LABEL_STORAGE);
         }
 
         $query = $this->getFactory()->createSpyProductAbstractLabelStorageQuery();
-        if ($ids !== []) {
-            $query->filterByIdProductAbstractLabelStorage_In($ids);
+        if ($productAbstractLabelStorageIds !== []) {
+            $query->filterByIdProductAbstractLabelStorage_In($productAbstractLabelStorageIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)
@@ -136,19 +107,21 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productLabelDictionaryStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
-    {
+    public function getProductLabelDictionaryStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productLabelDictionaryStorageIds
+    ): array {
         if (!$filterTransfer->getOrderBy()) {
             $filterTransfer->setOrderBy(SpyProductLabelDictionaryStorageTableMap::COL_ID_PRODUCT_LABEL_DICTIONARY_STORAGE);
         }
 
         $query = $this->getFactory()->createSpyProductLabelDictionaryStorageQuery();
-        if ($ids !== []) {
-            $query->filterByIdProductLabelDictionaryStorage_In($ids);
+        if ($productLabelDictionaryStorageIds !== []) {
+            $query->filterByIdProductLabelDictionaryStorage_In($productLabelDictionaryStorageIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)

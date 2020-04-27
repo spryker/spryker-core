@@ -9,23 +9,47 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Mapper;
 
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
-class ProductLabelDictionaryItemMapper
+class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param array $productLabelDictionaryItemTransfers
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function mapProductLabelTransferToProductLabelDictionaryItemTransfersForStoreByLocale(
-        ProductLabelTransfer $productLabelTransfer,
-        array $productLabelDictionaryItemTransfers,
-        string $storeName
+    public function mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
+        array $productLabelTransfers
     ): array {
-        foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $offsetKey => $productLabelLocalizedAttributesTransfer) {
-            $productLabelDictionaryItemTransfers[$storeName][$productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName()][] =
+        $productLabelDictionaryItemTransfers = [];
+
+        foreach ($productLabelTransfers as $productLabelTransfer) {
+            foreach ($productLabelTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                $productLabelDictionaryItemTransfers = $this->mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
+                    $productLabelTransfer,
+                    $storeTransfer,
+                    $productLabelDictionaryItemTransfers
+                );
+            }
+        }
+
+        return $productLabelDictionaryItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][] $productLabelDictionaryItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    protected function mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
+        ProductLabelTransfer $productLabelTransfer,
+        StoreTransfer $storeTransfer,
+        array $productLabelDictionaryItemTransfers
+    ): array {
+        foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $productLabelLocalizedAttributesTransfer) {
+            $productLabelDictionaryItemTransfers[$storeTransfer->getName()][$productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName()][] =
                 (new ProductLabelDictionaryItemTransfer())
                     ->setName($productLabelLocalizedAttributesTransfer->getName())
                     ->setIdProductLabel($productLabelLocalizedAttributesTransfer->getFkProductLabel())

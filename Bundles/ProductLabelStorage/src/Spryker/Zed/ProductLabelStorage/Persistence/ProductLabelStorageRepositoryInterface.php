@@ -26,28 +26,29 @@ interface ProductLabelStorageRepositoryInterface
     public function getProductAbstractLabelStorageTransfersByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
-     */
-    public function getProductLabelLocalizedAttributes(): array;
-
-    /**
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[]
      */
     public function getProductLabelDictionaryStorageTransfers(): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAbstractLabelStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductAbstractLabelStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productAbstractLabelStorageIds
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productLabelDictionaryStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductLabelDictionaryStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productLabelDictionaryStorageIds
+    ): array;
 }

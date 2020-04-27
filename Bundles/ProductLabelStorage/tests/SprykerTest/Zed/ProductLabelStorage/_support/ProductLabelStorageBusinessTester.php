@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductLabelStorage;
 
 use Codeception\Actor;
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;

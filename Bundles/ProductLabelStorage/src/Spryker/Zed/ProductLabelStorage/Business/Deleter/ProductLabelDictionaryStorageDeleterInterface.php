@@ -10,13 +10,6 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Deleter;
 interface ProductLabelDictionaryStorageDeleterInterface
 {
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface::deleteProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function unpublish();
-
-    /**
      * @return void
      */
     public function deleteProductLabelDictionaryStorageCollection(): void;

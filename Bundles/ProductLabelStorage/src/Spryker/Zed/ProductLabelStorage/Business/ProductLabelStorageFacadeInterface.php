@@ -13,20 +13,6 @@ interface ProductLabelStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Stores label dictionary data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
-     * - Deletes label dictionary storage entities if dictionary is empty
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function publishLabelDictionary();
-
-    /**
-     * Specification:
      * - Stores label dictionary data as json encoded to storage table.
      * - Sends a copy of data to queue based on module config.
      * - Deletes label dictionary storage entities if dictionary is empty.
@@ -39,20 +25,6 @@ interface ProductLabelStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds and deletes label dictionary storage entities
-     * - Sends delete message to queue based on module config
-     * - Deletes label dictionary storage entities if dictionary is empty
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::deleteProductLabelDictionaryStorageCollection()} instead.
-     *
-     * @return void
-     */
-    public function unpublishLabelDictionary();
-
-    /**
-     * Specification:
      * - Finds and deletes label dictionary storage entities.
      * - Sends delete message to queue based on module config.
      * - Deletes label dictionary storage entities if dictionary is empty.
@@ -62,23 +34,6 @@ interface ProductLabelStorageFacadeInterface
      * @return void
      */
     public function deleteProductLabelDictionaryStorageCollection(): void;
-
-    /**
-     * Specification:
-     * - Queries all productLabels with the given productAbstractIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function publishProductLabel(array $productAbstractIds);
 
     /**
      * Specification:
@@ -108,22 +63,6 @@ interface ProductLabelStorageFacadeInterface
      * @return void
      */
     public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void;
-
-    /**
-     * Specification:
-     * - Finds and deletes productLabels storage entities with the given productAbstractIds
-     * - Sends delete message to queue based on module config
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function unpublishProductLabel(array $productAbstractIds);
 
     /**
      * Specification:

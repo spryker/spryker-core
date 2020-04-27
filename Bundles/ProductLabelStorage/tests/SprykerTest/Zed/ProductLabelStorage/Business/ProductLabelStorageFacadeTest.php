@@ -35,7 +35,6 @@ class ProductLabelStorageFacadeTest extends Unit
     protected const STORE_NAME_DE = 'DE';
     protected const LOCALE_NAME_EN = 'en_US';
 
-
     /**
      * @var \SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageBusinessTester
      */
@@ -174,7 +173,8 @@ class ProductLabelStorageFacadeTest extends Unit
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Number of synchronisation data transfers is not equals to an expected value.');
+            'Number of synchronisation data transfers is not equals to an expected value.'
+        );
     }
 
     /**
@@ -199,7 +199,8 @@ class ProductLabelStorageFacadeTest extends Unit
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Number of synchronisation data transfers is not equals to an expected value.');
+            'Number of synchronisation data transfers is not equals to an expected value.'
+        );
     }
 
     /**

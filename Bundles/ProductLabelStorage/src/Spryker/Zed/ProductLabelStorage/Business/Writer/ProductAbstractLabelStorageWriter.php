@@ -59,18 +59,6 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()} instead.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function publish(array $productAbstractIds)
-    {
-        $this->writeCollection($productAbstractIds);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
@@ -155,7 +143,6 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
         $productAbstractLabelStorageTransfer->setIdProductAbstract($productAbstractId);
         $productAbstractLabelStorageTransfer->setProductLabelIds($productLabelIds[$productAbstractId]);
-
 
         $this->productLabelStorageEntityManager->saveProductAbstractLabelStorage($productAbstractLabelStorageTransfer);
     }

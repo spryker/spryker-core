@@ -97,12 +97,16 @@ class ProductLabelMapper
         }
         $productLabelTransfer->setStoreRelation($storeRelationTransfer);
 
+        $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
+
         $productLabelLocalizedAttributesTransfers = $this->productLabelLocalizedAttributesMapper
             ->mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
                 $productLabelEntity->getSpyProductLabelLocalizedAttributess(),
                 $productLabelTransfer->getLocalizedAttributesCollection()
             );
-        $productLabelTransfer->setLocalizedAttributesCollection(new ArrayObject($productLabelLocalizedAttributesTransfers));
+        $productLabelTransfer->setLocalizedAttributesCollection(
+            new ArrayObject($productLabelLocalizedAttributesTransfers)
+        );
 
         $productLabelTransfer->setProductLabelProductAbstracts(
             $this->productLabelProductAbstractsMapper
