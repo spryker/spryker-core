@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\DataExport;
 
+use Generated\Shared\Transfer\DataExportResultDocumentTransfer;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Service\UtilDataReader\UtilDataReaderService;
@@ -21,6 +22,7 @@ class DataExportService extends AbstractService implements DataExportServiceInte
 
     public function readConfiguration(string $configurationPath): array
     {
+        // This method MAY need to be exploded to `readExportConfiguration` and `readExportConfigurations` to have a typed return
         $configurationIterator = (new UtilDataReaderService())->getYamlBatchIterator($configurationPath)->current();
 
         $configuration = [];
@@ -51,26 +53,35 @@ class DataExportService extends AbstractService implements DataExportServiceInte
 
     /**
      * @param array $exportConfiguration
+     * @param array $writeConfiguration
      * @param array $data
      *
      * @return array
      */
     public function writeBatch(array $exportConfiguration, array $writeConfiguration, array $data): array
     {
-
-        if ($exportConfiguration['connection']['type'] === 'local') { // FlySystem => spryker/flysystem
-            if ($exportConfiguration['writer']['type'] === 'csv') { // Leage/Csv => spryker/csv
+        // Note: here should be a 2 level plugin stack (Writer + Connection) with an in-built fallback to spryker/flysystem + spryker/csv
+        if ($exportConfiguration['connection']['type'] === 'local') {
+            if ($exportConfiguration['writer']['type'] === 'csv') {
                 $destination = $exportConfiguration['connection']['params']['export_root_dir'] . '/' . $exportConfiguration['destination'];
                 $destination = $this->resolveDestination($destination, $exportConfiguration);
 
-                $this->make_dir($destination); // flysystem
-                $file = fopen($destination, $writeConfiguration['mode']);
+                $this->make_dir($destination);
+                $file = fopen($destination, $writeConfiguration['mode']); // We need to have a clever solution so each writer and connection can have a strict structure!
+                if ($writeConfiguration['mode'] === 'w') {
+                    fputcsv($file, $data['headers']);
+                }
                 foreach($data['rows'] as $row) {
                     fputcsv($file, $row);
                 }
                 fclose($file);
 
-                return [$destination, count($data['rows'])];
+                $result = (new DataExportResultDocumentTransfer())
+                    ->setName($destination)
+                    ->setObjectCount(count($data['rows']));
+
+                return [$result];
+
             } else if ($exportConfiguration['writer'] === 'xml') {
                 //  fwrite($file, $data['header']);
                 foreach($data['rows'] as $objects) {
@@ -84,6 +95,7 @@ class DataExportService extends AbstractService implements DataExportServiceInte
 
     protected function resolveDestination(string $destination, array $exportConfiguration): string
     {
+        // dynamic resolution is necessary => use keys and values from the assoc array
         return str_replace(
             [
                 '{data_entity}',
@@ -92,16 +104,17 @@ class DataExportService extends AbstractService implements DataExportServiceInte
                 '{application_root_dir}',
             ],
             [
-                $exportConfiguration['data_entity'],
-                $exportConfiguration['hidden']['timestamp'],
-                $exportConfiguration['hidden']['extension'],
-                $exportConfiguration['hidden']['application_root_dir'],
+                $exportConfiguration['data_entity'], // this should come from hooks as well
+                $exportConfiguration['hooks']['timestamp'],
+                $exportConfiguration['hooks']['extension'],
+                $exportConfiguration['hooks']['application_root_dir'],
             ],
             $destination
         );
     }
 
     protected function make_dir( $fullyQualifiedFileName, $permissions = 0777 ): bool {
+        // This will be resovled with spryker/flysystem
         $path = dirname($fullyQualifiedFileName);
         return is_dir( $path ) || mkdir( $path, $permissions, true );
     }

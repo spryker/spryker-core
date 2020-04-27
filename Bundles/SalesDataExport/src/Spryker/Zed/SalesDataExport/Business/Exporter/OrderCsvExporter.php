@@ -43,21 +43,18 @@ class OrderCsvExporter
 
         $offset = 0;
         do {
-            $orders = $this->orderReader->csvReadBatch($exportConfiguration, $offset, static::READ_BATCH_SIZE);
+            list($headers, $rows) = $this->orderReader->csvReadBatch($exportConfiguration, $offset, static::READ_BATCH_SIZE);
 
-            if ($offset === 0 && count($orders)) {
-                $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'w'], ['rows' => [array_keys($orders[0])]]);
-            }
-
-            list($destination, $objectCount) = $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'a'], ['rows' => $orders]);
-            $result->addDocuments(
-                (new DataExportResultDocumentTransfer())
-                    ->setName($destination)
-                    ->setObjectCount($objectCount)
+            list($dataExportResultDocumentTransfer) = $this->dataExportService->writeBatch(
+                $exportConfiguration,
+                ['mode' => $offset === 0 ? 'w' : 'a'],
+                ['headers' => $headers, 'rows' => $rows]
             );
 
-            $offset += count($orders);
-        } while (count($orders) == static::READ_BATCH_SIZE);
+            $result->addDocuments($dataExportResultDocumentTransfer);
+
+            $offset += count($rows);
+        } while (count($rows) == static::READ_BATCH_SIZE);
 
         return $result;
     }

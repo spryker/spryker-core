@@ -17,7 +17,7 @@ class OrderReader
         'customer_reference' => 'SpySalesOrder.CustomerReference',
         'order_created_at' => 'SpySalesOrder.CreatedAt',
         'order_updated_at' => 'SpySalesOrder.UpdatedAt',
-        'store' => 'SpySalesOrder.Store',
+        'order_store' => 'SpySalesOrder.Store',
         'email' => 'SpySalesOrder.Email',
         'salutation' => 'SpySalesOrder.Salutation',
         'first_name' => 'SpySalesOrder.FirstName',
@@ -65,8 +65,8 @@ class OrderReader
                         ->endUse();
                 }
 
-                if (isset($exportConfiguration['filter_criteria']['store_name'])) {
-                    $orders->filterByStore_In($exportConfiguration['filter_criteria']['store_name']);
+                if (isset($exportConfiguration['filter_criteria']['order_store'])) {
+                    $orders->filterByStore_In($exportConfiguration['filter_criteria']['order_store']);
                 }
 
                 if (isset($exportConfiguration['filter_criteria']['order_created_at'])) {
@@ -76,14 +76,15 @@ class OrderReader
                     ]);
                 }
 
-                $orders->select($this->mapping);
+                $selectedFields = array_intersect_key($this->mapping, array_flip($exportConfiguration['fields']));
+                $orders->select($selectedFields);
                 $orders->addAsColumn('order_id', SpySalesOrderTableMap::COL_ID_SALES_ORDER);
 
                 $orders = $orders->find()->toArray();
                 $orderIds = [];
                 foreach($orders as &$order) {
                     $orderIds[] = $order['order_id'];
-                    foreach($this->fieldsToPropel() as $niceName => $propelName) {
+                    foreach($selectedFields as $niceName => $propelName) {
                         $order[$niceName] = $order[$propelName];
                         unset($order[$propelName]);
                     }
@@ -106,7 +107,10 @@ class OrderReader
                     unset($order['order_id']);
                 }
 
-                return $orders;
+                return [
+                    count($orders) > 0 ? array_keys($orders[0]) : [],
+                    $orders,
+                ];
     }
 
     protected function getCommentsByOrderId(array $orderIds): array
@@ -167,10 +171,5 @@ class OrderReader
         }
 
         return $orderTotals;
-    }
-
-    protected function fieldsToPropel(): array
-    {
-        return $this->mapping;
     }
 }

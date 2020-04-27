@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class OrderItemExporterPlugin extends AbstractPlugin implements DataEntityExporterPluginInterface
 {
-    protected const DATA_ENTITY = 'order_item';
+    protected const DATA_ENTITY = 'order-item';
     protected const SUPPORTED_WRITER = 'csv';
 
     /**

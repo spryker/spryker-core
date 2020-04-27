@@ -12,18 +12,18 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\DataExport\Business\DataExportBusinessFactory getFactory()
- * @method \Spryker\Zed\DataExport\Persistence\DataExportRepositoryInterface getRepository()
- * @method \Spryker\Zed\DataExport\Persistence\DataExportEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\DataExport\DataExportConfig getConfig()
  */
 class DataExportFacade extends AbstractFacade implements DataExportFacadeInterface
 {
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
+     * {@inheritDoc}
+     *
      * @param [] $dataEntityExportConfigurations
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */

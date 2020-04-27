@@ -20,8 +20,6 @@ use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
 
 /**
  * @method \Spryker\Zed\SalesDataExport\Business\SalesDataExportBusinessFactory getFactory()
- * @method \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface getRepository()
- * @method \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\SalesDataExport\SalesDataExportConfig getConfig()
  */
 class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFacadeInterface
@@ -30,7 +28,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
 
     /**
      * Specification
-     * - Exports orders in various formats (writer)
+     * - Exports orders in various (writer) formats
      * - Returns results of export
      *
      * @param array $exportConfiguration
@@ -45,7 +43,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
 
     /**
      * Specification
-     * - Exports order items in various formats (writer)
+     * - Exports order items in various (writer) formats
      * - Returns results of export
      *
      * @param array $exportConfiguration
@@ -61,7 +59,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
 
     /**
      * Specification
-     * - Exports order expense in various formats (writer)
+     * - Exports order expense in various (writer) formats
      * - Returns results of export
      *
      * @param array $exportConfiguration

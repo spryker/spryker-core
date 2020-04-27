@@ -85,38 +85,37 @@ class OrderItemReader
                 ->limit($limit);
 
 
-                if (isset($exportConfiguration['filter_criteria']['store_name'])) {
-                    $orderItems
-                        ->useOrderQuery()
-                            ->filterByStore_In($exportConfiguration['filter_criteria']['store_name'])
-                        ->endUse();
+            if (isset($exportConfiguration['filter_criteria']['order_store'])) {
+                $orderItems
+                    ->useOrderQuery()
+                        ->filterByStore_In($exportConfiguration['filter_criteria']['order_store'])
+                    ->endUse();
+            }
+
+            if (isset($exportConfiguration['filter_criteria']['order_created_at'])) {
+                $orderItems
+                    ->useOrderQuery()
+                        ->filterByCreatedAt_Between([
+                            'min' => $exportConfiguration['filter_criteria']['order_created_at']['from'],
+                            'max' => $exportConfiguration['filter_criteria']['order_created_at']['to']
+                        ])
+                    ->endUse();
+            }
+
+            $selectedFields = array_intersect_key($this->mapping, array_flip($exportConfiguration['fields']));
+            $orderItems->select($selectedFields);
+            $orderItems = $orderItems->find()->toArray();
+
+            foreach($orderItems as &$orderItem) {
+                foreach($selectedFields as $niceName => $propelName) {
+                    $orderItem[$niceName] = $orderItem[$propelName];
+                    unset($orderItem[$propelName]);
                 }
+            }
 
-                if (isset($exportConfiguration['filter_criteria']['order_created_at'])) {
-                    $orderItems
-                        ->useOrderQuery()
-                            ->filterByCreatedAt_Between([
-                                'min' => $exportConfiguration['filter_criteria']['order_created_at']['from'],
-                                'max' => $exportConfiguration['filter_criteria']['order_created_at']['to']
-                            ])
-                        ->endUse();
-                }
-
-                $orderItems->select($this->mapping);
-
-                $orderItems = $orderItems->find()->toArray();
-                foreach($orderItems as &$orderItem) {
-                    foreach($this->fieldsToPropel() as $niceName => $propelName) {
-                        $orderItem[$niceName] = $orderItem[$propelName];
-                        unset($orderItem[$propelName]);
-                    }
-                }
-
-                return $orderItems;
-    }
-
-    protected function fieldsToPropel(): array
-    {
-        return $this->mapping;
+            return [
+                count($orderItems) > 0 ? array_keys($orderItems[0]) : [],
+                $orderItems,
+            ];
     }
 }

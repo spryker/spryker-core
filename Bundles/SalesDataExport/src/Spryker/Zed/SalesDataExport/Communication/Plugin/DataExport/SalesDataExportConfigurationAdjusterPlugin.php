@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SalesDataExportConfigurationAdjusterPlugin extends AbstractPlugin implements DataExportConfigurationAdjusterPluginInterface
 {
-    protected const DATA_ENTITIES = ['order', 'order_item', 'order_expense'];
+    protected const DATA_ENTITIES = ['order', 'order-item', 'order-expense'];
 
     /**
      * @param array $exportConfiguration
@@ -26,6 +26,9 @@ class SalesDataExportConfigurationAdjusterPlugin extends AbstractPlugin implemen
     }
 
     /**
+     * Specification:
+     * - Applies Bundles/SalesDataExport/data/exprot/config/sales_export_config.yml on the provided "action export configuration" selectivly by a matching "data_entity"
+     *
      * @param array $exportConfiguration
      *
      * @return array

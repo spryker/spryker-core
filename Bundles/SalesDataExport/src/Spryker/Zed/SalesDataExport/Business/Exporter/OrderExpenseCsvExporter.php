@@ -6,9 +6,6 @@ use Generated\Shared\Transfer\DataExportResultDocumentTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
-use Spryker\Zed\SalesDataExport\Business\Writer\CsvWriter;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
 
 class OrderExpenseCsvExporter
 {
@@ -45,21 +42,18 @@ class OrderExpenseCsvExporter
 
         $offset = 0;
         do {
-            $orderExpenses = $this->orderExpenseReader->csvReadBatch($exportConfiguration, $offset, static::READ_BATCH_SIZE);
+            list($headers, $rows) = $this->orderExpenseReader->csvReadBatch($exportConfiguration, $offset, static::READ_BATCH_SIZE);
 
-            if ($offset === 0 && count($orderExpenses)) {
-                $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'w'], ['rows' => [array_keys($orderExpenses[0])]]);
-            }
-
-            list($destination, $objectCount) = $this->dataExportService->writeBatch($exportConfiguration, ['mode' => 'a'], ['rows' => $orderExpenses]);
-            $result->addDocuments(
-                (new DataExportResultDocumentTransfer())
-                    ->setName($destination)
-                    ->setObjectCount($objectCount)
+            list($dataExportResultDocumentTransfer) = $this->dataExportService->writeBatch(
+                $exportConfiguration,
+                ['mode' => $offset === 0 ? 'w' : 'a'],
+                ['headers' => $headers, 'rows' => $rows]
             );
 
-            $offset += count($orderExpenses);
-        } while (count($orderExpenses) == static::READ_BATCH_SIZE);
+            $result->addDocuments($dataExportResultDocumentTransfer);
+
+            $offset += count($rows);
+        } while (count($rows) == static::READ_BATCH_SIZE);
 
         return $result;
     }

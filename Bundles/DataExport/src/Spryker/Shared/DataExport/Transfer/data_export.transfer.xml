@@ -17,7 +17,7 @@
         <property name="objectCount" type="int" />
     </transfer>
 
-    <transfer name="DataExportConfigurationBatch">
+    <transfer name="DataExportConfigurations">
         <property name="version" type="int" />
         <property name="defaults" type="DataExportConfiguration" />
         <property name="actions" type="DataExportConfiguration[]" />
@@ -29,13 +29,14 @@
         <property name="overwrite" type="bool" />
         <property name="operation" type="string" />
         <property name="writer" type="DataExportWriterConfiguration" />
-        <property name="filterCriteria" type="array" />
         <property name="connection" type="DataExportConnectionConfiguration" />
-        <property name="hidden" type="array" />
+        <property name="filterCriteria" type="array" />
+        <property name="hooks" type="array" />
     </transfer>
 
     <transfer name="DataExportWriterConfiguration">
         <property name="type" type="string" />
+        <property name="params" type="array" />
     </transfer>
 
     <transfer name="DataExportConnectionConfiguration">

@@ -2,9 +2,7 @@
 
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
 class OrderExpenseReader
 {
@@ -35,39 +33,38 @@ class OrderExpenseReader
                 ->offset($offset)
                 ->limit($limit);
 
+            if (isset($exportConfiguration['filter_criteria']['order_store'])) {
+                $orderExpenses
+                    ->useOrderQuery()
+                        ->filterByStore_In($exportConfiguration['filter_criteria']['order_store'])
+                    ->endUse();
+            }
 
-                if (isset($exportConfiguration['filter_criteria']['store_name'])) {
-                    $orderExpenses
-                        ->useOrderQuery()
-                            ->filterByStore_In($exportConfiguration['filter_criteria']['store_name'])
-                        ->endUse();
+            if (isset($exportConfiguration['filter_criteria']['order_created_at'])) {
+                $orderExpenses
+                    ->useOrderQuery()
+                        ->filterByCreatedAt_Between([
+                            'min' => $exportConfiguration['filter_criteria']['order_created_at']['from'],
+                            'max' => $exportConfiguration['filter_criteria']['order_created_at']['to']
+                        ])
+                    ->endUse();
+            }
+
+            $selectedFields = array_intersect_key($this->mapping, array_flip($exportConfiguration['fields']));
+            $orderExpenses->select($selectedFields);
+            $orderExpenses = $orderExpenses->find()->toArray();
+
+            // This will need a much efficient solution
+            foreach($orderExpenses as &$orderExpense) {
+                foreach($selectedFields as $niceName => $propelName) {
+                    $orderExpense[$niceName] = $orderExpense[$propelName];
+                    unset($orderExpense[$propelName]);
                 }
+            }
 
-                if (isset($exportConfiguration['filter_criteria']['order_created_at'])) {
-                    $orderExpenses
-                        ->useOrderQuery()
-                            ->filterByCreatedAt_Between([
-                                'min' => $exportConfiguration['filter_criteria']['order_created_at']['from'],
-                                'max' => $exportConfiguration['filter_criteria']['order_created_at']['to']
-                            ])
-                        ->endUse();
-                }
-
-                $orderExpenses->select($this->mapping);
-
-                $orderExpenses = $orderExpenses->find()->toArray();
-                foreach($orderExpenses as &$orderExpense) {
-                    foreach($this->fieldsToPropel() as $niceName => $propelName) {
-                        $orderExpense[$niceName] = $orderExpense[$propelName];
-                        unset($orderExpense[$propelName]);
-                    }
-                }
-
-                return $orderExpenses;
-    }
-
-    protected function fieldsToPropel(): array
-    {
-        return $this->mapping;
+            return [
+                count($orderExpenses) > 0 ? array_keys($orderExpenses[0]) : [],
+                $orderExpenses,
+            ];
     }
 }

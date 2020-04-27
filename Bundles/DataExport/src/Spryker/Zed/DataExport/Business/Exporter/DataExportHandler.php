@@ -47,15 +47,15 @@ class DataExportHandler
     /**
      * @param array $exportConfigurations
      *
-     * @return DataExportReportTransfer
-     *@throws \Exception
+     * @throws \Exception
      *
+     * @return DataExportReportTransfer
      */
     public function exportBatch(array $exportConfigurations): DataExportReportTransfer {
         $dataExportResultTransfer = (new DataExportReportTransfer())
             ->setIsSuccess(true);
 
-        $this->assertExportConfigurationBatch($exportConfigurations);
+        $this->assertExportConfigurations($exportConfigurations);
 
         $exportConfigurations = $this->applyGlobalDataExportConfigurationsAdjuster($exportConfigurations);
         foreach($exportConfigurations['actions'] as $exportConfiguration) {
@@ -90,34 +90,37 @@ class DataExportHandler
     }
 
     /**
-     * @param array $exportConfigurationBatch
+     * @param array $exportConfigurations
+     *
+     * @throws \Exception
      *
      * @return void
-     *@throws \Exception
-     *
      */
-    protected function assertExportConfigurationBatch(array $exportConfigurationBatch): void {
-        foreach ($exportConfigurationBatch['actions'] as $index => $exportConfiguration) {
+    protected function assertExportConfigurations(array $exportConfigurations): void {
+        foreach ($exportConfigurations['actions'] as $index => $exportConfiguration) {
             if (!isset($exportConfiguration['data_entity'])) {
-                throw new \Exception(sprintf('"data_entity" property is missing in action #%d', $index));
+                throw new \Exception(sprintf('"data_entity" property is mandatory in action #%d', $index));
             }
         }
     }
 
     /**
+     * Note: Applying "defaults" from Bundles/DataExport/data/config/defaults_config.yml on each action of application_root/data/export/config/order_export_config.yml
+     * Note: Adds "hooks" for the magic file naming, eg: {application_root_dir}/data/export/myfile_{timestamp}.{extension}
+     *
      * @param array $exportConfigurations
      *
-     * @return array
-     *@throws \Exception
+     * @throws \Exception
      *
+     * @return array
      */
     protected function applyGlobalDataExportConfigurationsAdjuster(array $exportConfigurations): array {
-        $exportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
+        $globalExportConfigurationDefaults = $this->dataExportService->readConfiguration($this->dataExportConfig->getExportConfigurationDefaultsPath());
 
-        $exportConfigurations['defaults'] = ($exportConfigurations['defaults'] ?? []) + ($exportConfigurationDefaults['defaults'] ?? []);
+        $exportConfigurations['defaults'] = ($exportConfigurations['defaults'] ?? []) + ($globalExportConfigurationDefaults['defaults'] ?? []);
         foreach($exportConfigurations['actions'] as &$exportConfiguration) {
             $exportConfiguration += $exportConfigurations['defaults'];
-            $exportConfiguration['hidden'] = [
+            $exportConfiguration['hooks'] = [
                 'timestamp' => time(),
                 'application_root_dir' => APPLICATION_ROOT_DIR,
                 'extension' => $this->getWriterExtension($exportConfiguration),
@@ -128,6 +131,8 @@ class DataExportHandler
     }
 
     /**
+     * Note: data entity specific configuration adjustments, eg: /Bundles/SalesDataExport/data/export/config/sales_export_config.yml
+     *
      * @param array $exportConfigurations
      *
      * @return array
@@ -143,6 +148,8 @@ class DataExportHandler
     }
 
     /**
+     * Note: figures out writer (csv is in-built!)
+     *
      * @param array $exportConfiguration
      *
      * @throws \Exception
@@ -157,7 +164,6 @@ class DataExportHandler
             }
         }
 
-        // in-built fallback
         if ($exportConfiguration['writer']['type'] === 'csv') {
             return 'csv';
         }
