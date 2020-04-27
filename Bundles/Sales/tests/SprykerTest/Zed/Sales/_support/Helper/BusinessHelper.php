@@ -46,16 +46,15 @@ class BusinessHelper extends Module
 
     /**
      * @param iterable|array $itemTransfers
-     * @param string|null $currencyIsoCode
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function haveSalesOrderEntity(iterable $itemTransfers = [], ?string $currencyIsoCode = null): SpySalesOrder
+    public function haveSalesOrderEntity(iterable $itemTransfers = []): SpySalesOrder
     {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
         $omsProcessEntity = $this->createOmsProcess();
-        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity, $currencyIsoCode);
+        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
         $this->createOrderItems(
@@ -202,11 +201,10 @@ class BusinessHelper extends Module
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
-     * @param string|null $currencyIsoCode
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity, ?string $currencyIsoCode = null): SpySalesOrder
+    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity): SpySalesOrder
     {
         $customerEntity = $this->createCustomer();
 
@@ -215,7 +213,6 @@ class BusinessHelper extends Module
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference(md5(time() + rand()));
-        $salesOrderEntity->setCurrencyIsoCode($currencyIsoCode);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
