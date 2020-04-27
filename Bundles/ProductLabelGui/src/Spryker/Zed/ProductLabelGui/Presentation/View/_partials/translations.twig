@@ -3,20 +3,20 @@
 
         <div class="form-group" id="option-value-translations">
 
-            {% for localizedAttributesTransfer in productLabelTransfer.getLocalizedAttributesCollection() %}
+            {% for localizedAttributesTransfer in productLabelTransfer.localizedAttributesCollection %}
                 {% set isCollapsed = not loop.first %}
-                {% set localeTransfer = localizedAttributesTransfer.getLocale() %}
+                {% set localeTransfer = localizedAttributesTransfer.locale %}
 
-                <div data-locale-code="{{ localeTransfer.getLocaleName() }}">
+                <div data-locale-code="{{ localeTransfer.localeName }}">
                     {% embed '@Gui/Partials/localized-ibox.twig' with {
-                        localeName: localeTransfer.getLocaleName(),
+                        localeName: localeTransfer.localeName,
                         collapsed: isCollapsed ,
                         hasError: false
                     } %}
                         {% block content %}
                             <dl class="row">
                                 <dt class="col-xs-3">{{ 'Name' | trans }}:</dt>
-                                <dd class="col-xs-9">{{ localizedAttributesTransfer.getName() }}</dd>
+                                <dd class="col-xs-9">{{ localizedAttributesTransfer.name }}</dd>
                             </dl>
                         {% endblock %}
 

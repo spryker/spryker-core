@@ -1,8 +1,8 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Behavior' | trans } %}
-    {% set isDynamic = (productLabelTransfer.isDynamic()) ? ('Yes' | trans) : ('No' | trans) %}
-    {% set isExclusive = (productLabelTransfer.getIsExclusive()) ? ('Yes' | trans) : ('No' | trans) %}
-    {% set validFrom = (productLabelTransfer.getValidFrom()) ? (productLabelTransfer.getValidFrom() | formatDate) : ('N/A' | trans) %}
-    {% set validTo = (productLabelTransfer.getValidTo()) ? (productLabelTransfer.getValidTo() | formatDate) : ('N/A' | trans) %}
+    {% set isDynamic = (productLabelTransfer.isDynamic) ? ('Yes' | trans) : ('No' | trans) %}
+    {% set isExclusive = (productLabelTransfer.isExclusive) ? ('Yes' | trans) : ('No' | trans) %}
+    {% set validFrom = (productLabelTransfer.validFrom) ? (productLabelTransfer.validFrom | formatDate) : ('N/A' | trans) %}
+    {% set validTo = (productLabelTransfer.validTo) ? (productLabelTransfer.validTo | formatDate) : ('N/A' | trans) %}
 
     {% block widget_content %}
         <div class="row form-group">

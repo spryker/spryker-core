@@ -3,8 +3,8 @@
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
             <div class="col-xs-10">
-                {% if productLabelTransfer.getStoreRelation().getStores() | length > 0 %}
-                    {% for store in productLabelTransfer.getStoreRelation().getStores() %}
+                {% if productLabelTransfer.storeRelation is defined and productLabelTransfer.storeRelation.stores | length > 0 %}
+                    {% for store in productLabelTransfer.storeRelation.stores %}
                         <span class="label label-info">{{ store.name }}</span>
                     {% endfor %}
                 {% endif %}

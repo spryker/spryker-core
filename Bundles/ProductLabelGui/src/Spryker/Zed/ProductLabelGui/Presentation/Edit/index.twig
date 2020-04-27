@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit Product Label' | trans ~ ': "' ~ productLabelTransfer.getName() ~ '"' %}
+{% set widget_title = 'Edit Product Label' | trans ~ ': "' ~ productLabelTransfer.name ~ '"' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -31,7 +31,7 @@
 {% block footer_js %}
     {{ parent() }}
     <script src="{{ assetsPath('js/spryker-zed-product-label-form.js') }}"></script>
-    {% if productLabelTransfer.getIsDynamic() %}
+    {% if productLabelTransfer.isDynamic %}
         <script src="{{ assetsPath('js/spryker-zed-product-label-dynamic-label.js') }}"></script>
     {% endif %}
 {% endblock %}
