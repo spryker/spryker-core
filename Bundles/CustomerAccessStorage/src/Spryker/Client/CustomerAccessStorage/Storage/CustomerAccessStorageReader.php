@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface;
 use Spryker\Client\CustomerAccessStorage\Dependency\Service\CustomerAccessStorageToSynchronizationServiceInterface;
 use Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 
 class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterface
@@ -35,6 +36,11 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
      * @var \Spryker\Client\CustomerAccessStorage\Mapper\CustomerAccessStorageMapperInterface
      */
     protected $customerAccessStorageMapper;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
 
     /**
      * @param \Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface $storageClient
@@ -85,7 +91,19 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
-        return $this->synchronizationService->getStorageKeyBuilder(CustomerAccessStorageConstants::CUSTOMER_ACCESS_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(CustomerAccessStorageConstants::CUSTOMER_ACCESS_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**

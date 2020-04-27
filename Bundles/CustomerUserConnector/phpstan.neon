@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \#1 \$v of method .+SpyCustomer::setFkUser\(\) expects int, null given.#'
