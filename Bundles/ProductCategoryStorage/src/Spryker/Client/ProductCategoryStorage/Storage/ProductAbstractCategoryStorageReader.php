@@ -67,6 +67,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array
     {
         $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $localeName);
+        array_filter($productAbstractCategoryStorageData);
 
         if (!$productAbstractCategoryStorageData) {
             return [];
