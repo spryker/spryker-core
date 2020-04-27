@@ -84,8 +84,7 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        $usedNotAppliedVoucherCodes = $quoteTransfer->getUsedNotAppliedVoucherCodes();
-        if ($usedNotAppliedVoucherCodes && !in_array($code, $usedNotAppliedVoucherCodes, true)) {
+        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_NON_APPLICABLE);
             $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
