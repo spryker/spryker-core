@@ -219,6 +219,6 @@ class CmsBlockTable extends AbstractTable
             );
         }
 
-        return implode(" ", $storeNames);
+        return implode(' ', $storeNames);
     }
 }

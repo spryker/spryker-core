@@ -40,6 +40,13 @@ interface OmsRepositoryInterface
     public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal;
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
+     */
+    public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OmsProductReservationTransfer|null

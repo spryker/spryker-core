@@ -22,6 +22,7 @@ Edit,Bearbeiten
 "Edit Delivery Method: %s",
 Enabled?,Aktiviert?
 "Is this delivery method active?",
+"List of delivery methods",
 "List Shipment Methods",
 "Method Name",
 Name,Name

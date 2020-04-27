@@ -512,4 +512,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->resolve($calculableObjectTransfer->getItems())
             ->recalculateByCalculableObject($calculableObjectTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createShipmentTotalCalculator()
+            ->calculateShipmentTotal($calculableObjectTransfer);
+    }
 }

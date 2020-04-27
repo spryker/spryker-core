@@ -30,6 +30,11 @@ use Twig\Loader\FilesystemLoader;
 class TwigMoneyServiceProviderTest extends Unit
 {
     /**
+     * @var \SprykerTest\Yves\Money\MoneyYvesTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testRegisterShouldAddFilterToTwig(): void
@@ -79,6 +84,7 @@ class TwigMoneyServiceProviderTest extends Unit
         $callable = $filter->getCallable();
 
         Store::getInstance()->setCurrentLocale($locale);
+        $this->tester->clearLocaleCacheForMoneyFormatter();
 
         $result = $callable($input, $withSymbol);
         $this->assertSame($expected, $result);

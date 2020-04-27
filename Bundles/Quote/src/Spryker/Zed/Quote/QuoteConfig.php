@@ -44,6 +44,20 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns item properties that should be stored in the quote table.
+     * - Leave an empty array if you want to store all the Item transfer properties.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getQuoteItemFieldsAllowedForSaving(): array
+    {
+        return [];
+    }
+
+    /**
      * @api
      *
      * @return string

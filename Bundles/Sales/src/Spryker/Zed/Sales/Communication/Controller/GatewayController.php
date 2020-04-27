@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -104,5 +106,15 @@ class GatewayController extends AbstractGatewayController
     public function getCustomerOrderByOrderReferenceAction(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFacade()->getCustomerOrderByOrderReference($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItemsAction(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        return $this->getFacade()->getOrderItems($orderItemFilterTransfer);
     }
 }

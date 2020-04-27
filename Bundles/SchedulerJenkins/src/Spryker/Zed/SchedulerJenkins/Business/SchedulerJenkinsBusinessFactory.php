@@ -48,7 +48,8 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new JenkinsApi(
             $this->createJenkinsApiRequestBuilder(),
-            $this->createJenkinsApiRequestExecutor()
+            $this->createJenkinsApiRequestExecutor(),
+            $this->getUtilEncodingService()
         );
     }
 

@@ -25,7 +25,6 @@
     "spryker/decimal-object": "*",
     "spryker/event": "*",
     "spryker/oms": "*",
-    "spryker/oms-extension": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/stock": "*",
