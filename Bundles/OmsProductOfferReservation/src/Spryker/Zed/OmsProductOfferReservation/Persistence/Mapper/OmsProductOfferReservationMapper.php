@@ -39,6 +39,7 @@ class OmsProductOfferReservationMapper
         SpyOmsProductOfferReservation $omsProductOfferReservationEntity,
         OmsProductOfferReservationTransfer $omsProductOfferReservationTransfer
     ): OmsProductOfferReservationTransfer {
-        return $omsProductOfferReservationTransfer->fromArray($omsProductOfferReservationEntity->toArray());
+        return $omsProductOfferReservationTransfer->fromArray($omsProductOfferReservationEntity->toArray(), true)
+            ->setIdStore($omsProductOfferReservationEntity->getFkStore());
     }
 }

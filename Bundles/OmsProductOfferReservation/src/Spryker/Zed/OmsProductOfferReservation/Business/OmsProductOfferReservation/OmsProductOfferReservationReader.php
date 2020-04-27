@@ -36,7 +36,7 @@ class OmsProductOfferReservationReader implements OmsProductOfferReservationRead
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): ReservationResponseTransfer {
         $omsProductOfferReservationCriteriaTransfer->requireProductOfferReference();
-        $omsProductOfferReservationCriteriaTransfer->requireIdStore();
+        $omsProductOfferReservationCriteriaTransfer->requireStore();
 
         $reservationQuantity = $this->omsProductOfferReservationRepository->getQuantity($omsProductOfferReservationCriteriaTransfer);
 

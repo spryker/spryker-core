@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
+use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -64,9 +65,15 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): Decimal {
-        $quantity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
-            ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
-            ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())
+        $omsProductOfferReservationQuery = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
+            ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference());
+
+        $omsProductOfferReservationQuery = $this->resolveFilterByStore(
+            $omsProductOfferReservationQuery,
+            $omsProductOfferReservationCriteriaTransfer->getStore()
+        );
+
+        $quantity = $omsProductOfferReservationQuery
             ->select([SpyOmsProductOfferReservationTableMap::COL_RESERVATION_QUANTITY])
             ->findOne();
 
@@ -122,9 +129,34 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
          */
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
-                ->fromArray($salesOrderItemAggregation, true);
+                ->fromArray($salesOrderItemAggregation, true)
+                ->setSku($salesOrderItemAggregation[SpySalesOrderItemTableMap::COL_SKU]);
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery
+     */
+    protected function resolveFilterByStore(
+        SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery,
+        StoreTransfer $storeTransfer
+    ): SpyOmsProductOfferReservationQuery {
+        if ($storeTransfer->getIdStore()) {
+            return $omsProductOfferReservationQuery->filterByFkStore($storeTransfer->getIdStore());
+        }
+
+        if ($storeTransfer->getName()) {
+            $omsProductOfferReservationQuery
+                ->useStoreQuery()
+                    ->filterByName($storeTransfer->getName())
+                ->endUse();
+        }
+
+        return $omsProductOfferReservationQuery;
     }
 }

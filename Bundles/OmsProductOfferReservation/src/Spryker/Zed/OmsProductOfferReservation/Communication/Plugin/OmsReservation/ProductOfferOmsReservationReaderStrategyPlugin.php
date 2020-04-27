@@ -38,7 +38,7 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
      * {@inheritDoc}
      * - Returns ReservationResponse.reservationQuantity for provider product offer and store.
      * - Requires ReservationRequest.productOfferReference.
-     * - Requires ReservationRequest.store.id.
+     * - Requires ReservationRequest.store.
      *
      * @api
      *
@@ -50,7 +50,7 @@ class ProductOfferOmsReservationReaderStrategyPlugin extends AbstractPlugin impl
     {
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($reservationRequestTransfer->requireProductOfferReference()->getProductOfferReference())
-            ->setIdStore($reservationRequestTransfer->requireStore()->getStore()->requireIdStore()->getIdStore());
+            ->setStore($reservationRequestTransfer->requireStore()->getStore());
 
         return $this->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
     }

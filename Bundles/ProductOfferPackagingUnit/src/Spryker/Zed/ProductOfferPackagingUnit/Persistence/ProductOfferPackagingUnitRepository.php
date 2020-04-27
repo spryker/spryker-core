@@ -70,7 +70,8 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
          */
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
-                ->fromArray($salesOrderItemAggregation, true);
+                ->fromArray($salesOrderItemAggregation, true)
+                ->setSku($salesOrderItemAggregation[SpySalesOrderItemTableMap::COL_SKU]);
         }
 
         return $salesAggregationTransfers;
