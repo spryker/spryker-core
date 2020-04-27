@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Business\Model\League;
 
 use League\OAuth2\Server\AuthorizationServer as OauthServer;
+use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 
 class AuthorizationServerBuilder implements AuthorizationServerBuilderInterface
@@ -23,13 +24,23 @@ class AuthorizationServerBuilder implements AuthorizationServerBuilderInterface
     protected $repositoryBuilder;
 
     /**
+     * @var \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface
+     */
+    protected $responseType;
+
+    /**
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      * @param \Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface $repositoryBuilder
+     * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
      */
-    public function __construct(OauthConfig $oauthConfig, RepositoryBuilderInterface $repositoryBuilder)
-    {
+    public function __construct(
+        OauthConfig $oauthConfig,
+        RepositoryBuilderInterface $repositoryBuilder,
+        ResponseTypeInterface $responseType
+    ) {
         $this->oauthConfig = $oauthConfig;
         $this->repositoryBuilder = $repositoryBuilder;
+        $this->responseType = $responseType;
     }
 
     /**
@@ -43,7 +54,7 @@ class AuthorizationServerBuilder implements AuthorizationServerBuilderInterface
             $this->repositoryBuilder->createScopeRepository(),
             $this->oauthConfig->getPrivateKeyPath(),
             $this->oauthConfig->getEncryptionKey(),
-            new BearerTokenResponse()
+            $this->responseType
         );
     }
 }
