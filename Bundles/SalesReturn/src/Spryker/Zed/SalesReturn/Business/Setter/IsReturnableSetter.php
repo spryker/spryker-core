@@ -42,9 +42,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
                 $itemTransfer->setIsReturnable(false);
             }
 
-            if ($itemTransfer->getCreatedAt()) {
-                $this->addReturnPolicyMessage($itemTransfer);
-            }
+            $this->addReturnPolicyMessage($itemTransfer);
         }
 
         return $itemTransfers;
@@ -57,6 +55,10 @@ class IsReturnableSetter implements IsReturnableSetterInterface
      */
     protected function addReturnPolicyMessage(ItemTransfer $itemTransfer): void
     {
+        if (!$itemTransfer->getCreatedAt()) {
+            return;
+        }
+
         $retunrableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
             ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
 
@@ -66,7 +68,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
                 static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $retunrableTillDateTime,
             ]);
 
-        $itemTransfer->addMessage($messageTransfer);
+        $itemTransfer->addReturnPolicyMessage($messageTransfer);
     }
 
     /**
