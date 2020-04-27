@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
+use Spryker\Zed\GiftCard\Communication\Plugin\CartCode\GiftCardCartCodePlugin;
 
 /**
  * Auto-generated group annotations
@@ -38,21 +39,12 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
-            new VoucherCartCodePlugin(),
-        ]);
-    }
-
-    /**
-     * @return void
-     */
     public function testAddCartCodeAddsVoucherCodeToUnlockedQuote(): void
     {
         // Arrange
+        $this->setPluginCartCodeCollection([
+            new VoucherCartCodePlugin(),
+        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
 
         // Act
@@ -73,10 +65,39 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAddCartCodeAddsGiftCardCodeToUnlockedQuote(): void
+    {
+        // Arrange
+        $this->setPluginCartCodeCollection([
+            new GiftCardCartCodePlugin(),
+        ]);
+        $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
+
+        // Act
+        $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
+        $this->assertEquals(
+            static::CODE,
+            $cartCodeResponseTransfer->getQuote()->getGiftCards()[0]->getCode()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testAddCartCodeWillReturnUnsuccessfulResponseWithFailedCartCodePlugin(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection();
+        $this->setPluginCartCodeCollection([
+            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('error'),
+            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('success'),
+        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
 
         // Act
@@ -112,9 +133,12 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillRemoveDiscountFromCartWithUnlockedQuote(): void
+    public function testRemoveCodeWillRemoveVoucherDiscountFromCartWithUnlockedQuote(): void
     {
         // Arrange
+        $this->setPluginCartCodeCollection([
+            new VoucherCartCodePlugin(),
+        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -131,10 +155,35 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testRemoveCodeWillRemoveGiftCardFromCartWithUnlockedQuote(): void
+    {
+        // Arrange
+        $this->setPluginCartCodeCollection([
+            new GiftCardCartCodePlugin(),
+        ]);
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
+
+        // Act
+        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveCodeWillReturnUnsuccessfulResponseWithFailedCartCodePlugin(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection();
+        $this->setPluginCartCodeCollection([
+            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('error'),
+            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('success'),
+        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -173,6 +222,9 @@ class CartCodeFacadeTest extends Unit
     public function testClearCartCodesWillRemoveAllDiscountsCodeFromUnlockedQuote(): void
     {
         // Arrange
+        $this->setPluginCartCodeCollection([
+            new VoucherCartCodePlugin(),
+        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -182,6 +234,26 @@ class CartCodeFacadeTest extends Unit
 
         // Assert
         $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearCartCodesWillRemoveAllGiftCardsCodeFromUnlockedQuote(): void
+    {
+        // Arrange
+        $this->setPluginCartCodeCollection([
+            new GiftCardCartCodePlugin(),
+        ]);
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
+
+        // Act
+        $cartCodeResponseTransfer = $this->tester->getFacade()->clearCartCodes(
+            (new CartCodeRequestTransfer())->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
     }
 
     /**
@@ -202,14 +274,13 @@ class CartCodeFacadeTest extends Unit
     }
 
     /**
+     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $pluginStack
+     *
      * @return void
      */
-    protected function setPluginCartCodeCollection(): void
+    protected function setPluginCartCodeCollection(array $pluginStack): void
     {
-        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
-            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('error'),
-            $this->createCartCodePluginInterfaceMockWithOperationResponseMessage('success'),
-        ]);
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, $pluginStack);
     }
 
     /**

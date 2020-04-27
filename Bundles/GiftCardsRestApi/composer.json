@@ -5,11 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/gift-card": "^1.5.1",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
