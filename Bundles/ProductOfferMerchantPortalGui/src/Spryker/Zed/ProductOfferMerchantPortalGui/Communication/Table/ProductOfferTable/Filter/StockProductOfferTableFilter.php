@@ -8,17 +8,11 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 
-class StockProductOfferTableFilter implements TableFilterInterface
+class StockProductOfferTableFilter implements SelectTableFilterInterface
 {
     public const FILTER_NAME = 'stock';
-
-    protected const OPTION_HAS_STOCK = 'Has stock';
-    protected const OPTION_OUT_OF_STOCK = 'Out of stock';
-
-    protected const OPTION_HAS_STOCK_VALUE = 1;
-    protected const OPTION_OUT_OF_STOCK_VALUE = 0;
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -27,10 +21,9 @@ class StockProductOfferTableFilter implements TableFilterInterface
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
+            ->setType(static::FILTER_TYPE)
             ->setTitle('Stock')
-            ->setType('select')
-            ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getStockOptions());
+            ->addTypeOption(static::OPTION_VALUES, $this->getStockOptions());
     }
 
     /**
@@ -40,12 +33,12 @@ class StockProductOfferTableFilter implements TableFilterInterface
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_HAS_STOCK,
-                static::OPTION_VALUE_KEY_VALUE => static::OPTION_HAS_STOCK_VALUE,
+                static::OPTION_VALUE_KEY_TITLE => 'Has stock',
+                static::OPTION_VALUE_KEY_VALUE => 1,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_OUT_OF_STOCK,
-                static::OPTION_VALUE_KEY_VALUE => static::OPTION_OUT_OF_STOCK_VALUE,
+                static::OPTION_VALUE_KEY_TITLE => 'Out of stock',
+                static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];
     }

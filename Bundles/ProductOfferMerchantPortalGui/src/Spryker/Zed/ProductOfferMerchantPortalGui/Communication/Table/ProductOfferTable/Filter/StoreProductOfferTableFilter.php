@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 
-class StoreProductOfferTableFilter implements TableFilterInterface
+class StoreProductOfferTableFilter implements SelectTableFilterInterface
 {
     public const FILTER_NAME = 'store';
 
@@ -36,9 +36,9 @@ class StoreProductOfferTableFilter implements TableFilterInterface
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
             ->setTitle('Stores')
-            ->setType('select')
-            ->addTypeOption(static::OPTION_NAME_MULTISELECT, true)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getStoreOptions());
+            ->setType(static::FILTER_TYPE)
+            ->addTypeOption(static::OPTION_MULTIPLE, true)
+            ->addTypeOption(static::OPTION_VALUES, $this->getStoreOptions());
     }
 
     /**

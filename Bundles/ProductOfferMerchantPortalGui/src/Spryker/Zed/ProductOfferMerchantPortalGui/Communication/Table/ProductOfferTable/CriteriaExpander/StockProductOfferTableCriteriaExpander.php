@@ -32,7 +32,7 @@ class StockProductOfferTableCriteriaExpander implements ProductOfferTableCriteri
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $hasStock = (bool)$filterValue;
+        $hasStock = filter_var($filterValue, FILTER_VALIDATE_BOOLEAN);
         $productOfferTableCriteriaTransfer->setHasStock($hasStock);
 
         return $productOfferTableCriteriaTransfer;

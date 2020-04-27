@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 
-class IsActiveProductOfferTableFilter implements TableFilterInterface
+class IsActiveProductOfferTableFilter implements SelectTableFilterInterface
 {
     public const FILTER_NAME = 'isActive';
-
-    protected const OPTION_NAME_ONLINE = 'Online';
-    protected const OPTION_NAME_OFFLINE = 'Offline';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -25,9 +22,8 @@ class IsActiveProductOfferTableFilter implements TableFilterInterface
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
             ->setTitle('Visibility')
-            ->setType('select')
-            ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsVisibleOptions());
+            ->setType(static::FILTER_TYPE)
+            ->addTypeOption(static::OPTION_VALUES, $this->getIsVisibleOptions());
     }
 
     /**
@@ -37,11 +33,11 @@ class IsActiveProductOfferTableFilter implements TableFilterInterface
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_ONLINE,
+                static::OPTION_VALUE_KEY_TITLE => 'Online',
                 static::OPTION_VALUE_KEY_VALUE => 1,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_OFFLINE,
+                static::OPTION_VALUE_KEY_TITLE => 'Offline',
                 static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];

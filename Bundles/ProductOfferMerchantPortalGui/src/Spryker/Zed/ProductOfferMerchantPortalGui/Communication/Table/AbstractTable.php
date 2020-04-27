@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Exception\InvalidSortingConfigurationException;
@@ -471,20 +471,20 @@ abstract class AbstractTable
 
         $typeOptions = $guiTableFilterTransfer->getTypeOptions();
 
-        if (!isset($typeOptions[TableFilterInterface::OPTION_NAME_VALUES])) {
+        if (!isset($typeOptions[SelectTableFilterInterface::OPTION_VALUES])) {
             return $guiTableFilterTransfer;
         }
 
-        $optionNameValues = $typeOptions[TableFilterInterface::OPTION_NAME_VALUES];
+        $optionNameValues = $typeOptions[SelectTableFilterInterface::OPTION_VALUES];
 
         foreach ($optionNameValues as $key => $optionNameValue) {
-            if (isset($optionNameValue[TableFilterInterface::OPTION_VALUE_KEY_TITLE])) {
-                $titleTranslated = $this->translate($optionNameValue[TableFilterInterface::OPTION_VALUE_KEY_TITLE]);
-                $optionNameValues[$key][TableFilterInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
+            if (isset($optionNameValue[SelectTableFilterInterface::OPTION_VALUE_KEY_TITLE])) {
+                $titleTranslated = $this->translate($optionNameValue[SelectTableFilterInterface::OPTION_VALUE_KEY_TITLE]);
+                $optionNameValues[$key][SelectTableFilterInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
             }
         }
 
-        $typeOptions[TableFilterInterface::OPTION_NAME_VALUES] = $optionNameValues;
+        $typeOptions[SelectTableFilterInterface::OPTION_VALUES] = $optionNameValues;
         $guiTableFilterTransfer->setTypeOptions($typeOptions);
 
         return $guiTableFilterTransfer;
