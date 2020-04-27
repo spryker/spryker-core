@@ -69,7 +69,9 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer,
             (string)Response::HTTP_OK
         );
-        $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        if ($responseSchemaDataTransfer) {
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer = $this->addDefaultErrorToErrorSchemaDataTransfer($errorSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
@@ -102,7 +104,9 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer,
             (string)Response::HTTP_CREATED
         );
-        $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        if ($responseSchemaDataTransfer) {
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer = $this->addDefaultErrorToErrorSchemaDataTransfer($errorSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
@@ -140,7 +144,9 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer,
             (string)Response::HTTP_OK
         );
-        $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        if ($responseSchemaDataTransfer) {
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer = $this->addDefaultErrorToErrorSchemaDataTransfer($errorSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
@@ -165,14 +171,14 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         PathMethodDataTransfer $pathMethodDataTransfer,
         PathSchemaDataTransfer $errorSchemaDataTransfer
     ): void {
-        $responseSchemaDataTransfer = new PathSchemaDataTransfer();
-
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
+            new PathSchemaDataTransfer(),
             (string)Response::HTTP_NO_CONTENT
         );
-        $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        if ($responseSchemaDataTransfer) {
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer = $this->addDefaultErrorToErrorSchemaDataTransfer($errorSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
@@ -221,20 +227,21 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
      * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $responseSchemaDataTransfer
      * @param string $defaultResponseCode
      *
-     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer
+     * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */
     protected function addDefaultSuccessResponseToResponseSchemaDataTransfer(
         PathMethodDataTransfer $pathMethodDataTransfer,
         PathSchemaDataTransfer $responseSchemaDataTransfer,
         string $defaultResponseCode
-    ): PathSchemaDataTransfer {
+    ): ?PathSchemaDataTransfer {
         $pathSchemaDataTransfer = $this->getSuccessResponseSchema($pathMethodDataTransfer->getResponseSchemas());
 
         if ($pathSchemaDataTransfer) {
-            $responseSchemaDataTransfer->setCode($pathSchemaDataTransfer->getCode());
-            $responseSchemaDataTransfer->setDescription($pathSchemaDataTransfer->getDescription());
+            if ($pathSchemaDataTransfer->getCode() !== Response::HTTP_NO_CONTENT) {
+                $pathSchemaDataTransfer->setSchemaReference($responseSchemaDataTransfer->getSchemaReference());
+            }
 
-            return $responseSchemaDataTransfer;
+            return null;
         }
 
         $responseStatusCode = $this->getResponseStatusCode($pathMethodDataTransfer, $defaultResponseCode);

@@ -192,7 +192,7 @@ class OmsFacadeTest extends Unit
     {
         //Arrange
         $testStateMachineProcessName = 'Test04';
-        $omsFacade = $this->createOmsFacadeWithErroredTestStateMachine([$testStateMachineProcessName]);
+        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
 
         $saveOrderTransfer1 = $this->tester->haveOrder([
             'unitPrice' => 100,
@@ -210,6 +210,8 @@ class OmsFacadeTest extends Unit
             ])
             ->orderByIdSalesOrderItem(Criteria::ASC)
             ->find();
+
+        $omsFacade = $this->createOmsFacadeWithErroredTestStateMachine([$testStateMachineProcessName]);
 
         //Act
         $omsFacade->triggerEvent('authorize', clone $orderItems, []);

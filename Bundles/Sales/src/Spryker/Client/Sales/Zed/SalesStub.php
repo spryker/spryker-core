@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Sales\Zed;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -107,5 +109,18 @@ class SalesStub implements SalesStubInterface
         $orderTransfer = $this->zedStub->call('/sales/gateway/get-customer-order-by-order-reference', $orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer */
+        $itemCollectionTransfer = $this->zedStub->call('/sales/gateway/get-order-items', $orderItemFilterTransfer);
+
+        return $itemCollectionTransfer;
     }
 }

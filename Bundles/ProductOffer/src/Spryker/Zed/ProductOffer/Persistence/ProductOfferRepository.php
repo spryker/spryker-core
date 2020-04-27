@@ -133,6 +133,12 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilter->getApprovalStatuses());
         }
 
+        if ($productOfferCriteriaFilter->getIdStore()) {
+            $productOfferQuery->useSpyProductOfferStoreQuery()
+                ->filterByFkStore($productOfferCriteriaFilter->getIdStore())
+            ->endUse();
+        }
+
         if ($productOfferCriteriaFilter->getIsActiveConcreteProduct() !== null) {
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,

@@ -718,6 +718,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createStateHistoryExpander()
+            ->expandOrderItemsWithStateHistory($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer

@@ -66,6 +66,10 @@ class CartItemAdder implements CartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
+        if (!$this->findCartIdentifier($restRequest)) {
+            return $this->cartRestResponseBuilder->createCartIdMissingErrorResponse();
+        }
+
         $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addToCart($cartItemRequestTransfer);

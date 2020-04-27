@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ZedUi\Communication\Twig;
 
 use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface;
 use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface;
 
 class NavigationComponentConfigFunction extends TwigFunction
@@ -21,12 +22,21 @@ class NavigationComponentConfigFunction extends TwigFunction
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface $utilEncodingService
+     * @var \Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface
      */
-    public function __construct(ZedUiToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    protected $translatorFacade;
+
+    /**
+     * @param \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface $translatorFacade
+     */
+    public function __construct(
+        ZedUiToUtilEncodingServiceInterface $utilEncodingService,
+        ZedUiToTranslatorFacadeInterface $translatorFacade
+    ) {
         parent::__construct();
         $this->utilEncodingService = $utilEncodingService;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -74,7 +84,7 @@ class NavigationComponentConfigFunction extends TwigFunction
     {
         $navigationItem = new NavigationItem();
 
-        $navigationItem->setTitle($item['label']);
+        $navigationItem->setTitle($this->translatorFacade->trans($item['label']));
         $navigationItem->setUrl($item['uri']);
         $navigationItem->setIcon($this->getNavigationItemIcon($item));
         $navigationItem->setIsActive($this->isNavigationItemActive($item));
