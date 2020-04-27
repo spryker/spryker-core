@@ -242,7 +242,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->setFirstPage($propelPager->getFirstPage())
             ->setLastPage($propelPager->getLastPage())
             ->setNextPage($propelPager->getNextPage())
-            ->setPreviousPage($propelPager->getPreviousPage());
+            ->setPreviousPage($propelPager->getPreviousPage())
+            ->setPage($propelPager->getPage());
 
         return $paginationTransfer;
     }
