@@ -12,6 +12,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -25,8 +26,12 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     protected const KEY_MERCHANT_REFERENCE = 'reference';
     protected const KEY_MERCHANT_NAMES = 'names';
     protected const KEY_MERCHANT_REFERENCES = 'references';
+    protected const KEY_STORE_NAME = 'storeName';
 
     /**
+     * @module Store
+     * @module Merchant
+     *
      * @param int[] $productAbstractIds
      *
      * @return array
@@ -36,6 +41,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery->filterByIsActive(true)
             ->useSpyMerchantQuery()
+                ->useSpyMerchantStoreQuery()
+                    ->joinSpyStore()
+                ->endUse()
                 ->filterByIsActive(true)
             ->endUse()
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
@@ -47,6 +55,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
             ->withColumn(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, static::KEY_MERCHANT_REFERENCE)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
+            ->withColumn(SpyStoreTableMap::COL_NAME, static::KEY_STORE_NAME)
             ->orderBy(static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()
             ->getData();
@@ -123,9 +132,10 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             $idProductAbstract = $productAbstractMerchant[static::KEY_ABSTRACT_PRODUCT_ID];
             $merchantName = $productAbstractMerchant[static::KEY_MERCHANT_NAME];
             $merchantReference = $productAbstractMerchant[static::KEY_MERCHANT_REFERENCE];
+            $storeName = $productAbstractMerchant[static::KEY_STORE_NAME];
 
-            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_NAMES][] = $merchantName;
-            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][] = $merchantReference;
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_NAMES][$storeName][] = $merchantName;
+            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_REFERENCES][$storeName][] = $merchantReference;
             $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_ABSTRACT_PRODUCT_ID] = $idProductAbstract;
         }
 
