@@ -62,7 +62,7 @@
 
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
-        <property name="orderReference" type="string"/>
+        <property name="orderReferences" type="string[]"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

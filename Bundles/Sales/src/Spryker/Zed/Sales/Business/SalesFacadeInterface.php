@@ -369,7 +369,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Expands order items with currency ISO code.
-     * - Requires ItemTransfer::FK_SALES_ORDER to be set.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
      *
      * @api
      *

@@ -28,7 +28,6 @@ class BusinessHelper extends Module
 {
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     public const DEFAULT_ITEM_STATE = 'test';
-    public const DEFAULT_CURRENCY_ISO_CODE = 'TEST';
 
     protected const ORDER_ITEM_QTY = 1;
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
@@ -47,15 +46,16 @@ class BusinessHelper extends Module
 
     /**
      * @param iterable|array $itemTransfers
+     * @param string|null $currencyIsoCode
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function haveSalesOrderEntity(iterable $itemTransfers = []): SpySalesOrder
+    public function haveSalesOrderEntity(iterable $itemTransfers = [], ?string $currencyIsoCode = null): SpySalesOrder
     {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
         $omsProcessEntity = $this->createOmsProcess();
-        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
+        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity, $currencyIsoCode);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
         $this->createOrderItems(
@@ -202,10 +202,11 @@ class BusinessHelper extends Module
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     * @param string|null $currencyIsoCode
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity): SpySalesOrder
+    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity, ?string $currencyIsoCode = null): SpySalesOrder
     {
         $customerEntity = $this->createCustomer();
 
@@ -214,7 +215,7 @@ class BusinessHelper extends Module
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference(md5(time() + rand()));
-        $salesOrderEntity->setCurrencyIsoCode(static::DEFAULT_CURRENCY_ISO_CODE);
+        $salesOrderEntity->setCurrencyIsoCode($currencyIsoCode);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;

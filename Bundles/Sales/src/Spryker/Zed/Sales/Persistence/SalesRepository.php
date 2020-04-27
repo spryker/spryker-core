@@ -102,6 +102,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array
     {
+        if (!$salesOrderIds) {
+            return [];
+        }
+
         return $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByIdSalesOrder_In($salesOrderIds)
@@ -145,8 +149,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
 
-        if ($orderListRequestTransfer->getOrderReference()) {
-            $orderListQuery->filterByOrderReference($orderListRequestTransfer->getOrderReference());
+        if ($orderListRequestTransfer->getOrderReferences()) {
+            $orderListQuery->filterByOrderReference_In($orderListRequestTransfer->getOrderReferences());
         }
 
         $ordersCount = $orderListQuery->count();

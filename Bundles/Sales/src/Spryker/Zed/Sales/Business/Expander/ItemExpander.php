@@ -36,7 +36,7 @@ class ItemExpander implements ItemExpanderInterface
         );
 
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setCurrencyIsoCode($currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()]);
+            $itemTransfer->setCurrencyIsoCode($currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()] ?? null);
         }
 
         return $itemTransfers;
@@ -52,8 +52,9 @@ class ItemExpander implements ItemExpanderInterface
         $salesOrderIds = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->requireFkSalesOrder();
-            $salesOrderIds[] = $itemTransfer->getFkSalesOrder();
+            if ($itemTransfer->getFkSalesOrder()) {
+                $salesOrderIds[] = $itemTransfer->getFkSalesOrder();
+            }
         }
 
         return array_unique($salesOrderIds);
