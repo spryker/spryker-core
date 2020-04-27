@@ -10,7 +10,9 @@ namespace Spryker\Glue\GiftCardsRestApi;
 use Spryker\Glue\GiftCardsRestApi\Processor\Expander\GiftCardByQuoteResourceRelationshipExpander;
 use Spryker\Glue\GiftCardsRestApi\Processor\Expander\GiftCardByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapper;
+use Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapperInterface;
 use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilder;
+use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -32,7 +34,7 @@ class GiftCardsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface
      */
-    public function createGiftCardsRestResponseBuilder()
+    public function createGiftCardsRestResponseBuilder(): GiftCardsRestResponseBuilderInterface
     {
         return new GiftCardsRestResponseBuilder(
             $this->getResourceBuilder(),
@@ -43,7 +45,7 @@ class GiftCardsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapperInterface
      */
-    public function createGiftCardsMapper()
+    public function createGiftCardsMapper(): GiftCardsMapperInterface
     {
         return new GiftCardsMapper();
     }
