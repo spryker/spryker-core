@@ -128,23 +128,37 @@ class NavigationCRUDTest extends Unit
         $baseNavigationTransfer = $this->tester->createNavigation('test-key', 'Test navigation', true);
         $newNavigationTransfer = $this->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
         $navigationNodeTransfer = $this->tester->createNavigationNode($baseNavigationTransfer->getIdNavigation());
+        $this->tester->createNavigationNode(
+            $baseNavigationTransfer->getIdNavigation(),
+            $navigationNodeTransfer->getIdNavigationNode()
+        );
 
         // Act
         $duplicatedNavigationTransfer = $this->navigationFacade->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
 
         // Assert
-        $duplicatedNavigationNodeTransfer = $this->navigationFacade
+        $duplicatedNavigationNodeTransfer1 = $this->navigationFacade
             ->findNavigationTree($duplicatedNavigationTransfer)
             ->getNodes()[0]
+            ->getNavigationNode();
+
+        $duplicatedNavigationNodeTransfer2 = $this->navigationFacade
+            ->findNavigationTree($duplicatedNavigationTransfer)
+            ->getNodes()[0]
+            ->getChildren()[0]
             ->getNavigationNode();
 
         [$navigationNodeLocalizedAttributesTransfer1, $navigationNodeLocalizedAttributesTransfer2]
             = $navigationNodeTransfer->getNavigationNodeLocalizedAttributes();
         [$duplicatedNavigationNodeLocalizedAttributesTransfer1, $duplicatedNavigationNodeLocalizedAttributesTransfer2]
-            = $duplicatedNavigationNodeTransfer->getNavigationNodeLocalizedAttributes();
+            = $duplicatedNavigationNodeTransfer1->getNavigationNodeLocalizedAttributes();
         $this->assertEquals($newNavigationTransfer->getName(), $duplicatedNavigationTransfer->getName());
         $this->assertEquals($newNavigationTransfer->getKey(), $duplicatedNavigationTransfer->getKey());
-        $this->assertEquals($duplicatedNavigationNodeTransfer->getIsActive(), $navigationNodeTransfer->getIsActive());
+        $this->assertEquals($duplicatedNavigationNodeTransfer1->getIsActive(), $navigationNodeTransfer->getIsActive());
+        $this->assertEquals(
+            $duplicatedNavigationNodeTransfer2->getFkParentNavigationNode(),
+            $duplicatedNavigationNodeTransfer1->getIdNavigationNode()
+        );
         $this->assertEquals(
             $duplicatedNavigationNodeLocalizedAttributesTransfer1->getExternalUrl(),
             $navigationNodeLocalizedAttributesTransfer1->getExternalUrl()

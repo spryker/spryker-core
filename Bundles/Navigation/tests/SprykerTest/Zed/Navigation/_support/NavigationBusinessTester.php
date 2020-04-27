@@ -54,13 +54,15 @@ class NavigationBusinessTester extends Actor
 
     /**
      * @param int $idNavigation
+     * @param int|null $idParentNavigationNode
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    public function createNavigationNode(int $idNavigation): NavigationNodeTransfer
+    public function createNavigationNode(int $idNavigation, ?int $idParentNavigationNode = null): NavigationNodeTransfer
     {
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer
+            ->setFkParentNavigationNode($idParentNavigationNode)
             ->setFkNavigation($idNavigation)
             ->setIsActive(true);
         $idLocale1 = $this->haveLocale(['localeName' => 'ab_CD'])->getIdLocale();
