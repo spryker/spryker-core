@@ -95,11 +95,10 @@ class SalesFacadeExpandItemsTest extends Test
     public function testExpandItemsWithCurrencyIsoCodeWithoutOrder(): void
     {
         // Arrange
-        $salesFacade = $this->getSalesFacade();
         $itemTransfer = (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build();
 
         // Act
-        $itemTransfers = $salesFacade->expandItemsWithCurrencyIsoCode([$itemTransfer]);
+        $itemTransfers = $this->getSalesFacade()->expandItemsWithCurrencyIsoCode([$itemTransfer]);
 
         // Assert
         $this->assertNull($itemTransfers[0]->getCurrencyIsoCode());
