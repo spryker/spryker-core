@@ -65,9 +65,9 @@ class ProductLabelDataHelper extends Module
             ->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 
-        /**
-         * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
-         */
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     */
     protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->getLocator()->productLabel()->facade();

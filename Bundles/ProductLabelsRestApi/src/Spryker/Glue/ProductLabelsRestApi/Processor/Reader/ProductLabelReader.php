@@ -81,6 +81,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
             $restRequest->getMetadata()->getLocale(),
             APPLICATION_STORE
         );
+        dd($labelTransfers);
 
         if (!count($labelTransfers)) {
             return $this->addProductLabelNotFoundErrorToResponse($restResponse);
