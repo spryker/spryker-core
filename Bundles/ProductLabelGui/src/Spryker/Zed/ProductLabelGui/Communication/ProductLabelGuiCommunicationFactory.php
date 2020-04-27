@@ -15,9 +15,7 @@ use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggr
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelAggregateFormType;
-use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
-use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelLocalizedAttributesFormType;
-use Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelDeleteForm;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AssignedProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\AvailableProductTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
@@ -25,11 +23,11 @@ use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -42,67 +40,14 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getProductLabelAggregateForm()` instead.
-     *
      * @param \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductLabelAggregateForm(
-        ProductLabelAggregateFormTransfer $aggregateFormTransfer,
-        array $options = []
-    ) {
-        return $this
-            ->getFormFactory()
-            ->create(
-                $this->createProductLabelAggregateFormType(),
-                $aggregateFormTransfer,
-                $options
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getProductLabelAggregateForm(
-        ProductLabelAggregateFormTransfer $aggregateFormTransfer,
-        array $options = []
-    ) {
-        return $this->createProductLabelAggregateForm($aggregateFormTransfer, $options);
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    protected function createProductLabelAggregateFormType()
+    public function getProductLabelAggregateForm(ProductLabelAggregateFormTransfer $aggregateFormTransfer, array $options = []): FormInterface
     {
-        return ProductLabelAggregateFormType::class;
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    protected function createProductLabelFormType()
-    {
-        return ProductLabelFormType::class;
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    protected function createProductLabelLocalizedAttributesFormType()
-    {
-        return ProductLabelLocalizedAttributesFormType::class;
+        return $this->getFormFactory()->create(ProductLabelAggregateFormType::class, $aggregateFormTransfer, $options);
     }
 
     /**
@@ -113,16 +58,6 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new UniqueProductLabelNameConstraint([
             UniqueProductLabelNameConstraint::OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
         ]);
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    protected function createRelatedProductFormType()
-    {
-        return RelatedProductFormType::class;
     }
 
     /**
@@ -139,7 +74,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider
      */
-    protected function createProductLabelFormDataProvider()
+    public function createProductLabelFormDataProvider()
     {
         return new ProductLabelFormDataProvider(
             $this->getLocaleFacade(),
@@ -150,7 +85,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\RelatedProductFormDataProvider
      */
-    protected function createRelatedProductFormDataProvider()
+    public function createRelatedProductFormDataProvider()
     {
         return new RelatedProductFormDataProvider();
     }
@@ -233,9 +168,17 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductLabelDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductLabelDeleteForm::class);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface
      */
-    protected function createRelatedProductTableQueryBuilder()
+    public function createRelatedProductTableQueryBuilder()
     {
         return new RelatedProductTableQueryBuilder(
             $this->getProductQueryContainer(),
@@ -248,7 +191,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
      */
-    protected function getProductQueryContainer()
+    public function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
@@ -256,7 +199,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
      */
-    protected function getMoneyFacade()
+    public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
     }
@@ -264,7 +207,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
      */
-    protected function getPriceProductFacade()
+    public function getPriceProductFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
