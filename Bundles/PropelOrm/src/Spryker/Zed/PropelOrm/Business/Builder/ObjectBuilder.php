@@ -42,6 +42,31 @@ class ObjectBuilder extends PropelObjectBuilder
     }
 
     /**
+     * Adds the comment for a mutator. Respects nullable.
+     *
+     * @param string $script
+     * @param \Propel\Generator\Model\Column $column
+     *
+     * @return void
+     */
+    public function addMutatorComment(&$script, Column $column)
+    {
+        $clo = $column->getLowercasedName();
+        $type = $column->getPhpType();
+        if ($type && !$column->isNotNull()) {
+            $type .= '|null';
+        }
+
+        $script .= "
+    /**
+     * Set the value of [$clo] column.
+     * " . $column->getDescription() . "
+     * @param " . $type . " \$v New value
+     * @return \$this|" . $this->getObjectClassName(true) . " The current object (for fluent API support)
+     */";
+    }
+
+    /**
      * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
