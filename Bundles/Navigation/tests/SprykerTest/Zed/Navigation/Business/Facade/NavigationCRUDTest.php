@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Navigation\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NavigationTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
 use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
@@ -58,7 +57,7 @@ class NavigationCRUDTest extends Unit
      */
     public function testCreateNewNavigationPersistsToDatabase(): void
     {
-        $navigationTransfer = $this->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
+        $navigationTransfer = $this->tester->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
 
         $navigationTransfer = $this->navigationFacade->createNavigation($navigationTransfer);
 
@@ -126,7 +125,7 @@ class NavigationCRUDTest extends Unit
     {
         // Arrange
         $baseNavigationTransfer = $this->tester->createNavigation('test-key', 'Test navigation', true);
-        $newNavigationTransfer = $this->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
+        $newNavigationTransfer = $this->tester->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
         $navigationNodeTransfer = $this->tester->createNavigationNode($baseNavigationTransfer->getIdNavigation());
         $this->tester->createNavigationNode(
             $baseNavigationTransfer->getIdNavigation(),
@@ -137,14 +136,12 @@ class NavigationCRUDTest extends Unit
         $duplicatedNavigationTransfer = $this->navigationFacade->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
 
         // Assert
-        $duplicatedNavigationNodeTransfer1 = $this->navigationFacade
+        $navigationTreeNodeTransfer = $this->navigationFacade
             ->findNavigationTree($duplicatedNavigationTransfer)
-            ->getNodes()[0]
-            ->getNavigationNode();
+            ->getNodes()[0];
 
-        $duplicatedNavigationNodeTransfer2 = $this->navigationFacade
-            ->findNavigationTree($duplicatedNavigationTransfer)
-            ->getNodes()[0]
+        $duplicatedNavigationNodeTransfer1 = $navigationTreeNodeTransfer->getNavigationNode();
+        $duplicatedNavigationNodeTransfer2 = $navigationTreeNodeTransfer
             ->getChildren()[0]
             ->getNavigationNode();
 
@@ -180,23 +177,6 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDuplicateNavigationWillThrowExceptionForNavigationDuplicatingWithExistentKey(): void
-    {
-        // Arrange
-        $baseNavigationTransfer = $this->tester->createNavigation('test-key', 'Test navigation', true);
-        $newNavigationTransfer = $this->createNavigationTransfer($baseNavigationTransfer->getKey(), 'test-navigation-1', true);
-
-        // Assert
-        $this->expectException(PropelException::class);
-        $this->expectExceptionMessage('duplicate key value violates unique constraint "spy_navigation_key-unique-key"');
-
-        // Act
-        $this->navigationFacade->duplicateNavigation($newNavigationTransfer, $baseNavigationTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testDuplicateNavigationWillThrowExceptionWithoutKey(): void
     {
         // Assert
@@ -222,23 +202,5 @@ class NavigationCRUDTest extends Unit
             (new NavigationTransfer())->setKey('test_1'),
             (new NavigationTransfer())->setKey('test_2')
         );
-    }
-
-    /**
-     * @param string $key
-     * @param string $name
-     * @param bool $isActive
-     *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
-     */
-    protected function createNavigationTransfer(string $key, string $name, bool $isActive): NavigationTransfer
-    {
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer
-            ->setKey($key)
-            ->setName($name)
-            ->setIsActive($isActive);
-
-        return $navigationTransfer;
     }
 }

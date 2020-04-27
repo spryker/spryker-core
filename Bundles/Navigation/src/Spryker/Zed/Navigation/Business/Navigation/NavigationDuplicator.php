@@ -72,13 +72,12 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             ->requireKey()
             ->requireName();
 
-        $newNavigationElement->setIsActive($baseNavigationElement->getIsActive());
-
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree($baseNavigationElement);
+        $newNavigationElement->setIsActive($navigationTreeTransfer->getNavigation()->getIsActive());
         $baseNavigationNodeTransfers = $this->getNavigationNodeTransfersRecursively($navigationTreeTransfer->getNodes());
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $baseNavigationNodeTransfers) {
-            return $this->executeCreateNavigationTransaction($newNavigationElement, $baseNavigationNodeTransfers);
+            return $this->executeDuplicateNavigationTransaction($newNavigationElement, $baseNavigationNodeTransfers);
         });
     }
 
@@ -109,7 +108,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    protected function executeCreateNavigationTransaction(
+    protected function executeDuplicateNavigationTransaction(
         NavigationTransfer $navigationTransfer,
         array $navigationNodeTransfers
     ): NavigationTransfer {

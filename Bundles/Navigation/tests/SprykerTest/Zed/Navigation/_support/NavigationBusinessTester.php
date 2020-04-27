@@ -123,4 +123,22 @@ class NavigationBusinessTester extends Actor
 
         return $navigationEntity;
     }
+
+    /**
+     * @param string $key
+     * @param string $name
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function createNavigationTransfer(string $key, string $name, bool $isActive): NavigationTransfer
+    {
+        $navigationTransfer = new NavigationTransfer();
+        $navigationTransfer
+            ->setKey($key)
+            ->setName($name)
+            ->setIsActive($isActive);
+
+        return $navigationTransfer;
+    }
 }
