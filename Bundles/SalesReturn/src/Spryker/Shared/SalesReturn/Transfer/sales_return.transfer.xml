@@ -74,7 +74,7 @@
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
-        <property name="returnPolicyMessages" type="Message[]"  singular="message"/>
+        <property name="returnPolicyMessages" type="Message[]"  singular="returnPolicyMessage"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">

@@ -42,7 +42,9 @@ class IsReturnableSetter implements IsReturnableSetterInterface
                 $itemTransfer->setIsReturnable(false);
             }
 
-            $this->setOrderItemreturnPolicyMessages($itemTransfer);
+            if ($itemTransfer->getCreatedAt()) {
+                $this->addReturnPolicyMessage($itemTransfer);
+            }
         }
 
         return $itemTransfers;
@@ -53,7 +55,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
      *
      * @return void
      */
-    protected function setOrderItemreturnPolicyMessages(ItemTransfer $itemTransfer): void
+    protected function addReturnPolicyMessage(ItemTransfer $itemTransfer): void
     {
         $retunrableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
             ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
