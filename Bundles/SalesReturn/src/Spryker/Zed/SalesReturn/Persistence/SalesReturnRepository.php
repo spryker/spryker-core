@@ -104,7 +104,12 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
                 ->setPagination($paginationTransfer);
         }
 
-        $page = $filterTransfer->getOffset() && $filterTransfer->getLimit() ? $filterTransfer->getOffset() / $filterTransfer->getLimit() + 1 : 1;
+        $page = 1;
+
+        if ($filterTransfer->getOffset() && $filterTransfer->getLimit()) {
+            $page = $filterTransfer->getOffset() / $filterTransfer->getLimit() + 1;
+        }
+
         $propelModelPager = $salesReturnQuery->paginate($page, $filterTransfer->getLimit());
         $paginationTransfer = $this->getPagination($propelModelPager);
 
