@@ -39,12 +39,10 @@ class ProductLabelDataImportPluginTest extends Unit
     public function testImportImportsProductLabel(): void
     {
         //Arrange
-        $this->tester->truncateProductLabelProductAbstractRelations();
-
-        $this->tester->haveProductAbstract([
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::SKU => '0001',
         ]);
-        $this->tester->haveProductAbstract([
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::SKU => '0002',
         ]);
 
@@ -58,6 +56,8 @@ class ProductLabelDataImportPluginTest extends Unit
 
         //Act
         $dataImporterReportTransfer = $productRelationDataImportPlugin->import($dataImportConfigurationTransfer);
+        $this->tester->truncateProductLabelProductAbstractRelations($productAbstractTransfer1);
+        $this->tester->truncateProductLabelProductAbstractRelations($productAbstractTransfer2);
 
         //Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess(), 'Data import should finish successfully');
@@ -71,14 +71,5 @@ class ProductLabelDataImportPluginTest extends Unit
                 static::EXPECTED_IMPORT_COUNT
             )
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        $this->tester->truncateProductLabelProductAbstractRelations();
-        parent::tearDown();
     }
 }

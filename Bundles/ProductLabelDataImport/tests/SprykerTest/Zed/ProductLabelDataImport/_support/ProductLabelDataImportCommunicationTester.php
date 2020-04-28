@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\ProductLabelDataImport;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 
 /**
  * Inherited Methods
@@ -32,23 +32,15 @@ class ProductLabelDataImportCommunicationTester extends Actor
     use _generated\ProductLabelDataImportCommunicationTesterActions;
 
     /**
-     * Define custom actions here
-     */
-
-    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
      * @return void
      */
-    public function truncateProductLabelProductAbstractRelations(): void
+    public function removeProductLabelProductAbstractRelations(ProductAbstractTransfer $productAbstractTransfer): void
     {
-        $this->truncateTableRelations($this->createProductLabelProductAbstractQuery());
-    }
-
-    /**
-     * @return void
-     */
-    public function truncateProductLabelStoreRelations(): void
-    {
-        $this->truncateTableRelations($this->createProductLabelStoreQuery());
+        $this->createProductLabelProductAbstractQuery()
+            ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->delete();
     }
 
     /**
@@ -57,13 +49,5 @@ class ProductLabelDataImportCommunicationTester extends Actor
     protected function createProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
     {
         return SpyProductLabelProductAbstractQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery
-     */
-    protected function createProductLabelStoreQuery(): SpyProductLabelStoreQuery
-    {
-        return SpyProductLabelStoreQuery::create();
     }
 }
