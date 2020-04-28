@@ -17,7 +17,7 @@ interface OmsProductOfferReservationFacadeInterface
      * Specification:
      * - Returns ReservationResponseTransfer with reserved quantity for product offer.
      * - Requires OmsProductOfferReservationCriteriaTransfer.productOfferReference transfer field to be set.
-     * - Requires OmsProductOfferReservationCriteriaTransfer.idStore transfer field to be set.
+     * - Requires OmsProductOfferReservationCriteriaTransfer.store transfer field to be set.
      *
      * @api
      *
