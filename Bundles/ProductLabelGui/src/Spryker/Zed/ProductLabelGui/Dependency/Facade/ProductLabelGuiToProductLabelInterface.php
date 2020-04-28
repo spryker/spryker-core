@@ -66,5 +66,5 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array;
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel);
 }

@@ -28,7 +28,7 @@ class AddIdsProductToDeAssignConstraintValidator extends ConstraintValidator
         }
 
         $assignedProducts = $constraint->getProductLabelFacade()
-            ->getProductAbstractIdsByIdProductLabel($value->getIdProductLabel());
+            ->findProductAbstractRelationsByIdProductLabel($value->getIdProductLabel());
 
         if (array_diff($value->getIdsProductAbstractToDeAssign(), $assignedProducts) !== []) {
             $this->context

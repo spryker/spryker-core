@@ -100,8 +100,8 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel)
     {
-        return $this->productLabelFacade->getProductAbstractIdsByIdProductLabel($idProductLabel);
+        return $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
     }
 }
