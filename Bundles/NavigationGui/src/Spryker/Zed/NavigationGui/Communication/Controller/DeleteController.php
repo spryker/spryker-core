@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,9 +37,11 @@ class DeleteController extends AbstractController
         $deleteNavigationForm = $this->getFactory()->createDeleteNavigationForm();
         $deleteNavigationForm->handleRequest($request);
 
+        $navigationCriteriaTransfer = new NavigationCriteriaTransfer();
+        $navigationCriteriaTransfer->setIdNavigation($idNavigation);
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
-            ->findNavigation((new NavigationTransfer())->setIdNavigation($idNavigation));
+            ->findNavigationByCriteria($navigationCriteriaTransfer);
         if (!$navigationTransfer) {
             $this->addErrorMessage(static::MESSAGE_NAVIGATION_REMOVAL_FAIL, [static::MESSAGE_PARAM => $idNavigation]);
 
