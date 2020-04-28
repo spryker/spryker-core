@@ -24,7 +24,7 @@ interface ShoppingListProductOptionConnectorEntityManagerInterface
      *
      * @return void
      */
-    public function saveBulkShoppingListItemProductOption(ArrayObject $shoppingListItemTransfers): void;
+    public function saveShoppingListItemProductOptionInBulk(ArrayObject $shoppingListItemTransfers): void;
 
     /**
      * @param int $idShoppingListItem

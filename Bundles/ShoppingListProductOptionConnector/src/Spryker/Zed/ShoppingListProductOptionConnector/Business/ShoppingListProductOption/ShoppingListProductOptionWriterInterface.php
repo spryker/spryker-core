@@ -24,7 +24,7 @@ interface ShoppingListProductOptionWriterInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(
+    public function saveShoppingListItemProductOptionsInBulk(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): ShoppingListItemCollectionTransfer;
 

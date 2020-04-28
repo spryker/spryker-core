@@ -50,7 +50,7 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
     ): ShoppingListItemCollectionTransfer {
         return $this->getFactory()
             ->createShoppingListProductOptionWriter()
-            ->saveShoppingListItemProductOptionsBulk($shoppingListItemCollectionTransfer);
+            ->saveShoppingListItemProductOptionsInBulk($shoppingListItemCollectionTransfer);
     }
 
     /**

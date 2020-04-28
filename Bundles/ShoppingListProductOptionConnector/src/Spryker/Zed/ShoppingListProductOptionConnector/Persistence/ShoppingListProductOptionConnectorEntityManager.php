@@ -37,7 +37,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
      *
      * @return void
      */
-    public function saveBulkShoppingListItemProductOption(ArrayObject $shoppingListItemTransfers): void
+    public function saveShoppingListItemProductOptionInBulk(ArrayObject $shoppingListItemTransfers): void
     {
         $shoppingListItemObjectCollection = new ObjectCollection();
         $shoppingListItemObjectCollection->setModel(SpyShoppingListProductOption::class);

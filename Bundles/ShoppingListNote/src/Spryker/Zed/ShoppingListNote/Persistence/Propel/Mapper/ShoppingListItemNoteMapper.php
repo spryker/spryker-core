@@ -75,10 +75,11 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): ShoppingListItemCollectionTransfer {
         $shoppingListItemNoteTransfers = $this->mapShoppingListItemEntityCollectionToTransferCollection($shoppingListItemNoteEntityCollection);
+        $indexedShoppingListItemNoteTransfers = $this->indexShoppingListItemNoteTransfersByFkShoppingListItem($shoppingListItemNoteTransfers);
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
-            $shoppingListItemNoteTransfer = $this
-                ->findShoppingListItemNoteTransferByIdShoppingListItem($shoppingListItemNoteTransfers, $shoppingListItemTransfer->getIdShoppingListItem());
+            $shoppingListItemNoteTransfer = $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? null;
+
             if ($shoppingListItemNoteTransfer) {
                 $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
             }
@@ -88,21 +89,17 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
     }
 
     /**
-     * @param \ArrayObject $shoppingListItemNoteTransfers
-     * @param int $idShoppingListItem
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemNoteTransfer[] $shoppingListItemNoteTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
      */
-    protected function findShoppingListItemNoteTransferByIdShoppingListItem(
-        ArrayObject $shoppingListItemNoteTransfers,
-        int $idShoppingListItem
-    ): ?ShoppingListItemNoteTransfer {
+    protected function indexShoppingListItemNoteTransfersByFkShoppingListItem(ArrayObject $shoppingListItemNoteTransfers): array
+    {
+        $indexedShoppingListItemNoteTransfers = [];
         foreach ($shoppingListItemNoteTransfers as $shoppingListItemNoteTransfer) {
-            if ($shoppingListItemNoteTransfer->getFkShoppingListItem() === $idShoppingListItem) {
-                return $shoppingListItemNoteTransfer;
-            }
+            $indexedShoppingListItemNoteTransfers[$shoppingListItemNoteTransfer->getFkShoppingListItem()] = $shoppingListItemNoteTransfer;
         }
 
-        return null;
+        return $indexedShoppingListItemNoteTransfers;
     }
 }

@@ -50,7 +50,7 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function saveShoppingListItemProductOptionsBulk(
+    public function saveShoppingListItemProductOptionsInBulk(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): ShoppingListItemCollectionTransfer {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
@@ -119,6 +119,6 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
         $this->removeShoppingListItemProductOptionsInBulk($shoppingListItemCollectionTransfer->getItems());
 
         $this->shoppingListProductOptionEntityManager
-            ->saveBulkShoppingListItemProductOption($shoppingListItemCollectionTransfer->getItems());
+            ->saveShoppingListItemProductOptionInBulk($shoppingListItemCollectionTransfer->getItems());
     }
 }
