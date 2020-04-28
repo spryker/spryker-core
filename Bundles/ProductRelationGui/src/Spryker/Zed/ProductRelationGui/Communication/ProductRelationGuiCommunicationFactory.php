@@ -27,6 +27,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreator;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
+use Spryker\Zed\ProductRelationGui\Communication\Table\ProductAbstractTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRelationTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRuleTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable;
@@ -170,6 +171,8 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @deprecated Use createProductAbstractTable() instead.
+     *
      * @param int|null $idProductRelation
      *
      * @return \Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable
@@ -182,6 +185,21 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getUtilEncodingService(),
             $this->getMoneyFacade(),
             $this->getPriceProductFacade(),
+            $idProductRelation
+        );
+    }
+
+    /**
+     * @param int|null $idProductRelation
+     *
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Table\ProductAbstractTable
+     */
+    public function createProductAbstractTable(?int $idProductRelation = null): ProductAbstractTable
+    {
+        return new ProductAbstractTable(
+            $this->getProductAbstractPropelQuery(),
+            $this->getLocaleFacade(),
+            $this->getUtilEncodingService(),
             $idProductRelation
         );
     }

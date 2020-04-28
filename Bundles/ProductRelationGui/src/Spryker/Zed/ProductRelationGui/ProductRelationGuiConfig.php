@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductRelationGuiConfig extends AbstractBundleConfig
 {
+    protected const USE_PRODUCT_ATTRIBUTE_TABLE = true;
+
     /**
      * @api
      *
@@ -20,5 +22,19 @@ class ProductRelationGuiConfig extends AbstractBundleConfig
     public function getYvesHost(): string
     {
         return $this->get(ApplicationConstants::BASE_URL_YVES);
+    }
+
+    /**
+     * Specification:
+     * - If true, Spryker\Zed\ProductRelationGui\Communication\Table\ProductAttributeTable will be used.
+     * - If false, Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable will be used.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function useOptimizedProductTable(): bool
+    {
+        return static::USE_PRODUCT_ATTRIBUTE_TABLE;
     }
 }
