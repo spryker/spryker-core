@@ -17,7 +17,7 @@ interface ProductLabelDataSetInterface
     public const COL_VALID_FROM = 'valid_from';
     public const COL_VALID_TO = 'valid_to';
     public const COL_PRODUCT_ABSTRACT_SKUS = 'product_abstract_skus';
-    public const COL_PRIORITY = 'position';
+    public const COL_PRIORITY = 'priority';
 
     public const COL_ID_PRODUCT_LABEL = 'id_product_label';
     public const COL_PRODUCT_ABSTRACT_IDS = 'product_abstract_ids';
