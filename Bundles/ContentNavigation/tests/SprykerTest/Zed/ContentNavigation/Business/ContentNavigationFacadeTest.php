@@ -40,7 +40,7 @@ class ContentNavigationFacadeTest extends Unit
         //Act
         $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentNavigationTerm($contentNavigationTermTransfer);
 
-        //Arrange
+        //Assert
         $this->assertFalse($contentValidationResponseTransfer->getIsSuccess(), 'Validation result does not match expected value.');
         $this->assertGreaterThanOrEqual(
             1,
@@ -61,7 +61,7 @@ class ContentNavigationFacadeTest extends Unit
         //Act
         $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentNavigationTerm($contentNavigationTermTransfer);
 
-        //Arrange
+        //Assert
         $this->assertTrue($contentValidationResponseTransfer->getIsSuccess(), 'Validation result does not match expected value.');
         $this->assertCount(
             0,

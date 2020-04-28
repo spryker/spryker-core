@@ -33,8 +33,7 @@ class ToggleStatusController extends AbstractController
     {
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
-        $navigationCriteriaTransfer = new NavigationCriteriaTransfer();
-        $navigationCriteriaTransfer->setIdNavigation($idNavigation);
+        $navigationCriteriaTransfer = (new NavigationCriteriaTransfer())->setIdNavigation($idNavigation);
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
             ->findNavigationByCriteria($navigationCriteriaTransfer);
