@@ -33,6 +33,16 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
     protected $config;
 
     /**
+     * @var string|null
+     */
+    protected static $storeName;
+
+    /**
+     * @var string|null
+     */
+    protected static $locale;
+
+    /**
      * @param \Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface $localeClient
      * @param \Spryker\Client\Storage\StorageConfig $config
@@ -127,7 +137,7 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     protected function buildCacheKey(string $urlSegments, string $queryStringParametersKey): string
     {
-        $storeName = $this->storeClient->getCurrentStore()->getName();
+        $storeName = $this->getStoreName();
         $locale = $this->localeClient->getCurrentLocale();
 
         return implode(static::KEY_NAME_SEPARATOR, [
@@ -136,5 +146,29 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
             static::KEY_NAME_PREFIX,
             sprintf('%s%s', $urlSegments, $queryStringParametersKey),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        if (static::$storeName === null) {
+            static::$storeName = $this->storeClient->getCurrentStore()->getName();
+        }
+
+        return static::$storeName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale(): string
+    {
+        if (static::$locale === null) {
+            static::$locale = $this->localeClient->getCurrentLocale();
+        }
+
+        return static::$locale;
     }
 }

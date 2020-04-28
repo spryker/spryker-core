@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Kernel\ClassResolver\ClassNameFinder;
 
 use Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilderInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
 use Throwable;
 
 class ClassNameFinder implements ClassNameFinderInterface
@@ -18,11 +19,18 @@ class ClassNameFinder implements ClassNameFinderInterface
     protected $classNameCandidatesBuilder;
 
     /**
-     * @param \Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilderInterface $classNameCandidatesBuilder
+     * @var \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
      */
-    public function __construct(ClassNameCandidatesBuilderInterface $classNameCandidatesBuilder)
+    protected $resolverCacheManager;
+
+    /**
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilderInterface $classNameCandidatesBuilder
+     * @param \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface $resolverCacheManager
+     */
+    public function __construct(ClassNameCandidatesBuilderInterface $classNameCandidatesBuilder, ResolverCacheFactoryInterface $resolverCacheManager)
     {
         $this->classNameCandidatesBuilder = $classNameCandidatesBuilder;
+        $this->resolverCacheManager = $resolverCacheManager;
     }
 
     /**
@@ -57,6 +65,16 @@ class ClassNameFinder implements ClassNameFinderInterface
     protected function tryClassName(string $classNameCandidate, bool $throwException): ?string
     {
         try {
+            if ($this->resolverCacheManager->useCache()) {
+                $cacheProvider = $this->resolverCacheManager->createClassResolverCacheProvider();
+
+                if ($cacheProvider->getCache()->classExists($classNameCandidate)) {
+                    return $classNameCandidate;
+                }
+
+                return null;
+            }
+
             if (class_exists($classNameCandidate)) {
                 return $classNameCandidate;
             }
