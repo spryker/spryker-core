@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -159,5 +160,20 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         return $this->getFactory()
             ->createProductLabelStoreRelationMapper()
             ->mapProductLabelStoreEntitiesToStoreRelationTransfer($productLabelStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array
+    {
+        return $this->getFactory()
+            ->createProductRelationQuery()
+            ->select([SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByFkProductLabel($idProductLabel)
+            ->find()
+            ->getData();
     }
 }

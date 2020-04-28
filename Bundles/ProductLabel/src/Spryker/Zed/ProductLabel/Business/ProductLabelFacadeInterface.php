@@ -208,4 +208,16 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
+
+    /**
+     * Specification:
+     * - Retrieves all product abstract IDs for the given id_product_label.
+     *
+     * @api
+     *
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array;
 }

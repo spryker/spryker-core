@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductLabelGui\Communication;
 use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\AddIdsProductToAssignConstraint;
+use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\AddIdsProductToDeAssignConstraint;
 use Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelAggregateFormDataProvider;
 use Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider;
@@ -24,6 +26,7 @@ use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuil
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
@@ -57,6 +60,26 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new UniqueProductLabelNameConstraint([
             UniqueProductLabelNameConstraint::OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createAddIdsProductToAssignConstraint(): Constraint
+    {
+        return new AddIdsProductToAssignConstraint([
+            AddIdsProductToAssignConstraint::OPTION_PRODUCT_LABEL_FACADE => $this->getProductLabelFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createAddIdsProductToDeAssignConstraint(): Constraint
+    {
+        return new AddIdsProductToDeAssignConstraint([
+            AddIdsProductToDeAssignConstraint::OPTION_PRODUCT_LABEL_FACADE => $this->getProductLabelFacade(),
         ]);
     }
 

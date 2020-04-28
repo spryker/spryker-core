@@ -60,4 +60,11 @@ interface ProductLabelGuiToProductLabelInterface
      * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
      */
     public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer;
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array;
 }

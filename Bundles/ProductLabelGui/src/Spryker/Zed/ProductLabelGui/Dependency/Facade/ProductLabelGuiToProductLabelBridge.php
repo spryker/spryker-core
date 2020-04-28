@@ -94,4 +94,14 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     {
         return $this->productLabelFacade->removeLabel($productLabelTransfer);
     }
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array
+    {
+        return $this->productLabelFacade->getProductAbstractIdsByIdProductLabel($idProductLabel);
+    }
 }
