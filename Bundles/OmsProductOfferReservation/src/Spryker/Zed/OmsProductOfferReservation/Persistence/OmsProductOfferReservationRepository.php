@@ -71,7 +71,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
 
         $omsProductOfferReservationQuery = $this->applyFilters(
             $omsProductOfferReservationQuery,
-            $omsProductOfferReservationCriteriaTransfer->getStore()
+            $omsProductOfferReservationCriteriaTransfer
         );
 
         $quantity = $omsProductOfferReservationQuery
@@ -138,22 +138,24 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
 
     /**
      * @param \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
      *
      * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery
      */
     protected function applyFilters(
         SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery,
-        StoreTransfer $storeTransfer
+        OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): SpyOmsProductOfferReservationQuery {
-        if ($storeTransfer->getIdStore()) {
-            $omsProductOfferReservationQuery->filterByFkStore($storeTransfer->getIdStore());
+        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()) {
+            $omsProductOfferReservationQuery->filterByFkStore(
+                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()
+            );
         }
 
-        if ($storeTransfer->getName()) {
+        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getName()) {
             $omsProductOfferReservationQuery
                 ->useStoreQuery()
-                    ->filterByName($storeTransfer->getName())
+                    ->filterByName($omsProductOfferReservationCriteriaTransfer->getStore()->getName())
                 ->endUse();
         }
 
