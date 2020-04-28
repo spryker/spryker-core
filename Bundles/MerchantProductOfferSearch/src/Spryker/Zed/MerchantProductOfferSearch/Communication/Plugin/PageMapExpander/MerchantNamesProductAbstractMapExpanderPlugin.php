@@ -49,7 +49,7 @@ class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMa
             return $pageMapTransfer;
         }
 
-        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $storeName => $merchantName) {
+        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {
             $pageMapBuilder
                 ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_NAME, $merchantName)
                 ->addFullTextBoosted($pageMapTransfer, $merchantName)

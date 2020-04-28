@@ -394,10 +394,10 @@ class MerchantTable extends AbstractTable
      */
     protected function createStoresLabel(array $merchant): string
     {
-        $stores = explode(',', $merchant[static::COL_STORES]);
+        $storeNames = explode(',', $merchant[static::COL_STORES]);
 
         $storeLabels = [];
-        foreach ($stores as $storeName) {
+        foreach ($storeNames as $storeName) {
             $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
         }
 
