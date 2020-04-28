@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -49,14 +50,20 @@ class DuplicateController extends AbstractController
     protected function handleDuplicateNavigationForm(FormInterface $duplicateNavigationForm, Request $request)
     {
         if ($duplicateNavigationForm->isSubmitted() && $duplicateNavigationForm->isValid()) {
-            $navigationTransfer = $duplicateNavigationForm->getData();
             $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
-            $newNavigationTransfer = (new NavigationTransfer())
-                ->setName($navigationTransfer->getName())
-                ->setKey($navigationTransfer->getKey());
-            $this->getFactory()
+            $duplicateNavigationTransfer = $this->createDuplicateNavigationTransfer(
+                $duplicateNavigationForm->getData(),
+                $idNavigation
+            );
+            $navigationResponseTransfer = $this->getFactory()
                 ->getNavigationFacade()
-                ->duplicateNavigation($newNavigationTransfer, (new NavigationTransfer())->setIdNavigation($idNavigation));
+                ->duplicateNavigation($duplicateNavigationTransfer);
+
+            if (!$navigationResponseTransfer->getIsSuccessful()) {
+                $this->addErrorMessage($navigationResponseTransfer->getError()->getMessage());
+
+                return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+            }
 
             $this->addSuccessMessage(
                 'Navigation element %d was duplicated successfully.',
@@ -67,5 +74,19 @@ class DuplicateController extends AbstractController
         }
 
         return $this->viewResponse(['duplicateNavigationForm' => $duplicateNavigationForm->createView()]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     * @param int $idBaseNavigation
+     *
+     * @return \Generated\Shared\Transfer\DuplicateNavigationTransfer
+     */
+    protected function createDuplicateNavigationTransfer(NavigationTransfer $navigationTransfer, int $idBaseNavigation): DuplicateNavigationTransfer
+    {
+        return (new DuplicateNavigationTransfer())
+            ->setKey($navigationTransfer->getKey())
+            ->setName($navigationTransfer->getName())
+            ->setIdBaseNavigation($idBaseNavigation);
     }
 }

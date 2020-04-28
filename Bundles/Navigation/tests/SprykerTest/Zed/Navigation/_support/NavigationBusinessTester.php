@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Navigation;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
@@ -44,7 +45,7 @@ class NavigationBusinessTester extends Actor
      */
     public function createNavigation(string $name, string $key, bool $isActive): NavigationTransfer
     {
-        $baseNavigationEntity = $this->createNavigationEntity($name, $key, $isActive);
+        $baseNavigationEntity = $this->createNavigationEntity($key, $name, $isActive);
 
         return (new NavigationTransfer())
             ->setKey($baseNavigationEntity->getKey())
@@ -140,5 +141,20 @@ class NavigationBusinessTester extends Actor
             ->setIsActive($isActive);
 
         return $navigationTransfer;
+    }
+
+    /**
+     * @param string $key
+     * @param string $name
+     * @param int $idBaseNavigation
+     *
+     * @return \Generated\Shared\Transfer\DuplicateNavigationTransfer
+     */
+    public function createDuplicateNavigationTransfer(string $key, string $name, int $idBaseNavigation): DuplicateNavigationTransfer
+    {
+        return (new DuplicateNavigationTransfer())
+            ->setKey($key)
+            ->setName($name)
+            ->setIdBaseNavigation($idBaseNavigation);
     }
 }

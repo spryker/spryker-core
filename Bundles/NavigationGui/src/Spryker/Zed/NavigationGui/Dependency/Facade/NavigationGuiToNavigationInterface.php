@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationResponseTransfer;
@@ -58,15 +59,11 @@ interface NavigationGuiToNavigationInterface
     public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
-     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     * @param \Generated\Shared\Transfer\DuplicateNavigationTransfer $duplicateNavigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationResponseTransfer
      */
-    public function duplicateNavigation(
-        NavigationTransfer $newNavigationElement,
-        NavigationTransfer $baseNavigationElement
-    ): NavigationResponseTransfer;
+    public function duplicateNavigation(DuplicateNavigationTransfer $duplicateNavigationTransfer): NavigationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer

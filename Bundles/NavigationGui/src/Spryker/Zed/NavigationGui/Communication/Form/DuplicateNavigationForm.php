@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
- * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiRepositoryInterface getRepository()
  */
 class DuplicateNavigationForm extends AbstractType
 {
@@ -87,7 +86,6 @@ class DuplicateNavigationForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 255]),
-                    $this->getFactory()->createUniqueKeyConstraint(),
                 ],
             ]);
 

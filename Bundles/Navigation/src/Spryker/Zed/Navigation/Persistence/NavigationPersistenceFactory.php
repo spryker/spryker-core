@@ -16,6 +16,7 @@ use Spryker\Zed\Navigation\Persistence\Mapper\NavigationMapper;
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  */
 class NavigationPersistenceFactory extends AbstractPersistenceFactory
 {

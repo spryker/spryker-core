@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiRepositoryInterface getRepository()
  */
 class UpdateController extends AbstractController
 {

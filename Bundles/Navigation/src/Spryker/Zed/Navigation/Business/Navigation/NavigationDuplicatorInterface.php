@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\NavigationResponseTransfer;
-use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationDuplicatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
-     * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
+     * @param \Generated\Shared\Transfer\DuplicateNavigationTransfer $duplicateNavigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationResponseTransfer
      */
-    public function duplicateNavigation(
-        NavigationTransfer $newNavigationElement,
-        NavigationTransfer $baseNavigationElement
-    ): NavigationResponseTransfer;
+    public function duplicateNavigation(DuplicateNavigationTransfer $duplicateNavigationTransfer): NavigationResponseTransfer;
 }
