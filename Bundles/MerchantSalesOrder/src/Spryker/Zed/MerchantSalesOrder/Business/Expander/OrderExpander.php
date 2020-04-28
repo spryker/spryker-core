@@ -64,9 +64,9 @@ class OrderExpander implements OrderExpanderInterface
                 continue;
             }
 
-            /** @var \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrder */
-            $merchantOrder = $groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()];
-            $itemTransfer->setMerchantOrderReference($merchantOrder->getMerchantOrderReference());
+            /** @var \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer */
+            $merchantOrderTransfer = $groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()];
+            $itemTransfer->setMerchantOrderReference($merchantOrderTransfer->getMerchantOrderReference());
         }
 
         return $orderTransfer;
