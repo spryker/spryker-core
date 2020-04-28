@@ -56,8 +56,8 @@ class ProductLabelDataImportPluginTest extends Unit
 
         //Act
         $dataImporterReportTransfer = $productRelationDataImportPlugin->import($dataImportConfigurationTransfer);
-        $this->tester->truncateProductLabelProductAbstractRelations($productAbstractTransfer1);
-        $this->tester->truncateProductLabelProductAbstractRelations($productAbstractTransfer2);
+        $this->tester->removeProductLabelProductAbstractRelationsByProductAbstractTransfer($productAbstractTransfer1);
+        $this->tester->removeProductLabelProductAbstractRelationsByProductAbstractTransfer($productAbstractTransfer2);
 
         //Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess(), 'Data import should finish successfully');

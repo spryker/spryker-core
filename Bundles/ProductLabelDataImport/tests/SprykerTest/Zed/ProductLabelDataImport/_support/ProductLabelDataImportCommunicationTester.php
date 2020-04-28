@@ -36,8 +36,9 @@ class ProductLabelDataImportCommunicationTester extends Actor
      *
      * @return void
      */
-    public function removeProductLabelProductAbstractRelations(ProductAbstractTransfer $productAbstractTransfer): void
-    {
+    public function removeProductLabelProductAbstractRelationsByProductAbstractTransfer(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): void {
         $this->createProductLabelProductAbstractQuery()
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->delete();
