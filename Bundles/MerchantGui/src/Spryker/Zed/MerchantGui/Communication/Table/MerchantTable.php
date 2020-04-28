@@ -401,6 +401,6 @@ class MerchantTable extends AbstractTable
             $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
         }
 
-        return implode(" ", $storeLabels);
+        return implode(' ', $storeLabels);
     }
 }
