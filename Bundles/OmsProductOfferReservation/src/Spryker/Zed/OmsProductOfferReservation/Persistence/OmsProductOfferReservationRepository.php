@@ -65,10 +65,11 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): Decimal {
-        $omsProductOfferReservationQuery = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
+        $omsProductOfferReservationQuery = $this->getFactory()
+            ->getOmsProductOfferReservationPropelQuery()
             ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference());
 
-        $omsProductOfferReservationQuery = $this->resolveFilterByStore(
+        $omsProductOfferReservationQuery = $this->applyFilters(
             $omsProductOfferReservationQuery,
             $omsProductOfferReservationCriteriaTransfer->getStore()
         );
@@ -108,13 +109,13 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+            ])
             ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT)
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ]);
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT);
 
         if ($storeTransfer !== null) {
             $salesOrderItemQuery
@@ -129,8 +130,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
          */
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
-                ->fromArray($salesOrderItemAggregation, true)
-                ->setSku($salesOrderItemAggregation[SpySalesOrderItemTableMap::COL_SKU]);
+                ->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;
@@ -142,12 +142,12 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
      *
      * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery
      */
-    protected function resolveFilterByStore(
+    protected function applyFilters(
         SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery,
         StoreTransfer $storeTransfer
     ): SpyOmsProductOfferReservationQuery {
         if ($storeTransfer->getIdStore()) {
-            return $omsProductOfferReservationQuery->filterByFkStore($storeTransfer->getIdStore());
+            $omsProductOfferReservationQuery->filterByFkStore($storeTransfer->getIdStore());
         }
 
         if ($storeTransfer->getName()) {
