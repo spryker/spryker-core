@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -15,52 +15,46 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class CartVouchersResourceController extends AbstractController
+class GuestCartCodesResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds a code to cart."
+     *              "Adds a code to guest cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "401": "Invalid access token.",
-     *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found."
      *          }
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()
-            ->createCartCodeAdder()
-            ->addDiscountCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()->createCartCodeAdder()->addCartCodeToGuestCart($restRequest, $restCartCodeRequestAttributesTransfer);
     }
 
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/vouchers/{voucherCode}",
+     *          "path": "/guest-carts/{guestCartId}/cart-codes/{code}",
      *          "summary": [
-     *              "Deletes a code from cart."
+     *              "Deletes a code from guest cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "401": "Invalid access token.",
-     *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found.",
      *              "422": "Cart code can't be deleted."
      *          }
@@ -74,6 +68,6 @@ class CartVouchersResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeCodeFromGuestCart($restRequest);
     }
 }

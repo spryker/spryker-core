@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class CartVouchersResourceController extends AbstractController
+class CartCodesResourceController extends AbstractController
 {
     /**
      * @Glue({
@@ -35,23 +35,23 @@ class CartVouchersResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCartCodeAdder()
-            ->addDiscountCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
+            ->addCartCodeToCart($restRequest, $restCartCodeRequestAttributesTransfer);
     }
 
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/vouchers/{voucherCode}",
+     *          "path": "/carts/{cartId}/cart-codes/{code}",
      *          "summary": [
      *              "Deletes a code from cart."
      *          ],

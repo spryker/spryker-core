@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
 use Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
@@ -48,7 +50,7 @@ class CartCodeAdder implements CartCodeAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCartCodeToCart(
+    public function addDiscountCodeToCart(
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
@@ -60,11 +62,43 @@ class CartCodeAdder implements CartCodeAdderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCartCodeToCart(
+        RestRequestInterface $restRequest,
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+    ): RestResponseInterface {
+        $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_CARTS);
+        $cartCodeResponseTransfer = $this->addCartCode($restCartCodeRequestAttributesTransfer, $quoteTransfer);
+
+        return $this->cartCodeResponseBuilder->createCartRestResponse($cartCodeResponseTransfer, $restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function addCartCodeToGuestCart(
+        RestRequestInterface $restRequest,
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+    ): RestResponseInterface {
+        $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_GUEST_CARTS);
+        $cartCodeResponseTransfer = $this->addCartCode($restCartCodeRequestAttributesTransfer, $quoteTransfer);
+
+        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeResponseTransfer, $restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addDiscountCodeToGuestCart(
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
@@ -75,18 +109,18 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer|\Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
     protected function addCartCode(
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer,
+        AbstractTransfer $restCartCodeRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): CartCodeResponseTransfer {
         $cartCodeRequestTransfer = (new CartCodeRequestTransfer())
             ->setQuote($quoteTransfer)
-            ->setCartCode($restDiscountRequestAttributesTransfer->getCode());
+            ->setCartCode($restCartCodeRequestAttributesTransfer->getCode());
 
         return $this->cartCodesRestApiClient->addCartCode($cartCodeRequestTransfer);
     }

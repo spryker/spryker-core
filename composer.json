@@ -284,6 +284,7 @@
     "spryker/gift-card": "*",
     "spryker/gift-card-balance": "*",
     "spryker/gift-card-mail-connector": "*",
+    "spryker/gift-cards-rest-api": "*",
     "spryker/glossary": "*",
     "spryker/glossary-storage": "*",
     "spryker/glue-application": "*",

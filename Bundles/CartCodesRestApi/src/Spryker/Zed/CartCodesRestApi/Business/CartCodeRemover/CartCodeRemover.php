@@ -55,16 +55,17 @@ class CartCodeRemover implements CartCodeRemoverInterface
             );
         }
 
-        $discountTransfers = $quoteResponseTransfer->getQuoteTransfer()->getVoucherDiscounts();
-        if (!$this->isVoucherCodeInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
+        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        $cartCodeResponseTransfer = $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
+
+        if (!$cartCodeResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
         }
 
-        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
-        return $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
+        return $cartCodeResponseTransfer;
     }
 
     /**
