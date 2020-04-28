@@ -4,6 +4,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
+    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
     {{ editActionButton(
         url(
             '/product-label-gui/edit',
@@ -11,7 +12,6 @@
         ),
         'Edit' | trans
     ) }}
-    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
 {% endblock %}
 
 {% block content %}
