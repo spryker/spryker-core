@@ -21,7 +21,7 @@ class CompanyUserStoragePublishListener extends AbstractPlugin implements EventB
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
