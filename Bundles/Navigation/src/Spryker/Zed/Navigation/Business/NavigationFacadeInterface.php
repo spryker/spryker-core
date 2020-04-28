@@ -9,6 +9,7 @@ namespace Spryker\Zed\Navigation\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -183,16 +184,18 @@ interface NavigationFacadeInterface
      * - Duplicates navigation with all navigation nodes.
      * - Persists new navigation entity to database.
      * - Touches navigation entity as active.
+     * - Returns response with duplicated Navigation.
+     * - Returns response with error message in case of error.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
      * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
      */
     public function duplicateNavigation(
         NavigationTransfer $newNavigationElement,
         NavigationTransfer $baseNavigationElement
-    ): NavigationTransfer;
+    ): NavigationResponseTransfer;
 }

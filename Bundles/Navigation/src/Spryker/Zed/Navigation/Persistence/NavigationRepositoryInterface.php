@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\NavigationGui\Persistence;
+namespace Spryker\Zed\Navigation\Persistence;
 
-interface NavigationGuiRepositoryInterface
+interface NavigationRepositoryInterface
 {
     /**
      * @param string $key

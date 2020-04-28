@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\NavigationGui\Persistence;
+namespace Spryker\Zed\Navigation\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
  * @method \Spryker\Zed\Navigation\Persistence\NavigationPersistenceFactory getFactory()
  */
-class NavigationGuiRepository extends AbstractRepository implements NavigationGuiRepositoryInterface
+class NavigationRepository extends AbstractRepository implements NavigationRepositoryInterface
 {
     /**
      * @param string $key

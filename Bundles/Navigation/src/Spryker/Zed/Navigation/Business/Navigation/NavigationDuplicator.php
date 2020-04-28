@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Navigation\Business\Navigation;
 
 use ArrayObject;
+use Generated\Shared\Transfer\NavigationErrorTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -19,6 +21,9 @@ use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface;
 class NavigationDuplicator implements NavigationDuplicatorInterface
 {
     use TransactionTrait;
+
+    protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found';
+    protected const ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS = 'Navigation with the same key already exists.';
 
     /**
      * @var \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface
@@ -54,17 +59,28 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
      * @param \Generated\Shared\Transfer\NavigationTransfer $newNavigationElement
      * @param \Generated\Shared\Transfer\NavigationTransfer $baseNavigationElement
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
      */
     public function duplicateNavigation(
         NavigationTransfer $newNavigationElement,
         NavigationTransfer $baseNavigationElement
-    ): NavigationTransfer {
+    ): NavigationResponseTransfer {
         $newNavigationElement
             ->requireKey()
             ->requireName();
 
+        $navigationResponseTransfer = (new NavigationResponseTransfer())->setIsSuccessful(false);
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree($baseNavigationElement);
+        if (!$navigationTreeTransfer) {
+            return $navigationResponseTransfer
+                ->setError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND));
+        }
+
+        if (!$this->hasUniqueKey($newNavigationElement->getKey())) {
+            return $navigationResponseTransfer
+                ->setError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS));
+        }
+
         $newNavigationElement->setIsActive($navigationTreeTransfer->getNavigation()->getIsActive());
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $navigationTreeTransfer) {
@@ -76,16 +92,18 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
      *
-     * @return \Generated\Shared\Transfer\NavigationTransfer
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
      */
     protected function executeDuplicateNavigationTransaction(
         NavigationTransfer $navigationTransfer,
         NavigationTreeTransfer $navigationTreeTransfer
-    ): NavigationTransfer {
+    ): NavigationResponseTransfer {
         $navigationTransfer = $this->navigationCreator->createNavigation($navigationTransfer);
         $this->duplicateNavigationNodeTransfers($navigationTreeTransfer->getNodes(), $navigationTransfer->getIdNavigation());
 
-        return $navigationTransfer;
+        return (new NavigationResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setNavigationTransfer($navigationTransfer);
     }
 
     /**
@@ -142,5 +160,15 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         }
 
         return new ArrayObject($newNavigationNodeLocalizedAttributesTransfers);
+    }
+
+    /**
+     * @param string $navigationKey
+     *
+     * @return bool
+     */
+    protected function hasUniqueKey(string $navigationKey)
+    {
+        return true;
     }
 }
