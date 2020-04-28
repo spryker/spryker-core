@@ -194,7 +194,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
         FilterFieldTransfer $filterFieldTransfer
     ): SpySalesOrderQuery {
         $comparison = $filterFieldTransfer->getType() === static::SEARCH_TYPE_DATE_FROM ?
-            Criteria::GREATER_THAN :
+            Criteria::GREATER_EQUAL :
             Criteria::LESS_THAN;
 
         $salesOrderQuery->filterByCreatedAt($filterFieldTransfer->getValue(), $comparison);
