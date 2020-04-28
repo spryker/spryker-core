@@ -82,7 +82,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
         return $this->getFactory()
             ->createProductLabelMapper()
-            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
     }
 
     /**
@@ -103,7 +103,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
         return $this->getFactory()
             ->createProductLabelMapper()
-            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
     }
 
     /**
@@ -151,7 +151,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
         return $this->getFactory()
             ->createProductLabelMapper()
-            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
     }
 
     /**

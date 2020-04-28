@@ -449,7 +449,7 @@ class ProductLabelFacadeTest extends Unit
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelIds = $productLabelFacade->findLabelIdsByIdProductAbstract($idProductAbstract);
 
-        $this->assertSame([$idProductLabel], $productLabelIds);
+        $this->assertEquals([$idProductLabel], $productLabelIds);
     }
 
     /**

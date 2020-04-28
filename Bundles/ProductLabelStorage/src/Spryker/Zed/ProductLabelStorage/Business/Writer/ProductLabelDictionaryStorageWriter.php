@@ -76,11 +76,11 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
 
         $productLabelDictionaryStorageTransfers = $this->productLabelStorageRepository
             ->getProductLabelDictionaryStorageTransfers();
-        $productLabelDictionaryStorageTransfers = $this->filterEmptyProductLabelDictionaryStorageTransfers(
+        $productLabelDictionaryStorageTransfers = $this->filterAndDeleteEmptyProductLabelDictionaryStorageTransfers(
             $productLabelDictionaryStorageTransfers,
             $productLabelDictionaryItemTransfersMappedByStoreAndLocale
         );
-        $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->filterExistingProductLabelDictionaryStorageData(
+        $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->filterAndUpdateExistingProductLabelDictionaryStorageData(
             $productLabelDictionaryStorageTransfers,
             $productLabelDictionaryItemTransfersMappedByStoreAndLocale
         );
@@ -94,7 +94,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[]
      */
-    protected function filterEmptyProductLabelDictionaryStorageTransfers(
+    protected function filterAndDeleteEmptyProductLabelDictionaryStorageTransfers(
         array $productLabelDictionaryStorageTransfers,
         array $productLabelDictionaryItemTransfersMappedByStoreAndLocale
     ): array {
@@ -121,7 +121,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    protected function filterExistingProductLabelDictionaryStorageData(
+    protected function filterAndUpdateExistingProductLabelDictionaryStorageData(
         array $productLabelDictionaryStorageTransfers,
         array $productLabelDictionaryItemTransfersMappedByStoreAndLocale
     ): array {

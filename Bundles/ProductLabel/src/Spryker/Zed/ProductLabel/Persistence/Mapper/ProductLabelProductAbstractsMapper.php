@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelProductAbstractTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -16,24 +15,22 @@ class ProductLabelProductAbstractsMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[] $productLabelProductAbstractsEntities
-     * @param \ArrayObject $productLabelProductAbstractsTransferCollection
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productLabelProductAbstractsTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
      */
-    public function mapProductLabelProductAbstractEntitiesToProductLabelProductAbstractTransferCollection(
+    public function mapProductLabelProductAbstractEntitiesToProductLabelProductAbstractTransfers(
         ObjectCollection $productLabelProductAbstractsEntities,
-        ArrayObject $productLabelProductAbstractsTransferCollection
-    ): ArrayObject {
+        array $productLabelProductAbstractsTransfers
+    ): array {
         foreach ($productLabelProductAbstractsEntities as $productLabelProductAbstractsEntity) {
-            $productLabelProductAbstractsTransferCollection->append(
-                $this->mapProductLabelProductAbstractEntityToProductLabelProductAbstractTransfer(
-                    $productLabelProductAbstractsEntity,
-                    new ProductLabelProductAbstractTransfer()
-                )
+            $productLabelProductAbstractsTransfers[] = $this->mapProductLabelProductAbstractEntityToProductLabelProductAbstractTransfer(
+                $productLabelProductAbstractsEntity,
+                new ProductLabelProductAbstractTransfer()
             );
         }
 
-        return $productLabelProductAbstractsTransferCollection;
+        return $productLabelProductAbstractsTransfers;
     }
 
     /**

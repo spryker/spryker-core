@@ -49,14 +49,16 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
         array $productLabelDictionaryItemTransfers
     ): array {
         foreach ($productLabelTransfer->getLocalizedAttributesCollection() as $productLabelLocalizedAttributesTransfer) {
-            $productLabelDictionaryItemTransfers[$storeTransfer->getName()][$productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName()][] =
-                (new ProductLabelDictionaryItemTransfer())
-                    ->setName($productLabelLocalizedAttributesTransfer->getName())
-                    ->setIdProductLabel($productLabelLocalizedAttributesTransfer->getFkProductLabel())
-                    ->setKey($productLabelTransfer->getName())
-                    ->setIsExclusive($productLabelTransfer->getIsExclusive())
-                    ->setPosition($productLabelTransfer->getPosition())
-                    ->setFrontEndReference($productLabelTransfer->getFrontEndReference());
+            $storeName = $storeTransfer->getName();
+            $localeName = $productLabelLocalizedAttributesTransfer->getLocale()->getLocaleName();
+
+            $productLabelDictionaryItemTransfer = (new ProductLabelDictionaryItemTransfer())
+                ->fromArray($productLabelTransfer->toArray(), true)
+                ->setName($productLabelLocalizedAttributesTransfer->getName())
+                ->setIdProductLabel($productLabelLocalizedAttributesTransfer->getFkProductLabel())
+                ->setKey($productLabelTransfer->getName());
+
+            $productLabelDictionaryItemTransfers[$storeName][$localeName][] = $productLabelDictionaryItemTransfer;
         }
 
         return $productLabelDictionaryItemTransfers;
