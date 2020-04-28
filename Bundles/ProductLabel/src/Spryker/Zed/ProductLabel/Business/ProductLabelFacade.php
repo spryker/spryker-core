@@ -254,18 +254,4 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->createProductAbstractRelationUpdater($logger)
             ->updateProductLabelRelations();
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductLabel
-     *
-     * @return int[]
-     */
-    public function getProductAbstractIdsByIdProductLabel(int $idProductLabel): array
-    {
-        return $this->getRepository()->getProductAbstractIdsByIdProductLabel($idProductLabel);
-    }
 }
