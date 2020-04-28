@@ -23,7 +23,7 @@ class DataSetBrokerTransactionFailedException extends Exception implements Trans
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(int $rolledBackRowsCount, $message = "", $code = 0, ?Throwable $previous = null)
+    public function __construct(int $rolledBackRowsCount, $message = '', $code = 0, ?Throwable $previous = null)
     {
         $this->rolledBackRowsCount = $rolledBackRowsCount;
         parent::__construct($message, $code, $previous);

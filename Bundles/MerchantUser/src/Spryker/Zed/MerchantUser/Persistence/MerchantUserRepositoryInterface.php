@@ -25,4 +25,11 @@ interface MerchantUserRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
      */
     public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     */
+    public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array;
 }

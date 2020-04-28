@@ -14,6 +14,7 @@ use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferS
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapperInterface;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 
 class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderInterface
@@ -42,6 +43,21 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
      * @var \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface
      */
     protected $priceProductService;
+
+    /**
+     * @var string|null
+     */
+    protected static $storeName;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
+     * @var \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected static $productOfferPricesByIdProductConcrete = [];
 
     /**
      * @var \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
@@ -79,11 +95,19 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
      */
     public function getProductOfferPrices(int $idProductConcrete): array
     {
+        if (isset(static::$productOfferPricesByIdProductConcrete[$idProductConcrete])) {
+            static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
+        }
+
         $priceProductOfferKey = $this->generateKey($idProductConcrete);
         $priceProductOfferData = $this->storageClient->get($priceProductOfferKey);
+
         if (empty($priceProductOfferData)) {
-            return [];
+            static::$productOfferPricesByIdProductConcrete[$idProductConcrete] = [];
+
+            return static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
         }
+
         unset($priceProductOfferData['_timestamp']);
         $priceProductTransfers = [];
 
@@ -102,7 +126,9 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
             );
         }
 
-        return $priceProductTransfers;
+        static::$productOfferPricesByIdProductConcrete[$idProductConcrete] = $priceProductTransfers;
+
+        return static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
     }
 
     /**
@@ -114,10 +140,32 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference((string)$idProductConcrete);
-        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
+        $synchronizationDataTransfer->setStore($this->getCurrentStoreName());
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(PriceProductOfferStorageConfig::RESOURCE_PRICE_PRODUCT_OFFER_OFFER_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentStoreName(): string
+    {
+        if (static::$storeName === null) {
+            static::$storeName = $this->storeClient->getCurrentStore()->getName();
+        }
+
+        return static::$storeName;
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(PriceProductOfferStorageConfig::RESOURCE_PRICE_PRODUCT_OFFER_OFFER_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 }

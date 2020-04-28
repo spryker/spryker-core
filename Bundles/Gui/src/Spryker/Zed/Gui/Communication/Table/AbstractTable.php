@@ -1142,7 +1142,7 @@ abstract class AbstractTable
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
             $query->where(
                 sprintf(
-                    "(%s >= %s AND %s <= %s)",
+                    '(%s >= %s AND %s <= %s)',
                     $searchColumns[$column->getData()],
                     Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
@@ -1159,7 +1159,7 @@ abstract class AbstractTable
         }
 
         $query->where(sprintf(
-            "%s = %s",
+            '%s = %s',
             $searchColumns[$column->getData()],
             Propel::getConnection()->quote($value)
         ));

@@ -43,6 +43,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_POST_SAVE = 'PLUGINS_ORDER_POST_SAVE';
     public const PLUGINS_ITEM_PRE_TRANSFORMER = 'PLUGINS_ITEM_PRE_TRANSFORMER';
     public const PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER = 'PLUGINS_UNIQUE_ORDER_ITEMS_EXPANDER';
+    public const PLUGINS_ORDER_ITEM_EXPANDER = 'PLUGINS_ORDER_ITEM_EXPANDER';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -72,6 +73,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderPostSavePlugins($container);
         $container = $this->addItemPreTransformerPlugins($container);
         $container = $this->addUniqueOrderItemsExpanderPlugins($container);
+        $container = $this->addOrderItemExpanderPlugins($container);
 
         return $container;
     }
@@ -363,6 +365,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEM_EXPANDER, function () {
+            return $this->getOrderItemExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -422,6 +438,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[]
      */
     protected function getUniqueOrderItemsExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    protected function getOrderItemExpanderPlugins(): array
     {
         return [];
     }

@@ -181,6 +181,8 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -314,4 +316,17 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Hydrates product options for given order items.
+     * - Sets ItemTransfer::sumProductOptionPriceAggregation, ItemTransfer::unitProductOptionPriceAggregation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
 }
