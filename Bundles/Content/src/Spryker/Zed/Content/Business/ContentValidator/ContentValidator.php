@@ -53,6 +53,7 @@ class ContentValidator implements ContentValidatorInterface
         foreach ($this->contentConstraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
             $violations = $validator->validate($properties[$parameter], $constraintCollection);
             if (count($violations)) {
+                dd($constraintCollection);
                 $contentValidationResponseTransfer->addParameterMessages(
                     $this->createContentParameterMessageTransfer($parameter, $violations)
                 );

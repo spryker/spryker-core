@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ContentNavigationDataImport\Business\Step;
 
-use Generated\Shared\Transfer\ContentBannerTermTransfer;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
+use Generated\Shared\Transfer\ContentNavigationTermTransfer;
+use Spryker\Zed\ContentNavigationDataImport\Business\DataSet\ContentNavigationDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -22,26 +22,26 @@ class PrepareLocalizedContentNavigationTermStep implements DataImportStepInterfa
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $localizedBannerTermParameters = [];
+        $localizedNavigationTermParameters = [];
 
         $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], ['default' => null]);
 
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
-            $bannerTermParamaters = [];
+            $navigationTermParameters = [];
             $localeNotEmpty = false;
-            $contentBanner = new ContentBannerTermTransfer();
+            $contentNavigationTermTransfer = new ContentNavigationTermTransfer();
 
-            foreach (array_keys($contentBanner->toArray()) as $bannerTermParamaterKey) {
-                if (!empty($dataSet[$bannerTermParamaterKey . '.' . $localeName])) {
-                    $bannerTermParamaters[$bannerTermParamaterKey] = $dataSet[$bannerTermParamaterKey . '.' . $localeName];
+            foreach (array_keys($contentNavigationTermTransfer->toArray()) as $navigationTermParameterKey) {
+                if (!empty($dataSet[$navigationTermParameterKey . '.' . $localeName])) {
+                    $navigationTermParameters[$navigationTermParameterKey] = $dataSet[$navigationTermParameterKey . '.' . $localeName];
                     $localeNotEmpty = true;
                 }
             }
             if ($localeNotEmpty) {
-                $localizedBannerTermParameters[$idLocale] = $contentBanner->fromArray($bannerTermParamaters);
+                $localizedNavigationTermParameters[$idLocale] = $contentNavigationTermTransfer->fromArray($navigationTermParameters);
             }
         }
 
-        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $localizedBannerTermParameters;
+        $dataSet[ContentNavigationDataSetInterface::CONTENT_LOCALIZED_NAVIGATION_TERMS] = $localizedNavigationTermParameters;
     }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentNavigationDataImport\Communication\Plugin;
+namespace Spryker\Zed\ContentNavigationDataImport\Communication\Plugin\DataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;

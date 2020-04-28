@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\ContentNavigationDataImport\Business\Step;
 
-use Generated\Shared\Transfer\ContentBannerTermTransfer;
+use Generated\Shared\Transfer\ContentNavigationTermTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
-use Spryker\Shared\ContentBanner\ContentBannerConfig;
+use Spryker\Shared\ContentNavigation\ContentNavigationConfig;
 use Spryker\Zed\Content\Dependency\ContentEvents;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
-use Spryker\Zed\ContentBannerDataImport\Dependency\Service\ContentBannerDataImportToUtilEncodingInterface;
+use Spryker\Zed\ContentNavigationDataImport\Business\DataSet\ContentNavigationDataSetInterface;
 use Spryker\Zed\ContentNavigationDataImport\Dependency\Service\ContentNavigationDataImportToUtilEncodingInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -42,16 +41,16 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentBannerEntity = $this->saveContentBanner($dataSet);
+        $contentNavigationEntity = $this->saveContentNavigation($dataSet);
 
-        $this->saveContentLocalizedBannerTerms(
-            $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS],
-            $contentBannerEntity->getIdContent()
+        $this->saveContentLocalizedNavigationTerms(
+            $dataSet[ContentNavigationDataSetInterface::CONTENT_LOCALIZED_NAVIGATION_TERMS],
+            $contentNavigationEntity->getIdContent()
         );
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentBannerEntity->getPrimaryKey()
+            $contentNavigationEntity->getPrimaryKey()
         );
     }
 
@@ -60,58 +59,58 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    protected function saveContentBanner(DataSetInterface $dataSet): SpyContent
+    protected function saveContentNavigation(DataSetInterface $dataSet): SpyContent
     {
-        $contentBannerEntity = SpyContentQuery::create()
-            ->filterByKey($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])
+        $contentNavigationEntity = SpyContentQuery::create()
+            ->filterByKey($dataSet[ContentNavigationDataSetInterface::CONTENT_NAVIGATION_KEY])
             ->findOneOrCreate();
 
-        $contentBannerEntity->fromArray($dataSet->getArrayCopy());
-        $contentBannerEntity->setContentTermKey(ContentBannerConfig::CONTENT_TERM_BANNER);
-        $contentBannerEntity->setContentTypeKey(ContentBannerConfig::CONTENT_TYPE_BANNER);
+        $contentNavigationEntity->fromArray($dataSet->getArrayCopy());
+        $contentNavigationEntity->setContentTermKey(ContentNavigationConfig::CONTENT_TERM_NAVIGATION);
+        $contentNavigationEntity->setContentTypeKey(ContentNavigationConfig::CONTENT_TYPE_NAVIGATION);
 
-        $contentBannerEntity->save();
+        $contentNavigationEntity->save();
 
-        return $contentBannerEntity;
+        return $contentNavigationEntity;
     }
 
     /**
-     * @param array $localizedBannerTerms
-     * @param int $idContentBannerTerm
+     * @param array $localizedNavigationTerms
+     * @param int $idContentNavigationTerm
      *
      * @return void
      */
-    protected function saveContentLocalizedBannerTerms(array $localizedBannerTerms, int $idContentBannerTerm): void
+    protected function saveContentLocalizedNavigationTerms(array $localizedNavigationTerms, int $idContentNavigationTerm): void
     {
         SpyContentLocalizedQuery::create()
-            ->filterByFkContent($idContentBannerTerm)
+            ->filterByFkContent($idContentNavigationTerm)
             ->find()
             ->delete();
 
-        foreach ($localizedBannerTerms as $idLocale => $localizedBannerTerm) {
+        foreach ($localizedNavigationTerms as $idLocale => $localizedNavigationTerm) {
             if (!$idLocale) {
                 $idLocale = null;
             }
 
-            $localizedContentBannerEntity = SpyContentLocalizedQuery::create()
-                ->filterByFkContent($idContentBannerTerm)
+            $localizedContentNavigationEntity = SpyContentLocalizedQuery::create()
+                ->filterByFkContent($idContentNavigationTerm)
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
-            $localizedContentBannerEntity->setParameters(
-                $this->getEncodedParameters($localizedBannerTerm)
+            $localizedContentNavigationEntity->setParameters(
+                $this->getEncodedParameters($localizedNavigationTerm)
             );
 
-            $localizedContentBannerEntity->save();
+            $localizedContentNavigationEntity->save();
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
+     * @param \Generated\Shared\Transfer\ContentNavigationTermTransfer $contentNavigationTermTransfer
      *
      * @return string|null
      */
-    protected function getEncodedParameters(ContentBannerTermTransfer $contentBannerTermTransfer): ?string
+    protected function getEncodedParameters(ContentNavigationTermTransfer $contentNavigationTermTransfer): ?string
     {
-        return $this->utilEncoding->encodeJson($contentBannerTermTransfer->toArray());
+        return $this->utilEncoding->encodeJson($contentNavigationTermTransfer->toArray());
     }
 }

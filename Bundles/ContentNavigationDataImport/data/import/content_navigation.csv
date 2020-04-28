@@ -1,1 +1,6 @@
-key,name,description,navigation.default,navigation.en_US,navigation.de_DE
+key,name,description,navigation_key.default,navigation_key.en_US,navigation_key.de_DE
+navigation-main,Main navigation,Main navigation,MAIN_NAVIGATION,MAIN_NAVIGATION,MAIN_NAVIGATION
+navigation-footer,Footer navigation,Footer navigation,FOOTER_NAVIGATION,FOOTER_NAVIGATION,FOOTER_NAVIGATION
+navigation-payment-providers,Payment Providers navigation,Payment Providers navigation,PAYMENT_PROVIDERS,PAYMENT_PROVIDERS,PAYMENT_PROVIDERS
+navigation-shipment-providers,Shipment Providers navigation,Shipment Providers navigation,SHIPMENT_PROVIDERS,SHIPMENT_PROVIDERS,SHIPMENT_PROVIDERS
+navigation-social-links,Social Links navigation,Social Links navigation,SOCIAL_LINKS,SOCIAL_LINKS,SOCIAL_LINKS

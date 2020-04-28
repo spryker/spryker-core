@@ -20,7 +20,7 @@ class ContentNavigationDataImportConfig extends DataImportConfig
      *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getContentBannerDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getContentNavigationDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 

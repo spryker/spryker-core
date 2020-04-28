@@ -8,27 +8,27 @@
 namespace Spryker\Zed\ContentNavigationDataImport\Business\Step;
 
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
-use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface;
+use Spryker\Zed\ContentNavigationDataImport\Business\DataSet\ContentNavigationDataSetInterface;
+use Spryker\Zed\ContentNavigationDataImport\Dependency\Facade\ContentNavigationDataImportToContentNavigationFacadeInterface;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
 {
-    /**
-     * @var \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface
-     */
-    protected $contentBanner;
-
     protected const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
 
     /**
-     * @param \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface $contentBanner
+     * @var \Spryker\Zed\ContentNavigationDataImport\Dependency\Facade\ContentNavigationDataImportToContentNavigationFacadeInterface
      */
-    public function __construct(ContentBannerDataImportToContentBannerInterface $contentBanner)
+    protected $contentNavigationFacade;
+
+    /**
+     * @param \Spryker\Zed\ContentNavigationDataImport\Dependency\Facade\ContentNavigationDataImportToContentNavigationFacadeInterface $contentNavigationFacade
+     */
+    public function __construct(ContentNavigationDataImportToContentNavigationFacadeInterface $contentNavigationFacade)
     {
-        $this->contentBanner = $contentBanner;
+        $this->contentNavigationFacade = $contentNavigationFacade;
     }
 
     /**
@@ -40,17 +40,21 @@ class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $validatedContentBannerTerms = [];
+        $validatedContentNavigationTerms = [];
         $defaultLocaleIsPresent = false;
-        foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] as $idLocale => $contentBannerTerm) {
+
+        /**
+         * @var \Generated\Shared\Transfer\ContentNavigationTermTransfer $contentNavigationTermTransfer
+         */
+        foreach ($dataSet[ContentNavigationDataSetInterface::CONTENT_LOCALIZED_NAVIGATION_TERMS] as $idLocale => $contentNavigationTermTransfer) {
             if (!$idLocale) {
                 $defaultLocaleIsPresent = true;
             }
 
-            $validationResult = $this->contentBanner->validateContentBannerTerm($contentBannerTerm);
+            $contentValidationResponseTransfer = $this->contentNavigationFacade->validateContentNavigationTerm($contentNavigationTermTransfer);
 
-            if (!$validationResult->getIsSuccess()) {
-                $errorMessages = $this->getErrorMessages($validationResult);
+            if (!$contentValidationResponseTransfer->getIsSuccess()) {
+                $errorMessages = $this->getErrorMessages($contentValidationResponseTransfer);
 
                 throw new InvalidDataException(
                     sprintf(
@@ -60,14 +64,14 @@ class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
                     )
                 );
             }
-            $validatedContentBannerTerms[$idLocale] = $contentBannerTerm;
+            $validatedContentNavigationTerms[$idLocale] = $contentNavigationTermTransfer;
         }
 
         if (!$defaultLocaleIsPresent) {
             throw new InvalidDataException('Default locale is required.');
         }
 
-        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $validatedContentBannerTerms;
+        $dataSet[ContentNavigationDataSetInterface::CONTENT_LOCALIZED_NAVIGATION_TERMS] = $validatedContentNavigationTerms;
     }
 
     /**
