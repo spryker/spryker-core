@@ -4,6 +4,7 @@
 {{ form_row(merchantForm.merchant_reference) }}
 {{ form_row(merchantForm.email) }}
 {{ form_row(merchantForm.is_active) }}
+{{ form_row(merchantForm.storeRelation) }}
 
 {{ form_label(merchantForm.urlCollection) }}
 
@@ -26,8 +27,6 @@
 {% endfor %}
 
 {% do merchantForm.urlCollection.setRendered %}
-
-{{ form_row(merchantForm.storeRelation) }}
 
 {% if (merchantForm.stocks is defined) %}
     {{ form_row(merchantForm.stocks) }}
