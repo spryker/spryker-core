@@ -8,14 +8,17 @@
 namespace SprykerTest\Zed\Payment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\PaymentBusinessFactory;
 use Spryker\Zed\Payment\PaymentConfig;
 
@@ -296,5 +299,67 @@ class PaymentFacadeTest extends Unit
             $paymentMethods,
             'Amount of payment methods does not match the expected value'
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuotePaymentMethodValidShouldReturnTrueIfPaymentExists(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withPayment(['payment_selection' => 'dummyPaymentInvoice'])
+            ->build();
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+        $this->mockPaymentMethodReader();
+
+        // Act
+        $isPaymentMethodExists = $this->paymentFacade->isQuotePaymentMethodValid($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($isPaymentMethodExists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuotePaymentMethodValidShouldReturnFalseIfPaymentNotExists(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withPayment(['payment_selection' => 'NotExists'])
+            ->build();
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+        $this->mockPaymentMethodReader();
+
+        // Act
+        $isPaymentMethodExists = $this->paymentFacade->isQuotePaymentMethodValid($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($isPaymentMethodExists);
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockPaymentMethodReader(): void
+    {
+        $paymentMethodReaderMock = $this->getMockBuilder(PaymentMethodReader::class)
+            ->onlyMethods(['getAvailableMethods'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $paymentMethodReaderMock->method('getAvailableMethods')->willReturn(
+            (new PaymentMethodsTransfer())
+                ->addMethod((new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice'))
+        );
+
+        /** @var \Spryker\Zed\Payment\Business\PaymentBusinessFactory $paymentBusinessFactoryMock */
+        $paymentBusinessFactoryMock = $this->getMockBuilder(PaymentBusinessFactory::class)
+            ->onlyMethods(['createPaymentMethodReader'])
+            ->getMock();
+        $paymentBusinessFactoryMock->method('createPaymentMethodReader')
+            ->willReturn($paymentMethodReaderMock);
+
+        $this->paymentFacade->setFactory($paymentBusinessFactoryMock);
     }
 }
