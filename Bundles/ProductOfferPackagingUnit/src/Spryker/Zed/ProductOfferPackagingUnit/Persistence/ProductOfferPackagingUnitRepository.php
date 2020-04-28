@@ -45,11 +45,12 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
             ->select([SpySalesOrderItemTableMap::COL_SKU])
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
             ->withColumn(
                 sprintf(
-                    "CASE WHEN %s IS NOT NULL THEN SUM(%s) ELSE SUM(%s) END",
+                    'CASE WHEN %s IS NOT NULL THEN SUM(%s) ELSE SUM(%s) END',
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
                     SpySalesOrderItemTableMap::COL_AMOUNT,
                     SpySalesOrderItemTableMap::COL_QUANTITY

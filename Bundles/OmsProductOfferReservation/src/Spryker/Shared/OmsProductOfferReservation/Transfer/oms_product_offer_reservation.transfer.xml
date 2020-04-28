@@ -5,7 +5,7 @@
 
     <transfer name="OmsProductOfferReservationCriteria">
         <property name="productOfferReference" type="string"/>
-        <property name="idStore" type="int"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="OmsProductOfferReservation">

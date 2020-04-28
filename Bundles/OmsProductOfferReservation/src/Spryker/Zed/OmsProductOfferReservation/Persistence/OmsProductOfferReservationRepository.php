@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
+use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -64,9 +65,16 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
     public function getQuantity(
         OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
     ): Decimal {
-        $quantity = $this->getFactory()->getOmsProductOfferReservationPropelQuery()
-            ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference())
-            ->filterByFkStore($omsProductOfferReservationCriteriaTransfer->getIdStore())
+        $omsProductOfferReservationQuery = $this->getFactory()
+            ->getOmsProductOfferReservationPropelQuery()
+            ->filterByProductOfferReference($omsProductOfferReservationCriteriaTransfer->getProductOfferReference());
+
+        $omsProductOfferReservationQuery = $this->applyFilters(
+            $omsProductOfferReservationQuery,
+            $omsProductOfferReservationCriteriaTransfer
+        );
+
+        $quantity = $omsProductOfferReservationQuery
             ->select([SpyOmsProductOfferReservationTableMap::COL_RESERVATION_QUANTITY])
             ->findOne();
 
@@ -101,13 +109,13 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+            ])
             ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT)
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ]);
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT);
 
         if ($storeTransfer !== null) {
             $salesOrderItemQuery
@@ -126,5 +134,31 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery
+     * @param \Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
+     *
+     * @return \Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservationQuery
+     */
+    protected function applyFilters(
+        SpyOmsProductOfferReservationQuery $omsProductOfferReservationQuery,
+        OmsProductOfferReservationCriteriaTransfer $omsProductOfferReservationCriteriaTransfer
+    ): SpyOmsProductOfferReservationQuery {
+        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()) {
+            $omsProductOfferReservationQuery->filterByFkStore(
+                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()
+            );
+        }
+
+        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getName()) {
+            $omsProductOfferReservationQuery
+                ->useStoreQuery()
+                    ->filterByName($omsProductOfferReservationCriteriaTransfer->getStore()->getName())
+                ->endUse();
+        }
+
+        return $omsProductOfferReservationQuery;
     }
 }
