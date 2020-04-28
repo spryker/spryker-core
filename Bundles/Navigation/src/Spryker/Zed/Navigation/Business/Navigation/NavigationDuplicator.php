@@ -11,10 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface;
 use Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface;
-use Spryker\Zed\Navigation\Persistence\NavigationEntityManagerInterface;
 
 class NavigationDuplicator implements NavigationDuplicatorInterface
 {
@@ -36,26 +36,18 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected $navigationNodeCreator;
 
     /**
-     * @var \Spryker\Zed\Navigation\Persistence\NavigationEntityManagerInterface
-     */
-    protected $navigationEntityManager;
-
-    /**
      * @param \Spryker\Zed\Navigation\Business\Tree\NavigationTreeReaderInterface $navigationTreeReader
      * @param \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface $navigationCreator
      * @param \Spryker\Zed\Navigation\Business\Node\NavigationNodeCreatorInterface $navigationNodeCreator
-     * @param \Spryker\Zed\Navigation\Persistence\NavigationEntityManagerInterface $navigationEntityManager
      */
     public function __construct(
         NavigationTreeReaderInterface $navigationTreeReader,
         NavigationCreatorInterface $navigationCreator,
-        NavigationNodeCreatorInterface $navigationNodeCreator,
-        NavigationEntityManagerInterface $navigationEntityManager
+        NavigationNodeCreatorInterface $navigationNodeCreator
     ) {
         $this->navigationTreeReader = $navigationTreeReader;
         $this->navigationCreator = $navigationCreator;
         $this->navigationNodeCreator = $navigationNodeCreator;
-        $this->navigationEntityManager = $navigationEntityManager;
     }
 
     /**
@@ -74,85 +66,63 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree($baseNavigationElement);
         $newNavigationElement->setIsActive($navigationTreeTransfer->getNavigation()->getIsActive());
-        $baseNavigationNodeTransfers = $this->getNavigationNodeTransfersRecursively($navigationTreeTransfer->getNodes());
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $baseNavigationNodeTransfers) {
-            return $this->executeDuplicateNavigationTransaction($newNavigationElement, $baseNavigationNodeTransfers);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($newNavigationElement, $navigationTreeTransfer) {
+            return $this->executeDuplicateNavigationTransaction($newNavigationElement, $navigationTreeTransfer);
         });
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationTreeNodeTransfer[] $navigationTreeNodeTransfers
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
-     *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
-     */
-    protected function getNavigationNodeTransfersRecursively(
-        ArrayObject $navigationTreeNodeTransfers,
-        array $navigationNodeTransfers = []
-    ): array {
-        foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
-            $navigationNodeTransfers[] = $navigationTreeNodeTransfer->getNavigationNode();
-            $navigationNodeTransfers = $this->getNavigationNodeTransfersRecursively(
-                $navigationTreeNodeTransfer->getChildren(),
-                $navigationNodeTransfers
-            );
-        }
-
-        return $navigationNodeTransfers;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
     protected function executeDuplicateNavigationTransaction(
         NavigationTransfer $navigationTransfer,
-        array $navigationNodeTransfers
+        NavigationTreeTransfer $navigationTreeTransfer
     ): NavigationTransfer {
         $navigationTransfer = $this->navigationCreator->createNavigation($navigationTransfer);
-        $newNavigationNodeTransfers = $this->duplicateNavigationNodeTransfers($navigationNodeTransfers);
-
-        $duplicatedNavigationNodeIdsByNavigationNodeIds = [];
-        foreach ($newNavigationNodeTransfers as $index => $navigationNodeTransfer) {
-            $newNavigationNode = $this->navigationNodeCreator->createNavigationNode(
-                $navigationNodeTransfer->setFkNavigation($navigationTransfer->getIdNavigation())
-            );
-
-            $duplicatedNavigationNodeIdsByNavigationNodeIds[$navigationNodeTransfers[$index]->getIdNavigationNode()]
-                = $newNavigationNode->getIdNavigationNode();
-        }
-
-        $this->navigationEntityManager
-            ->updateFkParentNavigationNodeForDuplicatedNavigationNodes($duplicatedNavigationNodeIdsByNavigationNodeIds);
+        $this->duplicateNavigationNodeTransfers($navigationTreeTransfer->getNodes(), $navigationTransfer->getIdNavigation());
 
         return $navigationTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\NavigationTreeNodeTransfer[] $navigationTreeNodeTransfers
+     * @param int $idNavigation
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $parentNavigationNodeTransfer
      *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
+     * @return void
      */
-    protected function duplicateNavigationNodeTransfers(array $navigationNodeTransfers): array
-    {
-        $newNavigationNodeTransfers = [];
-        foreach ($navigationNodeTransfers as $navigationNodeTransfer) {
+    protected function duplicateNavigationNodeTransfers(
+        ArrayObject $navigationTreeNodeTransfers,
+        int $idNavigation,
+        ?NavigationNodeTransfer $parentNavigationNodeTransfer = null
+    ): void {
+        if (!$navigationTreeNodeTransfers->count()) {
+            return;
+        }
+
+        foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
+            $navigationNodeTransfer = $navigationTreeNodeTransfer->getNavigationNode();
             $newNavigationNodeLocalizedAttributesTransfers = $this->duplicateNavigationNodeLocalizedAttributesTransfers(
                 $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
             );
-            $navigationNodeTransferForDuplication = clone $navigationNodeTransfer;
-            $navigationNodeTransferForDuplication->setIdNavigationNode(null);
-            $navigationNodeTransferForDuplication->setNavigationNodeLocalizedAttributes(new ArrayObject());
-            $newNavigationNodeTransfers[] = (new NavigationNodeTransfer())->fromArray(
-                $navigationNodeTransferForDuplication->toArray(),
-                true
-            )->setNavigationNodeLocalizedAttributes($newNavigationNodeLocalizedAttributesTransfers);
-        }
 
-        return $newNavigationNodeTransfers;
+            $idParentNavigationNode = $parentNavigationNodeTransfer ? $parentNavigationNodeTransfer->getIdNavigationNode() : null;
+            $navigationNodeTransferForDuplication = clone $navigationNodeTransfer
+                ->setIdNavigationNode(null)
+                ->setFkNavigation($idNavigation)
+                ->setFkParentNavigationNode($idParentNavigationNode)
+                ->setNavigationNodeLocalizedAttributes($newNavigationNodeLocalizedAttributesTransfers);
+
+            $this->duplicateNavigationNodeTransfers(
+                $navigationTreeNodeTransfer->getChildren(),
+                $idNavigation,
+                $this->navigationNodeCreator->createNavigationNode($navigationNodeTransferForDuplication)
+            );
+        }
     }
 
     /**
