@@ -8,18 +8,13 @@
 namespace Spryker\Zed\ContentNavigationGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\ContentNavigationTermTransfer;
-use Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNavigationConstraint;
 
 interface ContentNavigationTermDataMapperInterface
 {
     /**
-     * @param string|null $navigationData
-     * @param \Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNavigationConstraint $constraint
+     * @param array|null $navigationData
      *
      * @return \Generated\Shared\Transfer\ContentNavigationTermTransfer
      */
-    public function mapNavigationDataToContentNavigationTermTransfer(
-        ?string $navigationData,
-        ContentNavigationConstraint $constraint
-    ): ContentNavigationTermTransfer;
+    public function mapNavigationDataToContentNavigationTermTransfer(?array $navigationData): ContentNavigationTermTransfer;
 }

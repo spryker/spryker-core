@@ -61,7 +61,7 @@ class ContentNavigationClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentNavigationValidTransfer(): void
+    public function testExecuteNavigationTypeByKeyWithValidTermShoudlReturnContentNavigationTypeTransfer(): void
     {
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
@@ -73,17 +73,17 @@ class ContentNavigationClientTest extends Unit
         $this->setNavigationStorageClientReturn($contentTypeContextTransfer);
 
         // Act
-        $systemUnderTest = $this->createContentNavigationClient()
+        $contentNavigationTypeTransfer = $this->createContentNavigationClient()
             ->executeNavigationTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentNavigationTypeTransfer::class, get_class($systemUnderTest));
+        $this->assertEquals(ContentNavigationTypeTransfer::class, get_class($contentNavigationTypeTransfer));
     }
 
     /**
      * @return void
      */
-    public function testFindContentItemWithWrongTermThrowsException(): void
+    public function testExecuteNavigationTypeByKeyWithWrongTermThrowsException(): void
     {
         // Arrange
         $contentTypeContextTransfer = (new ContentTypeContextTransfer())
@@ -98,23 +98,24 @@ class ContentNavigationClientTest extends Unit
         $this->expectException(MissingNavigationTermException::class);
 
         // Act
-        $this->createContentNavigationClient()->executeNavigationTypeByKey(static::CONTENT_KEY, static::LOCALE);
+        $this->createContentNavigationClient()
+            ->executeNavigationTypeByKey(static::CONTENT_KEY, static::LOCALE);
     }
 
     /**
      * @return void
      */
-    public function testFindNotExistingContentNavigation(): void
+    public function testExecuteNavigationTypeByKeyWithNotExistingContentNavigationWillReturnNull(): void
     {
         // Arrange
         $this->setNavigationStorageClientReturn(null);
 
         // Act
-        $systemUnderTest = $this->createContentNavigationClient()
+        $contentNavigationTypeTransfer = $this->createContentNavigationClient()
             ->executeNavigationTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
-        $this->assertNull($systemUnderTest);
+        $this->assertNull($contentNavigationTypeTransfer);
     }
 
     /**
@@ -124,9 +125,16 @@ class ContentNavigationClientTest extends Unit
      */
     protected function setNavigationStorageClientReturn(?ContentTypeContextTransfer $contentTypeContextTransfer): void
     {
-        $contentNavigationToContentStorageClientBridge = $this->getMockBuilder(ContentNavigationToContentStorageClientInterface::class)->getMock();
-        $contentNavigationToContentStorageClientBridge->method('findContentTypeContextByKey')->willReturn($contentTypeContextTransfer);
-        $this->tester->setDependency(ContentNavigationDependencyProvider::CLIENT_CONTENT_STORAGE, $contentNavigationToContentStorageClientBridge);
+        $contentNavigationToContentStorageClientBridge = $this
+            ->getMockBuilder(ContentNavigationToContentStorageClientInterface::class)->getMock();
+
+        $contentNavigationToContentStorageClientBridge
+            ->method('findContentTypeContextByKey')
+            ->willReturn($contentTypeContextTransfer);
+        $this->tester->setDependency(
+            ContentNavigationDependencyProvider::CLIENT_CONTENT_STORAGE,
+            $contentNavigationToContentStorageClientBridge
+        );
     }
 
     /**

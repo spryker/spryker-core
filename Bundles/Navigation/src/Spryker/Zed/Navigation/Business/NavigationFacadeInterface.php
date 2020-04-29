@@ -214,6 +214,7 @@ interface NavigationFacadeInterface
      * - Touches each nested navigation node.
      * - Returns response with duplicated Navigation.
      * - Returns response with error message in case of error.
+     * - Required properties: DuplicateNavigationTransfer.idBaseNavigation, DuplicateNavigationTransfer.key, DuplicateNavigationTransfer.name
      *
      * @api
      *

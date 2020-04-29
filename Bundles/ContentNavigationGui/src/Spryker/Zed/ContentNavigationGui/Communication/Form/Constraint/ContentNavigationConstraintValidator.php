@@ -36,7 +36,8 @@ class ContentNavigationConstraintValidator extends AbstractConstraintValidator
             ));
         }
 
-        $contentNavigationTermTransfer = $this->mapNavigationDataToTransfer($value, $constraint);
+        $navigationData = $constraint->getUtilEncodingService()->decodeJson($value, true);
+        $contentNavigationTermTransfer = $this->mapNavigationDataToTransfer($navigationData);
 
         $contentValidationResponseTransfer = $constraint
             ->getContentNavigationFacade()
@@ -66,15 +67,14 @@ class ContentNavigationConstraintValidator extends AbstractConstraintValidator
     }
 
     /**
-     * @param string|null $navigationData
-     * @param \Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNavigationConstraint $constraint
+     * @param array|null $navigationData
      *
      * @return \Generated\Shared\Transfer\ContentNavigationTermTransfer
      */
-    protected function mapNavigationDataToTransfer(?string $navigationData, ContentNavigationConstraint $constraint): ContentNavigationTermTransfer
+    protected function mapNavigationDataToTransfer(?array $navigationData): ContentNavigationTermTransfer
     {
         return $this->getFactory()
             ->createContentNavigationTermDataMapper()
-            ->mapNavigationDataToContentNavigationTermTransfer($navigationData, $constraint);
+            ->mapNavigationDataToContentNavigationTermTransfer($navigationData);
     }
 }

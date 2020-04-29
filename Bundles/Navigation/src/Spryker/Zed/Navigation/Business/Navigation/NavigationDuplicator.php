@@ -116,7 +116,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 
         return (new NavigationResponseTransfer())
             ->setIsSuccessful(true)
-            ->setNavigationTransfer($navigationTransfer);
+            ->setNavigation($navigationTransfer);
     }
 
     /**
