@@ -70,7 +70,7 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
             CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_IS_NOT_APPLICABLE => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_CODE_IS_NOT_APPLICABLE,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_CODE_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_CODE_IS_NOT_APPLICABLE,
             ],
         ];
     }

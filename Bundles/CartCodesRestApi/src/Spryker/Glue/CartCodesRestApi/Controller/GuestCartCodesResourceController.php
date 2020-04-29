@@ -59,7 +59,7 @@ class GuestCartCodesResourceController extends AbstractController
      *          "responses": {
      *              "204": "No content.",
      *              "404": "Cart with given uuid not found.",
-     *              "422": "Cart code can't be deleted."
+     *              "422": "Cart code isn't applicable."
      *          }
      *     }
      * })
