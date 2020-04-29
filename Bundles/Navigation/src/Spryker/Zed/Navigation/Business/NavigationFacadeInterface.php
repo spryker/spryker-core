@@ -185,6 +185,7 @@ interface NavigationFacadeInterface
      * - Duplicates navigation with all navigation nodes.
      * - Persists new navigation entity to database.
      * - Touches navigation entity as active.
+     * - Touches each nested navigation node.
      * - Returns response with duplicated Navigation.
      * - Returns response with error message in case of error.
      *

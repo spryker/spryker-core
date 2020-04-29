@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\NavigationErrorTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
@@ -24,7 +23,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
 {
     use TransactionTrait;
 
-    protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found';
+    protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found.';
     protected const ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS = 'Navigation with the same key already exists.';
 
     /**
@@ -78,18 +77,18 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             ->requireName();
 
         $navigationResponseTransfer = (new NavigationResponseTransfer())->setIsSuccessful(false);
+        if ($this->navigationRepository->hasNavigationKey($duplicateNavigationTransfer->getKey())) {
+            return $navigationResponseTransfer
+                ->addError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS));
+        }
+
         $navigationTreeTransfer = $this->navigationTreeReader->findNavigationTree(
             (new NavigationTransfer())->setIdNavigation($duplicateNavigationTransfer->getIdBaseNavigation())
         );
 
         if (!$navigationTreeTransfer) {
             return $navigationResponseTransfer
-                ->setError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND));
-        }
-
-        if ($this->navigationRepository->hasNavigationKey($duplicateNavigationTransfer->getKey())) {
-            return $navigationResponseTransfer
-                ->setError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS));
+                ->addError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND));
         }
 
         $newNavigationElement = $this->createNavigationTransfer(
@@ -123,14 +122,14 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\NavigationTreeNodeTransfer[] $navigationTreeNodeTransfers
      * @param int $idNavigation
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $parentNavigationNodeTransfer
+     * @param int|null $idParentNavigationNode
      *
      * @return void
      */
     protected function duplicateNavigationNodeTransfers(
         ArrayObject $navigationTreeNodeTransfers,
         int $idNavigation,
-        ?NavigationNodeTransfer $parentNavigationNodeTransfer = null
+        $idParentNavigationNode = null
     ): void {
         if (!$navigationTreeNodeTransfers->count()) {
             return;
@@ -142,7 +141,6 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
                 $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()
             );
 
-            $idParentNavigationNode = $parentNavigationNodeTransfer ? $parentNavigationNodeTransfer->getIdNavigationNode() : null;
             $navigationNodeTransferForDuplication = clone $navigationNodeTransfer
                 ->setIdNavigationNode(null)
                 ->setFkNavigation($idNavigation)
@@ -152,7 +150,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             $this->duplicateNavigationNodeTransfers(
                 $navigationTreeNodeTransfer->getChildren(),
                 $idNavigation,
-                $this->navigationNodeCreator->createNavigationNode($navigationNodeTransferForDuplication)
+                $this->navigationNodeCreator->createNavigationNode($navigationNodeTransferForDuplication)->getIdNavigationNode()
             );
         }
     }
@@ -185,8 +183,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected function createNavigationTransfer(DuplicateNavigationTransfer $duplicateNavigationTransfer, bool $isActive): NavigationTransfer
     {
         return (new NavigationTransfer())
-            ->setName($duplicateNavigationTransfer->getName())
-            ->setKey($duplicateNavigationTransfer->getKey())
+            ->fromArray($duplicateNavigationTransfer->toArray(), true)
             ->setIsActive($isActive);
     }
 }

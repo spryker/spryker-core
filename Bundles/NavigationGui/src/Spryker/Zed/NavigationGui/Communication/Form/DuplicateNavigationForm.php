@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Form;
 
-use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,7 +35,7 @@ class DuplicateNavigationForm extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => NavigationTransfer::class,
+            'data_class' => DuplicateNavigationTransfer::class,
         ]);
     }
 

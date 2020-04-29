@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
-use Orm\Zed\Navigation\Persistence\SpyNavigation;
 
 /**
  * Inherited Methods
@@ -45,12 +44,7 @@ class NavigationBusinessTester extends Actor
      */
     public function createNavigation(string $name, string $key, bool $isActive): NavigationTransfer
     {
-        $baseNavigationEntity = $this->createNavigationEntity($key, $name, $isActive);
-
-        return (new NavigationTransfer())
-            ->setKey($baseNavigationEntity->getKey())
-            ->setName($baseNavigationEntity->getName())
-            ->setIdNavigation($baseNavigationEntity->getIdNavigation());
+        return $this->getFacade()->createNavigation($this->createNavigationTransfer($key, $name, $isActive));
     }
 
     /**
@@ -97,32 +91,10 @@ class NavigationBusinessTester extends Actor
         string $nodeTitle,
         string $externalUrl
     ): NavigationNodeLocalizedAttributesTransfer {
-        $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
-        $navigationNodeLocalizedAttributesTransfer
+        return (new NavigationNodeLocalizedAttributesTransfer())
             ->setFkLocale($idLocale)
             ->setTitle($nodeTitle)
             ->setExternalUrl($externalUrl);
-
-        return $navigationNodeLocalizedAttributesTransfer;
-    }
-
-    /**
-     * @param string $key
-     * @param string $name
-     * @param bool $isActive
-     *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
-     */
-    public function createNavigationEntity(string $key, string $name, bool $isActive): SpyNavigation
-    {
-        $navigationEntity = new SpyNavigation();
-        $navigationEntity
-            ->setKey($key)
-            ->setName($name)
-            ->setIsActive($isActive)
-            ->save();
-
-        return $navigationEntity;
     }
 
     /**
@@ -134,13 +106,10 @@ class NavigationBusinessTester extends Actor
      */
     public function createNavigationTransfer(string $key, string $name, bool $isActive): NavigationTransfer
     {
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer
+        return (new NavigationTransfer())
             ->setKey($key)
             ->setName($name)
             ->setIsActive($isActive);
-
-        return $navigationTransfer;
     }
 
     /**

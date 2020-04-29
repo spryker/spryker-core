@@ -30,7 +30,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @uses \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND
      */
-    protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found';
+    protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found.';
 
     /**
      * @uses \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS
@@ -82,7 +82,7 @@ class NavigationCRUDTest extends Unit
      */
     public function testUpdateExistingNavigationPersistsToDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
+        $navigationEntity = $this->tester->createNavigation('Test navigation 1', 'test-navigation-1', true);
 
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer
@@ -100,7 +100,7 @@ class NavigationCRUDTest extends Unit
      */
     public function testReadExistingNavigationReadsFromDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
+        $navigationEntity = $this->tester->createNavigation('test-navigation-1', 'Test navigation 1', true);
 
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($navigationEntity->getIdNavigation());
@@ -117,7 +117,7 @@ class NavigationCRUDTest extends Unit
      */
     public function testDeleteExistingNavigationDeletesFromDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
+        $navigationEntity = $this->tester->createNavigation('test-navigation-1', 'Test navigation 1', true);
 
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($navigationEntity->getIdNavigation());
@@ -195,7 +195,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDuplicateNonExistentNavigationWillThrowError(): void
+    public function testDuplicateNonExistentNavigationWillReturnResponseWithError(): void
     {
         // Arrange
         $duplicateNavigationTransfer = $this->tester->createDuplicateNavigationTransfer(
@@ -218,7 +218,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDuplicateNavigationWithExistentKeyWillThrowError(): void
+    public function testDuplicateNavigationWithExistentKeyWillReturnResponseWithError(): void
     {
         // Arrange
         $navigationTransfer = $this->tester->createNavigation('test-key', 'test-navigation-1', true);

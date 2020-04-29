@@ -19,7 +19,7 @@
     <transfer name="NavigationResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="navigationTransfer" type="Navigation"/>
-        <property name="error" type="NavigationError" singular="error"/>
+        <property name="errors" type="NavigationError[]" singular="error"/>
     </transfer>
 
     <transfer name="NavigationError">
