@@ -66,6 +66,7 @@ import 'core-js/features/reflect';
 import 'core-js/features/array/flat';
 import 'core-js/features/array/includes';
 import 'core-js/features/object/entries';
+import 'core-js/es/global-this';
 import cssVars from 'css-vars-ponyfill';
 import 'url-search-params-polyfill';
 
