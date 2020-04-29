@@ -61,7 +61,7 @@ class ContentNavigationClientTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteNavigationTypeByKeyWithValidTermShoudlReturnContentNavigationTypeTransfer(): void
+    public function testExecuteNavigationTypeByKeyWithValidTermShouldReturnContentNavigationTypeTransfer(): void
     {
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
