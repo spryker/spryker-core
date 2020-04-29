@@ -8,6 +8,7 @@
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\NavigationCriteriaTransfer;
+use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

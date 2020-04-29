@@ -23,4 +23,11 @@ interface NavigationRepositoryInterface
      * @return \Generated\Shared\Transfer\NavigationTransfer[]
      */
     public function getAllNavigations(): array;
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function checkNavigationWithKeyExists(string $key): bool;
 }

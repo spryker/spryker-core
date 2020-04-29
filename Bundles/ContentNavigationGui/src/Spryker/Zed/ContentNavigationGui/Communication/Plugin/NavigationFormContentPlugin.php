@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentNavigationGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\ContentNavigationTermTransfer;
 use Spryker\Shared\ContentNavigationGui\ContentNavigationGuiConfig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
@@ -67,12 +66,8 @@ class NavigationFormContentPlugin extends AbstractPlugin implements ContentPlugi
      */
     public function getTransferObject(?array $params = null): TransferInterface
     {
-        $contentNavigationTermTransfer = new ContentNavigationTermTransfer();
-
-        if ($params) {
-            $contentNavigationTermTransfer->fromArray($params);
-        }
-
-        return $contentNavigationTermTransfer;
+        return $this->getFactory()
+            ->createContentNavigationFormDataMapper()
+            ->mapFormDataToContentNavigationTermTransfer($params);
     }
 }

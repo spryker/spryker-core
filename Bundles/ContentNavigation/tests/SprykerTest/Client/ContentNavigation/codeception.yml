@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\Navigation
+namespace: SprykerTest\Client\ContentNavigation
 
 paths:
     tests: .
@@ -12,15 +12,11 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: NavigationBusinessTester
+    Client:
+        path: .
+        class_name: ContentNavigationClientTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

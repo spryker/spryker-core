@@ -24,14 +24,14 @@ class ContentNavigationFactory extends AbstractFactory
     {
         return new ContentNavigationTypeMapper(
             $this->getContentStorageClient(),
-            $this->getContentBannerTermExecutorMap()
+            $this->getContentNavigationTermExecutorMap()
         );
     }
 
     /**
      * @return \Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface[]
      */
-    public function getContentBannerTermExecutorMap(): array
+    public function getContentNavigationTermExecutorMap(): array
     {
         return [
             ContentNavigationConfig::CONTENT_TERM_NAVIGATION => $this->createContentNavigationTermExecutor(),

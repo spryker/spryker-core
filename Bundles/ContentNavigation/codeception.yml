@@ -1,6 +1,7 @@
 namespace: ContentNavigation
 include:
     - tests/SprykerTest/Zed/ContentNavigation
+    - tests/SprykerTest/Client/ContentNavigation
 paths:
     tests: tests
     log: tests/_output
