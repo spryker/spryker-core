@@ -174,7 +174,7 @@ class NavigationCRUDTest extends Unit
     public function testFindAllNavigationsWillReturnACollectionOfNavigationTransfers(): void
     {
         //Arrange
-        $this->tester->createNavigation(static::TEST_NAVIGATION_NAME , static::TEST_NAVIGATION_KEY, true);
+        $this->tester->createNavigation(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
 
         //Act
         $navigationTransfers = $this->navigationFacade->getAllNavigations();
