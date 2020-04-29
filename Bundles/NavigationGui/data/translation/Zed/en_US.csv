@@ -8,6 +8,11 @@
 Save,Save
 "Save order","Save Order"
 Search,Search
+"Duplicate Navigation Element","Duplicate Navigation Element"
+"Navigation element details","Navigation element details"
+Key,Key
+Name,Name
+Duplicate,Duplicate
 "Navigation element removal confirmation","Navigation element removal confirmation"
 "Are you sure about deleting this navigation","Are you sure about deleting this navigation"
 "No, I want to keep this navigation","No, I want to keep this navigation"
