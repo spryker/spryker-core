@@ -70,9 +70,7 @@
                 </thead>
 
                 <tbody>
-                    {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
-                        {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order, items: shipmentOrderItems.items} %}
-                    {% endif %}
+                    {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order, items: shipmentOrderItems.items} %}
 
                     {% if itemGroups[shipmentOrderItems.hash] is defined and itemGroups[shipmentOrderItems.hash] | length > 0 %}
                         {% include '@Sales/Detail/boxes/item-group.twig' with {groups: itemGroups[shipmentOrderItems.hash]} %}
