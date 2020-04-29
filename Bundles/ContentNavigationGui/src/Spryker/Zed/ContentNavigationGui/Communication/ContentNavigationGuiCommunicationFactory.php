@@ -11,6 +11,10 @@ use Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNaviga
 use Spryker\Zed\ContentNavigationGui\Communication\Form\DataProvider\NavigationContentTermFormDataProvider;
 use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationContentGuiEditorConfigurationMapper;
 use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationContentGuiEditorConfigurationMapperInterface;
+use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationFormDataMapper;
+use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationFormDataMapperInterface;
+use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationTermDataMapper;
+use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationTermDataMapperInterface;
 use Spryker\Zed\ContentNavigationGui\ContentNavigationGuiDependencyProvider;
 use Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToContentNavigationFacadeInterface;
 use Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToNavigationFacadeInterface;
@@ -47,6 +51,22 @@ class ContentNavigationGuiCommunicationFactory extends AbstractCommunicationFact
     public function createContentNavigationContentGuiEditorConfigurationMapper(): ContentNavigationContentGuiEditorConfigurationMapperInterface
     {
         return new ContentNavigationContentGuiEditorConfigurationMapper($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationFormDataMapperInterface
+     */
+    public function createContentNavigationFormDataMapper(): ContentNavigationFormDataMapperInterface
+    {
+        return new ContentNavigationFormDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationTermDataMapperInterface
+     */
+    public function createContentNavigationTermDataMapper(): ContentNavigationTermDataMapperInterface
+    {
+        return new ContentNavigationTermDataMapper();
     }
 
     /**

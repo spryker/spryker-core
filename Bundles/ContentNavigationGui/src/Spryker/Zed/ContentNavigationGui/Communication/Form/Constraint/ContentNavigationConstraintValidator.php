@@ -10,10 +10,13 @@ namespace Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint;
 use Generated\Shared\Transfer\ContentNavigationTermTransfer;
 use Generated\Shared\Transfer\ContentParameterMessageTransfer;
 use InvalidArgumentException;
+use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
-class ContentNavigationConstraintValidator extends ConstraintValidator
+/**
+ * @method \Spryker\Zed\ContentNavigationGui\Communication\ContentNavigationGuiCommunicationFactory getFactory()
+ */
+class ContentNavigationConstraintValidator extends AbstractConstraintValidator
 {
     /**
      * @param mixed $value
@@ -70,15 +73,8 @@ class ContentNavigationConstraintValidator extends ConstraintValidator
      */
     protected function mapNavigationDataToTransfer(?string $navigationData, ContentNavigationConstraint $constraint): ContentNavigationTermTransfer
     {
-        $contentNavigationTermTransfer = new ContentNavigationTermTransfer();
-
-        if ($navigationData === null) {
-            return $contentNavigationTermTransfer;
-        }
-
-        $navigationData = $constraint->getUtilEncodingService()->decodeJson($navigationData, true);
-        $contentNavigationTermTransfer->fromArray($navigationData);
-
-        return $contentNavigationTermTransfer;
+        return $this->getFactory()
+            ->createContentNavigationTermDataMapper()
+            ->mapNavigationDataToContentNavigationTermTransfer($navigationData, $constraint);
     }
 }
