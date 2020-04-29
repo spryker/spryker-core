@@ -16,10 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  */
-class ZedInstallDependenciesConsole extends Console
+class MpInstallDependenciesConsole extends Console
 {
-    public const COMMAND_NAME = 'frontend:zed:install-dependencies';
-    public const DESCRIPTION = 'This command will install Zed Module dependencies.';
+    public const COMMAND_NAME = 'frontend:mp:install-dependencies';
+    public const DESCRIPTION = 'This command will install Merchant Portal dependencies.';
 
     /**
      * @return void
@@ -40,10 +40,10 @@ class ZedInstallDependenciesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Install Zed dependencies');
+        $this->info('Install Merchant Portal dependencies');
         $this->getMessenger()->notice('DEPRECATED: In next major all dependencies will be installed via single command: ' . InstallProjectDependenciesConsole::COMMAND_NAME);
 
-        if ($this->getFacade()->installZedDependencies($this->getMessenger())) {
+        if ($this->getFacade()->installMpDependencies($this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

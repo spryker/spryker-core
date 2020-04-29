@@ -74,7 +74,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
-     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -82,7 +82,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function installYvesDependencies(LoggerInterface $logger)
     {
-        return $this->installProjectDependencies($logger);
+        return $this->getFactory()->createYvesDependencyInstaller()->install($logger);
     }
 
     /**
@@ -102,7 +102,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
-     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -110,7 +110,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function installZedDependencies(LoggerInterface $logger)
     {
-        return $this->installProjectDependencies($logger);
+        return $this->getFactory()->createZedDependencyInstaller()->install($logger);
     }
 
     /**
@@ -137,6 +137,22 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     public function removeZedAssets()
     {
         return $this->getFactory()->createZedAssetsCleaner()->clean();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMpDependencies(LoggerInterface $logger)
+    {
+        return $this->getFactory()->createMpDependencyInstaller()->install($logger);
     }
 
     /**

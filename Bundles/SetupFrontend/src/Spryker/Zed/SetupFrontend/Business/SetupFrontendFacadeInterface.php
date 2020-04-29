@@ -63,7 +63,7 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
-     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -87,7 +87,7 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
-     * @deprecated All dependencies are now installed via single command {@see $this->installProjectDependencies()}
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -116,6 +116,20 @@ interface SetupFrontendFacadeInterface
      * @return bool
      */
     public function removeZedAssets();
+
+    /**
+     * Specification:
+     * - Installs needed Merchant Portal dependencies.
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMpDependencies(LoggerInterface $logger);
 
     /**
      * Specification:

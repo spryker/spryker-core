@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated All dependencies are now installed via {@see InstallProjectDependenciesConsole}
+ * @deprecated In next major all dependencies will be installed via {@see InstallProjectDependenciesConsole}
  *
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  */
-class YvesInstallDependenciesConsole extends InstallProjectDependenciesConsole
+class YvesInstallDependenciesConsole extends Console
 {
     public const COMMAND_NAME = 'frontend:yves:install-dependencies';
     public const DESCRIPTION = 'This command will install Yves Module dependencies.';
@@ -39,8 +40,13 @@ class YvesInstallDependenciesConsole extends InstallProjectDependenciesConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getMessenger()->notice('DEPRECATED: All dependencies are now installed via single command: ' . InstallProjectDependenciesConsole::COMMAND_NAME);
+        $this->info('Install Yves dependencies');
+        $this->getMessenger()->notice('DEPRECATED: In next major all dependencies will be installed via single command: ' . InstallProjectDependenciesConsole::COMMAND_NAME);
 
-        return parent::execute($input, $output);
+        if ($this->getFacade()->installYvesDependencies($this->getMessenger())) {
+            return static::CODE_SUCCESS;
+        }
+
+        return static::CODE_ERROR;
     }
 }
