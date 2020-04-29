@@ -10,6 +10,9 @@ namespace Spryker\Client\Sales;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Sales\Zed\SalesStub;
 
+/**
+ * @method \Spryker\Client\Sales\SalesConfig getConfig()
+ */
 class SalesFactory extends AbstractFactory
 {
     /**
