@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Navigation\Persistence\Mapper;
 
+use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -41,5 +43,30 @@ class NavigationMapper
         NavigationTransfer $navigationTransfer
     ): NavigationTransfer {
         return $navigationTransfer->fromArray($navigationEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode[] $navigationNodeEntities
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
+     *
+     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
+     */
+    public function mapNavigationNodeEntitiesToNavigationNodeTransfers(
+        array $navigationNodeEntities,
+        array $navigationNodeTransfers
+    ): array {
+        foreach ($navigationNodeEntities as $navigationNodeEntity) {
+            $navigationNodeTransfer = (new NavigationNodeTransfer())->fromArray($navigationNodeEntity->toArray(), true);
+            foreach ($navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess() as $navigationNodeLocalizedAttributes) {
+                $navigationNodeTransfer->addNavigationNodeLocalizedAttribute(
+                    (new NavigationNodeLocalizedAttributesTransfer())
+                        ->fromArray($navigationNodeLocalizedAttributes->toArray(), true)
+                );
+            }
+
+            $navigationNodeTransfers[] = $navigationNodeTransfer;
+        }
+
+        return $navigationNodeTransfers;
     }
 }

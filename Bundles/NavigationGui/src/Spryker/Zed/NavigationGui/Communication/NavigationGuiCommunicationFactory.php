@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DeleteNavigationForm;
+use Spryker\Zed\NavigationGui\Communication\Form\DuplicateNavigationForm;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
@@ -67,6 +68,17 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createNavigationFormType()
     {
         return NavigationFormType::class;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDuplicateNavigationForm(?NavigationTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(DuplicateNavigationForm::class, $data, $options);
     }
 
     /**

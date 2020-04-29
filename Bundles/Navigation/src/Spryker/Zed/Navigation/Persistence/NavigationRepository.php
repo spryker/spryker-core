@@ -57,6 +57,19 @@ class NavigationRepository extends AbstractRepository implements NavigationRepos
     }
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasNavigationKey(string $key): bool
+    {
+        return $this->getFactory()
+            ->createNavigationQuery()
+            ->filterByKey($key)
+            ->exists();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationQuery $navigationQuery
      *
