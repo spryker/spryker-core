@@ -161,11 +161,9 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
      */
     protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
     {
-        $productTableCriteriaTransfer = (new ProductTableCriteriaTransfer())
+        return (new ProductTableCriteriaTransfer())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
-
-        return $productTableCriteriaTransfer;
     }
 
     /**
@@ -190,12 +188,12 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
         }
 
         if (isset($this->filters[IsActiveProductTableFilter::FILTER_NAME])) {
-            $isActive = (bool)$this->filters[IsActiveProductTableFilter::FILTER_NAME];
+            $isActive = filter_var($this->filters[IsActiveProductTableFilter::FILTER_NAME], FILTER_VALIDATE_BOOLEAN);
             $productTableCriteriaTransfer->setIsActive($isActive);
         }
 
         if (isset($this->filters[HasOffersProductTableFilter::FILTER_NAME])) {
-            $hasOffers = (bool)$this->filters[HasOffersProductTableFilter::FILTER_NAME];
+            $hasOffers = filter_var($this->filters[HasOffersProductTableFilter::FILTER_NAME], FILTER_VALIDATE_BOOLEAN);
             $productTableCriteriaTransfer->setHasOffers($hasOffers);
         }
 

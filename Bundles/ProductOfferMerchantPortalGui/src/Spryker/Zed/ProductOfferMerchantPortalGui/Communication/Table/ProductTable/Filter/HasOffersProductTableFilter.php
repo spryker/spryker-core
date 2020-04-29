@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 
-class HasOffersProductTableFilter implements TableFilterInterface
+class HasOffersProductTableFilter implements SelectTableFilterInterface
 {
     public const FILTER_NAME = 'offers';
-
-    protected const OPTION_NAME_WITH_OFFERS = 'With Offers';
-    protected const OPTION_NAME_WITHOUT_OFFERS = 'Without Offers';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -25,9 +22,8 @@ class HasOffersProductTableFilter implements TableFilterInterface
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
             ->setTitle('Offers')
-            ->setType('select')
-            ->addTypeOption(static::OPTION_NAME_MULTISELECT, false)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getIsActiveValues());
+            ->setType(static::FILTER_TYPE)
+            ->addTypeOption(static::OPTION_VALUES, $this->getIsActiveValues());
     }
 
     /**
@@ -37,11 +33,11 @@ class HasOffersProductTableFilter implements TableFilterInterface
     {
         return [
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_WITH_OFFERS,
+                static::OPTION_VALUE_KEY_TITLE => 'With Offers',
                 static::OPTION_VALUE_KEY_VALUE => 1,
             ],
             [
-                static::OPTION_VALUE_KEY_TITLE => static::OPTION_NAME_WITHOUT_OFFERS,
+                static::OPTION_VALUE_KEY_TITLE => 'Without Offers',
                 static::OPTION_VALUE_KEY_VALUE => 0,
             ],
         ];

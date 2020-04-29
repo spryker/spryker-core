@@ -32,7 +32,7 @@ class IsActiveProductOfferTableCriteriaExpander implements ProductOfferTableCrit
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $isActive = (bool)$filterValue;
+        $isActive = filter_var($filterValue, FILTER_VALIDATE_BOOLEAN);
         $productOfferTableCriteriaTransfer->setIsActive($isActive);
 
         return $productOfferTableCriteriaTransfer;

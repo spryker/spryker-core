@@ -7,12 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter;
 
-use Generated\Shared\Transfer\GuiTableFilterTransfer;
-
-interface TableFilterInterface
+interface DateRangeTableFilterInterface extends TableFilterInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
-     */
-    public function getFilter(): GuiTableFilterTransfer;
+    public const FILTER_TYPE = 'date-range';
 }

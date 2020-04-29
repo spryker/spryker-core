@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\DateRangeTableFilterInterface;
 
-class ValidityProductOfferTableFilter implements TableFilterInterface
+class ValidityProductOfferTableFilter implements DateRangeTableFilterInterface
 {
     public const FILTER_NAME = 'validity';
-
-    protected const OPTION_PLACEHOLDER_VALID_FROM = 'Valid from';
-    protected const OPTION_PLACEHOLDER_VALID_TO = 'Valid to';
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
@@ -25,8 +22,6 @@ class ValidityProductOfferTableFilter implements TableFilterInterface
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
             ->setTitle('Validity')
-            ->setType('date-range')
-            ->addTypeOption(static::OPTION_NAME_PLACEHOLDER_FROM, static::OPTION_PLACEHOLDER_VALID_FROM)
-            ->addTypeOption(static::OPTION_NAME_PLACEHOLDER_TO, static::OPTION_PLACEHOLDER_VALID_TO);
+            ->setType(static::FILTER_TYPE);
     }
 }
