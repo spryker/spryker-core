@@ -52,7 +52,7 @@ class ContentNavigationValidator implements ContentNavigationValidatorInterface
 
         foreach ($this->contentNavigationConstraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
             $violations = $validator->validate(
-                $properties[$parameter],
+                $properties[$parameter] ?? null,
                 $constraintCollection
             );
             if (count($violations) !== 0) {
