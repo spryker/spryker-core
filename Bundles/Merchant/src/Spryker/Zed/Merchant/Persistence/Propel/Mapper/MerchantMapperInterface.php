@@ -9,7 +9,9 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
+use Orm\Zed\Store\Persistence\SpyStore;
 
 interface MerchantMapperInterface
 {
@@ -45,4 +47,15 @@ interface MerchantMapperInterface
         $merchantEntities,
         MerchantCollectionTransfer $merchantCollectionTransfer
     ): MerchantCollectionTransfer;
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer;
 }

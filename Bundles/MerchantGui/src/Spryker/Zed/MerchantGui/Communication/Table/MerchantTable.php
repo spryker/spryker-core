@@ -24,7 +24,7 @@ class MerchantTable extends AbstractTable
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
     public const COL_ACTIONS = 'actions';
-    protected const COL_STORES = 'stores';
+    public const COL_STORES = 'stores';
 
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',

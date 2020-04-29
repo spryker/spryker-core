@@ -12,8 +12,6 @@ use Spryker\Zed\Merchant\Communication\Plugin\Cart\Validator\MerchantCartValidat
 use Spryker\Zed\Merchant\Communication\Plugin\Cart\Validator\MerchantCartValidatorInterface;
 use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidator;
 use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidatorInterface;
-use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
-use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Merchant\Business\MerchantFacade getFacade()
@@ -28,10 +26,7 @@ class MerchantCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantCartValidator(): MerchantCartValidatorInterface
     {
-        return new MerchantCartValidator(
-            $this->getFacade(),
-            $this->getStoreFacade()
-        );
+        return new MerchantCartValidator($this->getFacade());
     }
 
     /**
@@ -39,17 +34,6 @@ class MerchantCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantCheckoutValidator(): MerchantCheckoutValidatorInterface
     {
-        return new MerchantCheckoutValidator(
-            $this->getFacade(),
-            $this->getStoreFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
-     */
-    public function getStoreFacade(): MerchantToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_STORE);
+        return new MerchantCheckoutValidator($this->getFacade());
     }
 }

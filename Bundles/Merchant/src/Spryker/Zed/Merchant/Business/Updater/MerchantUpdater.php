@@ -152,9 +152,9 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function updateMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer->requireStoreRelation();
-
-        $currentStoreRelationTransfer = $this->merchantRepository->getMerchantStoresByIdMerchant($merchantTransfer->getIdMerchant());
+        $currentStoreRelationTransfer = $this->merchantRepository->findOne(
+            (new MerchantCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
+        )->getStoreRelation();
 
         if (!$currentStoreRelationTransfer->getIdStores()) {
             return $this->createMerchantStores(
@@ -242,7 +242,8 @@ class MerchantUpdater implements MerchantUpdaterInterface
     {
         $merchantTransfer
             ->requireName()
-            ->requireEmail();
+            ->requireEmail()
+            ->requireStoreRelation();
     }
 
     /**

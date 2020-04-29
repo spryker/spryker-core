@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -47,6 +44,10 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantCollection */
         $merchantCollection = $this->getPaginatedCollection($merchantQuery, $merchantCriteriaTransfer->getPagination());
+
+        foreach ($merchantCollection as $merchantEntity) {
+            $merchantEntity->setSpyMerchantStores($merchantEntity->getSpyMerchantStoresJoinSpyStore());
+        }
 
         $merchantCollectionTransfer = $this->getFactory()
             ->createPropelMerchantMapper()
@@ -150,41 +151,5 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         }
 
         return $query->find();
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getMerchantStoresByIdMerchant(int $idMerchant): StoreRelationTransfer
-    {
-        $storeRelationTransfer = (new StoreRelationTransfer())
-            ->setIdEntity($idMerchant);
-
-        $merchantStoreEntities = $this->getFactory()
-            ->createMerchantStoreQuery()
-            ->joinWithSpyStore()
-            ->filterByFkMerchant($idMerchant)
-            ->find();
-
-        if (!$merchantStoreEntities->count()) {
-            return $storeRelationTransfer;
-        }
-
-        $storeTransfers = new ArrayObject();
-        foreach ($merchantStoreEntities as $merchantStoreEntity) {
-            $storeTransfers->append(
-                $this->getFactory()
-                    ->createMerchantStoreMapper()
-                    ->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer())
-            );
-        }
-
-        $storeRelationTransfer = $this->getFactory()
-            ->createMerchantStoreMapper()
-            ->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
-
-        return $storeRelationTransfer;
     }
 }

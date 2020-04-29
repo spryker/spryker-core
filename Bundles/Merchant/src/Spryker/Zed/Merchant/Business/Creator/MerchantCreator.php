@@ -105,8 +105,6 @@ class MerchantCreator implements MerchantCreatorInterface
      */
     protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer->requireStoreRelation();
-
         $storeRelationTransfer = $merchantTransfer->getStoreRelation();
         $urlTransfers = $merchantTransfer->getUrlCollection();
 
@@ -174,7 +172,8 @@ class MerchantCreator implements MerchantCreatorInterface
     {
         $merchantTransfer
             ->requireName()
-            ->requireEmail();
+            ->requireEmail()
+            ->requireStoreRelation();
     }
 
     /**

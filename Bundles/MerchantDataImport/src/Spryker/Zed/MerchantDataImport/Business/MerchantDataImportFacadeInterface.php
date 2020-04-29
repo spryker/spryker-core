@@ -27,7 +27,7 @@ interface MerchantDataImportFacadeInterface
 
     /**
      * Specification:
-     * - Imports data from a specified file.
+     * - Imports merchant stores data from a specified file.
      * - Iterates over the data sets and imports the data into the database.
      *
      * @api

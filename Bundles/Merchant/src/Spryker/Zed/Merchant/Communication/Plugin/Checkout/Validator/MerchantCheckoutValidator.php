@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
-use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
 
 class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
 {
@@ -26,20 +25,11 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
     protected $merchantFacade;
 
     /**
-     * @var \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Merchant\Business\MerchantFacadeInterface $merchantFacade
-     * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface $storeFacade
      */
-    public function __construct(
-        MerchantFacadeInterface $merchantFacade,
-        MerchantToStoreFacadeInterface $storeFacade
-    ) {
+    public function __construct(MerchantFacadeInterface $merchantFacade)
+    {
         $this->merchantFacade = $merchantFacade;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -100,7 +90,7 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
                 ->setIsActive(true)
-                ->setStore($this->storeFacade->getCurrentStore())
+                ->setStore($quoteTransfer->getStore())
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

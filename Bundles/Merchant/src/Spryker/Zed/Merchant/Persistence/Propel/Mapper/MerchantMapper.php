@@ -14,23 +14,11 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
+use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantMapper implements MerchantMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper
-     */
-    protected $merchantStoreMapper;
-
-    /**
-     * @param \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantStoreMapper $merchantStoreMapper
-     */
-    public function __construct(MerchantStoreMapper $merchantStoreMapper)
-    {
-        $this->merchantStoreMapper = $merchantStoreMapper;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
@@ -63,7 +51,7 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        $merchantTransfer = $this->mapStoreEntitiesToMerchantTransfer($merchantEntity->getSpyMerchantStoresJoinSpyStore(), $merchantTransfer);
+        $merchantTransfer = $this->mapStoreEntitiesToMerchantTransfer($merchantEntity->getSpyMerchantStores(), $merchantTransfer);
 
         $this->mapUrlCollectionToMerchantTransfer($merchantEntity->getSpyUrls(), $merchantTransfer);
 
@@ -89,6 +77,19 @@ class MerchantMapper implements MerchantMapperInterface
         $merchantCollectionTransfer->setMerchants($merchants);
 
         return $merchantCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer {
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**
@@ -122,16 +123,37 @@ class MerchantMapper implements MerchantMapperInterface
     {
         $storeTransfers = new ArrayObject();
         foreach ($merchantStoreEntities as $merchantStoreEntity) {
-            $storeTransfers->append($this->merchantStoreMapper->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer()));
+            $storeTransfers->append($this->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer()));
         }
 
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdEntity($merchantTransfer->getIdMerchant());
 
-        $storeRelationTransfer = $this->merchantStoreMapper->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
+        $storeRelationTransfer = $this->mapStoreTransfersToStoreRelationTransfer($storeTransfers, $storeRelationTransfer);
 
         $merchantTransfer->setStoreRelation($storeRelationTransfer);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function mapStoreTransfersToStoreRelationTransfer(
+        ArrayObject $storeTransfers,
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
+        $storeIds = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getIdStore();
+        }, $storeTransfers->getArrayCopy());
+
+        $storeRelationTransfer
+            ->setStores($storeTransfers)
+            ->setIdStores($storeIds);
+
+        return $storeRelationTransfer;
     }
 }
