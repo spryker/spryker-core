@@ -21,6 +21,8 @@ class ContentNavigationDataImportPlugin extends AbstractPlugin implements DataIm
 {
     /**
      * {@inheritDoc}
+     * - Imports content navigation data from the specified file.
+     * - Iterates over the data sets and imports the data into persistence.
      *
      * @api
      *

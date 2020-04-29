@@ -32,10 +32,13 @@ class PrepareLocalizedContentNavigationTermStep implements DataImportStepInterfa
             $contentNavigationTermTransfer = new ContentNavigationTermTransfer();
 
             foreach (array_keys($contentNavigationTermTransfer->toArray()) as $navigationTermParameterKey) {
-                if (!empty($dataSet[$navigationTermParameterKey . '.' . $localeName])) {
-                    $navigationTermParameters[$navigationTermParameterKey] = $dataSet[$navigationTermParameterKey . '.' . $localeName];
-                    $localeNotEmpty = true;
+                $navigationTermParameterKeyForLocale = $navigationTermParameterKey . '.' . $localeName;
+                if (empty($dataSet[$navigationTermParameterKeyForLocale])) {
+                    continue;
                 }
+
+                $navigationTermParameters[$navigationTermParameterKey] = $dataSet[$navigationTermParameterKeyForLocale];
+                $localeNotEmpty = true;
             }
             if ($localeNotEmpty) {
                 $localizedNavigationTermParameters[$idLocale] = $contentNavigationTermTransfer->fromArray($navigationTermParameters);

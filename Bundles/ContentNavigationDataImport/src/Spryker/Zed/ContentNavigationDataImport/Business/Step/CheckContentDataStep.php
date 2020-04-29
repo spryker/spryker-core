@@ -40,12 +40,7 @@ class CheckContentDataStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentTransfer = (new ContentTransfer())
-            ->setName($dataSet[ContentTransfer::NAME])
-            ->setDescription($dataSet[ContentTransfer::DESCRIPTION])
-            ->setKey($dataSet[ContentTransfer::KEY]);
-
-        $validationResult = $this->contentFacade->validateContent($contentTransfer);
+        $validationResult = $this->contentFacade->validateContent($this->createContentTransfer($dataSet));
 
         if (!$validationResult->getIsSuccess()) {
             $errorMessages = $this->getErrorMessages($validationResult);
@@ -57,6 +52,18 @@ class CheckContentDataStep implements DataImportStepInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer
+     */
+    protected function createContentTransfer(DataSetInterface $dataSet): ContentTransfer
+    {
+        return (new ContentTransfer())->setName($dataSet[ContentTransfer::NAME])
+            ->setDescription($dataSet[ContentTransfer::DESCRIPTION])
+            ->setKey($dataSet[ContentTransfer::KEY]);
     }
 
     /**

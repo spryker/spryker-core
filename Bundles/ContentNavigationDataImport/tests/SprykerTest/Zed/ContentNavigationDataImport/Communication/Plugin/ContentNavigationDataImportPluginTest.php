@@ -39,12 +39,9 @@ class ContentNavigationDataImportPluginTest extends Unit
         // Arrange
         $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
-
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_navigation.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+        $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
+            codecept_data_dir() . 'import/content_navigation.csv'
+        );
 
         // Act
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -61,12 +58,9 @@ class ContentNavigationDataImportPluginTest extends Unit
         // Arrange
         $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation_without_default_locale']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
-
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_navigation_without_default_locale.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+        $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
+            codecept_data_dir() . 'import/content_navigation_without_default_locale.csv'
+        );
 
         // Act
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -82,17 +76,30 @@ class ContentNavigationDataImportPluginTest extends Unit
     {
         // Arrange
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
-
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_navigation_with_invalid_navigation_key.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+        $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
+            codecept_data_dir() . 'import/content_navigation_with_invalid_navigation_key.csv'
+        );
 
         // Act
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    protected function createDataImportConfigurationTransfer(string $fileName): DataImporterConfigurationTransfer
+    {
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName($fileName);
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        return $dataImportConfigurationTransfer;
     }
 }
