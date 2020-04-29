@@ -89,7 +89,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
 
         if (!$cartCodeResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_IS_NOT_APPLICABLE
             );
         }
 
