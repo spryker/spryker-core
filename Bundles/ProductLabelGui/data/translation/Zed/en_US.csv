@@ -48,6 +48,8 @@ Status,Status
 "Store relation","Store relation"
 Stores,Stores
 Translations,Translations
+"This product has already assigned to the given label","This product has already assigned to the given label"
+"This product has not been assigned to the given label","This product has not been assigned to the given label"
 "Valid from","Valid from"
 "Valid to","Valid to"
 Validity,Validity

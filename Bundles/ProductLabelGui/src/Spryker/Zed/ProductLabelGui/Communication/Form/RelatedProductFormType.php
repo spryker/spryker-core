@@ -35,6 +35,10 @@ class RelatedProductFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductLabelProductAbstractRelationsTransfer::class,
+            'constraints' => [
+                $this->getFactory()->createAddIdsProductToAssignConstraint(),
+                $this->getFactory()->createAddIdsProductToDeAssignConstraint(),
+            ],
         ]);
     }
 
