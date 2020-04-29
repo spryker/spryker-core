@@ -13,15 +13,15 @@ use Generated\Shared\Transfer\RestGiftCardsAttributesTransfer;
 class GiftCardsMapper implements GiftCardsMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardsTransfer
-     * @param \Generated\Shared\Transfer\RestGiftCardsAttributesTransfer $restGiftCardsAttributes
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\RestGiftCardsAttributesTransfer $restGiftCardsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestGiftCardsAttributesTransfer
      */
-    public function mapGiftCardDataToRestGiftCardsAttributesTransfer(
-        GiftCardTransfer $giftCardsTransfer,
-        RestGiftCardsAttributesTransfer $restGiftCardsAttributes
+    public function mapGiftCardTransferToRestGiftCardsAttributesTransfer(
+        GiftCardTransfer $giftCardTransfer,
+        RestGiftCardsAttributesTransfer $restGiftCardsAttributesTransfer
     ): RestGiftCardsAttributesTransfer {
-        return $restGiftCardsAttributes->fromArray($giftCardsTransfer->toArray(), true);
+        return $restGiftCardsAttributesTransfer->fromArray($giftCardTransfer->toArray(), true);
     }
 }

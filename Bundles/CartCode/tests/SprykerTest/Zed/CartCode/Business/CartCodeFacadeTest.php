@@ -58,7 +58,7 @@ class CartCodeFacadeTest extends Unit
         $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             static::CODE,
-            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
+            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->getIterator()->current()->getVoucherCode()
         );
     }
 
@@ -84,7 +84,7 @@ class CartCodeFacadeTest extends Unit
         $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
         $this->assertEquals(
             static::CODE,
-            $cartCodeResponseTransfer->getQuote()->getGiftCards()[0]->getCode()
+            $cartCodeResponseTransfer->getQuote()->getGiftCards()->getIterator()->current()->getCode()
         );
     }
 
@@ -133,7 +133,7 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillRemoveVoucherDiscountFromCartWithUnlockedQuote(): void
+    public function testRemoveCodeRemovesVoucherDiscountFromCartWithUnlockedQuote(): void
     {
         // Arrange
         $this->setPluginCartCodeCollection([
@@ -155,7 +155,7 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillRemoveGiftCardFromCartWithUnlockedQuote(): void
+    public function testRemoveCodeRemovesGiftCardFromCartWithUnlockedQuote(): void
     {
         // Arrange
         $this->setPluginCartCodeCollection([
@@ -239,7 +239,7 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testClearCartCodesWillRemoveAllGiftCardsCodeFromUnlockedQuote(): void
+    public function testClearCartCodesRemovesAllGiftCardsCodeFromUnlockedQuote(): void
     {
         // Arrange
         $this->setPluginCartCodeCollection([

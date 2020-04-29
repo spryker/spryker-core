@@ -40,23 +40,23 @@ class GiftCardsRestResponseBuilder implements GiftCardsRestResponseBuilderInterf
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardsTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
      * @param string $quoteReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createGiftCardsRestResource(ArrayObject $giftCardsTransfers, string $quoteReference): RestResourceInterface
+    public function createGiftCardsRestResource(ArrayObject $giftCardTransfers, string $quoteReference): RestResourceInterface
     {
-        foreach ($giftCardsTransfers as $giftCardsTransfer) {
+        foreach ($giftCardTransfers as $giftCardTransfer) {
             $restGiftCardsAttributesTransfer = $this->giftCardsMapper
-                ->mapGiftCardDataToRestGiftCardsAttributesTransfer(
-                    $giftCardsTransfer,
+                ->mapGiftCardTransferToRestGiftCardsAttributesTransfer(
+                    $giftCardTransfer,
                     new RestGiftCardsAttributesTransfer()
                 );
 
             $restResource = $this->restResourceBuilder->createRestResource(
                 GiftCardsRestApiConfig::RESOURCE_GIFT_CARDS,
-                $giftCardsTransfer->getCode(),
+                $giftCardTransfer->getCode(),
                 $restGiftCardsAttributesTransfer
             );
 

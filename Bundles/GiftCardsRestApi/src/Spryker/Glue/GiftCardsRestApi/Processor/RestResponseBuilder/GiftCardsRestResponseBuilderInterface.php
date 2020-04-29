@@ -13,10 +13,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 interface GiftCardsRestResponseBuilderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardsTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
      * @param string $quoteReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createGiftCardsRestResource(ArrayObject $giftCardsTransfers, string $quoteReference): RestResourceInterface;
+    public function createGiftCardsRestResource(ArrayObject $giftCardTransfers, string $quoteReference): RestResourceInterface;
 }

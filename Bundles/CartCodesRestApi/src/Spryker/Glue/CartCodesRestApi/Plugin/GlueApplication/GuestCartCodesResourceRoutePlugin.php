@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
 
 class GuestCartCodesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
@@ -29,8 +30,8 @@ class GuestCartCodesResourceRoutePlugin extends AbstractPlugin implements Resour
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post', false)
-            ->addDelete('delete', false);
+            ->addPost(Request::METHOD_POST, false)
+            ->addDelete(Request::METHOD_DELETE, false);
 
         return $resourceRouteCollection;
     }
