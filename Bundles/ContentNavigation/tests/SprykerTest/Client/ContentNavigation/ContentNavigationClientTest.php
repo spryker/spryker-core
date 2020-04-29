@@ -105,7 +105,7 @@ class ContentNavigationClientTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteNavigationTypeByKeyWithNotExistingContentNavigationWillReturnNull(): void
+    public function testExecuteNavigationTypeByKeyWithNotExistingContentNavigationShouldReturnNull(): void
     {
         // Arrange
         $this->setNavigationStorageClientReturn(null);
