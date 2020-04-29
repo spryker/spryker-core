@@ -60,7 +60,8 @@
         <property name="idLocale" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="pagination" type="Pagination"/>
-        <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferTableCriteria">
@@ -77,7 +78,8 @@
         <property name="idLocale" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="pagination" type="Pagination"/>
-        <property name="orderBy" type="string[]" associative="true" singular="orderBy"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="ProductTableData">
@@ -90,9 +92,7 @@
         <property name="sku" type="string"/>
         <property name="image" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
-        <property name="productAbstractLocalizedAttributes" type="array" singular="productAbstractLocalizedAttribute"/>
         <property name="productConcreteLocalizedAttributes" type="array" singular="productConcreteLocalizedAttribute"/>
         <property name="offersCount" type="int"/>
         <property name="stores" type="string"/>
@@ -114,9 +114,7 @@
         <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
         <property name="productConcreteName" type="string"/>
-        <property name="productAbstractAttributes" type="array" singular="productAbstractAttribute"/>
         <property name="productConcreteAttributes" type="array" singular="productConcreteAttribute"/>
-        <property name="productAbstractLocalizedAttributes" type="array" singular="productAbstractLocalizedAttribute"/>
         <property name="productConcreteLocalizedAttributes" type="array" singular="productConcreteLocalizedAttribute"/>
         <property name="stores" type="string"/>
         <property name="validFrom" type="string"/>
@@ -148,11 +146,6 @@
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="idStore" type="int"/>
-    </transfer>
-
-    <transfer name="ProductAbstract">
-        <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="ProductConcrete">

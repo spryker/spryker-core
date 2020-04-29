@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductT
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductTableRowDataTransfer;
@@ -102,9 +101,8 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     protected function getNameColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer($productTableRowDataTransfer);
-        $productAbstractTransfer = $this->createProductAbstractTransfer($productTableRowDataTransfer);
 
-        return $this->productNameBuilder->buildProductName($productConcreteTransfer, $productAbstractTransfer);
+        return $this->productNameBuilder->buildProductName($productConcreteTransfer);
     }
 
     /**
@@ -123,23 +121,6 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
             ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function createProductAbstractTransfer(ProductTableRowDataTransfer $productTableRowDataTransfer): ProductAbstractTransfer
-    {
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->setAttributes($productTableRowDataTransfer->getProductAbstractLocalizedAttributes());
-
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setAttributes($productTableRowDataTransfer->getProductAbstractAttributes())
-            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
-
-        return $productAbstractTransfer;
     }
 
     /**

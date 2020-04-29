@@ -246,7 +246,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createValidityProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
     {
-        return new ValidityProductOfferTableCriteriaExpander();
+        return new ValidityProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
     }
 
     /**
@@ -254,7 +254,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createCreatedAtProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
     {
-        return new CreatedAtProductOfferTableCriteriaExpander();
+        return new CreatedAtProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
     }
 
     /**
@@ -262,7 +262,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createUpdatedAtProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
     {
-        return new UpdatedAtProductOfferTableCriteriaExpander();
+        return new UpdatedAtProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
     }
 
     /**

@@ -98,26 +98,14 @@ class ProductTableDataMapper
                 $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
                 true
             );
-            $productAbstractAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES] ?? null,
-                true
-            );
             $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
                 $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES] ?? null,
                 true
             );
-            $productAbstractLocalizedAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES] ?? null,
-                true
-            );
             $productTableRowDataTransfer = (new ProductTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
             $productTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
-            $productTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
             $productTableRowDataTransfer->setProductConcreteLocalizedAttributes(
                 is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : []
-            );
-            $productTableRowDataTransfer->setProductAbstractLocalizedAttributes(
-                is_array($productAbstractLocalizedAttributes) ? $productAbstractLocalizedAttributes : []
             );
             $rowsData[] = $productTableRowDataTransfer;
         }

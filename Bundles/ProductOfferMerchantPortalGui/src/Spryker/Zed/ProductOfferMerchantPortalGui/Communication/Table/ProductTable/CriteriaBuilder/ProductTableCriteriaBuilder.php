@@ -32,9 +32,14 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     protected $searchTerm;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $sorting;
+    protected $sortColumn;
+
+    /**
+     * @var string
+     */
+    protected $sortDirection;
 
     /**
      * @var int
@@ -70,7 +75,8 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     {
         $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer()
             ->setSearchTerm($this->searchTerm)
-            ->setOrderBy($this->sorting)
+            ->setOrderBy($this->sortColumn)
+            ->setOrderDirection($this->sortDirection)
             ->setPagination($this->buildPaginationTransfer());
 
         $productTableCriteriaTransfer = $this->applyFilters($productTableCriteriaTransfer);
@@ -115,13 +121,25 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     }
 
     /**
-     * @param string[] $sorting
+     * @param string|null $sortColumn
      *
      * @return $this
      */
-    public function setSorting(array $sorting)
+    public function setSortColumn(?string $sortColumn)
     {
-        $this->sorting = $sorting;
+        $this->sortColumn = $sortColumn;
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $sortDirection
+     *
+     * @return $this
+     */
+    public function setSortDirection(?string $sortDirection)
+    {
+        $this->sortDirection = $sortDirection;
 
         return $this;
     }

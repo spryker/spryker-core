@@ -36,9 +36,14 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
     protected $searchTerm;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $sorting;
+    protected $sortColumn;
+
+    /**
+     * @var string
+     */
+    protected $sortDirection;
 
     /**
      * @var int
@@ -77,7 +82,8 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
     {
         $productOfferTableCriteriaTransfer = $this->buildProductOfferTableCriteriaTransfer()
             ->setSearchTerm($this->searchTerm)
-            ->setOrderBy($this->sorting)
+            ->setOrderBy($this->sortColumn)
+            ->setOrderDirection($this->sortDirection)
             ->setPagination($this->buildPaginationTransfer());
 
         $productOfferTableCriteriaTransfer = $this->applyFilters($productOfferTableCriteriaTransfer);
@@ -122,13 +128,25 @@ class ProductOfferTableCriteriaBuilder implements ProductOfferTableCriteriaBuild
     }
 
     /**
-     * @param string[] $sorting
+     * @param string|null $sortColumn
      *
      * @return $this
      */
-    public function setSorting(array $sorting)
+    public function setSortColumn(?string $sortColumn)
     {
-        $this->sorting = $sorting;
+        $this->sortColumn = $sortColumn;
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $sortDirection
+     *
+     * @return $this
+     */
+    public function setSortDirection(?string $sortDirection)
+    {
+        $this->sortDirection = $sortDirection;
 
         return $this;
     }

@@ -106,42 +106,30 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param array $productTableDataArray
+     * @param array $productOfferTableDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTableDataTransfer $productOfferTableDataTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTableDataTransfer
      */
     public function mapProductOfferTableDataArrayToTableDataTransfer(
-        array $productTableDataArray,
+        array $productOfferTableDataArray,
         ProductOfferTableDataTransfer $productOfferTableDataTransfer
     ): ProductOfferTableDataTransfer {
         $rowsData = [];
 
-        foreach ($productTableDataArray as $productTableRowDataArray) {
+        foreach ($productOfferTableDataArray as $productOfferTableRowDataArray) {
             $productConcreteAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
-                true
-            );
-            $productAbstractAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_ATTRIBUTES] ?? null,
+                $productOfferTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
                 true
             );
             $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES] ?? null,
+                $productOfferTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES] ?? null,
                 true
             );
-            $productAbstractLocalizedAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductOfferTableRowDataTransfer::PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES] ?? null,
-                true
-            );
-            $productOfferTableRowDataTransfer = (new ProductOfferTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
+            $productOfferTableRowDataTransfer = (new ProductOfferTableRowDataTransfer())->fromArray($productOfferTableRowDataArray, true);
             $productOfferTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
-            $productOfferTableRowDataTransfer->setProductAbstractAttributes(is_array($productAbstractAttributes) ? $productAbstractAttributes : []);
             $productOfferTableRowDataTransfer->setProductConcreteLocalizedAttributes(
                 is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : []
-            );
-            $productOfferTableRowDataTransfer->setProductAbstractLocalizedAttributes(
-                is_array($productAbstractLocalizedAttributes) ? $productAbstractLocalizedAttributes : []
             );
             $rowsData[] = $productOfferTableRowDataTransfer;
         }

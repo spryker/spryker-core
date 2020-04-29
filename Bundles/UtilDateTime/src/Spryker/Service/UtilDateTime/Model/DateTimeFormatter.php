@@ -19,6 +19,8 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     public const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
     public const DEFAULT_FORMAT_DATE = 'M. d, Y';
 
+    protected const DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var \Spryker\Shared\Config\Config
      */
@@ -60,6 +62,16 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     public function formatDateTimeToIso($dateTime): string
     {
         return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM);
+    }
+
+    /**
+     * @param \DateTime|string $dateTime
+     *
+     * @return string
+     */
+    public function formatToDbDateTime($dateTime): string
+    {
+        return $this->format($dateTime, static::DB_DATE_TIME_FORMAT, static::DB_DATE_TIME_FORMAT);
     }
 
     /**

@@ -38,11 +38,18 @@ interface ProductTableCriteriaBuilderInterface
     public function setSearchTerm(?string $searchTerm);
 
     /**
-     * @param string[] $sorting
+     * @param string|null $sortColumn
      *
      * @return $this
      */
-    public function setSorting(array $sorting);
+    public function setSortColumn(?string $sortColumn);
+
+    /**
+     * @param string|null $sortDirection
+     *
+     * @return $this
+     */
+    public function setSortDirection(?string $sortDirection);
 
     /**
      * @param array $filters

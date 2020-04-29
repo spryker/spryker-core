@@ -9,9 +9,23 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductO
 
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\UpdatedAtProductOfferTableFilter;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
 
 class UpdatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface
+     */
+    protected $utilDateTimeService;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService
+     */
+    public function __construct(ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService)
+    {
+        $this->utilDateTimeService = $utilDateTimeService;
+    }
+
     /**
      * @param string $filterName
      *
@@ -32,8 +46,12 @@ class UpdatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCri
         $filterValue,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setUpdatedFrom($filterValue['from'] ?? null);
-        $productOfferTableCriteriaTransfer->setUpdatedTo($filterValue['to'] ?? null);
+        $productOfferTableCriteriaTransfer->setUpdatedFrom(
+            isset($filterValue['from']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['from']) : null
+        );
+        $productOfferTableCriteriaTransfer->setUpdatedTo(
+            isset($filterValue['to']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['to']) : null
+        );
 
         return $productOfferTableCriteriaTransfer;
     }

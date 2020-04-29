@@ -68,9 +68,14 @@ abstract class AbstractTable
     protected $searchTerm;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $sorting;
+    protected $sortColumn;
+
+    /**
+     * @var string
+     */
+    protected $sortDirection;
 
     /**
      * @var int
@@ -287,7 +292,8 @@ abstract class AbstractTable
             throw new InvalidSortingConfigurationException('Sort column is not present.');
         }
 
-        $this->sorting[$sortColumn] = $sortDirection;
+        $this->sortColumn = $sortColumn;
+        $this->sortDirection = $sortDirection;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductO
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
@@ -107,9 +106,8 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected function getNameColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer($productOfferTableRowDataTransfer);
-        $productAbstractTransfer = $this->createProductAbstractTransfer($productOfferTableRowDataTransfer);
 
-        return $this->productNameBuilder->buildProductName($productConcreteTransfer, $productAbstractTransfer);
+        return $this->productNameBuilder->buildProductName($productConcreteTransfer);
     }
 
     /**
@@ -129,24 +127,6 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
             ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function createProductAbstractTransfer(
-        ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-    ): ProductAbstractTransfer {
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractLocalizedAttributes());
-
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractAttributes())
-            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
-
-        return $productAbstractTransfer;
     }
 
     /**

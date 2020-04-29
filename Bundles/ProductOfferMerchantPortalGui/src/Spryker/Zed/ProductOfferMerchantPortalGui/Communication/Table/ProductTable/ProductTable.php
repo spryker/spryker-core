@@ -199,7 +199,8 @@ class ProductTable extends AbstractTable
             ->setSearchTerm($this->searchTerm)
             ->setPage($this->page)
             ->setPageSize($this->pageSize)
-            ->setSorting($this->sorting)
+            ->setSortColumn($this->sortColumn)
+            ->setSortDirection($this->sortDirection)
             ->setFilters($this->filters)
             ->build();
     }
