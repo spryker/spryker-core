@@ -10,8 +10,6 @@ namespace Spryker\Zed\ContentNavigationDataImport\Business\DataSet;
 interface ContentNavigationDataSetInterface
 {
     public const CONTENT_NAVIGATION_KEY = 'key';
-    public const CONTENT_NAVIGATION_NAME = 'name';
-    public const CONTENT_NAVIGATION_DESCRIPTION = 'description';
 
     public const CONTENT_LOCALIZED_NAVIGATION_TERMS = 'localized_navigation_terms';
 }

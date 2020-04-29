@@ -25,8 +25,9 @@ class ContentNavigationDataImportFacade extends AbstractFacade implements Conten
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importContentNavigation(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importContentNavigation(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()->getContentNavigationDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

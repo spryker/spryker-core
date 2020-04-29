@@ -29,7 +29,9 @@ class ContentNavigationDataImportBusinessFactory extends DataImportBusinessFacto
      */
     public function getContentNavigationDataImport(): DataImporterInterface
     {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getContentNavigationDataImporterConfiguration());
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getContentNavigationDataImporterConfiguration()
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCheckContentDataStep());

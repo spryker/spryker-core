@@ -23,5 +23,7 @@ interface ContentNavigationDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importContentNavigation(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importContentNavigation(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer;
 }
