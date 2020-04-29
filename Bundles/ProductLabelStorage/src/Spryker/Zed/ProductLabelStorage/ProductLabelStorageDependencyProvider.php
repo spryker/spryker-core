@@ -16,15 +16,12 @@ use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProdu
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
-use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerBridge;
-use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
 class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
 
     public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
@@ -69,7 +66,6 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductLabelQueryContainer($container);
-        $container = $this->addProductQueryContainer($container);
         $container = $this->addProductLabelPropelQuery($container);
 
         return $container;
@@ -101,22 +97,6 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::QUERY_CONTAINER_PRODUCT_LABEL, function (Container $container): ProductLabelStorageToProductLabelQueryContainerInterface {
             return new ProductLabelStorageToProductLabelQueryContainerBridge(
                 $container->getLocator()->productLabel()->queryContainer()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductQueryContainer(Container $container): Container
-    {
-        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container): ProductLabelStorageToProductQueryContainerInterface {
-            return new ProductLabelStorageToProductQueryContainerBridge(
-                $container->getLocator()->product()->queryContainer()
             );
         });
 

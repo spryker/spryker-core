@@ -53,6 +53,22 @@ class ProductLabelSearchFacade extends AbstractFacade implements ProductLabelSea
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductLabelSearchWriter()
+            ->writeCollectionByProductLabelStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer

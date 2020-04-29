@@ -85,7 +85,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label entity creation
+     * - This events will be used for spy_product_label entity creation.
      *
      * @api
      */
@@ -93,7 +93,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label entity changes
+     * - This events will be used for spy_product_label entity changes.
      *
      * @api
      */
@@ -101,7 +101,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label entity deletion
+     * - This events will be used for spy_product_label entity deletion.
      *
      * @api
      */
@@ -109,7 +109,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_localized_attributes entity creation
+     * - This events will be used for spy_product_label_localized_attributes entity creation.
      *
      * @api
      */
@@ -117,7 +117,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_localized_attributes entity changes
+     * - This events will be used for spy_product_label_localized_attributes entity changes.
      *
      * @api
      */
@@ -125,7 +125,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_localized_attributes entity deletion
+     * - This events will be used for spy_product_label_localized_attributes entity deletion.
      *
      * @api
      */
@@ -133,7 +133,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_store entity deletion
+     * - This events will be used for spy_product_label_store entity creation.
      *
      * @api
      */
@@ -141,7 +141,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_store entity deletion
+     * - This events will be used for spy_product_label_store entity changes.
      *
      * @api
      */
@@ -149,7 +149,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_label_store entity deletion
+     * - This events will be used for spy_product_label_store entity deletion.
      *
      * @api
      */
@@ -157,7 +157,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing price messages
+     * - Queue name as used for processing price messages.
      *
      * @api
      */
@@ -165,7 +165,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing price messages
+     * - Queue name as used for processing price messages.
      *
      * @api
      */
@@ -173,7 +173,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */

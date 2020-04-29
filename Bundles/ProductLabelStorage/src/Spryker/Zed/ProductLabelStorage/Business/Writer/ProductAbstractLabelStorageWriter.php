@@ -18,7 +18,12 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
      */
-    protected const KEY_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+    protected const COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+
+    /**
+     * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+     */
+    protected const COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL = 'spy_product_label_store.fk_product_label';
 
     /**
      * @var \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface
@@ -92,7 +97,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      */
     public function writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents(array $eventTransfers): void
     {
-        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productLabelIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->productLabelStorageRepository
+            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
 
         $this->writeCollection($productAbstractIds);
     }
@@ -102,9 +109,30 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      *
      * @return void
      */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void
+    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(
+        array $eventTransfers
+    ): void {
+        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers,
+            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT
+        );
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(array $eventTransfers): void
     {
-        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::KEY_FK_PRODUCT_ABSTRACT);
+        $productLabelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers,
+            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL
+        );
+        $productAbstractIds = $this->productLabelStorageRepository
+            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
 
         $this->writeCollection($productAbstractIds);
     }
@@ -116,14 +144,19 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      */
     protected function writeCollection(array $productAbstractIds): void
     {
-        $uniqueProductAbstractIds = $this->productLabelStorageRepository
-            ->getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds($productAbstractIds);
-        $productAbstractLabelStorageTransfers = $this->productLabelStorageRepository->getProductAbstractLabelStorageTransfersByProductAbstractIds($uniqueProductAbstractIds);
-        $indexedProductAbstractLabelStorageTransfers = $this->indexProductAbstractLabelTransfersByProductAbstractIds($productAbstractLabelStorageTransfers);
-
+        $uniqueProductAbstractIds = array_unique($productAbstractIds);
+        $productAbstractLabelStorageTransfers = $this->productLabelStorageRepository
+            ->getProductAbstractLabelStorageTransfersByProductAbstractIds($uniqueProductAbstractIds);
+        $indexedProductAbstractLabelStorageTransfers = $this->indexProductAbstractLabelTransfersByProductAbstractIds(
+            $productAbstractLabelStorageTransfers
+        );
         $groupedProductLabelIds = $this->getGroupedProductLabelIdsByProductAbstractIds($productAbstractIds);
 
-        $this->storeData($uniqueProductAbstractIds, $indexedProductAbstractLabelStorageTransfers, $groupedProductLabelIds);
+        $this->storeData(
+            $uniqueProductAbstractIds,
+            $indexedProductAbstractLabelStorageTransfers,
+            $groupedProductLabelIds
+        );
     }
 
     /**
@@ -159,7 +192,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
         ?ProductAbstractLabelStorageTransfer $productAbstractLabelStorageTransfer = null
     ): void {
         if (empty($productLabelIds[$productAbstractId])) {
-            $this->productLabelStorageEntityManager->deleteProductAbstractLabelStorageByProductAbstractId($productAbstractId);
+            $this->productLabelStorageEntityManager->deleteProductAbstractLabelStorageByProductAbstractId(
+                $productAbstractId
+            );
 
             return;
         }
@@ -194,8 +229,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      *
      * @return int[][]
      */
-    protected function getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(array $productLabelProductAbstractTransfers): array
-    {
+    protected function getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
+        array $productLabelProductAbstractTransfers
+    ): array {
         $groupedLabelsByProductAbstractId = [];
         foreach ($productLabelProductAbstractTransfers as $productLabelProductAbstractTransfer) {
             $groupedLabelsByProductAbstractId[$productLabelProductAbstractTransfer->getFkProductAbstract()][] = $productLabelProductAbstractTransfer->getFkProductLabel();
@@ -209,8 +245,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      *
      * @return \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[]
      */
-    protected function indexProductAbstractLabelTransfersByProductAbstractIds(array $productAbstractLabelStorageTransfers): array
-    {
+    protected function indexProductAbstractLabelTransfersByProductAbstractIds(
+        array $productAbstractLabelStorageTransfers
+    ): array {
         $indexedProductAbstractLabelStorageTransfers = [];
         foreach ($productAbstractLabelStorageTransfers as $productAbstractLabelStorageTransfer) {
             $indexedProductAbstractLabelStorageTransfers[$productAbstractLabelStorageTransfer->getIdProductAbstract()] = $productAbstractLabelStorageTransfer;

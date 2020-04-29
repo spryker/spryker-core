@@ -39,7 +39,12 @@ class ProductLabelSearchFacadeTest extends Unit
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
      */
-    protected const COL_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+    protected const COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+
+    /**
+     * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+     */
+    protected const COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL = 'spy_product_label_store.fk_product_label';
 
     /**
      * @return void
@@ -124,12 +129,12 @@ class ProductLabelSearchFacadeTest extends Unit
         $eventTransfers = [
             $this->getEventEntityTransfer([
                 EventEntityTransfer::FOREIGN_KEYS => [
-                    static::COL_FK_PRODUCT_ABSTRACT => $productTransfer1->getFkProductAbstract(),
+                    static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT => $productTransfer1->getFkProductAbstract(),
                 ],
             ]),
             $this->getEventEntityTransfer([
                 EventEntityTransfer::FOREIGN_KEYS => [
-                    static::COL_FK_PRODUCT_ABSTRACT => $productTransfer2->getFkProductAbstract(),
+                    static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT => $productTransfer2->getFkProductAbstract(),
                 ],
             ]),
         ];
@@ -168,6 +173,77 @@ class ProductLabelSearchFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByProductLabelStoreEventsRefreshesProductPageSearchWithCorrectData(): void
+    {
+        // Arrange
+        $productPageSearchFacadeMock = $this->getProductPageSearchFacadeMock();
+
+        $productTransfer1 = $this->tester->haveProduct();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer1->getFkProductAbstract()
+        );
+
+        $productTransfer2 = $this->tester->haveProduct();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract()
+        );
+
+        $eventTransfers = [
+            $this->getEventEntityTransfer([
+                EventEntityTransfer::FOREIGN_KEYS => [
+                    static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL => $productLabelTransfer1->getIdProductLabel(),
+                ],
+            ]),
+            $this->getEventEntityTransfer([
+                EventEntityTransfer::FOREIGN_KEYS => [
+                    static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL => $productLabelTransfer2->getIdProductLabel(),
+                ],
+            ]),
+        ];
+
+        // Assert
+        $productPageSearchFacadeMock->expects($this->once())
+            ->method('refresh')
+            ->with([
+                $productTransfer1->getFkProductAbstract(),
+                $productTransfer2->getFkProductAbstract(),
+            ]);
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByProductLabelStoreEvents($eventTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByProductLabelStoreEventsDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $productPageSearchFacadeMock = $this->getProductPageSearchFacadeMock();
+
+        $productTransfer = $this->tester->haveProduct();
+
+        $eventTransfers = [
+            $this->getEventEntityTransfer([
+                EventEntityTransfer::ID => $productTransfer->getFkProductAbstract(),
+            ]),
+        ];
+
+        // Assert
+        $productPageSearchFacadeMock->expects($this->never())
+            ->method('refresh');
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByProductLabelStoreEvents($eventTransfers);
     }
 
     /**

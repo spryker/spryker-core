@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductLabelDictionaryStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -20,17 +20,17 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductLabelStorageRepository extends AbstractRepository implements ProductLabelStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productLabelIds
      *
      * @return int[]
      */
-    public function getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array
     {
         return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryAllProductAbstractLocalizedAttributes()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->select(SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->getProductLabelPropelQuery()
+            ->filterByIdProductLabel_In($productLabelIds)
+            ->joinSpyProductLabelProductAbstract()
+            ->select(SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->distinct()
             ->find()
             ->getData();

@@ -55,25 +55,6 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function queryProductAbstractLocalizedByIds(array $productAbstractIds)
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryAllProductAbstractLocalizedAttributes()
-            ->joinWithLocale()
-            ->joinWithSpyProductAbstract()
-            ->filterByFkProductAbstract_In($productAbstractIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $productAbstractIds
-     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)

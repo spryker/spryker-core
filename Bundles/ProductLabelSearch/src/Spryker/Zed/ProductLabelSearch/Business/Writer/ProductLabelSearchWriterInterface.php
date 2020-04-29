@@ -22,4 +22,11 @@ interface ProductLabelSearchWriterInterface
      * @return void
      */
     public function writeCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelStoreEvents(array $eventTransfers): void;
 }

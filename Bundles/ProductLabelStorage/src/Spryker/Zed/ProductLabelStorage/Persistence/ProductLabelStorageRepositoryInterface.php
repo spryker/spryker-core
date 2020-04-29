@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductLabelStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productLabelIds
      *
      * @return int[]
      */
-    public function getUniqueProductAbstractIdsFromLocalizedAttributesByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array;
 
     /**
      * @param int[] $productAbstractIds

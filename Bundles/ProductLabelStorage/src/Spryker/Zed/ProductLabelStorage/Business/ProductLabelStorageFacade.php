@@ -131,6 +131,22 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductAbstractLabelStorageWriter()
+            ->writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
      *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *

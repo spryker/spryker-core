@@ -82,9 +82,9 @@ interface ProductLabelStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts product abstract ids from event transfers.
-     * - Queries all product labels with the given product abstract ids.
-     * - Stores data as json encoded to storage table.
+     * - Extracts product abstract IDs from $eventTransfers created by product label events.
+     * - Finds product labels using product abstract IDs.
+     * - Stores JSON encoded data to a storage table.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
@@ -97,8 +97,9 @@ interface ProductLabelStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries all product labels the given $eventTransfer by ProductLabelProductAbstractEvents.
-     * - Stores data as json encoded to storage table.
+     * - Extracts product abstract IDs from the $eventTransfers created by product label product abstract events.
+     * - Finds product labels using product abstract IDs.
+     * - Stores JSON encoded data to a storage table.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
@@ -107,7 +108,26 @@ interface ProductLabelStorageFacadeInterface
      *
      * @return void
      */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(array $eventTransfers): void;
+    public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(
+        array $eventTransfers
+    ): void;
+
+    /**
+     * Specification:
+     * - Extracts product abstract IDs from the $eventTransfers created by product label store events.
+     * - Finds product labels using product abstract IDs.
+     * - Stores JSON encoded data to a storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(
+        array $eventTransfers
+    ): void;
 
     /**
      * Specification:

@@ -12,7 +12,6 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
-use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
@@ -64,14 +63,6 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductLabelQueryContainer(): ProductLabelStorageToProductLabelQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerInterface
-     */
-    public function getProductQueryContainer(): ProductLabelStorageToProductQueryContainerInterface
-    {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
     /**

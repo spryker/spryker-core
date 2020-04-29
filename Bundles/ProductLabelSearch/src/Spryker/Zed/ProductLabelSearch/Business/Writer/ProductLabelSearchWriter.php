@@ -17,7 +17,12 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
      */
-    protected const COL_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+    protected const COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
+
+    /**
+     * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+     */
+    protected const COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL = 'spy_product_label_store.fk_product_label';
 
     /**
      * @var \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface
@@ -71,8 +76,25 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventTransfers,
-            static::COL_FK_PRODUCT_ABSTRACT
+            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT
         );
+
+        $this->writeCollection($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductLabelStoreEvents(array $eventTransfers): void
+    {
+        $productLabelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers,
+            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL
+        );
+        $productAbstractIds = $this->productLabelSearchRepository
+            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
 
         $this->writeCollection($productAbstractIds);
     }

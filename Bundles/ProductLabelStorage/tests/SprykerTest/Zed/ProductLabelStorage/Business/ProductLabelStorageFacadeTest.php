@@ -11,9 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelStoreTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -104,16 +104,22 @@ class ProductLabelStorageFacadeTest extends Unit
     public function testWriteProductAbstractLabelStorageCollectionByProductAbstractLabelEventsPersistStorageEntity(): void
     {
         //Arrange
-        $productAbstractTransfer = $this->prepareProductAbstractData();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($productAbstractTransfer->getIdProductAbstract()),
+            (new EventEntityTransfer())->setId($productLabelTransfer->getIdProductLabel()),
         ];
 
         //Act
-        $this->tester->getFacade()->writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents($eventTransfers);
+        $this->tester->getFacade()
+            ->writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents($eventTransfers);
 
         //Assert
         $this->assertTrue(
@@ -128,7 +134,12 @@ class ProductLabelStorageFacadeTest extends Unit
     public function testWriteProductAbstractLabelStorageCollectionByProductLabelProductAbstractEventsPersistStorageEntity(): void
     {
         //Arrange
-        $productAbstractTransfer = $this->prepareProductAbstractData();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
 
@@ -140,6 +151,37 @@ class ProductLabelStorageFacadeTest extends Unit
 
         //Act
         $this->tester->getFacade()->writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents($eventTransfers);
+
+        //Assert
+        $this->assertTrue(
+            $this->tester->isProductAbstractLabelStorageRecordExists($productAbstractTransfer->getIdProductAbstract()),
+            'Product abstract label storage record should exists.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteProductAbstractLabelStorageCollectionByProductLabelStoreEventsPersistStorageEntity(): void
+    {
+        //Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
+
+        $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductLabelStoreTableMap::COL_FK_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel(),
+            ]),
+        ];
+
+        //Act
+        $this->tester->getFacade()->writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents($eventTransfers);
 
         //Assert
         $this->assertTrue(
@@ -180,7 +222,7 @@ class ProductLabelStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testgetProductLabelDictionaryStorageDataTransfersByIdsWillReturnSynchronizationDataTransfers(): void
+    public function testGetProductLabelDictionaryStorageDataTransfersByIdsWillReturnSynchronizationDataTransfers(): void
     {
         //Arrange
         $productLabelDictionaryStorageTransfer = $this->tester->haveProductLabelDictionaryStorage([
@@ -201,26 +243,6 @@ class ProductLabelStorageFacadeTest extends Unit
             $synchronizationDataTransfers,
             'Number of synchronisation data transfers is not equals to an expected value.'
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function prepareProductAbstractData(): ProductAbstractTransfer
-    {
-        $productLabelTransfer = $this->tester->haveProductLabel();
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $localizedAttributes = $this->tester->generateLocalizedAttributes(
-            $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale()
-        );
-        $this->tester->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
-
-        $this->tester->haveProductLabelToAbstractProductRelation(
-            $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
-        );
-
-        return $productAbstractTransfer;
     }
 
     /**
