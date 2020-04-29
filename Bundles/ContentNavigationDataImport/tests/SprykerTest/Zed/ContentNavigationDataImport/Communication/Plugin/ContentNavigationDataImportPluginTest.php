@@ -26,8 +26,6 @@ use Spryker\Zed\ContentNavigationDataImport\Communication\Plugin\DataImport\Cont
  */
 class ContentNavigationDataImportPluginTest extends Unit
 {
-    protected const TEST_NAVIGATION_KEY = 'TEST_NAVIGATION';
-
     /**
      * @var \SprykerTest\Zed\ContentNavigationDataImport\ContentNavigationDataImportCommunicationTester
      */
@@ -36,31 +34,10 @@ class ContentNavigationDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tester->haveNavigation([NavigationTransfer::KEY => static::TEST_NAVIGATION_KEY]);
-        $this->tester->ensureContentTablesAreEmpty();
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->tester->ensureNavigationTableIsEmpty();
-        $this->tester->ensureContentTablesAreEmpty();
-    }
-
-    /**
-     * @return void
-     */
     public function testImporterPopulatesTables(): void
     {
         // Arrange
+        $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -70,13 +47,10 @@ class ContentNavigationDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
-        $contentCountBefore = $this->tester->getContentTableCount();
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
-        $contentCountAfter = $this->tester->getContentTableCount();
 
         // Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
-        $this->assertNotSame($contentCountBefore, $contentCountAfter);
     }
 
     /**
@@ -85,6 +59,7 @@ class ContentNavigationDataImportPluginTest extends Unit
     public function testImportWithEmptyDefaultLocaleDataReturnsFalse(): void
     {
         // Arrange
+        $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation_without_default_locale']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -94,13 +69,10 @@ class ContentNavigationDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
-        $contentCountBefore = $this->tester->getContentTableCount();
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
-        $contentCountAfter = $this->tester->getContentTableCount();
 
         // Assert
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-        $this->assertSame($contentCountAfter, $contentCountBefore);
     }
 
     /**
@@ -118,12 +90,9 @@ class ContentNavigationDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
-        $contentCountBefore = $this->tester->getContentTableCount();
         $dataImporterReportTransfer = $contentNavigationDataImportPlugin->import($dataImportConfigurationTransfer);
-        $contentCountAfter = $this->tester->getContentTableCount();
 
         // Assert
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-        $this->assertSame($contentCountAfter, $contentCountBefore);
     }
 }
