@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Navigation\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DuplicateNavigationTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
@@ -27,6 +28,9 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
  */
 class NavigationCRUDTest extends Unit
 {
+    protected const TEST_NAVIGATION_KEY = 'test-navigation-1';
+    protected const TEST_NAVIGATION_NAME = 'Test navigation 1';
+
     /**
      * @uses \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND
      */
@@ -70,11 +74,11 @@ class NavigationCRUDTest extends Unit
      */
     public function testCreateNewNavigationPersistsToDatabase(): void
     {
-        $navigationTransfer = $this->tester->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
+        $navigationTransfer = $this->tester->createNavigationTransfer(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
 
-        $navigationTransfer = $this->navigationFacade->createNavigation($navigationTransfer);
+        $resultNavigationTransfer = $this->navigationFacade->createNavigation($navigationTransfer);
 
-        $this->assertGreaterThan(0, $navigationTransfer->getIdNavigation());
+        $this->assertGreaterThan(0, $resultNavigationTransfer->getIdNavigation());
     }
 
     /**
@@ -82,17 +86,16 @@ class NavigationCRUDTest extends Unit
      */
     public function testUpdateExistingNavigationPersistsToDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigation('Test navigation 1', 'test-navigation-1', true);
+        $navigationTransfer = $this->tester->createNavigation(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer
-            ->setIdNavigation($navigationEntity->getIdNavigation())
+        $navigationTransferForUpdate = (new NavigationTransfer())
+            ->setIdNavigation($navigationTransfer->getIdNavigation())
             ->setName('Test navigation 1 (edited)');
 
-        $updatedNavigationTransfer = $this->navigationFacade->updateNavigation($navigationTransfer);
+        $updatedNavigationTransfer = $this->navigationFacade->updateNavigation($navigationTransferForUpdate);
 
         $this->assertSame('Test navigation 1 (edited)', $updatedNavigationTransfer->getName(), 'Name should have changed when updating navigation.');
-        $this->assertSame('test-navigation-1', $updatedNavigationTransfer->getKey(), 'Returned navigation transfer should contain non-updated data as well.');
+        $this->assertSame(static::TEST_NAVIGATION_KEY, $updatedNavigationTransfer->getKey(), 'Returned navigation transfer should contain non-updated data as well.');
     }
 
     /**
@@ -100,16 +103,15 @@ class NavigationCRUDTest extends Unit
      */
     public function testReadExistingNavigationReadsFromDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigation('test-navigation-1', 'Test navigation 1', true);
+        $navigationTransfer = $this->tester->createNavigation(static::TEST_NAVIGATION_KEY, static::TEST_NAVIGATION_NAME, true);
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($navigationEntity->getIdNavigation());
+        $resultNavigationTransfer = $this->navigationFacade->findNavigation(
+            (new NavigationTransfer())->setIdNavigation($navigationTransfer->getIdNavigation())
+        );
 
-        $navigationTransfer = $this->navigationFacade->findNavigation($navigationTransfer);
-
-        $this->assertSame($navigationEntity->getKey(), $navigationTransfer->getKey(), 'Key read from database should match expected value.');
-        $this->assertSame($navigationEntity->getName(), $navigationTransfer->getName(), 'Name read from database should match expected value.');
-        $this->assertSame($navigationEntity->getIsActive(), $navigationTransfer->getIsActive(), 'Active status read from database should match expected value.');
+        $this->assertSame($resultNavigationTransfer->getKey(), $resultNavigationTransfer->getKey(), 'Key read from database should match expected value.');
+        $this->assertSame($resultNavigationTransfer->getName(), $resultNavigationTransfer->getName(), 'Name read from database should match expected value.');
+        $this->assertSame($resultNavigationTransfer->getIsActive(), $resultNavigationTransfer->getIsActive(), 'Active status read from database should match expected value.');
     }
 
     /**
@@ -117,12 +119,9 @@ class NavigationCRUDTest extends Unit
      */
     public function testDeleteExistingNavigationDeletesFromDatabase(): void
     {
-        $navigationEntity = $this->tester->createNavigation('test-navigation-1', 'Test navigation 1', true);
+        $navigationEntity = $this->tester->createNavigation(static::TEST_NAVIGATION_KEY, static::TEST_NAVIGATION_NAME, true);
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($navigationEntity->getIdNavigation());
-
-        $this->navigationFacade->deleteNavigation($navigationTransfer);
+        $this->navigationFacade->deleteNavigation((new NavigationTransfer())->setIdNavigation($navigationEntity->getIdNavigation()));
 
         $actualCount = $this->navigationQueryContainer
             ->queryNavigationById($navigationEntity->getIdNavigation())
@@ -134,13 +133,71 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
+    public function testFindNavigationByCriteriaWillFindNavigationByExistingKey(): void
+    {
+        //Arrange
+        $navigationTransfer = $this->tester->createNavigation(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
+
+        $navigationCriteriaTransfer = (new NavigationCriteriaTransfer())->setKey($navigationTransfer->getKey());
+
+        //Act
+        $navigationTransfer = $this->navigationFacade->findNavigationByCriteria($navigationCriteriaTransfer);
+
+        //Assert
+        $this->assertNotNull($navigationTransfer, 'Result should not be null.');
+        $this->assertEquals(static::TEST_NAVIGATION_KEY, $navigationTransfer->getKey(), 'Navigation key does not match expected value.');
+        $this->assertEquals(static::TEST_NAVIGATION_NAME, $navigationTransfer->getName(), 'Navigation name does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindNavigationByCriteriaWillFindNavigationByExistingNavigationId(): void
+    {
+        //Arrange
+        $navigationTransfer = $this->tester->createNavigation(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
+
+        $navigationCriteriaTransfer = (new NavigationCriteriaTransfer())->setIdNavigation($navigationTransfer->getIdNavigation());
+
+        //Act
+        $resultNavigationTransfer = $this->navigationFacade->findNavigationByCriteria($navigationCriteriaTransfer);
+
+        //Assert
+        $this->assertNotNull($resultNavigationTransfer, 'Result should not be null.');
+        $this->assertEquals(static::TEST_NAVIGATION_KEY, $resultNavigationTransfer->getKey(), 'Navigation key does not match expected value.');
+        $this->assertEquals(static::TEST_NAVIGATION_NAME, $resultNavigationTransfer->getName(), 'Navigation name does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAllNavigationsWillReturnACollectionOfNavigationTransfers(): void
+    {
+        //Arrange
+        $this->tester->createNavigation(static::TEST_NAVIGATION_NAME, static::TEST_NAVIGATION_KEY, true);
+
+        //Act
+        $navigationTransfers = $this->navigationFacade->getAllNavigations();
+
+        //Arrange
+        $this->assertGreaterThanOrEqual(1, count($navigationTransfers), 'Collection count does not match an expected value.');
+        $this->assertInstanceOf(
+            NavigationTransfer::class,
+            $navigationTransfers[0],
+            sprintf('Collection elements expected to be an instance of %s', NavigationTransfer::class)
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testDuplicateNavigationWillPersistTheSameNavigationAsExistingOne(): void
     {
         // Arrange
         $baseNavigationTransfer = $this->tester->createNavigation('test-key', 'Test navigation', true);
         $duplicateNavigationTransfer = $this->tester->createDuplicateNavigationTransfer(
-            'test-navigation-1',
-            'Test navigation 1',
+            static::TEST_NAVIGATION_KEY,
+            static::TEST_NAVIGATION_NAME,
             $baseNavigationTransfer->getIdNavigation()
         );
         $navigationNodeTransfer = $this->tester->createNavigationNode($baseNavigationTransfer->getIdNavigation());
@@ -154,7 +211,7 @@ class NavigationCRUDTest extends Unit
 
         // Assert
         $navigationTreeNodeTransfer = $this->navigationFacade
-            ->findNavigationTree($navigationResponseTransfer->getNavigationTransfer())
+            ->findNavigationTree($navigationResponseTransfer->getNavigation())
             ->getNodes()[0];
 
         $duplicatedNavigationNodeTransfer1 = $navigationTreeNodeTransfer->getNavigationNode();
@@ -162,7 +219,7 @@ class NavigationCRUDTest extends Unit
             ->getChildren()[0]
             ->getNavigationNode();
 
-        $actualNavigationTransfer = $navigationResponseTransfer->getNavigationTransfer();
+        $actualNavigationTransfer = $navigationResponseTransfer->getNavigation();
         [$navigationNodeLocalizedAttributesTransfer1, $navigationNodeLocalizedAttributesTransfer2]
             = $navigationNodeTransfer->getNavigationNodeLocalizedAttributes();
         [$duplicatedNavigationNodeLocalizedAttributesTransfer1, $duplicatedNavigationNodeLocalizedAttributesTransfer2]
@@ -199,8 +256,8 @@ class NavigationCRUDTest extends Unit
     {
         // Arrange
         $duplicateNavigationTransfer = $this->tester->createDuplicateNavigationTransfer(
-            'test-navigation-1',
-            'Test navigation 1',
+            static::TEST_NAVIGATION_KEY,
+            static::TEST_NAVIGATION_NAME,
             static::NON_EXISTENT_NAVIGATION_ID
         );
 
@@ -211,7 +268,7 @@ class NavigationCRUDTest extends Unit
         $this->assertFalse($navigationResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND,
-            $navigationResponseTransfer->getError()->getMessage()
+            $navigationResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -223,8 +280,8 @@ class NavigationCRUDTest extends Unit
         // Arrange
         $navigationTransfer = $this->tester->createNavigation('test-key', 'test-navigation-1', true);
         $duplicateNavigationTransfer = $this->tester->createDuplicateNavigationTransfer(
-            'test-navigation-1',
-            'Test navigation 1',
+            static::TEST_NAVIGATION_KEY,
+            static::TEST_NAVIGATION_NAME,
             $navigationTransfer->getIdNavigation()
         );
 
@@ -235,7 +292,7 @@ class NavigationCRUDTest extends Unit
         $this->assertFalse($navigationResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS,
-            $navigationResponseTransfer->getError()->getMessage()
+            $navigationResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -251,7 +308,7 @@ class NavigationCRUDTest extends Unit
         $this->navigationFacade->duplicateNavigation(
             (new DuplicateNavigationTransfer())
                 ->setIdBaseNavigation(666)
-                ->setName('Test key 1')
+                ->setName(static::TEST_NAVIGATION_NAME)
         );
     }
 
@@ -267,7 +324,7 @@ class NavigationCRUDTest extends Unit
         $this->navigationFacade->duplicateNavigation(
             (new DuplicateNavigationTransfer())
                 ->setIdBaseNavigation(666)
-                ->setKey('Test key 1')
+                ->setKey(static::TEST_NAVIGATION_KEY)
         );
     }
 
@@ -282,8 +339,8 @@ class NavigationCRUDTest extends Unit
         // Act
         $this->navigationFacade->duplicateNavigation(
             (new DuplicateNavigationTransfer())
-                ->setName('Test key 1')
-                ->setKey('Test key 1')
+                ->setName(static::TEST_NAVIGATION_NAME)
+                ->setKey(static::TEST_NAVIGATION_KEY)
         );
     }
 }

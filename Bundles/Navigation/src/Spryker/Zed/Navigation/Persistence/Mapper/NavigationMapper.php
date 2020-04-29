@@ -7,33 +7,39 @@
 
 namespace Spryker\Zed\Navigation\Persistence\Mapper;
 
-use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationTransfer;
+use Orm\Zed\Navigation\Persistence\SpyNavigation;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class NavigationMapper
 {
     /**
-     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode[] $navigationNodeEntities
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer[] $navigationNodeTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Navigation\Persistence\SpyNavigation[] $navigationEntities
+     * @param \Generated\Shared\Transfer\NavigationTransfer[] $navigationTransfers
      *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
      */
-    public function mapNavigationNodeEntitiesToNavigationNodeTransfers(
-        array $navigationNodeEntities,
-        array $navigationNodeTransfers
+    public function mapNavigationEntitiesToNavigationTransfers(
+        ObjectCollection $navigationEntities,
+        array $navigationTransfers
     ): array {
-        foreach ($navigationNodeEntities as $navigationNodeEntity) {
-            $navigationNodeTransfer = (new NavigationNodeTransfer())->fromArray($navigationNodeEntity->toArray(), true);
-            foreach ($navigationNodeEntity->getSpyNavigationNodeLocalizedAttributess() as $navigationNodeLocalizedAttributes) {
-                $navigationNodeTransfer->addNavigationNodeLocalizedAttribute(
-                    (new NavigationNodeLocalizedAttributesTransfer())
-                        ->fromArray($navigationNodeLocalizedAttributes->toArray(), true)
-                );
-            }
-
-            $navigationNodeTransfers[] = $navigationNodeTransfer;
+        foreach ($navigationEntities as $navigationEntity) {
+            $navigationTransfers[] = $this->mapNavigationEntityToNavigationTransfer($navigationEntity, new NavigationTransfer());
         }
 
-        return $navigationNodeTransfers;
+        return $navigationTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer
+     */
+    public function mapNavigationEntityToNavigationTransfer(
+        SpyNavigation $navigationEntity,
+        NavigationTransfer $navigationTransfer
+    ): NavigationTransfer {
+        return $navigationTransfer->fromArray($navigationEntity->toArray(), true);
     }
 }

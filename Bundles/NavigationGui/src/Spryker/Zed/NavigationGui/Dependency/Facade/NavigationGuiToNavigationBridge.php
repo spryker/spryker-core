@@ -9,6 +9,7 @@ namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
@@ -37,16 +38,6 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     public function createNavigation(NavigationTransfer $navigationTransfer)
     {
         return $this->navigationFacade->createNavigation($navigationTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationTransfer|null
-     */
-    public function findNavigation(NavigationTransfer $navigationTransfer)
-    {
-        return $this->navigationFacade->findNavigation($navigationTransfer);
     }
 
     /**
@@ -138,5 +129,15 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer)
     {
         $this->navigationFacade->updateNavigationTreeHierarchy($navigationTreeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer
+    {
+        return $this->navigationFacade->findNavigationByCriteria($navigationCriteriaTransfer);
     }
 }
