@@ -29,5 +29,5 @@ interface NavigationRepositoryInterface
      *
      * @return bool
      */
-    public function hasNavigationKey(string $key): bool;
+    public function checkNavigationWithKeyExists(string $key): bool;
 }

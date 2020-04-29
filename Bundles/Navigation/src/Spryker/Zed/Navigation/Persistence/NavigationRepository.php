@@ -61,7 +61,7 @@ class NavigationRepository extends AbstractRepository implements NavigationRepos
      *
      * @return bool
      */
-    public function hasNavigationKey(string $key): bool
+    public function checkNavigationWithKeyExists(string $key): bool
     {
         return $this->getFactory()
             ->createNavigationQuery()

@@ -77,7 +77,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             ->requireName();
 
         $navigationResponseTransfer = (new NavigationResponseTransfer())->setIsSuccessful(false);
-        if ($this->navigationRepository->hasNavigationKey($duplicateNavigationTransfer->getKey())) {
+        if ($this->navigationRepository->checkNavigationWithKeyExists($duplicateNavigationTransfer->getKey())) {
             return $navigationResponseTransfer
                 ->addError((new NavigationErrorTransfer())->setMessage(static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS));
         }
