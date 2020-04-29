@@ -74,6 +74,6 @@ class CartVouchersResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeDiscountCodeFromCart($restRequest);
     }
 }

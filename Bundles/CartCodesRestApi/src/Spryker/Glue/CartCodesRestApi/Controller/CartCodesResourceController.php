@@ -59,6 +59,7 @@ class CartCodesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
+     *              "204": "No content.",
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found.",

@@ -94,77 +94,53 @@ class CartCodesRestApiFacadeTest extends Test
     /**
      * @return void
      */
-    public function testAddCartCodeWillNotAddCodeWithNonExistentQuote(): void
-    {
-        // Arrange
-        $quoteTransfer = $this->tester->prepareQuoteTransfer();
-
-        // Act
-        $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
-        );
-
-        // Assert
-        $this->assertEquals(
-            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveCartCodeWillRemoveDiscountWithExistingQuote(): void
+    public function testRemoveCartCodeFromQuoteWillRemoveDiscountCodeWithExistingQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferWithVouchers();
 
         // Act
-        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCode(
+        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
                 ->setQuote($quoteTransfer)
         );
 
         // Assert
+        $this->assertTrue($cartCodeResponseTransfer->getIsSuccessful());
         $this->assertEmpty($cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
     }
 
     /**
      * @return void
      */
-    public function testRemoveCartCodeWillNotRemoveDiscountWithNonExistentCartCode(): void
+    public function testRemoveCartCodeFromQuoteWillRemoveGiftCardCodeWithExistingQuote(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::NON_EXISTENT_CODE)
+                ->setCartCode($this->tester::CODE)
                 ->setQuote($quoteTransfer)
         );
 
         // Assert
-        $this->assertEmpty($cartCodeResponseTransfer->getQuote());
-        $this->assertEquals(
-            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
-        );
+        $this->assertTrue($cartCodeResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($cartCodeResponseTransfer->getQuote()->getGiftCards());
     }
 
     /**
      * @return void
      */
-    public function testRemoveCartCodeWillNotRemoveDiscountWithNonExistentQuote(): void
+    public function testRemoveCartCodeFromQuoteWillNotRemoveCodeWithNonExistentQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
                 ->setQuote($quoteTransfer)
@@ -174,7 +150,7 @@ class CartCodesRestApiFacadeTest extends Test
         $this->assertEmpty($cartCodeResponseTransfer->getQuote());
         $this->assertEquals(
             CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
+            $cartCodeResponseTransfer->getMessages()->getIterator()->current()->getValue()
         );
     }
 

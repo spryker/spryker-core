@@ -27,4 +27,20 @@ interface CartCodeRemoverInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function removeCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function removeDiscountCodeFromCart(
+        RestRequestInterface $restRequest
+    ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function removeDiscountCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface;
 }

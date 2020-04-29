@@ -57,6 +57,7 @@ class GuestCartCodesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
+     *              "204": "No content.",
      *              "404": "Cart with given uuid not found.",
      *              "422": "Cart code can't be deleted."
      *          }
