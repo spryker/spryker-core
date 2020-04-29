@@ -129,7 +129,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
     protected function duplicateNavigationNodeTransfers(
         ArrayObject $navigationTreeNodeTransfers,
         int $idNavigation,
-        $idParentNavigationNode = null
+        ?int $idParentNavigationNode = null
     ): void {
         if (!$navigationTreeNodeTransfers->count()) {
             return;
