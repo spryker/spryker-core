@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ItemMetadataHydratorInterface
 {
     /**

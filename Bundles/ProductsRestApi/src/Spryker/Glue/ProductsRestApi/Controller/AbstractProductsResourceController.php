@@ -23,8 +23,7 @@ class AbstractProductsResourceController extends AbstractController
      *              "Retrieves product abstract by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",

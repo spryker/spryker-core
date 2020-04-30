@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -40,7 +42,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $merchantSalesOrderQuery = $this->addMerchantSalesOrderTotalsDataToMerchantSalesOrderQuery(
             $merchantSalesOrderQuery
         );
-        $merchantSalesOrderQuery = $this->applyFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
+        $merchantSalesOrderQuery = $this->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery */
         $merchantSalesOrderQuery = $this->buildQueryFromCriteria(
             $merchantSalesOrderQuery,
@@ -48,7 +50,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         );
         $merchantSalesOrderQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         $merchantSalesOrderEntityCollection = $this
-            ->applyPagination($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer->getPagination())
+            ->applyMerchantOrderPagination($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer->getPagination())
             ->find();
 
         if ($merchantSalesOrderEntityCollection->count() === 0) {
@@ -130,7 +132,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderQuery
         );
         $merchantSalesOrderEntity = $this
-            ->applyFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer)
+            ->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer)
             ->findOne();
 
         if (!$merchantSalesOrderEntity) {
@@ -173,7 +175,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    protected function applyFilters(
+    protected function applyMerchantOrderFilters(
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): SpyMerchantSalesOrderQuery {
@@ -222,7 +224,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    protected function applyPagination(
+    protected function applyMerchantOrderPagination(
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         ?PaginationTransfer $paginationTransfer = null
     ): SpyMerchantSalesOrderQuery {
@@ -247,5 +249,54 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
         return $paginationModel->getQuery();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null
+     */
+    public function findMerchantOrderItem(
+        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+    ): ?MerchantOrderItemTransfer {
+        $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
+        $merchantSalesOrderItemQuery = $this->applyMerchantOrderItemFilters(
+            $merchantOrderItemCriteriaTransfer,
+            $merchantSalesOrderItemQuery
+        );
+
+        $merchantSalesOrderEntity = $merchantSalesOrderItemQuery->findOne();
+
+        if (!$merchantSalesOrderEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createMerchantSalesOrderMapper()
+            ->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+                $merchantSalesOrderEntity,
+                new MerchantOrderItemTransfer()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
+     *
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
+     */
+    protected function applyMerchantOrderItemFilters(
+        MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer,
+        SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
+    ): SpyMerchantSalesOrderItemQuery {
+        if ($merchantOrderItemCriteriaTransfer->getIdMerchantOrderItem()) {
+            $merchantSalesOrderItemQuery->filterByIdMerchantSalesOrderItem($merchantOrderItemCriteriaTransfer->getIdMerchantOrderItem());
+        }
+
+        if ($merchantOrderItemCriteriaTransfer->getIdOrderItem()) {
+            $merchantSalesOrderItemQuery->filterByFkSalesOrderItem($merchantOrderItemCriteriaTransfer->getIdOrderItem());
+        }
+
+        return $merchantSalesOrderItemQuery;
     }
 }

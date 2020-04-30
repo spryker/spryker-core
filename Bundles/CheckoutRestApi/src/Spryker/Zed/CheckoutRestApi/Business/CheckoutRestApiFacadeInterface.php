@@ -17,6 +17,7 @@ interface CheckoutRestApiFacadeInterface
      * Specification:
      * - Provides checkout data based on data passed in RestCheckoutRequestAttributesTransfer.
      * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
+     * - Recalculates quote.
      *
      * @api
      *

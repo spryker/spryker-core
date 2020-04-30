@@ -65,4 +65,18 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
             ->createUrlRedirectStorageReader()
             ->findUrlRedirectStorageById($idRedirectUrl);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $urlCollection
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     */
+    public function getUrlStorageTransferByUrls(array $urlCollection): array
+    {
+        return $this->getFactory()->createUrlStorageReader()->getUrlStorageTransferByUrls($urlCollection);
+    }
 }
