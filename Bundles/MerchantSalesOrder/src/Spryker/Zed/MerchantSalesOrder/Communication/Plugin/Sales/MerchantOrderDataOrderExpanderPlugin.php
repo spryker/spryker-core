@@ -27,7 +27,7 @@ class MerchantOrderDataOrderExpanderPlugin extends AbstractPlugin implements Ord
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrate(OrderTransfer $orderTransfer)
+    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFacade()->expandOrderWithMerchantOrderData($orderTransfer);
     }
