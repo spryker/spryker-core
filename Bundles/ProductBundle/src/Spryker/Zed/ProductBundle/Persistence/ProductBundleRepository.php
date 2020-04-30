@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductBundle\Persistence;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundlePersistenceFactory getFactory()
@@ -77,5 +78,23 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         return $this->getFactory()
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+    }
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        $salesOrderItemEntities = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByFkSalesOrderItemBundle(null, Criteria::ISNOTNULL)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemEntities);
     }
 }

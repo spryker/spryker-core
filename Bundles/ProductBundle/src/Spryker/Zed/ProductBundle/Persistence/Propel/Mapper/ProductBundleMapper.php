@@ -8,9 +8,13 @@
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemMetadataTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
 {
@@ -51,6 +55,46 @@ class ProductBundleMapper
         $productBundleCollectionTransfer->setProductBundles(new ArrayObject($productForBundleTransfers));
 
         return $productBundleCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function mapSalesOrderItemEntitiesToBundleItemTransfers(ObjectCollection $salesOrderItemEntities): array
+    {
+        $uniqueBundleItemTransfers = [];
+        $bundleItemTransfers = [];
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $bundleItemIdentifier = $salesOrderItemEntity->getFkSalesOrderItemBundle();
+            if (!isset($uniqueBundleItemTransfers[$bundleItemIdentifier])) {
+                $uniqueBundleItemTransfers[$bundleItemIdentifier] = $this->mapSalesOrderItemEntityToBundleItemTransfer($salesOrderItemEntity);
+            }
+
+            $bundleItemTransfers[$salesOrderItemEntity->getIdSalesOrderItem()] = $uniqueBundleItemTransfers[$bundleItemIdentifier];
+        }
+
+        return $bundleItemTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $spySalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapSalesOrderItemEntityToBundleItemTransfer(SpySalesOrderItem $spySalesOrderItem): ItemTransfer
+    {
+        $salesOrderItemBundle = $spySalesOrderItem->getSalesOrderItemBundle();
+        $productMetadataTransfer = (new ItemMetadataTransfer())
+            ->setImage($salesOrderItemBundle->getImage());
+
+        return (new ItemTransfer())
+            ->setBundleItemIdentifier((string)$spySalesOrderItem->getFkSalesOrderItemBundle())
+            ->setQuantity($spySalesOrderItem->getQuantity())
+            ->setMetadata($productMetadataTransfer)
+            ->fromArray($salesOrderItemBundle->toArray(), true);
     }
 
     /**

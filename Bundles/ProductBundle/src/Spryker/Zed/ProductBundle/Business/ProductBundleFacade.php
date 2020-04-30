@@ -517,4 +517,20 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->createProductBundleExpander()
             ->expandUniqueOrderItemsWithProductBundles($itemTransfers, $orderTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithProductBundles(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createItemExpander()
+            ->expandItemsWithProductBundles($itemTransfers);
+    }
 }
