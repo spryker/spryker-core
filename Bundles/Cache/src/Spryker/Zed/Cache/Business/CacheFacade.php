@@ -52,7 +52,23 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      */
     public function emptyCodeBucketCache(): string
     {
-        return $this->getFactory()->createCacheClearer()->clearCodeBucketCache();
+        return $this->getFactory()
+            ->createCacheClearer()
+            ->clearCodeBucketCache();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyDefaultCodeBucketCache(): string
+    {
+        return $this->getFactory()
+            ->createCacheClearer()
+            ->clearDefaultCodeBucketCache();
     }
 
     /**
@@ -81,17 +97,5 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     public function emptyAutoLoaderCache()
     {
         return $this->getFactory()->createCacheClearer()->clearAutoLoaderCache();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function emptyCodeBucketAutoloaderCache(): string
-    {
-        return $this->getFactory()->createCacheClearer()->clearCodeBucketAutoLoaderCache();
     }
 }

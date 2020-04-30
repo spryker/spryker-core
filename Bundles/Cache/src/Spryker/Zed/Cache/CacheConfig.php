@@ -39,6 +39,16 @@ class CacheConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getDefaultCodeBucketCachePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/data/cache/codeBucket';
+    }
+
+    /**
+     * @api
+     *
      * @deprecated Use getCodeBucketAutoloaderCachePath() instead.
      *
      * @return string

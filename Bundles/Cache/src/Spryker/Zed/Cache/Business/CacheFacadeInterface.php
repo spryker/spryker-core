@@ -39,6 +39,16 @@ interface CacheFacadeInterface
     public function emptyCodeBucketCache(): string;
 
     /**
+     * Specification:
+     * - Empties default codebucket cache directory.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyDefaultCodeBucketCache(): string;
+
+    /**
      * @api
      *
      * @deprecated Use emptyAutoLoaderCache() instead
@@ -56,14 +66,4 @@ interface CacheFacadeInterface
      * @return string[]
      */
     public function emptyAutoLoaderCache();
-
-    /**
-     * Specification:
-     * - Empties configured auto-loader cache directory for codebucket directory structure.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function emptyCodeBucketAutoloaderCache(): string;
 }

@@ -14,14 +14,14 @@ class CodeBucketConfig implements CodeBucketConfigInterface
     /**
      * @var \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
      */
-    protected $customCodeBucketContext;
+    protected $customCodeBucketConfig;
 
     /**
      * @param \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface|null $customCodeBucketConfig
      */
     public function __construct(?CodeBucketConfigInterface $customCodeBucketConfig = null)
     {
-        $this->customCodeBucketContext = $customCodeBucketConfig ?? new ProjectCodeBucketConfig();
+        $this->initializeCustomCodeBucketConfig($customCodeBucketConfig);
     }
 
     /**
@@ -29,7 +29,7 @@ class CodeBucketConfig implements CodeBucketConfigInterface
      */
     public function getCodeBuckets(): array
     {
-        return $this->resolveCodeBucket()->getCodeBuckets();
+        return $this->customCodeBucketConfig->getCodeBuckets();
     }
 
     /**
@@ -37,7 +37,7 @@ class CodeBucketConfig implements CodeBucketConfigInterface
      */
     public function getCurrentCodeBucket(): string
     {
-        return $this->resolveCodeBucket()->getCurrentCodeBucket();
+        return $this->customCodeBucketConfig->getCurrentCodeBucket();
     }
 
     /**
@@ -45,6 +45,22 @@ class CodeBucketConfig implements CodeBucketConfigInterface
      */
     protected function resolveCodeBucket(): CodeBucketConfigInterface
     {
-        return $this->customCodeBucketContext;
+        return $this->customCodeBucketConfig;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface|null $customCodeBucketConfig
+     *
+     * @return void
+     */
+    protected function initializeCustomCodeBucketConfig(?CodeBucketConfigInterface $customCodeBucketConfig = null): void
+    {
+        if (!$customCodeBucketConfig) {
+            $this->customCodeBucketConfig = class_exists(ProjectCodeBucketConfig::class) ? new ProjectCodeBucketConfig() : new DefaultCodeBucketConfig();
+
+            return;
+        }
+
+        $this->customCodeBucketConfig = $customCodeBucketConfig;
     }
 }

@@ -66,6 +66,20 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
+     * @return string
+     */
+    public function clearDefaultCodeBucketCache(): string
+    {
+        $directory = $this->config->getDefaultCodeBucketCachePath();
+
+        if ($this->fileSystem->exists($directory)) {
+            $this->clearDirectory($directory);
+        }
+
+        return $directory;
+    }
+
+    /**
      * @return string[]
      */
     public function clearAutoLoaderCache()
@@ -74,20 +88,6 @@ class CacheClearer implements CacheClearerInterface
             $this->config->getAutoloaderCachePath(),
             $this->config->getAllowedStores()
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function clearCodeBucketAutoLoaderCache(): string
-    {
-        $directory = $this->config->getCodeBucketAutoloaderCachePath();
-
-        if ($this->fileSystem->exists($directory)) {
-            $this->clearDirectory($directory);
-        }
-
-        return $directory;
     }
 
     /**

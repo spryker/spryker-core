@@ -22,10 +22,10 @@ interface CacheClearerInterface
     /**
      * @return string
      */
-    public function clearCodeBucketAutoLoaderCache(): string;
+    public function clearCodeBucketCache(): string;
 
     /**
      * @return string
      */
-    public function clearCodeBucketCache(): string;
+    public function clearDefaultCodeBucketCache(): string;
 }
