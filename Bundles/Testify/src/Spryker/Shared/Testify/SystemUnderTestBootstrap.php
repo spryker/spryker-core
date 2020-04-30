@@ -61,7 +61,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\Application|null
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -91,6 +91,8 @@ class SystemUnderTestBootstrap
         if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
+
+        return null;
     }
 
     /**

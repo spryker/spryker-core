@@ -58,7 +58,7 @@ class TransferServer
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater|null $repeater
      *
-     * @return static
+     * @return static|\Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer
      */
     public static function getInstance(?Repeater $repeater = null)
     {
