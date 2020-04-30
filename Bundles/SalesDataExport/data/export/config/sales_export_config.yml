@@ -2,7 +2,6 @@ version: 1
 
 actions:
     - data_entity: order
-      destination: '{timestamp}/{data_entity}s.{extension}'
       fields:
           - order_reference
           - customer_reference
@@ -41,7 +40,6 @@ actions:
           locale_is_active: true
 
     - data_entity: order-item
-      destiantion: '{timestamp}/{data_entity}s.{extension}'
       fields:
           - order_reference
           - product_name
@@ -104,7 +102,6 @@ actions:
           order_item_id: ASC
 
     - data_entity: order-expense
-      destiantion: '{timestamp}/{data_entity}s.{extension}'
       fields:
           - order_reference
           - order_shipment_id
