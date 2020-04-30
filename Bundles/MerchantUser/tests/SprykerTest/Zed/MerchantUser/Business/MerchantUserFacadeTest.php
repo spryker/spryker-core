@@ -71,7 +71,7 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['findUser', 'updateUser', 'createUser'])
+            ->onlyMethods(['findUser', 'updateUser', 'createUser', 'getCurrentUser'])
             ->getMockForAbstractClass();
     }
 
@@ -361,6 +361,26 @@ class MerchantUserFacadeTest extends Unit
         $this->tester->getFacade()->disableMerchantUsers(
             (new MerchantUserCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCurrentMerchantUserReturnsCorrectMerchantUser(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+        $this->userFacadeMock->method('getCurrentUser')->willReturn($userTransfer);
+
+        // Act
+        $currentMerchantUserTransfer = $this->tester->getFacade()->getCurrentMerchantUser();
+
+        // Assert
+        $this->assertEquals($merchantUserTransfer, $currentMerchantUserTransfer);
     }
 
     /**

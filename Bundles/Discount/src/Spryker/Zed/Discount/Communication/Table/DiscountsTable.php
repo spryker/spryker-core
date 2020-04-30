@@ -167,7 +167,7 @@ class DiscountsTable extends AbstractTable
             );
         }
 
-        return implode(" ", $storeNames);
+        return implode(' ', $storeNames);
     }
 
     /**

@@ -469,12 +469,25 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         array $responses
     ): void {
         foreach ($responses as $code => $description) {
-            $responseSchemaDataTransfer = clone $errorSchemaDataTransfer;
+            $responseSchemaDataTransfer = $this->isResponseCodeSuccessful($code)
+                ? new PathSchemaDataTransfer()
+                : clone $errorSchemaDataTransfer;
+
             $responseSchemaDataTransfer->setCode($code);
             $responseSchemaDataTransfer->setDescription($description);
 
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
         }
+    }
+
+    /**
+     * @param int $responseCode
+     *
+     * @return bool
+     */
+    protected function isResponseCodeSuccessful(int $responseCode): bool
+    {
+        return $responseCode >= 200 && $responseCode < 300;
     }
 
     /**

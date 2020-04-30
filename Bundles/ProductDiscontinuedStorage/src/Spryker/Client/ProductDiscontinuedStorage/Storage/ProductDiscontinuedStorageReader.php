@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 
 class ProductDiscontinuedStorageReader implements ProductDiscontinuedStorageReaderInterface
@@ -24,6 +25,11 @@ class ProductDiscontinuedStorageReader implements ProductDiscontinuedStorageRead
      * @var \Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
 
     /**
      * @param \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface $storageClient
@@ -78,8 +84,18 @@ class ProductDiscontinuedStorageReader implements ProductDiscontinuedStorageRead
             ->setLocale($locale)
             ->setReference($concreteSku);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 }

@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         class_name: QuoteBusinessTester
         modules:
             enabled:
@@ -26,3 +26,10 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+    Persistence:
+        path: Persistence
+        class_name: QuotePersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

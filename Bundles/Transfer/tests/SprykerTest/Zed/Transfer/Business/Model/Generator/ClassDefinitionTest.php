@@ -307,14 +307,14 @@ class ClassDefinitionTest extends Unit
         $properties = $classDefinition->getProperties();
 
         $expected = [
-            "property1" => [
-                "name" => "property1",
-                "type" => "string[]",
-                "is_typed_array" => true,
-                "bundles" => [
-                    "Bundle1",
+            'property1' => [
+                'name' => 'property1',
+                'type' => 'string[]',
+                'is_typed_array' => true,
+                'bundles' => [
+                    'Bundle1',
                 ],
-                "is_associative" => false,
+                'is_associative' => false,
             ],
         ];
         $this->assertSame($expected, $properties);
@@ -528,12 +528,12 @@ class ClassDefinitionTest extends Unit
         $properties = $classDefinition->getProperties();
 
         $expected = [
-            "property1" => [
-                "name" => "property1",
-                "type" => "string[]",
-                "is_typed_array" => true,
-                "bundles" => [],
-                "is_associative" => true,
+            'property1' => [
+                'name' => 'property1',
+                'type' => 'string[]',
+                'is_typed_array' => true,
+                'bundles' => [],
+                'is_associative' => true,
             ],
         ];
         $this->assertSame($expected, $properties);
@@ -555,12 +555,12 @@ class ClassDefinitionTest extends Unit
         $properties = $classDefinition->getProperties();
 
         $expected = [
-            "property1" => [
-                "name" => "property1",
-                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
-                "is_typed_array" => false,
-                "bundles" => [],
-                "is_associative" => true,
+            'property1' => [
+                'name' => 'property1',
+                'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                'is_typed_array' => false,
+                'bundles' => [],
+                'is_associative' => true,
             ],
         ];
         $this->assertSame($expected, $properties);
@@ -573,7 +573,7 @@ class ClassDefinitionTest extends Unit
     {
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], "1")],
+            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], '1')],
         ];
 
         $classDefinition = $this->createClassDefinition();
@@ -582,12 +582,12 @@ class ClassDefinitionTest extends Unit
         $properties = $classDefinition->getProperties();
 
         $expected = [
-            "property1" => [
-                "name" => "property1",
-                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
-                "is_typed_array" => false,
-                "bundles" => [],
-                "is_associative" => true,
+            'property1' => [
+                'name' => 'property1',
+                'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                'is_typed_array' => false,
+                'bundles' => [],
+                'is_associative' => true,
             ],
         ];
         $this->assertSame($expected, $properties);
