@@ -24,20 +24,20 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      */
     public function saveMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $spyMerchant = $this->getFactory()
+        $merchantEntity = $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($merchantTransfer->getIdMerchant())
             ->findOneOrCreate();
 
-        $spyMerchant = $this->getFactory()
+        $merchantEntity = $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapMerchantTransferToMerchantEntity($merchantTransfer, $spyMerchant);
+            ->mapMerchantTransferToMerchantEntity($merchantTransfer, $merchantEntity);
 
-        $spyMerchant->save();
+        $merchantEntity->save();
 
         $merchantTransfer = $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapMerchantEntityToMerchantTransfer($spyMerchant, $merchantTransfer);
+            ->mapMerchantEntityToMerchantTransfer($merchantEntity, $merchantTransfer);
 
         return $merchantTransfer;
     }

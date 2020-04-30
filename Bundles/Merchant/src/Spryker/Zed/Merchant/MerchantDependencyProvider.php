@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant;
 
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeBridge;
@@ -26,6 +27,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_POST_UPDATE = 'PLUGINS_MERCHANT_POST_UPDATE';
     public const PLUGINS_MERCHANT_EXPANDER = 'PLUGINS_MERCHANT_EXPANDER';
 
+    public const PROPEL_QUERY_URL = 'PROPEL_QUERY_URL';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -39,6 +42,20 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantExpanderPlugins($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addEventFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addUrlPropelQuery($container);
 
         return $container;
     }
@@ -147,6 +164,20 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new MerchantToEventFacadeBridge($container->getLocator()->event()->facade());
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_URL, $container->factory(function () {
+            return SpyUrlQuery::create();
+        }));
 
         return $container;
     }

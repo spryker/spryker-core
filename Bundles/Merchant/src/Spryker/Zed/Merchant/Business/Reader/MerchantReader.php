@@ -62,7 +62,7 @@ class MerchantReader implements MerchantReaderInterface
             return null;
         }
 
-        return $this->executeMerchantExpanderPlugins($merchantTransfer);
+        return $this->expandMerchant($merchantTransfer);
     }
 
     /**
@@ -72,14 +72,37 @@ class MerchantReader implements MerchantReaderInterface
      */
     protected function expandMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
     {
+        $merchantIds = $this->getMerchantIds($merchantCollectionTransfer);
+        $storeRelationTransfers = $this->merchantRepository->getMerchantStoreRelationsByMerchantIds($merchantIds);
+        $merchantIdUrlTransferMap = $this->merchantRepository->getUrlTransfersByMerchantIds($merchantIds);
+
         $merchantTransfers = new ArrayObject();
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantTransfer->setStoreRelation($storeRelationTransfers[$merchantTransfer->getIdMerchant()]);
+            $merchantTransfer->setUrlCollection(new ArrayObject($merchantIdUrlTransferMap[$merchantTransfer->getIdMerchant()] ?? []));
+
             $merchantTransfer = $this->executeMerchantExpanderPlugins($merchantTransfer);
             $merchantTransfers->append($merchantTransfer);
         }
         $merchantCollectionTransfer->setMerchants($merchantTransfers);
 
         return $merchantCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function expandMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        $storeRelationTransfers = $this->merchantRepository->getMerchantStoreRelationsByMerchantIds([$merchantTransfer->getIdMerchant()]);
+        $merchantIdUrlTransferMap = $this->merchantRepository->getUrlTransfersByMerchantIds([$merchantTransfer->getIdMerchant()]);
+
+        $merchantTransfer->setStoreRelation($storeRelationTransfers[$merchantTransfer->getIdMerchant()]);
+        $merchantTransfer->setUrlCollection(new ArrayObject($merchantIdUrlTransferMap[$merchantTransfer->getIdMerchant()] ?? []));
+
+        return $this->executeMerchantExpanderPlugins($merchantTransfer);
     }
 
     /**
@@ -94,5 +117,17 @@ class MerchantReader implements MerchantReaderInterface
         }
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getMerchantIds(MerchantCollectionTransfer $merchantCollectionTransfer): array
+    {
+        return array_map(function (MerchantTransfer $merchantTransfer): int {
+            return $merchantTransfer->getIdMerchant();
+        }, $merchantCollectionTransfer->getMerchants()->getArrayCopy());
     }
 }

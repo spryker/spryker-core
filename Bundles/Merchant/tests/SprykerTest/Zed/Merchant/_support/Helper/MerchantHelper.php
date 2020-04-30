@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Merchant\Helper;
 
-use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
@@ -69,10 +68,7 @@ class MerchantHelper extends Module
             return (new StoreRelationBuilder())->seed($seedData[MerchantTransfer::STORE_RELATION])->build();
         }
 
-        return (new StoreRelationBuilder())->seed([
-            StoreRelationTransfer::ID_STORES => [],
-            StoreRelationTransfer::STORES => new ArrayObject(),
-        ])->build();
+        return (new StoreRelationBuilder())->build();
     }
 
     /**
