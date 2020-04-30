@@ -34,7 +34,7 @@ class ContentNavigationDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImporterPopulatesTables(): void
+    public function testImporterPopulatesContentsTables(): void
     {
         // Arrange
         $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation']);
