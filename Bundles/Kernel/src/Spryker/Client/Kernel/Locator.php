@@ -29,7 +29,7 @@ class Locator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @return static
+     * @return static|\Spryker\Client\Kernel\Locator
      */
     public static function getInstance()
     {
