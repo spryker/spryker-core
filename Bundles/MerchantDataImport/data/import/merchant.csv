@@ -1,8 +1,8 @@
 merchant_key,merchant_reference,merchant_name,registration_number,status,email
-kudu-merchant-1,MER000006,Kudu Merchant,1,approved,kudu.merchant@merchant.kudu
-oryx-merchant-1,MER000005,Oryx Merchant,2,approved,oryx.merchant@merchant.kudu
+kudu-merchant-1,MER000006,Sony Experts,HYY 134306,approved,michele@sony-experts.com
+oryx-merchant-1,MER000005,Budget Cameras,HXX 134305,approved,jason.weidmann@budgetcamerasonline.com
 impala-merchant-1,MER000004,Impala Merchant,3,waiting-for-approval,impala.merchant@merchant.kudu
 sugar-monster,MER000003,Sugar Monster,4,waiting-for-approval,sugar.monster@merchant.kudu
 restrictions-merchant,MER000007,Restrictions Merchant,5,waiting-for-approval,restrictions.merchant@merchant.kudu
-roan-gmbh-und-co-k-g,MER000001,Roan GmbH und Co KG,HFD123456,approved,schmidt@roan.de
-steenbok,MER000002,Steenbok,1234.4567,waiting-for-approval,maryam@steenbok.nl
+roan-gmbh-und-co-k-g,MER000001,Spryker,HRB 134310,approved,harald@spryker.com
+steenbok,MER000002,Video King,1234.4567,approved,martha@video-king.nl

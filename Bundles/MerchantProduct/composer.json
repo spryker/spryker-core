@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-product",
+  "type": "library",
   "description": "MerchantProduct module",
   "license": "proprietary",
   "require": {
@@ -8,7 +9,7 @@
     "spryker/product": "^6.0.0"
   },
   "require-dev": {
-  "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -18,8 +19,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
