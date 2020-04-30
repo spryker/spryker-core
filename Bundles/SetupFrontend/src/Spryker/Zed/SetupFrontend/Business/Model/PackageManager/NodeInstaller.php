@@ -29,7 +29,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $yarnVersion = $this->getYarnVersion($logger);
         $yarnInstalled = true;
 
-        if (empty($yarnVersion)) {
+        if (!$yarnVersion) {
             $yarnInstalled = $this->installYarn($logger);
         }
 
