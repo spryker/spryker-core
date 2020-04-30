@@ -114,7 +114,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $this->tester->cleanupProductAbstractLabelStorage($productAbstractTransfer->getIdProductAbstract());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($productLabelTransfer->getIdProductLabel()),
+            (new EventEntityTransfer())->setId($productAbstractTransfer->getIdProductAbstract()),
         ];
 
         //Act

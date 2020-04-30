@@ -97,9 +97,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
      */
     public function writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents(array $eventTransfers): void
     {
-        $productLabelIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-        $productAbstractIds = $this->productLabelStorageRepository
-            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
+        $productAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
         $this->writeCollection($productAbstractIds);
     }
