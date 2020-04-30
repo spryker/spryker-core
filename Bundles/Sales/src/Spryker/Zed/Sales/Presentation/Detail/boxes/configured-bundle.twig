@@ -42,11 +42,10 @@
     {% for item in configuredBundleItems %}
         {% if item.salesOrderConfiguredBundleItem.idSalesOrderConfiguredBundle == bundle.idSalesOrderConfiguredBundle %}
             <tr>
-                {% set product = item %}
                 {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
-                    orderItem: product,
+                    orderItem: item,
                     displayImage: true,
-                    image: product.metadata.image,
+                    image: item.metadata.image,
                 } %}
             </tr>
 
