@@ -150,9 +150,9 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @return bool
      */
-    public function installMpDependencies(LoggerInterface $logger)
+    public function installMerchantPortalDependencies(LoggerInterface $logger)
     {
-        return $this->getFactory()->createMpDependencyInstaller()->install($logger);
+        return $this->getFactory()->createMerchantPortalDependencyInstaller()->install($logger);
     }
 
     /**
@@ -164,8 +164,8 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @return bool
      */
-    public function buildMpFrontend(LoggerInterface $logger)
+    public function buildMerchantPortalFrontend(LoggerInterface $logger)
     {
-        return $this->getFactory()->createMpBuilder()->build($logger);
+        return $this->getFactory()->createMerchantPortalBuilder()->build($logger);
     }
 }

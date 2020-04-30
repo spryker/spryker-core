@@ -167,7 +167,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getMpInstallCommand()
+    public function getMerchantPortalInstallCommand()
     {
         return 'yarn install';
     }
@@ -177,7 +177,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getMpBuildCommand()
+    public function getMerchantPortalBuildCommand()
     {
         return 'npm run mp:build';
     }

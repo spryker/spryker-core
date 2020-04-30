@@ -129,7 +129,7 @@ interface SetupFrontendFacadeInterface
      *
      * @return bool
      */
-    public function installMpDependencies(LoggerInterface $logger);
+    public function installMerchantPortalDependencies(LoggerInterface $logger);
 
     /**
      * Specification:
@@ -141,5 +141,5 @@ interface SetupFrontendFacadeInterface
      *
      * @return bool
      */
-    public function buildMpFrontend(LoggerInterface $logger);
+    public function buildMerchantPortalFrontend(LoggerInterface $logger);
 }

@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  */
-class MpInstallDependenciesConsole extends Console
+class MerchantPortalInstallDependenciesConsole extends Console
 {
     public const COMMAND_NAME = 'frontend:mp:install-dependencies';
     public const DESCRIPTION = 'This command will install Merchant Portal dependencies.';
@@ -43,7 +43,7 @@ class MpInstallDependenciesConsole extends Console
         $this->info('Install Merchant Portal dependencies');
         $this->getMessenger()->notice('DEPRECATED: In next major all dependencies will be installed via single command: ' . InstallProjectDependenciesConsole::COMMAND_NAME);
 
-        if ($this->getFacade()->installMpDependencies($this->getMessenger())) {
+        if ($this->getFacade()->installMerchantPortalDependencies($this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

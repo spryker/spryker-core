@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  */
-class MpBuildFrontendConsole extends Console
+class MerchantPortalBuildFrontendConsole extends Console
 {
     public const COMMAND_NAME = 'frontend:mp:build';
     public const DESCRIPTION = 'This command will build Merchant Portal frontend.';
@@ -40,7 +40,7 @@ class MpBuildFrontendConsole extends Console
     {
         $this->info('Build Merchant Portal frontend');
 
-        if ($this->getFacade()->buildMpFrontend($this->getMessenger())) {
+        if ($this->getFacade()->buildMerchantPortalFrontend($this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

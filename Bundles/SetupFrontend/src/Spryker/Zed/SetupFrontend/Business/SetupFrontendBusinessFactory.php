@@ -165,16 +165,16 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface
      */
-    public function createMpDependencyInstaller()
+    public function createMerchantPortalDependencyInstaller()
     {
-        return new ProjectInstaller($this->getConfig()->getMpInstallCommand());
+        return new ProjectInstaller($this->getConfig()->getMerchantPortalInstallCommand());
     }
 
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
      */
-    public function createMpBuilder()
+    public function createMerchantPortalBuilder()
     {
-        return new Builder($this->getConfig()->getMpBuildCommand());
+        return new Builder($this->getConfig()->getMerchantPortalBuildCommand());
     }
 }
