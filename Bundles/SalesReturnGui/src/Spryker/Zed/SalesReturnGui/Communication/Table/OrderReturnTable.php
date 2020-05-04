@@ -46,13 +46,23 @@ class OrderReturnTable extends AbstractTable
     protected $moneyFacade;
 
     /**
+     * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     */
+    protected $salesReturnQuery;
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
      */
-    public function __construct(OrderTransfer $orderTransfer, SalesReturnGuiToMoneyFacadeInterface $moneyFacade)
-    {
+    public function __construct(
+        OrderTransfer $orderTransfer,
+        SalesReturnGuiToMoneyFacadeInterface $moneyFacade,
+        SpySalesReturnQuery $salesReturnQuery
+    ) {
         $this->orderTransfer = $orderTransfer;
         $this->moneyFacade = $moneyFacade;
+        $this->salesReturnQuery = $salesReturnQuery;
 
         $this->baseUrl = static::BASE_URL;
     }
@@ -121,7 +131,7 @@ class OrderReturnTable extends AbstractTable
     {
         $this->orderTransfer->requireIdSalesOrder();
 
-        return SpySalesReturnQuery::create()
+        return $this->salesReturnQuery
             ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
                 ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkSalesOrder($this->orderTransfer->getIdSalesOrder())
@@ -143,7 +153,7 @@ class OrderReturnTable extends AbstractTable
     protected function getRemunerationTotal(array $return): string
     {
         $moneyTransfer = $this->moneyFacade->fromInteger(
-            (int)$return[static::COL_REMUNERATION_TOTAL] ?? 0,
+            (int)$return[static::COL_REMUNERATION_TOTAL],
             $return[static::COL_CURRENCY]
         );
 
