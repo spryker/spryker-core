@@ -128,7 +128,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
 
         static::$productOfferPricesByIdProductConcrete[$idProductConcrete] = $priceProductTransfers;
 
-        return static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
+        return $priceProductTransfers;
     }
 
     /**
