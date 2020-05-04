@@ -123,4 +123,19 @@ class SalesStub implements SalesStubInterface
 
         return $itemCollectionTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::searchOrdersAction()
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/search-orders', $orderListTransfer);
+
+        return $orderListTransfer;
+    }
 }
