@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 
 interface ProductTableDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): GuiTableDataTransfer;
+    public function getProductTableData(ProductCriteriaFilterTransfer $productCriteriaFilterTransfer): GuiTableDataTransfer;
 }

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StoreProductOfferTableFilter;
 
-class StoreProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
+class StoreProductOfferCriteriaFilterExpander implements ProductOfferCriteriaFilterExpanderInterface
 {
     /**
      * @param string $filterName
@@ -24,20 +24,20 @@ class StoreProductOfferTableCriteriaExpander implements ProductOfferTableCriteri
 
     /**
      * @param mixed $filterValue
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function expandProductOfferTableCriteria(
+    public function expandProductOfferCriteriaFilter(
         $filterValue,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer {
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
         $storeIds = array_map(function ($storeId) {
             return (int)$storeId;
         }, $filterValue);
 
-        $productOfferTableCriteriaTransfer->setInStores($storeIds);
+        $productOfferCriteriaFilterTransfer->setInStores($storeIds);
 
-        return $productOfferTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 }

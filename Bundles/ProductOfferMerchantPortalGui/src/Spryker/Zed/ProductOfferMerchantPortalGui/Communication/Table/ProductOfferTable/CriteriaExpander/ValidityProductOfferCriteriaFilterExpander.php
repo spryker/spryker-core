@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\ValidityProductOfferTableFilter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
 
-class ValidityProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
+class ValidityProductOfferCriteriaFilterExpander implements ProductOfferCriteriaFilterExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface
@@ -38,21 +38,21 @@ class ValidityProductOfferTableCriteriaExpander implements ProductOfferTableCrit
 
     /**
      * @param mixed $filterValue
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function expandProductOfferTableCriteria(
+    public function expandProductOfferCriteriaFilter(
         $filterValue,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setValidFrom(
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
+        $productOfferCriteriaFilterTransfer->setValidFrom(
             isset($filterValue['from']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['from']) : null
         );
-        $productOfferTableCriteriaTransfer->setValidTo(
+        $productOfferCriteriaFilterTransfer->setValidTo(
             isset($filterValue['to']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['to']) : null
         );
 
-        return $productOfferTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 }

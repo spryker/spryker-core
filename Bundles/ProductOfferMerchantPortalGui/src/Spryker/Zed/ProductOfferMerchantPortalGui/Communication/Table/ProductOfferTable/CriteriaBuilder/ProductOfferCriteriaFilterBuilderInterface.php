@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder;
 
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 
-interface ProductTableCriteriaBuilderInterface
+interface ProductOfferCriteriaFilterBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function build(): ProductTableCriteriaTransfer;
+    public function build(): ProductOfferCriteriaFilterTransfer;
 
     /**
      * @param int $page

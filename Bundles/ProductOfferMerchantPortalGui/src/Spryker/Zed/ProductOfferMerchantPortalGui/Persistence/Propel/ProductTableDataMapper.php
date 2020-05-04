@@ -8,8 +8,12 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductTableDataTransfer;
-use Generated\Shared\Transfer\ProductTableRowDataTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
@@ -61,9 +65,9 @@ class ProductTableDataMapper
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
         self::COL_KEY_NAME => SpyProductLocalizedAttributesTableMap::COL_NAME,
         self::COL_KEY_STATUS => SpyProductTableMap::COL_IS_ACTIVE,
-        self::COL_KEY_IMAGE => ProductTableRowDataTransfer::IMAGE,
-        self::COL_KEY_OFFERS => ProductTableRowDataTransfer::OFFERS_COUNT,
-        self::COL_KEY_STORES => ProductTableRowDataTransfer::STORES,
+        self::COL_KEY_IMAGE => ProductImageTransfer::EXTERNAL_URL_SMALL,
+        self::COL_KEY_OFFERS => ProductConcreteTransfer::NUMBER_OF_OFFERS,
+        self::COL_KEY_STORES => ProductConcreteTransfer::STORES,
         self::COL_KEY_VALID_FROM => SpyProductValidityTableMap::COL_VALID_FROM,
         self::COL_KEY_VALID_TO => SpyProductValidityTableMap::COL_VALID_TO,
     ];
@@ -83,35 +87,96 @@ class ProductTableDataMapper
 
     /**
      * @param array $productTableDataArray
-     * @param \Generated\Shared\Transfer\ProductTableDataTransfer $productTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    public function mapProductTableDataArrayToTableDataTransfer(
+    public function mapProductTableDataArrayToProductConcreteCollectionTransfer(
         array $productTableDataArray,
-        ProductTableDataTransfer $productTableDataTransfer
-    ): ProductTableDataTransfer {
-        $rowsData = [];
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): ProductConcreteCollectionTransfer {
+        $products = [];
 
         foreach ($productTableDataArray as $productTableRowDataArray) {
-            $productConcreteAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_ATTRIBUTES] ?? null,
-                true
-            );
-            $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
-                $productTableRowDataArray[ProductTableRowDataTransfer::PRODUCT_CONCRETE_LOCALIZED_ATTRIBUTES] ?? null,
-                true
-            );
-            $productTableRowDataTransfer = (new ProductTableRowDataTransfer())->fromArray($productTableRowDataArray, true);
-            $productTableRowDataTransfer->setProductConcreteAttributes(is_array($productConcreteAttributes) ? $productConcreteAttributes : []);
-            $productTableRowDataTransfer->setProductConcreteLocalizedAttributes(
-                is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : []
-            );
-            $rowsData[] = $productTableRowDataTransfer;
+            $productTableRowDataArray = $this->prepareProductStoresTableData($productTableRowDataArray);
+            $productTableRowDataArray = $this->prepareProductAttributesTableData($productTableRowDataArray);
+
+            $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productTableRowDataArray, true);
+            $productConcreteTransfer->setStores($productTableRowDataArray[ProductConcreteTransfer::STORES]);
+            $productConcreteTransfer->setAttributes($productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES]);
+            $productConcreteTransfer->setLocalizedAttributes($productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES]);
+            $productConcreteTransfer = $this->mapImageToProductConcrete($productTableRowDataArray, $productConcreteTransfer);
+
+            $products[] = $productConcreteTransfer;
         }
 
-        $productTableDataTransfer->setRows(new ArrayObject($rowsData));
+        $productConcreteCollectionTransfer->setProducts(new ArrayObject($products));
 
-        return $productTableDataTransfer;
+        return $productConcreteCollectionTransfer;
+    }
+
+    /**
+     * @param array $productTableRowDataArray
+     *
+     * @return array
+     */
+    protected function prepareProductStoresTableData(array $productTableRowDataArray): array
+    {
+        $stores = explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES]);
+
+        $storeTransfers = array_map(function (string $storeName): StoreTransfer {
+            return (new StoreTransfer())->setName($storeName);
+        }, $stores);
+
+        $productTableRowDataArray[ProductConcreteTransfer::STORES] = new ArrayObject($storeTransfers);
+
+        return $productTableRowDataArray;
+    }
+
+    /**
+     * @param array $productTableRowDataArray
+     *
+     * @return array
+     */
+    protected function prepareProductAttributesTableData(array $productTableRowDataArray): array
+    {
+        $productConcreteAttributes = $this->utilEncodingService->decodeJson(
+            $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] ?? null,
+            true
+        );
+        $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
+
+        $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
+            $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null,
+            true
+        );
+        $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];
+
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+            ->setAttributes($productConcreteLocalizedAttributes)
+            ->setName($productTableRowDataArray[LocalizedAttributesTransfer::NAME]);
+
+        $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] = $productConcreteAttributes;
+        $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] = new ArrayObject([$localizedAttributesTransfer]);
+
+        return $productTableRowDataArray;
+    }
+
+    /**
+     * @param array $productTableRowDataArray
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function mapImageToProductConcrete(
+        array $productTableRowDataArray,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer {
+        $productImageSetTransfer = (new ProductImageSetTransfer())
+            ->addProductImage((new ProductImageTransfer())->setExternalUrlSmall($productTableRowDataArray[ProductImageTransfer::EXTERNAL_URL_SMALL]));
+
+        $productConcreteTransfer->setImageSets(new ArrayObject([$productImageSetTransfer]));
+
+        return $productConcreteTransfer;
     }
 }

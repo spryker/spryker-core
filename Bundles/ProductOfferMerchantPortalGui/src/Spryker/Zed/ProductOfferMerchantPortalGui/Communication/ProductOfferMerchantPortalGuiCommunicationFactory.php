@@ -12,15 +12,15 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameB
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilder;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\CreatedAtProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\IsActiveProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StockProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StoreProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\UpdatedAtProductOfferTableCriteriaExpander;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ValidityProductOfferTableCriteriaExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilder;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\CreatedAtProductOfferCriteriaFilterExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\IsActiveProductOfferCriteriaFilterExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StockProductOfferCriteriaFilterExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\StoreProductOfferCriteriaFilterExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\UpdatedAtProductOfferCriteriaFilterExpander;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ValidityProductOfferCriteriaFilterExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\CreatedAtProductOfferTableFilter;
@@ -30,8 +30,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTa
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\UpdatedAtProductOfferTableFilter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\ValidityProductOfferTableFilter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductCriteriaFilterBuilder;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductCriteriaFilterBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\HasOffersProductTableFilter;
@@ -60,16 +60,16 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getTranslatorFacade(),
             $this->createProductTableDataProvider(),
             $this->getProductTableFilterDataProviders(),
-            $this->createProductTableCriteriaBuilder()
+            $this->createProductCriteriaFilterBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductCriteriaFilterBuilderInterface
      */
-    public function createProductTableCriteriaBuilder(): ProductTableCriteriaBuilderInterface
+    public function createProductCriteriaFilterBuilder(): ProductCriteriaFilterBuilderInterface
     {
-        return new ProductTableCriteriaBuilder(
+        return new ProductCriteriaFilterBuilder(
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade()
         );
@@ -98,19 +98,19 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getTranslatorFacade(),
             $this->createProductOfferTableDataProvider(),
             $this->getProductOfferTableFilters(),
-            $this->createProductOfferTableCriteriaBuilder()
+            $this->createProductOfferCriteriaFilterBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface
      */
-    public function createProductOfferTableCriteriaBuilder(): ProductOfferTableCriteriaBuilderInterface
+    public function createProductOfferCriteriaFilterBuilder(): ProductOfferCriteriaFilterBuilderInterface
     {
-        return new ProductOfferTableCriteriaBuilder(
+        return new ProductOfferCriteriaFilterBuilder(
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade(),
-            $this->getProductOfferTableCriteriaExpanders()
+            $this->getProductOfferCriteriaFilterExpanders()
         );
     }
 
@@ -218,65 +218,65 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createIsActiveProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createIsActiveProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new IsActiveProductOfferTableCriteriaExpander();
+        return new IsActiveProductOfferCriteriaFilterExpander();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createStockProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createStockProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new StockProductOfferTableCriteriaExpander();
+        return new StockProductOfferCriteriaFilterExpander();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createStoreProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createStoreProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new StoreProductOfferTableCriteriaExpander();
+        return new StoreProductOfferCriteriaFilterExpander();
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createValidityProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createValidityProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new ValidityProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
+        return new ValidityProductOfferCriteriaFilterExpander($this->getUtilDateTimeService());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createCreatedAtProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createCreatedAtProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new CreatedAtProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
+        return new CreatedAtProductOfferCriteriaFilterExpander($this->getUtilDateTimeService());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface
      */
-    public function createUpdatedAtProductOfferTableCriteriaExpander(): ProductOfferTableCriteriaExpanderInterface
+    public function createUpdatedAtProductOfferCriteriaFilterExpander(): ProductOfferCriteriaFilterExpanderInterface
     {
-        return new UpdatedAtProductOfferTableCriteriaExpander($this->getUtilDateTimeService());
+        return new UpdatedAtProductOfferCriteriaFilterExpander($this->getUtilDateTimeService());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferTableCriteriaExpanderInterface[]
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface[]
      */
-    public function getProductOfferTableCriteriaExpanders(): array
+    public function getProductOfferCriteriaFilterExpanders(): array
     {
         return [
-            $this->createIsActiveProductOfferTableCriteriaExpander(),
-            $this->createStockProductOfferTableCriteriaExpander(),
-            $this->createStoreProductOfferTableCriteriaExpander(),
-            $this->createValidityProductOfferTableCriteriaExpander(),
-            $this->createCreatedAtProductOfferTableCriteriaExpander(),
-            $this->createUpdatedAtProductOfferTableCriteriaExpander(),
+            $this->createIsActiveProductOfferCriteriaFilterExpander(),
+            $this->createStockProductOfferCriteriaFilterExpander(),
+            $this->createStoreProductOfferCriteriaFilterExpander(),
+            $this->createValidityProductOfferCriteriaFilterExpander(),
+            $this->createCreatedAtProductOfferCriteriaFilterExpander(),
+            $this->createUpdatedAtProductOfferCriteriaFilterExpander(),
         ];
     }
 

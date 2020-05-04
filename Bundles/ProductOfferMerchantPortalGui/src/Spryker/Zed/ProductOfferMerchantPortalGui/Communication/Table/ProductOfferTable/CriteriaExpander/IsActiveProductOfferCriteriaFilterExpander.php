@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\IsActiveProductOfferTableFilter;
 
-class IsActiveProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
+class IsActiveProductOfferCriteriaFilterExpander implements ProductOfferCriteriaFilterExpanderInterface
 {
     /**
      * @param string $filterName
@@ -24,17 +24,17 @@ class IsActiveProductOfferTableCriteriaExpander implements ProductOfferTableCrit
 
     /**
      * @param mixed $filterValue
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function expandProductOfferTableCriteria(
+    public function expandProductOfferCriteriaFilter(
         $filterValue,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer {
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
         $isActive = filter_var($filterValue, FILTER_VALIDATE_BOOLEAN);
-        $productOfferTableCriteriaTransfer->setIsActive($isActive);
+        $productOfferCriteriaFilterTransfer->setIsActive($isActive);
 
-        return $productOfferTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 }

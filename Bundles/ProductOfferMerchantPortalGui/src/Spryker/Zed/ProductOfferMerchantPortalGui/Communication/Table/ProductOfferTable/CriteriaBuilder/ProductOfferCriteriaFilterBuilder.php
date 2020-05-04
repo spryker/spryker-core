@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder;
 
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\HasOffersProductTableFilter;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\IsActiveProductTableFilter;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 
-class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterface
+class ProductOfferCriteriaFilterBuilder implements ProductOfferCriteriaFilterBuilderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
@@ -25,6 +24,11 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface[]
+     */
+    protected $productOfferCriteriaFilterExpanders;
 
     /**
      * @var string|null
@@ -59,29 +63,32 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface[] $productOfferCriteriaFilterExpanders
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
+        array $productOfferCriteriaFilterExpanders
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->localeFacade = $localeFacade;
+        $this->productOfferCriteriaFilterExpanders = $productOfferCriteriaFilterExpanders;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function build(): ProductTableCriteriaTransfer
+    public function build(): ProductOfferCriteriaFilterTransfer
     {
-        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer()
+        $productOfferCriteriaFilterTransfer = $this->buildProductOfferCriteriaFilterTransfer()
             ->setSearchTerm($this->searchTerm)
             ->setOrderBy($this->sortColumn)
             ->setOrderDirection($this->sortDirection)
             ->setPagination($this->buildPaginationTransfer());
 
-        $productTableCriteriaTransfer = $this->applyFilters($productTableCriteriaTransfer);
+        $productOfferCriteriaFilterTransfer = $this->applyFilters($productOfferCriteriaFilterTransfer);
 
-        return $productTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 
     /**
@@ -157,13 +164,15 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
+    protected function buildProductOfferCriteriaFilterTransfer(): ProductOfferCriteriaFilterTransfer
     {
-        return (new ProductTableCriteriaTransfer())
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
+
+        return $productOfferCriteriaFilterTransfer;
     }
 
     /**
@@ -177,26 +186,49 @@ class ProductTableCriteriaBuilder implements ProductTableCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    protected function applyFilters(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableCriteriaTransfer
-    {
+    protected function applyFilters(
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
         if (!$this->filters) {
-            return $productTableCriteriaTransfer;
+            return $productOfferCriteriaFilterTransfer;
         }
 
-        if (isset($this->filters[IsActiveProductTableFilter::FILTER_NAME])) {
-            $isActive = filter_var($this->filters[IsActiveProductTableFilter::FILTER_NAME], FILTER_VALIDATE_BOOLEAN);
-            $productTableCriteriaTransfer->setIsActive($isActive);
+        foreach ($this->filters as $filterName => $filterValue) {
+            if (!isset($filterValue)) {
+                continue;
+            }
+
+            $productOfferCriteriaFilterExpander = $this->findApplicableProductOfferCriteriaFilterExpander($filterName);
+
+            if ($productOfferCriteriaFilterExpander) {
+                $productOfferCriteriaFilterTransfer = $productOfferCriteriaFilterExpander->expandProductOfferCriteriaFilter(
+                    $filterValue,
+                    $productOfferCriteriaFilterTransfer
+                );
+            }
         }
 
-        if (isset($this->filters[HasOffersProductTableFilter::FILTER_NAME])) {
-            $hasOffers = filter_var($this->filters[HasOffersProductTableFilter::FILTER_NAME], FILTER_VALIDATE_BOOLEAN);
-            $productTableCriteriaTransfer->setHasOffers($hasOffers);
+        return $productOfferCriteriaFilterTransfer;
+    }
+
+    /**
+     * @param string $filterName
+     *
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ProductOfferCriteriaFilterExpanderInterface|null
+     */
+    protected function findApplicableProductOfferCriteriaFilterExpander(
+        string $filterName
+    ): ?ProductOfferCriteriaFilterExpanderInterface {
+        foreach ($this->productOfferCriteriaFilterExpanders as $productOfferCriteriaFilterExpander) {
+            if ($productOfferCriteriaFilterExpander->isApplicable($filterName)) {
+                return $productOfferCriteriaFilterExpander;
+            }
         }
 
-        return $productTableCriteriaTransfer;
+        return null;
     }
 }

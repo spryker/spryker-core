@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilter;
 
-class StockProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
+class StockProductOfferCriteriaFilterExpander implements ProductOfferCriteriaFilterExpanderInterface
 {
     /**
      * @param string $filterName
@@ -24,17 +24,17 @@ class StockProductOfferTableCriteriaExpander implements ProductOfferTableCriteri
 
     /**
      * @param mixed $filterValue
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function expandProductOfferTableCriteria(
+    public function expandProductOfferCriteriaFilter(
         $filterValue,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer {
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
         $hasStock = filter_var($filterValue, FILTER_VALIDATE_BOOLEAN);
-        $productOfferTableCriteriaTransfer->setHasStock($hasStock);
+        $productOfferCriteriaFilterTransfer->setHasStock($hasStock);
 
-        return $productOfferTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 }

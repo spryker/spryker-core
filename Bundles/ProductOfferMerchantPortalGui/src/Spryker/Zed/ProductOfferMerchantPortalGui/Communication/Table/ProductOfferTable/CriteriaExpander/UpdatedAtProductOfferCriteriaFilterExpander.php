@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\UpdatedAtProductOfferTableFilter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
 
-class UpdatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCriteriaExpanderInterface
+class UpdatedAtProductOfferCriteriaFilterExpander implements ProductOfferCriteriaFilterExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface
@@ -38,21 +38,21 @@ class UpdatedAtProductOfferTableCriteriaExpander implements ProductOfferTableCri
 
     /**
      * @param mixed $filterValue
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    public function expandProductOfferTableCriteria(
+    public function expandProductOfferCriteriaFilter(
         $filterValue,
-        ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
-    ): ProductOfferTableCriteriaTransfer {
-        $productOfferTableCriteriaTransfer->setUpdatedFrom(
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCriteriaFilterTransfer {
+        $productOfferCriteriaFilterTransfer->setUpdatedFrom(
             isset($filterValue['from']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['from']) : null
         );
-        $productOfferTableCriteriaTransfer->setUpdatedTo(
+        $productOfferCriteriaFilterTransfer->setUpdatedTo(
             isset($filterValue['to']) ? $this->utilDateTimeService->formatToDbDateTime($filterValue['to']) : null
         );
 
-        return $productOfferTableCriteriaTransfer;
+        return $productOfferCriteriaFilterTransfer;
     }
 }

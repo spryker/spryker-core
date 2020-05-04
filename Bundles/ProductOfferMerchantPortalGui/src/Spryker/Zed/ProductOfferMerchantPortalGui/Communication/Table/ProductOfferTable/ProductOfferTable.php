@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductO
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
@@ -52,28 +52,28 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableFilters;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface
      */
-    protected $productOfferTableCriteriaBuilder;
+    protected $productOfferCriteriaFilterBuilder;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface $productTableDataProvider
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface[] $productOfferTableFilters
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface $productOfferCriteriaFilterBuilder
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         ProductOfferTableDataProviderInterface $productTableDataProvider,
         array $productOfferTableFilters,
-        ProductOfferTableCriteriaBuilderInterface $productOfferTableCriteriaBuilder
+        ProductOfferCriteriaFilterBuilderInterface $productOfferCriteriaFilterBuilder
     ) {
         parent::__construct($utilEncodingService, $translatorFacade);
         $this->productOfferTableDataProvider = $productTableDataProvider;
         $this->productOfferTableFilters = $productOfferTableFilters;
-        $this->productOfferTableCriteriaBuilder = $productOfferTableCriteriaBuilder;
+        $this->productOfferCriteriaFilterBuilder = $productOfferCriteriaFilterBuilder;
     }
 
     /**
@@ -81,9 +81,9 @@ class ProductOfferTable extends AbstractTable
      */
     protected function provideTableData(): GuiTableDataTransfer
     {
-        $productTableCriteriaTransfer = $this->buildProductOfferTableCriteriaTransfer();
+        $productOfferCriteriaFilterTransfer = $this->buildProductOfferCriteriaFilterTransfer();
 
-        return $this->productOfferTableDataProvider->getProductOfferTableData($productTableCriteriaTransfer);
+        return $this->productOfferTableDataProvider->getProductOfferTableData($productOfferCriteriaFilterTransfer);
     }
 
     /**
@@ -210,11 +210,11 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
      */
-    protected function buildProductOfferTableCriteriaTransfer(): ProductOfferTableCriteriaTransfer
+    protected function buildProductOfferCriteriaFilterTransfer(): ProductOfferCriteriaFilterTransfer
     {
-        return $this->productOfferTableCriteriaBuilder
+        return $this->productOfferCriteriaFilterBuilder
             ->setSearchTerm($this->searchTerm)
             ->setPage($this->page)
             ->setPageSize($this->pageSize)

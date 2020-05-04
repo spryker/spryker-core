@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductTableRowDataTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
@@ -63,29 +60,29 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): GuiTableDataTransfer
+    public function getProductTableData(ProductCriteriaFilterTransfer $productCriteriaFilterTransfer): GuiTableDataTransfer
     {
-        $productTableDataTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($productTableCriteriaTransfer);
+        $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($productCriteriaFilterTransfer);
         $productTableDataArray = [];
 
-        foreach ($productTableDataTransfer->getRows() as $productTableRowDataTransfer) {
+        foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $productTableDataArray[] = [
-                ProductTable::COL_KEY_SKU => $productTableRowDataTransfer->getSku(),
-                ProductTable::COL_KEY_NAME => $this->getNameColumnData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_IMAGE => $productTableRowDataTransfer->getImage(),
-                ProductTable::COL_KEY_STATUS => $this->getStatusColumnData($productTableRowDataTransfer),
-                ProductTable::COL_KEY_VALID_FROM => $this->getFormattedDateTime($productTableRowDataTransfer->getValidFrom()),
-                ProductTable::COL_KEY_VALID_TO => $this->getFormattedDateTime($productTableRowDataTransfer->getValidTo()),
-                ProductTable::COL_KEY_OFFERS => $productTableRowDataTransfer->getOffersCount(),
+                ProductTable::COL_KEY_SKU => $productConcreteTransfer->getSku(),
+                ProductTable::COL_KEY_NAME => $this->productNameBuilder->buildProductName($productConcreteTransfer),
+                ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
+                ProductTable::COL_KEY_IMAGE => $this->getImageUrl($productConcreteTransfer),
+                ProductTable::COL_KEY_STATUS => $this->getStatusColumnData($productConcreteTransfer),
+                ProductTable::COL_KEY_VALID_FROM => $this->getFormattedDateTime($productConcreteTransfer->getValidFrom()),
+                ProductTable::COL_KEY_VALID_TO => $this->getFormattedDateTime($productConcreteTransfer->getValidTo()),
+                ProductTable::COL_KEY_OFFERS => $productConcreteTransfer->getNumberOfOffers(),
             ];
         }
 
-        $paginationTransfer = $productTableDataTransfer->getPagination();
+        $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
 
         return (new GuiTableDataTransfer())->setData($productTableDataArray)
             ->setPage($paginationTransfer->getPage())
@@ -94,60 +91,52 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return string|null
-     */
-    protected function getNameColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): ?string
-    {
-        $productConcreteTransfer = $this->createProductConcreteTransfer($productTableRowDataTransfer);
-
-        return $this->productNameBuilder->buildProductName($productConcreteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function createProductConcreteTransfer(ProductTableRowDataTransfer $productTableRowDataTransfer): ProductConcreteTransfer
-    {
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->setAttributes($productTableRowDataTransfer->getProductConcreteLocalizedAttributes())
-            ->setName($productTableRowDataTransfer->getName());
-
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setAttributes($productTableRowDataTransfer->getProductConcreteAttributes())
-            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return string
      */
-    protected function getStoresColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer)
+    protected function getStoresColumnData(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $storesString = $productTableRowDataTransfer->getStores();
-        $stores = explode(',', $storesString);
+        $storeTransfers = $productConcreteTransfer->getStores();
+        $storeNames = [];
 
-        return implode(', ', $stores);
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeNames[] = $storeTransfer->getName();
+        }
+
+        return implode(', ', $storeNames);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductTableRowDataTransfer $productTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return string
      */
-    protected function getStatusColumnData(ProductTableRowDataTransfer $productTableRowDataTransfer): string
+    protected function getStatusColumnData(ProductConcreteTransfer $productConcreteTransfer): string
     {
-        $isActiveColumnData = $productTableRowDataTransfer->getIsActive()
+        $isActiveColumnData = $productConcreteTransfer->getIsActive()
             ? static::COLUMN_DATA_STATUS_ACTIVE
             : static::COLUMN_DATA_STATUS_INACTIVE;
 
         return $this->translatorFacade->trans($isActiveColumnData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string|null
+     */
+    protected function getImageUrl(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
+        if (!isset($productConcreteTransfer->getImageSets()[0])) {
+            return null;
+        }
+
+        $productImageSetTransfer = $productConcreteTransfer->getImageSets()[0];
+
+        return isset($productImageSetTransfer->getProductImages()[0])
+            ? $productImageSetTransfer->getProductImages()[0]->getExternalUrlSmall()
+            : null;
     }
 
     /**
