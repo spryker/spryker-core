@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelRelationUpdaterConsole extends Console
 {
-    public const COMMAND_NAME = 'productzz:relations:update';
+    public const COMMAND_NAME = 'product-label:relations:update';
 
     protected const OPTION_NO_TOUCH = 'no-touch';
     protected const OPTION_NO_TOUCH_SHORT = 't';
