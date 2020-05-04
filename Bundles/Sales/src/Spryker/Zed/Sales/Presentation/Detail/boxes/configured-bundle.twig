@@ -1,3 +1,5 @@
+{# this file is deprecated, please use ../configured-bundle-general.twig instead #}
+
 {% set mappedItems = (items ?: order.items) | reduce((collection, item) => collection | merge({('_' ~ item.idSalesOrderItem): (item)}), {}) %}
 {% set mappedBundles = [] %}
 
