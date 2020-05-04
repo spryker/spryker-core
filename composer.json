@@ -331,7 +331,6 @@
     "spryker/merchant-profile": "*",
     "spryker/merchant-profile-data-import": "*",
     "spryker/merchant-profile-gui": "*",
-    "spryker/merchant-profile-gui-page": "*",
     "spryker/merchant-profile-merchant-portal-gui": "*",
     "spryker/merchant-relationship": "*",
     "spryker/merchant-relationship-data-import": "*",
