@@ -41,8 +41,6 @@
                 </pages>
             </order-list>
 
-
-
             <order-matrix>
                 <label>Order Matrix</label>
                 <title>Order Matrix</title>
@@ -51,6 +49,15 @@
                 <action>index</action>
                 <visible>1</visible>
             </order-matrix>
+
+            <returns>
+                <label>Returns</label>
+                <title>Returns</title>
+                <bundle>SalesReturnGui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </returns>
 
         </pages>
     </sales>
