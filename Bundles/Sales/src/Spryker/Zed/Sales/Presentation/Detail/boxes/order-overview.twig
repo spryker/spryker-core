@@ -67,6 +67,11 @@
                             <div class="col-sm-10"><p>{{ 'Total taxes' | trans }}</p></div>
                             <div class="col-sm-2">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
                         </div>
+                        {% include '@SalesReturnGui/Sales/remuneration-total.twig' ignore missing with {
+                            data: {
+                                order: order,
+                            },
+                        } only %}
                     </div>
                 </div>
             </div>
