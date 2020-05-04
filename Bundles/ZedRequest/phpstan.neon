@@ -5,7 +5,8 @@ parameters:
         - APPLICATION_STORE
     ignoreErrors:
         - '#Class .+HttpClient constructor invoked with 3 parameters, 5-7 required.#'
-        - '#Call to an undefined method .+AbstractBundleConfig::getYvesRequestRepeatDataFileName\(\).#'
-        - '#Call to an undefined method .+AbstractBundleConfig::getPathToYvesRequestRepeatData\(\).#'
-        - '#Call to an undefined method .+AbstractBundleConfig::getPermissionMode\(\).#'
         - '#Unsafe usage of new static\(\)#'
+        -
+            message: '#Unreachable statement - code above always terminates#'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php'
+

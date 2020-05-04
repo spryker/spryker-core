@@ -15,7 +15,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipS
 class MerchantRelationshipThresholdFormMapperResolver implements MerchantRelationshipThresholdFormMapperResolverInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 

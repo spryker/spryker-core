@@ -111,7 +111,9 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     /**
      * @api
      *
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface[]
+     * @phpstan-return class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface>[]
+     *
+     * @return string[]
      */
     public function getStrategyGroupToDataProviderMap(): array
     {
