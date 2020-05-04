@@ -15,6 +15,7 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilder;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinder;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Shared\Kernel\KernelConfig;
 use SprykerTest\Shared\Testify\Helper\ClassHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
@@ -43,8 +44,9 @@ class ClassResolverHelper extends Module
                 $sharedConfig = $this->getConfigStub($resolverClassName);
                 $moduleNameCandidatesBuilder = new ModuleNameCandidatesBuilder($sharedConfig);
                 $classNameCandidatesBuilder = new ClassNameCandidatesBuilder($moduleNameCandidatesBuilder, $sharedConfig);
+                $resolverCacheManager = new ResolverCacheManager();
 
-                return new ClassNameFinder($classNameCandidatesBuilder);
+                return new ClassNameFinder($classNameCandidatesBuilder, $resolverCacheManager);
             },
         ]);
 

@@ -99,6 +99,7 @@ interface OauthRevokeFacadeInterface
 
     /**
      * Specification:
+     * - Executes `OauthUserIdentifierFilterPluginInterface` stack of plugins.
      * - Persists the new refresh token to permanent storage.
      *
      * @api

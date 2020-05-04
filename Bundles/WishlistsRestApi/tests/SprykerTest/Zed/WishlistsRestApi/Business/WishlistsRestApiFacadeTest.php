@@ -288,7 +288,7 @@ class WishlistsRestApiFacadeTest extends Test
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist($wishlist->getUuid())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setSku("non-existing-sku");
+            ->setSku('non-existing-sku');
 
         //Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->addWishlistItem($wishlistItemRequestTransfer);
