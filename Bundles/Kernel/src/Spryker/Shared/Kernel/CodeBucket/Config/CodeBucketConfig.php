@@ -41,26 +41,18 @@ class CodeBucketConfig implements CodeBucketConfigInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
-     */
-    protected function resolveCodeBucket(): CodeBucketConfigInterface
-    {
-        return $this->customCodeBucketConfig;
-    }
-
-    /**
      * @param \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface|null $customCodeBucketConfig
      *
      * @return void
      */
     protected function initializeCustomCodeBucketConfig(?CodeBucketConfigInterface $customCodeBucketConfig = null): void
     {
-        if (!$customCodeBucketConfig) {
-            $this->customCodeBucketConfig = class_exists(ProjectCodeBucketConfig::class) ? new ProjectCodeBucketConfig() : new DefaultCodeBucketConfig();
+        if ($customCodeBucketConfig) {
+            $this->customCodeBucketConfig = $customCodeBucketConfig;
 
             return;
         }
 
-        $this->customCodeBucketConfig = $customCodeBucketConfig;
+        $this->customCodeBucketConfig = class_exists(ProjectCodeBucketConfig::class) ? new ProjectCodeBucketConfig() : new DefaultCodeBucketConfig();
     }
 }
