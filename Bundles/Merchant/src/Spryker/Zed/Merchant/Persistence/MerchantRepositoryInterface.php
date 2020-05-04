@@ -32,12 +32,12 @@ interface MerchantRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer[]
      */
-    public function getMerchantStoreRelationsByMerchantIds(array $merchantIds): array;
+    public function getMerchantStoreRelationMapByMerchantIds(array $merchantIds): array;
 
     /**
      * @param int[] $merchantIds
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[][]
      */
-    public function getUrlTransfersByMerchantIds(array $merchantIds): array;
+    public function getUrlsMapByMerchantIds(array $merchantIds): array;
 }

@@ -73,13 +73,13 @@ class MerchantReader implements MerchantReaderInterface
     protected function expandMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
     {
         $merchantIds = $this->getMerchantIds($merchantCollectionTransfer);
-        $storeRelationTransfers = $this->merchantRepository->getMerchantStoreRelationsByMerchantIds($merchantIds);
-        $merchantIdUrlTransferMap = $this->merchantRepository->getUrlTransfersByMerchantIds($merchantIds);
+        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds($merchantIds);
+        $merchantUrlTransfersMap = $this->merchantRepository->getUrlsMapByMerchantIds($merchantIds);
 
         $merchantTransfers = new ArrayObject();
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantTransfer->setStoreRelation($storeRelationTransfers[$merchantTransfer->getIdMerchant()]);
-            $merchantTransfer->setUrlCollection(new ArrayObject($merchantIdUrlTransferMap[$merchantTransfer->getIdMerchant()] ?? []));
+            $merchantTransfer->setStoreRelation($merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()]);
+            $merchantTransfer->setUrlCollection(new ArrayObject($merchantUrlTransfersMap[$merchantTransfer->getIdMerchant()] ?? []));
 
             $merchantTransfer = $this->executeMerchantExpanderPlugins($merchantTransfer);
             $merchantTransfers->append($merchantTransfer);
@@ -96,11 +96,11 @@ class MerchantReader implements MerchantReaderInterface
      */
     protected function expandMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $storeRelationTransfers = $this->merchantRepository->getMerchantStoreRelationsByMerchantIds([$merchantTransfer->getIdMerchant()]);
-        $merchantIdUrlTransferMap = $this->merchantRepository->getUrlTransfersByMerchantIds([$merchantTransfer->getIdMerchant()]);
+        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds([$merchantTransfer->getIdMerchant()]);
+        $merchantUrlTransfersMap = $this->merchantRepository->getUrlsMapByMerchantIds([$merchantTransfer->getIdMerchant()]);
 
-        $merchantTransfer->setStoreRelation($storeRelationTransfers[$merchantTransfer->getIdMerchant()]);
-        $merchantTransfer->setUrlCollection(new ArrayObject($merchantIdUrlTransferMap[$merchantTransfer->getIdMerchant()] ?? []));
+        $merchantTransfer->setStoreRelation($merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()]);
+        $merchantTransfer->setUrlCollection(new ArrayObject($merchantUrlTransfersMap[$merchantTransfer->getIdMerchant()] ?? []));
 
         return $this->executeMerchantExpanderPlugins($merchantTransfer);
     }

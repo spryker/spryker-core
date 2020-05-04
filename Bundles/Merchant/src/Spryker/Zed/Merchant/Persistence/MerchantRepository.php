@@ -81,7 +81,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer[]
      */
-    public function getMerchantStoreRelationsByMerchantIds(array $merchantIds): array
+    public function getMerchantStoreRelationMapByMerchantIds(array $merchantIds): array
     {
         /** @var \Generated\Shared\Transfer\StoreRelationTransfer[] $storeRelationTransfers */
         $storeRelationTransfers = [];
@@ -93,13 +93,12 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->find();
 
         foreach ($merchantIds as $idMerchant) {
-            $storeRelationTransfers[$idMerchant] = (new StoreRelationTransfer())
-                ->setIdEntity($idMerchant);
-
-            $filteredMerchantStoreEntity = $this->filterMerchantStoresById($merchantStoreEntities, $idMerchant);
             $storeRelationTransfers[$idMerchant] = $this->getFactory()
                 ->createPropelMerchantMapper()
-                ->mapMerchantStoreEntitiesToStoreRelationTransfer($filteredMerchantStoreEntity, $storeRelationTransfers[$idMerchant]);
+                ->mapMerchantStoreEntitiesToStoreRelationTransfer(
+                    $this->filterMerchantStoresById($merchantStoreEntities, $idMerchant),
+                    (new StoreRelationTransfer())->setIdEntity($idMerchant)
+                );
         }
 
         return $storeRelationTransfers;
@@ -113,14 +112,14 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      */
     protected function filterMerchantStoresById(ObjectCollection $merchantStoreEntities, int $idMerchant): array
     {
-        $merchantStores = [];
+        $filteredMerchantStoreEntities = [];
         foreach ($merchantStoreEntities as $merchantStoreEntity) {
             if ($merchantStoreEntity->getFkMerchant() === $idMerchant) {
-                $merchantStores[] = $merchantStoreEntity;
+                $filteredMerchantStoreEntities[] = $merchantStoreEntity;
             }
         }
 
-        return $merchantStores;
+        return $filteredMerchantStoreEntities;
     }
 
     /**
@@ -128,9 +127,9 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[][]
      */
-    public function getUrlTransfersByMerchantIds(array $merchantIds): array
+    public function getUrlsMapByMerchantIds(array $merchantIds): array
     {
-        $urlTransferCollections = [];
+        $merchantUrlTransfersMap = [];
 
         $urlEntities = $this->getFactory()
             ->getUrlPropelQuery()
@@ -139,19 +138,16 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->find();
 
         if (!$urlEntities->count()) {
-            return $urlTransferCollections;
+            return $merchantUrlTransfersMap;
         }
 
         foreach ($urlEntities as $urlEntity) {
-            if (!isset($urlTransferCollections[$urlEntity->getFkResourceMerchant()])) {
-                $urlTransferCollections[$urlEntity->getFkResourceMerchant()] = [];
-            }
-            $urlTransferCollections[$urlEntity->getFkResourceMerchant()][] = $this->getFactory()
+            $merchantUrlTransfersMap[$urlEntity->getFkResourceMerchant()][] = $this->getFactory()
                 ->createPropelMerchantMapper()
                 ->mapUrlEntityToUrlTransfer($urlEntity, new UrlTransfer());
         }
 
-        return $urlTransferCollections;
+        return $merchantUrlTransfersMap;
     }
 
     /**
