@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesReturnConfig extends AbstractBundleConfig
 {
-    protected const EVENT_RETURN = 'return';
+    protected const EVENT_RETURN = 'start-return';
     protected const GLOBAL_RETURNABLE_NUMBER_OF_DAYS = 30;
 
     protected const RETURNABLE_STATE_NAMES = [
