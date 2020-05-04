@@ -96,7 +96,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     public function getProductOfferPrices(int $idProductConcrete): array
     {
         if (isset(static::$productOfferPricesByIdProductConcrete[$idProductConcrete])) {
-            static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
+            return static::$productOfferPricesByIdProductConcrete[$idProductConcrete];
         }
 
         $priceProductOfferKey = $this->generateKey($idProductConcrete);
