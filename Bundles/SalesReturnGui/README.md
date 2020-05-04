@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-return-gui.svg)](https://travis-ci.org/spryker/sales-return-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-Zed Admin GUI for managing returns for orders.
+Zed Admin GUI for managing returns.
 
 ## Installation
 
