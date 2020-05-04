@@ -8,32 +8,23 @@
 namespace Spryker\Glue\GiftCardsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $giftCardRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface
-     */
-    protected $giftCardsRestResponseBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface $giftCardsRestResponseBuilder
+     * @param \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface $giftCardRestResponseBuilder
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        GiftCardsRestResponseBuilderInterface $giftCardsRestResponseBuilder
+        GiftCardRestResponseBuilderInterface $giftCardRestResponseBuilder
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->giftCardsRestResponseBuilder = $giftCardsRestResponseBuilder;
+        $this->giftCardRestResponseBuilder = $giftCardRestResponseBuilder;
     }
 
     /**
@@ -56,8 +47,8 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
                 continue;
             }
 
-            $giftCardsRestResource = $this->giftCardsRestResponseBuilder
-                ->createGiftCardsRestResource($giftCardTransfers, $payload->getUuid());
+            $giftCardsRestResource = $this->giftCardRestResponseBuilder
+                ->createGiftCardRestResource($giftCardTransfers, $payload->getUuid());
 
             $resource->addRelationship($giftCardsRestResource);
         }

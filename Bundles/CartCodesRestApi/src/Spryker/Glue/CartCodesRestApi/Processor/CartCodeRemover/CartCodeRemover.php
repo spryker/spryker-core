@@ -80,7 +80,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function removeCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
+    public function removeCartCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_CARTS);
 
@@ -97,7 +97,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function removeCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
+    public function removeCartCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_GUEST_CARTS);
 

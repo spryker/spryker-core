@@ -23,7 +23,7 @@ class GiftCardByQuoteResourceRelationshipPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Adds gift-cadrs resource as relationship by quote.
+     * - Adds `gift-cards` resource as relationship by quote.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class GiftCardByQuoteResourceRelationshipPlugin extends AbstractPlugin implement
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCartCodeByQuoteResourceRelationshipExpander()
+            ->createGiftCardByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

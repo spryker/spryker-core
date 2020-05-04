@@ -29,7 +29,8 @@ class CartCodesResourceController extends AbstractController
      *          "responses": {
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -59,11 +60,10 @@ class CartCodesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "204": "No content.",
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found.",
-     *              "422": "Cart code isn't applicable."
+     *              "422": "Cart code can't be removed."
      *          }
      *     }
      * })
@@ -75,6 +75,6 @@ class CartCodesResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeCartCodeFromCart($restRequest);
     }
 }

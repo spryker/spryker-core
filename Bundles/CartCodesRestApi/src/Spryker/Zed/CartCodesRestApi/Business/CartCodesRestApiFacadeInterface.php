@@ -43,11 +43,11 @@ interface CartCodesRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Removes code from QuoteTransfer.
+     * - Removes cart code from QuoteTransfer.
      * - Calls CartCodeFacade.
      * - Finds QuoteTransfer by UUID.
      * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if Quote is not found.
-     * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if code is not applicable.
+     * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if cart code can not be removed.
      *
      * @api
      *

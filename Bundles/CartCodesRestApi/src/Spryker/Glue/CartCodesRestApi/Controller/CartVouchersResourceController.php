@@ -29,7 +29,8 @@ class CartVouchersResourceController extends AbstractController
      *          "responses": {
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })

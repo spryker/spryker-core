@@ -27,7 +27,8 @@ class GuestCartCodesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -57,9 +58,8 @@ class GuestCartCodesResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "204": "No content.",
      *              "404": "Cart with given uuid not found.",
-     *              "422": "Cart code isn't applicable."
+     *              "422": "Cart code can't be removed."
      *          }
      *     }
      * })
@@ -71,6 +71,6 @@ class GuestCartCodesResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromGuestCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeCartCodeFromGuestCart($restRequest);
     }
 }

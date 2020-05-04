@@ -9,10 +9,8 @@ namespace Spryker\Glue\GiftCardsRestApi;
 
 use Spryker\Glue\GiftCardsRestApi\Processor\Expander\GiftCardByQuoteResourceRelationshipExpander;
 use Spryker\Glue\GiftCardsRestApi\Processor\Expander\GiftCardByQuoteResourceRelationshipExpanderInterface;
-use Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapper;
-use Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapperInterface;
-use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilder;
-use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface;
+use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilder;
+use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -23,30 +21,20 @@ class GiftCardsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\GiftCardsRestApi\Processor\Expander\GiftCardByQuoteResourceRelationshipExpanderInterface
      */
-    public function createCartCodeByQuoteResourceRelationshipExpander(): GiftCardByQuoteResourceRelationshipExpanderInterface
+    public function createGiftCardByQuoteResourceRelationshipExpander(): GiftCardByQuoteResourceRelationshipExpanderInterface
     {
         return new GiftCardByQuoteResourceRelationshipExpander(
-            $this->getResourceBuilder(),
-            $this->createGiftCardsRestResponseBuilder()
+            $this->createGiftCardRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardsRestResponseBuilderInterface
+     * @return \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface
      */
-    public function createGiftCardsRestResponseBuilder(): GiftCardsRestResponseBuilderInterface
+    public function createGiftCardRestResponseBuilder(): GiftCardRestResponseBuilderInterface
     {
-        return new GiftCardsRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createGiftCardsMapper()
+        return new GiftCardRestResponseBuilder(
+            $this->getResourceBuilder()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\GiftCardsRestApi\Processor\Mapper\GiftCardsMapperInterface
-     */
-    public function createGiftCardsMapper(): GiftCardsMapperInterface
-    {
-        return new GiftCardsMapper();
     }
 }
