@@ -87,7 +87,9 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     /**
      * @api
      *
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface[]
+     * @phpstan-return class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface>[]
+     *
+     * @return string[]
      */
     public function getStrategyGroupToFormTypeMap(): array
     {

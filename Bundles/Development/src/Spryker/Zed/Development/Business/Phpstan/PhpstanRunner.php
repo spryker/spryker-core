@@ -404,7 +404,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $directories = (new Finder())
             ->directories()
             ->in($path)
-            ->depth('== 0');
+            ->depth('== 0')
+            ->sortByName();
 
         $modules = [];
         foreach ($directories as $dir) {

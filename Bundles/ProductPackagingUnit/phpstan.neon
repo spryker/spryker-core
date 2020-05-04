@@ -1,5 +1,7 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-            - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
-            - '#Call to an undefined method .+::innerJoinProcess\(\).#'
-            - '#Call to an undefined method .+ModelCriteria::useOrderQuery\(\).#'
+        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
+        - '#Call to an undefined method .+::innerJoinProcess\(\).#'
+        - '#Call to an undefined method .+ModelCriteria::useOrderQuery\(\).#'

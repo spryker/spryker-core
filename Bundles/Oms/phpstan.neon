@@ -6,10 +6,10 @@ parameters:
     - '#Method .+OmsQueryContainer::.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
     -
         message: '#Result of && is always false.#'
-        path: 'vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
     -
         message: '#Result of && is always false.#'
-        path: 'vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php'
     - '#Instanceof between \*NEVER\* and .+ConditionInterface will always evaluate to false#'
     - '#Parameter \#1 \$orderItems of method .+CommandByOrderInterface::run\(\) expects array<.+SpySalesOrderItem>, .+SpySalesOrderItem given.#'
     - '#Parameter \#2 \$orderEntity of method .+CommandByOrderInterface::run\(\) expects .+SpySalesOrder, .+ReadOnlyArrayObject given.#'

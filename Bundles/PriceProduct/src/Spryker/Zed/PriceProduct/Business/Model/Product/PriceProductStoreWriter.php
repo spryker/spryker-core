@@ -274,9 +274,9 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-        );
+        /** @var int|null $idPriceProductDefault */
+        $idPriceProductDefault = $priceProductDefaultEntityTransfer->getIdPriceProductDefault();
+        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault($idPriceProductDefault);
 
         return $priceProductTransfer;
     }

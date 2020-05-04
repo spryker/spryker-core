@@ -1,3 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Result of \|\| is always false.#'
+        - '#Call to an undefined method .+PropelConditionalProxy::filterBy.+\(\)#'
+        - '#Parameter \#1 \$glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int\|null, string\|null given.#'
