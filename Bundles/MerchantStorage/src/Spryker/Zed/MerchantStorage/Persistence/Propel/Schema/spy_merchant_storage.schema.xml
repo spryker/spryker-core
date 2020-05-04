@@ -18,6 +18,7 @@
             <parameter name="key_suffix_column" value="id_merchant"/>
             <parameter name="queue_group" value="sync.storage.merchant"/>
             <parameter name="mappings" value="merchant_reference:id_merchant"/>
+            <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

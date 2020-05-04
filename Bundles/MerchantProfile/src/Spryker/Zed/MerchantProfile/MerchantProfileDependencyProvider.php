@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProfile;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeBridge;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeBridge;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeBridge;
 
@@ -20,7 +19,6 @@ class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_EVENT = 'FACADE_EVENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +31,6 @@ class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addEventFacade($container);
 
         return $container;
     }
@@ -61,20 +58,6 @@ class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new MerchantProfileToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addEventFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_EVENT, function (Container $container) {
-            return new MerchantProfileToEventFacadeBridge($container->getLocator()->event()->facade());
         });
 
         return $container;

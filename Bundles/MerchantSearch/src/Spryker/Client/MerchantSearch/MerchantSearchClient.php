@@ -8,7 +8,6 @@
 namespace Spryker\Client\MerchantSearch;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -23,10 +22,10 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function getMerchantCollection(): MerchantCollectionTransfer
     {
         return $this->getFactory()
-            ->createMerchantSearchStub()
-            ->getMerchants((new MerchantCriteriaTransfer())->setIsActive(true));
+            ->createMerchantReader()
+            ->get();
     }
 }

@@ -9,7 +9,9 @@ namespace Spryker\Zed\MerchantGui;
 
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeBridge;
@@ -30,6 +32,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER = 'PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER';
     public const PLUGINS_MERCHANT_FORM_TABS_EXPANDER = 'PLUGINS_MERCHANT_FORM_TABS_EXPANDER';
     public const PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER = 'PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER';
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +54,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUrlFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUpdateFormViewExpanderPlugins($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -207,6 +211,37 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return $this->getStoreRelationFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own MerchantGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage merchants.',
+                FormTypeInterface::class
+            )
+        );
     }
 
     /**

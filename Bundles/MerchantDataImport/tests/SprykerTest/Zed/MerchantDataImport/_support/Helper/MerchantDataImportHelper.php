@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantDataImportHelper extends Module
@@ -28,11 +29,30 @@ class MerchantDataImportHelper extends Module
     }
 
     /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    public function assertMerchantStoreDatabaseTableContainsData(int $idMerchant): void
+    {
+        $query = $this->getMerchantStoreQuery()->filterByFkMerchant($idMerchant);
+        $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
+    }
+
+    /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
     protected function getMerchantQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery
+     */
+    protected function getMerchantStoreQuery(): SpyMerchantStoreQuery
+    {
+        return SpyMerchantStoreQuery::create();
     }
 
     /**

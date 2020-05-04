@@ -41,6 +41,7 @@ class MerchantCreateForm extends AbstractType
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
     protected const FIELD_IS_ACTIVE = 'is_active';
     protected const FIELD_URL_COLLECTION = 'urlCollection';
+    protected const FIELD_STORE_RELATION = 'storeRelation';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
@@ -84,7 +85,8 @@ class MerchantCreateForm extends AbstractType
             ->addRegistrationNumberField($builder)
             ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID])
             ->addIsActiveField($builder)
-            ->addUrlCollectionField($builder);
+            ->addUrlCollectionField($builder)
+            ->addStoreRelationForm($builder);
 
         $this->executeMerchantFormExpanderPlugins($builder, $options);
     }
@@ -190,6 +192,25 @@ class MerchantCreateForm extends AbstractType
                     ]),
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+                'required' => false,
+            ]
+        );
 
         return $this;
     }

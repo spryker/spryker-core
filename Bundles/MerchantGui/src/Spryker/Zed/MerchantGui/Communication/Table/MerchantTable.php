@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -21,6 +24,7 @@ class MerchantTable extends AbstractTable
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
     public const COL_ACTIONS = 'actions';
+    public const COL_STORES = 'stores';
 
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
@@ -32,6 +36,8 @@ class MerchantTable extends AbstractTable
         MerchantGuiConfig::STATUS_APPROVED => 'btn-create',
         MerchantGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
+
+    protected const STORE_CLASS_LABEL = 'label-info';
 
     /**
      * @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
@@ -106,6 +112,7 @@ class MerchantTable extends AbstractTable
             static::COL_ACTIONS,
             SpyMerchantTableMap::COL_STATUS,
             SpyMerchantTableMap::COL_IS_ACTIVE,
+            SpyMerchantStoreTableMap::COL_FK_STORE,
         ]);
         $config->setDefaultSortField(SpyMerchantTableMap::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
@@ -161,6 +168,7 @@ class MerchantTable extends AbstractTable
             SpyMerchantTableMap::COL_NAME => 'Name',
             SpyMerchantTableMap::COL_STATUS => 'Status',
             SpyMerchantTableMap::COL_IS_ACTIVE => 'active',
+            SpyMerchantStoreTableMap::COL_FK_STORE => 'Stores',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
@@ -185,13 +193,31 @@ class MerchantTable extends AbstractTable
     }
 
     /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function prepareQuery(): SpyMerchantQuery
+    {
+        $this->merchantQuery
+            ->groupByIdMerchant()
+            ->useSpyMerchantStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinSpyStore()
+                ->withColumn(
+                    sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
+                    static::COL_STORES
+                )
+            ->endUse();
+
+        return $this->merchantQuery;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryResults = $this->runQuery($this->merchantQuery, $config);
+        $queryResults = $this->runQuery($this->prepareQuery(), $config);
         $results = [];
 
         foreach ($queryResults as $item) {
@@ -200,6 +226,7 @@ class MerchantTable extends AbstractTable
                 SpyMerchantTableMap::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 SpyMerchantTableMap::COL_STATUS => $this->createStatusLabel($item),
                 SpyMerchantTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
+                SpyMerchantStoreTableMap::COL_FK_STORE => $this->createStoresLabel($item),
             ], $this->executeDataExpanderPlugins($item));
             $rowData[static::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
@@ -358,5 +385,22 @@ class MerchantTable extends AbstractTable
     public function getActiveLabel(bool $isActive): string
     {
         return $isActive ? $this->generateLabel('Active', 'label-info') : $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param array $merchant
+     *
+     * @return string
+     */
+    protected function createStoresLabel(array $merchant): string
+    {
+        $storeNames = explode(',', $merchant[static::COL_STORES]);
+
+        $storeLabels = [];
+        foreach ($storeNames as $storeName) {
+            $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
+        }
+
+        return implode(' ', $storeLabels);
     }
 }

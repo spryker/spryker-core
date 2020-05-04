@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantGui\Communication;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
@@ -182,5 +183,13 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): MerchantGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

@@ -10,8 +10,10 @@ namespace Spryker\Zed\MerchantStorage\Business\Writer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface;
+use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface;
 use Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface;
 
@@ -28,6 +30,11 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     protected $merchantFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface
      */
     protected $merchantStorageEntityManager;
@@ -40,17 +47,20 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     /**
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToMerchantFacadeInterface $merchantFacade
+     * @param \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageEntityManagerInterface $merchantStorageEntityManager
      * @param \Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface $merchantStorageRepository
      */
     public function __construct(
         MerchantStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantStorageToMerchantFacadeInterface $merchantFacade,
+        MerchantStorageToStoreFacadeInterface $storeFacade,
         MerchantStorageEntityManagerInterface $merchantStorageEntityManager,
         MerchantStorageRepositoryInterface $merchantStorageRepository
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantFacade = $merchantFacade;
+        $this->storeFacade = $storeFacade;
         $this->merchantStorageEntityManager = $merchantStorageEntityManager;
         $this->merchantStorageRepository = $merchantStorageRepository;
     }
@@ -81,22 +91,39 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
 
         $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaTransfer);
-
-        $merchantIdsToRemove = [];
+        $storeTransfers = $this->storeFacade->getAllStores();
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            if (!$merchantTransfer->getIsActive()) {
-                $merchantIdsToRemove[] = $merchantTransfer->getIdMerchant();
+            foreach ($storeTransfers as $storeTransfer) {
+                if ($merchantTransfer->getIsActive() && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)) {
+                    $this->merchantStorageEntityManager->saveMerchantStorage(
+                        $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
+                        $storeTransfer
+                    );
 
-                continue;
+                    continue;
+                }
+
+                $this->merchantStorageEntityManager->deleteMerchantStorage($merchantTransfer->getIdMerchant(), $storeTransfer->getName());
             }
+        }
+    }
 
-            $this->merchantStorageEntityManager->saveMerchantStorage(
-                $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer())
-            );
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isMerchantAvailableInStore(MerchantTransfer $merchantTransfer, StoreTransfer $storeTransfer): bool
+    {
+        foreach ($merchantTransfer->getStoreRelation()->getStores() as $merchantStoreTransfer) {
+            if ($merchantStoreTransfer->getName() === $storeTransfer->getName()) {
+                return true;
+            }
         }
 
-        $this->merchantStorageEntityManager->deleteMerchantStorageByMerchantIds($merchantIdsToRemove);
+        return false;
     }
 
     /**

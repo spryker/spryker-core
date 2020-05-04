@@ -26,4 +26,18 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer;
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer[]
+     */
+    public function getMerchantStoreRelationMapByMerchantIds(array $merchantIds): array;
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[][]
+     */
+    public function getUrlsMapByMerchantIds(array $merchantIds): array;
 }

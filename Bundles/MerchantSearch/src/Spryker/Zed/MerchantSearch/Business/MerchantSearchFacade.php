@@ -30,7 +30,7 @@ class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacad
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
         return $this->getFactory()
-            ->createMerchantReader()
+            ->getMerchantFacade()
             ->get($merchantCriteriaTransfer);
     }
 }

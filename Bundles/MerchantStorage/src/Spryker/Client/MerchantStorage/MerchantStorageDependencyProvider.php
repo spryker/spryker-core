@@ -10,6 +10,7 @@ namespace Spryker\Client\MerchantStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientBridge;
+use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientBridge;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceBridge;
 
@@ -18,6 +19,7 @@ class MerchantStorageDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,6 +32,7 @@ class MerchantStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSynchronizationService($container);
         $container = $this->addStorageClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addStoreClient($container);
         
         return $container;
     }
@@ -72,6 +75,20 @@ class MerchantStorageDependencyProvider extends AbstractDependencyProvider
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new MerchantStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new MerchantStorageToStoreClientBridge($container->getLocator()->store()->client());
+        });
 
         return $container;
     }

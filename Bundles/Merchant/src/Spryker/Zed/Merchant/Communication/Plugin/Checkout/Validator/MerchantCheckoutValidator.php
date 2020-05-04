@@ -90,6 +90,7 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
                 ->setIsActive(true)
+                ->setStore($quoteTransfer->getStore())
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

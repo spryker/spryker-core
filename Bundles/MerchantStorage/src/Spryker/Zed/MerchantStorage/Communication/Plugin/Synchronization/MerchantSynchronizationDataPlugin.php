@@ -137,6 +137,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
 
             $synchronizationDataTransfer->setData($merchantStorageEntity->getData());
             $synchronizationDataTransfer->setKey($merchantStorageEntity->getKey());
+            $synchronizationDataTransfer->setStore($merchantStorageEntity->getStore());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

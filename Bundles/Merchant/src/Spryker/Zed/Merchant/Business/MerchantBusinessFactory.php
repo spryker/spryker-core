@@ -20,6 +20,7 @@ use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidator;
 use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Business\Updater\MerchantUpdater;
 use Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
@@ -40,7 +41,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getConfig(),
             $this->getMerchantPostCreatePlugins(),
-            $this->createMerchantUrlSaver()
+            $this->createMerchantUrlSaver(),
+            $this->getEventFacade()
         );
     }
 
@@ -54,7 +56,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
             $this->getMerchantPostUpdatePlugins(),
-            $this->createMerchantUrlSaver()
+            $this->createMerchantUrlSaver(),
+            $this->getEventFacade()
         );
     }
 
@@ -137,5 +140,13 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantUrlSaver(
             $this->getUrlFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface
+     */
+    public function getEventFacade(): MerchantToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_EVENT);
     }
 }

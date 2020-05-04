@@ -9,6 +9,7 @@
         <property name="status" type="string"/>
         <property name="addressCollection" type="MerchantAddressCollection"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -78,6 +79,14 @@
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -33,7 +33,7 @@ class MerchantCheckoutPreConditionPlugin extends AbstractPlugin implements Check
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        return !$this->getFactory()
+        return $this->getFactory()
             ->createMerchantCheckoutValidator()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }

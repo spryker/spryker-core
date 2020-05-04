@@ -13,6 +13,7 @@
         <property name="isActive" type="bool"/>
         <property name="merchantReference" type="string"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
@@ -24,6 +25,7 @@
         <property name="filter" type="Filter"/>
         <property name="isActive" type="bool"/>
         <property name="pagination" type="Pagination"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Filter">
@@ -60,6 +62,17 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="Url">
         <property name="idUrl" type="int"/>
         <property name="fkResourceMerchant" type="int"/>
@@ -69,6 +82,7 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Message">
@@ -84,6 +98,7 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="CheckoutError">
@@ -103,4 +118,8 @@
         <property name="merchantReference" type="string"/>
         <property name="sku" type="string"/>
     </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

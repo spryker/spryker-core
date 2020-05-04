@@ -33,7 +33,7 @@ class MerchantSearchStub implements MerchantSearchStubInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer */
         $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get', $merchantCriteriaTransfer);

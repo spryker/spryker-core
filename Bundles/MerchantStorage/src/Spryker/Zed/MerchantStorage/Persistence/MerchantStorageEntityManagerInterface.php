@@ -8,20 +8,23 @@
 namespace Spryker\Zed\MerchantStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface MerchantStorageEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */
-    public function saveMerchantStorage(MerchantStorageTransfer $merchantStorageTransfer): MerchantStorageTransfer;
+    public function saveMerchantStorage(MerchantStorageTransfer $merchantStorageTransfer, StoreTransfer $storeTransfer): MerchantStorageTransfer;
 
     /**
-     * @param int[] $merchantIds
+     * @param int $idMerchant
+     * @param string $store
      *
      * @return void
      */
-    public function deleteMerchantStorageByMerchantIds(array $merchantIds): void;
+    public function deleteMerchantStorage(int $idMerchant, string $store): void;
 }

@@ -10,9 +10,12 @@ namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
-use Propel\Runtime\Collection\ObjectCollection;
+use Orm\Zed\Store\Persistence\SpyStore;
+use Orm\Zed\Url\Persistence\SpyUrl;
 
 class MerchantMapper implements MerchantMapperInterface
 {
@@ -43,14 +46,10 @@ class MerchantMapper implements MerchantMapperInterface
         SpyMerchant $merchantEntity,
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer {
-        $merchantTransfer = $merchantTransfer->fromArray(
+        return $merchantTransfer->fromArray(
             $merchantEntity->toArray(),
             true
         );
-
-        $this->mapUrlCollectionToMerchantTransfer($merchantEntity->getSpyUrls(), $merchantTransfer);
-
-        return $merchantTransfer;
     }
 
     /**
@@ -75,23 +74,47 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function mapUrlCollectionToMerchantTransfer(ObjectCollection $urlEntities, MerchantTransfer $merchantTransfer)
-    {
-        $urlTransfers = new ArrayObject();
-        foreach ($urlEntities as $urlEntity) {
-            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
-            $urlTransfer->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
+    public function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer {
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
+    }
 
-            $urlTransfers->append($urlTransfer);
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function mapUrlEntityToUrlTransfer(SpyUrl $urlEntity, UrlTransfer $urlTransfer): UrlTransfer
+    {
+        return $urlTransfer->fromArray($urlEntity->toArray(), true)
+            ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[] $merchantStoreEntities
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function mapMerchantStoreEntitiesToStoreRelationTransfer(
+        array $merchantStoreEntities,
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
+        foreach ($merchantStoreEntities as $merchantStoreEntity) {
+            $storeTransfer = $this->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer());
+
+            $storeRelationTransfer->addStores($storeTransfer)
+                ->addIdStores($storeTransfer->getIdStore());
         }
 
-        $merchantTransfer->setUrlCollection($urlTransfers);
-
-        return $merchantTransfer;
+        return $storeRelationTransfer;
     }
 }
