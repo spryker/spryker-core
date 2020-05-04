@@ -1,17 +1,27 @@
-{% set mappedItems = (items ?: order.items) | reduce((collection, item) => collection | merge({('_' ~ item.idSalesOrderItem): (item)}), {}) %}
-{% set mappedBundles = [] %}
+{% set items = items ?: order.items %}
+{% set configuredBundles = [] %}
+{% set configuredBundleIds = [] %}
+{% set configuredBundleItems = [] %}
 
-{% for bundle in order.salesOrderConfiguredBundles %}
-    {% set filteredItems = bundle.salesOrderConfiguredBundleItems|filter(item => mappedItems['_' ~ item.IdSalesOrderItem] is defined) %}
-    {% if (filteredItems|length) %}
-        {% set mappedBundles = mappedBundles | merge([bundle]) %}
+{% for item in items %}
+    {% if item.salesOrderConfiguredBundleItem %}
+        {% set configuredBundleItems = configuredBundleItems | merge([item]) %}
     {% endif %}
 {% endfor %}
 
-{% for bundle in mappedBundles %}
+{% for item in configuredBundleItems %}
+    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+    {% if not (bundleId in configuredBundleIds) %}
+        {% set configuredBundleIds = configuredBundleIds | merge([bundleId]) %}
+        {% set configuredBundles = configuredBundles | merge([item.salesOrderConfiguredBundle]) %}
+    {% endif %}
+{% endfor %}
+
+{% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            {{ (bundle.translations[0].name ?? bundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
+            {{ (bundle.translations[0].name ?? bundle.name) | trans }}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
@@ -27,14 +37,22 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
+
     {% set partialItemCount = 0 %}
-    {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
-        <tr>
-            {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
-            {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image} %}{% endembed %}
-        </tr>
-        {% set partialItemCount = partialItemCount + 1 %}
+    {% for item in configuredBundleItems %}
+        {% if item.salesOrderConfiguredBundleItem.idSalesOrderConfiguredBundle == bundle.idSalesOrderConfiguredBundle %}
+            <tr>
+                {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
+                    orderItem: item,
+                    displayImage: true,
+                    image: item.metadata.image,
+                } %}
+            </tr>
+
+            {% set partialItemCount = partialItemCount + 1 %}
+        {% endif %}
     {% endfor %}
+
     {% if bundle.note is defined and bundle.note is not empty %}
         <tr>
             <td colspan="8" class="text-left">
