@@ -100,7 +100,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
      *
      * @return bool
      */
-    protected function installYarn(LoggerInterface $logger)
+    protected function installYarn(LoggerInterface $logger): bool
     {
         $logger->info('Installing Yarn');
 
@@ -115,7 +115,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
     /**
      * @return string
      */
-    protected function getYarnInstallCommand()
+    protected function getYarnInstallCommand(): string
     {
         return 'npm install -g yarn';
     }
@@ -125,7 +125,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
      *
      * @return string
      */
-    protected function getYarnVersion(LoggerInterface $logger)
+    protected function getYarnVersion(LoggerInterface $logger): string
     {
         $process = $this->getProcess('yarn -v');
         $process->run();

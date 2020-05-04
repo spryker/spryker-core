@@ -9,8 +9,10 @@ namespace Spryker\Zed\SetupFrontend\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
+use Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallMultiPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface;
@@ -165,7 +167,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface
      */
-    public function createMerchantPortalDependencyInstaller()
+    public function createMerchantPortalDependencyInstaller(): DependencyInstallerInterface
     {
         return new ProjectInstaller($this->getConfig()->getMerchantPortalInstallCommand());
     }
@@ -173,7 +175,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
      */
-    public function createMerchantPortalBuilder()
+    public function createMerchantPortalBuilder(): BuilderInterface
     {
         return new Builder($this->getConfig()->getMerchantPortalBuildCommand());
     }
