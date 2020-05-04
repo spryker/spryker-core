@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnItemTableMap;
 use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnTableMap;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -63,7 +64,7 @@ class OrderReturnTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $config->setUrl('table?' . self::PARAM_ID_SALES_ORDER . '=' . $this->orderTransfer->getIdSalesOrder());
+        $config->setUrl('table?' . static::PARAM_ID_SALES_ORDER . '=' . $this->orderTransfer->getIdSalesOrder());
 
         $config->setHeader([
             static::COL_RETURN_REFERENCE => 'Return reference',
@@ -121,21 +122,16 @@ class OrderReturnTable extends AbstractTable
         $this->orderTransfer->requireIdSalesOrder();
 
         return SpySalesReturnQuery::create()
-            ->leftJoinSpySalesReturnItem()
-            ->useSpySalesReturnItemQuery()
-                ->leftJoinSpySalesOrderItem()
-                ->useSpySalesOrderItemQuery()
+            ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
+                ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkSalesOrder($this->orderTransfer->getIdSalesOrder())
-                    ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_REMUNERATION_AMOUNT . ')', static::COL_REMUNERATION_TOTAL)
-                    ->useOrderQuery()
+                    ->withColumn(sprintf('SUM(%s)', SpySalesOrderItemTableMap::COL_REMUNERATION_AMOUNT), static::COL_REMUNERATION_TOTAL)
+                    ->useOrderQuery(null, Criteria::LEFT_JOIN)
                         ->withColumn(SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE, static::COL_CURRENCY)
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->withColumn(
-                'COUNT(' . SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM . ')',
-                static::COL_ITEMS
-            )
+            ->withColumn(sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM), static::COL_ITEMS)
             ->groupByIdSalesReturn();
     }
 
@@ -144,7 +140,7 @@ class OrderReturnTable extends AbstractTable
      *
      * @return string
      */
-    protected function getRemunerationTotal(array $return)
+    protected function getRemunerationTotal(array $return): string
     {
         $moneyTransfer = $this->moneyFacade->fromInteger(
             (int)$return[static::COL_REMUNERATION_TOTAL] ?? 0,
