@@ -22,7 +22,6 @@ class ProductLabelRelationUpdaterConsole extends Console
     public const COMMAND_NAME = 'product-label:relations:update';
 
     protected const OPTION_NO_TOUCH = 'no-touch';
-    protected const OPTION_NO_TOUCH_SHORT = 't';
 
     /**
      * @return void
@@ -32,7 +31,7 @@ class ProductLabelRelationUpdaterConsole extends Console
         $this->setName(static::COMMAND_NAME);
         $this->addOption(
             static::OPTION_NO_TOUCH,
-            static::OPTION_NO_TOUCH_SHORT,
+            null,
             InputOption::VALUE_NONE,
             'Disable the touch operations.'
         );
