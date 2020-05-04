@@ -9,11 +9,12 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTranslationTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
-class ItemExpander implements ItemExpanderInterface
+class OrderItemExpander implements OrderItemExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface
@@ -42,10 +43,10 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array
     {
-        $salesOrderConfiguredBundleTransfers = $this->getSalesOrderConfiguredBundleTransfers($itemTransfers);
-        $salesOrderConfiguredBundleItemTransfers = $this->extractSalesOrderConfiguredBundleItems($salesOrderConfiguredBundleTransfers);
+        $salesOrderConfiguredBundleTransfers = $this->getSalesOrderConfiguredBundleTransfers($this->getSalesOrderItemIds($itemTransfers));
+        $salesOrderConfiguredBundleItemTransfers = $this->indexSalesOrderConfiguredBundleItems($salesOrderConfiguredBundleTransfers);
 
         foreach ($itemTransfers as $itemTransfer) {
             if (!isset($salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()])) {
@@ -53,8 +54,9 @@ class ItemExpander implements ItemExpanderInterface
             }
 
             $salesOrderConfiguredBundleItemTransfer = $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()];
-            $salesOrderConfiguredBundleTransfer = clone $salesOrderConfiguredBundleTransfers[$salesOrderConfiguredBundleItemTransfer->getIdSalesOrderConfiguredBundle()];
-            $salesOrderConfiguredBundleTransfer->setSalesOrderConfiguredBundleItems(new ArrayObject());
+            $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
+                ->fromArray($salesOrderConfiguredBundleTransfers[$salesOrderConfiguredBundleItemTransfer->getIdSalesOrderConfiguredBundle()]->toArray())
+                ->setSalesOrderConfiguredBundleItems(new ArrayObject());
 
             $itemTransfer->setSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer)
                 ->setSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer);
@@ -64,16 +66,16 @@ class ItemExpander implements ItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
      */
-    protected function getSalesOrderConfiguredBundleTransfers(array $itemTransfers): array
+    protected function getSalesOrderConfiguredBundleTransfers(array $salesOrderItemIds): array
     {
         $salesOrderConfiguredBundleTransfers = $this->salesConfigurableBundleRepository
             ->getSalesOrderConfiguredBundleCollectionByFilter(
                 (new SalesOrderConfiguredBundleFilterTransfer())
-                    ->setSalesOrderItemIds($this->getSalesOrderItemIds($itemTransfers))
+                    ->setSalesOrderItemIds($salesOrderItemIds)
             )
             ->getSalesOrderConfiguredBundles();
         $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);
@@ -91,7 +93,9 @@ class ItemExpander implements ItemExpanderInterface
         $salesOrderItemIds = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+            if ($itemTransfer->getIdSalesOrderItem()) {
+                $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+            }
         }
 
         return $salesOrderItemIds;
@@ -123,7 +127,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
      */
-    protected function extractSalesOrderConfiguredBundleItems(array $salesOrderConfiguredBundleTransfers): array
+    protected function indexSalesOrderConfiguredBundleItems(array $salesOrderConfiguredBundleTransfers): array
     {
         $salesOrderConfiguredBundleItemTransfers = [];
 

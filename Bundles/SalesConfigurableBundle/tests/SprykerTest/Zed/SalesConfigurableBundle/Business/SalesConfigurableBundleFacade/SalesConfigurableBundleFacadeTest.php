@@ -539,7 +539,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->expandItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
+            ->expandOrderItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
 
         // Assert
         $this->assertInstanceOf(
@@ -577,7 +577,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         // Act
         $itemTransfers = $this->tester
             ->getFacade()
-            ->expandItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
+            ->expandOrderItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
 
         // Assert
         $this->assertNull($itemTransfers[0]->getSalesOrderConfiguredBundleItem());
