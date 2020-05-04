@@ -243,7 +243,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         }
 
         /** @var \SimpleXMLElement[] $xPath */
-        $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database');
+        $xPath = $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database');
 
         /** @var array $database */
         $database = $xPath ? $xPath[0] : [];

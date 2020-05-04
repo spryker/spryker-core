@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\Mer
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface;
 
 class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresholdWriterInterface
 {
@@ -30,7 +31,7 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     protected $merchantRelationshipSalesOrderThresholdEntityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface
      */
     protected $merchantRelationshipSalesOrderThresholdRepository;
 
@@ -47,14 +48,14 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     /**
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface $merchantRelationshipSalesOrderThresholdEntityManager
-     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository $merchantRelationshipSalesOrderThresholdRepository
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface $merchantRelationshipSalesOrderThresholdRepository
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationWriterInterface $translationWriter
      */
     public function __construct(
         MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade,
         MerchantRelationshipSalesOrderThresholdEntityManagerInterface $merchantRelationshipSalesOrderThresholdEntityManager,
-        MerchantRelationshipSalesOrderThresholdRepository $merchantRelationshipSalesOrderThresholdRepository,
+        MerchantRelationshipSalesOrderThresholdRepositoryInterface $merchantRelationshipSalesOrderThresholdRepository,
         MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         MerchantRelationshipSalesOrderThresholdTranslationWriterInterface $translationWriter
     ) {
