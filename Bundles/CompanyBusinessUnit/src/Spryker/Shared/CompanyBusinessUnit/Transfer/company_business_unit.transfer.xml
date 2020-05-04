@@ -45,6 +45,7 @@
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
         <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
+        <property name="withoutExpanders" type="bool"/>
     </transfer>
 
     <transfer name="Filter">
