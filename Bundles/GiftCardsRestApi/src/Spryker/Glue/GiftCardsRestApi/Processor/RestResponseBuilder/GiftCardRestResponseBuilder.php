@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder;
 
-use ArrayObject;
 use Generated\Shared\Transfer\RestGiftCardsAttributesTransfer;
 use Spryker\Glue\GiftCardsRestApi\GiftCardsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
@@ -31,26 +30,28 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
-     * @param string $quoteReference
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createGiftCardRestResource(ArrayObject $giftCardTransfers, string $quoteReference): RestResourceInterface
+    public function createGiftCardRestResource(RestResourceInterface $resource): RestResourceInterface
     {
-        foreach ($giftCardTransfers as $giftCardTransfer) {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer|null $payload */
+        $payload = $resource->getPayload();
+        foreach ($payload->getGiftCards() as $giftCardTransfer) {
             $restGiftCardsAttributesTransfer = (new RestGiftCardsAttributesTransfer())
                 ->fromArray($giftCardTransfer->toArray(), true);
 
+            $giftCardCode = $giftCardTransfer->getCode();
             $restResource = $this->restResourceBuilder->createRestResource(
                 GiftCardsRestApiConfig::RESOURCE_GIFT_CARDS,
-                $giftCardTransfer->getCode(),
+                $giftCardCode,
                 $restGiftCardsAttributesTransfer
             );
 
             $restResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->getGiftCardsResourceSelfLink($quoteReference)
+                $this->getGiftCardsResourceSelfLink($resource->getType(), $payload->getUuid(), $giftCardCode)
             );
 
             return $restResource;
@@ -58,17 +59,20 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
     }
 
     /**
-     * @param string $quoteReference
+     * @param string $resourceType
+     * @param string $quoteUuid
+     * @param string $giftCardCode
      *
      * @return string
      */
-    protected function getGiftCardsResourceSelfLink(string $quoteReference): string
+    protected function getGiftCardsResourceSelfLink(string $resourceType, string $quoteUuid, string $giftCardCode): string
     {
         return sprintf(
-            '%s/%s/%s',
-            GiftCardsRestApiConfig::RESOURCE_CARTS,
-            $quoteReference,
-            GiftCardsRestApiConfig::RESOURCE_GIFT_CARDS
+            '%s/%s/%s/%s',
+            $resourceType,
+            $quoteUuid,
+            GiftCardsRestApiConfig::RESOURCE_CART_CODES,
+            $giftCardCode
         );
     }
 }

@@ -17,4 +17,8 @@
     <transfer name="GiftCard">
         <property name="code" type="string"/>
     </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+    </transfer>
 </transfers>

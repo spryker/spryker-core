@@ -7,16 +7,14 @@
 
 namespace Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder;
 
-use ArrayObject;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface GiftCardRestResponseBuilderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
-     * @param string $quoteReference
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createGiftCardRestResource(ArrayObject $giftCardTransfers, string $quoteReference): RestResourceInterface;
+    public function createGiftCardRestResource(RestResourceInterface $resource): RestResourceInterface;
 }

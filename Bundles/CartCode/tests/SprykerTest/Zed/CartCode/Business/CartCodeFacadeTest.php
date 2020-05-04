@@ -39,12 +39,22 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
+            new VoucherCartCodePlugin(),
+            new GiftCardCartCodePlugin(),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
     public function testAddCartCodeAddsVoucherCodeToUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new VoucherCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
 
         // Act
@@ -68,9 +78,6 @@ class CartCodeFacadeTest extends Unit
     public function testAddCartCodeAddsGiftCardCodeToUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new GiftCardCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
 
         // Act
@@ -136,9 +143,6 @@ class CartCodeFacadeTest extends Unit
     public function testRemoveCodeRemovesVoucherDiscountFromCartWithUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new VoucherCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -158,9 +162,6 @@ class CartCodeFacadeTest extends Unit
     public function testRemoveCodeRemovesGiftCardFromCartWithUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new GiftCardCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -222,9 +223,6 @@ class CartCodeFacadeTest extends Unit
     public function testClearCartCodesWillRemoveAllDiscountsCodeFromUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new VoucherCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
@@ -242,9 +240,6 @@ class CartCodeFacadeTest extends Unit
     public function testClearCartCodesRemovesAllGiftCardsCodeFromUnlockedQuote(): void
     {
         // Arrange
-        $this->setPluginCartCodeCollection([
-            new GiftCardCartCodePlugin(),
-        ]);
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act

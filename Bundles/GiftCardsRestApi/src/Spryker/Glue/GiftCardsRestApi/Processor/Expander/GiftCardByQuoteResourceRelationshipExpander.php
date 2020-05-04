@@ -48,7 +48,7 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
             }
 
             $giftCardsRestResource = $this->giftCardRestResponseBuilder
-                ->createGiftCardRestResource($giftCardTransfers, $payload->getUuid());
+                ->createGiftCardRestResource($resource);
 
             $resource->addRelationship($giftCardsRestResource);
         }
