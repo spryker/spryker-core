@@ -35,6 +35,10 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
      */
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
+        if (method_exists($this->merchantFacade, 'getMerchants')) {
+            return $this->merchantFacade->getMerchants();
+        }
+
         return $this->merchantFacade->get($merchantCriteriaTransfer);
     }
 }
