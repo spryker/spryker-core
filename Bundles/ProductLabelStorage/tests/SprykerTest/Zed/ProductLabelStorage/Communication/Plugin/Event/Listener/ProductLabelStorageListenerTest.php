@@ -178,7 +178,7 @@ class ProductLabelStorageListenerTest extends Unit
             ->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $labelsCount = $this->tester->getProductLabelsCountByAndStoreNameAndLocaleName(
+        $labelsCount = $this->tester->getProductLabelsCountByStoreNameAndLocaleName(
             $storeTransfer->getName(),
             $localeName
         );
@@ -226,7 +226,7 @@ class ProductLabelStorageListenerTest extends Unit
             ->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $labelsCount = $this->tester->getProductLabelsCountByAndStoreNameAndLocaleName(
+        $labelsCount = $this->tester->getProductLabelsCountByStoreNameAndLocaleName(
             $storeTransferDE->getName(),
             $localeName
         );

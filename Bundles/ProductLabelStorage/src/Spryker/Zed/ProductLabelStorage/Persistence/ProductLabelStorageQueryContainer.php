@@ -73,28 +73,6 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productLabelProductAbstractIds
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
-     */
-    public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
-    {
-        return $this->getFactory()
-            ->getProductLabelQueryContainer()
-            ->queryAllProductLabelProductAbstractRelations()
-            ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds)
-            ->joinWithSpyProductLabel()
-            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int[] $productLabelProductAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery

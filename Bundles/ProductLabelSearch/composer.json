@@ -19,7 +19,6 @@
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/search": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
   },

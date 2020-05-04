@@ -88,7 +88,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetActiveLabelsByCriteria(): void
+    public function testGetActiveLabelsByCriteriaShouldRetrieveActiveLabels(): void
     {
         //Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -99,10 +99,6 @@ class ProductLabelFacadeTest extends Unit
             StoreRelationTransfer::ID_STORES => [
                 $storeTransferDE->getIdStore(),
                 $storeTransferAT->getIdStore(),
-            ],
-            StoreRelationTransfer::STORES => [
-                $storeTransferDE,
-                $storeTransferAT,
             ],
         ];
         $productLabelTransfer = $this->tester->haveProductLabel([

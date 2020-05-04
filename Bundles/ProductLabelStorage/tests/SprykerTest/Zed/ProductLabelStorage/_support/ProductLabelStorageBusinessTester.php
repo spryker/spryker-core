@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductLabelStorage;
 
 use Codeception\Actor;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\Map\SpyProductAbstractLabelStorageTableMap;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
@@ -35,34 +34,6 @@ class ProductLabelStorageBusinessTester extends Actor
 {
     use _generated\ProductLabelStorageBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
-    /**
-     * @param int $idProductLabelDictionaryStorage
-     *
-     * @return void
-     */
-    public function cleanupProductLabelDictionaryStorage(int $idProductLabelDictionaryStorage): void
-    {
-        $this->createProductLabelDictionaryStorageQuery()
-            ->filterByIdProductLabelDictionaryStorage($idProductLabelDictionaryStorage)
-            ->delete();
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function cleanupProductAbstractLabelStorage(int $idProductAbstract): void
-    {
-        $this->createProductAbstractLabelStorageQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->delete();
-    }
-
     /**
      * @param int $idProductAbstract
      *
@@ -80,7 +51,7 @@ class ProductLabelStorageBusinessTester extends Actor
      *
      * @return int[]
      */
-    public function getProductAbstractLAbelStorageIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductAbstractLabelStorageIdsByIdProductAbstract(int $idProductAbstract): array
     {
         return $this->createProductAbstractLabelStorageQuery()
             ->filterByFkProductAbstract($idProductAbstract)
@@ -103,14 +74,6 @@ class ProductLabelStorageBusinessTester extends Actor
     public function createProductAbstractLabelStorageQuery(): SpyProductAbstractLabelStorageQuery
     {
         return SpyProductAbstractLabelStorageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
-     */
-    public function createProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
-    {
-        return SpyProductLabelProductAbstractQuery::create();
     }
 
     /**

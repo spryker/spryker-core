@@ -60,11 +60,6 @@ class ProductLabelLocalizedAttributesMapper
         SpyProductLabelLocalizedAttributes $productLabelLocalizedAttributesEntity,
         ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
     ): ProductLabelLocalizedAttributesTransfer {
-        $productLabelLocalizedAttributesTransfer->fromArray(
-            $productLabelLocalizedAttributesEntity->toArray(),
-            true
-        );
-
         return $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntity->toArray(), true)
             ->setLocale($this->localeMapper->mapLocaleEntityToLocaleTransfer($productLabelLocalizedAttributesEntity->getSpyLocale(), new LocaleTransfer()))
             ->setProductLabel($this->mapProductLabelEntityToProductLabelTransfer($productLabelLocalizedAttributesEntity->getSpyProductLabel(), new ProductLabelTransfer()));

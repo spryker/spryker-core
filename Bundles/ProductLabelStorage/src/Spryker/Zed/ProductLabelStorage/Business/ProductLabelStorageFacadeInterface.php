@@ -114,23 +114,6 @@ interface ProductLabelStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts product abstract IDs from the $eventTransfers created by product label store events.
-     * - Finds product labels using product abstract IDs.
-     * - Stores JSON encoded data to a storage table.
-     * - Sends a copy of data to queue based on module config.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(
-        array $eventTransfers
-    ): void;
-
-    /**
-     * Specification:
      * - Finds and deletes productLabels storage entities with the given productAbstractIds
      * - Sends delete message to queue based on module config
      *
@@ -152,11 +135,14 @@ interface ProductLabelStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAbstractLabelStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductAbstractLabelStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productAbstractLabelStorageIds
+    ): array;
 
     /**
      * Specification:
@@ -165,9 +151,12 @@ interface ProductLabelStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productLabelDictionaryStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductLabelDictionaryStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productLabelDictionaryStorageIds
+    ): array;
 }

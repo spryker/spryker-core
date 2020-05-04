@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductLabelStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleter;
-use Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface;
 use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface;
@@ -37,14 +35,6 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createProductLabelDictionaryItemMapper()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Deleter\ProductLabelDictionaryStorageDeleterInterface
-     */
-    public function createProductLabelDictionaryStorageDeleter(): ProductLabelDictionaryStorageDeleterInterface
-    {
-        return new ProductLabelDictionaryStorageDeleter($this->getEntityManager());
     }
 
     /**

@@ -29,23 +29,23 @@ class ProductLabelMapper
     protected $productLabelLocalizedAttributesMapper;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper
+     * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper
      */
-    protected $productLabelProductAbstractsMapper;
+    protected $productLabelProductAbstractMapper;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper $productLabelStoreRelationMapper
      * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper
-     * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
+     * @param \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper $productLabelProductAbstractMapper
      */
     public function __construct(
         ProductLabelStoreRelationMapper $productLabelStoreRelationMapper,
         ProductLabelLocalizedAttributesMapper $productLabelLocalizedAttributesMapper,
-        ProductLabelProductAbstractsMapper $productLabelProductAbstractsMapper
+        ProductLabelProductAbstractMapper $productLabelProductAbstractMapper
     ) {
         $this->productLabelStoreRelationMapper = $productLabelStoreRelationMapper;
         $this->productLabelLocalizedAttributesMapper = $productLabelLocalizedAttributesMapper;
-        $this->productLabelProductAbstractsMapper = $productLabelProductAbstractsMapper;
+        $this->productLabelProductAbstractMapper = $productLabelProductAbstractMapper;
     }
 
     /**
@@ -109,8 +109,8 @@ class ProductLabelMapper
             new ArrayObject($productLabelLocalizedAttributesTransfers)
         );
 
-        $productLabelProductAbstractTransfers = $this->productLabelProductAbstractsMapper
-            ->mapProductLabelProductAbstractEntitiesToProductLabelProductAbstractTransfers(
+        $productLabelProductAbstractTransfers = $this->productLabelProductAbstractMapper
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers(
                 $productLabelEntity->getSpyProductLabelProductAbstracts(),
                 []
             );

@@ -16,7 +16,6 @@ use Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractMapper;
-use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper;
 
 /**
@@ -59,7 +58,7 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
         return new ProductLabelMapper(
             $this->createProductLabelStoreRelationMapper(),
             $this->createProductLabelLocalizedAttributesMapper(),
-            $this->createProductLabelProductAbstractsMapper()
+            $this->createProductLabelProductAbstractMapper()
         );
     }
 
@@ -93,14 +92,6 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     public function createLocaleMapper(): LocaleMapper
     {
         return new LocaleMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelProductAbstractsMapper
-     */
-    public function createProductLabelProductAbstractsMapper(): ProductLabelProductAbstractsMapper
-    {
-        return new ProductLabelProductAbstractsMapper();
     }
 
     /**

@@ -119,23 +119,6 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(array $eventTransfers): void
-    {
-        $productLabelIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventTransfers,
-            static::COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL
-        );
-        $productAbstractIds = $this->productLabelStorageRepository
-            ->getProductAbstractIdsByProductLabelIds($productLabelIds);
-
-        $this->writeCollection($productAbstractIds);
-    }
-
-    /**
      * @param int[] $productAbstractIds
      *
      * @return void

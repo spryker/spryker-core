@@ -60,9 +60,15 @@ class ProductLabelDataHelper extends Module
      */
     public function haveProductLabelToAbstractProductRelation(int $idProductLabel, int $idProductAbstract): void
     {
-        $this
-            ->getProductLabelFacade()
+        $this->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductLabel, $idProductAbstract): void {
+            $this->getProductLabelFacade()->removeProductAbstractRelationsForLabel(
+                $idProductLabel,
+                [$idProductAbstract]
+            );
+        });
     }
 
     /**

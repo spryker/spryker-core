@@ -42,11 +42,4 @@ interface ProductAbstractLabelStorageWriterInterface
     public function writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents(
         array $eventTransfers
     ): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(array $eventTransfers): void;
 }

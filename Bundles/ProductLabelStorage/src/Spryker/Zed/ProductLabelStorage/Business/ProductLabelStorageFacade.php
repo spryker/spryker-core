@@ -58,9 +58,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      */
     public function unpublishLabelDictionary()
     {
-        $this->getFactory()
-            ->createProductLabelDictionaryStorageDeleter()
-            ->deleteProductLabelDictionaryStorageCollection();
+        $this->getEntityManager()->deleteAllProductLabelDictionaryStorageEntities();
     }
 
     /**
@@ -72,9 +70,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      */
     public function deleteProductLabelDictionaryStorageCollection(): void
     {
-        $this->getFactory()
-            ->createProductLabelDictionaryStorageDeleter()
-            ->deleteProductLabelDictionaryStorageCollection();
+        $this->getEntityManager()->deleteAllProductLabelDictionaryStorageEntities();
     }
 
     /**
@@ -131,22 +127,6 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents(array $eventTransfers): void
-    {
-        $this->getFactory()
-            ->createProductAbstractLabelStorageWriter()
-            ->writeProductAbstractLabelStorageCollectionByProductLabelStoreEvents($eventTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
      *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
@@ -165,13 +145,16 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productAbstractLabelStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductAbstractLabelStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
-    {
-        return $this->getRepository()->getProductAbstractLabelStorageDataTransfersByIds($filterTransfer, $ids);
+    public function getProductAbstractLabelStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productAbstractLabelStorageIds
+    ): array {
+        return $this->getRepository()
+            ->getProductAbstractLabelStorageDataTransfersByIds($filterTransfer, $productAbstractLabelStorageIds);
     }
 
     /**
@@ -180,12 +163,15 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $productLabelDictionaryStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductLabelDictionaryStorageDataTransfersByIds(FilterTransfer $filterTransfer, array $ids): array
-    {
-        return $this->getRepository()->getProductLabelDictionaryStorageDataTransfersByIds($filterTransfer, $ids);
+    public function getProductLabelDictionaryStorageDataTransfersByIds(
+        FilterTransfer $filterTransfer,
+        array $productLabelDictionaryStorageIds
+    ): array {
+        return $this->getRepository()
+            ->getProductLabelDictionaryStorageDataTransfersByIds($filterTransfer, $productLabelDictionaryStorageIds);
     }
 }

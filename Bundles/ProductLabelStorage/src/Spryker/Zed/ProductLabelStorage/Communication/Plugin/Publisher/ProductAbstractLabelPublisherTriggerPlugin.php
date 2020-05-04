@@ -23,7 +23,7 @@ class ProductAbstractLabelPublisherTriggerPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Retrieves product labels by provided limit and offset.
+     * - Retrieves product label product abstracts by provided limit and offset.
      *
      * @api
      *

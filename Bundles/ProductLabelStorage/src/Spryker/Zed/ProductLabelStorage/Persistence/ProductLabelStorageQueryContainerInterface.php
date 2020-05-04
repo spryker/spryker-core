@@ -38,17 +38,6 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds);
 
     /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productLabelProductAbstractIds
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
-     */
-    public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds);
-
-    /**
      * Specification:
      * - Returns a a query for the table `spy_product_label_product_abstract` filtered by primary ids.
      *

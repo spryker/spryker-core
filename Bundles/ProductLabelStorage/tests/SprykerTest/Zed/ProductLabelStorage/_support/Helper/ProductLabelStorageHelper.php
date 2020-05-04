@@ -30,10 +30,6 @@ class ProductLabelStorageHelper extends Module
         $productLabelDictionaryStorageTransfer = (new ProductLabelDictionaryStorageBuilder($seedData))->build();
         $productLabelDictionaryStorageTransfer = $this->persistProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productLabelDictionaryStorageTransfer): void {
-            $this->cleanupProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer);
-        });
-
         return $productLabelDictionaryStorageTransfer;
     }
 
@@ -87,18 +83,6 @@ class ProductLabelStorageHelper extends Module
 
         $productAbstractLabelStorageEntity->setData($productAbstractLabelStorageTransfer->toArray());
         $productAbstractLabelStorageEntity->save();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
-     *
-     * @return void
-     */
-    protected function cleanupProductLabelDictionaryStorage(ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer): void
-    {
-        $this->createProductLabelDictionaryStorageQuery()
-            ->filterByIdProductLabelDictionaryStorage($productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage())
-            ->delete();
     }
 
     /**

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductAbstractLabelStorageMapper;
 use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelDictionaryStorageMapper;
-use Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
@@ -71,13 +70,5 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductLabelPropelQuery(): SpyProductLabelQuery
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Persistence\Mapper\ProductLabelLocalizedAttributesMapper
-     */
-    public function createProductLabelLocalizedAttributesMapper(): ProductLabelLocalizedAttributesMapper
-    {
-        return new ProductLabelLocalizedAttributesMapper();
     }
 }

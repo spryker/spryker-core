@@ -68,7 +68,7 @@ class ProductLabelStorageCommunicationTester extends Actor
      *
      * @return int
      */
-    public function getProductLabelsCountByAndStoreNameAndLocaleName(string $storeName, string $localeName): int
+    public function getProductLabelsCountByStoreNameAndLocaleName(string $storeName, string $localeName): int
     {
         return SpyProductLabelQuery::create()
             ->filterByValidTo(null)
