@@ -132,24 +132,30 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param bool $withTouch
+     *
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriterInterface
      */
-    public function createProductAbstractRelationWriter()
+    public function createProductAbstractRelationWriter(bool $withTouch = true)
     {
         return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $withTouch
         );
     }
 
     /**
+     * @param bool $withTouch
+     *
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleterInterface
      */
-    public function createProductAbstractRelationDeleter()
+    public function createProductAbstractRelationDeleter(bool $withTouch = true)
     {
         return new ProductAbstractRelationDeleter(
             $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $withTouch
         );
     }
 
@@ -174,14 +180,15 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $withTouch
      *
      * @return ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
      */
-    public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null)
+    public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null, bool $withTouch = true)
     {
         return new ProductAbstractRelationUpdater(
-            $this->createProductAbstractRelationDeleter(),
-            $this->createProductAbstractRelationWriter(),
+            $this->createProductAbstractRelationDeleter($withTouch),
+            $this->createProductAbstractRelationWriter($withTouch),
             $this->getProductLabelRelationUpdaterPlugins(),
             $logger
         );

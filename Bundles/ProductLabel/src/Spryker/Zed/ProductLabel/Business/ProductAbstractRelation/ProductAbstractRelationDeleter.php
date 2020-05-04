@@ -26,15 +26,23 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     protected $productRelationTouchManager;
 
     /**
+     * @var bool
+     */
+    protected $withTouch;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+     * @param bool $withTouch
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
+        bool $withTouch = true
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
+        $this->withTouch = $withTouch;
     }
 
     /**
@@ -61,7 +69,9 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
         foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
             $relationEntity->delete();
 
-            $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
+            if ($this->withTouch) {
+                $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
+            }
         }
     }
 

@@ -247,13 +247,14 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      * @api
      *
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $withTouch
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null)
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null, bool $withTouch = true)
     {
         $this->getFactory()
-            ->createProductAbstractRelationUpdater($logger)
+            ->createProductAbstractRelationUpdater($logger, $withTouch)
             ->updateProductLabelRelations();
     }
 }

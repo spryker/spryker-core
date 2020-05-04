@@ -27,15 +27,23 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
     protected $productRelationTouchManager;
 
     /**
+     * @var bool
+     */
+    protected $withTouch;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+     * @param bool $withTouch
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
+        bool $withTouch = true
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
+        $this->withTouch = $withTouch;
     }
 
     /**
@@ -62,7 +70,9 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
 
-            $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
+            if ($this->withTouch) {
+                $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
+            }
         }
     }
 

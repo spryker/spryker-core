@@ -199,8 +199,9 @@ interface ProductLabelFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $withTouch
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null, bool $withTouch = true);
 }

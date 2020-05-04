@@ -60,7 +60,8 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductDiscontinuedFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getRepository()
         );
     }
 
