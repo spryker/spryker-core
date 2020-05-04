@@ -20,7 +20,8 @@ class ProductBundleOptionItemExpanderPlugin extends AbstractPlugin implements Or
 {
     /**
      * {@inheritDoc}
-     * - Expands items with product bundles.
+     * - Expands item product bundle with product options.
+     * - Copies unique product options from related bundle items to bundle.
      *
      * @api
      *
@@ -30,6 +31,6 @@ class ProductBundleOptionItemExpanderPlugin extends AbstractPlugin implements Or
      */
     public function expand(array $itemTransfers): array
     {
-        return $itemTransfers;
+        return $this->getFacade()->expandItemProductBundlesWithProductOptions($itemTransfers);
     }
 }

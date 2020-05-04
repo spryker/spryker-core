@@ -435,4 +435,17 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandItemsWithProductBundles(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands item product bundle with product options.
+     * - Copies unique product options from related bundle items to bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array;
 }
