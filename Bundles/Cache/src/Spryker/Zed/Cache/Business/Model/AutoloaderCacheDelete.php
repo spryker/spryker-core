@@ -35,7 +35,7 @@ class AutoloaderCacheDelete
      */
     public function deleteAllFiles()
     {
-        $rootDirectory = $this->config->getCodeBucketAutoloaderCachePath();
+        $rootDirectory = $this->config->getAutoloaderCachePath();
         $stores = $this->config->getAllowedStores();
         $dirs = [];
         foreach ($stores as $store) {

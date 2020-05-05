@@ -136,7 +136,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getLogPath()
     {
-        $defaultPath = APPLICATION_ROOT_DIR . sprintf('/data/logs/ZED/propel%s.log', APPLICATION_CODE_BUCKET);
+        $defaultPath = APPLICATION_ROOT_DIR . '/data/logs/ZED/propel.log';
 
         return $this->get(PropelConstants::LOG_FILE_PATH, $defaultPath);
     }
