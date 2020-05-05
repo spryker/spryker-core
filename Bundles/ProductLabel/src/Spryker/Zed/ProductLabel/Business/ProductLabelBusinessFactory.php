@@ -132,30 +132,24 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param bool $withTouch
-     *
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriterInterface
      */
-    public function createProductAbstractRelationWriter(bool $withTouch = true)
+    public function createProductAbstractRelationWriter()
     {
         return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager(),
-            $withTouch
+            $this->createProductAbstractRelationTouchManager()
         );
     }
 
     /**
-     * @param bool $withTouch
-     *
      * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleterInterface
      */
-    public function createProductAbstractRelationDeleter(bool $withTouch = true)
+    public function createProductAbstractRelationDeleter()
     {
         return new ProductAbstractRelationDeleter(
             $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager(),
-            $withTouch
+            $this->createProductAbstractRelationTouchManager()
         );
     }
 
@@ -180,15 +174,14 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
-     * @param bool $withTouch
      *
      * @return ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
      */
-    public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null, bool $withTouch = true)
+    public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null)
     {
         return new ProductAbstractRelationUpdater(
-            $this->createProductAbstractRelationDeleter($withTouch),
-            $this->createProductAbstractRelationWriter($withTouch),
+            $this->createProductAbstractRelationDeleter(),
+            $this->createProductAbstractRelationWriter(),
             $this->getProductLabelRelationUpdaterPlugins(),
             $logger
         );

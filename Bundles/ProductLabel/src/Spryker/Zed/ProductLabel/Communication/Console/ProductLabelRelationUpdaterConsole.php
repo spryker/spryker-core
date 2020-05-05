@@ -48,7 +48,7 @@ class ProductLabelRelationUpdaterConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger(), $this->getWithTouchOption($input));
+        $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger(), $this->isTouchEnabled($input));
 
         return null;
     }
@@ -58,7 +58,7 @@ class ProductLabelRelationUpdaterConsole extends Console
      *
      * @return bool
      */
-    protected function getWithTouchOption(InputInterface $input): bool
+    protected function isTouchEnabled(InputInterface $input): bool
     {
         return !$input->getOption(static::OPTION_NO_TOUCH);
     }

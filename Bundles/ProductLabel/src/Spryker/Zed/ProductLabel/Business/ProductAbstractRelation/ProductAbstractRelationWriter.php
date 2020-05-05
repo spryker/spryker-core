@@ -27,50 +27,44 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
     protected $productRelationTouchManager;
 
     /**
-     * @var bool
-     */
-    protected $withTouch;
-
-    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
-     * @param bool $withTouch
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
-        bool $withTouch = true
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
-        $this->withTouch = $withTouch;
     }
 
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function addRelations($idProductLabel, array $idsProductAbstract)
+    public function addRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
-            $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
+            $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
         });
     }
 
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract)
+    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled)
     {
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
 
-            if ($this->withTouch) {
+            if ($isTouchEnabled) {
                 $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
             }
         }
