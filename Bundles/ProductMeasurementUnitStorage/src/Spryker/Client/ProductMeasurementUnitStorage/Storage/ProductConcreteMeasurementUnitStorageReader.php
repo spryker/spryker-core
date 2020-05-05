@@ -166,7 +166,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setStore($this->store->getStoreName())
-            ->setReference((string)$idProduct);
+            ->setReference($idProduct);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME)

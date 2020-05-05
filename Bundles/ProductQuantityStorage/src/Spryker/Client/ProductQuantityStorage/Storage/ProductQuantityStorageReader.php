@@ -102,7 +102,7 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
     protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference((string)$idProduct);
+            ->setReference($idProduct);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductQuantityStorageConfig::PRODUCT_QUANTITY_RESOURCE_NAME)
