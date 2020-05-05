@@ -49,6 +49,8 @@ class DefaultCodeBucketConfig extends AbstractCodeBucketConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param bool|null $isDynamicStoreMode
      *
      * @return bool
