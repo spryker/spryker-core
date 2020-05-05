@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
 
@@ -24,6 +28,36 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getUtilDateTimeService(),
             $this->getSalesReturnPropelQuery()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable
+     */
+    public function createOrderReturnTable(OrderTransfer $orderTransfer): OrderReturnTable
+    {
+        return new OrderReturnTable(
+            $orderTransfer,
+            $this->getMoneyFacade(),
+            $this->getSalesReturnPropelQuery()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface
+     */
+    public function getMoneyFacade(): SalesReturnGuiToMoneyFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface
+     */
+    public function getSalesReturnFacade(): SalesReturnGuiToSalesReturnFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_SALES_RETURN);
     }
 
     /**
