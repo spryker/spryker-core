@@ -22,6 +22,16 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
     protected $converter;
 
     /**
+     * @var \Money\Formatter\IntlMoneyFormatter[][]
+     */
+    protected static $formatters = [];
+
+    /**
+     * @var string|null
+     */
+    protected static $locale;
+
+    /**
      * @param \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface $transferToMoneyConverter
      */
     public function __construct(TransferToMoneyMapperInterface $transferToMoneyConverter)
@@ -56,7 +66,19 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
             return $moneyTransfer->getLocale()->getLocaleName();
         }
 
-        return Store::getInstance()->getCurrentLocale();
+        return $this->getCurrentLocale();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentLocale(): string
+    {
+        if (static::$locale === null) {
+            static::$locale = Store::getInstance()->getCurrentLocale();
+        }
+
+        return static::$locale;
     }
 
     /**
@@ -66,10 +88,14 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
      */
     protected function getInnerFormatter($localeName)
     {
-        return new InnerFormatter(
-            $this->getNumberFormatter($localeName),
-            $this->getIsoCurrencies()
-        );
+        if (!isset(static::$formatters[static::class][$localeName])) {
+            static::$formatters[static::class][$localeName] = new InnerFormatter(
+                $this->getNumberFormatter($localeName),
+                $this->getIsoCurrencies()
+            );
+        }
+
+        return static::$formatters[static::class][$localeName];
     }
 
     /**

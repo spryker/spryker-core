@@ -188,7 +188,8 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement. This is no longer required as all class name patterns are now
+     * configurable in {@link \Spryker\Shared\Kernel\KernelConfig::getResolvableTypeClassNamePatternMap}
      *
      * @return string
      */

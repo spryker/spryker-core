@@ -53,4 +53,8 @@
         <property name="discountPromotionQuantity" type="int"/>
     </transfer>
 
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+    </transfer>
+
 </transfers>

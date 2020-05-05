@@ -16,6 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\Sales\SalesFactory getFactory()
+ * @method \Spryker\Client\Sales\SalesConfig getConfig()
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
@@ -129,5 +130,23 @@ class SalesClient extends AbstractClient implements SalesClientInterface
         return $this->getFactory()
             ->createZedSalesStub()
             ->getOrderItems($orderItemFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        $orderListTransfer->requireCustomerReference();
+
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->searchOrders($orderListTransfer);
     }
 }
