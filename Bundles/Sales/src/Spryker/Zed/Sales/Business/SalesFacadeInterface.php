@@ -203,6 +203,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
+     *  - Executes CustomerOrderAccessCheckPluginInterface plugins, expects OrderTransfer::customer to be provided, not applicable to order creator.
      *  - Aggregates order totals calls -> SalesAggregator.
      *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
@@ -365,4 +366,21 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires OrderListTransfer::pagination to be set.
+     * - Requires OrderListTransfer::format to be set.
+     * - Filters orders by OrderListTransfer::filterFields if provided.
+     * - Filters orders by OrderListTransfer::filter if provided.
+     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }
