@@ -190,6 +190,9 @@ class ReturnTable extends AbstractTable
     }
 
     /**
+     * @module Sales
+     * @module Oms
+     *
      * @param int $idSalesReturn
      *
      * @return string[]
