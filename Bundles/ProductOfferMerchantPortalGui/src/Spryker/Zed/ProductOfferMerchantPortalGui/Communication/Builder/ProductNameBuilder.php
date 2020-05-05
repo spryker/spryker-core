@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductNameBuilder implements ProductNameBuilderInterface
@@ -17,16 +16,12 @@ class ProductNameBuilder implements ProductNameBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return string|null
      */
-    public function buildProductName(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): ?string {
+    public function buildProductName(ProductConcreteTransfer $productConcreteTransfer): ?string
+    {
         $concreteLocalizedAttributesTransfer = $this->getConcreteLocalizedAttributesTransfer($productConcreteTransfer);
-        $abstractLocalizedAttributesTransfer = $this->getAbstractLocalizedAttributesTransfer($productAbstractTransfer);
 
         $productConcreteName = $concreteLocalizedAttributesTransfer->getName();
 
@@ -39,10 +34,6 @@ class ProductNameBuilder implements ProductNameBuilderInterface
             $productConcreteTransfer->getAttributes(),
             $concreteLocalizedAttributesTransfer->getAttributes()
         );
-        $productAbstractAttributes = array_merge(
-            $productAbstractTransfer->getAttributes(),
-            $abstractLocalizedAttributesTransfer->getAttributes()
-        );
 
         foreach ($productConcreteAttributes as $productConcreteAttribute) {
             if (!$productConcreteAttribute) {
@@ -50,10 +41,6 @@ class ProductNameBuilder implements ProductNameBuilderInterface
             }
 
             $extendedProductConcreteNameParts[] = ucfirst($productConcreteAttribute);
-        }
-
-        if (!isset($productConcreteAttributes[static::ATTRIBUTE_KEY_COLOR]) && isset($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR])) {
-            $extendedProductConcreteNameParts[] = ucfirst($productAbstractAttributes[static::ATTRIBUTE_KEY_COLOR]);
         }
 
         return implode(', ', $extendedProductConcreteNameParts);
@@ -68,16 +55,5 @@ class ProductNameBuilder implements ProductNameBuilderInterface
         ProductConcreteTransfer $productConcreteTransfer
     ): LocalizedAttributesTransfer {
         return $productConcreteTransfer->getLocalizedAttributes()->offsetGet(0);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
-    protected function getAbstractLocalizedAttributesTransfer(
-        ProductAbstractTransfer $productAbstractTransfer
-    ): LocalizedAttributesTransfer {
-        return $productAbstractTransfer->getLocalizedAttributes()->offsetGet(0);
     }
 }

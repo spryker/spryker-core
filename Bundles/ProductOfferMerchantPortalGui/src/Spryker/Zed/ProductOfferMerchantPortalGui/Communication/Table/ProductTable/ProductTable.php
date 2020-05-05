@@ -13,13 +13,19 @@ use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
+ */
 class ProductTable extends AbstractTable
 {
     public const COL_KEY_NAME = 'name';
@@ -36,9 +42,9 @@ class ProductTable extends AbstractTable
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::getTableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::tableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/get-table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
@@ -129,7 +135,7 @@ class ProductTable extends AbstractTable
                 ->setId(static::COL_KEY_VALID_FROM)
                 ->setTitle('Valid From')
                 ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
+                ->addTypeOption('format', $this->getConfig()->getTableDefaultFrontendDateFormat())
                 ->setSortable(true)
                 ->setHideable(false)
         )->addColumn(
@@ -137,7 +143,7 @@ class ProductTable extends AbstractTable
                 ->setId(static::COL_KEY_VALID_TO)
                 ->setTitle('Valid To')
                 ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
+                ->addTypeOption('format', $this->getConfig()->getTableDefaultFrontendDateFormat())
                 ->setSortable(true)
                 ->setHideable(false)
         )->addColumn(

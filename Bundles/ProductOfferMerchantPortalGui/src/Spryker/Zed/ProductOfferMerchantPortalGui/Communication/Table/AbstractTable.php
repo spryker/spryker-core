@@ -13,11 +13,14 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
 {
+    use BundleConfigResolverAwareTrait;
+
     protected const CONFIG_COLUMNS = 'columns';
     protected const CONFIG_DATA_URL = 'dataUrl';
     protected const CONFIG_PAGINATION = 'pagination';
@@ -55,9 +58,14 @@ abstract class AbstractTable
     protected $searchTerm;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $sorting;
+    protected $sortColumn;
+
+    /**
+     * @var string
+     */
+    protected $sortDirection;
 
     /**
      * @var int
@@ -149,7 +157,7 @@ abstract class AbstractTable
             : static::DEFAULT_AVAILABLE_PAGE_SIZES;
 
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizedEnabled() ?? true,
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizeEnabled() ?? true,
             static::CONFIG_SIZES => $sizes,
         ];
     }

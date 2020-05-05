@@ -7,13 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferTableRowDataTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
@@ -65,33 +62,33 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    public function getProductOfferTableData(ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer): GuiTableDataTransfer
+    public function getProductOfferTableData(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer): GuiTableDataTransfer
     {
-        $productOfferTableDataTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($productOfferTableCriteriaTransfer);
+        $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($productOfferCriteriaFilterTransfer);
         $productTableDataArray = [];
 
-        foreach ($productOfferTableDataTransfer->getRows() as $productOfferTableRowDataTransfer) {
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $productTableDataArray[] = [
-                ProductOfferTable::COL_KEY_OFFER_REFERENCE => $productOfferTableRowDataTransfer->getOfferReference(),
-                ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTableRowDataTransfer->getMerchantSku(),
-                ProductOfferTable::COL_KEY_CONCRETE_SKU => $productOfferTableRowDataTransfer->getConcreteSku(),
-                ProductOfferTable::COL_KEY_IMAGE => $productOfferTableRowDataTransfer->getImage(),
-                ProductOfferTable::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTableRowDataTransfer),
-                ProductOfferTable::COL_KEY_VALID_FROM => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getValidFrom()),
-                ProductOfferTable::COL_KEY_VALID_TO => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getValidTo()),
-                ProductOfferTable::COL_KEY_CREATED_AT => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getCreatedAt()),
-                ProductOfferTable::COL_KEY_UPDATED_AT => $this->getFormattedDateTime($productOfferTableRowDataTransfer->getUpdatedAt()),
+                ProductOfferTable::COL_KEY_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+                ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTransfer->getMerchantSku(),
+                ProductOfferTable::COL_KEY_CONCRETE_SKU => $productOfferTransfer->getConcreteSku(),
+                ProductOfferTable::COL_KEY_IMAGE => $this->getImageUrl($productOfferTransfer),
+                ProductOfferTable::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_STORES => $this->getStoresColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_STOCK => $this->getStockColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_VALID_FROM => $this->getValidFromColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_VALID_TO => $this->getValidToColumnData($productOfferTransfer),
+                ProductOfferTable::COL_KEY_CREATED_AT => $this->getFormattedDateTime($productOfferTransfer->getCreatedAt()),
+                ProductOfferTable::COL_KEY_UPDATED_AT => $this->getFormattedDateTime($productOfferTransfer->getUpdatedAt()),
             ];
         }
 
-        $paginationTransfer = $productOfferTableDataTransfer->getPagination();
+        $paginationTransfer = $productOfferCollectionTransfer->getPagination();
 
         return (new GuiTableDataTransfer())->setData($productTableDataArray)
             ->setPage($paginationTransfer->getPage())
@@ -100,96 +97,102 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return string|null
      */
-    protected function getNameColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): ?string
+    protected function getNameColumnData(ProductOfferTransfer $productOfferTransfer): ?string
     {
-        $productConcreteTransfer = $this->createProductConcreteTransfer($productOfferTableRowDataTransfer);
-        $productAbstractTransfer = $this->createProductAbstractTransfer($productOfferTableRowDataTransfer);
-
-        return $this->productNameBuilder->buildProductName($productConcreteTransfer, $productAbstractTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function createProductConcreteTransfer(
-        ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-    ): ProductConcreteTransfer {
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductConcreteLocalizedAttributes())
-            ->setName($productOfferTableRowDataTransfer->getProductConcreteName());
-
         $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductConcreteAttributes())
-            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
+            ->setAttributes($productOfferTransfer->getProductAttributes())
+            ->setLocalizedAttributes($productOfferTransfer->getProductLocalizedAttributes());
 
-        return $productConcreteTransfer;
+        return $this->productNameBuilder->buildProductName($productConcreteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function createProductAbstractTransfer(
-        ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
-    ): ProductAbstractTransfer {
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractLocalizedAttributes());
-
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setAttributes($productOfferTableRowDataTransfer->getProductAbstractAttributes())
-            ->setLocalizedAttributes(new ArrayObject([$localizedAttributesTransfer]));
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return string
      */
-    protected function getStoresColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer)
+    protected function getStoresColumnData(ProductOfferTransfer $productOfferTransfer): string
     {
-        $storesString = $productOfferTableRowDataTransfer->getStores();
-        $stores = explode(',', $storesString);
+        $storeTransfers = $productOfferTransfer->getStores();
+        $storeNames = [];
 
-        return implode(', ', $stores);
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeNames[] = $storeTransfer->getName();
+        }
+
+        return implode(', ', $storeNames);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return int|string|null
      */
-    protected function getStockColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer)
+    protected function getStockColumnData(ProductOfferTransfer $productOfferTransfer)
     {
-        if ($productOfferTableRowDataTransfer->getIsNeverOutOfStock()) {
+        $productOfferStockTransfer = $productOfferTransfer->getProductOfferStock();
+
+        if (!$productOfferStockTransfer) {
+            return null;
+        }
+
+        if ($productOfferStockTransfer->getIsNeverOutOfStock()) {
             return $this->translatorFacade->trans(static::COLUMN_DATA_IS_NEVER_OUT_OF_STOCK);
         }
 
-        $quantity = $productOfferTableRowDataTransfer->getQuantity();
+        $quantity = $productOfferStockTransfer->getQuantity();
 
         return $quantity === null ? $quantity : $quantity->toInt();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return string
      */
-    protected function getVisibilityColumnData(ProductOfferTableRowDataTransfer $productOfferTableRowDataTransfer): string
+    protected function getVisibilityColumnData(ProductOfferTransfer $productOfferTransfer): string
     {
-        if ($productOfferTableRowDataTransfer->getIsActive()) {
+        if ($productOfferTransfer->getIsActive()) {
             return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE);
         }
 
         return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_OFFLINE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidFromColumnData(ProductOfferTransfer $productOfferTransfer): ?string
+    {
+        $productOfferValidityTransfer = $productOfferTransfer->getProductOfferValidity();
+
+        if (!$productOfferValidityTransfer) {
+            return null;
+        }
+
+        return $this->getFormattedDateTime($productOfferValidityTransfer->getValidFrom());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return string|null
+     */
+    protected function getValidToColumnData(ProductOfferTransfer $productOfferTransfer): ?string
+    {
+        $productOfferValidityTransfer = $productOfferTransfer->getProductOfferValidity();
+
+        if (!$productOfferValidityTransfer) {
+            return null;
+        }
+
+        return $this->getFormattedDateTime($productOfferValidityTransfer->getValidTo());
     }
 
     /**
@@ -200,5 +203,17 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected function getFormattedDateTime(?string $dateTime): ?string
     {
         return $dateTime ? $this->utilDateTimeService->formatDateTimeToIso($dateTime) : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return string|null
+     */
+    protected function getImageUrl(ProductOfferTransfer $productOfferTransfer): ?string
+    {
+        return isset($productOfferTransfer->getProductImages()[0])
+            ? $productOfferTransfer->getProductImages()[0]->getExternalUrlSmall()
+            : null;
     }
 }

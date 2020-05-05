@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter;
 
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\SelectTableFilterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 
-class StoresProductOfferTableFilterDataProvider implements TableFilterDataProviderInterface
+class StoreProductOfferTableFilter implements SelectTableFilterInterface
 {
-    protected const FILTER_NAME = 'stores';
+    public const FILTER_NAME = 'store';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
@@ -31,14 +31,14 @@ class StoresProductOfferTableFilterDataProvider implements TableFilterDataProvid
     /**
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */
-    public function getFilterData(): GuiTableFilterTransfer
+    public function getFilter(): GuiTableFilterTransfer
     {
         return (new GuiTableFilterTransfer())
             ->setId(static::FILTER_NAME)
             ->setTitle('Stores')
-            ->setType('select')
-            ->addTypeOption(static::OPTION_NAME_MULTISELECT, true)
-            ->addTypeOption(static::OPTION_NAME_VALUES, $this->getStoreOptions());
+            ->setType(static::FILTER_TYPE)
+            ->addTypeOption(static::OPTION_MULTIPLE, true)
+            ->addTypeOption(static::OPTION_VALUES, $this->getStoreOptions());
     }
 
     /**

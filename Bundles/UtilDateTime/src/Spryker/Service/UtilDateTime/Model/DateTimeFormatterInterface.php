@@ -36,4 +36,11 @@ interface DateTimeFormatterInterface
      * @return string
      */
     public function formatDateTimeToIso($dateTime): string;
+
+    /**
+     * @param \DateTime|string $dateTime
+     *
+     * @return string
+     */
+    public function formatToDbDateTime($dateTime): string;
 }

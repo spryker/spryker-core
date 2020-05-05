@@ -7,24 +7,27 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferTableDataTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Generated\Shared\Transfer\ProductTableDataTransfer;
 
 interface ProductOfferMerchantPortalGuiRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductCriteriaFilterTransfer $productCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
-    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductTableDataTransfer;
+    public function getProductTableData(ProductTableCriteriaTransfer $productCriteriaFilterTransfer): ProductConcreteCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferTableData(ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer): ProductOfferTableDataTransfer;
+    public function getProductOfferTableData(
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer;
 }

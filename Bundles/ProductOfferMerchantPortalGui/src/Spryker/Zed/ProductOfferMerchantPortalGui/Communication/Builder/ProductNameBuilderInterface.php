@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductNameBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return string|null
      */
-    public function buildProductName(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): ?string;
+    public function buildProductName(ProductConcreteTransfer $productConcreteTransfer): ?string;
 }
