@@ -528,14 +528,14 @@ class OrderStateMachine implements OrderStateMachineInterface
                 continue;
             }
 
-            /** @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface $command */
+            /** @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command */
             $command = $this->getCommand($event->getCommand());
             $type = $this->getCommandType($command);
 
             $log->addCommand($orderItemEntity, $command);
 
             try {
-                if ($command instanceof CommandByOrderInterface || $command instanceof LegacyCommandByOrderInterface) {
+                if ($command instanceof CommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
@@ -544,7 +544,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     return $orderItems;
                 }
 
-                if ($command instanceof CommandByItemInterface || $command instanceof LegacyCommandByOrderItemInterface) {
+                if ($command instanceof CommandByItemInterface) {
                     $returnData = $command->run($orderItemEntity, $data);
                     $this->returnData = array_merge($this->returnData, $returnData);
                     $processedOrderItems[] = $orderItemEntity;
