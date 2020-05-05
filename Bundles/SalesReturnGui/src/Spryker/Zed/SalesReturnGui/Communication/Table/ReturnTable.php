@@ -28,8 +28,15 @@ class ReturnTable extends AbstractTable
     protected const COL_STATE = 'state';
     protected const COL_ACTIONS = 'actions';
 
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ViewController::indexAction()
+     */
     protected const ROUTE_VIEW_RETURN = '/sales-return-gui/view';
-    protected const ROUTE_PRINT_SLIP = '/sales-return-gui/print-slip';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SlipController::indexAction()
+     */
+    protected const ROUTE_PRINT_SLIP = '/sales-return-gui/slip';
 
     protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
 
@@ -103,7 +110,7 @@ class ReturnTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
