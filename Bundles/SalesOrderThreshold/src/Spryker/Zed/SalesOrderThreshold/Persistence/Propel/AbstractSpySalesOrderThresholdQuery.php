@@ -51,7 +51,7 @@ abstract class AbstractSpySalesOrderThresholdQuery extends BaseSpySalesOrderThre
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
-        if($currencyTransfer->getIdCurrency() !== null) {
+        if ($currencyTransfer->getIdCurrency() !== null) {
             return $this->filterByFkCurrency($currencyTransfer->getIdCurrency());
         }
 
