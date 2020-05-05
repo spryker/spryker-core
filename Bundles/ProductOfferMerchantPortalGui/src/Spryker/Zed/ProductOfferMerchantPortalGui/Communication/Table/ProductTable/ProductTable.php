@@ -36,9 +36,9 @@ class ProductTable extends AbstractTable
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductTableController::getDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::getTableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/product/get-table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/get-table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface

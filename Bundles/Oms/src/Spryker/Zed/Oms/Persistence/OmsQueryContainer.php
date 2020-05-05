@@ -354,7 +354,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $query = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
-            ->withColumn("COUNT(*)", static::ITEMS_COUNT)
+            ->withColumn('COUNT(*)', static::ITEMS_COUNT)
             ->withColumn(sprintf(
                 "(CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END)",
                 SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,

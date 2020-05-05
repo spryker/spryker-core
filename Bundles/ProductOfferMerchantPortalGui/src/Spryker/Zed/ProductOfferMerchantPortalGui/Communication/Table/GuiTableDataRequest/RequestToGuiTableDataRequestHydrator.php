@@ -62,7 +62,7 @@ class RequestToGuiTableDataRequestHydrator extends AbstractPlugin implements Req
             $guiTableRequest->addOrder($orderBy);
         }
 
-        $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'));
+        $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'), true);
 
         foreach ($configurationTransfer->getFilters() as $filterDefinition) {
             $filterId = $filterDefinition->getId();
