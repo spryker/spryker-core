@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOfferFacadeInterface
 {
@@ -67,4 +68,17 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Removes inactive offer items from quote.
+     *  - Adds info messages for the removed product offers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Business;
 
 use DateTime;
+use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface;
@@ -19,6 +20,7 @@ use Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidator;
 use Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidatorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\BearerTokenResponse;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeBuilder;
@@ -168,7 +170,11 @@ class OauthBusinessFactory extends AbstractBusinessFactory
      */
     public function createAuthorizationServerBuilder(): AuthorizationServerBuilderInterface
     {
-        return new AuthorizationServerBuilder($this->getConfig(), $this->createRepositoryBuilder());
+        return new AuthorizationServerBuilder(
+            $this->getConfig(),
+            $this->createRepositoryBuilder(),
+            $this->createBearerTokenResponse()
+        );
     }
 
     /**
@@ -280,6 +286,14 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new OauthClientReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface
+     */
+    public function createBearerTokenResponse(): ResponseTypeInterface
+    {
+        return new BearerTokenResponse();
     }
 
     /**

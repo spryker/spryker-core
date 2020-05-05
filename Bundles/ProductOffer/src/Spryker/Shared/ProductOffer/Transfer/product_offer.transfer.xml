@@ -45,6 +45,7 @@
     <transfer name="ProductOfferCriteriaFilter">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="idStore" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
@@ -69,10 +70,16 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 </transfers>

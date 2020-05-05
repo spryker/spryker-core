@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
@@ -21,6 +22,16 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
  */
 class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
+     * @var string|null
+     */
+    protected static $storeName;
+
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      * @param array $options
@@ -63,18 +74,34 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
         $synchronizationDataTransfer->setLocale($locale);
         $synchronizationDataTransfer->setReference($idProductAbstract);
 
-        return $this->getFactory()
-            ->getSynchronizationService()
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
     }
 
     /**
      * @return string
      */
-    protected function getStoreName()
+    protected function getStoreName(): string
     {
-        return $this->getFactory()
-            ->getStore()
-            ->getStoreName();
+        if (static::$storeName === null) {
+            static::$storeName = $this->getFactory()
+                ->getStore()
+                ->getStoreName();
+        }
+
+        return static::$storeName;
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->getFactory()
+                ->getSynchronizationService()
+                ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 }
