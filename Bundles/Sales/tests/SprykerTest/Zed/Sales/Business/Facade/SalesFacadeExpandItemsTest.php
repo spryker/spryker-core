@@ -8,16 +8,15 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
-use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -58,10 +57,15 @@ class SalesFacadeExpandItemsTest extends Test
     public function testExpandItemsWithCurrencyIsoCodeWithOrderWithCurrencyCode(): void
     {
         // Arrange
-        $salesFacade = $this->getSalesFacade();
-        $quoteTransfer = $this->getFakeQuote(static::CURRENCY_ISO_CODE);
+        $currencyTransfer = (new CurrencyBuilder([CurrencyTransfer::CODE => static::CURRENCY_ISO_CODE]))->build();
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))->build();
+        $quoteTransfer = $this->tester->buildQuote([
+            QuoteTransfer::CURRENCY => $currencyTransfer,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+        ]);
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $orderTransfer = $salesFacade->getCustomerOrderByOrderReference(
+        $orderTransfer = $this->tester->getFacade()->getCustomerOrderByOrderReference(
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
@@ -69,7 +73,7 @@ class SalesFacadeExpandItemsTest extends Test
         );
 
         // Act
-        $itemTransfers = $salesFacade->expandItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
+        $itemTransfers = $this->tester->getFacade()->expandOrderItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
 
         // Assert
         $this->assertEquals($orderTransfer->getCurrencyIsoCode(), $itemTransfers[0]->getCurrencyIsoCode());
@@ -81,10 +85,15 @@ class SalesFacadeExpandItemsTest extends Test
     public function testExpandItemsWithCurrencyIsoCodeWithOrderWithoutCurrencyCode(): void
     {
         // Arrange
-        $salesFacade = $this->getSalesFacade();
-        $quoteTransfer = $this->getFakeQuote(false);
+        $currencyTransfer = (new CurrencyBuilder([CurrencyTransfer::CODE => null]))->build();
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))->build();
+        $quoteTransfer = $this->tester->buildQuote([
+            QuoteTransfer::CURRENCY => $currencyTransfer,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+        ]);
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $orderTransfer = $salesFacade->getCustomerOrderByOrderReference(
+        $orderTransfer = $this->tester->getFacade()->getCustomerOrderByOrderReference(
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
@@ -92,7 +101,7 @@ class SalesFacadeExpandItemsTest extends Test
         );
 
         // Act
-        $itemTransfers = $salesFacade->expandItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
+        $itemTransfers = $this->tester->getFacade()->expandOrderItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
 
         // Assert
         $this->assertEmpty($itemTransfers[0]->getCurrencyIsoCode());
@@ -107,39 +116,9 @@ class SalesFacadeExpandItemsTest extends Test
         $itemTransfer = (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build();
 
         // Act
-        $itemTransfers = $this->getSalesFacade()->expandItemsWithCurrencyIsoCode([$itemTransfer]);
+        $itemTransfers = $this->tester->getFacade()->expandOrderItemsWithCurrencyIsoCode([$itemTransfer]);
 
         // Assert
         $this->assertNull($itemTransfers[0]->getCurrencyIsoCode());
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
-    protected function getSalesFacade(): SalesFacadeInterface
-    {
-        return $this->tester->getLocator()->sales()->facade();
-    }
-
-    /**
-     * @param string|null $currencyIsoCode
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getFakeQuote(?string $currencyIsoCode = null): QuoteTransfer
-    {
-        $quoteBuilder = (new QuoteBuilder([QuoteTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))
-            ->withItem([
-                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
-                ItemTransfer::UNIT_PRICE => 1,
-                ItemTransfer::QUANTITY => 1,
-            ])
-            ->withTotals()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCustomer([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE])
-            ->withCurrency([CurrencyTransfer::CODE => $currencyIsoCode]);
-
-        return $quoteBuilder->build();
     }
 }

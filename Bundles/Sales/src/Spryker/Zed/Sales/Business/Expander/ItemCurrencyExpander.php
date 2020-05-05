@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales\Business\Expander;
 
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
-class ItemExpander implements ItemExpanderInterface
+class ItemCurrencyExpander implements ItemCurrencyExpanderInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
@@ -29,14 +29,16 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {
         $currencyIsoCodesBySalesOrderIds = $this->salesRepository->getCurrencyIsoCodesBySalesOrderIds(
             $this->getSalesOrderIds($itemTransfers)
         );
 
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->setCurrencyIsoCode($currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()] ?? null);
+            $itemTransfer->setCurrencyIsoCode(
+                $currencyIsoCodesBySalesOrderIds[$itemTransfer->getFkSalesOrder()] ?? null
+            );
         }
 
         return $itemTransfers;

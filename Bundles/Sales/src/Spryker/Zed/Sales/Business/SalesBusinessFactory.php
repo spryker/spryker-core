@@ -10,8 +10,8 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
-use Spryker\Zed\Sales\Business\Expander\ItemExpander;
-use Spryker\Zed\Sales\Business\Expander\ItemExpanderInterface;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpander;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -364,11 +364,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Expander\ItemExpanderInterface
+     * @return \Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface
      */
-    public function createItemExpander(): ItemExpanderInterface
+    public function createItemCurrencyExpander(): ItemCurrencyExpanderInterface
     {
-        return new ItemExpander($this->getRepository());
+        return new ItemCurrencyExpander($this->getRepository());
     }
 
     /**

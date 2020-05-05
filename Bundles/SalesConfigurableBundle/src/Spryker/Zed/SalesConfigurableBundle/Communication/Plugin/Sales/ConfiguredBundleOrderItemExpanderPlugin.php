@@ -19,8 +19,8 @@ class ConfiguredBundleOrderItemExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Expands items with sales order configured bundle items.
-     * - Expands items with sales order configured bundls.
+     * - Expands items with sales order configured bundles.
+     * - Expects ItemTransfer::ID_SALES_ORDER_ITEM to be set.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class ConfiguredBundleOrderItemExpanderPlugin extends AbstractPlugin implements 
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandItemsWithSalesOrderConfiguredBundles($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithSalesOrderConfiguredBundles($itemTransfers);
     }
 }

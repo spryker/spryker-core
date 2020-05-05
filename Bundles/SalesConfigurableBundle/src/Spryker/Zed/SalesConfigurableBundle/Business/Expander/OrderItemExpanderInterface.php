@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Expander;
+namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 
-interface ItemExpanderInterface
+interface OrderItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array;
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

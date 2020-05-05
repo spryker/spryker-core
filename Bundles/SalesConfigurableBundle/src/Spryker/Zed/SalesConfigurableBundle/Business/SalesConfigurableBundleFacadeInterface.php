@@ -81,8 +81,8 @@ interface SalesConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Expands items with sales order configured bundle items.
      * - Expands items with sales order configured bundles.
+     * - Expects ItemTransfer::ID_SALES_ORDER_ITEM to be set.
      *
      * @api
      *
@@ -90,5 +90,5 @@ interface SalesConfigurableBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

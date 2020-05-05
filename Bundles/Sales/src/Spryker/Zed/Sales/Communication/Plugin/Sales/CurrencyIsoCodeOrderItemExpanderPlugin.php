@@ -31,6 +31,6 @@ class CurrencyIsoCodeOrderItemExpanderPlugin extends AbstractPlugin implements O
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandItemsWithCurrencyIsoCode($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithCurrencyIsoCode($itemTransfers);
     }
 }
