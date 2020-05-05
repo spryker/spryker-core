@@ -24,9 +24,15 @@ class OrderReturnTable extends AbstractTable
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
     protected const PARAM_ID_RETURN = 'id-return';
 
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     */
     protected const URL_RETURN_DETAIL = '/sales-return-gui/return/detail';
     protected const BUTTON_VIEW = 'View';
 
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SalesController
+     */
     protected const BASE_URL = '/sales-return-gui/sales/';
 
     protected const COL_RETURN_REFERENCE = 'return_reference';
@@ -74,7 +80,7 @@ class OrderReturnTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $config->setUrl('table?' . static::PARAM_ID_SALES_ORDER . '=' . $this->orderTransfer->getIdSalesOrder());
+        $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SALES_ORDER, $this->orderTransfer->getIdSalesOrder()));
 
         $config->setHeader([
             static::COL_RETURN_REFERENCE => 'Return reference',
