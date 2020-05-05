@@ -29,13 +29,13 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
     }
 
     /**
-     * @param string $resourceType
-     * @param \ArrayObject $giftCardTransfers
-     * @param string $quoteUuid
+     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
+     * @param string $parentResourceType
+     * @param string $parentResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createGiftCardRestResource(string $resourceType, ArrayObject $giftCardTransfers, string $quoteUuid): array
+    public function createGiftCardRestResource(ArrayObject $giftCardTransfers, string $parentResourceType, string $parentResourceId): array
     {
         $giftCardResources = [];
         foreach ($giftCardTransfers as $giftCardTransfer) {
@@ -51,7 +51,7 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
 
             $giftCardRestResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->getGiftCardsResourceSelfLink($resourceType, $quoteUuid, $giftCardCode)
+                $this->getGiftCardsResourceSelfLink($parentResourceType, $parentResourceId, $giftCardCode)
             );
 
             $giftCardResources[] = $giftCardRestResource;
@@ -62,20 +62,20 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
 
     /**
      * @param string $parentResourceType
-     * @param string $quoteUuid
+     * @param string $parentResourceId
      * @param string $giftCardCode
      *
      * @return string
      */
     protected function getGiftCardsResourceSelfLink(
         string $parentResourceType,
-        string $quoteUuid,
+        string $parentResourceId,
         string $giftCardCode
     ): string {
         return sprintf(
             '%s/%s/%s/%s',
             $parentResourceType,
-            $quoteUuid,
+            $parentResourceId,
             GiftCardsRestApiConfig::RESOURCE_CART_CODES,
             $giftCardCode
         );
