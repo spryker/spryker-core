@@ -70,7 +70,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
      *
      * @return void
      */
-    protected function executeUpdateProductLabelRelationsTransaction(bool $isTouchEnabled)
+    protected function executeUpdateProductLabelRelationsTransaction(bool $isTouchEnabled = true)
     {
         foreach ($this->productLabelRelationUpdaterPlugins as $productLabelRelationUpdaterPlugin) {
             $pluginName = get_class($productLabelRelationUpdaterPlugin);
@@ -93,7 +93,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
      *
      * @return void
      */
-    protected function updateRelations($productLabelProductAbstractRelationTransfers, $pluginName, bool $isTouchEnabled)
+    protected function updateRelations($productLabelProductAbstractRelationTransfers, $pluginName, bool $isTouchEnabled = true)
     {
         foreach ($productLabelProductAbstractRelationTransfers as $productLabelProductAbstractRelationTransfer) {
             $this->deAssign($productLabelProductAbstractRelationTransfer, $pluginName, $isTouchEnabled);
@@ -111,7 +111,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     protected function deAssign(
         ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer,
         $pluginName,
-        bool $isTouchEnabled
+        bool $isTouchEnabled = true
     ): void {
         $toBeDeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign());
 
@@ -143,7 +143,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     protected function assign(
         ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer,
         $pluginName,
-        bool $isTouchEnabled
+        bool $isTouchEnabled = true
     ): void {
         $toBeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign());
 

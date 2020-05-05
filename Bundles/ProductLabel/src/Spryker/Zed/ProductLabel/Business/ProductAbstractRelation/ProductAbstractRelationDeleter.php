@@ -58,7 +58,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled)
+    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
         foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
             $relationEntity->delete();

@@ -59,7 +59,7 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
      *
      * @return void
      */
-    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled)
+    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
