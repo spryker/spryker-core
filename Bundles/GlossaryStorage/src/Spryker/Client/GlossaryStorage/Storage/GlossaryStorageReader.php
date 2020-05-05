@@ -13,6 +13,7 @@ use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchroni
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig as SharedGlossaryStorageConfig;
 
 class GlossaryStorageReader implements GlossaryStorageReaderInterface
@@ -40,6 +41,11 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      * @var string[][]
      */
     protected static $translationsCache = [];
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
 
     /**
      * @param \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface $storageClient
@@ -125,9 +131,19 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             ->setReference($keyName)
             ->setLocale($localeName);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(SharedGlossaryStorageConfig::TRANSLATION_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(SharedGlossaryStorageConfig::TRANSLATION_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**
