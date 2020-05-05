@@ -13,10 +13,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Exception\InvalidSortingConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -35,27 +32,17 @@ abstract class AbstractTable
     protected const CONFIG_SIZES = 'sizes';
     protected const CONFIG_ITEMS = 'items';
 
-    protected const PARAM_PAGE = 'page';
-    protected const PARAM_PAGE_SIZE = 'pageSize';
-    protected const PARAM_SORT_BY = 'sortBy';
-    protected const PARAM_SORT_DIRECTION = 'sortDirection';
-    protected const PARAM_SEARCH_TERM = 'search';
-    protected const PARAM_FILTERS = 'filter';
-
-    protected const DEFAULT_PAGE = 1;
-    protected const DEFAULT_PAGE_SIZE = 10;
+    // @todo move to config when GuiTable is extracted out of ProductOfferMerchantPortalGui
     protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
-    protected const DEFAULT_SORT_DIRECTION = 'ASC';
 
     protected const COLUMN_TYPE_TEXT = 'text';
     protected const COLUMN_TYPE_IMAGE = 'image';
     protected const COLUMN_TYPE_DATE = 'date';
+    protected const COLUMN_TYPE_DATE_RANGE = 'date_range';
     protected const COLUMN_TYPE_CHIP = 'chip';
 
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
-     */
-    protected $utilEncodingService;
+    public const FILTER_TYPE_SELECT = 'select';
+    public const FILTER_TYPE_DATE_RANGE = 'date_range';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
@@ -93,14 +80,11 @@ abstract class AbstractTable
     protected $guiTableConfigurationTransfer;
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
     ) {
-        $this->utilEncodingService = $utilEncodingService;
         $this->translatorFacade = $translatorFacade;
     }
 
@@ -111,8 +95,7 @@ abstract class AbstractTable
      */
     public function getData(Request $request): array
     {
-        $this->initialize($request);
-        $guiTableDataTransfer = $this->provideTableData();
+        $guiTableDataTransfer = $this->provideTableData($request);
 
         return $guiTableDataTransfer->toArray(true, true);
     }
@@ -122,7 +105,7 @@ abstract class AbstractTable
      */
     public function getConfiguration(): array
     {
-        $guiTableConfigurationTransfer = $this->getTableConfiguration();
+        $guiTableConfigurationTransfer = $this->buildTableConfiguration();
         $guiTableConfigurationTransfer = $this->translateConfiguration($guiTableConfigurationTransfer);
 
         return [
@@ -253,136 +236,8 @@ abstract class AbstractTable
     protected function prepareSearchData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         return $guiTableConfigurationTransfer->getSearch() + [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsSearchEnabled() ?? true,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return void
-     */
-    protected function initialize(Request $request): void
-    {
-        $this->searchTerm = $request->query->get(static::PARAM_SEARCH_TERM);
-        $this->page = $request->query->get(static::PARAM_PAGE, static::DEFAULT_PAGE);
-        $this->pageSize = $request->query->get(static::PARAM_PAGE_SIZE, static::DEFAULT_PAGE_SIZE);
-        $this->setSorting($request);
-        $this->setFilters($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Exception\InvalidSortingConfigurationException
-     *
-     * @return void
-     */
-    protected function setSorting(Request $request): void
-    {
-        $sortColumn = $this->getSortColumn($request);
-        $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION) ?? static::DEFAULT_SORT_DIRECTION;
-
-        if (!$sortColumn) {
-            throw new InvalidSortingConfigurationException('Sort column is not present.');
-        }
-
-        $this->sorting[$sortColumn] = $sortDirection;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string|null
-     */
-    protected function getSortColumn(Request $request): ?string
-    {
-        $sortColumn = $request->query->get(static::PARAM_SORT_BY, $this->getTableConfiguration()->getDefaultSortColumn());
-        $this->assertSortColumn($sortColumn);
-
-        return $sortColumn;
-    }
-
-    /**
-     * @param string $sortColumn
-     *
-     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Exception\InvalidSortingConfigurationException
-     *
-     * @return void
-     */
-    protected function assertSortColumn(string $sortColumn): void
-    {
-        foreach ($this->getTableConfiguration()->getColumns() as $tableColumnConfigurationTransfer) {
-            if ($tableColumnConfigurationTransfer->getSortable() && $tableColumnConfigurationTransfer->getId() === $sortColumn) {
-                return;
-            }
-        }
-
-        throw new InvalidSortingConfigurationException(
-            sprintf('Sort column %s is not present in the configured list of sortable columns of `%s`', $sortColumn, static::class)
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    protected function getSortDirection(Request $request): string
-    {
-        $sortDirection = $request->query->get(static::PARAM_SORT_DIRECTION, $this->getTableConfiguration()->getDefaultSortDirection());
-
-        return $sortDirection ?? static::DEFAULT_SORT_DIRECTION;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return void
-     */
-    protected function setFilters(Request $request): void
-    {
-        $filtersData = $this->utilEncodingService->decodeJson($request->query->get(static::PARAM_FILTERS), true);
-
-        if (!$filtersData) {
-            return;
-        }
-
-        $availableFilterIds = $this->getAvailableFilterIds();
-
-        foreach ($filtersData as $filterId => $filterData) {
-            if (!in_array($filterId, $availableFilterIds, true)) {
-                continue;
-            }
-
-            $this->filters[$filterId] = $filterData;
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getAvailableFilterIds(): array
-    {
-        $availableFilterIds = [];
-
-        foreach ($this->getTableConfiguration()->getFilters() as $filterTransfer) {
-            $availableFilterIds[] = $filterTransfer->getId();
-        }
-
-        return $availableFilterIds;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    protected function getTableConfiguration(): GuiTableConfigurationTransfer
-    {
-        if ($this->guiTableConfigurationTransfer === null) {
-            $this->guiTableConfigurationTransfer = $this->buildTableConfiguration();
-        }
-
-        return $this->guiTableConfigurationTransfer;
+                static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsSearchEnabled() ?? true,
+            ];
     }
 
     /**
@@ -470,21 +325,21 @@ abstract class AbstractTable
         }
 
         $typeOptions = $guiTableFilterTransfer->getTypeOptions();
-
-        if (!isset($typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES])) {
+        // todo fix magic string
+        if (!isset($typeOptions['values'])) {
             return $guiTableFilterTransfer;
         }
 
-        $optionNameValues = $typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES];
+        $optionNameValues = $typeOptions['values'];
 
         foreach ($optionNameValues as $key => $optionNameValue) {
-            if (isset($optionNameValue[TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE])) {
-                $titleTranslated = $this->translate($optionNameValue[TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE]);
-                $optionNameValues[$key][TableFilterDataProviderInterface::OPTION_VALUE_KEY_TITLE] = $titleTranslated;
+            if (isset($optionNameValue['title'])) {
+                $titleTranslated = $this->translate($optionNameValue['title']);
+                $optionNameValues[$key]['title'] = $titleTranslated;
             }
         }
 
-        $typeOptions[TableFilterDataProviderInterface::OPTION_NAME_VALUES] = $optionNameValues;
+        $typeOptions['values'] = $optionNameValues;
         $guiTableFilterTransfer->setTypeOptions($typeOptions);
 
         return $guiTableFilterTransfer;
@@ -555,9 +410,10 @@ abstract class AbstractTable
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    abstract protected function provideTableData(): GuiTableDataTransfer;
+    abstract protected function provideTableData(Request $request): GuiTableDataTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer

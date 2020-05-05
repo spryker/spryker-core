@@ -56,9 +56,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productConcreteQuery = $this->addProductFilters($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->addProductSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
-        $paginationTransfer = $productTableCriteriaTransfer->requirePagination()->getPagination();
-        $propelPager = $this->getPagerForQuery($productConcreteQuery, $paginationTransfer);
-        $paginationTransfer = $this->hydratePaginationTransfer($paginationTransfer, $propelPager);
+        $propelPager = $productConcreteQuery->paginate(
+            $productTableCriteriaTransfer->requirePage()->getPage(),
+            $productTableCriteriaTransfer->requirePageSize()->getPageSize()
+        );
+
+        $paginationTransfer = $this->hydratePaginationTransfer($propelPager);
 
         $productTableDataTransfer = $productConcreteMapper->mapProductTableDataArrayToTableDataTransfer(
             $propelPager->getResults()->getData(),
@@ -237,24 +240,24 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      * @param \Propel\Runtime\Util\PropelModelPager $propelPager
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
     protected function hydratePaginationTransfer(
-        PaginationTransfer $paginationTransfer,
         PropelModelPager $propelPager
     ): PaginationTransfer {
-        $paginationTransfer->setNbResults($propelPager->getNbResults())
+        return (new PaginationTransfer())
+            ->setNbResults($propelPager->getNbResults())
+            ->setPage($propelPager->getPage())
+            ->setMaxPerPage($propelPager->getMaxPerPage())
+            ->setFirstIndex($propelPager->getFirstIndex())
             ->setFirstIndex($propelPager->getFirstIndex())
             ->setLastIndex($propelPager->getLastIndex())
             ->setFirstPage($propelPager->getFirstPage())
             ->setLastPage($propelPager->getLastPage())
             ->setNextPage($propelPager->getNextPage())
             ->setPreviousPage($propelPager->getPreviousPage());
-
-        return $paginationTransfer;
     }
 
     /**
@@ -334,13 +337,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         SpyProductQuery $productConcreteQuery,
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): SpyProductQuery {
-        if (!$productTableCriteriaTransfer->isPropertyModified(ProductTableCriteriaTransfer::IS_ACTIVE)) {
+        $filterValue = $productTableCriteriaTransfer->getFilterIsActive();
+        if (!isset($filterValue)) {
             return $productConcreteQuery;
         }
 
-        $productConcreteQuery->filterByIsActive(
-            $productTableCriteriaTransfer->getIsActive()
-        );
+        $productConcreteQuery->filterByIsActive($filterValue);
 
         return $productConcreteQuery;
     }
@@ -357,7 +359,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         SpyProductQuery $productConcreteQuery,
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): SpyProductQuery {
-        $productConcreteHasOffers = $productTableCriteriaTransfer->getHasOffers();
+        $productConcreteHasOffers = $productTableCriteriaTransfer->getFilterHasOffers();
 
         if ($productConcreteHasOffers === null) {
             return $productConcreteQuery;

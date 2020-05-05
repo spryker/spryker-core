@@ -10,13 +10,15 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductT
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
+use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductTable extends AbstractTable
 {
@@ -39,48 +41,29 @@ class ProductTable extends AbstractTable
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product/get-table-data';
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
      */
     protected $productTableDataProvider;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface[]
-     */
-    protected $productTableFilterDataProviders;
-
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface
-     */
-    protected $productTableCriteriaBuilder;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface $productTableDataProvider
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterDataProviderInterface[] $productTableFilterDataProviders
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface $productTableDataProvider
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
-        ProductTableDataProviderInterface $productTableDataProvider,
-        array $productTableFilterDataProviders,
-        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+        TableDataProviderInterface $productTableDataProvider
     ) {
-        parent::__construct($utilEncodingService, $translatorFacade);
+        parent::__construct($translatorFacade);
         $this->productTableDataProvider = $productTableDataProvider;
-        $this->productTableFilterDataProviders = $productTableFilterDataProviders;
-        $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    protected function provideTableData(): GuiTableDataTransfer
+    protected function provideTableData(Request $request): GuiTableDataTransfer
     {
-        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
-
-        return $this->productTableDataProvider->getProductTableData($productTableCriteriaTransfer);
+        return $this->productTableDataProvider->getData($request, $this->buildTableConfiguration());
     }
 
     /**
@@ -175,9 +158,39 @@ class ProductTable extends AbstractTable
      */
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        foreach ($this->productTableFilterDataProviders as $productTableFilterDataProvider) {
-            $guiTableConfigurationTransfer->addFilter($productTableFilterDataProvider->getFilterData());
-        }
+        $guiTableConfigurationTransfer
+            ->addFilter(
+                (new GuiTableFilterTransfer())
+                    ->setId('HasOffers')
+                    ->setTitle('Offers')
+                    ->setType('select')
+                    ->setTypeOptions(
+                        (new SelectGuiTableFilterTypeOptionsTransfer())
+                            ->setMultiselect(false)
+                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                                    ->setValue('1')
+                                    ->setTitle('With offers'))
+                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                                    ->setValue('0')
+                                    ->setTitle('Without offers'))
+                    )
+            )
+            ->addFilter(
+                (new GuiTableFilterTransfer())
+                    ->setId('IsActive')
+                    ->setTitle('Status')
+                    ->setType('select')
+                    ->setTypeOptions(
+                        (new SelectGuiTableFilterTypeOptionsTransfer())
+                            ->setMultiselect(false)
+                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                                ->setValue('1')
+                                ->setTitle('Active'))
+                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                                ->setValue('0')
+                                ->setTitle('Inactive'))
+                    )
+            );
 
         return $guiTableConfigurationTransfer;
     }
@@ -188,20 +201,6 @@ class ProductTable extends AbstractTable
     protected function getDefaultSortColumnKey(): string
     {
         return static::COL_KEY_SKU;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
-     */
-    protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
-    {
-        return $this->productTableCriteriaBuilder
-            ->setSearchTerm($this->searchTerm)
-            ->setPage($this->page)
-            ->setPageSize($this->pageSize)
-            ->setSorting($this->sorting)
-            ->setFilters($this->filters)
-            ->build();
     }
 
     /**
