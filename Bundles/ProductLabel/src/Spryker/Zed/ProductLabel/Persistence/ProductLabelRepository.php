@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
@@ -80,7 +82,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
         return $this->getFactory()
             ->createProductLabelMapper()
-            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
     }
 
     /**
@@ -101,7 +103,55 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
         return $this->getFactory()
             ->createProductLabelMapper()
-            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities);
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
+    {
+        $productLabelQuery = $this->getFactory()->createProductLabelQuery();
+
+        if ($productLabelCriteriaTransfer->getProductLabelIds()) {
+            $productLabelQuery->filterByIdProductLabel_In($productLabelCriteriaTransfer->getProductLabelIds());
+        }
+
+        if ($productLabelCriteriaTransfer->getProductAbstractIds()) {
+            $productLabelQuery->useSpyProductLabelProductAbstractQuery()
+                    ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getProductAbstractIds())
+                ->endUse();
+        }
+
+        if ($productLabelCriteriaTransfer->getStoreName() !== null) {
+            $productLabelQuery->useProductLabelStoreQuery()
+                    ->useStoreQuery()
+                        ->filterByName($productLabelCriteriaTransfer->getStoreName())
+                    ->endUse()
+                ->endUse();
+        }
+
+        $productLabelEntities = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes(Criteria::LEFT_JOIN)
+            ->useSpyProductLabelLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
+                ->joinSpyLocale()
+            ->endUse()
+            ->filterByIsActive(true)
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->_or()
+            ->filterByValidFrom(null, Criteria::ISNULL)
+            ->filterByValidTo('now', Criteria::GREATER_EQUAL)
+            ->_or()
+            ->filterByValidTo(null, Criteria::ISNULL)
+            ->orderByIsExclusive(Criteria::DESC)
+            ->orderByPosition(Criteria::ASC)
+            ->groupByIdProductLabel()
+            ->find();
+
+        return $this->getFactory()
+            ->createProductLabelMapper()
+            ->mapProductLabelEntitiesToProductLabelTransfers($productLabelEntities, []);
     }
 
     /**
@@ -159,5 +209,50 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         return $this->getFactory()
             ->createProductLabelStoreRelationMapper()
             ->mapProductLabelStoreEntitiesToStoreRelationTransfer($productLabelStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productLabelProductAbstractEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->joinWithSpyProductLabel()
+            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
+            ->find();
+
+        if (!$productLabelProductAbstractEntities->count()) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductLabelProductAbstractMapper()
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productLabelProductAbstractEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->setLimit($filterTransfer->getLimit())
+            ->setOffset($filterTransfer->getOffset())
+            ->find();
+
+        if (!$productLabelProductAbstractEntities->count()) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductLabelProductAbstractMapper()
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
     }
 }

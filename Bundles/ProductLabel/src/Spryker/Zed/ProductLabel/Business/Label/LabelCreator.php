@@ -90,9 +90,15 @@ class LabelCreator implements LabelCreatorInterface
      */
     protected function executeCreateTransaction(ProductLabelTransfer $productLabelTransfer): void
     {
+        $passedStoreRelation = $productLabelTransfer->getStoreRelation();
+
         $productLabelTransfer = $this->productLabelEntityManager->createProductLabel($productLabelTransfer);
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
-        $this->persistStoreRelation($productLabelTransfer);
+
+        if ($passedStoreRelation) {
+            $productLabelTransfer->setStoreRelation($passedStoreRelation);
+            $this->persistStoreRelation($productLabelTransfer);
+        }
 
         $this->dictionaryTouchManager->touchActive();
     }

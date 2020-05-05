@@ -470,6 +470,7 @@
     "spryker/product-image-storage": "*",
     "spryker/product-label": "*",
     "spryker/product-label-collector": "*",
+    "spryker/product-label-data-import": "*",
     "spryker/product-label-discount-connector": "*",
     "spryker/product-label-gui": "*",
     "spryker/product-label-search": "*",
