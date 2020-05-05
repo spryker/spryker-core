@@ -13,7 +13,9 @@ use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInter
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
 use Spryker\Zed\Development\Business\Traits\PathTrait;
 use Spryker\Zed\Development\DevelopmentConfig;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
@@ -108,18 +110,46 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         asort($paths);
 
+        $progressBar = $this->getProgressBar($output, $total);
+
         foreach ($paths as $path => $configFilePath) {
-            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
+            $progressBar->advance();
+
+            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output, $progressBar);
             $count++;
-            if ($input->getOption(static::OPTION_VERBOSE)) {
+
+            if ($output->isVeryVerbose()) {
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
+
+        $progressBar->finish();
+
         if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return $resultCode;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param int $stepsCount
+     *
+     * @return \Symfony\Component\Console\Helper\ProgressBar
+     */
+    protected function getProgressBar(OutputInterface $output, int $stepsCount): ProgressBar
+    {
+        $progressBarOutput = new NullOutput();
+
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_VERBOSE) {
+            $progressBarOutput = $output->section();
+        }
+
+        $progressBar = new ProgressBar($progressBarOutput, $stepsCount);
+        $progressBar->setFormat('normal');
+
+        return $progressBar;
     }
 
     /**
@@ -135,11 +165,17 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param string $configFilePath
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      *
      * @return int Exit code
      */
-    protected function runCommand($path, $configFilePath, InputInterface $input, OutputInterface $output)
-    {
+    protected function runCommand(
+        $path,
+        $configFilePath,
+        InputInterface $input,
+        OutputInterface $output,
+        ProgressBar $progressBar
+    ) {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
         $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
@@ -164,7 +200,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return static::CODE_SUCCESS;
         }
 
-        if ($output->isVerbose()) {
+        if ($output->isVeryVerbose()) {
             $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
         }
 
@@ -172,7 +208,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $processOutputBuffer = '';
 
-        $process->run(function ($type, $buffer) use ($output, &$processOutputBuffer) {
+        $process->run(function ($type, $buffer) use ($output, $progressBar, &$processOutputBuffer) {
             $this->addErrors($buffer);
 
             preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
@@ -183,9 +219,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
             }
 
             $processOutputBuffer .= $buffer;
+            $progressBar->clear();
             $output->write($processOutputBuffer);
+            $progressBar->display();
             $processOutputBuffer = '';
         });
+
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
