@@ -1,14 +1,14 @@
 Return,Return
-"Return reference","Return reference"
+"Return reference","Retouren Referenz"
 Items,Items
 "Remuneration total","Remuneration total"
-Actions,Actions
-View,View
-"Return ID","Return ID"
-"Order Reference","Order Reference"
-"Returned Products","Returned Products"
-"Return Date","Return Date"
-State,State
-"Print Slip","Print Slip"
-"List of Returns","List of Returns"
-Returns,Returns
+Actions,Aktionen
+View,Anzeigen
+"Return ID","Retouren ID"
+"Order Reference","Bestellreferenz"
+"Returned Products","Retournierte Produkte"
+"Return Date","Retouren Datum"
+State,Status
+"Print Slip","Beleg drucken"
+"List of Returns","Alle Retouren"
+Returns,Retouren
