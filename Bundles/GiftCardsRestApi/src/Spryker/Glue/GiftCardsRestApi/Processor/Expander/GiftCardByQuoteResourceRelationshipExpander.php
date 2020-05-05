@@ -9,6 +9,7 @@ namespace Spryker\Glue\GiftCardsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteResourceRelationshipExpanderInterface
@@ -21,9 +22,8 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
     /**
      * @param \Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder\GiftCardRestResponseBuilderInterface $giftCardRestResponseBuilder
      */
-    public function __construct(
-        GiftCardRestResponseBuilderInterface $giftCardRestResponseBuilder
-    ) {
+    public function __construct(GiftCardRestResponseBuilderInterface $giftCardRestResponseBuilder)
+    {
         $this->giftCardRestResponseBuilder = $giftCardRestResponseBuilder;
     }
 
@@ -47,9 +47,22 @@ class GiftCardByQuoteResourceRelationshipExpander implements GiftCardByQuoteReso
                 continue;
             }
 
-            $giftCardsRestResource = $this->giftCardRestResponseBuilder
-                ->createGiftCardRestResource($resource);
+            $giftCardsRestResources = $this->giftCardRestResponseBuilder
+                ->createGiftCardRestResource($resource->getType(), $giftCardTransfers, $payload->getUuid());
 
+            $this->addGiftCardResourceRelationships($resource, $giftCardsRestResources);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param array $giftCardsRestResources
+     *
+     * @return void
+     */
+    protected function addGiftCardResourceRelationships(RestResourceInterface $resource, array $giftCardsRestResources): void
+    {
+        foreach ($giftCardsRestResources as $giftCardsRestResource) {
             $resource->addRelationship($giftCardsRestResource);
         }
     }

@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\GiftCardsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\RestGiftCardsAttributesTransfer;
 use Spryker\Glue\GiftCardsRestApi\GiftCardsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterface
 {
@@ -23,53 +23,58 @@ class GiftCardRestResponseBuilder implements GiftCardRestResponseBuilderInterfac
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param string $resourceType
+     * @param \ArrayObject $giftCardTransfers
+     * @param string $quoteUuid
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createGiftCardRestResource(RestResourceInterface $resource): RestResourceInterface
+    public function createGiftCardRestResource(string $resourceType, ArrayObject $giftCardTransfers, string $quoteUuid): array
     {
-        /** @var \Generated\Shared\Transfer\QuoteTransfer|null $payload */
-        $payload = $resource->getPayload();
-        foreach ($payload->getGiftCards() as $giftCardTransfer) {
+        $giftCardResources = [];
+        foreach ($giftCardTransfers as $giftCardTransfer) {
             $restGiftCardsAttributesTransfer = (new RestGiftCardsAttributesTransfer())
                 ->fromArray($giftCardTransfer->toArray(), true);
 
             $giftCardCode = $giftCardTransfer->getCode();
-            $restResource = $this->restResourceBuilder->createRestResource(
+            $giftCardRestResource = $this->restResourceBuilder->createRestResource(
                 GiftCardsRestApiConfig::RESOURCE_GIFT_CARDS,
                 $giftCardCode,
                 $restGiftCardsAttributesTransfer
             );
 
-            $restResource->addLink(
+            $giftCardRestResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->getGiftCardsResourceSelfLink($resource->getType(), $payload->getUuid(), $giftCardCode)
+                $this->getGiftCardsResourceSelfLink($resourceType, $quoteUuid, $giftCardCode)
             );
 
-            return $restResource;
+            $giftCardResources[] = $giftCardRestResource;
         }
+
+        return $giftCardResources;
     }
 
     /**
-     * @param string $resourceType
+     * @param string $parentResourceType
      * @param string $quoteUuid
      * @param string $giftCardCode
      *
      * @return string
      */
-    protected function getGiftCardsResourceSelfLink(string $resourceType, string $quoteUuid, string $giftCardCode): string
-    {
+    protected function getGiftCardsResourceSelfLink(
+        string $parentResourceType,
+        string $quoteUuid,
+        string $giftCardCode
+    ): string {
         return sprintf(
             '%s/%s/%s/%s',
-            $resourceType,
+            $parentResourceType,
             $quoteUuid,
             GiftCardsRestApiConfig::RESOURCE_CART_CODES,
             $giftCardCode

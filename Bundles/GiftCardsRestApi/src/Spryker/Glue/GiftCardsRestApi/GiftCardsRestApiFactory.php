@@ -23,9 +23,7 @@ class GiftCardsRestApiFactory extends AbstractFactory
      */
     public function createGiftCardByQuoteResourceRelationshipExpander(): GiftCardByQuoteResourceRelationshipExpanderInterface
     {
-        return new GiftCardByQuoteResourceRelationshipExpander(
-            $this->createGiftCardRestResponseBuilder()
-        );
+        return new GiftCardByQuoteResourceRelationshipExpander($this->createGiftCardRestResponseBuilder());
     }
 
     /**
@@ -33,8 +31,6 @@ class GiftCardsRestApiFactory extends AbstractFactory
      */
     public function createGiftCardRestResponseBuilder(): GiftCardRestResponseBuilderInterface
     {
-        return new GiftCardRestResponseBuilder(
-            $this->getResourceBuilder()
-        );
+        return new GiftCardRestResponseBuilder($this->getResourceBuilder());
     }
 }
