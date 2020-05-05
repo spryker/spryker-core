@@ -48,7 +48,7 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
         $this->tester->assertMerchantProfileAddressDatabaseTableIsEmpty();
 
         $merchantTransfer = $this->tester->haveMerchant([
-            'merchant_key' => 'kudu-merchant-1',
+            'merchant_key' => 'sony-experts',
         ]);
         $this->tester->haveMerchantProfile($merchantTransfer);
 
