@@ -21,7 +21,7 @@ class CurrencyIsoCodeOrderItemExpanderPlugin extends AbstractPlugin implements O
     /**
      * {@inheritDoc}
      * - Expands items with currency ISO code.
-     * - Requires ItemTransfer::FK_SALES_ORDER to be set.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class CurrencyIsoCodeOrderItemExpanderPlugin extends AbstractPlugin implements O
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandItemsWithCurrencyIsoCode($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithCurrencyIsoCode($itemTransfers);
     }
 }

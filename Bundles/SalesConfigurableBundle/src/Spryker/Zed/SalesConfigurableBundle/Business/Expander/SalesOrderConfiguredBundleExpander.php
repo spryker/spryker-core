@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\SalesOrderConfiguredBundleTranslationTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\Expander\ItemExpander} instead.
+ */
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
 {
     /**

@@ -435,10 +435,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createItemExpander()
-            ->expandItemsWithCurrencyIsoCode($itemTransfers);
+            ->createItemCurrencyExpander()
+            ->expandOrderItemsWithCurrencyIsoCode($itemTransfers);
     }
 }

@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -35,7 +33,7 @@ class SalesFacadeTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
-    protected const ITEM_NAME = 'ITEM_NAME';
+    protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
 
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
@@ -172,7 +170,7 @@ class SalesFacadeTest extends Unit
         $orderEntity = $this->tester->haveSalesOrderEntity();
         $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
             OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
-            OrderListRequestTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
+            OrderListRequestTransfer::ORDER_REFERENCES => [$orderEntity->getOrderReference()],
         ]);
 
         //Act
@@ -195,7 +193,7 @@ class SalesFacadeTest extends Unit
         $orderEntity = $this->tester->haveSalesOrderEntity();
         $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
             OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
-            OrderListRequestTransfer::ORDER_REFERENCE => 'test--111',
+            OrderListRequestTransfer::ORDER_REFERENCES => [static::NON_EXISTING_ORDER_REFERENCE],
         ]);
 
         //Act
@@ -219,29 +217,6 @@ class SalesFacadeTest extends Unit
         );
 
         $this->assertNull($order->getIdSalesOrder());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandItemsWithCurrencyIsoCode(): void
-    {
-        // Arrange
-        $salesFacade = $this->createSalesFacade();
-        $itemTransfer = (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build();
-        $orderEntity = $this->tester->haveSalesOrderEntity([$itemTransfer]);
-        $orderTransfer = $salesFacade->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams([
-                OrderTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
-                OrderTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
-            ])
-        );
-
-        // Act
-        $itemTransfers = $salesFacade->expandItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
-
-        // Assert
-        $this->assertEquals($orderTransfer->getCurrencyIsoCode(), $itemTransfers[0]->getCurrencyIsoCode());
     }
 
     /**

@@ -369,7 +369,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Expands order items with currency ISO code.
-     * - Requires ItemTransfer::FK_SALES_ORDER to be set.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
      *
      * @api
      *
@@ -377,5 +377,5 @@ interface SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandItemsWithCurrencyIsoCode(array $itemTransfers): array;
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }
