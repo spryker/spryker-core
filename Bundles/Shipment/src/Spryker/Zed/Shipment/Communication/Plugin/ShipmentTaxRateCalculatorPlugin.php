@@ -29,12 +29,10 @@ class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements Calculat
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $this->getFacade()->calculateShipmentTaxRate($quoteTransfer);
-
-        return $quoteTransfer;
     }
 }
