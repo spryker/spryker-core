@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -18,17 +17,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductDiscontinuedProductLabelConnectorRepository extends AbstractRepository implements ProductDiscontinuedProductLabelConnectorRepositoryInterface
 {
     /**
+     * @module Product
+     * @module ProductDiscontinued
+     *
      * @return int[]
      */
     public function getProductAbstractIdsToBeLabeled(): array
     {
-        $productAbstractWithNotDiscontinuedProductConcreteQuery = SpyProductQuery::create()
+        $productAbstractWithNotDiscontinuedProductConcreteQuery = $this->getFactory()
+            ->getProductPropelQuery()
             ->useSpyProductDiscontinuedQuery(null, Criteria::LEFT_JOIN)
                 ->filterByIdProductDiscontinued(null, Criteria::ISNULL)
             ->endUse()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]);
 
-        return SpyProductQuery::create()
+        return $this->getFactory()
+            ->getProductPropelQuery()
             ->filterByFkProductAbstract($productAbstractWithNotDiscontinuedProductConcreteQuery, Criteria::NOT_IN)
             ->distinct()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
