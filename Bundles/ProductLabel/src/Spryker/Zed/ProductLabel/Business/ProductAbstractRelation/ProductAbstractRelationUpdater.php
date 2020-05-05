@@ -58,7 +58,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
      *
      * @return void
      */
-    public function updateProductLabelRelations(bool $isTouchEnabled)
+    public function updateProductLabelRelations(bool $isTouchEnabled = true)
     {
         $this->handleDatabaseTransaction(function () use ($isTouchEnabled) {
             $this->executeUpdateProductLabelRelationsTransaction($isTouchEnabled);

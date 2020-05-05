@@ -14,5 +14,5 @@ interface ProductAbstractRelationUpdaterInterface
      *
      * @return void
      */
-    public function updateProductLabelRelations(bool $isTouchEnabled);
+    public function updateProductLabelRelations(bool $isTouchEnabled = true);
 }
