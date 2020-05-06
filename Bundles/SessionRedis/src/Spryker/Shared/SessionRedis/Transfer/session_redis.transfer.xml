@@ -17,4 +17,8 @@
         <property name="password" type="string"/>
     </transfer>
 
+    <transfer name="HttpRequest">
+        <property name="headers" type="array" singular="header" associative="true"/>
+    </transfer>
+
 </transfers>

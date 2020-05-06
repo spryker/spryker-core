@@ -29,7 +29,8 @@ class PriceProductOfferStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStorageClient(),
             $this->getStoreClient(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
+            $this->getPriceProductOfferStoragePriceExtractorPlugins()
         );
     }
 
@@ -71,5 +72,13 @@ class PriceProductOfferStorageFactory extends AbstractFactory
     public function getPriceProductService(): PriceProductOfferStorageToPriceProductServiceInterface
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_PRICE_PRODUCT_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
+     */
+    protected function getPriceProductOfferStoragePriceExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR);
     }
 }

@@ -11,6 +11,10 @@ use Codeception\Module;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -22,24 +26,62 @@ class ProductRelationDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @return void
+     */
+    public function ensureProductRelationTableIsEmpty(): void
+    {
+        $this->ensureProductRelationStoreTableIsEmpty();
+        $this->ensureProductRelationProductAbstractTableIsEmpty();
+        SpyProductRelationQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductRelationProductAbstractTableIsEmpty(): void
+    {
+        SpyProductRelationProductAbstractQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductRelationStoreTableIsEmpty(): void
+    {
+        SpyProductRelationStoreQuery::create()->deleteAll();
+    }
+
+    /**
      * @param string $productAbstractSku
      * @param int $idProductAbstract
+     * @param string $productRelationKey
      * @param string $productRelationType
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     public function haveProductRelation(
         string $productAbstractSku,
         int $idProductAbstract,
-        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING
+        string $productRelationKey,
+        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING,
+        ?StoreRelationTransfer $storeRelationTransfer = null
     ): ProductRelationTransfer {
         $productRelationFacade = $this->getProductRelationFacade();
+        if (!$storeRelationTransfer) {
+            $storeRelationTransfer = new StoreRelationTransfer();
+        }
 
-        $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType);
+        $productRelationTransfer = $this->createProductRelationTransfer(
+            $productAbstractSku,
+            $idProductAbstract,
+            $productRelationKey,
+            $productRelationType,
+            $storeRelationTransfer
+        );
 
-        $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
-
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation);
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
 
         $this->debug(sprintf(
             'Inserted Product Relation: %d',
@@ -70,17 +112,22 @@ class ProductRelationDataHelper extends Module
     /**
      * @param string $productAbstractSku
      * @param int $idProductAbstractRelated
+     * @param string $productRelationKey
      * @param string $productRelationType
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     protected function createProductRelationTransfer(
         string $productAbstractSku,
         int $idProductAbstractRelated,
-        string $productRelationType
+        string $productRelationKey,
+        string $productRelationType,
+        StoreRelationTransfer $storeRelationTransfer
     ): ProductRelationTransfer {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setFkProductAbstract($idProductAbstractRelated);
+        $productRelationTransfer->setProductRelationKey($productRelationKey);
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
@@ -92,6 +139,7 @@ class ProductRelationDataHelper extends Module
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
         $productRelationTypeTransfer->setKey($productRelationType);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
+        $productRelationTransfer->setStoreRelation($storeRelationTransfer);
 
         return $productRelationTransfer;
     }

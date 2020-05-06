@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Sales;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -95,4 +97,37 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves order items from persistence by criteria from OrderItemFilterTransfer.
+     * - Executes OrderItemExpanderPluginInterface stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires OrderListTransfer::customerReference to be set.
+     * - Requires OrderListTransfer::pagination to be set.
+     * - Requires OrderListTransfer::format to be set.
+     * - Filters orders by OrderListTransfer::filterFields if provided.
+     * - Filters orders by OrderListTransfer::filter if provided.
+     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }

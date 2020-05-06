@@ -24,8 +24,7 @@ class GuestCartVouchersResourceController extends AbstractController
      *              "Adds a code to guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
@@ -48,13 +47,12 @@ class GuestCartVouchersResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/guest-carts/{guestCartId}/vouchers",
+     *          "path": "/guest-carts/{guestCartId}/vouchers/{voucherCode}",
      *          "summary": [
      *              "Deletes a code from guest cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found.",

@@ -18,6 +18,7 @@ interface ShipmentCartConnectorFacadeInterface
      * Specification:
      *  - Changes shipment method and shipment expenses based on current currency for quote level (BC)
      * or item level shipments.
+     * - Applies shipment source prices if they are set.
      *
      * @api
      *
@@ -38,4 +39,18 @@ interface ShipmentCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateShipment(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     * - Clears shipment from quote without items in case of item add or remove action.
+     * - Clears shipment method from quote and items in case of item add or remove action.
+     * - Clears shipment expenses in case of item add or remove action.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function clearShipmentMethod(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

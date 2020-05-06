@@ -75,4 +75,17 @@ class OauthConfig extends AbstractSharedConfig
     {
         return 'PT8H';
     }
+
+    /**
+     * Specification:
+     *  - Interval for how long refresh tokens will be stored in the system after they expire, this will be feed to \DateTime object.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRefreshTokenRetentionInterval(): string
+    {
+        return 'P100Y';
+    }
 }

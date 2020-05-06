@@ -17,6 +17,7 @@ use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToSt
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
 use Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -36,6 +37,16 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      * @var \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface
      */
     protected $availabilityStorageMapper;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
+     * @var string|null
+     */
+    protected static $storeName;
 
     /**
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface $storageClient
@@ -177,12 +188,34 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     protected function generateKey($idProductAbstract)
     {
-        $store = Store::getInstance()->getStoreName();
-
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($store);
+        $synchronizationDataTransfer->setStore($this->getStoreName());
         $synchronizationDataTransfer->setReference((string)$idProductAbstract);
 
-        return $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        if (static::$storeName === null) {
+            static::$storeName = Store::getInstance()->getStoreName();
+        }
+
+        return static::$storeName;
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 }

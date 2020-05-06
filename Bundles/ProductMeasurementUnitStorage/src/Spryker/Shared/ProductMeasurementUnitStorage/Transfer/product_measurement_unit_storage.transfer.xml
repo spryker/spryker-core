@@ -50,6 +50,7 @@
         <property name="storeRelation" type="StoreRelation"/>
         <property name="fkProductMeasurementUnit" type="int"/>
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
+        <property name="fkProduct" type="int"/>
     </transfer>
 
     <transfer name="ProductMeasurementUnit">
@@ -72,6 +73,11 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteProductMeasurementSalesUnit">
+        <property name="idProductConcrete" type="int"/>
+        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit"/>
     </transfer>
 
 </transfers>
