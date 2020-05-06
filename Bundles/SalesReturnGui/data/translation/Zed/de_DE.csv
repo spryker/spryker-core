@@ -1,6 +1,14 @@
 Return,Return
-"Return reference","Return reference"
+"Return reference","Retouren Referenz"
 Items,Items
 "Remuneration total","Remuneration total"
-Actions,Actions
-View,View
+Actions,Aktionen
+View,Anzeigen
+"Return ID","Retouren ID"
+"Order Reference",Bestellreferenz
+"Returned Products","Retournierte Produkte"
+"Return Date","Retouren Datum"
+State,Status
+"Print Slip","Beleg drucken"
+"List of Returns","Alle Retouren"
+Returns,Retouren
