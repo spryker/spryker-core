@@ -19,8 +19,6 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface as LegacyCommandByOrderInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface as LegacyCommandByOrderItemInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;

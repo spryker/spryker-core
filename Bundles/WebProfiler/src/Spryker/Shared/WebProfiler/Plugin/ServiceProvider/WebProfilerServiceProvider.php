@@ -199,7 +199,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $app['profiler.listener'] = $app->share(function ($app) {
             /** @var int $kernelVersion */
-            $kernelVersion = Kernel::VERSION_ID; 
+            $kernelVersion = Kernel::VERSION_ID;
             if ($kernelVersion >= 20800) {
                 return new ProfilerListener($app['profiler'], $app['request_stack'], $app['profiler.request_matcher'], $app['profiler.only_exceptions'], $app['profiler.only_master_requests']);
             } else {

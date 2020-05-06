@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Property;
 
-use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
-
 class PropertyDefinition
 {
     /**

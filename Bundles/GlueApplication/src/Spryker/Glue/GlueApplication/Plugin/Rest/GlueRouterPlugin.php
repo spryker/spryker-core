@@ -48,7 +48,7 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
      */
     public function getContext()
     {
-        return new RequestContext;
+        return new RequestContext();
     }
 
     /**
