@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductListStorageConfig extends AbstractBundleConfig
 {
+    protected const PUBLISH_PRODUCT_ABSTRACT_CHUNK = 1000;
+    protected const PUBLISH_PRODUCT_CONCRETE_CHUNK = 1000;
+
     /**
      * @api
      *
@@ -41,5 +44,25 @@ class ProductListStorageConfig extends AbstractBundleConfig
     public function getProductConcreteProductListSynchronizationPoolName(): ?string
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getPublishProductAbstractChunkSize(): int
+    {
+        return static::PUBLISH_PRODUCT_ABSTRACT_CHUNK;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getPublishProductConcreteChunkSize(): int
+    {
+        return static::PUBLISH_PRODUCT_CONCRETE_CHUNK;
     }
 }

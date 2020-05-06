@@ -21,6 +21,7 @@ use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\Produ
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
+use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 
 class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPublisherInterface
 {
@@ -60,6 +61,11 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig
+     */
+    protected $productPageSearchConfig;
+
+    /**
      * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
      */
     protected $pageDataExpanderPlugins;
@@ -71,6 +77,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
      * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper $productConcreteSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig $productPageSearchConfig
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[] $pageDataExpanderPlugins
      */
     public function __construct(
@@ -80,11 +87,13 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         ProductPageSearchToUtilEncodingInterface $utilEncoding,
         AbstractProductSearchDataMapper $productConcreteSearchDataMapper,
         ProductPageSearchToStoreFacadeInterface $storeFacade,
+        ProductPageSearchConfig $productPageSearchConfig,
         array $pageDataExpanderPlugins
     ) {
         $this->productConcretePageSearchReader = $productConcretePageSearchReader;
         $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
         $this->productFacade = $productFacade;
+        $this->productPageSearchConfig = $productPageSearchConfig;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productConcreteSearchDataMapper = $productConcreteSearchDataMapper;
         $this->utilEncoding = $utilEncoding;
@@ -92,24 +101,29 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param int[] $productIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function publish(array $productIds): void
+    public function publish(array $productConcreteIds): void
     {
-        $productIds = array_unique(array_filter($productIds));
+        $productConcreteIds = array_unique(array_filter($productConcreteIds));
 
-        if (!$productIds) {
+        if (!$productConcreteIds) {
             return;
         }
 
-        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productIds);
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
+        $productConcreteIdsChunks = array_chunk($productConcreteIds, $this->productPageSearchConfig->getPublishProductConcreteChunkSize());
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
-            $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
-        });
+        foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
+            $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIdsChunk);
+            $productConcretePageSearchTransfers = $this->productConcretePageSearchReader
+                ->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productConcreteIdsChunk);
+
+            $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
+                $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
+            });
+        }
     }
 
     /**

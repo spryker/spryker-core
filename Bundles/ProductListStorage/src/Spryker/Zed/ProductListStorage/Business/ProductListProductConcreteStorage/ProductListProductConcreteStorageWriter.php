@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
+use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
 
 class ProductListProductConcreteStorageWriter implements ProductListProductConcreteStorageWriterInterface
 {
@@ -25,25 +26,23 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     protected $productListStorageRepository;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
-     *
-     * @var bool
+     * @var \Spryker\Zed\ProductListStorage\ProductListStorageConfig
      */
-    protected $isSendingToQueue;
+    protected $productListStorageConfig;
 
     /**
      * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface $productListFacade
      * @param \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface $productListStorageRepository
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductListStorage\ProductListStorageConfig $productListStorageConfig
      */
     public function __construct(
         ProductListStorageToProductListFacadeInterface $productListFacade,
         ProductListStorageRepositoryInterface $productListStorageRepository,
-        bool $isSendingToQueue
+        ProductListStorageConfig $productListStorageConfig
     ) {
         $this->productListFacade = $productListFacade;
         $this->productListStorageRepository = $productListStorageRepository;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->productListStorageConfig = $productListStorageConfig;
     }
 
     /**
@@ -55,16 +54,20 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     {
         $productLists = $this->productListFacade->getProductListsIdsByProductIds($productConcreteIds);
 
-        $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIds);
-        $indexedProductConcreteProductListStorageEntities = $this->indexProductConcreteProductListStorageEntities($productConcreteProductListStorageEntities);
-        foreach ($productConcreteIds as $idProduct) {
-            $productConcreteProductListStorageEntity = $this->getProductConcreteProductListStorageEntity($idProduct, $indexedProductConcreteProductListStorageEntities);
-            if ($this->saveProductConcreteProductListStorageEntity($idProduct, $productConcreteProductListStorageEntity, $productLists)) {
-                unset($indexedProductConcreteProductListStorageEntities[$idProduct]);
-            }
-        }
+        $productConcreteIdsChunks = array_chunk($productConcreteIds, $this->productListStorageConfig->getPublishProductConcreteChunkSize());
 
-        $this->deleteProductConcreteProductListStorageEntities($indexedProductConcreteProductListStorageEntities);
+        foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
+            $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIdsChunk);
+            $indexedProductConcreteProductListStorageEntities = $this->indexProductConcreteProductListStorageEntities($productConcreteProductListStorageEntities);
+            foreach ($productConcreteIdsChunk as $idProduct) {
+                $productConcreteProductListStorageEntity = $this->getProductConcreteProductListStorageEntity($idProduct, $indexedProductConcreteProductListStorageEntities);
+                if ($this->saveProductConcreteProductListStorageEntity($idProduct, $productConcreteProductListStorageEntity, $productLists)) {
+                    unset($indexedProductConcreteProductListStorageEntities[$idProduct]);
+                }
+            }
+
+            $this->deleteProductConcreteProductListStorageEntities($indexedProductConcreteProductListStorageEntities);
+        }
     }
 
     /**
@@ -83,7 +86,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         if ($productConcreteProductListsStorageTransfer->getIdBlacklists() || $productConcreteProductListsStorageTransfer->getIdWhitelists()) {
             $productConcreteProductListStorageEntity->setFkProduct($idProduct)
                 ->setData($productConcreteProductListsStorageTransfer->toArray())
-                ->setIsSendingToQueue($this->isSendingToQueue)
+                ->setIsSendingToQueue($this->productListStorageConfig->isSendingToQueue())
                 ->save();
 
             return true;

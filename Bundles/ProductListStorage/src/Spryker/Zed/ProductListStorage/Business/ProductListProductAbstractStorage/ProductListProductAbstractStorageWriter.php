@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
+use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
 
 class ProductListProductAbstractStorageWriter implements ProductListProductAbstractStorageWriterInterface
 {
@@ -25,25 +26,23 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     protected $productListStorageRepository;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
-     *
-     * @var bool
+     * @var \Spryker\Zed\ProductListStorage\ProductListStorageConfig
      */
-    protected $isSendingToQueue;
+    protected $productListStorageConfig;
 
     /**
      * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface $productListFacade
      * @param \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface $productListStorageRepository
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductListStorage\ProductListStorageConfig $productListStorageConfig
      */
     public function __construct(
         ProductListStorageToProductListFacadeInterface $productListFacade,
         ProductListStorageRepositoryInterface $productListStorageRepository,
-        bool $isSendingToQueue
+        ProductListStorageConfig $productListStorageConfig
     ) {
         $this->productListFacade = $productListFacade;
         $this->productListStorageRepository = $productListStorageRepository;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->productListStorageConfig = $productListStorageConfig;
     }
 
     /**
@@ -53,18 +52,22 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
-        $productLists = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productAbstractIds);
+        $productAbstractIdsChunks = array_chunk($productAbstractIds, $this->productListStorageConfig->getPublishProductAbstractChunkSize());
 
-        $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
-        $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity($idProductAbstract, $indexedProductAbstractProductListStorageEntities);
-            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity, $productLists)) {
-                unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
+        foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
+            $productLists = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productAbstractIdsChunk);
+
+            $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIdsChunk);
+            $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
+            foreach ($productAbstractIdsChunk as $idProductAbstract) {
+                $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity($idProductAbstract, $indexedProductAbstractProductListStorageEntities);
+                if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity, $productLists)) {
+                    unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
+                }
             }
-        }
 
-        $this->deleteProductAbstractProductListStorageEntities($indexedProductAbstractProductListStorageEntities);
+            $this->deleteProductAbstractProductListStorageEntities($indexedProductAbstractProductListStorageEntities);
+        }
     }
 
     /**
@@ -83,7 +86,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
         if ($productAbstractProductListsStorageEntityTransfer->getIdWhitelists() || $productAbstractProductListsStorageEntityTransfer->getIdBlacklists()) {
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
                 ->setData($productAbstractProductListsStorageEntityTransfer->toArray())
-                ->setIsSendingToQueue($this->isSendingToQueue)
+                ->setIsSendingToQueue($this->productListStorageConfig->isSendingToQueue())
                 ->save();
 
             return true;
