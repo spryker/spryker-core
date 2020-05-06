@@ -25,6 +25,22 @@
                         <action>index</action>
                         <visible>0</visible>
                     </edit>
+                    <duplicate>
+                        <label>Duplicate Navigation Element</label>
+                        <title>Duplicate Navigation Element</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>duplicate</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </duplicate>
+                    <delete>
+                        <label>Delete Navigation</label>
+                        <title>Delete Navigation</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>delete</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </delete>
                 </pages>
             </navigation>
         </pages>
