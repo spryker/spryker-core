@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,12 +20,92 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
+     */
+    protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
+
+    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
+
+    protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+
+    /**
      * @return array
      */
-    public function detailAction(Request $request): array
+    public function indexAction(): array
     {
-        return [];
+        $returnTable = $this->getFactory()->createReturnTable();
+
+        return $this->viewResponse([
+            'returnTable' => $returnTable->render(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        return $this->jsonResponse(
+            $this->getFactory()->createReturnTable()->fetchData()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
+    public function detailAction(Request $request)
+    {
+        $response = $this->executeDetailAction($request);
+
+        if ($response instanceof RedirectResponse) {
+            return $response;
+        }
+
+        return $this->viewResponse($response);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
+    protected function executeDetailAction(Request $request)
+    {
+        $idSalesReturn = $this->castId(
+            $request->get(static::PARAM_ID_SALES_RETURN)
+        );
+
+        $returnCollectionTransfer = $this->getFactory()->getSalesReturnFacade()->getReturns(
+            (new ReturnFilterTransfer())->addSalesReturnIds($idSalesReturn)
+        );
+
+        if (!$returnCollectionTransfer->getReturns()->count()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idSalesReturn,
+            ]);
+
+            return $this->redirectResponse(
+                Url::generate(static::ROUTE_RETURN_LIST)->build()
+            );
+        }
+
+        /** @var \Generated\Shared\Transfer\ReturnTransfer $returnTransfer */
+        $returnTransfer = $returnCollectionTransfer->getReturns()->getIterator()->current();
+
+        $customerResponseTransfer = $this->getFactory()
+            ->getCustomerFacade()
+            ->findCustomerByReference($returnTransfer->getCustomerReference());
+
+        $returnExtractor = $this->getFactory()->createReturnExtractor();
+
+        return [
+            'return' => $returnTransfer,
+            'customer' => $customerResponseTransfer->getCustomerTransfer(),
+            'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
+            'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
+        ];
     }
 }

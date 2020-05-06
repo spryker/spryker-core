@@ -11,9 +11,38 @@
     </transfer>
 
     <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
     </transfer>
 
     <transfer name="ReturnFilter">
+        <property name="salesReturnIds" type="int[]" singular="salesReturnIds"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="createdAt" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="Item">
+        <property name="fkSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="state" type="ItemState"/>
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

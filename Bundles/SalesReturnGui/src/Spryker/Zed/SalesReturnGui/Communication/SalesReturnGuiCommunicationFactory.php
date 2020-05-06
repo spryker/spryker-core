@@ -10,13 +10,19 @@ namespace Spryker\Zed\SalesReturnGui\Communication;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractor;
+use Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractorInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -45,6 +51,14 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractorInterface
+     */
+    public function createReturnExtractor(): ReturnExtractorInterface
+    {
+        return new ReturnExtractor();
+    }
+
+    /**
      * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface
      */
     public function getMoneyFacade(): SalesReturnGuiToMoneyFacadeInterface
@@ -58,6 +72,14 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesReturnFacade(): SalesReturnGuiToSalesReturnFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_SALES_RETURN);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): SalesReturnGuiToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**

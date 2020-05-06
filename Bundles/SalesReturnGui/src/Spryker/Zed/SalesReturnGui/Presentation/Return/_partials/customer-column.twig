@@ -1,0 +1,37 @@
+{% embed '@SalesReturnGui/_partials/column.twig' with {
+    title: 'Customer'
+} %}
+    {% block content %}
+        <div class="row">
+            <div>
+                <div class="col-sm-6 font-bold">
+                    {{ 'Customer reference' | trans }}
+                </div>
+                <div class="col-sm-6">
+                    <a target="_blank"
+                       href="{{ url('/customer/view', {'id-customer': customer.idCustomer}) }}">
+                        {{ customer.customerReference }}
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-sm-6 font-bold">
+                    {{ 'Name' | trans }}
+                </div>
+                <div class="col-sm-6">
+                    {{ customer.firstName ~ ' ' ~ customer.lastName }}
+                </div>
+            </div>
+
+            <div>
+                <div class="col-lg-6 font-bold">
+                    {{ 'Email' | trans }}
+                </div>
+                <div class="col-lg-6">
+                    {{ customer.email }}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

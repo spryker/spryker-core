@@ -10,14 +10,19 @@ namespace Spryker\Zed\SalesReturnGui;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
     public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -34,6 +39,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSalesReturnFacade($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addSalesReturnPropelQuery($container);
         $container = $this->addUtilDateTimeService($container);
 
@@ -63,6 +69,22 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesReturnGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+            return new SalesReturnGuiToCustomerFacadeBridge(
+                $container->getLocator()->customer()->facade()
+            );
         });
 
         return $container;

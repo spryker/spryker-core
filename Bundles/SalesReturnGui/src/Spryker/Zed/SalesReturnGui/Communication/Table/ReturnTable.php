@@ -17,6 +17,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
+use Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig;
 
 class ReturnTable extends AbstractTable
 {
@@ -29,22 +30,16 @@ class ReturnTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ViewController::indexAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
      */
-    protected const ROUTE_VIEW_RETURN = '/sales-return-gui/view';
+    protected const ROUTE_VIEW_RETURN = '/sales-return-gui/return/detail';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SlipController::indexAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SlipController::printAction()
      */
-    protected const ROUTE_PRINT_SLIP = '/sales-return-gui/slip';
+    protected const ROUTE_PRINT_SLIP = '/sales-return-gui/slip/print';
 
     protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
-
-    protected const ITEM_STATE_TO_LABEL_CLASS_MAPPING = [
-        'returned' => 'label-inverse',
-        'refunded' => 'label-info',
-        'closed' => 'label-danger',
-    ];
 
     /**
      * @var \Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface
@@ -220,7 +215,7 @@ class ReturnTable extends AbstractTable
          $stateLabels = [];
 
         foreach ($states as $state) {
-            $stateLabels[] = $this->generateLabel(ucfirst($state), static::ITEM_STATE_TO_LABEL_CLASS_MAPPING[$state] ?? 'label-info');
+            $stateLabels[] = $this->generateLabel(ucfirst($state), SalesReturnGuiConfig::ITEM_STATE_TO_LABEL_CLASS_MAPPING[$state] ?? 'label-info');
         }
 
          return $stateLabels;
