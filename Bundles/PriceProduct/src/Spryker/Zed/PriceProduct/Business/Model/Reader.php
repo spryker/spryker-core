@@ -573,7 +573,7 @@ class Reader implements ReaderInterface
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
             $priceProductCriteriaIdentifier = spl_object_hash($priceProductFilterTransfers[$index]);
-            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+            $resolvedItemPrice = $this->resolveProductPriceByPriceProductCriteria(
                 $priceProductCriteriaIdentifier,
                 $priceProductTransfers,
                 $priceProductCriteriaTransfer
@@ -606,7 +606,7 @@ class Reader implements ReaderInterface
             );
         }
 
-        return static::$resolvedPriceProductTransferCollection[$sku];
+        return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
     }
 
     /**
