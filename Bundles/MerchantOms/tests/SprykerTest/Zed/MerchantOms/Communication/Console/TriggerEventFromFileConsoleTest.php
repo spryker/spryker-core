@@ -56,7 +56,6 @@ class TriggerEventFromFileConsoleTest extends Unit
         $output = new BufferedOutput();
 
         // Act
-
         $outputCode = $triggerEventFromFileConsole->run($input, $output);
 
         // Assert
@@ -73,6 +72,7 @@ class TriggerEventFromFileConsoleTest extends Unit
             'Valid empty import file' => ['valid_empty_import.csv', static::CODE_SUCCESS],
             'Invalid non existing file' => ['invalid_not_existing_import.csv', static::CODE_ERROR],
             'Invalid without headers' => ['invalid_without_headers_import.csv', static::CODE_ERROR],
+            'Invalid missing column' => ['invalid_missing_column_import.csv', static::CODE_ERROR],
         ];
     }
 
