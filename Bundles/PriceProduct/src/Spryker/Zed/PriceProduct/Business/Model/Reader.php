@@ -561,13 +561,9 @@ class Reader implements ReaderInterface
             ->buildCriteriaTransfersFromFilterTransfers($priceProductFilterTransfers);
 
         $resolvedPriceProductTransfers = [];
-        foreach ($priceProductCriteriaTransfers as $priceProductCriteriaTransfer) {
-            if (!isset($priceProductTransfers[$priceProductCriteriaTransfer->getSku()])) {
-                continue;
-            }
-
+        foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
             $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
-                $priceProductTransfers[$priceProductCriteriaTransfer->getSku()],
+                $priceProductTransfers[spl_object_hash($priceProductFilterTransfers[$index])],
                 $priceProductCriteriaTransfer
             );
 
@@ -623,12 +619,12 @@ class Reader implements ReaderInterface
             return $priceProductFilterTransfer->getSku();
         }, $priceProductFilterTransfers);
 
-        $concretePricesBySku = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
+        $concretePriceProductTransfers = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
             $priceProductCriteriaTransfer
         );
 
-        return $concretePricesBySku;
+        return $this->groupPriceProductTransfersByFilter($priceProductFilterTransfers, $concretePriceProductTransfers);
     }
 
     /**
@@ -642,10 +638,33 @@ class Reader implements ReaderInterface
         $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
+        $priceProductTransfers = $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
             $priceProductCriteriaTransfer
         );
+
+        return $this->groupPriceProductTransfersByFilter($priceProductFilterTransfers, $priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, $priceProductTransfers): array
+    {
+        $priceProductTransfersGroupedByFilterIdentifier = [];
+
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductFilterIdentifier = spl_object_hash($priceProductFilterTransfer);
+            $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
+                $priceProductTransfers,
+                $priceProductFilterTransfer
+            );
+        }
+
+        return $priceProductTransfersGroupedByFilterIdentifier;
     }
 
     /**
