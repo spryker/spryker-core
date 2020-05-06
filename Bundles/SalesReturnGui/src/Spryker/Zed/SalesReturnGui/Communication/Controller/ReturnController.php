@@ -20,6 +20,16 @@ class ReturnController extends AbstractController
      *
      * @return array
      */
+    public function indexAction(Request $request): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
     public function detailAction(Request $request): array
     {
         return [];

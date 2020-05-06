@@ -149,6 +149,10 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             $salesReturnQuery->filterByCustomerReference($returnFilterTransfer->getCustomerReference());
         }
 
+        if ($returnFilterTransfer->getIdSalesReturn()) {
+            $salesReturnQuery->filterByIdSalesReturn($returnFilterTransfer->getIdSalesReturn());
+        }
+
         return $salesReturnQuery;
     }
 

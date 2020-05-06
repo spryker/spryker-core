@@ -15,6 +15,7 @@
         <property name="store" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="ReturnItem">
@@ -37,6 +38,7 @@
     <transfer name="ReturnFilter">
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="idSalesReturn" type="int"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

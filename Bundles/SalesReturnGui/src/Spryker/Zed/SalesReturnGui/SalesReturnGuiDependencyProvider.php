@@ -12,11 +12,17 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
+use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToBarcodeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
     public const FACADE_MONEY = 'FACADE_MONEY';
+
+    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     public const PROPEL_QUERY_SALES_RETURN = 'PROPEL_QUERY_SALES_RETURN';
 
@@ -59,6 +65,20 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesReturnGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBarcodeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_BARCODE, function (Container $container) {
+            return new SalesReturnGuiToBarcodeServiceBridge($container->getLocator()->barcode()->service());
         });
 
         return $container;
