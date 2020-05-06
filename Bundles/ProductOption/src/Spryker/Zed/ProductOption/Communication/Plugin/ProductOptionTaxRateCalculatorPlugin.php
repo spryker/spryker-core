@@ -28,10 +28,12 @@ class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements Cal
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $this->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
+        
+        return $quoteTransfer;
     }
 }
