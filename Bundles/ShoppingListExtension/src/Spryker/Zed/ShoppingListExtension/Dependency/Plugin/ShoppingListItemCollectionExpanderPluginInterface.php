@@ -5,23 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
+namespace Spryker\Zed\ShoppingListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface ShoppingListItemExpanderInterface
+interface ShoppingListItemCollectionExpanderPluginInterface
 {
     /**
-     * @deprecated Use {@link \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpanderInterface::expandItemCollection()} instead.
+     * Specification:
+     * - Expands a {@link \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer} with additional data fields.
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
