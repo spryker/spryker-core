@@ -41,7 +41,7 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION",
-    "spryker/twig": "ADD SUGGEST DESCRIPTION"
+    "spryker/container": "If you want to use Twig Plugins",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   }
 }
