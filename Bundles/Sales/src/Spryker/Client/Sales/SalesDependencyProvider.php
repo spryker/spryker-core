@@ -10,6 +10,9 @@ namespace Spryker\Client\Sales;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Sales\SalesConfig getConfig()
+ */
 class SalesDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_ZED = 'zed service';

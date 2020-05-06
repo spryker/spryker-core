@@ -68,6 +68,16 @@ class Reader implements ReaderInterface
     protected $priceProductService;
 
     /**
+     * @var string|null
+     */
+    protected static $priceModeIdentifierForNetType;
+
+    /**
+     * @var \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected static $resolvedPriceProductTransferCollection = [];
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
@@ -562,8 +572,10 @@ class Reader implements ReaderInterface
 
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
+            $priceProductCriteriaIdentifier = spl_object_hash($priceProductFilterTransfers[$index]);
             $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
-                $priceProductTransfers[spl_object_hash($priceProductFilterTransfers[$index])],
+                $priceProductCriteriaIdentifier,
+                $priceProductTransfers,
                 $priceProductCriteriaTransfer
             );
 
@@ -573,6 +585,28 @@ class Reader implements ReaderInterface
         }
 
         return $resolvedPriceProductTransfers;
+    }
+
+    /**
+     * @param string $priceProductCriteriaIdentifier
+     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    protected function resolveProductPriceByPriceProductCriteria(
+        string $priceProductCriteriaIdentifier,
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer {
+        if (!isset(static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier])) {
+            static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+                $priceProductTransfers[$priceProductCriteriaIdentifier],
+                $priceProductCriteriaTransfer
+            );
+        }
+
+        return static::$resolvedPriceProductTransferCollection[$sku];
     }
 
     /**
@@ -589,21 +623,37 @@ class Reader implements ReaderInterface
             return false;
         }
 
+        $priceModeIdentifierForNetType = $this->getPriceModeIdentifierForNetType();
+
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            if ($priceProductFilterTransfer->getPriceMode() === $this->config->getPriceModeIdentifierForNetType()) {
-                if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+            if ($priceProductFilterTransfer->getPriceMode() === $priceModeIdentifierForNetType) {
+                if ($moneyValueTransfer->getNetAmount() === null) {
                     return false;
                 }
 
                 continue;
             }
 
-            if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
+            if ($moneyValueTransfer->getGrossAmount() === null) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPriceModeIdentifierForNetType(): string
+    {
+        if (static::$priceModeIdentifierForNetType === null) {
+            static::$priceModeIdentifierForNetType = $this->config->getPriceModeIdentifierForNetType();
+        }
+
+        return static::$priceModeIdentifierForNetType;
     }
 
     /**
