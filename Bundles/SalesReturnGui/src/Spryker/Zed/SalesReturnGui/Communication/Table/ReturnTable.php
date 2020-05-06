@@ -99,8 +99,10 @@ class ReturnTable extends AbstractTable
         $config->setSearchable([
             static::COL_RETURN_ID,
             static::COL_RETURN_REFERENCE,
-            static::COL_ORDER_REFERENCE,
+            sprintf('GROUP_CONCAT(DISTINCT %s)', SpySalesOrderTableMap::COL_ORDER_REFERENCE),
         ]);
+
+        $config->setHasSearchableFieldsWithAggregateFunctions(true);
 
         return $config;
     }

@@ -137,10 +137,21 @@ class OrderReturnTable extends AbstractTable
     {
         $this->orderTransfer->requireIdSalesOrder();
 
-        return $this->salesReturnQuery
+        $salesReturnIds = (clone $this->salesReturnQuery)
             ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
                 ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkSalesOrder($this->orderTransfer->getIdSalesOrder())
+                ->endUse()
+            ->endUse()
+            ->groupByIdSalesReturn()
+            ->select([SpySalesReturnTableMap::COL_ID_SALES_RETURN])
+            ->find()
+            ->toArray();
+
+        return $this->salesReturnQuery
+            ->filterByIdSalesReturn_In($salesReturnIds)
+            ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
+                ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
                     ->withColumn(sprintf('SUM(%s)', SpySalesOrderItemTableMap::COL_REMUNERATION_AMOUNT), static::COL_REMUNERATION_TOTAL)
                     ->useOrderQuery(null, Criteria::LEFT_JOIN)
                         ->withColumn(SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE, static::COL_CURRENCY)
