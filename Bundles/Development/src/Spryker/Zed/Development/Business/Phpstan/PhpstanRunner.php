@@ -15,6 +15,7 @@ use Spryker\Zed\Development\Business\Traits\PathTrait;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -114,8 +115,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
         asort($paths);
 
         $progressBar = $this->getProgressBar($output, $total);
-        $progressBar->setRedrawFrequency(static::PROGRESS_BAR_FREQUENCY);
-        $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
         $progressBar->display();
 
         foreach ($paths as $path => $configFilePath) {
@@ -130,6 +129,10 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         $progressBar->finish();
+
+        if (!$output->isDecorated() && $output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln('');
+        }
 
         if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
@@ -148,12 +151,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $progressBarOutput = new NullOutput();
 
-        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
-            $progressBarOutput = $output->section();
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL && $stepsCount > 1) {
+            $progressBarOutput = $output instanceof ConsoleOutputInterface ? $output->section() : $output;
         }
 
         $progressBar = new ProgressBar($progressBarOutput, $stepsCount);
-        $progressBar->setFormat('normal');
+        $progressBar->setRedrawFrequency(static::PROGRESS_BAR_FREQUENCY);
+        $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
 
         return $progressBar;
     }
@@ -226,6 +230,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
             $processOutputBuffer .= $buffer;
             $progressBar->clear();
+
+            if (!$output->isDecorated() && $output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+                $output->writeln('');
+            }
+
             $output->write($processOutputBuffer);
             $progressBar->display();
             $processOutputBuffer = '';
