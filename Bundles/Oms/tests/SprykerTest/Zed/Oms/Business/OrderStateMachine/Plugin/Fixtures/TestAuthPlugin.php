@@ -27,7 +27,7 @@ class TestAuthPlugin extends AbstractPlugin implements CommandByOrderInterface
      *
      * @throws \Exception
      *
-     * @return array|void
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {

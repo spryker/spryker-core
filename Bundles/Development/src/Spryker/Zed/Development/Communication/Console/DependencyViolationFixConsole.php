@@ -63,6 +63,8 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             }
             $this->executeModuleTransfer($moduleTransfer);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

@@ -62,7 +62,7 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     * @return bool
      */
     public function deleteMerchantRelationshipSalesOrderThreshold(
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
