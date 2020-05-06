@@ -20,6 +20,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDepen
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
 class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFactory
 {

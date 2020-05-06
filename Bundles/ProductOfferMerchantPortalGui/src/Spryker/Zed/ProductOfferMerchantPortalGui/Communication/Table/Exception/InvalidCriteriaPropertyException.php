@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class InvalidCriteriaPropertyException extends RuntimeException
 {
     /**
-     * InvalidCriteriaPropertyException constructor.
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
      * @param string $property
      */

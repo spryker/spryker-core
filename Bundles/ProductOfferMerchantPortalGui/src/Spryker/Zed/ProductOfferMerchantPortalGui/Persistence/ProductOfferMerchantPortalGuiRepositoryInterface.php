@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
-use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;

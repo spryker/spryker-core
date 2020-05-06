@@ -47,11 +47,13 @@
 
     <transfer name="GuiTableDataRequest" >
         <property name="searchTerm" type="string" />
-        <property name="order" type="OrderBy[]" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
         <property name="searchTerm" type="string" />
         <property name="page" type="int" />
         <property name="pageSize" type="int" />
         <property name="filters" type="array" associative="true" />
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="OrderBy">

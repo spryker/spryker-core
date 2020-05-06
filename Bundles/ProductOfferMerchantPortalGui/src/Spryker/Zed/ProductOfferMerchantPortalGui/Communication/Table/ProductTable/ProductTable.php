@@ -7,23 +7,16 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable;
 
-use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
-use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
-use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
-use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
-
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
 class ProductTable extends AbstractTable
@@ -36,8 +29,6 @@ class ProductTable extends AbstractTable
     public const COL_KEY_OFFERS = 'offers';
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
-
-    protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
 
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
@@ -65,6 +56,7 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
     protected function provideTableData(Request $request): GuiTableDataTransfer
@@ -95,64 +87,18 @@ class ProductTable extends AbstractTable
      */
     protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_SKU)
-                ->setTitle('SKU')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_IMAGE)
-                ->setTitle('Image')
-                ->setType(static::COLUMN_TYPE_IMAGE)
-                ->setSortable(false)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_NAME)
-                ->setTitle('Name')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STORES)
-                ->setTitle('Stores')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(false)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STATUS)
-                ->setTitle('Status')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_FROM)
-                ->setTitle('Valid From')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', $this->getConfig()->getTableDefaultFrontendDateFormat())
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_TO)
-                ->setTitle('Valid To')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', $this->getConfig()->getTableDefaultFrontendDateFormat())
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_OFFERS)
-                ->setTitle('Offers')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-        );
+        $columns = new ArrayObject([
+            $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
+            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
+            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
+            $this->createColumnText(static::COL_KEY_STORES, 'Stores', false, false),
+            $this->createColumnText(static::COL_KEY_STATUS, 'Status', true, false),
+            $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false),
+            $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false),
+            $this->createColumnText(static::COL_KEY_OFFERS, 'Offers', true, false),
+        ]);
+
+        $guiTableConfigurationTransfer->setColumns($columns);
 
         return $guiTableConfigurationTransfer;
     }
@@ -164,39 +110,17 @@ class ProductTable extends AbstractTable
      */
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer
-            ->addFilter(
-                (new GuiTableFilterTransfer())
-                    ->setId('HasOffers')
-                    ->setTitle('Offers')
-                    ->setType('select')
-                    ->setTypeOptions(
-                        (new SelectGuiTableFilterTypeOptionsTransfer())
-                            ->setMultiselect(false)
-                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                                    ->setValue('1')
-                                    ->setTitle('With offers'))
-                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                                    ->setValue('0')
-                                    ->setTitle('Without offers'))
-                    )
-            )
-            ->addFilter(
-                (new GuiTableFilterTransfer())
-                    ->setId('IsActive')
-                    ->setTitle('Status')
-                    ->setType('select')
-                    ->setTypeOptions(
-                        (new SelectGuiTableFilterTypeOptionsTransfer())
-                            ->setMultiselect(false)
-                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                                ->setValue('1')
-                                ->setTitle('Active'))
-                            ->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                                ->setValue('0')
-                                ->setTitle('Inactive'))
-                    )
-            );
+        $filters = new ArrayObject([
+            $this->createFilterSelect('HasOffers', 'Offers', false, [
+                '1' => 'With Offers',
+                '0' => 'Without Offers',
+            ]),
+            $this->createFilterSelect('IsActive', 'Status', false, [
+                '1' => 'Active',
+                '0' => 'Inactive',
+            ]),
+        ]);
+        $guiTableConfigurationTransfer->setFilters($filters);
 
         return $guiTableConfigurationTransfer;
     }

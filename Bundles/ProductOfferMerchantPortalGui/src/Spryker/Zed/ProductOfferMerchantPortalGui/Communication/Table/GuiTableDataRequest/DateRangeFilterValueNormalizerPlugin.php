@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest;
 
+use DateTime;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
-use DateTime;
 
 class DateRangeFilterValueNormalizerPlugin implements FilterValueNormalizerPluginInterface
 {

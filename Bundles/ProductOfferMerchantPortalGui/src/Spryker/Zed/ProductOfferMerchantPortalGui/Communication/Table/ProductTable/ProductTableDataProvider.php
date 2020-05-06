@@ -9,13 +9,11 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductT
 
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
@@ -53,11 +51,6 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     private $merchantUserFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
-     */
-    private $localeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface
      */
     private $requestToGuiTableDataRequestHydrator;
@@ -68,7 +61,6 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface $requestToGuiTableDataRequestHydrator
      */
     public function __construct(
@@ -77,7 +69,6 @@ class ProductTableDataProvider extends AbstractTableDataProvider
         ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService,
         ProductNameBuilderInterface $productNameBuilder,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         RequestToGuiTableDataRequestHydratorInterface $requestToGuiTableDataRequestHydrator
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
@@ -85,7 +76,6 @@ class ProductTableDataProvider extends AbstractTableDataProvider
         $this->utilDateTimeService = $utilDateTimeService;
         $this->productNameBuilder = $productNameBuilder;
         $this->merchantUserFacade = $merchantUserFacade;
-        $this->localeFacade = $localeFacade;
         $this->requestToGuiTableDataRequestHydrator = $requestToGuiTableDataRequestHydrator;
     }
 
@@ -99,13 +89,13 @@ class ProductTableDataProvider extends AbstractTableDataProvider
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function createPersistenceCriteria(Request $request): AbstractTransfer
     {
         $criteria = new ProductTableCriteriaTransfer();
         $criteria->setMerchantUser($this->merchantUserFacade->getCurrentMerchantUser());
-        $criteria->setLocale($this->localeFacade->getCurrentLocale());
 
         return $criteria;
     }
@@ -117,15 +107,6 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      */
     protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer
     {
-        if (!$persistenceCriteria instanceof ProductTableCriteriaTransfer) {
-            throw new LogicException(sprintf(
-                '%s expects %s as a criteria, %s given.',
-                static::class,
-                ProductTableCriteriaTransfer::class,
-                get_class($persistenceCriteria)
-            ));
-        }
-
         $productTableDataTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($persistenceCriteria);
         $productTableDataArray = [];
 

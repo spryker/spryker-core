@@ -9,13 +9,20 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTable
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
-use Generated\Shared\Transfer\OrderByTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestToGuiTableDataRequestHydrator extends AbstractPlugin implements RequestToGuiTableDataRequestHydratorInterface
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
+ */
+class RequestToGuiTableDataRequestHydrator implements RequestToGuiTableDataRequestHydratorInterface
 {
+    use BundleConfigResolverAwareTrait;
+
+    protected const DEFAULT_SORT_DIRECTION = 'ASC';
+
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[]
      */
@@ -27,14 +34,22 @@ class RequestToGuiTableDataRequestHydrator extends AbstractPlugin implements Req
     private $utilEncodingService;
 
     /**
-     * RequestToGuiTableDataRequestHydrator constructor.
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
+     */
+    private $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[] $filterValueNormalizerPlugins
      */
-    public function __construct(ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService, array $filterValueNormalizerPlugins)
-    {
+    public function __construct(
+        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
+        array $filterValueNormalizerPlugins
+    ) {
         $this->filterValueNormalizerPlugins = $filterValueNormalizerPlugins;
         $this->utilEncodingService = $utilEncodingService;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -47,34 +62,12 @@ class RequestToGuiTableDataRequestHydrator extends AbstractPlugin implements Req
     {
         $guiTableRequest = new GuiTableDataRequestTransfer();
 
-        $guiTableRequest
-            ->setSearchTerm($request->query->get('search'))
-                    // @todo grab default from config
-            ->setPage($request->query->get('pageSize', 1))
-                    // @todo grab default from config
-            ->setPageSize($request->query->get('pageSize', 10));
+        $guiTableRequest->setSearchTerm($request->query->get('search'));
+        $guiTableRequest->setLocale($this->localeFacade->getCurrentLocale());
 
-        if ($request->query->get('sortBy')) {
-            $orderBy = new OrderByTransfer();
-            $orderBy->setProperty($request->query->get('sortBy'));
-            // @todo grab default from config
-            $orderBy->setDirection($request->query->get('sortDirection', 'ASC'));
-            $guiTableRequest->addOrder($orderBy);
-        }
-
-        $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'), true);
-
-        foreach ($configurationTransfer->getFilters() as $filterDefinition) {
-            $filterId = $filterDefinition->getId();
-            if (!array_key_exists($filterId, $requestFilters)) {
-                continue;
-            }
-
-            $filterValue = $requestFilters[$filterDefinition->getId()];
-            $normalizedFilterValue = $this->normalizeFilterValue($filterDefinition->getId(), $filterValue);
-
-            $guiTableRequest->addFilters($filterId, $normalizedFilterValue);
-        }
+        $this->hydratePagination($guiTableRequest, $request);
+        $this->hydrateOrder($request, $guiTableRequest);
+        $this->hydrateFilters($request, $configurationTransfer, $guiTableRequest);
 
         return $guiTableRequest;
     }
@@ -97,5 +90,59 @@ class RequestToGuiTableDataRequestHydrator extends AbstractPlugin implements Req
         }
 
         return $value;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $configurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     *
+     * @return void
+     */
+    protected function hydrateFilters(
+        Request $request,
+        GuiTableConfigurationTransfer $configurationTransfer,
+        GuiTableDataRequestTransfer $guiTableRequest
+    ): void {
+        $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'), true);
+
+        foreach ($configurationTransfer->getFilters() as $filterDefinition) {
+            $filterId = $filterDefinition->getId();
+            if (!array_key_exists($filterId, $requestFilters)) {
+                continue;
+            }
+
+            $filterValue = $requestFilters[$filterDefinition->getId()];
+            $normalizedFilterValue = $this->normalizeFilterValue($filterDefinition->getId(), $filterValue);
+
+            $guiTableRequest->addFilters($filterId, $normalizedFilterValue);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     *
+     * @return void
+     */
+    protected function hydrateOrder(Request $request, GuiTableDataRequestTransfer $guiTableRequest): void
+    {
+        if ($request->query->get('sortBy')) {
+            $guiTableRequest->setOrderBy($request->query->get('sortBy'));
+            $guiTableRequest->setOrderDirection($request->query->get('sortDirection', static::DEFAULT_SORT_DIRECTION));
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function hydratePagination(GuiTableDataRequestTransfer $guiTableRequest, Request $request): void
+    {
+        $guiTableRequest
+            ->setPage($request->query->get('page', $this->getConfig()->getTableDefaultPage()))
+            ->setPageSize($request->query->get('pageSize', $this->getConfig()->getTableDefaultPageSize()));
     }
 }

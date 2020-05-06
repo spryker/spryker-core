@@ -13,10 +13,15 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
+use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
+ */
 abstract class AbstractTable
 {
     use BundleConfigResolverAwareTrait;
@@ -35,14 +40,11 @@ abstract class AbstractTable
     protected const CONFIG_SIZES = 'sizes';
     protected const CONFIG_ITEMS = 'items';
 
-    // @todo move to config when GuiTable is extracted out of ProductOfferMerchantPortalGui
-    protected const DEFAULT_AVAILABLE_PAGE_SIZES = [10, 25, 50, 100];
-
-    protected const COLUMN_TYPE_TEXT = 'text';
-    protected const COLUMN_TYPE_IMAGE = 'image';
-    protected const COLUMN_TYPE_DATE = 'date';
-    protected const COLUMN_TYPE_DATE_RANGE = 'date_range';
-    protected const COLUMN_TYPE_CHIP = 'chip';
+    public const COLUMN_TYPE_TEXT = 'text';
+    public const COLUMN_TYPE_IMAGE = 'image';
+    public const COLUMN_TYPE_DATE = 'date';
+    public const COLUMN_TYPE_DATE_RANGE = 'date_range';
+    public const COLUMN_TYPE_CHIP = 'chip';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_DATE_RANGE = 'date_range';
@@ -154,7 +156,7 @@ abstract class AbstractTable
     {
         $sizes = !empty($guiTableConfigurationTransfer->getAvailablePageSizes())
             ? $guiTableConfigurationTransfer->getAvailablePageSizes()
-            : static::DEFAULT_AVAILABLE_PAGE_SIZES;
+            : $this->getConfig()->getTableDefaultAvailabePageSizes();
 
         return [
             static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizeEnabled() ?? true,
@@ -332,23 +334,14 @@ abstract class AbstractTable
             $guiTableFilterTransfer->setTitle($this->translate($filterTitle));
         }
 
-        $typeOptions = $guiTableFilterTransfer->getTypeOptions();
-        // todo fix magic string
-        if (!isset($typeOptions['values'])) {
-            return $guiTableFilterTransfer;
-        }
-
-        $optionNameValues = $typeOptions['values'];
-
-        foreach ($optionNameValues as $key => $optionNameValue) {
-            if (isset($optionNameValue['title'])) {
-                $titleTranslated = $this->translate($optionNameValue['title']);
-                $optionNameValues[$key]['title'] = $titleTranslated;
+        if ($guiTableFilterTransfer->getType() === static::FILTER_TYPE_SELECT) {
+            /** @var \Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer $selectTypeOptions */
+            $selectTypeOptions = $guiTableFilterTransfer->getTypeOptions();
+            foreach ($selectTypeOptions->getValues() as $selectOption) {
+                $translatedTitle = $this->translate($selectOption->getTitle());
+                $selectOption->setTitle($translatedTitle);
             }
         }
-
-        $typeOptions['values'] = $optionNameValues;
-        $guiTableFilterTransfer->setTypeOptions($typeOptions);
 
         return $guiTableFilterTransfer;
     }
@@ -418,7 +411,95 @@ abstract class AbstractTable
     }
 
     /**
+     * @param string $id
+     * @param string $title
+     * @param bool $sortable
+     * @param bool $hidable
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function createColumnText(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
+    {
+        return (new GuiTableColumnConfigurationTransfer())
+                ->setId($id)
+                ->setTitle($title)
+                ->setType(static::COLUMN_TYPE_TEXT)
+                ->setSortable($sortable)
+                ->setHideable($hidable);
+    }
+
+    /***
+     * @param string $id
+     * @param string $title
+     * @param bool $sortable
+     * @param bool $hidable
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function createColumnImage(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
+    {
+        return (new GuiTableColumnConfigurationTransfer())
+                ->setId($id)
+                ->setTitle($title)
+                ->setType(static::COL_KEY_IMAGE)
+                ->setSortable($sortable)
+                ->setHideable($hidable);
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param bool $sortable
+     * @param bool $hidable
+     * @param string|null $dateFormat
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function createColumnDate(
+        string $id,
+        string $title,
+        bool $sortable,
+        bool $hidable,
+        ?string $dateFormat = null
+    ): GuiTableColumnConfigurationTransfer {
+        return (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_DATE)
+            ->setSortable($sortable)
+            ->setHideable($hidable)
+            ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultFrontendDateFormat());
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param bool $multiselect
+     * @param array $values select values in form of ['value1' => 'title1', 'value2' => 'title2' ]
+     *
+     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
+     */
+    protected function createFilterSelect(string $id, string $title, bool $multiselect, array $values): GuiTableFilterTransfer
+    {
+        $typeOptions = (new SelectGuiTableFilterTypeOptionsTransfer())
+            ->setMultiselect($multiselect);
+
+        foreach ($values as $value => $title) {
+            $typeOptions->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                ->setValue($value)
+                ->setTitle($title));
+        }
+
+        return (new GuiTableFilterTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::FILTER_TYPE_SELECT)
+            ->setTypeOptions($typeOptions);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
     abstract protected function provideTableData(Request $request): GuiTableDataTransfer;

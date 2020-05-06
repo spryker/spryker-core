@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferMerchantPortalGui\CocreateRequestToGuiTableDataRequestHydratormmunication\Table\ProductOfferTable\Filter\UpdateProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
@@ -27,11 +26,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTa
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaExpander\ValidityProductOfferCriteriaFilterExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\CreationProductOfferTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\IsVisibleProductOfferTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StockProductOfferTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\StoresProductOfferTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\Filter\ValidityProductOfferTableFilterDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTableDataProvider;
@@ -46,6 +40,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDepen
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
 class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -71,7 +66,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getUtilDateTimeService(),
             $this->createProductNameBuilder(),
             $this->getMerchantUserFacade(),
-            $this->getLocaleFacade(),
             $this->createRequestToGuiTableDataRequestHydrator()
         );
     }
@@ -304,9 +298,10 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new RequestToGuiTableDataRequestHydrator(
             $this->getUtilEncodingService(),
+            $this->getLocaleFacade(),
             // @todo refactor to plugin stack
             [
-                $this->createDateRangeFilterValueNormalizerPlugin()
+                $this->createDateRangeFilterValueNormalizerPlugin(),
             ]
         );
     }

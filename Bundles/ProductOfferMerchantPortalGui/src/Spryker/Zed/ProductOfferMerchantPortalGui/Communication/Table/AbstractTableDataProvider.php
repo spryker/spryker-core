@@ -24,12 +24,14 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     abstract protected function createPersistenceCriteria(Request $request): AbstractTransfer;
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
     abstract protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer;
@@ -37,15 +39,17 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfiguration
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer|mixed
      */
     public function getData(Request $request, GuiTableConfigurationTransfer $guiTableConfiguration)
     {
         $guiTableDataRequest = $this->getRequestToGuiTableDataRequestHydrator()->hydrate($request, $guiTableConfiguration);
         $criteria = $this->createPersistenceCriteria($request);
-
         $criteria = $this->mapFiltersToCriteria($guiTableDataRequest, $criteria);
         $criteria = $this->mapPagingToCriteria($guiTableDataRequest, $criteria);
+        $criteria = $this->mapSortingToCriteria($guiTableDataRequest, $criteria);
+        $criteria = $this->mapLocaleToCriteria($guiTableDataRequest, $criteria);
 
         return $this->fetchData($criteria);
     }
@@ -91,6 +95,47 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
 
         $persistenceCriteria->$pageSetter($guiTableDataRequestTransfer->getPage());
         $persistenceCriteria->$pageSizeSetter($guiTableDataRequestTransfer->getPageSize());
+
+        return $persistenceCriteria;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function mapSortingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    {
+        $orderSetter = 'setOrderBy';
+        $orderDirectionSetter = 'setOrderDirection';
+        if (!method_exists($persistenceCriteria, $orderSetter) && !method_exists($persistenceCriteria, $orderDirectionSetter)) {
+            throw new InvalidCriteriaPropertyException($persistenceCriteria, 'page|pageSize');
+        }
+
+        $persistenceCriteria->$orderSetter($guiTableDataRequestTransfer->getOrderBy());
+        $persistenceCriteria->$orderDirectionSetter($guiTableDataRequestTransfer->getOrderDirection());
+
+        return $persistenceCriteria;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function mapLocaleToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    {
+        $localeSetter = 'setLocale';
+
+        if (!method_exists($persistenceCriteria, $localeSetter)) {
+            return $persistenceCriteria;
+        }
+
+        $persistenceCriteria->setLocale($guiTableDataRequestTransfer->getLocale());
 
         return $persistenceCriteria;
     }
