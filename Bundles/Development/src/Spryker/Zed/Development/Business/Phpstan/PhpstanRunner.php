@@ -38,6 +38,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const OPTION_VERBOSE = 'verbose';
     public const OPTION_MODULE = 'module';
 
+    protected const PROGRESS_BAR_FREQUENCY = 50;
+    protected const PROGRESS_BAR_SECONDS_FORCE_REDRAW = 5 * 60;
+
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
@@ -111,6 +114,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         asort($paths);
 
         $progressBar = $this->getProgressBar($output, $total);
+        $progressBar->setRedrawFrequency(static::PROGRESS_BAR_FREQUENCY);
+        $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
+        $progressBar->display();
 
         foreach ($paths as $path => $configFilePath) {
             $progressBar->advance();
@@ -118,7 +124,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output, $progressBar);
             $count++;
 
-            if ($output->isVeryVerbose()) {
+            if ($output->isVerbose()) {
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
@@ -142,7 +148,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $progressBarOutput = new NullOutput();
 
-        if ($output->getVerbosity() === OutputInterface::VERBOSITY_VERBOSE) {
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
             $progressBarOutput = $output->section();
         }
 
@@ -200,7 +206,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return static::CODE_SUCCESS;
         }
 
-        if ($output->isVeryVerbose()) {
+        if ($output->isVerbose()) {
             $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
         }
 
