@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
@@ -70,7 +71,9 @@ class MerchantOmsFacadeTest extends Unit
 
         $processEntity = $this->tester->haveStateMachineProcess();
 
-        $stateEntity = $this->tester->createStateMachineItemState($processEntity);
+        $stateEntity = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $processEntity->getIdStateMachineProcess(),
+        ]);
 
         $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
             MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
@@ -79,7 +82,6 @@ class MerchantOmsFacadeTest extends Unit
         ]);
 
         // Act
-
         $stateMachineItemTransfers = $this->tester->getFacade()->getStateMachineItemsByStateIds([$stateEntity->getIdStateMachineItemState()]);
         $stateMachineItemTransfer = $stateMachineItemTransfers[0] ?? null;
 
@@ -106,7 +108,9 @@ class MerchantOmsFacadeTest extends Unit
 
         $processEntity = $this->tester->haveStateMachineProcess();
 
-        $stateEntity = $this->tester->createStateMachineItemState($processEntity);
+        $stateEntity = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $processEntity->getIdStateMachineProcess(),
+        ]);
 
         $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
             MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
