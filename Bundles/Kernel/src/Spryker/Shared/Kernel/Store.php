@@ -17,7 +17,7 @@ class Store
     public const APPLICATION_ZED = 'ZED';
 
     /**
-     * @var \Spryker\Shared\Kernel\Store|null
+     * @var static|null
      */
     protected static $instance;
 
@@ -110,12 +110,12 @@ class Store
     protected $storesWithSharedPersistence = [];
 
     /**
-     * @return static|\Spryker\Shared\Kernel\Store
+     * @return static
      */
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new self();
+            self::$instance = new static();
         }
 
         return self::$instance;

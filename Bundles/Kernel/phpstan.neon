@@ -5,6 +5,7 @@ parameters:
         - APPLICATION_STORE
 
     ignoreErrors:
+        - '#Unsafe usage of new static\(\).#'
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'
         - '#Access to an undefined static property .+EntityTransferInterface::\$entityNamespace.#'
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'

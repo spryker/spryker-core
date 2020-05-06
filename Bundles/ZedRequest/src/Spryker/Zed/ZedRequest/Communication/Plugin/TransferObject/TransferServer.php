@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TransferServer
 {
     /**
-     * @var self|null
+     * @var static|null
      */
     protected static $instance;
 
@@ -58,7 +58,7 @@ class TransferServer
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater|null $repeater
      *
-     * @return static|\Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer
+     * @return static
      */
     public static function getInstance(?Repeater $repeater = null)
     {
