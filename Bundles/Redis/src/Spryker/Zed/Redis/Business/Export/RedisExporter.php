@@ -29,18 +29,19 @@ class RedisExporter implements RedisExporterInterface
     /**
      * @param string $destination
      * @param int|null $redisPort
+     * @param string|null $redisHost
      *
      * @throws \Spryker\Zed\Redis\Business\Exception\RedisExportException
      *
      * @return bool
      */
-    public function export(string $destination, ?int $redisPort = null): bool
+    public function export(string $destination, ?int $redisPort = null, ?string $redisHost = null): bool
     {
         if ($redisPort === null) {
             throw new RedisExportException('No port specified for Redis export.');
         }
 
-        $command = $this->buildExportCliCommand($destination, $redisPort);
+        $command = $this->buildExportCliCommand($destination, $redisPort, $redisHost);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
         $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
@@ -51,11 +52,17 @@ class RedisExporter implements RedisExporterInterface
     /**
      * @param string $destination
      * @param int|null $redisPort
+     * @param string|null $redisHost
      *
      * @return string
      */
-    protected function buildExportCliCommand(string $destination, ?int $redisPort = null): string
+    protected function buildExportCliCommand(string $destination, ?int $redisPort = null, ?string $redisHost = null): string
     {
-        return sprintf('redis-cli -p %s --rdb %s', $redisPort, $destination);
+        return sprintf(
+            'redis-cli -h %s -p %s --rdb %s',
+            $redisHost ?? $this->config->getDefaultRedisHost(),
+            $redisPort,
+            $destination
+        );
     }
 }
