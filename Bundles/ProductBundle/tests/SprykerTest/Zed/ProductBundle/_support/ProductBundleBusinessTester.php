@@ -8,12 +8,14 @@
 namespace SprykerTest\Zed\ProductBundle;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -33,8 +35,6 @@ use Generated\Shared\Transfer\StoreTransfer;
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
- *
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  */
 class ProductBundleBusinessTester extends Actor
 {
@@ -137,5 +137,29 @@ class ProductBundleBusinessTester extends Actor
         ]);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param array $quoteSeed
+     * @param array $itemSeed
+     * @param array $bundleItemSeed
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function buildQuote(array $quoteSeed, array $itemSeed, array $bundleItemSeed = []): QuoteTransfer
+    {
+        $quoteBuilder = (new QuoteBuilder($quoteSeed))
+            ->withItem($itemSeed)
+            ->withTotals()
+            ->withStore()
+            ->withCurrency()
+            ->withShippingAddress()
+            ->withBillingAddress();
+
+        if ($bundleItemSeed) {
+            $quoteBuilder->withBundleItem($bundleItemSeed);
+        }
+
+        return $quoteBuilder->build();
     }
 }

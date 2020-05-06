@@ -8,17 +8,12 @@
 namespace SprykerTest\Zed\ProductBundle\Business\ProductBundleFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ProductBundleTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -63,9 +58,27 @@ class ExpandItemsWithProductBundlesTest extends Unit
     public function testExpandBundleItemsWithProductBundles(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProduct(static::PRODUCT_CONCRETE_SKU_1);
-        $bundleTransfer = $this->createProductBundle([$productConcreteTransfer]);
-        $orderTransfer = $this->createOrderWithBundleItem($productConcreteTransfer->getSku(), $bundleTransfer->getSku());
+        $productConcreteTransfer = $this->tester->createProduct(100, static::PRODUCT_CONCRETE_SKU_1, true, true);
+        $bundleTransfer = $this->tester->createProductBundle(100, true, true, [$productConcreteTransfer]);
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))->build();
+        $quoteSeed = [
+            QuoteTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ];
+        $itemSeed = [
+            ItemTransfer::SKU => $productConcreteTransfer->getSku(),
+            ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => $bundleTransfer->getSku(),
+            ItemTransfer::QUANTITY => 1,
+            ItemTransfer::UNIT_PRICE => 1,
+        ];
+        $bundleItemSeed = [
+            ItemTransfer::SKU => $bundleTransfer->getSku(),
+            ItemTransfer::BUNDLE_ITEM_IDENTIFIER => $bundleTransfer->getSku(),
+            ItemTransfer::QUANTITY => 1,
+            ItemTransfer::UNIT_PRICE => 1,
+        ];
+        $quoteTransfer = $this->tester->buildQuote($quoteSeed, $itemSeed, $bundleItemSeed);
+        $orderTransfer = $this->createOrderFromQuote($quoteTransfer);
 
         // Act
         $itemTransfers = $this->tester->getFacade()->expandItemsWithProductBundles($orderTransfer->getItems()->getArrayCopy());
@@ -76,87 +89,44 @@ class ExpandItemsWithProductBundlesTest extends Unit
     }
 
     /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return void
      */
-    protected function createProduct(string $sku): ProductConcreteTransfer
+    public function testExpandBundleItemsWithoutProductBundles(): void
     {
-        $productConcreteTransfer = $this->tester->haveProduct([
-            ProductConcreteTransfer::SKU => $sku,
-            ProductConcreteTransfer::IS_ACTIVE => true,
-        ]);
+        // Arrange
+        $productConcreteTransfer = $this->tester->createProduct(100, static::PRODUCT_CONCRETE_SKU_1, true, true);
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))->build();
+        $quoteSeed = [
+            QuoteTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ];
+        $itemSeed = [
+            ItemTransfer::SKU => $productConcreteTransfer->getSku(),
+            ItemTransfer::QUANTITY => 1,
+            ItemTransfer::UNIT_PRICE => 1,
+        ];
+        $quoteTransfer = $this->tester->buildQuote($quoteSeed, $itemSeed);
+        $orderTransfer = $this->createOrderFromQuote($quoteTransfer);
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->haveProductInStockForStore($storeTransfer, [
-            StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 10,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => true,
-        ]);
-        $this->tester->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 10);
+        // Act
+        $itemTransfers = $this->tester->getFacade()->expandItemsWithProductBundles($orderTransfer->getItems()->getArrayCopy());
 
-        $this->tester->havePriceProduct([
-            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
-        ]);
-
-        return $productConcreteTransfer;
+        // Assert
+        $this->assertEmpty($itemTransfers[0]->getProductBundle());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function createProductBundle(array $productsToAssign = []): ProductConcreteTransfer
-    {
-        $productBundleTransfer = (new ProductBundleTransfer())
-            ->setIsNeverOutOfStock(true);
-
-        foreach ($productsToAssign as $productConcreteTransferToAssign) {
-            $bundledProductTransfer = new ProductForBundleTransfer();
-            $bundledProductTransfer->setQuantity(1);
-            $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign->getIdProductConcrete());
-            $productBundleTransfer->addBundledProduct($bundledProductTransfer);
-        }
-
-        $productConcreteTransfer = $this->createProduct(static::BUNDLE_SKU_1);
-        $productConcreteTransfer->setProductBundle($productBundleTransfer);
-
-        $this->tester->getFacade()->saveBundledProducts($productConcreteTransfer);
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param string $productConcreteSku
-     * @param string $productBundleSku
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function createOrderWithBundleItem(string $productConcreteSku, string $productBundleSku): OrderTransfer
+    protected function createOrderFromQuote(QuoteTransfer $quoteTransfer): OrderTransfer
     {
-        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE]))
-            ->withItem([
-                ItemTransfer::SKU => $productConcreteSku,
-                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => $productBundleSku,
-                ItemTransfer::UNIT_PRICE => 1,
-                ItemTransfer::QUANTITY => 1,
-            ])
-            ->withBundleItem([
-                ItemTransfer::SKU => $productBundleSku,
-                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => $productBundleSku,
-                ItemTransfer::UNIT_PRICE => 1,
-                ItemTransfer::QUANTITY => 1,
-            ])
-            ->withTotals()
-            ->withStore()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCustomer([CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE])
-            ->withCurrency()
-            ->build();// ToDo: complete test
-
-        $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->haveOrderFromQuote(
+            $quoteTransfer,
+            BusinessHelper::DEFAULT_OMS_PROCESS_NAME,
+            [new ProductBundleOrderSaverPlugin()]
+        );
 
         return (new OrderTransfer())
             ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
