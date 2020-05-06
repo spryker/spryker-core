@@ -12,8 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
-use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToBarcodeServiceBridge;
+use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceBridge;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
@@ -41,6 +41,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyFacade($container);
         $container = $this->addSalesReturnPropelQuery($container);
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addBarcodeService($container);
 
         return $container;
     }

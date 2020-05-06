@@ -8,16 +8,17 @@
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
  */
 class ReturnSlipController extends AbstractController
 {
-    protected const PARAM_ID_RETURN = 'id-return';
+    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
 
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
@@ -50,7 +51,7 @@ class ReturnSlipController extends AbstractController
      */
     protected function executePrintAction(Request $request)
     {
-        $idReturn = $this->castId($request->query->get(static::PARAM_ID_RETURN));
+        $idReturn = $this->castId($request->query->get(static::PARAM_ID_SALES_RETURN));
 
         $returnTransfer = $this->getFactory()
             ->getSalesReturnFacade()
@@ -71,12 +72,28 @@ class ReturnSlipController extends AbstractController
             ->getBarcodeService()
             ->generateBarcode(
                 $returnTransfer->getReturnReference(),
-                $this->getConfig()->getDefaultBarcodeGeneratorPlugin()
+                $this->getFactory()->getConfig()->getDefaultBarcodeGeneratorPlugin()
             );
 
         return [
-            'return' => $returnTransfer,
+            'return' => $this->sortReturnItemByOrderReference($returnTransfer),
             'returnBarcode' => $returnBarcode,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    protected function sortReturnItemByOrderReference(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        $returnTransfer->getReturnItems()->uasort(
+            function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
+                return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
+            }
+        );
+
+        return $returnTransfer;
     }
 }

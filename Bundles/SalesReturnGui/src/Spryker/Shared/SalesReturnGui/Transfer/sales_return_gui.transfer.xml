@@ -21,4 +21,12 @@
         <property name="idSalesReturn" type="int"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="productBundle" type="Item"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+    </transfer>
+
 </transfers>

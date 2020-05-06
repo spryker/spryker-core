@@ -12,3 +12,13 @@ State,State
 "Print Slip","Print Slip"
 "List of Returns","List of Returns"
 Returns,Returns
+"Return Ref","Return Ref"
+Barcode,Barcode
+"Product SKU","Product SKU"
+"Product Name","Product Name"
+"Default Price","Default Price"
+Qty,Qty
+"Total Price","Total Price"
+"Return Reason","Return Reason"
+"Order Ref","Order Ref"
+"Return with id ""%id%"" was not found.","Return with id ""%id%"" was not found."
