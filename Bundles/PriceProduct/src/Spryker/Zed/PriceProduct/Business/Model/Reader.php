@@ -702,7 +702,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
-    protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, $priceProductTransfers): array
+    protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, array $priceProductTransfers): array
     {
         $priceProductTransfersGroupedByFilterIdentifier = [];
 
