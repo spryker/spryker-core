@@ -135,7 +135,8 @@ abstract class AbstractProductSearchDataMapper
     {
         foreach ($searchResultData as $searchResultDataMapTransfer) {
             $searchResultDataMapTransfer
-                ->requireName();
+                ->requireName()
+                ->requireValue();
 
             $result[PageIndexMap::SEARCH_RESULT_DATA][$searchResultDataMapTransfer->getName()] = $searchResultDataMapTransfer->getValue();
         }
