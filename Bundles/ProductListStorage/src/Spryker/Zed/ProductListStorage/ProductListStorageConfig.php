@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductListStorageConfig extends AbstractBundleConfig
 {
-    protected const PUBLISH_PRODUCT_ABSTRACT_CHUNK = 1000;
-    protected const PUBLISH_PRODUCT_CONCRETE_CHUNK = 1000;
+    protected const PUBLISH_PRODUCT_ABSTRACT_CHUNK = 500;
+    protected const PUBLISH_PRODUCT_CONCRETE_CHUNK = 500;
 
     /**
      * @api

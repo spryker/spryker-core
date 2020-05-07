@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStor
 
 use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage;
+use Propel\Runtime\Propel;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
@@ -52,6 +53,8 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     public function publish(array $productConcreteIds): void
     {
+        $isPoolingStateChanged = Propel::disableInstancePooling();
+
         $productLists = $this->productListFacade->getProductListsIdsByProductIds($productConcreteIds);
 
         $productConcreteIdsChunks = array_chunk($productConcreteIds, $this->productListStorageConfig->getPublishProductConcreteChunkSize());
@@ -67,6 +70,10 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
             }
 
             $this->deleteProductConcreteProductListStorageEntities($indexedProductConcreteProductListStorageEntities);
+        }
+
+        if ($isPoolingStateChanged) {
+            Propel::enableInstancePooling();
         }
     }
 

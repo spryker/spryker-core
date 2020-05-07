@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
@@ -107,6 +108,8 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function publish(array $productConcreteIds): void
     {
+        $isPoolingStateChanged = Propel::disableInstancePooling();
+
         $productConcreteIds = array_unique(array_filter($productConcreteIds));
 
         if (!$productConcreteIds) {
@@ -123,6 +126,10 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
                 $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
             });
+        }
+
+        if ($isPoolingStateChanged) {
+            Propel::enableInstancePooling();
         }
     }
 

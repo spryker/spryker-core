@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig as SharedProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
@@ -106,10 +107,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = [])
     {
+        $isPoolingStateChanged = Propel::disableInstancePooling();
+
         $productAbstractIdsChunks = array_chunk($productAbstractIds, $this->productPageSearchConfig->getRefreshProductAbstractChunkSize());
 
         foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
             $this->publishEntities($productAbstractIdsChunk, $pageDataExpanderPluginNames, true);
+        }
+
+        if ($isPoolingStateChanged) {
+            Propel::enableInstancePooling();
         }
     }
 
