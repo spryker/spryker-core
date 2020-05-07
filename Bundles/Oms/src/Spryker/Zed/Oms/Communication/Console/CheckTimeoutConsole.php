@@ -42,5 +42,7 @@ class CheckTimeoutConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->checkTimeouts();
+
+        return static::CODE_SUCCESS;
     }
 }

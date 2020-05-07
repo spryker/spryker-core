@@ -28,10 +28,10 @@ class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPlu
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $this->getFacade()->calculateBundlePrice($quoteTransfer);
+        return $this->getFacade()->calculateBundlePrice($quoteTransfer);
     }
 }
