@@ -173,9 +173,9 @@ class GetReturnsTest extends Unit
      */
     public function testGetReturnsRetrievesReturnsByReturnReferenceFilter(): void
     {
+        // Arrange
         $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
-        // Arrange
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setReturnReference($returnTransfer->getReturnReference());
 
@@ -195,13 +195,13 @@ class GetReturnsTest extends Unit
     /**
      * @return void
      */
-    public function testGetReturnsRetrievesReturnsIdSalesReturnFilter(): void
+    public function testGetReturnsRetrievesReturnBySalesReturnIdsFilter(): void
     {
+        // Arrange
         $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
-        // Arrange
         $returnFilterTransfer = (new ReturnFilterTransfer())
-            ->setIdSalesReturn($returnTransfer->getIdSalesReturn());
+            ->addIdSalesReturn($returnTransfer->getIdSalesReturn());
 
         // Act
         $returnCollectionTransfer = $this->tester

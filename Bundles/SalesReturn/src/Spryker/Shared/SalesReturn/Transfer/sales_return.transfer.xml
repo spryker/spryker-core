@@ -38,7 +38,7 @@
     <transfer name="ReturnFilter">
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
-        <property name="idSalesReturn" type="int"/>
+        <property name="salesReturnIds" singular="idSalesReturn" type="int[]"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

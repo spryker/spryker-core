@@ -26,7 +26,7 @@ class ReturnSlipController extends AbstractController
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
      */
-    protected const ROUTE_RETURNS_LIST = '/sales-return-gui/return';
+    protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -65,7 +65,7 @@ class ReturnSlipController extends AbstractController
                 static::ERROR_MESSAGE_PARAM_ID => $idReturn,
             ]);
 
-            return $this->redirectResponse(static::ROUTE_RETURNS_LIST);
+            return $this->redirectResponse(static::ROUTE_RETURN_LIST);
         }
 
         $returnBarcode = $this->getFactory()
