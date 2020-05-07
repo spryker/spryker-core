@@ -32,7 +32,7 @@ class ProductLabelStoreWritePublisherPlugin extends AbstractPlugin implements Pu
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductLabelProductAbstractEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByProductLabelStoreEvents($eventTransfers);
     }
 
     /**
@@ -46,8 +46,8 @@ class ProductLabelStoreWritePublisherPlugin extends AbstractPlugin implements Pu
     {
         return [
             ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_STORE_CREATE,
-            ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE,
-            ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE,
+            ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_STORE_UPDATE,
+            ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_STORE_DELETE,
         ];
     }
 }
