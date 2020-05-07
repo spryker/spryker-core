@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -95,6 +96,25 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param int[] $salesOrderIds
+     *
+     * @return string[]
+     */
+    public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array
+    {
+        if (!$salesOrderIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByIdSalesOrder_In($salesOrderIds)
+            ->select([static::ID_SALES_ORDER, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE])
+            ->find()
+            ->toKeyValue(static::ID_SALES_ORDER, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $addressEntity
      *
@@ -128,6 +148,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $orderListQuery = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
+
+        if ($orderListRequestTransfer->getOrderReferences()) {
+            $orderListQuery->filterByOrderReference_In($orderListRequestTransfer->getOrderReferences());
+        }
 
         $ordersCount = $orderListQuery->count();
         if (!$ordersCount) {
