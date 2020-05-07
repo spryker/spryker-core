@@ -35,6 +35,13 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-9">
+            {% include '@SalesReturnGui/Return/_partials/total-column.twig' with {
+                return: return,
+            } only %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block head_css %}
