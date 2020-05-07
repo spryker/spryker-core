@@ -22,7 +22,6 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Glue\Kernel\AbstractBundleDependencyProvider $resolved */
         $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {

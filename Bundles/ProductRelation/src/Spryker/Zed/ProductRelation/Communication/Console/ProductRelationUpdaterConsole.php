@@ -40,5 +40,7 @@ class ProductRelationUpdaterConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->rebuildRelations();
+
+        return static::CODE_SUCCESS;
     }
 }

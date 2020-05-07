@@ -130,6 +130,7 @@ class Config
     {
         $config = new ArrayObject();
         $environmentName = $environmentName ?? static::getEnvironmentName();
+        static::defineCodeBucket();
 
         /*
          * e.g. config_default.php
@@ -178,6 +179,18 @@ class Config
         static::buildConfig('propel', $config);
 
         static::$config = $config;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons.
+     *
+     * @return void
+     */
+    protected static function defineCodeBucket(): void
+    {
+        if (!defined('APPLICATION_CODE_BUCKET')) {
+            define('APPLICATION_CODE_BUCKET', APPLICATION_STORE);
+        }
     }
 
     /**

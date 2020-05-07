@@ -22,7 +22,6 @@ class EntityManagerResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $resolved */
         $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {

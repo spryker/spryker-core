@@ -22,7 +22,6 @@ class FactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Service\Kernel\AbstractServiceFactory $resolved */
         $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {

@@ -264,5 +264,7 @@ class CompanyTable extends AbstractTable
             case SpyCompanyTableMap::COL_STATUS_DENIED:
                 return $this->generateLabel('Denied', 'label-danger');
         }
+
+        return '';
     }
 }

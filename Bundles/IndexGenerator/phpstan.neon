@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
             - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false

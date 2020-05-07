@@ -61,6 +61,8 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         $this->addGlossaryTranslateQuery($container);
         $this->addGlossaryKeyQuery($container);
+
+        return $container;
     }
 
     /**
