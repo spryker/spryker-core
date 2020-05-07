@@ -81,5 +81,9 @@ interface ProductLabelStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductView(ProductViewTransfer $productViewTransfer, string $localeName, string $storeName): ProductViewTransfer;
+    public function expandProductView(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName,
+        string $storeName
+    ): ProductViewTransfer;
 }

@@ -101,8 +101,11 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductView(ProductViewTransfer $productViewTransfer, string $localeName, string $storeName): ProductViewTransfer
-    {
+    public function expandProductView(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName,
+        string $storeName
+    ): ProductViewTransfer {
         return $this->getFactory()
             ->createProductViewExpander()
             ->expand($productViewTransfer, $localeName, $storeName);
