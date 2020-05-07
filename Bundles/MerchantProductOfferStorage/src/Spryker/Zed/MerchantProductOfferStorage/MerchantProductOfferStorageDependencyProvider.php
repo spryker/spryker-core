@@ -11,7 +11,6 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeBridge;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeBridge;
 
 /**
@@ -20,7 +19,6 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
     public const FACADE_STORE = 'FACADE_STORE';
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
 
@@ -47,7 +45,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
     {
         parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addProductOfferFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
 
@@ -78,22 +75,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductOfferStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductOfferFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
-            return new MerchantProductOfferStorageToProductOfferFacadeBridge(
-                $container->getLocator()->productOffer()->facade()
             );
         });
 

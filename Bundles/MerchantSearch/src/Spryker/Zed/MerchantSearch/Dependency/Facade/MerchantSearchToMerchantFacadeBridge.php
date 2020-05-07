@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 
 class MerchantSearchToMerchantFacadeBridge implements MerchantSearchToMerchantFacadeInterface
 {
@@ -26,12 +26,12 @@ class MerchantSearchToMerchantFacadeBridge implements MerchantSearchToMerchantFa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->get($merchantCriteriaTransfer);
     }
 }
