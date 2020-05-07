@@ -18,7 +18,7 @@
     </transfer>
 
     <transfer name="ReturnFilter">
-        <property name="salesReturnIds" singular="idSalesReturn" type="int[]"/>
+        <property name="returnIds" singular="idReturn" type="int[]"/>
     </transfer>
 
     <transfer name="Item">

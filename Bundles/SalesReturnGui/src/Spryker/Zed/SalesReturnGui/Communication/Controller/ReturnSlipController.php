@@ -55,7 +55,7 @@ class ReturnSlipController extends AbstractController
 
         $returnTransfer = $this->getFactory()
             ->getSalesReturnFacade()
-            ->getReturns((new ReturnFilterTransfer())->setIdSalesReturn($idReturn))
+            ->getReturns((new ReturnFilterTransfer())->addIdReturn($idReturn))
             ->getReturns()
             ->getIterator()
             ->current();
