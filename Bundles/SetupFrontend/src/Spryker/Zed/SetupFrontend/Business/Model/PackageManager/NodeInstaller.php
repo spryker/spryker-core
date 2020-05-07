@@ -22,7 +22,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $nodeVersion = $this->getNodeJsVersion($logger);
         $nodeInstalled = true;
 
-        if (preg_match('/^v[0-9](\..+)?$/', $nodeVersion)) {
+        if (preg_match('/^v[0-7](\..+)?$/', $nodeVersion)) {
             $nodeInstalled = $this->installNodeJs($logger);
         }
 
