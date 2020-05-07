@@ -36,3 +36,8 @@
         </div>
     </div>
 {% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-main.css') }}">
+{% endblock %}
