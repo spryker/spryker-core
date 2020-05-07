@@ -58,7 +58,7 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
      *
      * @param array $idPositions
      *
-     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryIdsByPositionIds(array $idPositions);
 }

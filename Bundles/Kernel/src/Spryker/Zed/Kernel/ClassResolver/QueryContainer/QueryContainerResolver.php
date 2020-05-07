@@ -22,7 +22,6 @@ class QueryContainerResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {

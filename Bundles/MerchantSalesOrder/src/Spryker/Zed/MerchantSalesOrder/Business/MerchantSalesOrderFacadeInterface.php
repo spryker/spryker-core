@@ -134,4 +134,16 @@ interface MerchantSalesOrderFacadeInterface
         ExpenseTransfer $expenseTransfer,
         ShipmentGroupTransfer $shipmentGroupTransfer
     ): ExpenseTransfer;
+
+    /**
+     * Specification
+     * - Expands order items with merchant order reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchantOrderData(OrderTransfer $orderTransfer): OrderTransfer;
 }

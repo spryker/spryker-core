@@ -184,6 +184,8 @@ class UsersTable extends AbstractTable
             case SpyUserTableMap::COL_STATUS_DELETED:
                 return $this->generateLabel('Deleted', 'label-default');
         }
+
+        return '';
     }
 
     /**

@@ -44,10 +44,11 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     /**
      * {@inheritDoc}
      *
-     * @return void
+     * @return \Symfony\Component\Routing\RequestContext
      */
     public function getContext()
     {
+        return new RequestContext();
     }
 
     /**
@@ -57,9 +58,10 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
      * @param array $parameters
      * @param int $referenceType
      *
-     * @return void
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
+        return '';
     }
 }
