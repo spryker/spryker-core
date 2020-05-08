@@ -11,7 +11,7 @@ use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
 class OrderItemsOmsTriggerFormDataProvider
 {
-    public const QUERY_PARAM_ITEMS = 'items';
+    protected const QUERY_PARAM_ITEMS = 'items';
 
     /**
      * @param string $redirectUrl
