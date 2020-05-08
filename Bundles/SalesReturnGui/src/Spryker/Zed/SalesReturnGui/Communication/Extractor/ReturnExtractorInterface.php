@@ -24,4 +24,11 @@ interface ReturnExtractorInterface
      * @return string[]
      */
     public function extractUniqueItemStateLabelsFromReturn(ReturnTransfer $returnTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int[]
+     */
+    public function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array;
 }

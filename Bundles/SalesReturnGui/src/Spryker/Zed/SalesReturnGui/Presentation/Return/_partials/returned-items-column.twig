@@ -2,42 +2,67 @@
     title: 'Returned items'
 } %}
     {% block content %}
-        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
-            <thead>
-            <tr class="text-left">
-                <th><input type="checkbox" id="check-all-orders"/></th>
-                <th colspan="2">{{ 'Product' | trans }}</th>
-                <th>{{ 'Quantity' | trans }}</th>
-                <th>{{ 'Price' | trans }}</th>
-                <th>{{ 'Item total' | trans }}</th>
-                <th>{{ 'State' | trans }}</th>
-                <th>{{ 'Trigger event' | trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for returnItem in return.returnItems %}
-                {% set order = {
-                    currencyIsoCode: returnItem.orderItem.currencyIsoCode ?? null
-                } %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h5>
+                            {{ 'Trigger all matching states' | trans }}
+                            <span id="item-counter-wrapper" class="hidden">{{ 'of ' }}
+                                <span id="item-counter"></span>
+                                {{ ' selected items' | trans }}
+                            </span>
+                        </h5>
+                    </div>
+                    <div id="return-bulk-trigger-buttons" class="col-lg-9 text-right">
+                        {% include '@Oms/RenderForm/_partial/order-items-actions.twig' ignore missing with {
+                            redirectUrl: triggerButtonRedirectUrl,
+                            salesOrderItemIds: salesOrderItemIds,
+                            events: uniqueOrderItemManualEvents,
+                        } only %}
+                    </div>
+                </div>
+                <hr/>
+            </div>
 
-                <tr>
-                    {% include '@Sales/Detail/boxes/order-item.twig' with {
+            <table id="return-items-table" class="footable table toggle-arrow-tiny" data-qa="return-items-table">
+                <thead>
+                <tr class="text-left">
+                    <th><input type="checkbox" class="check-all-orders"/></th>
+                    <th colspan="2">{{ 'Product' | trans }}</th>
+                    <th>{{ 'Quantity' | trans }}</th>
+                    <th>{{ 'Price' | trans }}</th>
+                    <th>{{ 'Item total' | trans }}</th>
+                    <th>{{ 'State' | trans }}</th>
+                    <th>{{ 'Trigger event' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for returnItem in return.returnItems %}
+                    {% set order = {
+                        currencyIsoCode: returnItem.orderItem.currencyIsoCode ?? null
+                    } %}
+
+                    <tr>
+                        {% include '@Sales/Detail/boxes/order-item.twig' with {
+                            orderItem: returnItem.orderItem,
+                            displayImage: true,
+                            image: returnItem.orderItem.metadata.image,
+                            displayTotals: true,
+                            group: false,
+                            order: order,
+                            eventsGroupedByItem: orderItemManualEvents,
+                            changeStatusRedirectUrl: triggerButtonRedirectUrl,
+                        } only %}
+                    </tr>
+
+                    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
                         orderItem: returnItem.orderItem,
-                        displayImage: true,
-                        image: returnItem.orderItem.metadata.image,
-                        displayTotals: true,
-                        group: false,
                         order: order,
                     } only %}
-                </tr>
-
-                {% include '@Sales/Detail/boxes/order-item-option.twig' with {
-                    orderItem: returnItem.orderItem,
-                    order: order,
-                } only %}
-            {% endfor %}
-            </tbody>
-        </table>
-
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endblock %}
 {% endembed %}

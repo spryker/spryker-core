@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -23,6 +24,11 @@ class ReturnController extends AbstractController
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     */
+    protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
     protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
 
@@ -101,11 +107,40 @@ class ReturnController extends AbstractController
 
         $returnExtractor = $this->getFactory()->createReturnExtractor();
 
+        $salesOrderItemIds = $returnExtractor->extractSalesOrderItemIdsFromReturn($returnTransfer);
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
+
+        $triggerButtonRedirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
+            static::PARAM_ID_SALES_RETURN => $idSalesReturn,
+        ]);
+
+        $orderItemManualEvents = $this->getFactory()->getOmsFacade()->getOrderItemManualEvents($orderItemFilterTransfer);
+
         return [
             'return' => $returnTransfer,
             'customer' => $customerResponseTransfer->getCustomerTransfer(),
             'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
+            'triggerButtonRedirectUrl' => $triggerButtonRedirectUrl,
+            'orderItemManualEvents' => $orderItemManualEvents,
+            'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($orderItemManualEvents),
+            'salesOrderItemIds' => $salesOrderItemIds,
         ];
+    }
+
+    /**
+     * @param string[][] $orderItemManualEventsGroupedByItem
+     *
+     * @return string[]
+     */
+    protected function extractUniqueOrderItemManualEvents(array $orderItemManualEventsGroupedByItem): array
+    {
+        $allOrderItemManualEvents = [];
+
+        foreach ($orderItemManualEventsGroupedByItem as $orderItemManualEvents) {
+            $allOrderItemManualEvents = array_merge($allOrderItemManualEvents, $orderItemManualEvents);
+        }
+
+        return array_unique($allOrderItemManualEvents);
     }
 }

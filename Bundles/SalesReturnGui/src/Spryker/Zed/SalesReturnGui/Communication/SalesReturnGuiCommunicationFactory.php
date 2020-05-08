@@ -16,6 +16,7 @@ use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
@@ -80,6 +81,14 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerFacade(): SalesReturnGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): SalesReturnGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_OMS);
     }
 
     /**

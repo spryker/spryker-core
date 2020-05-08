@@ -50,4 +50,20 @@ class ReturnExtractor implements ReturnExtractorInterface
 
         return $uniqueItemStates;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int[]
+     */
+    public function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+        }
+
+        return $salesOrderItemIds;
+    }
 }

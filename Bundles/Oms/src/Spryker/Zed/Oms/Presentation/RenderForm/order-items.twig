@@ -1,0 +1,7 @@
+{% if formCollection | length > 0 %}
+    {% for form in formCollection %}
+        {{ form(form, { 'attr': {'class': 'oms-trigger-form'} }) }}
+    {% endfor %}
+{% else %}
+    -
+{% endif %}
