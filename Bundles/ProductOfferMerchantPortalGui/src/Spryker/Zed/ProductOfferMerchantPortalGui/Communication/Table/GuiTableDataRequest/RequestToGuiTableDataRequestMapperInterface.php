@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface RequestToGuiTableDataRequestHydratorInterface
+interface RequestToGuiTableDataRequestMapperInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -19,5 +19,5 @@ interface RequestToGuiTableDataRequestHydratorInterface
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    public function hydrate(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer;
+    public function map(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer;
 }

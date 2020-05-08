@@ -49,26 +49,19 @@
         <property name="searchTerm" type="string" />
         <property name="orderBy" type="string" />
         <property name="orderDirection" type="string" />
-        <property name="searchTerm" type="string" />
         <property name="page" type="int" />
         <property name="pageSize" type="int" />
         <property name="filters" type="array" associative="true" />
-        <property name="locale" type="Locale"/>
-    </transfer>
-
-    <transfer name="OrderBy">
-        <property name="property" type="string" />
-        <property name="direction" type="string" />
+        <property name="idLocale" type="string"/>
     </transfer>
 
     <transfer name="ProductTableCriteria">
-        <property name="inCategories" type="string[]" singular="inCategory"/>
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasOffers" type="bool"/>
         <property name="filterCategoriesIn" type="string[]" singular="inCategory"/>
         <property name="searchTerm" type="string"/>
-        <property name="locale" type="Locale"/>
-        <property name="merchantUser" type="MerchantUser"/>
+        <property name="idLocale" type="int"/>
+        <property name="idMerchant" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>

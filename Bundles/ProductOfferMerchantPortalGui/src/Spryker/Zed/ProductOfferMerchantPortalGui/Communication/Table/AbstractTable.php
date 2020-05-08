@@ -446,20 +446,21 @@ abstract class AbstractTable
      */
     protected function createFilterSelect(string $id, string $title, bool $multiselect, array $values): GuiTableFilterTransfer
     {
-        $typeOptions = (new SelectGuiTableFilterTypeOptionsTransfer())
+        $typeOptionTransfers = (new SelectGuiTableFilterTypeOptionsTransfer())
             ->setMultiselect($multiselect);
 
         foreach ($values as $value => $title) {
-            $typeOptions->addValue((new OptionSelectGuiTableFilterTypeOptionsTransfer())
+            $optionTransfer = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
                 ->setValue($value)
-                ->setTitle($title));
+                ->setTitle($title);
+            $typeOptionTransfers->addValue($optionTransfer);
         }
 
         return (new GuiTableFilterTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::FILTER_TYPE_SELECT)
-            ->setTypeOptions($typeOptions);
+            ->setTypeOptions($typeOptionTransfers);
     }
 
     /**

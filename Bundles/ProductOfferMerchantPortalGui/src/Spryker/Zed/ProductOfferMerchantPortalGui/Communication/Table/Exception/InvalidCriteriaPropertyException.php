@@ -13,11 +13,11 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class InvalidCriteriaPropertyException extends RuntimeException
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      * @param string $property
      */
-    public function __construct(AbstractTransfer $persistenceCriteria, string $property)
+    public function __construct(AbstractTransfer $criteriaTransfer, string $property)
     {
-        parent::__construct(sprintf('Criteria is not valid. %s::%s property not found ', get_class($persistenceCriteria), $property));
+        parent::__construct(sprintf('Criteria is not valid. %s::%s property not found ', get_class($criteriaTransfer), $property));
     }
 }

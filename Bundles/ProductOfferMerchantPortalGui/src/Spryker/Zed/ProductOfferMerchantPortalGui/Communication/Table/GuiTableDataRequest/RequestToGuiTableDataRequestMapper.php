@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
-class RequestToGuiTableDataRequestHydrator implements RequestToGuiTableDataRequestHydratorInterface
+class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequestMapperInterface
 {
     use BundleConfigResolverAwareTrait;
 
@@ -40,6 +40,7 @@ class RequestToGuiTableDataRequestHydrator implements RequestToGuiTableDataReque
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[] $filterValueNormalizerPlugins
      */
     public function __construct(
@@ -58,12 +59,12 @@ class RequestToGuiTableDataRequestHydrator implements RequestToGuiTableDataReque
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    public function hydrate(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer
+    public function map(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer
     {
         $guiTableRequest = new GuiTableDataRequestTransfer();
 
         $guiTableRequest->setSearchTerm($request->query->get('search'));
-        $guiTableRequest->setLocale($this->localeFacade->getCurrentLocale());
+        $guiTableRequest->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
         $this->hydratePagination($guiTableRequest, $request);
         $this->hydrateOrder($request, $guiTableRequest);

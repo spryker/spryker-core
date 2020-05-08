@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
@@ -51,7 +51,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     protected $merchantUserFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface
      */
     protected $requestToGuiTableDataRequestHydrator;
 
@@ -61,7 +61,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface $requestToGuiTableDataRequestHydrator
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface $requestToGuiTableDataRequestHydrator
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
@@ -69,7 +69,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
         ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService,
         ProductNameBuilderInterface $productNameBuilder,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        RequestToGuiTableDataRequestHydratorInterface $requestToGuiTableDataRequestHydrator
+        RequestToGuiTableDataRequestMapperInterface $requestToGuiTableDataRequestHydrator
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->translatorFacade = $translatorFacade;
@@ -80,9 +80,9 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface
      */
-    protected function getRequestToGuiTableDataRequestHydrator(): RequestToGuiTableDataRequestHydratorInterface
+    protected function getRequestToGuiTableDataRequestMapper(): RequestToGuiTableDataRequestMapperInterface
     {
         return $this->requestToGuiTableDataRequestHydrator;
     }
@@ -92,10 +92,10 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function createPersistenceCriteria(Request $request): AbstractTransfer
+    protected function createCriteria(Request $request): AbstractTransfer
     {
         $criteria = new ProductTableCriteriaTransfer();
-        $criteria->setMerchantUser($this->merchantUserFacade->getCurrentMerchantUser());
+        $criteria->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
 
         return $criteria;
     }

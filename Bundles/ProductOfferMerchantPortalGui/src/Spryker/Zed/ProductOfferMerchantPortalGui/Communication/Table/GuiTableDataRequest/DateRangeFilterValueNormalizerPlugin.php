@@ -13,6 +13,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 
 class DateRangeFilterValueNormalizerPlugin implements FilterValueNormalizerPluginInterface
 {
+    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @param string $filterType
      *
@@ -30,18 +32,18 @@ class DateRangeFilterValueNormalizerPlugin implements FilterValueNormalizerPlugi
      */
     public function normalizeValue($value)
     {
-        if (!$value || is_array($value) || (!array_key_exists('from', $value) && !array_key_exists('to', $value))) {
+        if (!$value || !is_array($value) || (!isset($value['from']) && !isset($value['to']))) {
             return null;
         }
 
         $from = $value['from'] ?? null;
         if ($from) {
-            $from = DateTime::createFromFormat(DateTime::ATOM, $from);
+            $from = DateTime::createFromFormat(DateTime::ATOM, $from)->format(self::DATE_TIME_FORMAT);
         }
 
         $to = $value['to'] ?? null;
         if ($to) {
-            $to = DateTime::createFromFormat(DateTime::ATOM, $to);
+            $to = DateTime::createFromFormat(DateTime::ATOM, $to)->format(self::DATE_TIME_FORMAT);
         }
 
         return (new CriteriaRangeFilterTransfer())
