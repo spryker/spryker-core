@@ -32,9 +32,7 @@ class ProductAbstractSkuToIdAbstractProductStep implements DataImportStepInterfa
             throw new InvalidDataException(sprintf('"%s" is required.', MerchantProductDataSetInterface::PRODUCT_ABSTRACT_SKU));
         }
 
-        $idProductAbstract = $this->getIdAbstractProduct($sku);
-
-        $dataSet[MerchantProductDataSetInterface::FK_PRODUCT_ABSTRACT] = $idProductAbstract;
+        $dataSet[MerchantProductDataSetInterface::FK_PRODUCT_ABSTRACT] = $this->getIdAbstractProduct($sku);
     }
 
     /**

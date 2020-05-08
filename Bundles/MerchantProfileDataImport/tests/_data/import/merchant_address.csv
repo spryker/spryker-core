@@ -1,2 +1,2 @@
 merchant_key,country_iso2_code,country_iso3_code,address1,address2,address3,city,zip_code
-kudu-merchant-1,DE,DEU,Caroline-Michaelis-Straße,8,,Berlin,10115
+test,DE,DEU,Caroline-Michaelis-Straße,8,,Berlin,10115

@@ -35,7 +35,6 @@ class MerchantProductDataImportCommunicationTester extends Actor
      */
     public function ensureMerchantProductAbstractTablesIsEmpty(): void
     {
-        $merchantProductAbstractQuery = SpyMerchantProductAbstractQuery::create();
-        $merchantProductAbstractQuery->deleteAll();
+        SpyMerchantProductAbstractQuery::create()->deleteAll();
     }
 }

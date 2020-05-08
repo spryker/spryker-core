@@ -37,9 +37,7 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
             throw new InvalidDataException(sprintf('"%s" is required.', MerchantProductDataSetInterface::MERCHANT_REFERENCE));
         }
 
-        $idMerchant = $this->getIdMerchant($merchantReference);
-
-        $dataSet[MerchantProductDataSetInterface::FK_MERCHANT] = $idMerchant;
+        $dataSet[MerchantProductDataSetInterface::FK_MERCHANT] = $this->getIdMerchant($merchantReference);
     }
 
     /**

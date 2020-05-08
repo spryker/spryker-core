@@ -60,7 +60,7 @@ class MerchantProductDataImportPluginTest extends Unit
         $this->tester->haveProductAbstract([
             ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_SKU,
         ]);
-        $t1 = SpyMerchantProductAbstractQuery::create()->find();
+
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
             ->setFileName(codecept_data_dir() . 'import/merchant_product.csv');
 
@@ -70,11 +70,14 @@ class MerchantProductDataImportPluginTest extends Unit
         // Act
         $merchantProductDataImportPlugin = new MerchantProductDataImportPlugin();
         $dataImporterReportTransfer = $merchantProductDataImportPlugin->import($dataImportConfigurationTransfer);
-        $t2 = SpyMerchantProductAbstractQuery::create()->find();
+
         // Assert
         $this->assertEmpty($dataImporterReportTransfer->getDataImporterReports());
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->tester->assertMerchantProductAbstractDatabaseTablesContainsData();
+        $this->assertTrue(
+            SpyMerchantProductAbstractQuery::create()->find()->count() > 0,
+            'Expected at least one entry in the database table but database table is empty.'
+        );
     }
 
     /**
@@ -83,9 +86,9 @@ class MerchantProductDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         // Act
-        $merchantOpeningHoursDateScheduleDataImportPlugin = new MerchantProductDataImportPlugin();
+        $merchantProductDataImportPlugin = new MerchantProductDataImportPlugin();
 
         // Assert
-        $this->assertSame(MerchantProductDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT, $merchantOpeningHoursDateScheduleDataImportPlugin->getImportType());
+        $this->assertSame(MerchantProductDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT, $merchantProductDataImportPlugin->getImportType());
     }
 }

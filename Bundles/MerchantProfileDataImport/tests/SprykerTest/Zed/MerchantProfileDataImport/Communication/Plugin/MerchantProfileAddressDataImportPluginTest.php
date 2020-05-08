@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use ReflectionClass;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportBusinessFactory;
@@ -48,7 +49,7 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
         $this->tester->assertMerchantProfileAddressDatabaseTableIsEmpty();
 
         $merchantTransfer = $this->tester->haveMerchant([
-            'merchant_key' => 'sony-experts',
+            MerchantTransfer::MERCHANT_KEY => 'test',
         ]);
         $this->tester->haveMerchantProfile($merchantTransfer);
 
