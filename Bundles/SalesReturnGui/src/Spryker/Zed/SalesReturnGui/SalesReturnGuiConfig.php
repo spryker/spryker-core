@@ -11,13 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesReturnGuiConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @return string|null
-     */
-    public function getDefaultBarcodeGeneratorPlugin(): ?string
-    {
-        return null;
-    }
 }
