@@ -49,6 +49,7 @@
         <tbody>
         {% set orderReference = '' %}
         {% set returnItems = return.returnItems | filter(returnItem => not (returnItem.orderItem.productBundle or returnItem.orderItem.salesOrderConfiguredBundle)) %}
+        {% set currencyIsoCode = (returnItems | first).orderItem.currencyIsoCode ?? null %}
 
         {% for returnItem in returnItems %}
             {% if returnItem.orderItem.orderReference != orderReference %}
@@ -59,7 +60,6 @@
             {% endif %}
 
             {% set orderReference = returnItem.orderItem.orderReference %}
-            {% set currencyIsoCode = returnItem.orderItem.currencyIsoCode ?? null %}
 
             <tr>
                 <td>{{ barcode(returnItem.orderItem.sku) }}</td>
@@ -75,6 +75,21 @@
 {#        Configured bundles #}
 {#        Product bundles #}
 
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <table class="return-slip-title">
+        <tbody>
+        <tr>
+            <td>{{ 'Items to Return' | trans }}</td>
+            <td>{{ return.returnItems | length }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Remuneration Total' | trans }}</td>
+            <td>{{ return.returnTotals.remunerationTotal | money(true, currencyIsoCode) }}</td>
+        </tr>
         </tbody>
     </table>
 {% endblock %}
