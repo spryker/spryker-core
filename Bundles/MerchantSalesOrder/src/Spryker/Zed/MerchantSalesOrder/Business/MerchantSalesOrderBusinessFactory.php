@@ -66,7 +66,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander(): OrderExpanderInterface
     {
-        return new OrderExpander();
+        return new OrderExpander($this->getRepository());
     }
 
     /**
