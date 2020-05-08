@@ -116,6 +116,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
@@ -145,6 +147,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductLabel
      * @param int $idLocale

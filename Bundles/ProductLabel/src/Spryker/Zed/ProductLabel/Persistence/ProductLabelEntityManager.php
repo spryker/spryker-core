@@ -123,7 +123,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idProductLabel
      *
      * @return void
@@ -143,7 +143,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idProductLabel
      *
      * @return void

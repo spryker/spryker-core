@@ -65,6 +65,8 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
@@ -80,6 +82,8 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductLabel
      * @param int $idLocale

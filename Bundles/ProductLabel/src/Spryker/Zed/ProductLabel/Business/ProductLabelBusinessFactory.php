@@ -13,11 +13,8 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
-use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
-use Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface;
-use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReader;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
@@ -67,17 +64,6 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\Label\LabelReaderInterface
-     */
-    public function createLabelReader(): LabelReaderInterface
-    {
-        return new LabelReader(
-            $this->createLocalizedAttributesCollectionReader(),
-            $this->getRepository()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface
      */
     public function createLabelDeleter(): LabelDeleterInterface
@@ -121,14 +107,6 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface
-     */
-    public function createLocalizedAttributesCollectionReader()
-    {
-        return new LocalizedAttributesCollectionReader($this->getQueryContainer());
     }
 
     /**

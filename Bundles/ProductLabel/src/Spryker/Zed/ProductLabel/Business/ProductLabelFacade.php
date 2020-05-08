@@ -35,9 +35,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelById($idProductLabel)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findByIdProductLabel($idProductLabel);
+            ->getRepository()
+            ->findProductLabelById($idProductLabel);
     }
 
     /**
@@ -52,8 +51,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
+            ->getRepository()
             ->findProductLabelByName($labelName);
     }
 
@@ -67,9 +65,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findAllLabels()
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAll();
+            ->getRepository()
+            ->getAllProductLabelsSortedByPosition();
     }
 
     /**
@@ -84,9 +81,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getProductLabelsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -101,9 +97,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelIdsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllLabelIdsByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -118,9 +113,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findActiveLabelIdsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllActiveLabelIdsByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

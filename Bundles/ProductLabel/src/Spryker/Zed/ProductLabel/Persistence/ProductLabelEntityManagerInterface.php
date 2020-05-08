@@ -54,7 +54,7 @@ interface ProductLabelEntityManagerInterface
     public function deleteProductLabelProductAbstractRelations(int $idProductLabel): void;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idProductLabel
      *
      * @return void
@@ -62,7 +62,7 @@ interface ProductLabelEntityManagerInterface
     public function removeProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idProductLabel
      *
      * @return void
