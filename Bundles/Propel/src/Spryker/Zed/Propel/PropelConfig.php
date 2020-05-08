@@ -136,7 +136,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getLogPath()
     {
-        $basePath = APPLICATION_ROOT_DIR . 'data/logs/';
+        $basePath = APPLICATION_ROOT_DIR . '/data/logs/';
 
         if (!is_writable($basePath)) {
             $basePath = $this->getBCBaseLogPath();
@@ -154,7 +154,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     protected function getBCBaseLogPath(): string
     {
-        return APPLICATION_ROOT_DIR . 'data/' . APPLICATION_STORE . '/logs/';
+        return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/logs/';
     }
 
     /**
