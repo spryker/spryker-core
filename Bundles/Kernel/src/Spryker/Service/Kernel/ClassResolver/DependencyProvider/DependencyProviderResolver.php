@@ -22,7 +22,6 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Service\Kernel\AbstractBundleDependencyProvider $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {

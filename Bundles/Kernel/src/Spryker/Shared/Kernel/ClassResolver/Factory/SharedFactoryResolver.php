@@ -25,7 +25,6 @@ class SharedFactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Shared\Kernel\AbstractSharedFactory $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {

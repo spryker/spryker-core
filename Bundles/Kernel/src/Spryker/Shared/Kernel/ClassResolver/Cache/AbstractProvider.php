@@ -9,6 +9,9 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache;
 
 use Spryker\Shared\Kernel\ClassResolver\ResolverCache;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+ */
 abstract class AbstractProvider implements ProviderInterface
 {
     /**

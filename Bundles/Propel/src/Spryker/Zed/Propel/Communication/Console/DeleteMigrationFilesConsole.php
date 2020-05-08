@@ -41,5 +41,7 @@ class DeleteMigrationFilesConsole extends Console
     {
         $this->info(static::DESCRIPTION);
         $this->getFacade()->deleteMigrationFilesDirectory();
+
+        return static::CODE_SUCCESS;
     }
 }

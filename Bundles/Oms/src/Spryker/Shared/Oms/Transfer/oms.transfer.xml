@@ -7,6 +7,7 @@
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Mail">
@@ -96,6 +97,7 @@
         <property name="idSalesOrderItem" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
     </transfer>
 
     <transfer name="Locale">

@@ -18,10 +18,8 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileA
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
-use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
-use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface;
 use Spryker\Zed\MerchantProfile\MerchantProfileDependencyProvider;
 
 /**
@@ -39,9 +37,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileWriter(
             $this->getEntityManager(),
             $this->createMerchantProfileGlossaryWriter(),
-            $this->getUrlFacade(),
-            $this->createMerchantProfileAddressWriter(),
-            $this->getEventFacade()
+            $this->createMerchantProfileAddressWriter()
         );
     }
 
@@ -99,21 +95,5 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): MerchantProfileToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface
-     */
-    public function getUrlFacade(): MerchantProfileToUrlFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_URL);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface
-     */
-    public function getEventFacade(): MerchantProfileToEventFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_EVENT);
     }
 }

@@ -12,8 +12,9 @@ interface ProductAbstractRelationWriterInterface
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function addRelations($idProductLabel, array $idsProductAbstract);
+    public function addRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true);
 }

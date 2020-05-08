@@ -131,7 +131,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getShoppingListItemBeforeDeletePlugins(),
             $this->getShoppingListItemPostSavePlugins(),
             $this->getAddItemPreCheckPlugins(),
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
+            $this->getItemCollectionExpanderPlugins(),
+            $this->getShoppingListItemBulkPostSavePlugins()
         );
     }
 
@@ -239,6 +241,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     */
+    public function getItemCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_COLLECTION_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface
      */
     public function getProductFacade(): ShoppingListToProductFacadeInterface
@@ -329,6 +339,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getShoppingListItemPostSavePlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     */
+    public function getShoppingListItemBulkPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE);
     }
 
     /**

@@ -622,6 +622,20 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     * - Hydrates history states for given order items.
+     * - Copies createAt field from latest history state to ItemTransfer::state.
+     * - Sets ItemTransfer::stateHistory.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array;
+
+    /**
+     * Specification:
      * - Expands order with OMS unique states from order items.
      *
      * @api

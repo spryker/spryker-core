@@ -64,12 +64,12 @@ interface MerchantSalesOrderFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function getMerchantOrderCollection(
-        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
     ): MerchantOrderCollectionTransfer;
 
     /**
@@ -79,12 +79,12 @@ interface MerchantSalesOrderFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(
-        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
     ): ?MerchantOrderTransfer;
 
     /**
@@ -134,6 +134,18 @@ interface MerchantSalesOrderFacadeInterface
         ExpenseTransfer $expenseTransfer,
         ShipmentGroupTransfer $shipmentGroupTransfer
     ): ExpenseTransfer;
+
+    /**
+     * Specification
+     * - Expands order items with merchant order reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchantOrderData(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:

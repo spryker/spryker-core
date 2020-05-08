@@ -43,7 +43,7 @@ class TriggerController extends AbstractController
     public function triggerEventForNewItemAction(Request $request)
     {
         trigger_error(
-            "This action is deprecated, please use submitTriggerEventForNewItemAction() instead.",
+            'This action is deprecated, please use submitTriggerEventForNewItemAction() instead.',
             E_USER_DEPRECATED
         );
 
@@ -96,7 +96,7 @@ class TriggerController extends AbstractController
     public function triggerEventAction(Request $request)
     {
         trigger_error(
-            "This action is deprecated, please use submitTriggerEventAction() instead.",
+            'This action is deprecated, please use submitTriggerEventAction() instead.',
             E_USER_DEPRECATED
         );
 

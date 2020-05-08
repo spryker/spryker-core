@@ -11,6 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceRelationshipExpander;
 use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceRelationshipExpanderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderItemExpander;
+use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderItemExpanderInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapper;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapper;
@@ -60,6 +62,17 @@ class OrdersRestApiFactory extends AbstractFactory
         return new OrderRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createOrderMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Expander\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander(
+            $this->getSalesClient(),
+            $this->createOrderRestResponseBuilder()
         );
     }
 

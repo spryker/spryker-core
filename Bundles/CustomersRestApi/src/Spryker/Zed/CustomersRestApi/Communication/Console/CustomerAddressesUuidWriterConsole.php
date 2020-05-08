@@ -42,5 +42,7 @@ class CustomerAddressesUuidWriterConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->updateCustomerAddressUuid();
+
+        return static::CODE_SUCCESS;
     }
 }
