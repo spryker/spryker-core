@@ -78,7 +78,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @api
      *
-     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getProductLabelsByIdProductAbstract} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getProductLabelsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
@@ -99,7 +99,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @api
      *
-     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getActiveProductLabelIdsByIdProductAbstract} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getActiveProductLabelIdsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
