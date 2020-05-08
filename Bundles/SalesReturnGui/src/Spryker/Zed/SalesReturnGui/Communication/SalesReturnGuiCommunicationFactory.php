@@ -14,7 +14,6 @@ use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface;
-use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToBarcodeServiceInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
 
@@ -78,13 +77,5 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesReturnPropelQuery(): SpySalesReturnQuery
     {
         return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::PROPEL_QUERY_SALES_RETURN);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToBarcodeServiceInterface
-     */
-    public function getBarcodeService(): SalesReturnGuiToBarcodeServiceInterface
-    {
-        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::SERVICE_BARCODE);
     }
 }

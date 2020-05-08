@@ -68,16 +68,8 @@ class ReturnSlipController extends AbstractController
             return $this->redirectResponse(static::ROUTE_RETURN_LIST);
         }
 
-        $returnBarcode = $this->getFactory()
-            ->getBarcodeService()
-            ->generateBarcode(
-                $returnTransfer->getReturnReference(),
-                $this->getFactory()->getConfig()->getDefaultBarcodeGeneratorPlugin()
-            );
-
         return [
             'return' => $this->sortReturnItemByOrderReference($returnTransfer),
-            'returnBarcode' => $returnBarcode,
         ];
     }
 

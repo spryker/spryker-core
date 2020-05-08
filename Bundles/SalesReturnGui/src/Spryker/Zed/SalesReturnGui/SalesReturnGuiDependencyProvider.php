@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
-use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToBarcodeServiceBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceBridge;
 
 /**
@@ -24,7 +23,6 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MONEY = 'FACADE_MONEY';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
-    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     public const PROPEL_QUERY_SALES_RETURN = 'PROPEL_QUERY_SALES_RETURN';
 
@@ -41,7 +39,6 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyFacade($container);
         $container = $this->addSalesReturnPropelQuery($container);
         $container = $this->addUtilDateTimeService($container);
-        $container = $this->addBarcodeService($container);
 
         return $container;
     }
@@ -85,20 +82,6 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesReturnGuiToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service()
             );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addBarcodeService(Container $container): Container
-    {
-        $container->set(static::SERVICE_BARCODE, function (Container $container) {
-            return new SalesReturnGuiToBarcodeServiceBridge($container->getLocator()->barcode()->service());
         });
 
         return $container;

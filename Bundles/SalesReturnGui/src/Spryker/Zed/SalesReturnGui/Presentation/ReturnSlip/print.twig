@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    <img src="{{ returnBarcode.encoding }},{{ returnBarcode.code }}">
+    {{ barcode(return.returnReference) }}
 
     <br><br>
 
