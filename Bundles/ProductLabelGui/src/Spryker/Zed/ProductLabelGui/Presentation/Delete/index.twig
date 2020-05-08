@@ -16,7 +16,7 @@
             <br><br>
             <ul class="list-inline m-b-none">
                 <li>
-                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-primary">{{ 'No, I want to keep this product label' | trans}}</a>
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this product label' | trans }}</a>
                 </li>
                 <li>
                     {{ form_start(deleteProductLabelForm) }}
