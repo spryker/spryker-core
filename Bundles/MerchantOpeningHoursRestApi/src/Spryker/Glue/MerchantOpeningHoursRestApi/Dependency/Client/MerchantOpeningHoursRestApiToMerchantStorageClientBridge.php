@@ -7,29 +7,31 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantStorageProfileTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements MerchantOpeningHoursRestApiToMerchantStorageClientInterface
 {
     /**
+     * @var \Spryker\Client\MerchantStorage\MerchantStorageClientInterface
+     */
+    protected $merchantStorageClient;
+
+    /**
+     * @param \Spryker\Client\MerchantStorage\MerchantStorageClientInterface $merchantStorageClient
+     */
+    public function __construct($merchantStorageClient)
+    {
+        $this->merchantStorageClient = $merchantStorageClient;
+    }
+
+    /**
      * @param string[] $merchantReferences
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function findByMerchantReference(array $merchantReferences): array
+    public function getByMerchantReferences(array $merchantReferences): array
     {
-        $merchantStorageProfile = (new MerchantStorageProfileTransfer())
-            ->setMerchantUrl('url-test')
-            ->setPublicEmail('email-test');
-
-        return [
-            (new MerchantStorageTransfer())
-                ->setIdMerchant(1)
-                ->setMerchantReference('MER000006')
-                ->setName('Kudu Merchant')
-                ->setMerchantStorageProfile($merchantStorageProfile),
-        ];
+        return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
     }
 
     /**
@@ -39,14 +41,6 @@ class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements Mercha
      */
     public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
     {
-        $merchantStorageProfile = (new MerchantStorageProfileTransfer())
-            ->setMerchantUrl('url-test')
-            ->setPublicEmail('email-test');
-
-        return (new MerchantStorageTransfer())
-                ->setIdMerchant(1)
-                ->setMerchantReference('MER000006')
-                ->setName('Kudu Merchant')
-                ->setMerchantStorageProfile($merchantStorageProfile);
+        return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
     }
 }

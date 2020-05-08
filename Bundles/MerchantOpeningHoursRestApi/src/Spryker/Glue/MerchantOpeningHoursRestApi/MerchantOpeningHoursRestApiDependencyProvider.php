@@ -62,7 +62,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursRestApiToMerchantStorageClientBridge(
-            //TODO
+                $container->getLocator()->merchantStorage()->client()
             );
         });
 

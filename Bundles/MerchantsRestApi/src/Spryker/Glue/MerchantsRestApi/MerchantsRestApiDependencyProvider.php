@@ -43,7 +43,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantsRestApiToMerchantsStorageClientBridge(
-                //TODO
+                $container->getLocator()->merchantStorage()->client()
             );
         });
 
