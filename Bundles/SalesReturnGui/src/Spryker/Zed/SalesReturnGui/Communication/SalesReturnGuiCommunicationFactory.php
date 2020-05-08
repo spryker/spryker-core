@@ -17,6 +17,9 @@ use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFaca
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

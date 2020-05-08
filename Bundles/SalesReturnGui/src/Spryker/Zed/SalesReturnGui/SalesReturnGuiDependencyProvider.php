@@ -14,6 +14,9 @@ use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeBrid
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
