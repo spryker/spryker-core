@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantStorageTransfer;
-
 class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
@@ -16,28 +14,21 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
      */
     protected $merchantStorageClient;
 
-    public function __construct()
+    /**
+     * @param \Spryker\Client\MerchantStorage\MerchantStorageClientInterface $merchantStorageClient
+     */
+    public function __construct($merchantStorageClient)
     {
-        // TODO add \Spryker\Client\MerchantStorage\MerchantStorageClientInterface $merchantStorageClient
-        $this->merchantStorageClient = null;
+        $this->merchantStorageClient = $merchantStorageClient;
     }
 
     /**
-     * @param array $merchantReferences
+     * @param string[] $merchantReferences
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
     public function getByMerchantReferences(array $merchantReferences): array
     {
-        // TODO: Replace implementation with:
-        // return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
-
-        $result = [];
-        foreach ($merchantReferences as $merchantReference) {
-            $result[] = (new MerchantStorageTransfer())->setMerchantReference($merchantReference)
-                ->setName('Name of ' . $merchantReference);
-        }
-
-        return $result;
+        return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
     }
 }
