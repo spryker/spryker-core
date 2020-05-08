@@ -6,7 +6,7 @@ MerchantProductOffersRestApi provides expands cart items data.
 ## Installation
 
 ```
-composer require spryker/product-offers-rest-api
+composer require spryker/merchant-product-offers-rest-api
 ```
 
 ## Documentation
