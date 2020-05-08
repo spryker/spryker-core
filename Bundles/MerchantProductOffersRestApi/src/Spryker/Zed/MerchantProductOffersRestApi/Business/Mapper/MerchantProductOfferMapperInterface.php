@@ -5,22 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOffersRestApi\Business;
+namespace Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * @method \Spryker\Zed\MerchantProductOffersRestApi\Business\MerchantProductOffersRestApiBusinessFactory getFactory()
- */
-class MerchantProductOffersRestApiFacade extends AbstractFacade implements MerchantProductOffersRestApiFacadeInterface
+interface MerchantProductOfferMapperInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
@@ -29,12 +21,5 @@ class MerchantProductOffersRestApiFacade extends AbstractFacade implements Merch
     public function mapCartItemRequestTransferToPersistentCartChangeTransfer(
         CartItemRequestTransfer $cartItemRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
-    ): PersistentCartChangeTransfer {
-        return $this->getFactory()
-            ->createMerchantProductOfferMapper()
-            ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
-                $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
-            );
-    }
+    ): PersistentCartChangeTransfer;
 }

@@ -36,6 +36,10 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
+        if (!$restCartItemsAttributesTransfer->getProductOfferReference()) {
+            return $cartItemRequestTransfer;
+        }
+
         $productOfferStorageTransfer = $this->merchantProductOfferStorageReader->findProductOfferStorageByReference(
             $restCartItemsAttributesTransfer->getProductOfferReference()
         );

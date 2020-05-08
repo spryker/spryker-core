@@ -20,7 +20,8 @@ class MerchantProductOfferCartItemMapperPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Maps CartItemRequestTransfer::$productOptionValues to PersistentCartChangeTransfer::$productOptions.
+     * - Maps CartItemRequestTransfer::$productOfferReference to PersistentCartChangeTransfer::$items by Item::$sku.
+     * - Maps CartItemRequestTransfer::$merchantReference to PersistentCartChangeTransfer::$items by Item::$sku.
      *
      * @api
      *
@@ -33,17 +34,10 @@ class MerchantProductOfferCartItemMapperPlugin extends AbstractPlugin implements
         CartItemRequestTransfer $cartItemRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer {
-        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() !== $cartItemRequestTransfer->getSku()) {
-                continue;
-            }
-
-            $itemTransfer->setProductOfferReference($cartItemRequestTransfer->getProductOfferReference());
-            $itemTransfer->setMerchantReference($cartItemRequestTransfer->getMerchantReference());
-
-            break;
-        }
-
-        return $persistentCartChangeTransfer;
+        return $this->getFacade()
+            ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
+                $cartItemRequestTransfer,
+                $persistentCartChangeTransfer
+            );
     }
 }

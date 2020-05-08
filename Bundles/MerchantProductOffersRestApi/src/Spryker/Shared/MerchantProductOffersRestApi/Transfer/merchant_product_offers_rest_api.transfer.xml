@@ -11,6 +11,7 @@
     <transfer name="CartItemRequest">
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -21,10 +22,17 @@
     <transfer name="Item">
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="PersistentCartChange">
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

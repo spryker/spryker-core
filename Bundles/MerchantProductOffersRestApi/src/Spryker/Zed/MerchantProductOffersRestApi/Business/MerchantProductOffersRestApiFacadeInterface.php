@@ -7,6 +7,25 @@
 
 namespace Spryker\Zed\MerchantProductOffersRestApi\Business;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+
 interface MerchantProductOffersRestApiFacadeInterface
 {
+    /**
+     * Specification:
+     * - Maps CartItemRequestTransfer::$productOfferReference to PersistentCartChangeTransfer::$items by Item::$sku.
+     * - Maps CartItemRequestTransfer::$merchantReference to PersistentCartChangeTransfer::$items by Item::$sku.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    public function mapCartItemRequestTransferToPersistentCartChangeTransfer(
+        CartItemRequestTransfer $cartItemRequestTransfer,
+        PersistentCartChangeTransfer $persistentCartChangeTransfer
+    ): PersistentCartChangeTransfer;
 }
