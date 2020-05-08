@@ -15,5 +15,12 @@
         <property name="state" type="string"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="state" type="ItemState"/>
+    </transfer>
+
+    <transfer name="ItemState">
+    </transfer>
+
 </transfers>
 

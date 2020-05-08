@@ -46,6 +46,7 @@ class OrderExpander implements OrderExpanderInterface
 
         return $orderTransfer;
     }
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

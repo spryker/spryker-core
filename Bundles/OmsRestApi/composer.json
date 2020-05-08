@@ -1,5 +1,6 @@
 {
   "name": "spryker/oms-rest-api",
+  "type": "library",
   "description": "OmsRestApi module",
   "license": "proprietary",
   "require": {
