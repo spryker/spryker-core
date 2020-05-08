@@ -17,7 +17,20 @@
     <transfer name="ReturnCollection">
     </transfer>
 
+    <transfer name="Return">
+        <property name="createdAt" type="string"/>
+    </transfer>
+
     <transfer name="ReturnFilter">
+        <property name="returnIds" singular="idReturn" type="int[]"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productBundle" type="Item"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
     </transfer>
 
 </transfers>

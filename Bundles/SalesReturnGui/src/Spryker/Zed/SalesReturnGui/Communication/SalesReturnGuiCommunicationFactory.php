@@ -24,6 +24,9 @@ use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeSe
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ */
 class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

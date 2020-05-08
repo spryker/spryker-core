@@ -173,11 +173,35 @@ class GetReturnsTest extends Unit
      */
     public function testGetReturnsRetrievesReturnsByReturnReferenceFilter(): void
     {
+        // Arrange
         $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
-        // Arrange
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setReturnReference($returnTransfer->getReturnReference());
+
+        // Act
+        $returnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($returnFilterTransfer);
+
+        /** @var \Generated\Shared\Transfer\ReturnTransfer $storedReturnTransfer */
+        $storedReturnTransfer = $returnCollectionTransfer->getReturns()->getIterator()->current();
+
+        // Assert
+        $this->assertCount(1, $returnCollectionTransfer->getReturns());
+        $this->assertEquals($returnTransfer, $storedReturnTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsRetrievesReturnByReturnIdsFilter(): void
+    {
+        // Arrange
+        $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $returnFilterTransfer = (new ReturnFilterTransfer())
+            ->addIdReturn($returnTransfer->getIdSalesReturn());
 
         // Act
         $returnCollectionTransfer = $this->tester
