@@ -69,7 +69,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
                 $productLists
             );
 
-            $this->deleteProductAbstractProductListStorageEntities(
+            $this->deleteProductAbstractProductListStorageEntitiesWithoutLists(
                 $indexedProductAbstractProductListStorageEntities,
                 $savedProductAbstractProductListStorageEntities
             );
@@ -208,17 +208,17 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
     /**
      * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntities
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $savedProductAbstractProductListStorageEntities
+     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntitiesWithLists
      *
      * @return void
      */
-    protected function deleteProductAbstractProductListStorageEntities(
+    protected function deleteProductAbstractProductListStorageEntitiesWithoutLists(
         array $productAbstractProductListStorageEntities,
-        array $savedProductAbstractProductListStorageEntities
+        array $productAbstractProductListStorageEntitiesWithLists
     ): void {
         $productAbstractProductListStorageEntitiesToDelete = array_diff_key(
             $productAbstractProductListStorageEntities,
-            $savedProductAbstractProductListStorageEntities
+            $productAbstractProductListStorageEntitiesWithLists
         );
 
         foreach ($productAbstractProductListStorageEntitiesToDelete as $productAbstractProductListStorageEntity) {

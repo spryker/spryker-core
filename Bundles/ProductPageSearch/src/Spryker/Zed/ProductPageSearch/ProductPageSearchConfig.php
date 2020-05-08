@@ -54,6 +54,6 @@ class ProductPageSearchConfig extends AbstractBundleConfig
      */
     public function getRefreshProductAbstractChunkSize(): int
     {
-        return static::PUBLISH_PRODUCT_CONCRETE_CHUNK_SIZE;
+        return static::REFRESH_PRODUCT_ABSTRACT_CHUNK_SIZE;
     }
 }
