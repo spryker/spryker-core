@@ -36,12 +36,12 @@ class DateRangeFilterValueNormalizerPlugin implements FilterValueNormalizerPlugi
 
         $from = $value['from'] ?? null;
         if ($from) {
-            $from = DateTime::createFromFormat(DateTime::ISO8601, $from);
+            $from = DateTime::createFromFormat(DateTime::ATOM, $from);
         }
 
         $to = $value['to'] ?? null;
         if ($to) {
-            $to = DateTime::createFromFormat(DateTime::ISO8601, $to);
+            $to = DateTime::createFromFormat(DateTime::ATOM, $to);
         }
 
         return (new CriteriaRangeFilterTransfer())

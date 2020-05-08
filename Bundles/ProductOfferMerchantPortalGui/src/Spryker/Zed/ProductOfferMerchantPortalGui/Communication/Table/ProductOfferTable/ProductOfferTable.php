@@ -210,21 +210,6 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function buildProductOfferCriteriaFilterTransfer(): ProductOfferCriteriaFilterTransfer
-    {
-        return $this->productOfferCriteriaFilterBuilder
-            ->setSearchTerm($this->searchTerm)
-            ->setPage($this->page)
-            ->setPageSize($this->pageSize)
-            ->setSortColumn($this->sortColumn)
-            ->setSortDirection($this->sortDirection)
-            ->setFilters($this->filters)
-            ->build();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer

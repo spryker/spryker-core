@@ -48,12 +48,12 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    private $merchantUserFacade;
+    protected $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestHydratorInterface
      */
-    private $requestToGuiTableDataRequestHydrator;
+    protected $requestToGuiTableDataRequestHydrator;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository

@@ -16,7 +16,7 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getTableDefaultFrontendDateFormat(): string
+    public function getTableDefaultUiDateFormat(): string
     {
         return 'dd.MM.y';
     }
@@ -26,7 +26,7 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
      *
      * @return int[]
      */
-    public function getTableDefaultAvailabePageSizes(): array
+    public function getTableDefaultAvailablePageSizes(): array
     {
         return [10, 25, 50, 100];
     }

@@ -55,41 +55,6 @@ abstract class AbstractTable
     protected $translatorFacade;
 
     /**
-     * @var string|null
-     */
-    protected $searchTerm;
-
-    /**
-     * @var string
-     */
-    protected $sortColumn;
-
-    /**
-     * @var string
-     */
-    protected $sortDirection;
-
-    /**
-     * @var int
-     */
-    protected $page;
-
-    /**
-     * @var int
-     */
-    protected $pageSize;
-
-    /**
-     * @var array
-     */
-    protected $filters = [];
-
-    /**
-     * @var \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    protected $guiTableConfigurationTransfer;
-
-    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
@@ -156,7 +121,7 @@ abstract class AbstractTable
     {
         $sizes = !empty($guiTableConfigurationTransfer->getAvailablePageSizes())
             ? $guiTableConfigurationTransfer->getAvailablePageSizes()
-            : $this->getConfig()->getTableDefaultAvailabePageSizes();
+            : $this->getConfig()->getTableDefaultAvailablePageSizes();
 
         return [
             static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPageSizeEnabled() ?? true,
@@ -468,7 +433,7 @@ abstract class AbstractTable
             ->setType(static::COLUMN_TYPE_DATE)
             ->setSortable($sortable)
             ->setHideable($hidable)
-            ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultFrontendDateFormat());
+            ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultUiDateFormat());
     }
 
     /**
