@@ -40,6 +40,8 @@ class EmptyAllCachesConsole extends Console
     {
         $this->emptyCache($output);
         $this->emptyAutoLoadCache($output);
+
+        return static::CODE_SUCCESS;
     }
 
     /**

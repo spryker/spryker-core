@@ -10,6 +10,8 @@ namespace Spryker\Zed\SessionRedis\Communication;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
@@ -20,6 +22,7 @@ use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface;
 use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \Spryker\Zed\SessionRedis\SessionRedisConfig getConfig()
@@ -116,11 +119,31 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),
-            $this->getConfig()->getZedSessionLifeTime(),
+            $this->createSessionRedisLifeTimeCalculator(),
             $this->getConfig()->getLockingTimeoutMilliseconds(),
             $this->getConfig()->getLockingRetryDelayMicroseconds(),
             $this->getConfig()->getLockingLockTtlMilliseconds()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface
+     */
+    public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
+    {
+        return new SessionRedisLifeTimeCalculator(
+            $this->getRequestStack(),
+            $this->getSessionRedisLifeTimeCalculatorPlugins(),
+            $this->getConfig()->getZedSessionLifeTime()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(SessionRedisDependencyProvider::REQUEST_STACK);
     }
 
     /**
@@ -137,5 +160,13 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function getRedisClient(): SessionRedisToRedisClientInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::CLIENT_SESSION_REDIS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     */
+    public function getSessionRedisLifeTimeCalculatorPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionRedisDependencyProvider::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR);
     }
 }

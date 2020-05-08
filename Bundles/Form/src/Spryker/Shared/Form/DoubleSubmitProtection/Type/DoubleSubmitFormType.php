@@ -28,17 +28,17 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**
-     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
+     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
      */
     protected $tokenGenerator;
 
     /**
-     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
+     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface
      */
     protected $storage;
 
     /**
-     * @var string $fieldName
+     * @var string
      */
     protected $fieldName;
 

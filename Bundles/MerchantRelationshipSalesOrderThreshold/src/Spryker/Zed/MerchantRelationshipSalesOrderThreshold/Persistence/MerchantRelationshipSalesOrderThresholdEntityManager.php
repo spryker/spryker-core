@@ -49,7 +49,9 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        if ($merchantRelationshipSalesOrderThresholdEntity->getMessageGlossaryKey() === null) {
+        /** @var string|null $messageGlossaryKey */
+        $messageGlossaryKey = $merchantRelationshipSalesOrderThresholdEntity->getMessageGlossaryKey();
+        if ($messageGlossaryKey === null) {
             $merchantRelationshipSalesOrderThresholdEntity->setMessageGlossaryKey(
                 $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
             );

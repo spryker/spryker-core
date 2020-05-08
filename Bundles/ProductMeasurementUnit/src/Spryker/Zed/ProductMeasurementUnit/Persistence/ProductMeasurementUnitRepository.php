@@ -348,6 +348,36 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @module Product
+     *
+     * @param string[] $productConcreteSkus
+     * @param int $idStore
+     *
+     * @return int[][]
+     */
+    public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
+    {
+        $indexedProductMeasurementSalesUnitIds = [];
+        $productMeasurementSalesUnitIdCollection = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->useProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
+            ->useSpyProductMeasurementSalesUnitStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->select([SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT, SpyProductTableMap::COL_SKU])
+            ->find();
+
+        foreach ($productMeasurementSalesUnitIdCollection as $salesUnitIdData) {
+            $indexedProductMeasurementSalesUnitIds[$salesUnitIdData[SpyProductTableMap::COL_SKU]][]
+                = $salesUnitIdData[SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT];
+        }
+
+        return $indexedProductMeasurementSalesUnitIds;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *

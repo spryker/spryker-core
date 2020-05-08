@@ -22,7 +22,6 @@ class RepositoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {

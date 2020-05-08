@@ -25,6 +25,11 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
     protected $calculationFacade;
 
     /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     */
+    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
+    /**
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationFacadeInterface $calculationFacade
      */
@@ -102,9 +107,78 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
      */
     protected function clearSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer = $this->clearItemSourcePrices($quoteTransfer);
+        $quoteTransfer = $this->clearItemShipmentMethodSourcePrices($quoteTransfer);
+        $quoteTransfer = $this->clearSingleShipmentMethodSourcePrices($quoteTransfer);
+        $quoteTransfer = $this->clearShipmentExpensesSourcePrices($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearShipmentExpensesSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $shipmentTransfer = $expenseTransfer->getShipment();
+
+            if ($shipmentTransfer && $shipmentTransfer->getMethod()) {
+                $shipmentTransfer->getMethod()->setSourcePrice(null);
+            }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setSourceUnitGrossPrice(null);
             $itemTransfer->setSourceUnitNetPrice(null);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemShipmentMethodSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod()) {
+                $itemTransfer->getShipment()->getMethod()->setSourcePrice(null);
+            }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearSingleShipmentMethodSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if ($quoteTransfer->getShipment() && $quoteTransfer->getShipment()->getMethod()) {
+            $quoteTransfer->getShipment()->getMethod()->setSourcePrice(null);
         }
 
         return $quoteTransfer;

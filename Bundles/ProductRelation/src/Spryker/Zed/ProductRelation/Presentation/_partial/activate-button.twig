@@ -1,5 +1,0 @@
-{% if isActive %}
-    {{ removeActionButton(url('/product-relation/edit/deactivate', {'id-product-relation': idProductRelation, 'redirect-url' : redirectUrl}), 'Deactivate' | trans, {'id' : 'deactivate-relation'}) }}
-{% else %}
-    {{ viewActionButton(url('/product-relation/edit/activate', {'id-product-relation': idProductRelation, 'redirect-url' : redirectUrl }), 'Activate' | trans, {'id' : 'activate-relation'}) }}
-{% endif %}

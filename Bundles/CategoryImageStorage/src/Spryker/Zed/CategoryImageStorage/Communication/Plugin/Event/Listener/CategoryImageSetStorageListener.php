@@ -22,7 +22,7 @@ class CategoryImageSetStorageListener extends AbstractPlugin implements EventBul
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void

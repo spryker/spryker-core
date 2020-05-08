@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomElementModule } from '@spryker/web-components';
+import { NotificationModule, NotificationComponent } from '@spryker/notification';
 
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
 import { LayoutCenteredModule } from './layout-centered/layout-centered.module';
@@ -25,6 +26,7 @@ import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-lay
 	    MerchantLayoutMainModule,
         LayoutMainModule,
         HeaderModule,
+        NotificationModule,
     ],
     providers: [],
 })
@@ -49,6 +51,10 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'mp-header',
             component: HeaderComponent,
+        },
+        {
+            selector: 'spy-notification',
+            component: NotificationComponent,
         },
     ];
 }

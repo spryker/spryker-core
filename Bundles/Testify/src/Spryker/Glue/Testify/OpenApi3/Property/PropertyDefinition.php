@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Property;
 
-use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
-
 class PropertyDefinition
 {
     /**
@@ -27,10 +25,6 @@ class PropertyDefinition
     public function __construct(string $type)
     {
         $this->type = $type;
-
-        if (new $type() instanceof ReferableInterface) {
-            $this;
-        }
     }
 
     /**

@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class ClearLocksConsole extends Console
 {
@@ -41,5 +42,7 @@ class ClearLocksConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->clearLocks();
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -20,6 +20,8 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
+use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensRevoker;
+use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensRevokerInterface;
 use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter;
 use Spryker\Glue\Kernel\AbstractFactory;
 
@@ -50,6 +52,17 @@ class AuthRestApiFactory extends AbstractFactory
             $this->getOauthClient(),
             $this->getResourceBuilder(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensRevokerInterface
+     */
+    public function createRefreshTokenRevoker(): RefreshTokensRevokerInterface
+    {
+        return new RefreshTokensRevoker(
+            $this->getOauthClient(),
+            $this->getResourceBuilder()
         );
     }
 

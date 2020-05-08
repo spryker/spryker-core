@@ -974,7 +974,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getShortClassName(string $fullyQualifiedClassName): string
     {
-        return substr(strrchr($fullyQualifiedClassName, "\\"), 1);
+        return substr(strrchr($fullyQualifiedClassName, '\\'), 1);
     }
 
     /**
