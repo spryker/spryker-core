@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Form;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use Spryker\Yves\Kernel\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {

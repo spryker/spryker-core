@@ -26,6 +26,8 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
+    public const PLUGINS_RETURN_CREATE_FORM_EXPANDER = 'PLUGINS_RETURN_CREATE_FORM_EXPANDER';
+
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_SALES_RETURN = 'PROPEL_QUERY_SALES_RETURN';
@@ -45,6 +47,8 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addGlossaryFacade($container);
+
+        $container = $this->addReturnCreateFormExpanderPlugins($container);
 
         return $container;
     }
@@ -133,5 +137,27 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnCreateFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_CREATE_FORM_EXPANDER, function () {
+            return $this->getReturnCreateFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     */
+    protected function getReturnCreateFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

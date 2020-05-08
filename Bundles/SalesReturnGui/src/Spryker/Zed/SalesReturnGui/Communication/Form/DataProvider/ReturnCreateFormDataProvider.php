@@ -29,15 +29,23 @@ class ReturnCreateFormDataProvider
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     */
+    protected $returnCreateFormExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
      */
     public function __construct(
         SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade,
-        SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade
+        SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade,
+        array $returnCreateFormExpanderPlugins
     ) {
         $this->salesReturnFacade = $salesReturnFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
     }
 
     /**
@@ -47,9 +55,11 @@ class ReturnCreateFormDataProvider
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
-        return [
+        $returnCreateFormData = [
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
         ];
+
+        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
     }
 
     /**
@@ -97,5 +107,19 @@ class ReturnCreateFormDataProvider
         $returnReasonChoices['Custom reason'] = static::CUSTOM_REASON_KEY;
 
         return $returnReasonChoices;
+    }
+
+    /**
+     * @param array $returnCreateFormData
+     *
+     * @return array
+     */
+    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
+    {
+        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
+            $returnCreateFormData = $returnCreateFormExpanderPlugin->expandData($returnCreateFormData);
+        }
+
+        return $returnCreateFormData;
     }
 }

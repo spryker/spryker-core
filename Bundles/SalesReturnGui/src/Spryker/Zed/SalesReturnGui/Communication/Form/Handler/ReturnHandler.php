@@ -26,48 +26,105 @@ class ReturnHandler implements ReturnHandlerInterface
     protected $salesReturnFacade;
 
     /**
-     * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
+     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
      */
-    public function __construct(SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade)
-    {
+    protected $returnCreateFormExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
+     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
+     */
+    public function __construct(
+        SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade,
+        array $returnCreateFormExpanderPlugins
+    ) {
         $this->salesReturnFacade = $salesReturnFacade;
+        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
     }
 
     /**
-     * @param array $returnItems
+     * @param array $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(array $returnItems, OrderTransfer $orderTransfer): ReturnResponseTransfer
+    public function createReturn(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnResponseTransfer
     {
-        $returnItemData = isset($returnItems[ReturnCreateForm::FIELD_RETURN_ITEMS])
-            ? $returnItems[ReturnCreateForm::FIELD_RETURN_ITEMS]
-            : [];
+        $returnCreateRequestTransfer = $this->buildReturnCreateRequestTransfer($returnCreateFormData, $orderTransfer);
+        $returnCreateRequestTransfer = $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData, $returnCreateRequestTransfer);
 
+        if ($returnCreateRequestTransfer->getReturnItems()->count()) {
+            return $this->salesReturnFacade->createReturn($returnCreateRequestTransfer);
+        }
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(false);
+    }
+
+    protected function buildReturnCreateRequestTransfer(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnCreateRequestTransfer
+    {
         $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore($orderTransfer->getStore())
             ->setReturnItems(new ArrayObject());
 
-        foreach ($returnItemData as $returnItem) {
-            if (!isset($returnItem[ItemTransfer::IS_RETURNABLE]) || !$returnItem[ItemTransfer::IS_RETURNABLE]) {
+        $returnItemsFormData = isset($returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS])
+            ? $returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS]
+            : [];
+
+        foreach ($returnItemsFormData as $returnItemFormData) {
+            if (!$this->isReturnItemChecked($returnItemFormData)) {
                 continue;
             }
 
-            $returnItemTransfer = (new ReturnItemTransfer())->fromArray($returnItem, true);
-
-            if ($returnItem[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_KEY && $returnItem[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]) {
-                $returnItemTransfer->setReason($returnItem[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]);
-            }
+            $returnItemTransfer = (new ReturnItemTransfer())
+                ->fromArray($returnItemFormData, true)
+                ->setReason($this->getReason($returnItemFormData));
 
             $returnCreateRequestTransfer->addReturnItem($returnItemTransfer);
         }
 
-        if (!$returnCreateRequestTransfer->getReturnItems()->count()) {
-            return (new ReturnResponseTransfer())->setIsSuccessful(false);
+        return $returnCreateRequestTransfer;
+    }
+
+    /**
+     * @param array $returnItemFormData
+     *
+     * @return string
+     */
+    protected function getReason(array $returnItemFormData): string
+    {
+        if ($returnItemFormData[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_KEY && $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]) {
+            return $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON];
         }
 
-        return $this->salesReturnFacade->createReturn($returnCreateRequestTransfer);
+        return $returnItemFormData[ReturnItemTransfer::REASON];
+    }
+
+    /**
+     * @param array $returnItemFormData
+     *
+     * @return bool
+     */
+    protected function isReturnItemChecked(array $returnItemFormData): bool
+    {
+        return isset($returnItemFormData[ItemTransfer::IS_RETURNABLE]) && $returnItemFormData[ItemTransfer::IS_RETURNABLE];
+    }
+
+    /**
+     * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     */
+    protected function executeReturnCreateFormExpanderPlugins(
+        array $returnCreateFormData,
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer
+    ): ReturnCreateRequestTransfer {
+        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
+            $returnCreateRequestTransfer = $returnCreateFormExpanderPlugin->handle($returnCreateFormData, $returnCreateRequestTransfer);
+        }
+
+        return $returnCreateRequestTransfer;
     }
 }

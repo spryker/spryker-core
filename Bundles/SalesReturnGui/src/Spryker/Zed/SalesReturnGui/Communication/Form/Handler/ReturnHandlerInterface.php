@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\ReturnResponseTransfer;
 interface ReturnHandlerInterface
 {
     /**
-     * @param array $returnItems
+     * @param array $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(array $returnItems, OrderTransfer $orderTransfer): ReturnResponseTransfer;
+    public function createReturn(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnResponseTransfer;
 }

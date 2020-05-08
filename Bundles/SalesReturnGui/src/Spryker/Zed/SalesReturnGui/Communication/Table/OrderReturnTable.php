@@ -98,6 +98,7 @@ class OrderReturnTable extends AbstractTable
         ]);
 
         $config->addRawColumn(static::COL_ACTIONS);
+        $config->setDefaultSortField(static::COL_RETURN_REFERENCE, TableConfiguration::SORT_DESC);
 
         return $config;
     }

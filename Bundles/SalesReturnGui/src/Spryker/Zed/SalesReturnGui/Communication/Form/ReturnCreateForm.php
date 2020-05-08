@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
  */
 class ReturnCreateForm extends AbstractType
 {
@@ -41,7 +42,9 @@ class ReturnCreateForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addReturnItemsCollection($builder, $options);
+        $this
+            ->addReturnItemsCollection($builder, $options)
+            ->executeReturnCreateFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -63,6 +66,21 @@ class ReturnCreateForm extends AbstractType
                 'label' => false,
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeReturnCreateFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getReturnCreateFormExpanderPlugins() as $returnCreateFormExpanderPlugin) {
+            $builder = $returnCreateFormExpanderPlugin->expand($builder, $options);
+        }
 
         return $this;
     }

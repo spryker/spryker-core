@@ -23,15 +23,6 @@
                             {{ order.orderReference }}
                         </a>
                     </div>
-                    <div class="col-sm-2 font-bold">
-                        {{ 'Customer reference' | trans }}
-                    </div>
-                    <div class="col-sm-10">
-                        <a target="_blank"
-                           href="{{ url('/customer/view', {'id-customer': order.customer.idCustomer}) }}">
-                            {{ order.customer.customerReference }}
-                        </a>
-                    </div>
                 </div>
             </div>
         {% endblock %}
