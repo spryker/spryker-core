@@ -20,12 +20,12 @@ interface MerchantAddressRestResponseBuilderInterface
     public function createMerchantAddressesRestResources(array $merchantStorageTransfers): array;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantAddressesStorageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantAddressesRestResponse(ArrayObject $merchantAddressesStorageTransfers, string $merchantReference): RestResponseInterface;
+    public function createMerchantAddressesRestResponse(ArrayObject $merchantStorageProfileAddressTransfers, string $merchantReference): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
