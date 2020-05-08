@@ -14,16 +14,16 @@
         {% block widget_content %}
             {{ "Are you sure you want to delete this product label?" | trans }}
             <br><br>
-            <div class="row">
-                <div class="col-md-2">
-                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this product label' | trans}}</a>
-                </div>
-                <div class="col-md-2">
+            <ul class="list-inline m-b-none">
+                <li>
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-primary">{{ 'No, I want to keep this product label' | trans}}</a>
+                </li>
+                <li>
                     {{ form_start(deleteProductLabelForm) }}
                     {{ form_widget(deleteProductLabelForm.submit) }}
                     {{ form_end(deleteProductLabelForm) }}
-                </div>
-            </div>
+                </li>
+            </ul>
         {% endblock %}
     {% endembed %}
 {% endblock %}
