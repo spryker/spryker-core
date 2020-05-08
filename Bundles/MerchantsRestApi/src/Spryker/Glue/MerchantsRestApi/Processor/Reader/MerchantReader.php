@@ -66,6 +66,9 @@ class MerchantReader implements MerchantReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        return $this->merchantsRestResponseBuilder->createMerchantsRestResponse($translatedMerchantStorageTransfer);
+        return $this->merchantsRestResponseBuilder->createMerchantsRestResponse(
+            $translatedMerchantStorageTransfer,
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 }

@@ -119,7 +119,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
      */
     protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
 
         $merchantIdsIndexedByReference = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {

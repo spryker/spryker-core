@@ -50,13 +50,13 @@ class MerchantTranslator implements MerchantTranslatorInterface
     protected function getGlossaryStorageKeysFromMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer): array
     {
         $glossaryKeys = [
-            $merchantStorageTransfer->getMerchantStorageProfile()->getBannerUrlGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getCancellationPolicyGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getDataPrivacyGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getDeliveryTimeGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getDescriptionGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getImprintGlossaryKey(),
-            $merchantStorageTransfer->getMerchantStorageProfile()->getTermsConditionsGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getImprintGlossaryKey(),
+            $merchantStorageTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
         ];
 
         return array_unique(array_filter($glossaryKeys));
@@ -70,7 +70,7 @@ class MerchantTranslator implements MerchantTranslatorInterface
      */
     protected function setTranslationsToMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer, array $translations): MerchantStorageTransfer
     {
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
 
         if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
             $merchantStorageProfileTransfer->setBannerUrlGlossaryKey($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);

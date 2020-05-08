@@ -16,14 +16,16 @@ class MerchantMapper implements MerchantMapperInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapMerchantStorageTransferToRestMerchantAttributesTransfer(
         MerchantStorageTransfer $merchantStorageTransfer,
-        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
+        string $localeName
     ): RestMerchantsAttributesTransfer {
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantStorageProfile();
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
 
         $restLegalInformationTransfer = (new RestLegalInformationTransfer())
             ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
@@ -33,11 +35,28 @@ class MerchantMapper implements MerchantMapperInterface
 
         return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
             ->fromArray($merchantStorageProfileTransfer->toArray(), true)
+            ->setMerchantName($merchantStorageTransfer->getName())
+            ->setLegalInformation($restLegalInformationTransfer)
             ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
             ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
-            ->setMerchantUrl($merchantStorageTransfer->getMerchantUrl())
-            ->setLegalInformation($restLegalInformationTransfer)
-            ->setMerchantName($merchantStorageTransfer->getName());
+            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param string $localeName
+     *
+     * @return string|null
+     */
+    protected function findMerchantUrlByLocaleName(MerchantStorageTransfer $merchantStorageTransfer, string $localeName): ?string
+    {
+        foreach ($merchantStorageTransfer->getUrlCollection() as $urlTransfer) {
+            if ($urlTransfer->getLocaleName() === $localeName) {
+                return $urlTransfer->getUrl();
+            }
+        }
+
+        return null;
     }
 }

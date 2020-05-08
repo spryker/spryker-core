@@ -51,11 +51,11 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     {
         $merchantAddressRestResources = [];
         foreach ($merchantStorageTransfers as $merchantReference => $merchantStorageTransfer) {
-            if (!$merchantStorageTransfer->getMerchantStorageProfile()) {
+            if (!$merchantStorageTransfer->getMerchantProfile()) {
                 continue;
             }
             $merchantAddressRestResources[$merchantReference] = $this->createMerchantAddressesRestResource(
-                $merchantStorageTransfer->getMerchantStorageProfile()->getAddressCollection(),
+                $merchantStorageTransfer->getMerchantProfile()->getAddressCollection(),
                 $merchantReference
             );
         }

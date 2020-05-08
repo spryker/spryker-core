@@ -19,16 +19,9 @@
         <property name="note" type="string"/>
     </transfer>
 
-    <transfer name="MerchantStorageProfile">
-        <property name="merchantUrl" type="string"/>
-        <property name="publicEmail" type="string"/>
-    </transfer>
-
     <transfer name="MerchantStorage">
         <property name="idMerchant" type="int"/>
         <property name="merchantReference" type="string"/>
-        <property name="name" type="string"/>
-        <property name="merchantStorageProfile" type="MerchantStorageProfile"/>
     </transfer>
 
     <transfer name="MerchantOpeningHoursStorage">
@@ -42,11 +35,17 @@
         <property name="detail" type="string"/>
     </transfer>
 
-    <transfer name="DateSchedule">
-        <property name="note" type="string"/>
+    <transfer name="WeekdaySchedule">
+        <property name="day" type="string"/>
+        <property name="timeFrom" type="string"/>
+        <property name="timeTo" type="string"/>
     </transfer>
 
-    <transfer name="WeekdaySchedule">
+    <transfer name="DateSchedule">
+        <property name="date" type="string"/>
+        <property name="timeFrom" type="string"/>
+        <property name="timeTo" type="string"/>
+        <property name="note" type="string"/>
     </transfer>
 
 </transfers>

@@ -14,10 +14,14 @@ interface MerchantRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createMerchantsRestResponse(MerchantStorageTransfer $merchantStorageTransfer): RestResponseInterface;
+    public function createMerchantsRestResponse(
+        MerchantStorageTransfer $merchantStorageTransfer,
+        string $localeName
+    ): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

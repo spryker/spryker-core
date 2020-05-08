@@ -55,7 +55,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
         }
 
         $merchantStorageProfileAddressTransfers = $merchantStorageTransfer
-            ->getMerchantStorageProfile()
+            ->getMerchantProfile()
             ->getAddressCollection();
 
         return $this->merchantsAddressRestResponseBuilder->createMerchantAddressesRestResponse(
@@ -71,7 +71,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
      */
     public function getMerchantAddressResources(array $merchantReferences): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->findByMerchantReference($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
 
         $merchantStorageTransfers = $this->indexMerchantStorageTransfersByMerchantReference($merchantStorageTransfers);
 
