@@ -12,12 +12,26 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ShoppingListItemCollection">
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+    </transfer>
+
     <transfer name="ShoppingListItem">
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="idShoppingListItem" type="int"/>
         <property name="sku" type="string"/>
         <property name="priceMode" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="ShoppingListProductOption">
+        <property name="idShoppingListProductOption" type="int"/>
+        <property name="idShoppingListItem" type="int"/>
+        <property name="idProductOptionValue" type="int"/>
+    </transfer>
+
+    <transfer name="ShoppingListProductOptionCollection">
+        <property name="shoppingListProductOptions" type="ShoppingListProductOption[]" singular="shoppingListProductOption"/>
     </transfer>
 
     <transfer name="ProductOptionValueStorage">

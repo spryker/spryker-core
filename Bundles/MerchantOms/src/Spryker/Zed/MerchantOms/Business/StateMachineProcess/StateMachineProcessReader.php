@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Business\StateMachineProcess;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -81,7 +81,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     protected function getMerchantByReference(string $merchantReference): MerchantTransfer
     {
         $merchantTransfer = $this->merchantFacade->findOne(
-            (new MerchantCriteriaFilterTransfer())->setMerchantReference($merchantReference)
+            (new MerchantCriteriaTransfer())->setMerchantReference($merchantReference)
         );
 
         if (!$merchantTransfer) {

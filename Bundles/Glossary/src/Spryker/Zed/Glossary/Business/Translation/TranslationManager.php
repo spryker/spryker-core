@@ -92,6 +92,7 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
+        /** @var string|null $translationKey */
         $translationKey = $keyTranslationTransfer->getGlossaryKey();
         try {
             if (!$this->keyManager->hasKey($translationKey)) {

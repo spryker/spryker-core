@@ -57,10 +57,9 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     public function createProductAbstractRelationReader(): ProductAbstractRelationReaderInterface
     {
         return new ProductAbstractRelationReader(
-            $this->getProductFacade(),
             $this->getProductLabelFacade(),
-            $this->getProductDiscontinuedFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getRepository()
         );
     }
 

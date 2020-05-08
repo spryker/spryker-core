@@ -42,5 +42,7 @@ class WishlistsUuidWriterConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->updateWishlistsUuid();
+
+        return static::CODE_SUCCESS;
     }
 }

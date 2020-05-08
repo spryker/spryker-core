@@ -34,13 +34,19 @@ class PackageVersionHydrator implements DependencyHydratorInterface
      */
     public function hydrate(array &$dependency)
     {
-        $dependency[DependencyTree::META_COMPOSER_VERSION] = $this->getComposerVersion($dependency);
+        $composerVersion = $this->getComposerVersion($dependency);
+
+        if ($composerVersion === null) {
+            return;
+        }
+
+        $dependency[DependencyTree::META_COMPOSER_VERSION] = $composerVersion;
     }
 
     /**
      * @param array $dependency
      *
-     * @return bool|string
+     * @return bool|string|null
      */
     private function getComposerVersion(array $dependency)
     {
@@ -53,5 +59,7 @@ class PackageVersionHydrator implements DependencyHydratorInterface
                 return $installedPackage[static::VERSION];
             }
         }
+
+        return null;
     }
 }

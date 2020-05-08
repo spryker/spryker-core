@@ -22,7 +22,6 @@ class ResourceResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Glue\Kernel\AbstractRestResource $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {

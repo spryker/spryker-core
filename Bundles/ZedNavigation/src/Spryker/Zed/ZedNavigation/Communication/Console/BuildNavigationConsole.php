@@ -42,6 +42,8 @@ class BuildNavigationConsole extends Console
     {
         $this->getMessenger()->info('Build navigation cache');
         $this->getFacade()->writeNavigationCache();
+
+        return static::CODE_SUCCESS;
     }
 
     /**
