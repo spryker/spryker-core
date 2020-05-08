@@ -322,6 +322,7 @@
     "spryker/merchant-oms-data-import": "*",
     "spryker/merchant-opening-hours": "*",
     "spryker/merchant-opening-hours-data-import": "*",
+    "spryker/merchant-opening-hours-rest-api": "*",
     "spryker/merchant-opening-hours-storage": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/merchant-product-offer-data-import": "*",

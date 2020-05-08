@@ -15,11 +15,13 @@ interface MerchantMapperInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
         MerchantStorageTransfer $merchantStorageTransfer,
-        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
+        string $localeName
     ): RestMerchantsAttributesTransfer;
 }

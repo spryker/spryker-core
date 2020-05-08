@@ -42,30 +42,14 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
             return;
         }
 
-        $merchantsResources = $this->merchantReader->getMerchantsResources($merchantReferences);
+        $merchantsResources = $this->merchantReader->getMerchantsResources(
+            $merchantReferences,
+            $restRequest->getMetadata()->getLocale()
+        );
 
         foreach ($resources as $orderResource) {
-            $orderResource = $this->addMerchantRelationships(
-                $orderResource,
-                $merchantsResources
-            );
+            $this->addMerchantRelationships($orderResource, $merchantsResources);
         }
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $merchantRestResources
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
-     */
-    protected function indexMerchantResourcesById(array $merchantRestResources): array
-    {
-        $indexedMerchantRestResources = [];
-
-        foreach ($merchantRestResources as $merchantRestResource) {
-            $indexedMerchantRestResources[$merchantRestResource->getId()] = $merchantRestResource;
-        }
-
-        return $indexedMerchantRestResources;
     }
 
     /**
@@ -95,28 +79,20 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderResource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $merchantsResources
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return void
      */
-    protected function addMerchantRelationships(
-        RestResourceInterface $orderResource,
-        array $merchantsResources
-    ): RestResourceInterface {
+    protected function addMerchantRelationships(RestResourceInterface $orderResource, array $merchantsResources): void
+    {
         $orderAttributes = $orderResource->getAttributes();
 
         if ($orderAttributes && $orderAttributes->offsetExists(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)) {
             /** @var string[] $merchantReferences */
             $merchantReferences = $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES);
-            $merchantsResources = $this->indexMerchantResourcesById($merchantsResources);
 
-            foreach ($merchantReferences as $merchantReference) {
-                if (!isset($merchantsResources[$merchantReference])) {
-                    continue;
-                }
-
+            $foundMerchantReferences = array_intersect(array_keys($merchantsResources), $merchantReferences);
+            foreach ($foundMerchantReferences as $merchantReference) {
                 $orderResource->addRelationship($merchantsResources[$merchantReference]);
             }
         }
-
-        return $orderResource;
     }
 }

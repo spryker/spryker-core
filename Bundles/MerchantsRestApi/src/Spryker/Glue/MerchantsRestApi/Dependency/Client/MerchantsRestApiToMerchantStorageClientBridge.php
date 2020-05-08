@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageTransfer;
+
 class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
@@ -30,5 +32,15 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     public function getByMerchantReferences(array $merchantReferences): array
     {
         return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+    }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    {
+        return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
     }
 }
