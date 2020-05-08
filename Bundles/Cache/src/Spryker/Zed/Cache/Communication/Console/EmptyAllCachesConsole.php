@@ -53,6 +53,10 @@ class EmptyAllCachesConsole extends Console
      */
     protected function emptyCodeBucketCache(OutputInterface $output): void
     {
+        if (APPLICATION_CODE_BUCKET === '') {
+            return;
+        }
+
         $emptiedDirectories = $this->getFacade()->emptyCodeBucketCache();
 
         $this->info('Removed cache files', true);
@@ -66,10 +70,6 @@ class EmptyAllCachesConsole extends Console
      */
     protected function emptyDefaultCodeBucketCache(OutputInterface $output): void
     {
-        if (APPLICATION_CODE_BUCKET !== '') {
-            return;
-        }
-
         $emptiedDirectories = $this->getFacade()->emptyDefaultCodeBucketCache();
 
         $this->info('Removed cache files', true);
