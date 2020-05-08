@@ -1,0 +1,8 @@
+{% set returnItems = returnItemGroup | filter(returnItem => not (returnItem.orderItem.productBundle or returnItem.orderItem.salesOrderConfiguredBundle)) %}
+
+{% for returnItem in returnItems %}
+    {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-item.twig' with {
+        returnItem: returnItem,
+        currencyIsoCode: currencyIsoCode,
+    } only %}
+{% endfor %}
