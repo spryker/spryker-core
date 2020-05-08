@@ -284,7 +284,7 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::NET_AMOUNT => 1230123.123,
                     ],
                     [
-                        PriceProductScheduleImportTransfer::NET_AMOUNT => "BAR",
+                        PriceProductScheduleImportTransfer::NET_AMOUNT => 'BAR',
                     ],
                 ],
             ],
@@ -294,7 +294,7 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::GROSS_AMOUNT => 1230123.123,
                     ],
                     [
-                        PriceProductScheduleImportTransfer::GROSS_AMOUNT => "BAR",
+                        PriceProductScheduleImportTransfer::GROSS_AMOUNT => 'BAR',
                     ],
                 ],
             ],
