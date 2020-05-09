@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\Sales\Communication\Plugin\Sales\CurrencyIsoCodeOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
@@ -49,6 +50,11 @@ class CreateReturnTest extends Unit
      * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidator::GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR
+     */
+    protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR = 'return.create_return.validation.items_currency_error';
 
     /**
      * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR
@@ -234,6 +240,53 @@ class CreateReturnTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR,
+            $returnResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateReturnCreatesReturnFromSeveralOrdersWithDifferentCurrencies(): void
+    {
+        // Arrange
+        $this->tester->setDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER, [
+            new CurrencyIsoCodeOrderItemExpanderPlugin(),
+        ]);
+
+        $customerTransfer = $this->tester->haveCustomer();
+        $currencyData = ['code' => 'CHF', 'name' => 'CHF', 'symbol' => 'CHF'];
+
+        $firstOrderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $secondOrderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer, $currencyData);
+
+        $firstItemTransfer = $firstOrderTransfer->getItems()->getIterator()->current();
+        $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+        $this->tester->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        $firstReturnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($firstItemTransfer->getIdSalesOrderItem()));
+
+        $secondReturnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($secondItemTransfer->getIdSalesOrderItem()));
+
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
+            ->setCustomer($firstOrderTransfer->getCustomer())
+            ->setStore($firstOrderTransfer->getStore())
+            ->addReturnItem($firstReturnItemTransfer)
+            ->addReturnItem($secondReturnItemTransfer);
+
+        // Act
+        $returnResponseTransfer = $this->tester
+            ->getFacade()
+            ->createReturn($returnCreateRequestTransfer);
+
+        // Assert
+        $this->assertFalse($returnResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR,
             $returnResponseTransfer->getMessages()[0]->getValue()
         );
     }
