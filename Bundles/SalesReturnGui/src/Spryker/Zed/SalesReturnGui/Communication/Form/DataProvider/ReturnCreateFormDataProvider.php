@@ -56,7 +56,7 @@ class ReturnCreateFormDataProvider
     public function getData(OrderTransfer $orderTransfer): array
     {
         $returnCreateFormData = [
-            ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
+            ReturnCreateForm::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
         ];
 
         return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
@@ -77,7 +77,7 @@ class ReturnCreateFormDataProvider
      *
      * @return array
      */
-    protected function createReturnItemTransfersCollection(OrderTransfer $orderTransfer): array
+    protected function mapReturnItemTransfers(OrderTransfer $orderTransfer): array
     {
         $returnItemTransfers = [];
 
