@@ -32,4 +32,14 @@ class MerchantProductOfferStorageToEventBehaviorFacadeBridge implements Merchant
     {
         return $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, $columnName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return array
+     */
+    public function getEventTransferIds(array $eventTransfers)
+    {
+        return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+    }
 }

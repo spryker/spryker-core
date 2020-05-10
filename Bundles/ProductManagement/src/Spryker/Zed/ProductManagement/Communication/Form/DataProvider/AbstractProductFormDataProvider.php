@@ -684,7 +684,7 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 self::FORM_FIELD_ID => $id,
                 self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_NAME => $value !== null,
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 self::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),

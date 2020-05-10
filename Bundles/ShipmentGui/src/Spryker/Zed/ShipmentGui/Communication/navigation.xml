@@ -50,7 +50,7 @@
                         <bundle>shipment-gui</bundle>
                         <controller>shipment-method</controller>
                         <action>index</action>
-                        <icon>fa fa-angle-right</icon>
+                        <icon>fa-angle-right</icon>
                         <pages>
                             <shipment-method-view>
                                 <label>View</label>

@@ -41,28 +41,32 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function addRelations($idProductLabel, array $idsProductAbstract)
+    public function addRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
-            $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
+            $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
         });
     }
 
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract)
+    protected function executeSetRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
         foreach ($idsProductAbstract as $idProductAbstract) {
             $this->persistRelation($idProductLabel, $idProductAbstract);
 
-            $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
+            if ($isTouchEnabled) {
+                $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
+            }
         }
     }
 

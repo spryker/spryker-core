@@ -22,7 +22,6 @@ class SharedConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Shared\Kernel\AbstractSharedConfig $resolved */
         $resolved = parent::doResolve($callerClass);
 
         if ($resolved !== null) {
