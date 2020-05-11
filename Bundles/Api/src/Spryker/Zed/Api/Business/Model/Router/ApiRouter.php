@@ -76,7 +76,7 @@ class ApiRouter implements RouterInterface
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      *
-     * @return void
+     * @return string The generated URL
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
