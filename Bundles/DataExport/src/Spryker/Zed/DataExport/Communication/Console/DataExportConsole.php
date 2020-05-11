@@ -45,25 +45,35 @@ class DataExportConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $exportConfigurationsPath = $this->getConfig()->getExportConfigurationsPath(). '/' . $input->getOption(static::OPTION_CONFIG);
-        $exportConfigurations = $this->getFactory()->getService()->readConfiguration($exportConfigurationsPath);
+        $exportConfigurations = $this->getFactory()->getService()->parseConfiguration($exportConfigurationsPath);
 
-        $dataExportReportTransfer = $this->getFacade()->exportBatch($exportConfigurations);
+        $dataExportReportTransfers = $this->getFacade()->exportDataEntities($exportConfigurations);
 
-        $this->printDataExportReport($output, $dataExportReportTransfer);
-
-        return $dataExportReportTransfer->getIsSuccess() ? static::CODE_SUCCESS : static::CODE_ERROR;
+        return $this->printDataExportReport($output, $dataExportReportTransfers);
     }
 
     /**
-     * @param OutputInterface $output
-     * @param DataExportReportTransfer $dataExportReportTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Generated\Shared\Transfer\DataExportReportTransfer[] $dataExportReportTransfers
+     *
+     * @return int
      */
-    protected function printDataExportReport(OutputInterface $output, DataExportReportTransfer $dataExportReportTransfer): void
+    protected function printDataExportReport(OutputInterface $output, array $dataExportReportTransfers): int
     {
-        foreach($dataExportReportTransfer->getResults() as $dataExportResultTransfer) {
-            foreach($dataExportResultTransfer->getDocuments() as $dataExportResultDocumentTransfer) {
-                $output->writeln(sprintf("<fg=white>Document: %s (Objects: %d)</fg=white>", $dataExportResultDocumentTransfer->getName(), $dataExportResultDocumentTransfer->getObjectCount()));
+        $isSuccessful = true;
+        foreach($dataExportReportTransfers as $dataExportReportTransfer) {
+            if (!$dataExportReportTransfer->getIsSuccessful()) {
+                $isSuccessful = false;
+            }
+            foreach($dataExportReportTransfer->getDataExportResults() as $dataExportResultTransfer) {
+                $output->writeln(sprintf(
+                    '<fg=white>Document: %s (Objects: %d)</fg=white>',
+                    $dataExportResultTransfer->getDataEntity(),
+                    $dataExportResultTransfer->getExportedRows()
+                ));
             }
         }
+
+        return $isSuccessful ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

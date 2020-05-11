@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataExport\Business;
 
+use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -17,20 +18,18 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class DataExportFacade extends AbstractFacade implements DataExportFacadeInterface
 {
     /**
-     * @api
-     *
      * {@inheritDoc}
      *
-     * @param [] $dataEntityExportConfigurations
+     * @api
      *
-     * @throws \Exception
+     * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer[]
      */
-    public function exportBatch(array $exportConfigurations): DataExportReportTransfer {
-        return $this
-            ->getFactory()
+    public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array
+    {
+        return $this->getFactory()
             ->createDataExportHandler()
-            ->exportBatch($exportConfigurations);
+            ->exportDataEntities($dataExportConfigurationsTransfer);
     }
 }

@@ -33,6 +33,6 @@ class OrderItemExporterPlugin extends AbstractPlugin implements DataEntityExport
      */
     public function exportBatch(array $exportConfiguration): DataExportResultTransfer
     {
-        return $this->getFacade()->exportOrderItemBatch($exportConfiguration);
+        return $this->getFacade()->exportOrderItem($exportConfiguration);
     }
 }

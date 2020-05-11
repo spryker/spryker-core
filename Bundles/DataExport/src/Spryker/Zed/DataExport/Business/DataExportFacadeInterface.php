@@ -7,19 +7,20 @@
 
 namespace Spryker\Zed\DataExport\Business;
 
+use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
-use Generated\Shared\Transfer\DataExportResultTransfer;
 
 interface DataExportFacadeInterface
 {
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Todo
      *
-     * @param array $exportConfigurations
+     * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer[]
      *@api
      *
      */
-    public function exportBatch(array $exportConfigurations): DataExportReportTransfer;
+    public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array;
 }

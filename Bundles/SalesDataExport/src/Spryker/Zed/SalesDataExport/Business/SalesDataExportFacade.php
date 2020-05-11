@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesDataExport\Business;
 
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
+use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -15,8 +17,8 @@ use Spryker\Zed\SalesDataExport\Business\Exporter\OrderExpenseCsvExporter;
 use Spryker\Zed\SalesDataExport\Business\Exporter\OrderItemCsvExporter;
 use Spryker\Zed\SalesDataExport\Business\Exporter\OrderCsvExporter;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemCsvReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderCsvReader;
 
 /**
  * @method \Spryker\Zed\SalesDataExport\Business\SalesDataExportBusinessFactory getFactory()
@@ -27,33 +29,35 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
     use BundleConfigResolverAwareTrait;
 
     /**
-     * Specification
-     * - Exports orders in various (writer) formats
-     * - Returns results of export
+     * {@inheritDoc}
      *
-     * @param array $exportConfiguration
+     * @api
      *
-     * @return DataExportResultTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportOrderBatch(array $exportConfiguration): DataExportResultTransfer
+    public function exportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return (new OrderCsvExporter(new OrderReader(), new DataExportService()))
-            ->exportBatch(($exportConfiguration));
+        return $this->getFactory()
+            ->createOrderCsvExporter()
+            ->export($dataExportConfigurationTransfer);
     }
 
     /**
-     * Specification
-     * - Exports order items in various (writer) formats
-     * - Returns results of export
+     * {@inheritDoc}
      *
-     * @param array $exportConfiguration
+     * @api
      *
-     * @return DataExportResultTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfern
+     *
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportOrderItemBatch(array $exportConfiguration): DataExportResultTransfer
+    public function exportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return (new OrderItemCsvExporter(new OrderItemReader(), new DataExportService()))
-            ->exportBatch($exportConfiguration);
+        return $this->getFactory()
+            ->createOrderItemCsvExporter()
+            ->export($dataExportConfigurationTransfer);
     }
 
 

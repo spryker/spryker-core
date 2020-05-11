@@ -7,18 +7,93 @@
 
 namespace Spryker\Service\DataExport;
 
-use Generated\Shared\Transfer\DataExportResultDocumentTransfer;
+use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
+use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Service\UtilDataReader\UtilDataReaderService;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
- * @method \Spryker\Service\DataExport\DataExportFactory getFactory()
+ * @method \Spryker\Service\DataExport\DataExportServiceFactory getFactory()
  * @method \Spryker\Service\DataExport\DataExportConfig getConfig()
  */
 class DataExportService extends AbstractService implements DataExportServiceInterface
 {
     use BundleConfigResolverAwareTrait;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $filePath
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer
+     */
+    public function parseConfiguration(string $filePath): DataExportConfigurationsTransfer
+    {
+        return $this->getFactory()
+            ->createDataExportConfigurationYamlParser()
+            ->parseConfigurationFile($filePath);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $writeConfiguration
+     *
+     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
+     */
+    public function write(
+        array $data,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        AbstractTransfer $writeConfiguration
+    ): DataExportWriteResponseTransfer {
+        return $this->getFactory()
+            ->createDataExportWriter()
+            ->write($data, $dataExportConfigurationTransfer, $writeConfiguration);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return string|null
+     */
+    public function getFormatExtension(DataExportConfigurationTransfer $dataExportConfigurationTransfer): ?string
+    {
+        return $this->getFactory()
+            ->createDataExportFormatter()
+            ->getFormatExtension($dataExportConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     */
+    public function mergeDataExportConfigurations(
+        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+    ): DataExportConfigurationTransfer {
+        return $this->getFactory()
+            ->createDataExportConfigurationMerger()
+            ->mergeDataExportConfigurationTransfers($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer);
+    }
 
     public function readConfiguration(string $configurationPath): array
     {

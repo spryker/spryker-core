@@ -2,8 +2,10 @@
 
 namespace Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport;
 
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
+use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
-use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
+use Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,23 +18,35 @@ class OrderExpenseExporterPlugin extends AbstractPlugin implements DataEntityExp
     protected const SUPPORTED_WRITER = 'csv';
 
     /**
-     * @param array $exportConfiguration
+     * {@inheritDoc}
+     * - TODO
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return bool
      */
-    public function isApplicable(array $exportConfiguration): bool {
-        return
-            static::DATA_ENTITY === $exportConfiguration['data_entity'] &&
-            static::SUPPORTED_WRITER === $exportConfiguration['writer']['type'];
+    public function isApplicable(DataExportConfigurationTransfer $dataExportConfigurationTransfer): bool
+    {
+        $dataExportConfigurationTransfer->requireFormat();
+
+        return  static::DATA_ENTITY === $dataExportConfigurationTransfer->getDataEntity() &&
+            static::SUPPORTED_WRITER === $dataExportConfigurationTransfer->getFormat()->getType();
     }
 
     /**
-     * @param array $exportConfiguration
+     * {@inheritDoc}
+     * - TODO
      *
-     * @return DataExportResultTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportBatch(array $exportConfiguration): DataExportResultTransfer
+    public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return $this->getFacade()->exportOrderExpenseBatch($exportConfiguration);
+        return $this->getFacade()->exportOrderExpenseBatch($dataExportConfigurationTransfer);
     }
 }

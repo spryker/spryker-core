@@ -11,13 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataExportConfig extends AbstractBundleConfig
 {
+    protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
+
     /**
      * @return string
      */
     public function getExportConfigurationDefaultsPath(): string
     {
-        // Bundles/DataExport/data/export/config/defaults_config.yml
-        return realpath(sprintf('%s/../../../../data/export/config/defaults_config.yml', __DIR__));
+        return $this->getModuleDataExportDirectoryPath() . 'defaults_config.yml';
     }
 
     /**
@@ -25,7 +26,26 @@ class DataExportConfig extends AbstractBundleConfig
      */
     public function getExportConfigurationsPath(): string
     {
-        // APPLICATION_ROOT/data/export/config
         return realpath(sprintf('%s/data/export/config', APPLICATION_ROOT_DIR));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleDataExportDirectoryPath(): string
+    {
+        return $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleRoot(): string
+    {
+        $moduleRoot = realpath(
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
+        );
+
+        return $moduleRoot . DIRECTORY_SEPARATOR;
     }
 }

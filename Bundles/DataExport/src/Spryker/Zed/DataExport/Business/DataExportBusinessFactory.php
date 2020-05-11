@@ -8,7 +8,7 @@
 namespace Spryker\Zed\DataExport\Business;
 
 use Spryker\Service\DataExport\DataExportService;
-use Spryker\Zed\DataExport\Business\Exporter\DataExportHandler;
+use Spryker\Zed\DataExport\Business\Exporter\DataExportExecutor;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConfigurationAdjusterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
@@ -27,11 +27,11 @@ use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\SalesDataExportC
 class DataExportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return DataExportHandler
+     * @return DataExportExecutor
      */
-    public function createDataExportHandler() : DataExportHandler
+    public function createDataExportHandler() : DataExportExecutor
     {
-        return new DataExportHandler(
+        return new DataExportExecutor(
             $this->getDataEntityExporterPlugins(),
             $this->getDataExportConnectionPlugins(),
             $this->getDataExportWriterPlugins(),
