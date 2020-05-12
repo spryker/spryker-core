@@ -61,6 +61,12 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setIsSuccessful(false);
     }
 
+    /**
+     * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     */
     protected function buildReturnCreateRequestTransfer(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnCreateRequestTransfer
     {
         $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())

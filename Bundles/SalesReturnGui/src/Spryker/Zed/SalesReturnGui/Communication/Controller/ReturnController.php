@@ -29,10 +29,13 @@ class ReturnController extends AbstractController
     protected const SUCCESS_MESSAGE_RETURN_CREATED = 'Return was successfully created.';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
 
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
     /**

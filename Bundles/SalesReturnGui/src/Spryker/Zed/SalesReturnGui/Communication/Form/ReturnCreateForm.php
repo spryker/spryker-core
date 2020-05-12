@@ -43,7 +43,7 @@ class ReturnCreateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addReturnItemsCollection($builder, $options)
+            ->addReturnItemsField($builder, $options)
             ->executeReturnCreateFormExpanderPlugins($builder, $options);
     }
 
@@ -53,7 +53,7 @@ class ReturnCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addReturnItemsCollection(FormBuilderInterface $builder, array $options)
+    protected function addReturnItemsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_RETURN_ITEMS,

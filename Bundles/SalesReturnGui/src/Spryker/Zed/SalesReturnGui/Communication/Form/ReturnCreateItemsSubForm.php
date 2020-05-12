@@ -48,7 +48,7 @@ class ReturnCreateItemsSubForm extends AbstractType
     {
         $this->addIsReturnable($builder)
             ->addReason($builder, $options)
-            ->addCustomReason($builder);
+            ->addCustomReasonField($builder);
     }
 
     /**
@@ -101,7 +101,7 @@ class ReturnCreateItemsSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomReason(FormBuilderInterface $builder)
+    protected function addCustomReasonField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CUSTOM_REASON, TextareaType::class, [
             'label' => false,
