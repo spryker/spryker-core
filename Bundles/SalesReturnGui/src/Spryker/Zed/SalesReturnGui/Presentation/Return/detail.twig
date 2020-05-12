@@ -31,11 +31,13 @@
                         uniqueItemStateLabels: uniqueItemStateLabels,
                     } only %}
                 </div>
-                <div class="col-lg-12">
-                    {% include '@SalesReturnGui/Return/_partials/customer-column.twig' with {
-                        customer: customer,
-                    } only %}
-                </div>
+                {% if customer is not null %}
+                    <div class="col-lg-12">
+                        {% include '@SalesReturnGui/Return/_partials/customer-column.twig' with {
+                            customer: customer,
+                        } only %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
