@@ -22,7 +22,7 @@ class ClientResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $resolved = parent::doResolve($callerClass);
+        $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {
             return $resolved;
