@@ -328,6 +328,7 @@
     "spryker/merchant-product-offer-search": "*",
     "spryker/merchant-product-offer-storage": "*",
     "spryker/merchant-product-offer-storage-extension": "*",
+    "spryker/merchant-product-offers-rest-api": "*",
     "spryker/merchant-profile": "*",
     "spryker/merchant-profile-data-import": "*",
     "spryker/merchant-profile-gui": "*",

@@ -34,7 +34,8 @@ class MerchantProductOfferRestCartItemsAttributesMapperPlugin extends AbstractPl
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        return $restItemsAttributesTransfer->setProductOfferReference($itemTransfer->getProductOfferReference())
+        return $restItemsAttributesTransfer
+            ->setProductOfferReference($itemTransfer->getProductOfferReference())
             ->setMerchantReference($itemTransfer->getMerchantReference());
     }
 }
