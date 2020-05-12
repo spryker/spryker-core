@@ -56,87 +56,87 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
-     *
-     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     *
      */
-    protected function mapFiltersToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    protected function mapFiltersToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
         foreach ($guiTableDataRequestTransfer->getFilters() as $filterName => $filterValue) {
             $setter = 'setFilter' . $filterName;
 
-            if (!method_exists($persistenceCriteria, $setter)) {
-                throw new InvalidCriteriaPropertyException($persistenceCriteria, $filterName);
+            if (!method_exists($criteriaTransfer, $setter)) {
+                throw new InvalidCriteriaPropertyException($criteriaTransfer, $filterName);
             }
 
-            $persistenceCriteria->$setter($filterValue);
+            $criteriaTransfer->$setter($filterValue);
         }
 
-        return $persistenceCriteria;
+        return $criteriaTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
-     *
-     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     *
      */
-    protected function mapPagingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    protected function mapPagingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
         $pageSetter = 'setPage';
         $pageSizeSetter = 'setPageSize';
-        if (!method_exists($persistenceCriteria, $pageSizeSetter) && !method_exists($persistenceCriteria, $pageSetter)) {
-            throw new InvalidCriteriaPropertyException($persistenceCriteria, 'page|pageSize');
+        if (!method_exists($criteriaTransfer, $pageSizeSetter) && !method_exists($criteriaTransfer, $pageSetter)) {
+            throw new InvalidCriteriaPropertyException($criteriaTransfer, 'page|pageSize');
         }
 
-        $persistenceCriteria->setPage($guiTableDataRequestTransfer->getPage());
-        $persistenceCriteria->setPageSize($guiTableDataRequestTransfer->getPageSize());
+        $criteriaTransfer->setPage($guiTableDataRequestTransfer->getPage());
+        $criteriaTransfer->setPageSize($guiTableDataRequestTransfer->getPageSize());
 
-        return $persistenceCriteria;
+        return $criteriaTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
-     *
-     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     *
      */
-    protected function mapSortingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    protected function mapSortingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
         $orderSetter = 'setOrderBy';
         $orderDirectionSetter = 'setOrderDirection';
-        if (!method_exists($persistenceCriteria, $orderSetter) && !method_exists($persistenceCriteria, $orderDirectionSetter)) {
-            throw new InvalidCriteriaPropertyException($persistenceCriteria, 'page|pageSize');
+        if (!method_exists($criteriaTransfer, $orderSetter) && !method_exists($criteriaTransfer, $orderDirectionSetter)) {
+            throw new InvalidCriteriaPropertyException($criteriaTransfer, 'page|pageSize');
         }
 
-        $persistenceCriteria->setOrderBy($guiTableDataRequestTransfer->getOrderBy());
-        $persistenceCriteria->setOrderDirection($guiTableDataRequestTransfer->getOrderDirection());
+        $criteriaTransfer->setOrderBy($guiTableDataRequestTransfer->getOrderBy());
+        $criteriaTransfer->setOrderDirection($guiTableDataRequestTransfer->getOrderDirection());
 
-        return $persistenceCriteria;
+        return $criteriaTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function mapLocaleToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $persistenceCriteria): AbstractTransfer
+    protected function mapLocaleToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
         $localeSetter = 'setIdLocale';
 
-        if (!method_exists($persistenceCriteria, $localeSetter)) {
-            return $persistenceCriteria;
+        if (!method_exists($criteriaTransfer, $localeSetter)) {
+            return $criteriaTransfer;
         }
 
-        $persistenceCriteria->setIdLocale($guiTableDataRequestTransfer->getIdLocale());
+        $criteriaTransfer->setIdLocale($guiTableDataRequestTransfer->getIdLocale());
 
-        return $persistenceCriteria;
+        return $criteriaTransfer;
     }
 }
