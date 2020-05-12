@@ -49,6 +49,8 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsContentWidgetToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+
+        return $container;
     }
 
     /**

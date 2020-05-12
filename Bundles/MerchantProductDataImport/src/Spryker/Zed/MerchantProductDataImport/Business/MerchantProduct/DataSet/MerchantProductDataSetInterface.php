@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet;
 
-class MerchantProductDataSetInterface
+interface MerchantProductDataSetInterface
 {
     public const MERCHANT_REFERENCE = 'merchant_reference';
     public const FK_MERCHANT = 'fk_merchant';

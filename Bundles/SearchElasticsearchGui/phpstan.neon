@@ -2,4 +2,4 @@ parameters:
     ignoreErrors:
     -
         message: '#Negated boolean expression is always false.#'
-        path: 'vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php'

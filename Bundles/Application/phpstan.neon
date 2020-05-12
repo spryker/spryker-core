@@ -3,7 +3,7 @@ parameters:
         - APPLICATION
         - APPLICATION_ENV
         - APPLICATION_STORE
+        - APPLICATION_CODE_BUCKET
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
-        - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
