@@ -1,3 +1,3 @@
 # MerchantProductOffersRestApi Changelog
 
-[Release Changelog](https://github.com/spryker/product-offers-rest-api/releases)
+[Release Changelog](https://github.com/spryker/merchant-product-offers-rest-api/releases)

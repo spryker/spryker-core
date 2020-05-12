@@ -31,7 +31,7 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
      * @var \Spryker\Zed\MerchantProductOffersRestApi\Business\MerchantProductOffersRestApiFacadeInterface
      */
     protected $merchantProductOffersRestApiFacade;
-    
+
     /**
      * @return void
      */
@@ -45,7 +45,7 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataSuccessfully()
+    public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataSuccessfully(): void
     {
         // Arrange
         $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer();

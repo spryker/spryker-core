@@ -26,7 +26,9 @@ class MerchantProductOfferStorageReader implements MerchantProductOfferStorageRe
     }
 
     /**
-     * @inheritDoc
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {

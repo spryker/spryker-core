@@ -20,9 +20,9 @@ class MerchantProductOfferCartItemExpanderPlugin extends AbstractPlugin implemen
     /**
      * {@inheritDoc}
      * - Expands CartItemRequestTransfer with product options.
-     * - Finds product options ids by RestCartItemsAttributesTransfer::$sku.
-     * - Sets CartItemRequestTransfer::$productOptions matched by RestCartItemsAttributesTransfer::$productOptions.
-     * - Adds list of ProductOptionTransfer to the CartItemRequestTransfer::$productOptionValues.
+     * - Finds ProductOfferStorageTransfer by RestCartItemsAttributesTransfer::$productOfferReference.
+     * - Sets CartItemRequestTransfer::$productOfferReference matched by ProductOfferStorageTransfer::$productOfferReference.
+     * - Sets CartItemRequestTransfer::$merchantReference matched by ProductOfferStorageTransfer::$merchantReference.
      *
      * @api
      *

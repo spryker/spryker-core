@@ -19,7 +19,7 @@ class MerchantProductOfferRestCartItemsAttributesMapperPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Maps ItemTransfer product options to RestOrderItemsAttributesTransfer selected options.
+     * - Maps ItemTransfer product options to RestItemsAttributesTransfer selected options.
      *
      * @api
      *

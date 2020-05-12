@@ -10,15 +10,16 @@ namespace Spryker\Glue\MerchantProductOffersRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\MerchantProductOfferStorageReader;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\MerchantProductOfferStorageReaderInterface;
 
 class MerchantProductOffersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpander
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpanderInterface
      */
-    public function createCartItemExpander()
+    public function createCartItemExpander(): CartItemExpanderInterface
     {
         return new CartItemExpander($this->createMerchantProductOfferStorageReader());
     }
