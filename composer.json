@@ -355,6 +355,7 @@
     "spryker/merchant-switcher": "*",
     "spryker/merchant-user": "*",
     "spryker/merchant-user-gui": "*",
+    "spryker/merchants-rest-api": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",
