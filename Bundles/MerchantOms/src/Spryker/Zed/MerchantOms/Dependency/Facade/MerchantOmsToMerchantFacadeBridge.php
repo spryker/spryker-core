@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 class MerchantOmsToMerchantFacadeBridge implements MerchantOmsToMerchantFacadeInterface
@@ -26,12 +26,12 @@ class MerchantOmsToMerchantFacadeBridge implements MerchantOmsToMerchantFacadeIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer
     {
-        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->findOne($merchantCriteriaTransfer);
     }
 }

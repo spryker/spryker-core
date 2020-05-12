@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ShoppingListItemNoteBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -209,6 +210,62 @@ class ShoppingListNoteFacadeTest extends Unit
 
         // Assert
         $this->assertEquals(static::CART_TEST_NOTE, $mappedShoppingListItemTransfer->getShoppingListItemNote()->getNote());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveShoppingListItemNotesForShoppingListItemCollection(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
+        $shoppingListItemNoteTransfer = $this->createShoppingListItemNote($shoppingListItemTransfer);
+        $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
+        $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemNotesForShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        $storedShoppingListItemNoteTransfer = $this->tester
+            ->getFacade()
+            ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
+        // Assert
+        $this->assertNotNull($storedShoppingListItemNoteTransfer->getIdShoppingListItemNote());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemCollectionWithProductOptionsExpandsShoppingListItemWithNote(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
+        $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
+
+        // Act
+        $expandedShoppingListItemCollectionTransfer = $this->tester->getFacade()->expandShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        // Assert
+        $this->assertNotNull($expandedShoppingListItemCollectionTransfer->getItems()[0]->getShoppingListItemNote());
+    }
+
+    /**
+     * @param array $shoppingListItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function createShoppingListItemCollectionTransfer(array $shoppingListItemTransfers = []): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**

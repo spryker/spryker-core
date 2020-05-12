@@ -23,7 +23,7 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceProductQueryContainer;
 

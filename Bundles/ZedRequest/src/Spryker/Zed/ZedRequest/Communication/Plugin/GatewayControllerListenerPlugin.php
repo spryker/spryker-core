@@ -68,6 +68,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         };
 
         $event->setController($newController);
+
+        return null;
     }
 
     /**

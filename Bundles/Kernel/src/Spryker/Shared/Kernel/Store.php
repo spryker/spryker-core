@@ -17,7 +17,7 @@ class Store
     public const APPLICATION_ZED = 'ZED';
 
     /**
-     * @var \Spryker\Shared\Kernel\Store|null
+     * @var static|null
      */
     protected static $instance;
 
@@ -110,15 +110,32 @@ class Store
     protected $storesWithSharedPersistence = [];
 
     /**
+     * @var bool
+     */
+    protected static $isDynamicStoreMode;
+
+    /**
      * @return static
      */
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new self();
+            self::$instance = new static();
         }
 
         return self::$instance;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isDynamicStoreMode(): bool
+    {
+        if (static::$isDynamicStoreMode === null) {
+            static::$isDynamicStoreMode = !file_exists(APPLICATION_ROOT_DIR . '/config/Shared/stores.php');
+        }
+
+        return static::$isDynamicStoreMode;
     }
 
     /**
