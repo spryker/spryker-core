@@ -9,6 +9,7 @@ namespace Spryker\Zed\Propel;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapter;
 use Spryker\Zed\Propel\Dependency\Facade\PropelToLogBridge;
 use Spryker\Zed\Propel\Dependency\Facade\PropelToTransferFacadeBridge;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
@@ -22,6 +23,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOG = 'FACADE_LOG';
     public const FACADE_TRANSFER = 'FACADE_TRANSFER';
     public const PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER = 'PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER';
+    public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +34,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUtilTextService($container);
         $container = $this->addPropelSchemaElementFilterPlugins($container);
+        $container = $this->addFileSystemAdapter($container);
 
         return $container;
     }
@@ -45,6 +48,20 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addLogFacade($container);
         $container = $this->addTransferFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileSystemAdapter(Container $container): Container
+    {
+        $container->set(static::ADAPTER_FILESYSTEM, function () {
+            return new PropelToFileSystemAdapter();
+        });
 
         return $container;
     }
