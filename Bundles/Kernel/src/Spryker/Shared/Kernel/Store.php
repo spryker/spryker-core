@@ -110,6 +110,11 @@ class Store
     protected $storesWithSharedPersistence = [];
 
     /**
+     * @var bool
+     */
+    protected static $isDynamicStoreMode;
+
+    /**
      * @return static
      */
     public static function getInstance()
@@ -119,6 +124,18 @@ class Store
         }
 
         return self::$instance;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isDynamicStoreMode(): bool
+    {
+        if (static::$isDynamicStoreMode === null) {
+            static::$isDynamicStoreMode = !file_exists(APPLICATION_ROOT_DIR . '/config/Shared/stores.php');
+        }
+
+        return static::$isDynamicStoreMode;
     }
 
     /**

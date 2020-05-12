@@ -34,6 +34,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
 use Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder;
+use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 use Spryker\Zed\Transfer\Dependency\Service\TransferToUtilGlobServiceInterface;
 use Spryker\Zed\Transfer\TransferDependencyProvider;
 
@@ -364,7 +365,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new EntityTransferDefinitionFinder(
             $this->getConfig(),
-            $this->getUtilGlobService()
+            $this->getUtilGlobService(),
+            $this->getPropelFacade()
         );
     }
 
@@ -385,5 +387,13 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function getUtilGlobService(): TransferToUtilGlobServiceInterface
     {
         return $this->getProvidedDependency(TransferDependencyProvider::SERVICE_UTIL_GLOB);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface
+     */
+    public function getPropelFacade(): TransferToPropelFacadeInterface
+    {
+        return $this->getProvidedDependency(TransferDependencyProvider::FACADE_PROPEL);
     }
 }

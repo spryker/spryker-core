@@ -29,6 +29,8 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      *
+     * @phpstan-param \ArrayObject<\Generated\Shared\Transfer\CategoryImageSetTransfer>|null $value
+     *
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\ArrayObject $value The value in the original representation
      *
      * @return array|null The value in the transformed representation

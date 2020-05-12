@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/merchant": "^2.0.0",
+    "spryker/merchant": "^3.0.0",
     "spryker/weekday-schedule": "^0.1.0"
   },
   "require-dev": {

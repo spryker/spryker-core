@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker/calculation": "^4.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^2.0.0",
+    "spryker/merchant": "^3.0.0",
     "spryker/merchant-sales-order-extension": "^0.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^11.0.0",

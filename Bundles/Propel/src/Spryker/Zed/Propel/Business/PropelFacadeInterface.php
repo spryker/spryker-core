@@ -20,6 +20,16 @@ interface PropelFacadeInterface
     public function cleanPropelSchemaDirectory();
 
     /**
+     * Specification:
+     * - Retrieves schema directory path from configuration.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSchemaDirectory(): string;
+
+    /**
      * @api
      *
      * @return void
