@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

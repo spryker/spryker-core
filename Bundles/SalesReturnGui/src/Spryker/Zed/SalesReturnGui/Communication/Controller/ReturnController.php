@@ -8,9 +8,7 @@
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
-use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,11 +82,9 @@ class ReturnController extends AbstractController
             $request->get(static::PARAM_ID_SALES_RETURN)
         );
 
-        $returnCollectionTransfer = $this->getFactory()->getSalesReturnFacade()->getReturns(
-            (new ReturnFilterTransfer())->addIdReturn($idSalesReturn)
-        );
+        $returnTransfer = $this->findReturn($idSalesReturn);
 
-        if (!$returnCollectionTransfer->getReturns()->count()) {
+        if (!$returnTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [
                 static::ERROR_MESSAGE_PARAM_ID => $idSalesReturn,
             ]);
@@ -97,9 +93,6 @@ class ReturnController extends AbstractController
                 Url::generate(static::ROUTE_RETURN_LIST)->build()
             );
         }
-
-        /** @var \Generated\Shared\Transfer\ReturnTransfer $returnTransfer */
-        $returnTransfer = $returnCollectionTransfer->getReturns()->getIterator()->current();
 
         $customerResponseTransfer = $this->getFactory()
             ->getCustomerFacade()

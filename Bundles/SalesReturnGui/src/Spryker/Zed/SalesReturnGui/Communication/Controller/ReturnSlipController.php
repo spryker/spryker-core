@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,12 +51,7 @@ class ReturnSlipController extends AbstractController
     {
         $idReturn = $this->castId($request->query->get(static::PARAM_ID_SALES_RETURN));
 
-        $returnTransfer = $this->getFactory()
-            ->getSalesReturnFacade()
-            ->getReturns((new ReturnFilterTransfer())->addIdReturn($idReturn))
-            ->getReturns()
-            ->getIterator()
-            ->current();
+        $returnTransfer = $this->findReturn($idReturn);
 
         if (!$returnTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [

@@ -7,7 +7,7 @@
 
 {% block action %}
     {{ backActionButton(url('/sales-return-gui/return'), 'Back to Returns' | trans) }}
-    {{ createActionButton(url('/sales-return-gui/slip/print'), 'Print Return Slip' | trans) }}
+    {{ createActionButton(url('/sales-return-gui/return-slip/print', {'id-sales-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
 {% endblock %}
 
 {% block content %}
