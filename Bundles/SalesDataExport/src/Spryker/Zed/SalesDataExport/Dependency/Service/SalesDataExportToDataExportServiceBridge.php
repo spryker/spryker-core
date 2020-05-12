@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesDataExport\Dependency\Service;
 
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -58,10 +58,13 @@ class SalesDataExportToDataExportServiceBridge implements SalesDataExportToDataE
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    public function mergeDataExportConfigurations(
+    public function mergeDataExportConfigurationTransfers(
         DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
         DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
-        return $this->dataExportService->mergeDataExportConfigurations($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer);
+        return $this->dataExportService->mergeDataExportConfigurationTransfers(
+            $masterDataExportConfigurationTransfer,
+            $slaveDataExportConfigurationTransfer
+        );
     }
 }

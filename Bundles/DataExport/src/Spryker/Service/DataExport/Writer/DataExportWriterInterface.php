@@ -20,5 +20,9 @@ interface DataExportWriterInterface
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
-    public function write(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer, AbstractTransfer $writeConfiguration): DataExportWriteResponseTransfer;
+    public function write(
+        array $data,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        AbstractTransfer $writeConfiguration
+    ): DataExportWriteResponseTransfer;
 }

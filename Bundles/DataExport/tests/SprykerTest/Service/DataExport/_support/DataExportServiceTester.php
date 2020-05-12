@@ -1,12 +1,19 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Service\DataExport;
 
+use Codeception\Actor;
 use Codeception\Configuration;
 use Spryker\Service\DataExport\DataExportServiceInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -20,7 +27,7 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
  *
  * @SuppressWarnings(PHPMD)
  */
-class DataExportServiceTester extends \Codeception\Actor
+class DataExportServiceTester extends Actor
 {
     use _generated\DataExportServiceTesterActions;
 

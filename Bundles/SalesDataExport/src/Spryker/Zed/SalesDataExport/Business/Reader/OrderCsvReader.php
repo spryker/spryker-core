@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface;
 
 class OrderCsvReader extends AbstractCsvReader
 {
@@ -16,7 +20,7 @@ class OrderCsvReader extends AbstractCsvReader
      */
     public function csvReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
     {
-        $ordersData = $this->salesDataExportRepository->getOrdersData($dataExportConfigurationTransfer, $offset, $limit);
+        $ordersData = $this->salesDataExportRepository->getOrderData($dataExportConfigurationTransfer, $offset, $limit);
 
         return $this->formatExportData($dataExportConfigurationTransfer->getFields(), $ordersData, $offset);
     }

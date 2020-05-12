@@ -34,9 +34,14 @@ actions:
           - billing_address_comment
           - billing_address_country
           - billing_address_region
-      sort:
-          order_id: ASC
-      filter_criteria:  # this rule is defined to ensure collision with higher level yml-s
+          - order_totals_canceled_total
+          - order_totals_discount_total
+          - order_totals_grand_total
+          - order_totals_order_expense_total
+          - order_totals_refund_total
+          - order_totals_subtotal
+          - order_totals_tax_total
+      filter_criteria:
           locale_is_active: true
 
     - data_entity: order-item
@@ -98,8 +103,6 @@ actions:
           - shipping_address_comment
           - shipping_address_country
           - shipping_address_region
-      sort:
-          order_item_id: ASC
 
     - data_entity: order-expense
       fields:
@@ -119,5 +122,3 @@ actions:
           - type
           - expense_created_at
           - expense_updated_at
-      sort:
-          order_id: ASC

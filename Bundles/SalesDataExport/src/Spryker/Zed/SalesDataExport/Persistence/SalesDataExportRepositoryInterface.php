@@ -18,7 +18,7 @@ interface SalesDataExportRepositoryInterface
      *
      * @return array
      */
-    public function getOrdersData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
 
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
@@ -27,5 +27,14 @@ interface SalesDataExportRepositoryInterface
      *
      * @return array
      */
-    public function getOrderItemsData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit) : array;
+    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
 }

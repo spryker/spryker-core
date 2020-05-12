@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataExport\Business\Exporter;
 
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
 
 interface DataExportExecutorInterface
 {

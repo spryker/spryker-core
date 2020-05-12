@@ -7,82 +7,41 @@
 
 namespace Spryker\Zed\DataExport\Business;
 
-use Spryker\Service\DataExport\DataExportService;
+use Spryker\Service\DataExport\DataExportServiceInterface;
 use Spryker\Zed\DataExport\Business\Exporter\DataExportExecutor;
-use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConfigurationAdjusterPluginInterface;
-use Spryker\Zed\DataExport\Dependency\Plugin\DataEntityExporterPluginInterface;
-use Spryker\Zed\DataExport\Dependency\Plugin\DataExportConnectionPluginInterface;
-use Spryker\Zed\DataExport\Dependency\Plugin\DataExportWriterPluginInterface;
+use Spryker\Zed\DataExport\DataExportDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExpenseExporterPlugin;
-use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExporterPlugin;
-use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderItemExporterPlugin;
-use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\SalesDataExportConfigurationAdjusterPlugin;
 
 /**
  * @method \Spryker\Zed\DataExport\DataExportConfig getConfig()
- * @method \Spryker\Zed\DataExport\Persistence\DataExportEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\DataExport\Persistence\DataExportRepositoryInterface getRepository()
  */
 class DataExportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return DataExportExecutor
+     * @return \Spryker\Zed\DataExport\Business\Exporter\DataExportExecutor
      */
-    public function createDataExportHandler() : DataExportExecutor
+    public function createDataExportHandler(): DataExportExecutor
     {
         return new DataExportExecutor(
             $this->getDataEntityExporterPlugins(),
-            $this->getDataExportConnectionPlugins(),
-            $this->getDataExportWriterPlugins(),
-            $this->getDataExportConfigurationAdjusterPlugins(),
-            $this->getService(),
+            $this->getDataExportService(),
             $this->getConfig()
         );
     }
 
-    protected function getService(): DataExportService
+    /**
+     * @return \Spryker\Service\DataExport\DataExportServiceInterface
+     */
+    public function getDataExportService(): DataExportServiceInterface
     {
-        return new DataExportService();
+        return $this->getProvidedDependency(DataExportDependencyProvider::SERVICE_DATA_EXPORT);
     }
 
     /**
-     * @return DataEntityExporterPluginInterface[]
+     * @return \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[]
      */
-    protected function getDataEntityExporterPlugins(): array
+    public function getDataEntityExporterPlugins(): array
     {
-        return [
-            new OrderExpenseExporterPlugin(),
-            new OrderExporterPlugin(),
-            new OrderItemExporterPlugin(),
-        ];
-    }
-
-    /**
-     * @return DataExportConnectionPluginInterface[]
-     */
-    protected function getDataExportConnectionPlugins(): array
-    {
-        return [
-        ];
-    }
-
-    /**
-     * @return DataExportWriterPluginInterface[]
-     */
-    protected function getDataExportWriterPlugins(): array
-    {
-        return [
-        ];
-    }
-
-    /**
-     * @return DataExportConfigurationAdjusterPluginInterface[]
-     */
-    protected function getDataExportConfigurationAdjusterPlugins(): array
-    {
-        return [
-            new SalesDataExportConfigurationAdjusterPlugin(),
-        ];
+        return $this->getProvidedDependency(DataExportDependencyProvider::DATA_ENTITY_EXPORTER_PLUGINS);
     }
 }

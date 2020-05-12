@@ -37,7 +37,7 @@ interface DataExportServiceInterface
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    public function mergeDataExportConfigurations(
+    public function mergeDataExportConfigurationTransfers(
         DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
         DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer;
@@ -54,7 +54,11 @@ interface DataExportServiceInterface
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
-    public function write(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer, AbstractTransfer $writeConfiguration): DataExportWriteResponseTransfer;
+    public function write(
+        array $data,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        AbstractTransfer $writeConfiguration
+    ): DataExportWriteResponseTransfer;
 
     /**
      * Specification:

@@ -47,7 +47,7 @@ class SalesDataExportConfigurationResolver implements SalesDataExportConfigurati
             $this->salesDataExportConfig->getDefaultExportConfigurationPath()
         );
 
-        $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurations(
+        $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationTransfer,
             $salesDataExportDataExportConfigurationsTransfer->getDefaults()
         );
@@ -61,7 +61,7 @@ class SalesDataExportConfigurationResolver implements SalesDataExportConfigurati
             return $dataExportConfigurationTransfer;
         }
 
-        return $this->dataExportService->mergeDataExportConfigurations(
+        return $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationTransfer,
             $salesDataExportActionConfigurationTransfer
         );

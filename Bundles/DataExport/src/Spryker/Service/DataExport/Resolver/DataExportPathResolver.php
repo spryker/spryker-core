@@ -19,11 +19,12 @@ class DataExportPathResolver implements DataExportPathResolverInterface
     public function resolvePath(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportConfigurationTransfer
     {
         $destinationPath = $dataExportConfigurationTransfer->getDestination();
-        $placeholders = array_map(function (string $hookValue, string $hookKey): string {
-            return sprintf('{%s}', $hookKey);
-        }, $dataExportConfigurationTransfer->getHooks());
+        $placeholders = [];
+        foreach ($dataExportConfigurationTransfer->getHooks() as $hookKey => $hookValue) {
+            $placeholders[sprintf('{%s}', $hookKey)] = $hookValue;
+        }
 
-        $destinationPathResolved = str_replace($placeholders, $dataExportConfigurationTransfer->getHooks(), $destinationPath);
+        $destinationPathResolved = str_replace(array_keys($placeholders), $placeholders, $destinationPath);
 
         return $dataExportConfigurationTransfer->setDestination($destinationPathResolved);
     }

@@ -34,7 +34,7 @@ abstract class AbstractCsvReader implements CsvReaderInterface
     protected function formatExportData(array $fields, array $exportData, int $offset): array
     {
         $exportData = array_map(function (array $exportRow) use ($fields): array {
-            return array_merge($fields, $exportRow);
+            return array_merge(array_flip($fields), $exportRow);
         }, $exportData);
 
         if ($offset === 0) {

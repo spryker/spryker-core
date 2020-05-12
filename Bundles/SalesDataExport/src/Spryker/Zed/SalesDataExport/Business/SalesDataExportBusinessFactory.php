@@ -13,8 +13,9 @@ use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportCo
 use Spryker\Zed\SalesDataExport\Business\Exporter\CsvExporter;
 use Spryker\Zed\SalesDataExport\Business\Exporter\CsvExporterInterface;
 use Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemCsvReader;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderCsvReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemCsvReader;
 use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface;
 use Spryker\Zed\SalesDataExport\SalesDataExportDependencyProvider;
 
@@ -37,12 +38,28 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\SalesDataExport\Business\Exporter\CsvExporterInterface
+     */
     public function createOrderItemCsvExporter(): CsvExporterInterface
     {
         return new CsvExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderCsvReader(),
+            $this->createOrderItemCsvReader(),
+            $this->createSalesDataExportConfigurationResolver()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesDataExport\Business\Exporter\CsvExporterInterface
+     */
+    public function createOrderExpenseCsvExporter(): CsvExporterInterface
+    {
+        return new CsvExporter(
+            $this->getDataExportService(),
+            $this->getConfig(),
+            $this->createOrderExpenseCsvReader(),
             $this->createSalesDataExportConfigurationResolver()
         );
     }
@@ -55,11 +72,25 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new OrderCsvReader($this->getRepository());
     }
 
+    /**
+     * @return \Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface
+     */
     public function createOrderItemCsvReader(): CsvReaderInterface
     {
         return new OrderItemCsvReader($this->getRepository());
     }
 
+    /**
+     * @return \Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface
+     */
+    public function createOrderExpenseCsvReader(): CsvReaderInterface
+    {
+        return new OrderExpenseReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface
+     */
     public function createSalesDataExportConfigurationResolver(): SalesDataExportConfigurationResolverInterface
     {
         return new SalesDataExportConfigurationResolver(

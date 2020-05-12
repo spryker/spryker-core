@@ -7,7 +7,6 @@
 
 namespace Spryker\Service\DataExport\Dependency\Service;
 
-
 class DataExportToUtilDataReaderServiceBridge implements DataExportToUtilDataReaderServiceInterface
 {
     /**

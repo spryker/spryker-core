@@ -19,6 +19,8 @@ class SalesDataExportConfig extends AbstractBundleConfig
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getReadBatchSize(): int
@@ -27,6 +29,8 @@ class SalesDataExportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getWriteModeTypeOverride(): string
@@ -35,6 +39,8 @@ class SalesDataExportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getWriteModeTypeAppend(): string
@@ -43,6 +49,8 @@ class SalesDataExportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultExportConfigurationPath(): string

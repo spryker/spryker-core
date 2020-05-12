@@ -8,7 +8,6 @@
 namespace Spryker\Service\DataExport\Dependency\External;
 
 use League\Csv\Writer;
-use SplFileObject;
 
 class DataExportToLeagueCsvWriterAdapter implements DataExportToCsvWriterInterface
 {

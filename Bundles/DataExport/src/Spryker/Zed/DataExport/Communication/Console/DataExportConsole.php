@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\DataExport\Communication\Console;
 
-use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,14 +42,15 @@ class DataExportConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @throws \Exception
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $exportConfigurationsPath = $this->getConfig()->getExportConfigurationsPath(). '/' . $input->getOption(static::OPTION_CONFIG);
-        $exportConfigurations = $this->getFactory()->getService()->parseConfiguration($exportConfigurationsPath);
+        $exportConfigurationsPath = $this->getConfig()
+                ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $input->getOption(static::OPTION_CONFIG);
+        $exportConfigurations = $this->getFactory()
+            ->getDataExportService()
+            ->parseConfiguration($exportConfigurationsPath);
 
         $dataExportReportTransfers = $this->getFacade()->exportDataEntities($exportConfigurations);
 
@@ -61,11 +66,11 @@ class DataExportConsole extends Console
     protected function printDataExportReport(OutputInterface $output, array $dataExportReportTransfers): int
     {
         $isSuccessful = true;
-        foreach($dataExportReportTransfers as $dataExportReportTransfer) {
+        foreach ($dataExportReportTransfers as $dataExportReportTransfer) {
             if (!$dataExportReportTransfer->getIsSuccessful()) {
                 $isSuccessful = false;
             }
-            foreach($dataExportReportTransfer->getDataExportResults() as $dataExportResultTransfer) {
+            foreach ($dataExportReportTransfer->getDataExportResults() as $dataExportResultTransfer) {
                 $output->writeln(sprintf(
                     '<fg=white>Document: %s (Objects: %d)</fg=white>',
                     $dataExportResultTransfer->getDataEntity(),

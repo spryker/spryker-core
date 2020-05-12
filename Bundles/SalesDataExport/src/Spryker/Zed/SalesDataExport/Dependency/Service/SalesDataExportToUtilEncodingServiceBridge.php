@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesDataExport\Dependency\Service;
 
-
 class SalesDataExportToUtilEncodingServiceBridge implements SalesDataExportToUtilEncodingServiceInterface
 {
     /**

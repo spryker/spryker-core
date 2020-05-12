@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
+use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class DataExportWriter implements DataExportWriterInterface
@@ -34,18 +35,26 @@ class DataExportWriter implements DataExportWriterInterface
     protected $dataExportLocalWriter;
 
     /**
+     * @var \Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface
+     */
+    protected $dataExportPathResolver;
+
+    /**
      * @param \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface[] $dataExportConnectionPlugins
      * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportFormatter
      * @param \Spryker\Service\DataExport\Writer\DataExportWriterInterface $dataExportLocalWriter
+     * @param \Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface $dataExportPathResolver
      */
     public function __construct(
         array $dataExportConnectionPlugins,
         DataExportFormatterInterface $dataExportFormatter,
-        DataExportWriterInterface $dataExportLocalWriter
+        DataExportWriterInterface $dataExportLocalWriter,
+        DataExportPathResolverInterface $dataExportPathResolver
     ) {
         $this->dataExportConnectionPlugins = $dataExportConnectionPlugins;
         $this->dataExportFormatter = $dataExportFormatter;
         $this->dataExportLocalWriter = $dataExportLocalWriter;
+        $this->dataExportPathResolver = $dataExportPathResolver;
     }
 
     /**
@@ -67,6 +76,7 @@ class DataExportWriter implements DataExportWriterInterface
         $dataExportWriteResponseTransfer = (new DataExportWriteResponseTransfer())
             ->setIsSuccessful(false);
 
+        $dataExportConfigurationTransfer = $this->dataExportPathResolver->resolvePath($dataExportConfigurationTransfer);
         foreach ($this->dataExportConnectionPlugins as $dataExportConnectionPlugin) {
             if (!$dataExportConnectionPlugin->isApplicable($dataExportConfigurationTransfer)) {
                 continue;

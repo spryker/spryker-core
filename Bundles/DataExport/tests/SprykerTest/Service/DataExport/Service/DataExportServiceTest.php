@@ -14,6 +14,16 @@ use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer;
 
+/**
+ * Auto-generated group annotations
+ *
+ * @group SprykerTest
+ * @group Service
+ * @group DataExport
+ * @group Service
+ * @group DataExportServiceTest
+ * Add your own group annotations below this line
+ */
 class DataExportServiceTest extends Unit
 {
     protected const DATA_ENTITY_MASTER = 'data-entity-master';
@@ -59,7 +69,7 @@ class DataExportServiceTest extends Unit
             ->setDataEntity(static::DATA_ENTITY_SLAVE);
 
         //Act
-        $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurations(
+        $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $masterDataExportConfigurationTransfer,
             $slaveDataExportConfigurationTransfer
         );
@@ -80,7 +90,7 @@ class DataExportServiceTest extends Unit
             ->addHook(static::HOOK_KEY_EXTENSION, 'csv');
 
         //Act
-        $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurations(
+        $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $masterDataExportConfigurationTransfer,
             $slaveDataExportConfigurationTransfer
         );

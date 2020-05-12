@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesDataExport\Persistence;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -37,11 +38,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array
      */
-    public function getOrdersData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
     {
         $salesOrderQuery = $this->getFactory()->getSalesOrderPropelQuery()
             ->joinLocale()
-            ->leftJoinOrderTotal()
+            ->joinOrderTotal()
             ->leftJoinBillingAddress()
             ->useBillingAddressQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinCountry()
@@ -73,15 +74,20 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
+     * @module Country
+     * @module Oms
+     * @module Shipment
+     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
      * @param int $limit
      *
      * @return array
      */
-    public function getOrderItemsData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit) : array
+    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
     {
-        $salesOrderItemQuery = SpySalesOrderItemQuery::create()
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
             ->joinOrder()
             ->joinState()
             ->leftJoinProcess()
@@ -110,10 +116,32 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             return [];
         }
 
-        return [
-            count($salesOrderItemData) > 0 ? array_keys($salesOrderItemData[0]) : [],
-            $salesOrderItemData,
-        ];
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemDataToCsvFormattedArray($salesOrderItemData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    {
+        $salesExpenseQuery = SpySalesExpenseQuery::create()
+            ->joinOrder()
+            ->leftJoinSpySalesShipment()
+            ->offset($offset)
+            ->limit($limit);
+
+        $salesExpenseQuery->select($this->getSalesExpenseSelectFields($dataExportConfigurationTransfer));
+        $orderExpenseData = $salesExpenseQuery->find()->getArrayCopy();
+
+        return $this->getFactory()
+            ->createSalesExpenseMapper()
+            ->mapSalesExpenseDataToCsvFormattedArray($orderExpenseData);
     }
 
     /**
@@ -125,8 +153,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     protected function applyFilterCriteriaToSalesOrderQuery(array $filterCriteria, SpySalesOrderQuery $salesOrderQuery): SpySalesOrderQuery
     {
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_LOCALE_IS_ACTIVE])) {
-            $salesOrderQuery->useLocaleQuery(null, Criteria::INNER_JOIN)
-                ->filterByIsActive(true)
+            $salesOrderQuery
+                ->useLocaleQuery(null, Criteria::INNER_JOIN)
+                    ->filterByIsActive(true)
                 ->endUse();
         }
 
@@ -137,7 +166,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderQuery->filterByCreatedAt_Between([
                 'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
-                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO]
+                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
             ]);
         }
 
@@ -153,19 +182,48 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     protected function applyFilterCriteriaToSalesOrderItemQuery(array $filterCriteria, SpySalesOrderItemQuery $salesOrderItemQuery): SpySalesOrderItemQuery
     {
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])) {
-            $salesOrderItemQuery->useOrderQuery()
-                ->filterByStore_In($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByStore_In($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])
                 ->endUse();
         }
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderItemQuery->filterByCreatedAt_Between([
                 'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
-                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO]
+                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
             ]);
         }
 
         return $salesOrderItemQuery;
+    }
+
+    /**
+     * @param array $filterCriteria
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery $salesExpenseQuery
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    protected function applyFilterCriteriaToSalesExpenseQuery(array $filterCriteria, SpySalesExpenseQuery $salesExpenseQuery): SpySalesExpenseQuery
+    {
+        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])) {
+            $salesExpenseQuery
+                ->useOrderQuery()
+                    ->filterByStore_In($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])
+                ->endUse();
+        }
+
+        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
+            $salesExpenseQuery
+                ->useOrderQuery()
+                    ->filterByCreatedAt_Between([
+                        'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
+                        'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
+                    ])
+                ->endUse();
+        }
+
+        return $salesExpenseQuery;
     }
 
     /**
@@ -194,6 +252,20 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     {
         $csvMapping = $this->getFactory()
             ->createSalesOrderItemMapper()
+            ->getCsvMapping();
+
+        return array_intersect_key($csvMapping, array_flip($dataExportConfigurationTransfer->getFields()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return array<string, string>
+     */
+    protected function getSalesExpenseSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    {
+        $csvMapping = $this->getFactory()
+            ->createSalesExpenseMapper()
             ->getCsvMapping();
 
         return array_intersect_key($csvMapping, array_flip($dataExportConfigurationTransfer->getFields()));

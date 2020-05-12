@@ -7,52 +7,10 @@
 
 namespace Spryker\Service\DataExport\Merger;
 
-use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
 class DataExportConfigurationMerger implements DataExportConfigurationMergerInterface
 {
-    public function mergeDataExportConfigurationsTransfers(
-        DataExportConfigurationsTransfer $masterDataExportConfigurationsTransfer,
-        DataExportConfigurationsTransfer $slaveDataExportConfigurationsTransfer
-    ): DataExportConfigurationsTransfer {
-        $dataExportConfigurationsTransfer = new DataExportConfigurationsTransfer();
-        $dataExportConfigurationsTransfer->setVersion($masterDataExportConfigurationsTransfer->getVersion());
-
-        $defaultsDataExportConfigurationTransfer = $this->mergeDataExportConfigurationTransfers(
-            $masterDataExportConfigurationsTransfer->getDefaults(),
-            $slaveDataExportConfigurationsTransfer->getDefaults()
-        );
-        $dataExportConfigurationsTransfer->setDefaults($defaultsDataExportConfigurationTransfer);
-
-        $masterDataEntities = array_map(function (DataExportConfigurationTransfer $dataExportConfigurationTransfer): string {
-            return $dataExportConfigurationTransfer->getDataEntity();
-        }, $masterDataExportConfigurationsTransfer->getActions());
-        $slaveDataEntities = array_map(function (DataExportConfigurationTransfer $dataExportConfigurationTransfer): string {
-            return $dataExportConfigurationTransfer->getDataEntity();
-        }, $slaveDataExportConfigurationsTransfer->getActions());
-
-        $intersect = array_intersect($masterDataEntities, $slaveDataEntities);
-
-
-        $dataExportConfigurationActionTransfers = [];
-        foreach ($masterDataExportConfigurationsTransfer->getActions() as $masterDataExportConfigurationTransfer) {
-            if (!in_array($masterDataExportConfigurationTransfer->getDataEntity(), $intersect, true)) {
-                $dataExportConfigurationActionTransfers[] = $masterDataExportConfigurationTransfer;
-            }
-            foreach ($slaveDataExportConfigurationsTransfer->getActions() as $slaveDataExportConfigurationTransfer) {
-                if ($masterDataExportConfigurationTransfer->getDataEntity() === $slaveDataExportConfigurationTransfer->getDataEntity()) {
-                    $dataExportConfigurationActionTransfers[$masterDataExportConfigurationTransfer->getDataEntity()] = $this->mergeDataExportConfigurationsTransfers(
-                        $masterDataExportConfigurationTransfer,
-                        $slaveDataExportConfigurationTransfer
-                    );
-
-                    break;
-                }
-            }
-        }
-    }
-
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $masterDataExportConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $slaveDataExportConfigurationTransfer
@@ -70,8 +28,11 @@ class DataExportConfigurationMerger implements DataExportConfigurationMergerInte
         $masterDataExportConfigurationTransfer->setHooks(
             $this->mergeDataExportConfigurationHooks($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer)
         );
+        $masterDataExportConfigurationTransfer->setFilterCriteria(
+            $this->mergeDataExportConfigurationFilterCriteria($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer)
+        );
 
-        return $slaveDataExportConfigurationTransfer->fromArray($masterDataExportConfigurationTransfer->toArray());
+        return $slaveDataExportConfigurationTransfer->fromArray($masterDataExportConfigurationTransfer->modifiedToArray());
     }
 
     /**
@@ -87,6 +48,22 @@ class DataExportConfigurationMerger implements DataExportConfigurationMergerInte
         return array_merge(
             $slaveDataExportConfigurationTransfer->getHooks(),
             $masterDataExportConfigurationTransfer->getHooks()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function mergeDataExportConfigurationFilterCriteria(
+        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+    ): array {
+        return array_merge(
+            $slaveDataExportConfigurationTransfer->getFilterCriteria(),
+            $masterDataExportConfigurationTransfer->getFilterCriteria()
         );
     }
 }

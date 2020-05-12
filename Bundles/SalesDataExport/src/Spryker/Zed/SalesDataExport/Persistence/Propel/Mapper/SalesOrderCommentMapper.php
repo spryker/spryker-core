@@ -32,8 +32,10 @@ class SalesOrderCommentMapper
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    public function mapSalesOrderCommentEntitiesToCommentTransfersGropedByIdSalesOrder(ObjectCollection $salesOrderCommentEntities, array $commentTransfers): array
-    {
+    public function mapSalesOrderCommentEntitiesToCommentTransfersGropedByIdSalesOrder(
+        ObjectCollection $salesOrderCommentEntities,
+        array $commentTransfers
+    ): array {
         foreach ($salesOrderCommentEntities as $salesOrderCommentEntity) {
             $commentTransfers[$salesOrderCommentEntity->getFkSalesOrder()][] = (new CommentTransfer())->fromArray(
                 $salesOrderCommentEntity->toArray(),
@@ -53,7 +55,7 @@ class SalesOrderCommentMapper
     {
         $orderComments = [];
         foreach ($salesOrderCommentTransfers as $salesOrderCommentTransfer) {
-            $orderComments[] =[
+            $orderComments[] = [
                 'username' => $salesOrderCommentTransfer->getUsername(),
                 'message' => $salesOrderCommentTransfer->getMessage(),
                 'created_at' => $salesOrderCommentTransfer->getCreatedAt(),

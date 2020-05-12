@@ -47,7 +47,7 @@ class DataExportFormatter implements DataExportFormatterInterface
         $dataExportConfigurationTransfer->requireFormat();
 
         foreach ($this->dataExportFormatterPlugins as $dataExportFormatterPlugin) {
-            if (!$dataExportFormatterPlugin->isApplicable($dataExportFormatterPlugin)) {
+            if (!$dataExportFormatterPlugin->isApplicable($dataExportConfigurationTransfer)) {
                 continue;
             }
 
@@ -69,7 +69,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     public function getFormatExtension(DataExportConfigurationTransfer $dataExportConfigurationTransfer): ?string
     {
         foreach ($this->dataExportFormatterPlugins as $dataExportFormatterPlugin) {
-            if (!$dataExportFormatterPlugin->isApplicable($dataExportFormatterPlugin)) {
+            if (!$dataExportFormatterPlugin->isApplicable($dataExportConfigurationTransfer)) {
                 continue;
             }
 

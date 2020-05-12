@@ -14,6 +14,9 @@ use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServ
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\DataExport\DataExportConfig getConfig()
+ */
 class DataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
@@ -90,9 +93,9 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCsvWriter(Container $container): Container
     {
-        $container->set(static::CSV_WRITER, function (): DataExportToCsvWriterInterface {
+        $container->set(static::CSV_WRITER, $container->factory(function (): DataExportToCsvWriterInterface {
             return new DataExportToLeagueCsvWriterAdapter();
-        });
+        }));
 
         return $container;
     }

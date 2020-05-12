@@ -16,5 +16,7 @@ interface SalesDataExportConfigurationResolverInterface
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    public function resolveSalesDataExportActionConfiguration(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportConfigurationTransfer;
+    public function resolveSalesDataExportActionConfiguration(
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportConfigurationTransfer;
 }

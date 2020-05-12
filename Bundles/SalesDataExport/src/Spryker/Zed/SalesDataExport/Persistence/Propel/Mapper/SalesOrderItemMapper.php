@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper;
 
 class SalesOrderItemMapper
 {
+    /**
+     * @var array
+     */
     protected $csvMapping = [
         'order_reference' => 'Order.OrderReference',
         'product_name' => 'SpySalesOrderItem.Name',

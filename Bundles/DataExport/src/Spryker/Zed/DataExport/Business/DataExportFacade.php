@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataExport\Business;
 
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

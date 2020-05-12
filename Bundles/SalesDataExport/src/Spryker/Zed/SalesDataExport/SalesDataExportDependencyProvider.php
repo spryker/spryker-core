@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesDataExport;
 
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -24,6 +26,8 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+    public const PROPEL_QUERY_SALES_EXPENSE = 'PROPEL_QUERY_SALES_EXPENSE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +51,8 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addSalesOrderPropelQuery($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
+        $container = $this->addSalesExpensePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -61,6 +67,34 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_SALES_ORDER, function (): SpySalesOrderQuery {
             return SpySalesOrderQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function (): SpySalesOrderItemQuery {
+            return SpySalesOrderItemQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesExpensePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_EXPENSE, function (): SpySalesExpenseQuery {
+            return SpySalesExpenseQuery::create();
         });
 
         return $container;

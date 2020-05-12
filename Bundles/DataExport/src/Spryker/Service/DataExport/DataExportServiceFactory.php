@@ -8,6 +8,7 @@
 namespace Spryker\Service\DataExport;
 
 use Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface;
+use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServiceInterface;
 use Spryker\Service\DataExport\Formatter\DataExportCsvFormatter;
 use Spryker\Service\DataExport\Formatter\DataExportFormatter;
 use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
@@ -17,7 +18,6 @@ use Spryker\Service\DataExport\Merger\DataExportConfigurationMerger;
 use Spryker\Service\DataExport\Merger\DataExportConfigurationMergerInterface;
 use Spryker\Service\DataExport\Parser\DataExportConfigurationParserInterface;
 use Spryker\Service\DataExport\Parser\DataExportConfigurationYamlParser;
-use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServiceInterface;
 use Spryker\Service\DataExport\Resolver\DataExportPathResolver;
 use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 use Spryker\Service\DataExport\Writer\DataExportLocalWriter;
@@ -55,6 +55,19 @@ class DataExportServiceFactory extends AbstractServiceFactory
     }
 
     /**
+     * @return \Spryker\Service\DataExport\Writer\DataExportWriterInterface
+     */
+    public function createDataExportWriter(): DataExportWriterInterface
+    {
+        return new DataExportWriter(
+            $this->getDataExportConnectionPlugins(),
+            $this->createDataExportFormatter(),
+            $this->createDataExportLocalWriter(),
+            $this->createDataExportPathResolver()
+        );
+    }
+
+    /**
      * @return \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface
      */
     public function createDataExportFormatter(): DataExportFormatterInterface
@@ -79,18 +92,6 @@ class DataExportServiceFactory extends AbstractServiceFactory
     public function createDataExportPathResolver(): DataExportPathResolverInterface
     {
         return new DataExportPathResolver();
-    }
-
-    /**
-     * @return \Spryker\Service\DataExport\Writer\DataExportWriterInterface
-     */
-    public function createDataExportWriter(): DataExportWriterInterface
-    {
-        return new DataExportWriter(
-            $this->getDataExportFormatterPlugins(),
-            $this->createDataExportFormatter(),
-            $this->createDataExportLocalWriter()
-        );
     }
 
     /**

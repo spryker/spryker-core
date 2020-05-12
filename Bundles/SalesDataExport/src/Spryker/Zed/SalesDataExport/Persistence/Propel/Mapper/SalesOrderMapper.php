@@ -16,6 +16,9 @@ class SalesOrderMapper
      */
     protected $salesOrderCommentMapper;
 
+    /**
+     * @var array
+     */
     protected $csvMapping = [
         'order_reference' => 'SpySalesOrder.OrderReference',
         'customer_reference' => 'SpySalesOrder.CustomerReference',

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
@@ -10,10 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesDataExport\Business\SalesDataExportFacade getFacade()
  * @method \Spryker\Zed\SalesDataExport\SalesDataExportConfig getConfig()
+ * @method \Spryker\Zed\SalesDataExport\Communication\SalesDataExportCommunicationFactory getFactory()
  */
-class OrderExporterPlugin extends AbstractPlugin implements DataEntityExporterPluginInterface
+class OrderExpenseDataEntityExporterPlugin extends AbstractPlugin implements DataEntityExporterPluginInterface
 {
-    protected const DATA_ENTITY = 'order';
+    protected const DATA_ENTITY = 'order-expense';
     protected const SUPPORTED_WRITER = 'csv';
 
     /**
@@ -30,8 +36,8 @@ class OrderExporterPlugin extends AbstractPlugin implements DataEntityExporterPl
     {
         $dataExportConfigurationTransfer->requireFormat();
 
-        return static::DATA_ENTITY === $dataExportConfigurationTransfer->getDataEntity() &&
-            static::SUPPORTED_WRITER === $dataExportConfigurationTransfer->getFormat()->getType();
+        return $dataExportConfigurationTransfer->getDataEntity() === static::DATA_ENTITY &&
+            $dataExportConfigurationTransfer->getFormat()->getType() === static::SUPPORTED_WRITER;
     }
 
     /**
@@ -46,6 +52,6 @@ class OrderExporterPlugin extends AbstractPlugin implements DataEntityExporterPl
      */
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return $this->getFacade()->exportOrderItem($dataExportConfigurationTransfer);
+        return $this->getFacade()->exportOrderExpense($dataExportConfigurationTransfer);
     }
 }

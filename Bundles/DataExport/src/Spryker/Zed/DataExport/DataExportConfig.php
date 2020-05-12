@@ -14,6 +14,8 @@ class DataExportConfig extends AbstractBundleConfig
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getExportConfigurationDefaultsPath(): string
@@ -22,6 +24,8 @@ class DataExportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getExportConfigurationsPath(): string
