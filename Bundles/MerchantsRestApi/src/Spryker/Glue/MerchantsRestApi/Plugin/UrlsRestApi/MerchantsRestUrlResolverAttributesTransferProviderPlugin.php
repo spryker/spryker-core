@@ -10,7 +10,6 @@ namespace Spryker\Glue\MerchantsRestApi\Plugin\UrlsRestApi;
 use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
 use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface;
 
 /**
@@ -30,13 +29,13 @@ class MerchantsRestUrlResolverAttributesTransferProviderPlugin extends AbstractP
      */
     public function isApplicable(UrlStorageTransfer $urlStorageTransfer): bool
     {
-        return $urlStorageTransfer->getFkResourceMerchantProfile() !== null;
+        return $urlStorageTransfer->getFkResourceMerchant() !== null;
     }
 
     /**
      * {@inheritDoc}
      * - Looks up the merchant in the key-value storage by id given in UrlStorageTransfer.
-     * - Returns the RestUrlResolverAttributesTransfer with the type and id of the merchant.
+     * - Returns the RestUrlResolverAttributesTransfer with id of the merchant and type = .
      *
      * @api
      *
@@ -46,8 +45,8 @@ class MerchantsRestUrlResolverAttributesTransferProviderPlugin extends AbstractP
      */
     public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
-        return (new RestUrlResolverAttributesTransfer())
-            ->setEntityId('MER00001')
-            ->setEntityType(MerchantsRestApiConfig::RESOURCE_MERCHANTS);
+        return $this->getFactory()
+            ->createMerchantUrlResolver()
+            ->resolveMerchantUrl($urlStorageTransfer);
     }
 }

@@ -5,6 +5,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.33.0",
+    "spryker/merchant-storage": "^0.1.0",
     "spryker/urls-rest-api-extension": "^1.0.0"
   },
   "autoload": {
