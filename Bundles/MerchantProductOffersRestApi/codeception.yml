@@ -1,4 +1,6 @@
 namespace: MerchantProductOffersRestApi
+include:
+    - tests/SprykerTest/Zed/MerchantProductOffersRestApi
 actor: Tester
 paths:
     tests: tests

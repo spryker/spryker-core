@@ -1,7 +1,7 @@
 # MerchantProductOffersRestApi Module
 [![Build Status](https://travis-ci.org/spryker/product-offers-rest-api.svg)](https://travis-ci.org/spryker/product-offers-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+MerchantProductOffersRestApi Module is a cart resource expander that populates a cart resource with concrete product offer information data.
 
 ## Installation
 
