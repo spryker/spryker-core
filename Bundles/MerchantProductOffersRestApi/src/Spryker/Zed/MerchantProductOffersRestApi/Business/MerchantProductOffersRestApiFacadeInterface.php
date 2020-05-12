@@ -14,8 +14,8 @@ interface MerchantProductOffersRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Maps CartItemRequestTransfer::$productOfferReference to PersistentCartChangeTransfer::$items by Item::$sku.
-     * - Maps CartItemRequestTransfer::$merchantReference to PersistentCartChangeTransfer::$items by Item::$sku.
+     * - Maps CartItemRequestTransfer.productOfferReference to PersistentCartChangeTransfer.items by Item.sku.
+     * - Maps CartItemRequestTransfer.merchantReference to PersistentCartChangeTransfer.items by Item.sku.
      *
      * @api
      *
