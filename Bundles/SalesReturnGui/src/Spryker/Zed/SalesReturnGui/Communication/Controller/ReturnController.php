@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,8 +27,8 @@ class ReturnController extends AbstractController
      */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
-    protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
-    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+    protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
+    protected const MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @return array
@@ -62,7 +61,7 @@ class ReturnController extends AbstractController
     {
         $response = $this->executeDetailAction($request);
 
-        if ($response instanceof RedirectResponse) {
+        if (!is_array($response)) {
             return $response;
         }
 
@@ -83,8 +82,8 @@ class ReturnController extends AbstractController
         $returnTransfer = $this->findReturn($request);
 
         if (!$returnTransfer) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [
-                static::ERROR_MESSAGE_PARAM_ID => $idSalesReturn,
+            $this->addErrorMessage(static::MESSAGE_RETURN_NOT_FOUND, [
+                static::MESSAGE_PARAM_ID => $idSalesReturn,
             ]);
 
             return $this->redirectResponse(
