@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\ConfigReader;
 
-use Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapterInterface;
+use Spryker\Zed\Propel\Dependency\External\PropelToFilesystemAdapterInterface;
 use Spryker\Zed\Propel\PropelConfig;
 
 class PropelConfigReader implements PropelConfigReaderInterface
@@ -18,17 +18,17 @@ class PropelConfigReader implements PropelConfigReaderInterface
     protected $propelConfig;
 
     /**
-     * @var \Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapterInterface
+     * @var \Spryker\Zed\Propel\Dependency\External\PropelToFilesystemAdapterInterface
      */
     protected $fileSystem;
 
     /**
      * @param \Spryker\Zed\Propel\PropelConfig $propelConfig
-     * @param \Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapterInterface $fileSystem
+     * @param \Spryker\Zed\Propel\Dependency\External\PropelToFilesystemAdapterInterface $fileSystem
      */
     public function __construct(
         PropelConfig $propelConfig,
-        PropelToFileSystemAdapterInterface $fileSystem
+        PropelToFilesystemAdapterInterface $fileSystem
     ) {
         $this->propelConfig = $propelConfig;
         $this->fileSystem = $fileSystem;
@@ -39,12 +39,12 @@ class PropelConfigReader implements PropelConfigReaderInterface
      */
     public function getSchemaDirectory(): string
     {
-        $shemaDirectory = $this->propelConfig->getSchemaDirectory();
+        $schemaDirectory = $this->propelConfig->getSchemaDirectory();
 
-        if (!$this->fileSystem->exists($shemaDirectory)) {
-            $this->fileSystem->mkdir($shemaDirectory);
+        if (!$this->fileSystem->exists($schemaDirectory)) {
+            $this->fileSystem->mkdir($schemaDirectory);
         }
 
-        return $shemaDirectory;
+        return $schemaDirectory;
     }
 }

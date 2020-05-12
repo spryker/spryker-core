@@ -9,7 +9,7 @@ namespace Spryker\Zed\Propel\Dependency\External;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class PropelToFileSystemAdapter implements PropelToFileSystemAdapterInterface
+class PropelToFilesystemAdapter implements PropelToFilesystemAdapterInterface
 {
     /**
      * @var \Symfony\Component\Filesystem\Filesystem

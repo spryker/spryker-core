@@ -41,7 +41,7 @@ use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
 use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
-use Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapterInterface;
+use Spryker\Zed\Propel\Dependency\External\PropelToFilesystemAdapterInterface;
 use Spryker\Zed\Propel\PropelDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -55,7 +55,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     public function createPropelConfigReader(): PropelConfigReaderInterface
     {
-        return new PropelConfigReader($this->getConfig(), $this->getFileSystemAdapter());
+        return new PropelConfigReader($this->getConfig(), $this->getFilesystemAdapter());
     }
 
     /**
@@ -448,9 +448,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Dependency\External\PropelToFileSystemAdapterInterface
+     * @return \Spryker\Zed\Propel\Dependency\External\PropelToFilesystemAdapterInterface
      */
-    public function getFileSystemAdapter(): PropelToFileSystemAdapterInterface
+    public function getFilesystemAdapter(): PropelToFilesystemAdapterInterface
     {
         return $this->getProvidedDependency(PropelDependencyProvider::ADAPTER_FILESYSTEM);
     }
