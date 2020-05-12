@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
+use ArrayObject;
+use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -31,6 +33,30 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return void
+     */
+    public function saveShoppingListItemProductOptionInBulk(ArrayObject $shoppingListItemTransfers): void
+    {
+        $shoppingListItemObjectCollection = new ObjectCollection();
+        $shoppingListItemObjectCollection->setModel(SpyShoppingListProductOption::class);
+
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
+                $shoppingListProductOptionEntity = $this->getFactory()
+                    ->createSpyShoppingListProductOption()
+                    ->setFkShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem())
+                    ->setFkProductOptionValue($productOptionTransfer->getIdProductOptionValue());
+
+                $shoppingListItemObjectCollection->append($shoppingListProductOptionEntity);
+            }
+        }
+
+        $shoppingListItemObjectCollection->save();
+    }
+
+    /**
      * @param int $idShoppingListItem
      *
      * @return void
@@ -40,6 +66,21 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
+            ->find();
+
+        $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);
+    }
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptionsByShoppingListItemIds(array $shoppingListItemIds): void
+    {
+        $shoppingListProductOptionEntities = $this->getFactory()
+            ->createSpyShoppingListProductOptionQuery()
+            ->filterByFkShoppingListItem_In($shoppingListItemIds)
             ->find();
 
         $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);
@@ -67,8 +108,6 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
      */
     protected function deleteEntitiesAndTriggerEvents(ObjectCollection $shoppingListProductOptionEntities): void
     {
-        foreach ($shoppingListProductOptionEntities as $shoppingListProductOptionEntity) {
-            $shoppingListProductOptionEntity->delete();
-        }
+        $shoppingListProductOptionEntities->delete();
     }
 }
