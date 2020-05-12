@@ -38,11 +38,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for returnItem in return.returnItems %}
-                    {% set order = {
-                        currencyIsoCode: returnItem.orderItem.currencyIsoCode ?? null
-                    } %}
+                {% set order = {
+                    currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
+                } %}
 
+                {% set returnItemsWithConfiguredBundles = [] %}
+
+                {% for returnItem in return.returnItems %}
+                {% if returnItem.orderItem.salesOrderConfiguredBundle is empty %}
                     <tr>
                         {% include '@Sales/Detail/boxes/order-item.twig' with {
                             orderItem: returnItem.orderItem,
@@ -55,12 +58,22 @@
                             changeStatusRedirectUrl: triggerButtonRedirectUrl,
                         } only %}
                     </tr>
+                    {% else %}
+                        {% set returnItemsWithConfiguredBundles = returnItemsWithConfiguredBundles | merge([returnItem]) %}
+                    {% endif %}
 
                     {% include '@Sales/Detail/boxes/order-item-option.twig' with {
                         orderItem: returnItem.orderItem,
                         order: order,
                     } only %}
                 {% endfor %}
+
+                {% include '@SalesReturnGui/Return/_partials/return-detail-configured-bundles.twig' with {
+                    returnItems: returnItemsWithConfiguredBundles,
+                    order: order,
+                    orderItemManualEvents: orderItemManualEvents,
+                    triggerButtonRedirectUrl: triggerButtonRedirectUrl,
+                } only %}
                 </tbody>
             </table>
         </div>
