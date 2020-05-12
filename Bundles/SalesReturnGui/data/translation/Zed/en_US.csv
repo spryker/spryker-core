@@ -12,3 +12,15 @@ State,State
 "Print Slip","Print Slip"
 "List of Returns","List of Returns"
 Returns,Returns
+"Requested return with ID ""%id%"" was not found.","Requested return with ID ""%id%"" was not found."
+"Customer reference","Customer reference"
+Customer,Customer
+Name,Name
+Email,Email
+"General information","General information"
+"Retured Items","Retured Items"
+"Trigger all matching states","Trigger all matching states"
+Total,Total
+"Back to Returns","Back to Returns"
+"Print Return Slip","Print Return Slip"
+"Overview of Return","Overview of Return"
