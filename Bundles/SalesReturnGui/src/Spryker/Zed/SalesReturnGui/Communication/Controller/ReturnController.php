@@ -85,7 +85,7 @@ class ReturnController extends AbstractController
         );
 
         $returnCollectionTransfer = $this->getFactory()->getSalesReturnFacade()->getReturns(
-            (new ReturnFilterTransfer())->addSalesReturnIds($idSalesReturn)
+            (new ReturnFilterTransfer())->addIdReturn($idSalesReturn)
         );
 
         if (!$returnCollectionTransfer->getReturns()->count()) {
