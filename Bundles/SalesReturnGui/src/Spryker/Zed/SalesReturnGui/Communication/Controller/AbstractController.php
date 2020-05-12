@@ -10,30 +10,31 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
 class AbstractController extends SprykerAbstractController
 {
+    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
+
     /**
-     * @param int $idSalesReturn
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer|null
      */
-    protected function findReturn(int $idSalesReturn): ?ReturnTransfer
+    protected function findReturn(Request $request): ?ReturnTransfer
     {
-        $returnCollectionTransfer = $this->getFactory()->getSalesReturnFacade()->getReturns(
-            (new ReturnFilterTransfer())->addIdReturn($idSalesReturn)
+        $idSalesReturn = $this->castId(
+            $request->get(static::PARAM_ID_SALES_RETURN)
         );
 
-        if (!$returnCollectionTransfer->getReturns()->count()) {
-            return null;
-        }
-
-        /** @var \Generated\Shared\Transfer\ReturnTransfer $returnTransfer */
-        $returnTransfer = $returnCollectionTransfer->getReturns()->getIterator()->current();
-
-        return $returnTransfer;
+        return $this->getFactory()
+            ->getSalesReturnFacade()
+            ->getReturns((new ReturnFilterTransfer())->addIdReturn($idSalesReturn))
+            ->getReturns()
+            ->getIterator()
+            ->current();
     }
 }

@@ -28,8 +28,6 @@ class ReturnController extends AbstractController
      */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
-    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
-
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
@@ -82,7 +80,7 @@ class ReturnController extends AbstractController
             $request->get(static::PARAM_ID_SALES_RETURN)
         );
 
-        $returnTransfer = $this->findReturn($idSalesReturn);
+        $returnTransfer = $this->findReturn($request);
 
         if (!$returnTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [

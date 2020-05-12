@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReturnSlipController extends AbstractController
 {
-    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
-
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
@@ -51,7 +49,7 @@ class ReturnSlipController extends AbstractController
     {
         $idReturn = $this->castId($request->query->get(static::PARAM_ID_SALES_RETURN));
 
-        $returnTransfer = $this->findReturn($idReturn);
+        $returnTransfer = $this->findReturn($request);
 
         if (!$returnTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [
