@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
@@ -184,7 +183,6 @@ class MerchantCreateForm extends AbstractType
                     new Length([
                         'max' => 255,
                     ]),
-                    new Required(),
                     new NotBlank(),
                     new UniqueMerchantReference([
                         UniqueMerchantReference::OPTION_CURRENT_MERCHANT_ID => $currentMerchantId,
@@ -246,7 +244,6 @@ class MerchantCreateForm extends AbstractType
     protected function getTextFieldConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];
@@ -258,7 +255,6 @@ class MerchantCreateForm extends AbstractType
     protected function getPhoneFieldConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];
@@ -272,7 +268,6 @@ class MerchantCreateForm extends AbstractType
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
@@ -291,7 +286,6 @@ class MerchantCreateForm extends AbstractType
     protected function getSalutationFieldConstraints(array $choices = []): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 64]),
             new Choice(['choices' => array_keys($choices)]),
