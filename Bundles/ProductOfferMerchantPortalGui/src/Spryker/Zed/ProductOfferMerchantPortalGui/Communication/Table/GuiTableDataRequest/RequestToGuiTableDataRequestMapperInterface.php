@@ -19,5 +19,5 @@ interface RequestToGuiTableDataRequestMapperInterface
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    public function map(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer;
+    public function mapRequestToGuiTableDataRequest(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer;
 }
