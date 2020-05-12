@@ -50,5 +50,7 @@ class TouchCleanUpConsole extends Console
         $output->writeln('');
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
         $output->writeln('');
+
+        return static::CODE_SUCCESS;
     }
 }

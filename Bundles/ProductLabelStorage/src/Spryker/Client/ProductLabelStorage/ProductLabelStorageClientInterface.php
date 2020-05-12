@@ -80,13 +80,19 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Expands ProductViewTransfer with product labels.
      * - Requires ProductViewTransfer.idProductAbstract to be set.
+     * - Forward compatibility (from next major): only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer;
+    public function expandProductView(
+        ProductViewTransfer $productViewTransfer,
+        string $locale,
+        ?string $storeName = null
+    ): ProductViewTransfer;
 }

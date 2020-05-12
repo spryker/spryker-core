@@ -8,24 +8,18 @@
 namespace Spryker\Zed\MerchantProfileGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeBridge;
-use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeBridge;
-use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToUrlFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
  */
 class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
-    public const FACADE_MERCHANT_PROFILE = 'FACADE_MERCHANT_PROFILE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_URL = 'FACADE_URL';
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
     /**
@@ -37,40 +31,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addTwigEnvironment($container);
-        $container = $this->addMerchantProfileFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addUrlFacade($container);
         $container = $this->addCountryFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTwigEnvironment(Container $container): Container
-    {
-        $container->set(static::TWIG_ENVIRONMENT, function () {
-            return (new Pimple())->getApplication()['twig'];
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantProfileFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_MERCHANT_PROFILE, function (Container $container) {
-            return new MerchantProfileGuiToMerchantProfileFacadeBridge($container->getLocator()->merchantProfile()->facade());
-        });
 
         return $container;
     }
@@ -98,20 +61,6 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new MerchantProfileGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUrlFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_URL, function (Container $container) {
-            return new MerchantProfileGuiToUrlFacadeBridge($container->getLocator()->url()->facade());
         });
 
         return $container;

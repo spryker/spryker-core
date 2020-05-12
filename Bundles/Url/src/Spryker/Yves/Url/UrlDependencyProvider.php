@@ -37,5 +37,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::STORE] = function () {
             return Store::getInstance();
         };
+
+        return $container;
     }
 }

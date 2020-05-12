@@ -18,6 +18,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="merchantOrderReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrder">

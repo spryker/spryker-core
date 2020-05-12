@@ -14,6 +14,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProduct
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
 class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteProductDiscontinuedPluginInterface
 {

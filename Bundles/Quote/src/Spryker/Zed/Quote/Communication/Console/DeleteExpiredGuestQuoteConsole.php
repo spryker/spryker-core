@@ -39,5 +39,7 @@ class DeleteExpiredGuestQuoteConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->deleteExpiredGuestQuote();
+
+        return static::CODE_SUCCESS;
     }
 }

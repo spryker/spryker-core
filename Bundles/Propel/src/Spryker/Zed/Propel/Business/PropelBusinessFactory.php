@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Propel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReader;
+use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReaderInterface;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\HealthCheck\HealthCheckInterface;
 use Spryker\Zed\Propel\Business\Model\HealthCheck\PropelHealthCheck;
@@ -47,6 +49,14 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReaderInterface
+     */
+    public function createPropelConfigReader(): PropelConfigReaderInterface
+    {
+        return new PropelConfigReader($this->getConfig());
+    }
+
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaInterface
      */
