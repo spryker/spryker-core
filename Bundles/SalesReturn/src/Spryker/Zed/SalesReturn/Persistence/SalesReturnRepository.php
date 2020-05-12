@@ -68,11 +68,11 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     }
 
     /**
-     * @param string $customerReference
+     * @param string|null $customerReference
      *
      * @return int
      */
-    public function countCustomerReturns(string $customerReference): int
+    public function countCustomerReturns(?string $customerReference): int
     {
         return $this->getFactory()
             ->getSalesReturnPropelQuery()

@@ -26,20 +26,20 @@ class ReturnHandler implements ReturnHandlerInterface
     protected $salesReturnFacade;
 
     /**
-     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    protected $returnCreateFormExpanderPlugins;
+    protected $returnCreateFormHandlerPlugins;
 
     /**
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
-     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
+     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade,
-        array $returnCreateFormExpanderPlugins
+        array $returnCreateFormHandlerPlugins
     ) {
         $this->salesReturnFacade = $salesReturnFacade;
-        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
+        $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
     }
 
     /**
@@ -96,9 +96,9 @@ class ReturnHandler implements ReturnHandlerInterface
     /**
      * @param array $returnItemFormData
      *
-     * @return string
+     * @return string|null
      */
-    protected function getReason(array $returnItemFormData): string
+    protected function getReason(array $returnItemFormData): ?string
     {
         if ($returnItemFormData[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_KEY && $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]) {
             return $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON];
@@ -127,8 +127,8 @@ class ReturnHandler implements ReturnHandlerInterface
         array $returnCreateFormData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
-            $returnCreateRequestTransfer = $returnCreateFormExpanderPlugin->handle($returnCreateFormData, $returnCreateRequestTransfer);
+        foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
+            $returnCreateRequestTransfer = $returnCreateFormHandlerPlugin->handle($returnCreateFormData, $returnCreateRequestTransfer);
         }
 
         return $returnCreateRequestTransfer;

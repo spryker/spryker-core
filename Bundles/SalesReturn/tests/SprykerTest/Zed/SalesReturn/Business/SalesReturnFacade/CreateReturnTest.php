@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\SalesReturn\Business\SalesReturnFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
@@ -294,6 +294,36 @@ class CreateReturnTest extends Unit
     /**
      * @return void
      */
+    public function testCreateReturnCreatesReturnFromGuestOrder(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder())->build();
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        $returnItemTransfer = (new ReturnItemTransfer())
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
+
+        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
+            ->setCustomer(null)
+            ->setStore($orderTransfer->getStore())
+            ->addReturnItem($returnItemTransfer);
+
+        // Act
+        $returnResponseTransfer = $this->tester
+            ->getFacade()
+            ->createReturn($returnCreateRequestTransfer);
+
+        // Assert
+        $this->assertTrue($returnResponseTransfer->getIsSuccessful());
+        $this->assertNull($returnResponseTransfer->getReturn()->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateReturnCreatesReturnUsingSalesOrderItemUuidInsteadOfId(): void
     {
         // Arrange
@@ -522,62 +552,6 @@ class CreateReturnTest extends Unit
         $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($orderTransfer->getCustomer())
             ->setStore(null)
-            ->addReturnItem($returnItemTransfer);
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester
-            ->getFacade()
-            ->createReturn($returnCreateRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateReturnThrowsExceptionWithoutCustomer(): void
-    {
-        // Arrange
-        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $returnItemTransfer = (new ReturnItemTransfer())
-            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
-
-        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
-            ->setCustomer(null)
-            ->setStore($orderTransfer->getStore())
-            ->addReturnItem($returnItemTransfer);
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester
-            ->getFacade()
-            ->createReturn($returnCreateRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateReturnThrowsExceptionWithoutCustomerReference(): void
-    {
-        // Arrange
-        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $returnItemTransfer = (new ReturnItemTransfer())
-            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
-
-        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
-            ->setCustomer(new CustomerTransfer())
-            ->setStore($orderTransfer->getStore())
             ->addReturnItem($returnItemTransfer);
 
         // Assert

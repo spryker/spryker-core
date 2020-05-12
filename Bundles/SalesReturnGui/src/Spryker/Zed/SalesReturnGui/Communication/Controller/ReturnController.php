@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,11 +21,11 @@ class ReturnController extends AbstractController
     protected const PARAM_ID_ORDER = 'id-order';
     protected const PARAM_ID_RETURN = 'id-return';
 
-    protected const ERROR_MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
-    protected const ERROR_MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
-    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+    protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
+    protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
+    protected const MESSAGE_PARAM_ID = '%id%';
 
-    protected const SUCCESS_MESSAGE_RETURN_CREATED = 'Return was successfully created.';
+    protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
@@ -67,7 +66,7 @@ class ReturnController extends AbstractController
     {
         $response = $this->executeCreateAction($request);
 
-        if ($response instanceof RedirectResponse) {
+        if (!is_array($response)) {
             return $response;
         }
 
@@ -87,8 +86,8 @@ class ReturnController extends AbstractController
             ->findOrderByIdSalesOrder($idOrder);
 
         if (!$orderTransfer) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_ORDER_NOT_FOUND, [
-                static::ERROR_MESSAGE_PARAM_ID => $idOrder,
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND, [
+                static::MESSAGE_PARAM_ID => $idOrder,
             ]);
 
             return $this->redirectResponse(static::ROUTE_RETURN_LIST);
@@ -121,7 +120,7 @@ class ReturnController extends AbstractController
             ->createReturn($returnCreateForm->getData(), $orderTransfer);
 
         if ($returnResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::SUCCESS_MESSAGE_RETURN_CREATED);
+            $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED);
 
             $redirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
                 static::PARAM_ID_RETURN => $returnResponseTransfer->getReturn()->getIdSalesReturn(),
@@ -130,7 +129,7 @@ class ReturnController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_CREATE_FAIL);
+        $this->addErrorMessage(static::MESSAGE_RETURN_CREATE_FAIL);
 
         return [
             'returnCreateForm' => $returnCreateForm->createView(),

@@ -16,6 +16,7 @@ use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFaca
 
 class ReturnCreateFormDataProvider
 {
+    public const CUSTOM_REASON = 'Custom reason';
     public const CUSTOM_REASON_KEY = 'custom_reason';
 
     /**
@@ -29,23 +30,23 @@ class ReturnCreateFormDataProvider
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    protected $returnCreateFormExpanderPlugins;
+    protected $returnCreateFormHandlerPlugins;
 
     /**
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade
-     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
+     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade,
         SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade,
-        array $returnCreateFormExpanderPlugins
+        array $returnCreateFormHandlerPlugins
     ) {
         $this->salesReturnFacade = $salesReturnFacade;
         $this->glossaryFacade = $glossaryFacade;
-        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
+        $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
     }
 
     /**
@@ -89,7 +90,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function prepareReturnReasonChoices(): array
     {
@@ -104,7 +105,7 @@ class ReturnCreateFormDataProvider
             $returnReasonChoices[$returnReason] = $returnReason;
         }
 
-        $returnReasonChoices['Custom reason'] = static::CUSTOM_REASON_KEY;
+        $returnReasonChoices[static::CUSTOM_REASON] = static::CUSTOM_REASON_KEY;
 
         return $returnReasonChoices;
     }
@@ -116,8 +117,8 @@ class ReturnCreateFormDataProvider
      */
     protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
     {
-        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
-            $returnCreateFormData = $returnCreateFormExpanderPlugin->expandData($returnCreateFormData);
+        foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
+            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandData($returnCreateFormData);
         }
 
         return $returnCreateFormData;

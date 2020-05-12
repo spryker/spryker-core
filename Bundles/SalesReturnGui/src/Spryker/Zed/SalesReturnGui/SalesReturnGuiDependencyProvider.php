@@ -26,7 +26,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
-    public const PLUGINS_RETURN_CREATE_FORM_EXPANDER = 'PLUGINS_RETURN_CREATE_FORM_EXPANDER';
+    public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -48,7 +48,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addGlossaryFacade($container);
 
-        $container = $this->addReturnCreateFormExpanderPlugins($container);
+        $container = $this->addReturnCreateFormHandlerPlugins($container);
 
         return $container;
     }
@@ -144,19 +144,19 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addReturnCreateFormExpanderPlugins(Container $container): Container
+    protected function addReturnCreateFormHandlerPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RETURN_CREATE_FORM_EXPANDER, function () {
-            return $this->getReturnCreateFormExpanderPlugins();
+        $container->set(static::PLUGINS_RETURN_CREATE_FORM_HANDLER, function () {
+            return $this->getReturnCreateFormHandlerPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    protected function getReturnCreateFormExpanderPlugins(): array
+    protected function getReturnCreateFormHandlerPlugins(): array
     {
         return [];
     }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface ReturnCreateFormExpanderPluginInterface
+interface ReturnCreateFormHandlerPluginInterface
 {
     /**
      * Specification:

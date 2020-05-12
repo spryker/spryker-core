@@ -31,7 +31,7 @@ class SalesReturnGuiToGlossaryFacadeBridge implements SalesReturnGuiToGlossaryFa
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }

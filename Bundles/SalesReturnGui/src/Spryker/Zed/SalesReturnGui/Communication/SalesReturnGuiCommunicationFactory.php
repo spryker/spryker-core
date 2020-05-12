@@ -53,7 +53,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnFacade(),
             $this->getGlossaryFacade(),
-            $this->getReturnCreateFormExpanderPlugins()
+            $this->getReturnCreateFormHandlerPlugins()
         );
     }
 
@@ -89,7 +89,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ReturnHandler(
             $this->getSalesReturnFacade(),
-            $this->getReturnCreateFormExpanderPlugins()
+            $this->getReturnCreateFormHandlerPlugins()
         );
     }
 
@@ -142,10 +142,10 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    public function getReturnCreateFormExpanderPlugins(): array
+    public function getReturnCreateFormHandlerPlugins(): array
     {
-        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::PLUGINS_RETURN_CREATE_FORM_EXPANDER);
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::PLUGINS_RETURN_CREATE_FORM_HANDLER);
     }
 }
