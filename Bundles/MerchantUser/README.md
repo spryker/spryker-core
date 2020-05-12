@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-user.svg)](https://travis-ci.org/spryker/merchant-user)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-Merchant user module provides data structure, facade methods and plugins for user relation to merchant.
+MerchantProductOffersRestApi module provides Glue API endpoints to manage merchant product offers.
 
 ## Installation
 

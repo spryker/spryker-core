@@ -7,14 +7,14 @@
 
     <transfer name="CartItemRequest">
         <property name="sku" dataBuilderRule="isbn10"/>
-        <property name="productOfferReference" dataBuilderRule="word(5)"/>
-        <property name="merchantReference" dataBuilderRule="word(7)"/>
+        <property name="productOfferReference" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
     </transfer>
 
     <transfer name="Item">
         <property name="sku" dataBuilderRule="isbn10"/>
-        <property name="productOfferReference" dataBuilderRule="word(5)"/>
-        <property name="merchantReference" dataBuilderRule="word(7)"/>
+        <property name="productOfferReference" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
     </transfer>
 
 </transfers>

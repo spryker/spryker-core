@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantProductOffersRestApi\Plugin\CartsRestApi;
@@ -19,7 +19,7 @@ class MerchantProductOfferRestCartItemsAttributesMapperPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Maps ItemTransfer product options to RestItemsAttributesTransfer selected options.
+     * - Maps `ItemTransfer` merchant offer reference and merchant reference to `RestItemsAttributesTransfer`.
      *
      * @api
      *

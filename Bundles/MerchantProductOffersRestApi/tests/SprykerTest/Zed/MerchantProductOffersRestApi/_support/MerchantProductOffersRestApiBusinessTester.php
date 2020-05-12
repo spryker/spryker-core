@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\MerchantProductOffersRestApi;
@@ -35,27 +35,33 @@ class MerchantProductOffersRestApiBusinessTester extends Actor
     use _generated\MerchantProductOffersRestApiBusinessTesterActions;
 
     /**
+     * @param array $seed
+     *
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
-    public function prepareCartItemRequestTransfer(): CartItemRequestTransfer
+    public function prepareCartItemRequestTransfer(array $seed = []): CartItemRequestTransfer
     {
-        return (new CartItemRequestBuilder())->build();
+        return (new CartItemRequestBuilder($seed))->build();
     }
 
     /**
+     * @param array $seed
+     *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function preparePersistentCartChangeTransfer(): PersistentCartChangeTransfer
+    public function createPersistentCartChangeTransfer(array $seed = []): PersistentCartChangeTransfer
     {
         return (new PersistentCartChangeTransfer())
-            ->addItem($this->prepareItemTransfer());
+            ->fromArray($seed, true);
     }
 
     /**
+     * @param array $seed
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function prepareItemTransfer(): ItemTransfer
+    public function prepareItemTransfer(array $seed = []): ItemTransfer
     {
-        return (new ItemBuilder())->build();
+        return (new ItemBuilder($seed))->build();
     }
 }

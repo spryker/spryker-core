@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\MerchantProductOffersRestApi\Plugin\CartsRestApi;
@@ -19,8 +19,8 @@ class MerchantProductOfferCartItemExpanderPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Expands CartItemRequestTransfer with product options.
-     * - Finds ProductOfferStorageTransfer by RestCartItemsAttributesTransfer.productOfferReference.
+     * - Expands CartItemRequestTransfer with product offer reference and merchant reference.
+     * - Finds product offer in storage by `productOfferReference`.
      * - Sets CartItemRequestTransfer.productOfferReference matched by ProductOfferStorageTransfer.productOfferReference.
      * - Sets CartItemRequestTransfer.merchantReference matched by ProductOfferStorageTransfer.merchantReference.
      *

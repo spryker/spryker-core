@@ -2,14 +2,13 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantProductOffersRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper\MerchantProductOfferMapper;
-use Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper\MerchantProductOfferMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig getConfig()
@@ -17,9 +16,9 @@ use Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper\MerchantProductOffe
 class MerchantProductOffersRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper\MerchantProductOfferMapperInterface
+     * @return \Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper\MerchantProductOfferMapper
      */
-    public function createMerchantProductOfferMapper(): MerchantProductOfferMapperInterface
+    public function createMerchantProductOfferMapper(): MerchantProductOfferMapper
     {
         return new MerchantProductOfferMapper();
     }

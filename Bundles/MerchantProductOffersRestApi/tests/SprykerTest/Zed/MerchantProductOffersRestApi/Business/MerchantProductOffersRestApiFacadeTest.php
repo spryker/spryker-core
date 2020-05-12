@@ -2,12 +2,14 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\MerchantProductOffersRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -22,25 +24,12 @@ use Codeception\Test\Unit;
  */
 class MerchantProductOffersRestApiFacadeTest extends Unit
 {
+    protected const TEST_SKU = 'test123';
+
     /**
      * @var \SprykerTest\Zed\MerchantProductOffersRestApi\MerchantProductOffersRestApiBusinessTester
      */
     protected $tester;
-
-    /**
-     * @var \Spryker\Zed\MerchantProductOffersRestApi\Business\MerchantProductOffersRestApiFacadeInterface
-     */
-    protected $merchantProductOffersRestApiFacade;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->merchantProductOffersRestApiFacade = $this->tester->getFacade();
-    }
 
     /**
      * @return void
@@ -48,22 +37,88 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataSuccessfully(): void
     {
         // Arrange
-        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer();
-        $persistentCartChangeTransfer = $this->tester->preparePersistentCartChangeTransfer();
+        $cartItem = $this->tester->prepareItemTransfer([
+            ItemTransfer::SKU => static::TEST_SKU,
+        ]);
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer([
+            CartItemRequestTransfer::SKU => static::TEST_SKU,
+        ]);
+        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
+        $persistentCartChangeTransfer->addItem($cartItem);
 
         // Act
-        $changedPersistentCartChangeTransfer = $this->merchantProductOffersRestApiFacade->mapCartItemRequestTransferToPersistentCartChangeTransfer(
+        $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
             $cartItemRequestTransfer,
             $persistentCartChangeTransfer
         );
 
         // Assert
         $this->assertEquals(
-            $persistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference(),
+            $cartItemRequestTransfer->getProductOfferReference(),
             $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
         );
         $this->assertEquals(
-            $persistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference(),
+            $cartItemRequestTransfer->getMerchantReference(),
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataUnsuccessfullyWithDifferentSkus(): void
+    {
+        // Arrange
+        $cartItem = $this->tester->prepareItemTransfer();
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer();
+        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
+        $persistentCartChangeTransfer->addItem($cartItem);
+
+        // Act
+        $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
+            $cartItemRequestTransfer,
+            $persistentCartChangeTransfer
+        );
+
+        // Assert
+        $this->assertNotEquals(
+            $cartItemRequestTransfer->getProductOfferReference(),
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
+        );
+        $this->assertNotEquals(
+            $cartItemRequestTransfer->getMerchantReference(),
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataUnsuccessfullyWithNoOfferData(): void
+    {
+        // Arrange
+        $cartItem = $this->tester->prepareItemTransfer([
+            ItemTransfer::SKU => static::TEST_SKU,
+        ]);
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer([
+            CartItemRequestTransfer::SKU => static::TEST_SKU,
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => null,
+            ItemTransfer::MERCHANT_REFERENCE => null,
+        ]);
+        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
+        $persistentCartChangeTransfer->addItem($cartItem);
+
+        // Act
+        $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
+            $cartItemRequestTransfer,
+            $persistentCartChangeTransfer
+        );
+
+        // Assert
+        $this->assertNull(
+            $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getProductOfferReference()
+        );
+        $this->assertNull(
             $changedPersistentCartChangeTransfer->getItems()->getIterator()->current()->getMerchantReference()
         );
     }
