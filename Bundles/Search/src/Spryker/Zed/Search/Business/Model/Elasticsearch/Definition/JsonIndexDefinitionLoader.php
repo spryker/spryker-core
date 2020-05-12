@@ -29,9 +29,14 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $definitionMerger;
 
     /**
-     * @var array
+     * @var string[]
      */
-    protected $storePrefixes;
+    protected $currentStorePrefixes;
+
+    /**
+     * @var string[]
+     */
+    protected $availableStorePrefixes;
 
     /**
      * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
@@ -42,18 +47,21 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
-     * @param array $stores
+     * @param string[] $currentStores
+     * @param string[] $availableStores
      */
     public function __construct(
         array $sourceDirectories,
         IndexDefinitionMergerInterface $definitionMerger,
         SearchToUtilEncodingInterface $utilEncodingService,
-        array $stores
+        array $currentStores,
+        array $availableStores
     ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
-        $this->storePrefixes = $this->getStorePrefixes($stores);
         $this->utilEncodingService = $utilEncodingService;
+        $this->currentStorePrefixes = $this->getStorePrefixes($currentStores);
+        $this->availableStorePrefixes = $this->getStorePrefixes($availableStores);
     }
 
     /**
@@ -63,8 +71,13 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         $indexDefinitions = [];
 
-        $jsonFiles = $this->getJsonFiles();
+        $jsonFiles = $this->getSortedJsonFiles();
+
         foreach ($jsonFiles as $jsonFile) {
+            if (!$this->isFileValidForCurrentStores($jsonFile)) {
+                continue;
+            }
+
             $definitionData = $this->decodeJson($jsonFile->getContents());
             $indexDefinitions = $this->getDefinitionByStores($jsonFile, $indexDefinitions, $definitionData);
         }
@@ -73,14 +86,42 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
+     *
+     * @return bool
      */
-    protected function getJsonFiles()
+    protected function isFileValidForCurrentStores(SplFileInfo $jsonFile): bool
     {
-        $finder = new Finder();
-        $finder->in($this->sourceDirectories)->name('*' . self::FILE_EXTENSION);
+        $jsonFileStorePrefix = $this->getFileStorePrefix($jsonFile->getFilename());
 
-        return $finder;
+        return !$jsonFileStorePrefix || in_array($jsonFileStorePrefix, $this->currentStorePrefixes);
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]
+     */
+    protected function getSortedJsonFiles(): array
+    {
+        $finder = (new Finder())
+            ->in($this->sourceDirectories)
+            ->name('*' . self::FILE_EXTENSION);
+
+        $result = [];
+        foreach ($finder as $file) {
+            $result[] = $file;
+        }
+
+        usort(
+            $result,
+            function (SplFileInfo $firstJsonFile, SplFileInfo $secondJsonFile): bool {
+                $firstJsonFileStorePrefix = $this->getFileStorePrefix($firstJsonFile->getFilename());
+                $secondJsonFileStorePrefix = $this->getFileStorePrefix($secondJsonFile->getFilename());
+
+                return (int)((bool)$firstJsonFileStorePrefix > (bool)$secondJsonFileStorePrefix);
+            }
+        );
+
+        return $result;
     }
 
     /**
@@ -92,8 +133,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getDefinitionByStores(SplFileInfo $jsonFile, array $indexDefinitions, array $definitionData)
     {
-        foreach ($this->storePrefixes as $storePrefix) {
-            $indexName = $this->getIndexName($jsonFile, $storePrefix);
+        foreach ($this->currentStorePrefixes as $storePrefix) {
+            $indexName = $this->getIndexName($jsonFile->getFilename(), $storePrefix);
 
             if (isset($indexDefinitions[$indexName])) {
                 $definitionData = $this
@@ -142,24 +183,38 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
+     * @param string $fileName
      * @param string $storePrefix
      *
      * @return string
      */
-    protected function getIndexName(SplFileInfo $jsonFile, $storePrefix)
+    protected function getIndexName(string $fileName, $storePrefix)
     {
-        $indexName = substr($jsonFile->getFilename(), 0, -strlen(self::FILE_EXTENSION));
-        $storePrefix = mb_strtolower($storePrefix);
-        $fileStorePrefix = mb_strtolower(substr($indexName, 0, strlen($storePrefix)));
+        $indexName = substr($fileName, 0, -strlen(self::FILE_EXTENSION));
 
-        if ($this->isPrefixable($storePrefix, $fileStorePrefix)) {
+        if (!$this->getFileStorePrefix($indexName)) {
             $indexName = $storePrefix . $indexName;
         }
 
         $indexName = $this->addSearchIndexNameSuffix($indexName);
 
         return $indexName;
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string|null
+     */
+    protected function getFileStorePrefix(string $fileName): ?string
+    {
+        foreach ($this->availableStorePrefixes as $availableStorePrefix) {
+            if (strpos($fileName, $availableStorePrefix) === 0) {
+                return $availableStorePrefix;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -174,29 +229,6 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         });
 
         return $stores;
-    }
-
-    /**
-     * @param string $storePrefix
-     * @param string $fileStorePrefix
-     *
-     * @return bool
-     */
-    protected function isPrefixable($storePrefix, $fileStorePrefix)
-    {
-        if ($fileStorePrefix === $storePrefix) {
-            return false;
-        }
-
-        $otherPrefixes = $this->storePrefixes;
-        $index = array_search($storePrefix, $this->storePrefixes);
-        unset($otherPrefixes[$index]);
-
-        if (in_array($fileStorePrefix, $otherPrefixes)) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

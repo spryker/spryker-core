@@ -328,7 +328,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
         string $suffix = ''
     ): JsonIndexDefinitionLoader {
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
-            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores])
+            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores, $stores])
             ->setMethods(['getIndexNameSuffix'])
             ->getMock();
 
