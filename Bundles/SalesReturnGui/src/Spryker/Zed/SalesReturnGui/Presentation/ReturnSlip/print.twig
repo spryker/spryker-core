@@ -1,0 +1,97 @@
+{% block meta %}
+    <meta charset="utf-8">
+{% endblock %}
+
+{% block headStyles %}
+    <style type="text/css">
+        .return-slip-title th,
+        .return-slip-title td,
+        .return-slip-items th,
+        .return-slip-items td {
+            border: 1px solid black;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {{ barcode(return.returnReference) }}
+
+    <br><br>
+
+    <table class="return-slip-title">
+        <tbody>
+        <tr>
+            <td>{{ 'Return Ref' | trans }}</td>
+            <td>{{ return.returnReference }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Return Date' | trans }}</td>
+            <td>{{ return.createdAt | formatDateTime }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <table class="return-slip-items">
+        <thead>
+        <tr>
+            <th>{{ 'Barcode' | trans }}</th>
+            <th>{{ 'Product SKU' | trans }}</th>
+            <th>{{ 'Product Name' | trans }}</th>
+            <th>{{ 'Default Price' | trans }}</th>
+            <th>{{ 'Qty' | trans }}</th>
+            <th>{{ 'Total Price' | trans }}</th>
+            <th>{{ 'Return Reason' | trans }}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% set orderReference = '' %}
+        {% set returnItems = return.returnItems | filter(returnItem => not (returnItem.orderItem.productBundle or returnItem.orderItem.salesOrderConfiguredBundle)) %}
+        {% set currencyIsoCode = (returnItems | first).orderItem.currencyIsoCode ?? null %}
+
+        {% for returnItem in returnItems %}
+            {% if returnItem.orderItem.orderReference != orderReference %}
+                <tr>
+                    <td>{{ 'Order Ref' | trans }}</td>
+                    <td>{{ returnItem.orderItem.orderReference }}</td>
+                </tr>
+            {% endif %}
+
+            {% set orderReference = returnItem.orderItem.orderReference %}
+
+            <tr>
+                <td>{{ barcode(returnItem.orderItem.sku) }}</td>
+                <td>{{ returnItem.orderItem.sku }}</td>
+                <td>{{ returnItem.orderItem.name }}</td>
+                <td>{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
+                <td>{{ returnItem.orderItem.quantity }}</td>
+                <td>{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
+                <td>{{ returnItem.reason ?? '-' }}</td>
+            </tr>
+        {% endfor %}
+
+{#        Configured bundles #}
+{#        Product bundles #}
+
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <table class="return-slip-title">
+        <tbody>
+        <tr>
+            <td>{{ 'Items to Return' | trans }}</td>
+            <td>{{ return.returnItems | length }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Remuneration Total' | trans }}</td>
+            <td>{{ return.returnTotals.remunerationTotal | money(true, currencyIsoCode) }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block footerScripts %} {% endblock %}

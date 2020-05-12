@@ -35,9 +35,9 @@ class ReturnTable extends AbstractTable
     protected const ROUTE_VIEW_RETURN = '/sales-return-gui/return/detail';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SlipController::printAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::printAction()
      */
-    protected const ROUTE_PRINT_SLIP = '/sales-return-gui/slip/print';
+    protected const ROUTE_RETURN_SLIP_PRINT = '/sales-return-gui/return-slip/print';
 
     protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
 
@@ -240,7 +240,7 @@ class ReturnTable extends AbstractTable
         );
 
         $buttons[] = $this->generateViewButton(
-            Url::generate(static::ROUTE_PRINT_SLIP, [
+            Url::generate(static::ROUTE_RETURN_SLIP_PRINT, [
                 static::PARAM_ID_SALES_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
             'Print Slip',
