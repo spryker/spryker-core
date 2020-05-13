@@ -35,7 +35,7 @@ interface SalesReturnRepositoryInterface
      *
      * @return int
      */
-    public function countCustomerReturns(?string $customerReference): int;
+    public function countCustomerReturns(?string $customerReference = null): int;
 
     /**
      * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
