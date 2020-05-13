@@ -20,8 +20,8 @@ class MerchantProductOfferCartItemMapperPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Maps CartItemRequestTransfer.productOfferReference to PersistentCartChangeTransfer.items by Item.sku.
-     * - Maps CartItemRequestTransfer.merchantReference to PersistentCartChangeTransfer.items by Item.sku.
+     * - Maps `CartItemRequestTransfer.productOfferReference` to `PersistentCartChangeTransfer.items` by `ItemTransfer.sku`.
+     * - Maps `CartItemRequestTransfer.merchantReference` to `PersistentCartChangeTransfer.items` by `ItemTransfer.sku`.
      *
      * @api
      *

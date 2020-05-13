@@ -51,13 +51,17 @@ class MerchantProductOffersRestApiBusinessTester extends Actor
     }
 
     /**
+     * @param array $seed
+     * @param array $itemSeed
+     *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function preparePersistentCartChangeTransfer(): PersistentCartChangeTransfer
+    public function preparePersistentCartChangeTransfer(array $seed = [], array $itemSeed = []): PersistentCartChangeTransfer
     {
-        $itemBuilder = new ItemBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]);
+        $itemSeed = array_merge(['sku' => static::PRODUCT_CONCRETE_SKU], $itemSeed);
+        $itemBuilder = new ItemBuilder($itemSeed);
 
-        return (new PersistentCartChangeBuilder())
+        return (new PersistentCartChangeBuilder($seed))
             ->withItem($itemBuilder)
             ->build();
     }

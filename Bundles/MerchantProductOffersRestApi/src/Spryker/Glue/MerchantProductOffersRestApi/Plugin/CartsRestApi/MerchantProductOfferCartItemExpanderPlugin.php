@@ -19,10 +19,9 @@ class MerchantProductOfferCartItemExpanderPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Expands CartItemRequestTransfer with product offer reference and merchant reference.
+     * - Expands `CartItemRequestTransfer` with product offer reference and merchant reference.
      * - Finds product offer in storage by `productOfferReference`.
-     * - Sets CartItemRequestTransfer.productOfferReference matched by ProductOfferStorageTransfer.productOfferReference.
-     * - Sets CartItemRequestTransfer.merchantReference matched by ProductOfferStorageTransfer.merchantReference.
+     * - Sets `CartItemRequestTransfer.productOfferReference` and `CartItemRequestTransfer.merchantReference` from `ProductOfferStorageTransfer`.
      *
      * @api
      *
