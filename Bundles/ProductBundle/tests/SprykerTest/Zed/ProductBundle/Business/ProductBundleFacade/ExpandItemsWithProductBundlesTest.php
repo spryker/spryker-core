@@ -11,9 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -78,7 +76,7 @@ class ExpandItemsWithProductBundlesTest extends Unit
             ItemTransfer::UNIT_PRICE => 1,
         ];
         $quoteTransfer = $this->tester->buildQuote($quoteSeed, $itemSeed, $bundleItemSeed);
-        $orderTransfer = $this->createOrderFromQuote($quoteTransfer);
+        $orderTransfer = $this->tester->createOrderFromQuote($quoteTransfer);
 
         // Act
         $itemTransfers = $this->tester->getFacade()->expandItemsWithProductBundles($orderTransfer->getItems()->getArrayCopy());
@@ -106,32 +104,12 @@ class ExpandItemsWithProductBundlesTest extends Unit
             ItemTransfer::UNIT_PRICE => 1,
         ];
         $quoteTransfer = $this->tester->buildQuote($quoteSeed, $itemSeed);
-        $orderTransfer = $this->createOrderFromQuote($quoteTransfer);
+        $orderTransfer = $this->tester->createOrderFromQuote($quoteTransfer);
 
         // Act
         $itemTransfers = $this->tester->getFacade()->expandItemsWithProductBundles($orderTransfer->getItems()->getArrayCopy());
 
         // Assert
         $this->assertEmpty($itemTransfers[0]->getProductBundle());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function createOrderFromQuote(QuoteTransfer $quoteTransfer): OrderTransfer
-    {
-        $saveOrderTransfer = $this->tester->haveOrderFromQuote(
-            $quoteTransfer,
-            BusinessHelper::DEFAULT_OMS_PROCESS_NAME,
-            [new ProductBundleOrderSaverPlugin()]
-        );
-
-        return (new OrderTransfer())
-            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setOrderReference($saveOrderTransfer->getOrderReference())
-            ->setCustomer($quoteTransfer->getCustomer())
-            ->setItems($saveOrderTransfer->getOrderItems());
     }
 }

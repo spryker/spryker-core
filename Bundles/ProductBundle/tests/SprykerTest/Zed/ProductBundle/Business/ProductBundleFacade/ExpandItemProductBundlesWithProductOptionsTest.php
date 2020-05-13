@@ -7,10 +7,8 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\ProductBundleFacade;
 
-use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
+use SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -25,12 +23,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
  */
 class ExpandItemProductBundlesWithProductOptionsTest extends Unit
 {
-    protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
-    protected const FAKE_BUNDLE_ITEM_IDENTIFIER_2 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_2';
-
-    protected const FAKE_PRODUCT_OPTION_SKU_1 = 'FAKE_PRODUCT_OPTION_SKU_1';
-    protected const FAKE_PRODUCT_OPTION_SKU_2 = 'FAKE_PRODUCT_OPTION_SKU_2';
-
     /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
@@ -42,7 +34,7 @@ class ExpandItemProductBundlesWithProductOptionsTest extends Unit
     public function testExpandItemProductBundlesWithProductOptionsCopiesUniqueProductOptionsFromItemsToBundleItems(): void
     {
         // Arrange
-        $itemTransfers = $this->createBundleItemsWithOptions();
+        $itemTransfers = $this->tester->createBundleItemsWithOptions();
 
         // Act
         $itemTransfers = $this->tester->getFacade()->expandItemProductBundlesWithProductOptions($itemTransfers);
@@ -58,51 +50,15 @@ class ExpandItemProductBundlesWithProductOptionsTest extends Unit
     public function testExpandItemProductBundlesWithProductOptionsConsiderProductOptionOrdering(): void
     {
         // Arrange
-        $itemTransfers = $this->createBundleItemsWithOptions();
+        $itemTransfers = $this->tester->createBundleItemsWithOptions();
 
         // Act
         $itemTransfers = $this->tester->getFacade()->expandItemProductBundlesWithProductOptions($itemTransfers);
 
         // Assert
         $this->assertSame(
-            static::FAKE_PRODUCT_OPTION_SKU_1,
+            ProductBundleBusinessTester::FAKE_PRODUCT_OPTION_SKU_1,
             $itemTransfers[2]->getProductBundle()->getProductOptions()->getIterator()->offsetGet(0)->getSku()
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function createBundleItemsWithOptions(): array
-    {
-        $bundleItem1 = (new ItemTransfer())
-            ->setBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_1);
-        $bundleItem2 = (new ItemTransfer())
-            ->setBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_2);
-
-        return [
-            (new ItemTransfer())
-                ->setRelatedBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
-                ->setProductOptions(new ArrayObject([
-                    (new ProductOptionTransfer())->setSku(static::FAKE_PRODUCT_OPTION_SKU_1),
-                    (new ProductOptionTransfer())->setSku(static::FAKE_PRODUCT_OPTION_SKU_2),
-                ]))
-                ->setProductBundle($bundleItem1),
-            (new ItemTransfer())
-                ->setRelatedBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
-                ->setProductBundle($bundleItem1),
-            (new ItemTransfer())
-                ->setRelatedBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
-                ->setProductOptions(new ArrayObject([
-                    (new ProductOptionTransfer())->setSku(static::FAKE_PRODUCT_OPTION_SKU_2),
-                ]))
-                ->setProductBundle($bundleItem2),
-            (new ItemTransfer())
-                ->setRelatedBundleItemIdentifier(static::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
-                ->setProductOptions(new ArrayObject([
-                    (new ProductOptionTransfer())->setSku(static::FAKE_PRODUCT_OPTION_SKU_1),
-                ]))
-                ->setProductBundle($bundleItem2),
-        ];
     }
 }

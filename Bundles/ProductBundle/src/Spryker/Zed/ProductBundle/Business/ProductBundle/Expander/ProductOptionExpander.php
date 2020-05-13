@@ -45,12 +45,13 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
-        $bundleItems = $this->getBundleItems($itemTransfers);
+        $productBundles = $this->getProductBundlesExpandedWithProductOptions($itemTransfers);
+        $productBundles = $this->sortProductBundlesProductOptions($productBundles);
 
-        foreach ($bundleItems as $bundleItem) {
-            $bundleItem->setProductOptions(
-                new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy()))
-            );
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
+            }
         }
 
         return $itemTransfers;
@@ -61,22 +62,37 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getBundleItems(array $itemTransfers): array
+    protected function getProductBundlesExpandedWithProductOptions(array $itemTransfers): array
     {
-        $bundleItems = [];
+        $productBundles = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+            if (!$itemTransfer->getProductBundle()) {
                 continue;
             }
 
-            $bundleItems[$itemTransfer->getRelatedBundleItemIdentifier()] = $this->expandBundleItemWithProductOptions(
+            $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $this->expandBundleItemWithProductOptions(
                 $itemTransfer->getProductBundle(),
                 $itemTransfer
             );
         }
 
-        return $bundleItems;
+        return $productBundles;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function sortProductBundlesProductOptions(array $productBundles): array
+    {
+        foreach ($productBundles as $productBundle) {
+            $productOptions = $productBundle->getProductOptions()->getArrayCopy();
+            $productBundle->setProductOptions(new ArrayObject($this->sortBundleProductOptions($productOptions)));
+        }
+
+        return $productBundles;
     }
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
+ * {@inheritDoc}
+ * - This plugin should be executed after {@link \Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderItemExpanderPlugin} execution.
+ *
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()

@@ -9,9 +9,7 @@ namespace Spryker\Zed\ProductBundle\Persistence;
 
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundlePersistenceFactory getFactory()
@@ -88,66 +86,16 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      */
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array
     {
-        $salesOrderItemEntities = $this->getSalesOrderItemEntitiesBySalesOrderItemIds($salesOrderItemIds);
-
-        if (!$salesOrderItemEntities->count()) {
-            return [];
-        }
-
         $salesOrderItemBundleEntities = $this->getFactory()
             ->createSalesOrderItemBundleQuery()
-            ->filterByIdSalesOrderItemBundle_In($this->getSalesOrderItemBundleIds($salesOrderItemEntities))
+            ->joinWithSalesOrderItem()
+            ->useSalesOrderItemQuery()
+                ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->endUse()
             ->find();
-        $salesOrderItemBundleEntities = $this->indexSalesOrderItemEntitiesByFkSalesOrderItemBundle($salesOrderItemBundleEntities);
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemEntities, $salesOrderItemBundleEntities);
-    }
-
-    /**
-     * @param int[] $salesOrderItemIds
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getSalesOrderItemEntitiesBySalesOrderItemIds(array $salesOrderItemIds): ObjectCollection
-    {
-        return $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
-            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
-            ->filterByFkSalesOrderItemBundle(null, Criteria::ISNOTNULL)
-            ->find();
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
-     *
-     * @return int[]
-     */
-    protected function getSalesOrderItemBundleIds(ObjectCollection $salesOrderItemEntities): array
-    {
-        $salesOrderItemBundleIds = [];
-
-        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
-            $salesOrderItemBundleIds[] = $salesOrderItemEntity->getFkSalesOrderItemBundle();
-        }
-
-        return $salesOrderItemBundleIds;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]
-     */
-    protected function indexSalesOrderItemEntitiesByFkSalesOrderItemBundle(ObjectCollection $salesOrderItemBundleEntities): array
-    {
-        $indexedSalesOrderItemBundleEntities = [];
-
-        foreach ($salesOrderItemBundleEntities as $salesOrderItemBundleEntity) {
-            $indexedSalesOrderItemBundleEntities[$salesOrderItemBundleEntity->getIdSalesOrderItemBundle()] = $salesOrderItemBundleEntity;
-        }
-
-        return $indexedSalesOrderItemBundleEntities;
+            ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemBundleEntities);
     }
 }
