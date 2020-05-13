@@ -13,18 +13,24 @@ use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Service\DataExport\DataExportConfig;
 use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
+use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 
 class DataExportLocalWriter implements DataExportWriterInterface
 {
-    protected const MESSAGE_WRITE_FAIL = 'Failed to write file "%s".';
-
     protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
     protected const ACCESS_MODE_TYPE_APPEND = 'ab';
+
+    protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
 
     /**
      * @var \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface
      */
     protected $dataExportFormatter;
+
+    /**
+     * @var \Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface
+     */
+    protected $dataExportPathResolver;
 
     /**
      * @var \Spryker\Service\DataExport\DataExportConfig
@@ -33,11 +39,16 @@ class DataExportLocalWriter implements DataExportWriterInterface
 
     /**
      * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportFormatter
+     * @param \Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface $dataExportPathResolver
      * @param \Spryker\Service\DataExport\DataExportConfig $dataExportConfig
      */
-    public function __construct(DataExportFormatterInterface $dataExportFormatter, DataExportConfig $dataExportConfig)
-    {
+    public function __construct(
+        DataExportFormatterInterface $dataExportFormatter,
+        DataExportPathResolverInterface $dataExportPathResolver,
+        DataExportConfig $dataExportConfig
+    ) {
         $this->dataExportFormatter = $dataExportFormatter;
+        $this->dataExportPathResolver = $dataExportPathResolver;
         $this->dataExportConfig = $dataExportConfig;
     }
 
@@ -51,30 +62,60 @@ class DataExportLocalWriter implements DataExportWriterInterface
         DataExportBatchTransfer $dataExportBatchTransfer,
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportWriteResponseTransfer {
-        $dataExportWriteResponseTransfer = (new DataExportWriteResponseTransfer())
-            ->setIsSuccessful(false);
+        $dataExportWriteResponseTransfer = $this->isValidConfiguration($dataExportConfigurationTransfer);
+        if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
+            return $dataExportWriteResponseTransfer;
+        }
 
         $dataFormatResponseTransfer = $this->dataExportFormatter->formatBatch($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         if (!$dataFormatResponseTransfer->getIsSuccessful()) {
             return $dataExportWriteResponseTransfer
+                ->setIsSuccessful(false)
                 ->setMessages($dataFormatResponseTransfer->getMessages());
         }
 
-        $filePath = $this->dataExportConfig->getDataExportDefaultLocalPath() . DIRECTORY_SEPARATOR . $dataExportConfigurationTransfer->getDestination();
+        $filePath = $this->dataExportPathResolver->resolvePath(
+            $dataExportConfigurationTransfer,
+            $dataExportConfigurationTransfer->getConnection()->getParams()['export_root_dir']
+        );
+
         if (!$this->createDirectory($filePath)) {
-            return $dataExportWriteResponseTransfer->addMessage($this->createWriteFailErrorMessage($filePath));
+            return $dataExportWriteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage($this->createWriteFailErrorMessage($filePath));
         }
 
         $file = fopen($filePath, $dataExportBatchTransfer->getOffset() === 0 ? static::ACCESS_MODE_TYPE_OVERWRITE : static::ACCESS_MODE_TYPE_APPEND);
         $result = fwrite($file, $dataFormatResponseTransfer->getDataFormatted());
         if ($result === false) {
-            return $dataExportWriteResponseTransfer->addMessage($this->createWriteFailErrorMessage($filePath));
+            return $dataExportWriteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage($this->createWriteFailErrorMessage($filePath));
         }
         fclose($file);
 
         return $dataExportWriteResponseTransfer
-            ->setFilename(basename($filePath))
+            ->setFilename(basename($filePath));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
+     */
+    protected function isValidConfiguration(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportWriteResponseTransfer
+    {
+        $result = (new DataExportWriteResponseTransfer())
             ->setIsSuccessful(true);
+
+        $params = $dataExportConfigurationTransfer->getConnection()->getParams();
+        if (isset($params[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR])) {
+            return $result;
+        }
+
+        return $result
+            ->setIsSuccessful(false)
+            ->addMessage($this->createConfigurationErrorMessage($dataExportConfigurationTransfer));
     }
 
     /**
@@ -97,6 +138,22 @@ class DataExportLocalWriter implements DataExportWriterInterface
      */
     protected function createWriteFailErrorMessage(?string $filePath): MessageTransfer
     {
-        return (new MessageTransfer())->setValue(sprintf(static::MESSAGE_WRITE_FAIL, $filePath));
+        return (new MessageTransfer())
+            ->setValue(
+                sprintf('Failed to write file "%s".', $filePath)
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createConfigurationErrorMessage(DataExportConfigurationTransfer $dataExportConfigurationTransfer): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(
+                sprintf('Missing local connection parameter (export_root_dir) for data_entity "%s".', $dataExportConfigurationTransfer->getDataEntity())
+            );
     }
 }

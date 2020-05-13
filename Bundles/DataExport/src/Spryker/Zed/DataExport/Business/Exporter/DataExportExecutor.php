@@ -22,7 +22,7 @@ class DataExportExecutor
     /**
      * @var \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[]
      */
-    protected $dataEntityExporterPlugins;
+    protected $dataEntityExporterPlugins = [];
 
     /**
      * @var \Spryker\Service\DataExport\DataExportServiceInterface
@@ -44,9 +44,12 @@ class DataExportExecutor
         DataExportServiceInterface $dataExportService,
         DataExportConfig $dataExportConfig
     ) {
-        $this->dataEntityExporterPlugins = $dataEntityExporterPlugins;
         $this->dataExportService = $dataExportService;
         $this->dataExportConfig = $dataExportConfig;
+
+        foreach ($dataEntityExporterPlugins as $dataEntityExporterPlugin) {
+            $this->dataEntityExporterPlugins[$dataEntityExporterPlugin::getDataEntity()] = $dataEntityExporterPlugin;
+        }
     }
 
     /**

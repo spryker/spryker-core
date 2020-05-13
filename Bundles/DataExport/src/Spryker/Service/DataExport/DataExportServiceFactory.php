@@ -65,8 +65,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
         return new DataExportWriter(
             $this->getDataExportConnectionPlugins(),
             $this->createDataExportFormatter(),
-            $this->createDataExportLocalWriter(),
-            $this->createDataExportPathResolver()
+            $this->createDataExportLocalWriter()
         );
     }
 
@@ -104,6 +103,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
     {
         return new DataExportLocalWriter(
             $this->createDataExportFormatter(),
+            $this->createDataExportPathResolver(),
             $this->getConfig()
         );
     }

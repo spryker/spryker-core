@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 class DataExportFormatter implements DataExportFormatterInterface
 {
     protected const MESSAGE_FORMATTER_PLUGIN_NOT_FOUND = 'Formatter plugin not found for format "%s"';
-    protected const FORMAT_CSV = 'csv';
+    protected const DEFAULT_FORMAT_TYPE = 'csv';
 
     /**
      * @var \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface[]
@@ -57,7 +57,7 @@ class DataExportFormatter implements DataExportFormatterInterface
             return $dataExportFormatterPlugin->format($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
-        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::FORMAT_CSV) {
+        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::DEFAULT_FORMAT_TYPE) {
             return $this->dataExportCsvFormatter->formatBatch($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
@@ -79,7 +79,7 @@ class DataExportFormatter implements DataExportFormatterInterface
             return $dataExportFormatterPlugin->getExtension($dataExportConfigurationTransfer);
         }
 
-        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::FORMAT_CSV) {
+        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::DEFAULT_FORMAT_TYPE) {
             return $this->dataExportCsvFormatter->getFormatExtension($dataExportConfigurationTransfer);
         }
 

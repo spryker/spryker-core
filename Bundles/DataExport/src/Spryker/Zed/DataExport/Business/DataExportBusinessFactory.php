@@ -42,14 +42,6 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
      */
     public function getDataEntityExporterPlugins(): array
     {
-        /** @var \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[] $plugins */
-        $plugins = $this->getProvidedDependency(DataExportDependencyProvider::DATA_ENTITY_EXPORTER_PLUGINS);
-
-        $mappedPlugins = [];
-        foreach ($plugins as $plugin) {
-            $mappedPlugins[$plugin::getDataEntity()] = $plugin;
-        }
-
-        return $mappedPlugins;
+        return $this->getProvidedDependency(DataExportDependencyProvider::DATA_ENTITY_EXPORTER_PLUGINS);
     }
 }
