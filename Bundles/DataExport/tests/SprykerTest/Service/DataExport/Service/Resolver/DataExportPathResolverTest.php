@@ -23,7 +23,8 @@ use Spryker\Service\DataExport\Resolver\DataExportPathResolver;
  */
 class DataExportPathResolverTest extends Unit
 {
-    protected const DESTINATION = '{application_root_dir}/{data_entity}s_{timestamp}.{extension}';
+    protected const EXPORT_ROOT_DIR = '{application_root_dir}';
+    protected const DESTINATION = '{data_entity}s_{timestamp}.{extension}';
     protected const DATA_ENTITY = 'test-data-entity';
     protected const EXTENSION = 'csv';
 
@@ -46,12 +47,15 @@ class DataExportPathResolverTest extends Unit
             static::HOOK_KEY_APPLICATION_ROOT_DIR => APPLICATION_ROOT_DIR,
         ];
 
-        $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+        $resultDestination = (new DataExportConfigurationTransfer())
             ->setDestination(static::DESTINATION)
             ->setHooks($hooks);
 
         //Act
-        $dataExportConfigurationTransfer = (new DataExportPathResolver())->resolvePath($dataExportConfigurationTransfer);
+        $resultDestination = (new DataExportPathResolver())->resolvePath(
+            $resultDestination,
+            static::EXPORT_ROOT_DIR
+        );
 
         //Assert
         $expectedDestination = sprintf(
@@ -64,7 +68,7 @@ class DataExportPathResolverTest extends Unit
 
         $this->assertEquals(
             $expectedDestination,
-            $dataExportConfigurationTransfer->getDestination(),
+            $resultDestination,
             'Resolved path does not equals to an expected value.'
         );
     }

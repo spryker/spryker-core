@@ -9,4 +9,4 @@ defaults:
     connection:
       type: local
       params:
-         export_root_dir: '{application_root_dir}/data/export'
+        export_root_dir: '{application_root_dir}/data/export'

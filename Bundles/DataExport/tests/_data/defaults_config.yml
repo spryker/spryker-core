@@ -4,7 +4,7 @@ defaults:
     destination: '{timestamp}/{data_entity}{split_hook}.{extension}'
     overwrite: true
     operation: export
-    writer:
+    format:
         type: csv
     connection:
         type: local

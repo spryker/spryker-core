@@ -30,6 +30,11 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
  */
 class DataExportServiceTest extends Unit
 {
+    /**
+     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     */
+    protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
+
     protected const DATA_ENTITY_MASTER = 'data-entity-master';
     protected const DATA_ENTITY_SLAVE = 'data-entity-slave';
 
@@ -117,7 +122,11 @@ class DataExportServiceTest extends Unit
         ];
 
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType('csv');
-        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())->setType('local');
+        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
+            ->setType('local')
+            ->setParams([
+                static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR => static::DESTINATION_DIR,
+            ]);
         $destination = static::DESTINATION_DIR . DIRECTORY_SEPARATOR . static::DESTINATION_FILE;
         $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->setConnection($dataExportConnectionConfigurationTransfer)

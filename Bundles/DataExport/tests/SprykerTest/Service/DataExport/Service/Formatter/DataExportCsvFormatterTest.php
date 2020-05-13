@@ -8,6 +8,7 @@
 namespace Service\DataExport\Service\Formatter;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
 use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface;
@@ -28,9 +29,8 @@ class DataExportCsvFormatterTest extends Unit
     protected const FORMAT_TYPE_CSV = 'csv';
 
     protected const CSV_DATA = [
-        ['column_1', 'column_2'],
-        ['data_1_1', 'data_1_2'],
-        ['data_2_1', 'data_2_2'],
+        ['column_1' => 'data_1_1', 'column_2' => 'data_1_2'],
+        ['column_1' => 'data_2_1', 'column_2' => 'data_2_2'],
     ];
 
     /**
@@ -43,7 +43,13 @@ class DataExportCsvFormatterTest extends Unit
 
         //Act
         $dataExportCsvFormatter = new DataExportCsvFormatter($this->mockCsvFormatter());
-        $dataExportFormatResponseTransfer = $dataExportCsvFormatter->formatBatch(static::CSV_DATA, $dataExportConfigurationTransfer);
+        $dataExportFormatResponseTransfer = $dataExportCsvFormatter->formatBatch(
+            (new DataExportBatchTransfer())
+                ->setOffset(0)
+                ->setData(static::CSV_DATA)
+                ->setFields(array_keys(static::CSV_DATA)),
+            $dataExportConfigurationTransfer
+        );
 
         //Arrange
         $this->assertTrue($dataExportFormatResponseTransfer->getIsSuccessful());
@@ -66,7 +72,13 @@ class DataExportCsvFormatterTest extends Unit
 
         //Act
         $dataExportCsvFormatter = new DataExportCsvFormatter($this->mockCsvFormatter());
-        $dataExportFormatResponseTransfer = $dataExportCsvFormatter->formatBatch($invalidData, $dataExportConfigurationTransfer);
+        $dataExportFormatResponseTransfer = $dataExportCsvFormatter->formatBatch(
+            (new DataExportBatchTransfer())
+                ->setOffset(0)
+                ->setData($invalidData)
+                ->setFields([]),
+            $dataExportConfigurationTransfer
+        );
 
         //Arrange
         $this->assertFalse($dataExportFormatResponseTransfer->getIsSuccessful());
