@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\MerchantProductOffersRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -24,8 +23,6 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class MerchantProductOffersRestApiFacadeTest extends Unit
 {
-    protected const TEST_SKU = 'test-sku-123';
-
     /**
      * @var \SprykerTest\Zed\MerchantProductOffersRestApi\MerchantProductOffersRestApiBusinessTester
      */
@@ -37,14 +34,10 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataSuccessfully(): void
     {
         // Arrange
-        $cartItem = $this->tester->prepareItemTransfer([
-            ItemTransfer::SKU => static::TEST_SKU,
-        ]);
         $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer([
-            CartItemRequestTransfer::SKU => static::TEST_SKU,
+            CartItemRequestTransfer::SKU => $this->tester::PRODUCT_CONCRETE_SKU,
         ]);
-        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
-        $persistentCartChangeTransfer->addItem($cartItem);
+        $persistentCartChangeTransfer = $this->tester->preparePersistentCartChangeTransfer();
 
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
@@ -69,10 +62,12 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataUnsuccessfullyWithDifferentSkus(): void
     {
         // Arrange
-        $cartItem = $this->tester->prepareItemTransfer();
-        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer();
-        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
-        $persistentCartChangeTransfer->addItem($cartItem);
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer([
+            CartItemRequestTransfer::SKU => $this->tester::DIFFERENT_PRODUCT_CONCRETE_SKU,
+            CartItemRequestTransfer::PRODUCT_OFFER_REFERENCE => $this->tester::PRODUCT_OFFER_REFERENCE,
+            CartItemRequestTransfer::MERCHANT_REFERENCE => $this->tester::MERCHANT_REFERENCE,
+        ]);
+        $persistentCartChangeTransfer = $this->tester->preparePersistentCartChangeTransfer();
 
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
@@ -97,16 +92,10 @@ class MerchantProductOffersRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferMapsDataUnsuccessfullyWithNoOfferData(): void
     {
         // Arrange
-        $cartItem = $this->tester->prepareItemTransfer([
-            ItemTransfer::SKU => static::TEST_SKU,
-        ]);
         $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransfer([
-            CartItemRequestTransfer::SKU => static::TEST_SKU,
-            ItemTransfer::PRODUCT_OFFER_REFERENCE => null,
-            ItemTransfer::MERCHANT_REFERENCE => null,
+            CartItemRequestTransfer::SKU => $this->tester::PRODUCT_CONCRETE_SKU,
         ]);
-        $persistentCartChangeTransfer = $this->tester->createPersistentCartChangeTransfer();
-        $persistentCartChangeTransfer->addItem($cartItem);
+        $persistentCartChangeTransfer = $this->tester->preparePersistentCartChangeTransfer();
 
         // Act
         $changedPersistentCartChangeTransfer = $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(

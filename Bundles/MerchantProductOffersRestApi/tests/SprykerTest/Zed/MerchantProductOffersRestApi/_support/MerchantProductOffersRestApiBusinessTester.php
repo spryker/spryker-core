@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantProductOffersRestApi;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\PersistentCartChangeBuilder;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
@@ -34,6 +35,11 @@ class MerchantProductOffersRestApiBusinessTester extends Actor
 {
     use _generated\MerchantProductOffersRestApiBusinessTesterActions;
 
+    public const PRODUCT_CONCRETE_SKU = 'PRODUCT_CONCRETE_SKU';
+    public const DIFFERENT_PRODUCT_CONCRETE_SKU = 'DIFFERENT_PRODUCT_CONCRETE_SKU';
+    public const MERCHANT_REFERENCE = 'MERCHANT_REFERENCE';
+    public const PRODUCT_OFFER_REFERENCE = 'PRODUCT_OFFER_REFERENCE';
+
     /**
      * @param array $seed
      *
@@ -45,14 +51,15 @@ class MerchantProductOffersRestApiBusinessTester extends Actor
     }
 
     /**
-     * @param array $seed
-     *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function createPersistentCartChangeTransfer(array $seed = []): PersistentCartChangeTransfer
+    public function preparePersistentCartChangeTransfer(): PersistentCartChangeTransfer
     {
-        return (new PersistentCartChangeTransfer())
-            ->fromArray($seed, true);
+        $itemBuilder = new ItemBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]);
+
+        return (new PersistentCartChangeBuilder())
+            ->withItem($itemBuilder)
+            ->build();
     }
 
     /**
