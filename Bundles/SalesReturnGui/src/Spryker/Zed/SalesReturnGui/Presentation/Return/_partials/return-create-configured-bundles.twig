@@ -18,7 +18,7 @@
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            {{ (bundle.translations[0].name ?? bundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
+            {{ (bundle.translations[0].name ?? bundle.name) | trans }}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
@@ -30,7 +30,7 @@
                 {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.vars.value.orderItem.sumPriceToPayAggregation %}
             {% endfor %}
 
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
+            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %}{% endembed %}</td>
         <td colspan="2"></td>
     </tr>
 
@@ -42,11 +42,12 @@
         } only %}
     {% endfor %}
     <tr>
-        <td colspan="8">
+        <td colspan="1"></td>
+        <td colspan="7">
             {{ 'Items' | trans }}: {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }} / {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }}
         </td>
     </tr>
     <tr>
-        <td colspan="8">&nbsp;</td>
+        <td colspan="8"></td>
     </tr>
 {% endfor %}

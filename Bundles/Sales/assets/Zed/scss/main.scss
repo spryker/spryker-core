@@ -133,22 +133,13 @@ $chat-box-background-color: #f0f0f0;
     padding-bottom: 10px;
 }
 
-img.product-image {
-  width: 150px;
-  border: 1px solid #e7eaec;
-
-    &--small {
-        width: 60px;
-    }
-
-    &--borderless {
-        border: none;
-    }
-}
-
 .image-wrap {
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
     position: relative;
-    display: inline-block;
+    padding: 2px;
 
     &::before {
         content: '';
@@ -158,12 +149,13 @@ img.product-image {
         right: 0;
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 3px;
     }
 }
 
-span.discounted {
-    text-decoration: line-through;
-    color: #aaa;
+.product-image {
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .table > tbody.single-item {
@@ -180,8 +172,8 @@ span.discounted {
 }
 
 .sku {
-    color: #aaa;
-    font-size: 10px;
+    color: #6f7274;
+    font-size: 12px;
 }
 
 .variant-details {
@@ -194,8 +186,15 @@ span.discounted {
 }
 
 .tax-info {
-    color: #aaa;
-    font-size: 10px;
+    color: #a1a5a8;
+    font-size: 12px;
+}
+
+.discounted {
+    color: #a1a5a8;
+    font-size: 12px;
+    text-decoration: line-through;
+    display: block;
 }
 
 a.edit_billing_address {
