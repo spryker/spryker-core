@@ -24,7 +24,7 @@ use Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper\SalesOrderMapper;
 class SalesDataExportRepository extends AbstractRepository implements SalesDataExportRepositoryInterface
 {
     public const FILTER_CRITERIA_KEY_LOCALE_IS_ACTIVE = 'locale_is_active';
-    public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
+    public const FILTER_CRITERIA_KEY_STORE_NAME = 'order_store';
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';

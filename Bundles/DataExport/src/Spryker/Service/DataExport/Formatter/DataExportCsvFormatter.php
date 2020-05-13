@@ -52,7 +52,7 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
             if (!is_array($row)) {
                 return $dataExportFormatResponseTransfer->addMessage($this->createInvalidDataSetResponseMessage());
             }
-            $this->csvFormatter->addRecord($row);
+            $this->csvFormatter->addRecord($this->filterOutNewlines($row));
         }
 
         return $dataExportFormatResponseTransfer
@@ -76,5 +76,15 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     protected function createInvalidDataSetResponseMessage(): MessageTransfer
     {
         return (new MessageTransfer())->setValue(static::MESSAGE_INVALID_DATA_SET);
+    }
+
+    /**
+     * @param string[] $rowData
+     *
+     * @return string[]
+     */
+    protected function filterOutNewlines(array $rowData): array
+    {
+        return str_replace(["\n", "\r"], '', $rowData);
     }
 }

@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
+use Spryker\Service\DataExport\DataExportConfig;
+use Spryker\Service\DataExport\DataExportService;
+use Spryker\Service\DataExport\DataExportServiceFactory;
+use Spryker\Service\DataExport\DataExportServiceInterface;
 
 /**
  * Auto-generated group annotations
@@ -114,7 +118,7 @@ class DataExportServiceTest extends Unit
 
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType('csv');
         $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())->setType('local');
-        $destination = Configuration::dataDir() . static::DESTINATION_DIR . DIRECTORY_SEPARATOR . static::DESTINATION_FILE;
+        $destination = static::DESTINATION_DIR . DIRECTORY_SEPARATOR . static::DESTINATION_FILE;
         $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->setConnection($dataExportConnectionConfigurationTransfer)
             ->setFormat($dataExportFormatConfigurationTransfer)
@@ -132,13 +136,58 @@ class DataExportServiceTest extends Unit
         );
 
         //Assert
+        $expectedFilePath = Configuration::outputDir() . DIRECTORY_SEPARATOR . $destination;
         $this->assertTrue($dataExportWriteResponseTransfer->getIsSuccessful());
-        $this->assertFileExists($destination);
+        $this->assertFileExists($expectedFilePath);
 
-        $fileData = $this->tester->getCsvFileData($destination);
+        $fileData = $this->tester->getCsvFileData($expectedFilePath);
         $this->assertCount(count($data), $fileData);
         $this->assertEquals($data, $fileData);
 
         $this->tester->removeCreatedFiles(static::DESTINATION_DIR);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFormatExtensionWillReturnExtensionCsv(): void
+    {
+        //Arrange
+        $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType('csv');
+        $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setFormat($dataExportFormatConfigurationTransfer);
+
+        //Act
+        $extension = $this->tester->getService()->getFormatExtension($dataExportConfigurationTransfer);
+
+        //Assert
+        $this->assertEquals('csv', $extension, 'Expected extension is "csv"');
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\DataExport\DataExportConfig
+     */
+    protected function mockDataExportConfig(): DataExportConfig
+    {
+        $dataExportConfigMock = $this->getMockBuilder(DataExportConfig::class)->getMock();
+
+        $dataExportConfigMock->method('getDataExportDefaultLocalPath')
+            ->willReturn(Configuration::outputDir());
+
+        return $dataExportConfigMock;
+    }
+
+    /**
+     * @return \Spryker\Service\DataExport\DataExportServiceInterface
+     */
+    public function getDataExportServiceWithConfigMock(): DataExportServiceInterface
+    {
+        $dataExportServiceFactory = new DataExportServiceFactory();
+        $dataExportServiceFactory->setConfig($this->mockDataExportConfig());
+
+        $dataExportService = new DataExportService();
+        $dataExportService->setFactory($dataExportServiceFactory);
+
+        return $dataExportService;
     }
 }
