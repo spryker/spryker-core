@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -36,5 +37,19 @@ abstract class AbstractReturnController extends AbstractController
             ->getReturns()
             ->getIterator()
             ->current();
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function findCustomerByReference(string $customerReference): ?CustomerTransfer
+    {
+        $customerResponseTransfer = $this->getFactory()
+            ->getCustomerFacade()
+            ->findCustomerByReference($customerReference);
+
+        return $customerResponseTransfer->getCustomerTransfer();
     }
 }

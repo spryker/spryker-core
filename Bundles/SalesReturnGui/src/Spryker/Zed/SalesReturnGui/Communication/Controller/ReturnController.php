@@ -98,10 +98,6 @@ class ReturnController extends AbstractReturnController
             );
         }
 
-        $customerResponseTransfer = $this->getFactory()
-            ->getCustomerFacade()
-            ->findCustomerByReference($returnTransfer->getCustomerReference());
-
         $returnExtractor = $this->getFactory()->createReturnExtractor();
 
         $salesOrderItemIds = $returnExtractor->extractSalesOrderItemIdsFromReturn($returnTransfer);
@@ -112,10 +108,11 @@ class ReturnController extends AbstractReturnController
         ]);
 
         $orderItemManualEvents = $this->getFactory()->getOmsFacade()->getOrderItemManualEvents($orderItemFilterTransfer);
+        $customerReference = $returnTransfer->getCustomerReference();
 
         return [
             'return' => $returnTransfer,
-            'customer' => $customerResponseTransfer->getCustomerTransfer(),
+            'customer' => $customerReference ? $this->findCustomerByReference($customerReference) : null,
             'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
             'triggerButtonRedirectUrl' => $triggerButtonRedirectUrl,
