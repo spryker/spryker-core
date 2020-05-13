@@ -113,7 +113,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 
         usort(
             $result,
-            function (SplFileInfo $firstJsonFile, SplFileInfo $secondJsonFile): bool {
+            function (SplFileInfo $firstJsonFile, SplFileInfo $secondJsonFile) {
                 $firstJsonFileStorePrefix = $this->getFileStorePrefix($firstJsonFile->getFilename());
                 $secondJsonFileStorePrefix = $this->getFileStorePrefix($secondJsonFile->getFilename());
 
