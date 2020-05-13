@@ -19,7 +19,7 @@ class MerchantsRestUrlResolverAttributesTransferProviderPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
-     * - Returns true if the UrlStorageTransfer::fkResourceMerchantProfile is not null.
+     * - Returns true if the `UrlStorageTransfer::fkResourceMerchant` is not null.
      *
      * @api
      *
@@ -34,8 +34,8 @@ class MerchantsRestUrlResolverAttributesTransferProviderPlugin extends AbstractP
 
     /**
      * {@inheritDoc}
-     * - Looks up the merchant in the key-value storage by id given in UrlStorageTransfer.
-     * - Returns the RestUrlResolverAttributesTransfer with id of the merchant and type = .
+     * - Looks up the merchant in the key-value storage by id given in `UrlStorageTransfer`.
+     * - Returns the `RestUrlResolverAttributesTransfer` with type "merchant" and merchant reference as ID.
      *
      * @api
      *
