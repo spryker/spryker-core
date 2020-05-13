@@ -81,7 +81,9 @@ class DataExportLocalWriter implements DataExportWriterInterface
         }
         fclose($file);
 
-        return $dataExportWriteResponseTransfer->setIsSuccessful(true);
+        return $dataExportWriteResponseTransfer
+            ->setFilename(basename($filePath))
+            ->setIsSuccessful(true);
     }
 
     /**
