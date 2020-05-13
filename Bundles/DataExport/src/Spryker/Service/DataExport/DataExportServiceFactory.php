@@ -25,6 +25,9 @@ use Spryker\Service\DataExport\Writer\DataExportWriter;
 use Spryker\Service\DataExport\Writer\DataExportWriterInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
+/**
+ * @method \Spryker\Service\DataExport\DataExportConfig getConfig()
+ */
 class DataExportServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -99,7 +102,10 @@ class DataExportServiceFactory extends AbstractServiceFactory
      */
     public function createDataExportLocalWriter(): DataExportWriterInterface
     {
-        return new DataExportLocalWriter($this->createDataExportFormatter());
+        return new DataExportLocalWriter(
+            $this->createDataExportFormatter(),
+            $this->getConfig()
+        );
     }
 
     /**

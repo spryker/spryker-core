@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Service\DataExport\DataExportConfig;
 use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -27,11 +28,18 @@ class DataExportLocalWriter implements DataExportWriterInterface
     protected $dataExportFormatter;
 
     /**
-     * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportFormatter
+     * @var \Spryker\Service\DataExport\DataExportConfig
      */
-    public function __construct(DataExportFormatterInterface $dataExportFormatter)
+    protected $dataExportConfig;
+
+    /**
+     * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportFormatter
+     * @param \Spryker\Service\DataExport\DataExportConfig $dataExportConfig
+     */
+    public function __construct(DataExportFormatterInterface $dataExportFormatter, DataExportConfig $dataExportConfig)
     {
         $this->dataExportFormatter = $dataExportFormatter;
+        $this->dataExportConfig = $dataExportConfig;
     }
 
     /**
@@ -61,7 +69,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
                 ->setMessages($dataFormatResponseTransfer->getMessages());
         }
 
-        $filePath = $dataExportConfigurationTransfer->getDestination();
+        $filePath = $this->dataExportConfig->getDataExportDefaultLocalPath() . DIRECTORY_SEPARATOR . $dataExportConfigurationTransfer->getDestination();
         if (!$this->createDirectory($filePath)) {
             return $dataExportWriteResponseTransfer->addMessage($this->createWriteFailErrorMessage($filePath));
         }
