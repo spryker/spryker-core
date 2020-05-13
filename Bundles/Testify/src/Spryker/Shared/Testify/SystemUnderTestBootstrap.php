@@ -61,7 +61,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\Application|null
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -69,7 +69,7 @@ class SystemUnderTestBootstrap
 
         $this->validateApplication($application);
         error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 1);
+        ini_set('display_errors', '1');
 
         putenv('SESSION_IS_TEST=true');
 
@@ -91,6 +91,8 @@ class SystemUnderTestBootstrap
         if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
+
+        return null;
     }
 
     /**

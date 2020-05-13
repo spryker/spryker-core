@@ -97,6 +97,8 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
 
             return null;
         }
+
+        return null;
     }
 
     /**

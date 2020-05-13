@@ -403,7 +403,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         $shoppingListCompanyBusinessUnitCollection = new ShoppingListCompanyBusinessUnitCollectionTransfer();
 
-        if ($shoppingListsCompanyBusinessUnits !== null) {
+        if ($shoppingListsCompanyBusinessUnits->count()) {
             return $this->getFactory()
                 ->createShoppingListCompanyBusinessUnitMapper()
                 ->mapCompanyBusinessUnitEntitiesToShoppingListCompanyBusinessUnitCollection($shoppingListsCompanyBusinessUnits, $shoppingListCompanyBusinessUnitCollection);
@@ -434,7 +434,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         $shoppingListCompanyUserCollection = new ShoppingListCompanyUserCollectionTransfer();
 
-        if ($shoppingListsCompanyUsers !== null) {
+        if ($shoppingListsCompanyUsers->count()) {
             return $this->getFactory()
                 ->createShoppingListCompanyUserMapper()
                 ->mapCompanyUserEntitiesToShoppingListCompanyUserCollection($shoppingListsCompanyUsers, $shoppingListCompanyUserCollection);
