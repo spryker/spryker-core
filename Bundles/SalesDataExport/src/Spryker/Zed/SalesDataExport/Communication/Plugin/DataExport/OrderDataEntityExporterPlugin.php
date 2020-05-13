@@ -21,7 +21,6 @@ class OrderDataEntityExporterPlugin extends AbstractPlugin implements DataEntity
 {
     /**
      * {@inheritDoc}
-     * - TODO
      *
      * @api
      *

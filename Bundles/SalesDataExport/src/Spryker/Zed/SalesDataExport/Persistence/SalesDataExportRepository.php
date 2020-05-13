@@ -23,7 +23,6 @@ use Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper\SalesOrderMapper;
  */
 class SalesDataExportRepository extends AbstractRepository implements SalesDataExportRepositoryInterface
 {
-    public const FILTER_CRITERIA_KEY_LOCALE_IS_ACTIVE = 'locale_is_active';
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'order_store';
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
@@ -45,7 +44,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        $selectedColumns = $this->getSalesOrderSelectColumns($dataExportConfigurationTransfer);
+        $selectedColumns = $this->getSalesOrderSelectedColumns($dataExportConfigurationTransfer);
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
             ->setFields(array_flip($selectedColumns))
@@ -59,6 +58,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
                 ->leftJoinCountry()
                 ->leftJoinRegion()
             ->endUse()
+            ->orderByIdSalesOrder()
             ->offset($offset)
             ->limit($limit);
 
@@ -101,7 +101,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        $selectedColumns = $this->getSalesOrderItemSelectColumns($dataExportConfigurationTransfer);
+        $selectedColumns = $this->getSalesOrderItemSelectedColumns($dataExportConfigurationTransfer);
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
             ->setFields(array_flip($selectedColumns))
@@ -121,6 +121,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
                     ->leftJoinRegion()
                 ->endUse()
             ->endUse()
+            ->orderByFkSalesOrder()
             ->offset($offset)
             ->limit($limit);
 
@@ -153,7 +154,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        $selectedColumns = $this->getSalesExpenseSelectFields($dataExportConfigurationTransfer);
+        $selectedColumns = $this->getSalesExpenseSelectedColumns($dataExportConfigurationTransfer);
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
             ->setFields(array_flip($selectedColumns))
@@ -162,6 +163,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         $salesExpenseQuery = SpySalesExpenseQuery::create()
             ->joinOrder()
             ->leftJoinSpySalesShipment()
+            ->orderByFkSalesOrder()
             ->offset($offset)
             ->limit($limit);
 
@@ -188,13 +190,6 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     protected function applyFilterCriteriaToSalesOrderQuery(array $filterCriteria, SpySalesOrderQuery $salesOrderQuery): SpySalesOrderQuery
     {
-        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_LOCALE_IS_ACTIVE])) {
-            $salesOrderQuery
-                ->useLocaleQuery(null, Criteria::INNER_JOIN)
-                    ->filterByIsActive(true)
-                ->endUse();
-        }
-
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])) {
             $salesOrderQuery->filterByStore_In($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME]);
         }
@@ -291,7 +286,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    protected function getSalesOrderSelectColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    protected function getSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesOrderMapper()
@@ -307,7 +302,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    public function getSalesOrderItemSelectColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    public function getSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesOrderItemMapper()
@@ -321,7 +316,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    public function getSalesExpenseSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesExpenseMapper()

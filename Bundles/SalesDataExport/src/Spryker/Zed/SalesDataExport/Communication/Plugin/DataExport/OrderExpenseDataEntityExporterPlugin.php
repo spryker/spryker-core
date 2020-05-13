@@ -21,7 +21,6 @@ class OrderExpenseDataEntityExporterPlugin extends AbstractPlugin implements Dat
 {
     /**
      * {@inheritDoc}
-     * - TODO
      *
      * @api
      *
