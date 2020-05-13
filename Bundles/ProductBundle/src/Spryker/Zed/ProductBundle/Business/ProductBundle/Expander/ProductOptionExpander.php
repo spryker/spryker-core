@@ -45,6 +45,24 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
+        $bundleItems = $this->getBundleItems($itemTransfers);
+
+        foreach ($bundleItems as $bundleItem) {
+            $bundleItem->setProductOptions(
+                new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy()))
+            );
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getBundleItems(array $itemTransfers): array
+    {
         $bundleItems = [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -58,13 +76,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             );
         }
 
-        foreach ($bundleItems as $bundleItem) {
-            $bundleItem->setProductOptions(
-                new ArrayObject($this->sortBundleProductOptions($bundleItem->getProductOptions()->getArrayCopy()))
-            );
-        }
-
-        return $itemTransfers;
+        return $bundleItems;
     }
 
     /**

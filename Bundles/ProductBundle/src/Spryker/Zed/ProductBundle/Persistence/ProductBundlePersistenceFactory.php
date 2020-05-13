@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Persistence;
 
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundleQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductBundle\Persistence\Propel\Mapper\ProductBundleMapper;
@@ -26,6 +27,14 @@ class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
     public function createProductBundleQuery()
     {
         return SpyProductBundleQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundleQuery
+     */
+    public function createSalesOrderItemBundleQuery(): SpySalesOrderItemBundleQuery
+    {
+        return new SpySalesOrderItemBundleQuery();
     }
 
     /**
