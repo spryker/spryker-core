@@ -1,12 +1,12 @@
 Return,Return
-"Return reference","Retouren Referenz"
+"Return Reference","Retouren Referenz"
 Items,Items
 "Remuneration total","Remuneration total"
 Actions,Aktionen
 View,Anzeigen
 "Return ID","Retouren ID"
 "Order Reference",Bestellreferenz
-"Returned Products","Retournierte Produkte"
+"Returned Items","Retournierte Artikel"
 "Return Date","Retouren Datum"
 State,Status
 "Print Slip","Beleg drucken"
@@ -41,3 +41,17 @@ Price,Price
 "Return Policy","Return Policy"
 State,State
 "Create return","Create return"
+"Requested return with ID ""%id%"" was not found.","Gewünschte Retoure mit ID ""%id%"" wurde nicht gefunden."
+"Customer reference",Kundennummer
+Customer,Kunde
+Name,Name
+Email,E-Mail
+"General information","General information"
+"Retured Items","Retournierte Artikel"
+"Trigger all matching states","Alle passenden Stati anstoßen"
+Total,Gesamt
+"Back to Returns","Zurück zu Retouren"
+"Print Return Slip","Retourenbeleg drucken"
+"Overview of Return","Übersicht der Retoure"
+"selected items","ausgewählte artikel"
+of,von

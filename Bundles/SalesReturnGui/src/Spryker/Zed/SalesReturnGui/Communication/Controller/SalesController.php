@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class SalesController extends AbstractController
+class SalesController extends AbstractReturnController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,7 +39,7 @@ class SalesController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $idSalesOrder = $request->query->get(OrderReturnTable::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->get(OrderReturnTable::PARAM_ID_ORDER);
 
         $orderReturnTable = $this->getFactory()
             ->createOrderReturnTable((new OrderTransfer())->setIdSalesOrder($idSalesOrder));

@@ -6,7 +6,7 @@
             <label>Returns</label>
             <title>Returns</title>
             <bundle>sales-return-gui</bundle>
-            <controller>index</controller>
+            <controller>return</controller>
             <action>index</action>
             <visible>1</visible>
             <pages>
