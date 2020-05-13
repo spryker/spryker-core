@@ -125,7 +125,7 @@ class DataExportServiceTest extends Unit
         $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
             ->setType('local')
             ->setParams([
-                static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR => static::DESTINATION_DIR,
+                static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR => rtrim(Configuration::outputDir(), '\\'),
             ]);
         $destination = static::DESTINATION_DIR . DIRECTORY_SEPARATOR . static::DESTINATION_FILE;
         $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
@@ -145,7 +145,7 @@ class DataExportServiceTest extends Unit
         );
 
         //Assert
-        $expectedFilePath = Configuration::outputDir() . DIRECTORY_SEPARATOR . $destination;
+        $expectedFilePath = Configuration::outputDir() . $destination;
         $this->assertTrue($dataExportWriteResponseTransfer->getIsSuccessful());
         $this->assertFileExists($expectedFilePath);
 
@@ -174,6 +174,8 @@ class DataExportServiceTest extends Unit
     }
 
     /**
+     * @deprecated
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\DataExport\DataExportConfig
      */
     protected function mockDataExportConfig(): DataExportConfig
@@ -187,6 +189,8 @@ class DataExportServiceTest extends Unit
     }
 
     /**
+     * @deprecated
+     *
      * @return \Spryker\Service\DataExport\DataExportServiceInterface
      */
     public function getDataExportServiceWithConfigMock(): DataExportServiceInterface
