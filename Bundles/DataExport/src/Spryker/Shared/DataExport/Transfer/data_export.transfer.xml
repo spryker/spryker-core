@@ -49,7 +49,6 @@
     <transfer name="DataExportFormatResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="dataFormatted" type="string"/>
-        <property name="extension" type="string"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
