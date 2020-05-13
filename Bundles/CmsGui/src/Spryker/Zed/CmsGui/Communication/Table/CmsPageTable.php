@@ -603,6 +603,6 @@ class CmsPageTable extends AbstractTable
             );
         }
 
-        return implode(" ", $storeNames);
+        return implode(' ', $storeNames);
     }
 }

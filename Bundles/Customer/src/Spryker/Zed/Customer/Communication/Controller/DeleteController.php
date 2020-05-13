@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +24,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+    protected const URL_CUSTOMER_DELETE_PAGE = '/customer/delete';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -38,11 +44,14 @@ class DeleteController extends AbstractController
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 
+        $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
+
         return $this->viewResponse([
-            'idCustomer' => $customerTransfer->getIdCustomer(),
+            'customerDeleteForm' => $customerDeleteForm->setData($customerTransfer)
+                ->createView(),
         ]);
     }
 
@@ -51,23 +60,57 @@ class DeleteController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmAction(Request $request)
+    public function confirmAction(Request $request): RedirectResponse
     {
-        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
+        $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
+        $customerDeleteForm->handleRequest($request);
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
+        if (!$customerDeleteForm->isSubmitted()) {
+            $this->addErrorMessage('Form was not submitted.');
+
+            return $this->createRedirectResponseToCustomerDeletePage($customerDeleteForm);
+        }
+
+        if (!$customerDeleteForm->isValid()) {
+            foreach ($customerDeleteForm->getErrors(true) as $formError) {
+                /** @var \Symfony\Component\Form\FormError $formError */
+                $this->addErrorMessage($formError->getMessage(), $formError->getMessageParameters());
+            }
+
+            return $this->createRedirectResponseToCustomerDeletePage($customerDeleteForm);
+        }
 
         try {
-            $this->getFacade()->anonymizeCustomer($customerTransfer);
+            $this->getFacade()->anonymizeCustomer($customerDeleteForm->getData());
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 
         $this->addSuccessMessage('Customer successfully deleted');
 
-        return $this->redirectResponse('/customer');
+        return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $customerDeleteForm
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createRedirectResponseToCustomerDeletePage(FormInterface $customerDeleteForm): RedirectResponse
+    {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer */
+        $customerTransfer = $customerDeleteForm->getData();
+
+        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
+            return $this->redirectResponse(
+                Url::generate(static::URL_CUSTOMER_DELETE_PAGE, [
+                    CustomerConstants::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer(),
+                ])
+            );
+        }
+
+        return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
     }
 }
