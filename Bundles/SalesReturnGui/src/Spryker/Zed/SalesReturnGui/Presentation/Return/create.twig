@@ -1,0 +1,71 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Create Return' | trans }}
+{% endblock %}
+
+
+{% block action %}
+    {{ backActionButton(url('/sales/detail', {'id-sales-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div>
+                    <div class="col-sm-2 font-bold">
+                        {{ 'Order reference' | trans }}
+                    </div>
+                    <div class="col-sm-10">
+                        <a target="_blank"
+                           href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
+                            {{ order.orderReference }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select Items to Return' } %}
+        {% block widget_content %}
+            {{ form_start(returnCreateForm) }}
+
+            <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+                <thead>
+                <tr class="text-left">
+                    <th><input type="checkbox" id="check-all-orders"/></th>
+                    <th colspan="2">{{ 'Product' | trans }}</th>
+                    <th>{{ 'Quantity' | trans }}</th>
+                    <th>{{ 'Price' | trans }}</th>
+                    <th>{{ 'Item total' | trans }}</th>
+                    <th>{{ 'Return Policy' | trans }}</th>
+                    <th>{{ 'State' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
+                    form: returnCreateForm,
+                    order: order,
+                } only %}
+
+                {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
+                    form: returnCreateForm,
+                    order: order,
+                } only %}
+                </tbody>
+            </table>
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create return' | trans }}" />
+
+            {{ form_end(returnCreateForm) }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-main.css') }}">
+{% endblock %}

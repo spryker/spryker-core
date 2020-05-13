@@ -7,6 +7,7 @@
     "php": ">=7.2",
     "spryker/barcode": "^1.1.0",
     "spryker/customer": "^7.11.0",
+    "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/money": "^2.0.0",
@@ -14,6 +15,7 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-return": "^0.1.0",
+    "spryker/sales-return-gui-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-text": "^1.1.0"

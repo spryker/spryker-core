@@ -1,0 +1,45 @@
+{% set returnItems = returnItemGroup | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle) %}
+
+{% set mappedReturnItems = [] %}
+{% set configuredBundles = [] %}
+
+{% for returnItem in returnItems %}
+    {% set bundleId = returnItem.orderItem.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+    {% if mappedReturnItems['_' ~ bundleId] is defined %}
+        {% set bundleReturnItems = mappedReturnItems['_' ~ bundleId] | merge([returnItem]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ bundleId): bundleReturnItems}) %}
+    {% else %}
+        {% set configuredBundles = configuredBundles | merge([returnItem.orderItem.salesOrderConfiguredBundle]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ bundleId): [returnItem]}) %}
+    {% endif %}
+{% endfor %}
+
+{% for configuredBundle in configuredBundles %}
+    <tr>
+        <td colspan="4">
+            <b>
+                {{ (configuredBundle.translations[0].name ?? configuredBundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
+            </b>
+        </td>
+        <td>{{ configuredBundle.quantity }}</td>
+        <td>
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for returnItem in mappedReturnItems['_' ~ configuredBundle.idSalesOrderConfiguredBundle] %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.orderItem.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {{ bundleSumPriceToPayAggregation | money(true, currencyIsoCode) }}
+        </td>
+        <td></td>
+    </tr>
+
+    {% for returnItem in mappedReturnItems['_' ~ configuredBundle.idSalesOrderConfiguredBundle] %}
+        {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-item.twig' with {
+            returnItem: returnItem,
+            currencyIsoCode: currencyIsoCode,
+        } only %}
+    {% endfor %}
+
+{% endfor %}

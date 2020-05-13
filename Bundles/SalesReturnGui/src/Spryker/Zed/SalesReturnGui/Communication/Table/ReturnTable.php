@@ -98,6 +98,7 @@ class ReturnTable extends AbstractTable
         ]);
 
         $config->setHasSearchableFieldsWithAggregateFunctions(true);
+        $config->setDefaultSortField(static::COL_RETURN_ID, TableConfiguration::SORT_DESC);
 
         return $config;
     }

@@ -8,7 +8,11 @@
 namespace Spryker\Zed\SalesReturnGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
+use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 class SalesReturnGuiToSalesReturnFacadeBridge implements SalesReturnGuiToSalesReturnFacadeInterface
 {
@@ -33,5 +37,25 @@ class SalesReturnGuiToSalesReturnFacadeBridge implements SalesReturnGuiToSalesRe
     public function getReturns(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
     {
         return $this->salesReturnFacade->getReturns($returnFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
+     */
+    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
+    {
+        return $this->salesReturnFacade->getReturnReasons($returnReasonFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    public function createReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer
+    {
+        return $this->salesReturnFacade->createReturn($returnCreateRequestTransfer);
     }
 }
