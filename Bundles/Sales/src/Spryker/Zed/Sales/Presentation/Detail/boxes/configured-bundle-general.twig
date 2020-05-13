@@ -21,7 +21,7 @@
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            {{ (bundle.translations[0].name ?? bundle.name) | trans }}
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong>
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
@@ -62,11 +62,12 @@
         </tr>
     {% endif %}
     <tr>
-        <td colspan="8">
+        <td colspan="1"></td>
+        <td colspan="7">
             {{ 'Items' | trans }}: {{ partialItemCount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
         </td>
     </tr>
     <tr>
-        <td colspan="8">&nbsp;</td>
+        <td colspan="8"></td>
     </tr>
 {% endfor %}

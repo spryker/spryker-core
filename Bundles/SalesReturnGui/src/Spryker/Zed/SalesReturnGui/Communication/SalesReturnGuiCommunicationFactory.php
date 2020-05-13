@@ -10,14 +10,18 @@ namespace Spryker\Zed\SalesReturnGui\Communication;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractor;
+use Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractorInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider;
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandler;
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandlerInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToGlossaryFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInterface;
+use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToOmsFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
@@ -64,6 +68,7 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ReturnTable(
             $this->getUtilDateTimeService(),
+            $this->getConfig(),
             $this->getSalesReturnPropelQuery()
         );
     }
@@ -91,6 +96,14 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getSalesReturnFacade(),
             $this->getReturnCreateFormHandlerPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Communication\Extractor\ReturnExtractorInterface
+     */
+    public function createReturnExtractor(): ReturnExtractorInterface
+    {
+        return new ReturnExtractor($this->getConfig());
     }
 
     /**
@@ -123,6 +136,22 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesReturnFacade(): SalesReturnGuiToSalesReturnFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_SALES_RETURN);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): SalesReturnGuiToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): SalesReturnGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::FACADE_OMS);
     }
 
     /**

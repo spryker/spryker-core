@@ -78,7 +78,7 @@ class ProductBundleMapper
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[] $salesOrderItemBundleEntities
+     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[] $salesOrderItemBundleEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -105,8 +105,8 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle $salesOrderItemBundleEntity
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $spySalesOrderItem
+     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle $salesOrderItemBundleEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItem
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

@@ -17,6 +17,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface;
+use Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig;
 
 class ReturnTable extends AbstractTable
 {
@@ -29,27 +30,29 @@ class ReturnTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ViewController::indexAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
      */
-    protected const ROUTE_VIEW_RETURN = '/sales-return-gui/view';
+    protected const ROUTE_VIEW_RETURN = '/sales-return-gui/return/detail';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::printAction()
      */
     protected const ROUTE_RETURN_SLIP_PRINT = '/sales-return-gui/return-slip/print';
 
-    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
-
-    protected const ITEM_STATE_TO_LABEL_CLASS_MAPPING = [
-        'returned' => 'label-inverse',
-        'refunded' => 'label-info',
-        'closed' => 'label-danger',
-    ];
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     */
+    protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @var \Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface
      */
     protected $utilDateTimeService;
+
+    /**
+     * @var \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig
+     */
+    protected $salesReturnGuiConfig;
 
     /**
      * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
@@ -58,14 +61,17 @@ class ReturnTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Service\SalesReturnGuiToUtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig $salesReturnGuiConfig
      * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
      */
     public function __construct(
         SalesReturnGuiToUtilDateTimeServiceInterface $utilDateTimeService,
+        SalesReturnGuiConfig $salesReturnGuiConfig,
         SpySalesReturnQuery $salesReturnQuery
     ) {
         $this->utilDateTimeService = $utilDateTimeService;
         $this->salesReturnQuery = $salesReturnQuery;
+        $this->salesReturnGuiConfig = $salesReturnGuiConfig;
     }
 
     /**
@@ -223,7 +229,7 @@ class ReturnTable extends AbstractTable
          $stateLabels = [];
 
         foreach ($states as $state) {
-            $stateLabels[] = $this->generateLabel(ucfirst($state), static::ITEM_STATE_TO_LABEL_CLASS_MAPPING[$state] ?? 'label-info');
+            $stateLabels[] = $this->generateLabel(ucfirst($state), $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? 'label-info');
         }
 
          return $stateLabels;
@@ -240,14 +246,14 @@ class ReturnTable extends AbstractTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate(static::ROUTE_VIEW_RETURN, [
-                static::PARAM_ID_SALES_RETURN => $salesReturnEntity->getIdSalesReturn(),
+                static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
             'View'
         );
 
         $buttons[] = $this->generateViewButton(
             Url::generate(static::ROUTE_RETURN_SLIP_PRINT, [
-                static::PARAM_ID_SALES_RETURN => $salesReturnEntity->getIdSalesReturn(),
+                static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
             'Print Slip',
             [

@@ -21,7 +21,14 @@ use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToMoneyFacadeInte
 
 class OrderReturnTable extends AbstractTable
 {
-    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::PARAM_ID_ORDER
+     */
+    public const PARAM_ID_ORDER = 'id-order';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     */
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
@@ -80,7 +87,7 @@ class OrderReturnTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_SALES_ORDER, $this->orderTransfer->getIdSalesOrder()));
+        $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_ORDER, $this->orderTransfer->getIdSalesOrder()));
 
         $config->setHeader([
             static::COL_RETURN_REFERENCE => 'Return reference',

@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class ReturnSlipController extends AbstractController
+class ReturnSlipController extends AbstractReturnController
 {
-    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
-
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
@@ -51,14 +47,9 @@ class ReturnSlipController extends AbstractController
      */
     protected function executePrintAction(Request $request)
     {
-        $idReturn = $this->castId($request->query->get(static::PARAM_ID_SALES_RETURN));
+        $idReturn = $this->castId($request->query->get(static::PARAM_ID_RETURN));
 
-        $returnTransfer = $this->getFactory()
-            ->getSalesReturnFacade()
-            ->getReturns((new ReturnFilterTransfer())->addIdReturn($idReturn))
-            ->getReturns()
-            ->getIterator()
-            ->current();
+        $returnTransfer = $this->findReturn($request);
 
         if (!$returnTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_RETURN_NOT_FOUND, [

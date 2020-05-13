@@ -18,7 +18,7 @@
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            {{ (bundle.translations[0].name ?? bundle.name) | trans }}
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong>
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>

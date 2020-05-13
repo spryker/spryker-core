@@ -2,7 +2,11 @@
 
 <tr>
     <td>
-        {{ form_row(returnItem.isReturnable) }}
+        {{ form_row(returnItem.isReturnable, {
+            attr: {
+                class: 'js-check-item',
+            },
+        }) }}
     </td>
     <td>
         <div class="image-wrap">

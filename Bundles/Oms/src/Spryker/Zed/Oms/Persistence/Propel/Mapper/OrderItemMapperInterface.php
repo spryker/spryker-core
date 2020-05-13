@@ -26,4 +26,13 @@ interface OrderItemMapperInterface
     public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
         ObjectCollection $omsOrderItemStateHistoryEntities
     ): array;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
+        ObjectCollection $salesOrderItemEntityCollection
+    ): array;
 }

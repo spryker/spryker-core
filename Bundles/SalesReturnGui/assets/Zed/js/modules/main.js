@@ -5,5 +5,5 @@
 
 'use strict';
 
-require('./logic');
+require('./return-detail');
 require('../../scss/main.scss');

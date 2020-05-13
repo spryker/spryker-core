@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\SalesReturnGui;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductBundle\Communication\Form\DataProvider\ProductBundleReturnCreateFormDataProvider;
+use Spryker\Zed\ProductBundle\Communication\Form\ReturnCreateBundleItemsSubForm;
 use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -27,11 +31,15 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      * @api
      *
      * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    public function expandData(array $returnCreateFormData): array
+    public function expandData(array $returnCreateFormData, OrderTransfer $orderTransfer): array
     {
+        return $this->getFactory()
+            ->createProductBundleReturnCreateFormDataProvider()
+            ->expandData($returnCreateFormData, $orderTransfer);
     }
 
     /**
@@ -47,6 +55,19 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
+        $builder->add(
+            ProductBundleReturnCreateFormDataProvider::FIELD_RETURN_BUNDLE_ITEMS,
+            CollectionType::class,
+            [
+                'entry_type' => ReturnCreateBundleItemsSubForm::class,
+                'entry_options' => [
+                    ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS => $options[ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS],
+                ],
+                'label' => false,
+            ]
+        );
+
+        return $builder;
     }
 
     /**
@@ -62,6 +83,8 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      */
     public function handle(array $returnCreateFormData, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
-        // TODO: Implement handle() method.
+        return $this->getFactory()
+            ->createProductBundleReturnCreateFormHandler()
+            ->handle($returnCreateFormData, $returnCreateRequestTransfer);
     }
 }

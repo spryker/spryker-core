@@ -18,9 +18,8 @@
 {% for configuredBundle in configuredBundles %}
     <tr>
         <td colspan="4">
-            <b>
-                {{ (configuredBundle.translations[0].name ?? configuredBundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
-            </b>
+            <strong>{{ (configuredBundle.translations[0].name ?? configuredBundle.name) | trans }}</strong>
+            ({{ 'ID:' | trans }} {{ configuredBundle.configurableBundleTemplateUuid }})
         </td>
         <td>{{ configuredBundle.quantity }}</td>
         <td>

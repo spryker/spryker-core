@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/sales/detail', {'id-sales-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
+    {{ backActionButton(url('/sales/detail', {'id-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
 {% endblock %}
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
         {% block widget_content %}
             <div class="row">
-                <div class="col-sm-2 font-bold">
+                <div class="col-lg-2 font-bold">
                     {{ 'Order reference' | trans }}
                 </div>
-                <div class="col-sm-10">
+                <div class="col-lg-10">
                     <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
                         {{ order.orderReference }}
                     </a>
@@ -29,10 +29,10 @@
             {{ form_start(returnCreateForm) }}
 
             <div class="table-responsive">
-                <table class="table" data-qa="order-item-list">
+                <table class="table js-create-return-table" data-qa="order-item-list">
                     <thead>
                         <tr class="text-left">
-                            <th><input type="checkbox" id="check-all-orders"></th>
+                            <th><input type="checkbox" class="js-check-all-items"></th>
                             <th colspan="2">{{ 'Product' | trans }}</th>
                             <th>{{ 'Quantity' | trans }}</th>
                             <th>{{ 'Price' | trans }}</th>
@@ -61,7 +61,6 @@
             {{ form_end(returnCreateForm) }}
         {% endblock %}
     {% endembed %}
-
 {% endblock %}
 
 {% block head_css %}
@@ -71,5 +70,6 @@
 
 {% block footer_js %}
     {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-sales-main.js') }}"></script>
     <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
 {% endblock %}

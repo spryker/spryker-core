@@ -7,25 +7,19 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class ReturnController extends AbstractController
+class ReturnController extends AbstractReturnController
 {
     protected const PARAM_ID_ORDER = 'id-order';
-    protected const PARAM_ID_RETURN = 'id-return';
-
-    protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
-    protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
-    protected const MESSAGE_PARAM_ID = '%id%';
-
-    protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
@@ -37,24 +31,111 @@ class ReturnController extends AbstractController
      */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
+    protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
+    protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
+    protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
+    protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
+    protected const MESSAGE_PARAM_ID = '%id%';
+
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request): array
+    public function indexAction(): array
     {
-        return [];
+        $returnTable = $this->getFactory()->createReturnTable();
+
+        return $this->viewResponse([
+            'returnTable' => $returnTable->render(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        return $this->jsonResponse(
+            $this->getFactory()->createReturnTable()->fetchData()
+        );
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
-    public function detailAction(Request $request): array
+    public function detailAction(Request $request)
     {
-        return [];
+        $response = $this->executeDetailAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->viewResponse($response);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
+    protected function executeDetailAction(Request $request)
+    {
+        $idSalesReturn = $this->castId(
+            $request->get(static::PARAM_ID_RETURN)
+        );
+
+        $returnTransfer = $this->findReturn($request);
+
+        if (!$returnTransfer) {
+            $this->addErrorMessage(static::MESSAGE_RETURN_NOT_FOUND, [
+                static::MESSAGE_PARAM_ID => $idSalesReturn,
+            ]);
+
+            return $this->redirectResponse(
+                Url::generate(static::ROUTE_RETURN_LIST)->build()
+            );
+        }
+
+        $returnExtractor = $this->getFactory()->createReturnExtractor();
+
+        $salesOrderItemIds = $returnExtractor->extractSalesOrderItemIdsFromReturn($returnTransfer);
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
+
+        $triggerButtonRedirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
+            static::PARAM_ID_RETURN => $idSalesReturn,
+        ]);
+
+        $orderItemManualEvents = $this->getFactory()->getOmsFacade()->getOrderItemManualEvents($orderItemFilterTransfer);
+        $customerReference = $returnTransfer->getCustomerReference();
+
+        return [
+            'return' => $returnTransfer,
+            'customer' => $customerReference ? $this->findCustomerByReference($customerReference) : null,
+            'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
+            'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
+            'triggerButtonRedirectUrl' => $triggerButtonRedirectUrl,
+            'orderItemManualEvents' => $orderItemManualEvents,
+            'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($orderItemManualEvents),
+            'salesOrderItemIds' => $salesOrderItemIds,
+        ];
+    }
+
+    /**
+     * @param string[][] $orderItemManualEventsGroupedByItem
+     *
+     * @return string[]
+     */
+    protected function extractUniqueOrderItemManualEvents(array $orderItemManualEventsGroupedByItem): array
+    {
+        $allOrderItemManualEvents = [];
+
+        foreach ($orderItemManualEventsGroupedByItem as $orderItemManualEvents) {
+            $allOrderItemManualEvents = array_merge($allOrderItemManualEvents, $orderItemManualEvents);
+        }
+
+        return array_unique($allOrderItemManualEvents);
     }
 
     /**
