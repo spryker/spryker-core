@@ -76,7 +76,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
 
         $filePath = $this->dataExportPathResolver->resolvePath(
             $dataExportConfigurationTransfer,
-            $dataExportConfigurationTransfer->getConnection()->getParams()['export_root_dir']
+            $dataExportConfigurationTransfer->getConnection()->getParams()[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR]
         );
 
         if (!$this->createDirectory($filePath)) {
