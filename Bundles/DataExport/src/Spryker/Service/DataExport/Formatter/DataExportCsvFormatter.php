@@ -62,14 +62,6 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createInvalidDataSetResponseMessage(): MessageTransfer
-    {
-        return (new MessageTransfer())->setValue(static::MESSAGE_INVALID_DATA_SET);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return string|null
@@ -77,5 +69,13 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     public function getFormatExtension(DataExportConfigurationTransfer $dataExportConfigurationTransfer): ?string
     {
         return static::EXTENSION_CSV;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createInvalidDataSetResponseMessage(): MessageTransfer
+    {
+        return (new MessageTransfer())->setValue(static::MESSAGE_INVALID_DATA_SET);
     }
 }

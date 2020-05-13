@@ -99,7 +99,7 @@ class LineExporter implements ExporterInterface
 
             $dataExportResultTransfer
                 ->setIsSuccessful(true)
-                ->setExportCount($offset)
+                ->setExportCount($offset - 1)
                 ->setFileName($dataExportWriteResponseTransfer->getFilename());
         } while ($exportedRowsCount === $readBatchSize);
 
