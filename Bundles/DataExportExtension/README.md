@@ -1,7 +1,7 @@
 # DataExportExtension Module
 [![Build Status](https://travis-ci.org/spryker/data-export-extension.svg)](https://travis-ci.org/spryker/data-export-extension)
 
-{{ADD DESCRIPTION HERE}}
+Adds extension points to data export
 
 ## Installation
 
