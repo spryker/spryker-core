@@ -194,7 +194,7 @@ class ProductAbstractTable extends AbstractProductTable
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         if ($this->idProductRelation !== null) {
-            return $this->queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(
+            return $this->queryProductsByIdLocaleAndIdRelation(
                 $localeTransfer->getIdLocale(),
                 $this->idProductRelation
             );
@@ -225,15 +225,13 @@ class ProductAbstractTable extends AbstractProductTable
 
     /**
      * @module ProductImage
-     * @module Category
-     * @module ProductCategory
      *
      * @param int $idLocale
      * @param int $idProductRelation
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    protected function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation(int $idLocale, int $idProductRelation): SpyProductAbstractQuery
+    protected function queryProductsByIdLocaleAndIdRelation(int $idLocale, int $idProductRelation): SpyProductAbstractQuery
     {
         return $this->queryProductsByFkLocale($idLocale)
             ->useSpyProductRelationProductAbstractQuery()
