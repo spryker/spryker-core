@@ -50,7 +50,7 @@ class DataExportServiceTester extends Actor
      */
     public function removeCreatedFiles(string $directoryName): void
     {
-        $targetDirectory = Configuration::dataDir() . $directoryName;
+        $targetDirectory = Configuration::outputDir() . $directoryName;
         exec('rm -rf ' . $targetDirectory);
     }
 

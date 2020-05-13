@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
-use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
