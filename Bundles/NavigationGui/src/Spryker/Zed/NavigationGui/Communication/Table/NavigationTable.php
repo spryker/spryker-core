@@ -110,8 +110,8 @@ class NavigationTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->createEditButton($navigationEntity->getIdNavigation());
-        $urls[] = $this->createRemoveButton($navigationEntity->getIdNavigation());
         $urls[] = $this->createDuplicateButton($navigationEntity->getIdNavigation());
+        $urls[] = $this->createRemoveButton($navigationEntity->getIdNavigation());
 
         return $urls;
     }
