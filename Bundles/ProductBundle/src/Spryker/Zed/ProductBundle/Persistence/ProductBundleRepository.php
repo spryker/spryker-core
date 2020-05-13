@@ -80,6 +80,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
     }
+
     /**
      * @param int[] $salesOrderItemIds
      *
@@ -136,9 +137,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
+     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]
+     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[]
      */
     protected function indexSalesOrderItemEntitiesByFkSalesOrderItemBundle(ObjectCollection $salesOrderItemBundleEntities): array
     {

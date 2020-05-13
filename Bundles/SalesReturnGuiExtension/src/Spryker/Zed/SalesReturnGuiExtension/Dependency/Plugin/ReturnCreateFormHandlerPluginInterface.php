@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,10 +20,11 @@ interface ReturnCreateFormHandlerPluginInterface
      * @api
      *
      * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    public function expandData(array $returnCreateFormData): array;
+    public function expandData(array $returnCreateFormData, OrderTransfer $orderTransfer): array;
 
     /**
      * Specification:

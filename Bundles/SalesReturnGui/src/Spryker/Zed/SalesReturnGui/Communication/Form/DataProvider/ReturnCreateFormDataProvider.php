@@ -60,7 +60,7 @@ class ReturnCreateFormDataProvider
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
         ];
 
-        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
+        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData, $orderTransfer);
     }
 
     /**
@@ -112,13 +112,14 @@ class ReturnCreateFormDataProvider
 
     /**
      * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
+    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData, OrderTransfer $orderTransfer): array
     {
         foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
-            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandData($returnCreateFormData);
+            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandData($returnCreateFormData, $orderTransfer);
         }
 
         return $returnCreateFormData;
