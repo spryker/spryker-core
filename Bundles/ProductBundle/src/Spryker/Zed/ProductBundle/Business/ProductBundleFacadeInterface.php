@@ -423,4 +423,13 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithProductBundles(array $itemTransfers): array;
 }

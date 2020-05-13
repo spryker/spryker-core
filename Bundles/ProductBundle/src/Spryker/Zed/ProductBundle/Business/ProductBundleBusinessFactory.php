@@ -26,6 +26,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFi
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
@@ -249,6 +251,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundlesSalesOrderHydrate(
             $this->getSalesQueryContainer(),
+            $this->createProductBundlePriceCalculator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpanderInterface
+     */
+    public function createItemExpander(): ItemExpanderInterface
+    {
+        return new ItemExpander(
+            $this->getRepository(),
             $this->createProductBundlePriceCalculator()
         );
     }
