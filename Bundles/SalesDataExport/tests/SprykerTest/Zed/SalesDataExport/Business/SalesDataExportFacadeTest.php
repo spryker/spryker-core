@@ -175,7 +175,7 @@ class SalesDataExportFacadeTest extends Unit
             'File name does not equals to an expected value'
         );
 
-        $filePath = APPLICATION_ROOT_DIR . 'data/export' . DIRECTORY_SEPARATOR . $fileName;
+        $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data/export' . DIRECTORY_SEPARATOR . $fileName;
         $this->assertFileExists($filePath);
 
         $this->tester->removeGeneratedFile($filePath);
