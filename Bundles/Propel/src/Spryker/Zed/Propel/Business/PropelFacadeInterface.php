@@ -22,6 +22,7 @@ interface PropelFacadeInterface
     /**
      * Specification:
      * - Retrieves schema directory path from configuration.
+     * - Creates schema directory if it does not exist.
      *
      * @api
      *
