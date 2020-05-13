@@ -19,6 +19,18 @@ use Spryker\Zed\SalesDataExport\SalesDataExportConfig;
 class CsvExporter implements CsvExporterInterface
 {
     /**
+     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::ACCESS_MODE_TYPE_OVERWRITE
+     */
+    protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
+
+    /**
+     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::ACCESS_MODE_TYPE_APPEND
+     */
+    protected const ACCESS_MODE_TYPE_APPEND = 'ab';
+
+    protected const READ_BATCH_SIZE = 100;
+
+    /**
      * @var \Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface
      */
     protected $dataExportService;
@@ -69,7 +81,7 @@ class CsvExporter implements CsvExporterInterface
             ->setDataEntity($dataExportConfigurationTransfer->getDataEntity())
             ->setIsSuccessful(false);
 
-        $readBatchSize = $this->salesDataExportConfig->getReadBatchSize();
+        $readBatchSize = static::READ_BATCH_SIZE;
 
         $offset = 0;
         do {
@@ -109,8 +121,8 @@ class CsvExporter implements CsvExporterInterface
     protected function createDataExportLocalWriteConfiguration(int $offset): DataExportLocalWriteConfigurationTransfer
     {
         $writeMode = $offset === 0
-            ? $this->salesDataExportConfig->getWriteModeTypeOverride()
-            : $this->salesDataExportConfig->getWriteModeTypeAppend();
+            ? static::ACCESS_MODE_TYPE_OVERWRITE
+            : static::ACCESS_MODE_TYPE_APPEND;
 
         return (new DataExportLocalWriteConfigurationTransfer())
             ->setMode($writeMode);
