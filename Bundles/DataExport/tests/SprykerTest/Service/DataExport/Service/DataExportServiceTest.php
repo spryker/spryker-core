@@ -9,10 +9,10 @@ namespace SprykerTest\Service\DataExport\Service;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer;
 use Spryker\Service\DataExport\DataExportConfig;
 use Spryker\Service\DataExport\DataExportService;
 use Spryker\Service\DataExport\DataExportServiceFactory;
@@ -30,6 +30,11 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
  */
 class DataExportServiceTest extends Unit
 {
+    /**
+     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     */
+    protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
+
     protected const DATA_ENTITY_MASTER = 'data-entity-master';
     protected const DATA_ENTITY_SLAVE = 'data-entity-slave';
 
@@ -112,26 +117,31 @@ class DataExportServiceTest extends Unit
     {
         //Arrange
         $data = [
-            ['header 1', 'header 2'],
-            ['data 1.1', 'data 1.2'],
-            ['data 2.1', 'data 2.2'],
+            ['header 1' => 'data 1.1', 'header 2' => 'data 1.2'],
+            ['header 1' => 'data 2.1', 'header 2' => 'data 2.2'],
         ];
 
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType('csv');
-        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())->setType('local');
+        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
+            ->setType('local')
+            ->setParams([
+                static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR => static::DESTINATION_DIR,
+            ]);
         $destination = static::DESTINATION_DIR . DIRECTORY_SEPARATOR . static::DESTINATION_FILE;
         $dataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->setConnection($dataExportConnectionConfigurationTransfer)
             ->setFormat($dataExportFormatConfigurationTransfer)
             ->setDestination($destination);
 
-        $writeConfiguration = (new DataExportLocalWriteConfigurationTransfer())->setMode('wb');
+        $batch = (new DataExportBatchTransfer())
+            ->setOffset(0)
+            ->setData($data)
+            ->setFields(array_keys($data[0]));
 
         //Act
-        $dataExportWriteResponseTransfer = $this->getDataExportServiceWithConfigMock()->write(
-            $data,
-            $dataExportConfigurationTransfer,
-            $writeConfiguration
+        $dataExportWriteResponseTransfer = $this->tester->getService()->write(
+            $batch,
+            $dataExportConfigurationTransfer
         );
 
         //Assert

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface;
 
-abstract class AbstractCsvReader implements CsvReaderInterface
+class OrderReader implements ReaderInterface
 {
     /**
      * @var \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface
@@ -25,22 +27,14 @@ abstract class AbstractCsvReader implements CsvReaderInterface
     }
 
     /**
-     * @param array $fields
-     * @param array $exportData
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
+     * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    protected function formatExportData(array $fields, array $exportData, int $offset): array
+    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        $exportData = array_map(function (array $exportRow) use ($fields): array {
-            return array_merge(array_flip($fields), $exportRow);
-        }, $exportData);
-
-        if ($offset === 0) {
-            array_unshift($exportData, $fields);
-        }
-
-        return $exportData;
+        return $this->salesDataExportRepository->getOrderData($dataExportConfigurationTransfer, $offset, $limit);
     }
 }

@@ -28,6 +28,11 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesDataExportFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     */
+    protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
+
     protected const DESTINATION_TEMPLATE = '{data_entity}s_DE_{timestamp}.{extension}';
     protected const FORMATTER_TYPE = 'csv';
     protected const CONNECTION_TYPE = 'local';
@@ -123,7 +128,10 @@ class SalesDataExportFacadeTest extends Unit
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())
             ->setType(static::FORMATTER_TYPE);
         $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
-            ->setType(static::CONNECTION_TYPE);
+            ->setType(static::CONNECTION_TYPE)
+            ->setParams([
+                static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR => '{application_root_dir}/data/export',
+            ]);
 
         return (new DataExportConfigurationTransfer())
             ->setDataEntity($dataEntity)

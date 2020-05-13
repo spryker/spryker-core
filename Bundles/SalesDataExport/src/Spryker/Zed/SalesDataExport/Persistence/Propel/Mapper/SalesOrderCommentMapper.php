@@ -32,7 +32,7 @@ class SalesOrderCommentMapper
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    public function mapSalesOrderCommentEntitiesToCommentTransfersGropedByIdSalesOrder(
+    public function mapSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder(
         ObjectCollection $salesOrderCommentEntities,
         array $commentTransfers
     ): array {
@@ -51,7 +51,7 @@ class SalesOrderCommentMapper
      *
      * @return string
      */
-    public function mapSalesOrderCommentTransfersToCsvFormattedJson(array $salesOrderCommentTransfers): string
+    public function mapSalesOrderCommentTransfersToJson(array $salesOrderCommentTransfers): string
     {
         $orderComments = [];
         foreach ($salesOrderCommentTransfers as $salesOrderCommentTransfer) {

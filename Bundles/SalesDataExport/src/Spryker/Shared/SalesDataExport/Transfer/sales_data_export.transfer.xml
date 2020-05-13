@@ -32,10 +32,6 @@
         <property name="filename" type="string"/>
     </transfer>
 
-    <transfer name="DataExportLocalWriteConfiguration">
-        <property name="mode" type="string"/>
-    </transfer>
-
     <transfer name="Comment">
         <property name="username" type="string"/>
         <property name="message" type="string"/>

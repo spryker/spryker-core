@@ -7,18 +7,22 @@
 
 namespace Spryker\Service\DataExport\Formatter;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatResponseTransfer;
 
 interface DataExportFormatterInterface
 {
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportFormatResponseTransfer
      */
-    public function formatBatch(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer;
+    public function formatBatch(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportFormatResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer

@@ -19,25 +19,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class OrderItemDataEntityExporterPlugin extends AbstractPlugin implements DataEntityExporterPluginInterface
 {
-    protected const DATA_ENTITY = 'order-item';
-    protected const SUPPORTED_FORMATTER = 'csv';
-
     /**
      * {@inheritDoc}
-     * - TODO
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     *
-     * @return bool
+     * @return string
      */
-    public function isApplicable(DataExportConfigurationTransfer $dataExportConfigurationTransfer): bool
+    public static function getDataEntity(): string
     {
-        $dataExportConfigurationTransfer->requireFormat();
-
-        return $dataExportConfigurationTransfer->getDataEntity() === static::DATA_ENTITY &&
-            $dataExportConfigurationTransfer->getFormat()->getType() === static::SUPPORTED_FORMATTER;
+        return 'order-item';
     }
 
     /**

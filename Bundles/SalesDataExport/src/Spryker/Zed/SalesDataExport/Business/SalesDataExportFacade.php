@@ -33,7 +33,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
     public function exportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderCsvExporter()
+            ->createOrderExporter()
             ->export($dataExportConfigurationTransfer);
     }
 
@@ -49,7 +49,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
     public function exportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderItemCsvExporter()
+            ->createOrderItemExporter()
             ->export($dataExportConfigurationTransfer);
     }
 
@@ -65,7 +65,7 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
     public function exportOrderExpense(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderExpenseCsvExporter()
+            ->createOrderExpenseExporter()
             ->export($dataExportConfigurationTransfer);
     }
 }

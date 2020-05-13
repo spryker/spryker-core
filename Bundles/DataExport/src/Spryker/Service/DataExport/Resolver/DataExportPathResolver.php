@@ -13,19 +13,20 @@ class DataExportPathResolver implements DataExportPathResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param string $exportRootDir
      *
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     * @return string
      */
-    public function resolvePath(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportConfigurationTransfer
+    public function resolvePath(DataExportConfigurationTransfer $dataExportConfigurationTransfer, string $exportRootDir): string
     {
-        $destinationPath = $dataExportConfigurationTransfer->getDestination();
+        $fullPath = $exportRootDir . DIRECTORY_SEPARATOR . $dataExportConfigurationTransfer->getDestination();
         $placeholders = [];
         foreach ($dataExportConfigurationTransfer->getHooks() as $hookKey => $hookValue) {
             $placeholders[sprintf('{%s}', $hookKey)] = $hookValue;
         }
 
-        $destinationPathResolved = str_replace(array_keys($placeholders), $placeholders, $destinationPath);
+        $resolvedPath = str_replace(array_keys($placeholders), $placeholders, $fullPath);
 
-        return $dataExportConfigurationTransfer->setDestination($destinationPathResolved);
+        return $resolvedPath;
     }
 }

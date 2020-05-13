@@ -7,24 +7,22 @@
 
 namespace Spryker\Zed\SalesDataExport\Dependency\Service;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface SalesDataExportToDataExportServiceInterface
 {
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $writeConfiguration
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
     public function write(
-        array $data,
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
-        AbstractTransfer $writeConfiguration
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportWriteResponseTransfer;
 
     /**

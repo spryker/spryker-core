@@ -13,8 +13,9 @@ interface DataExportPathResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param string $exportRootDir
      *
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     * @return string
      */
-    public function resolvePath(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportConfigurationTransfer;
+    public function resolvePath(DataExportConfigurationTransfer $dataExportConfigurationTransfer, string $exportRootDir): string;
 }

@@ -7,9 +7,10 @@
 
 namespace Spryker\Service\DataExportExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
+use Generated\Shared\Transfer\DataExportFormatResponseTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface DataExportConnectionPluginInterface
 {
@@ -31,15 +32,15 @@ interface DataExportConnectionPluginInterface
      *
      * @api
      *
-     * @param string $data
+     * @param \Generated\Shared\Transfer\DataExportFormatResponseTransfer $dataExportFormatResponseTransfer
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $writeConfiguration
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
     public function write(
-        string $data,
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
-        AbstractTransfer $writeConfiguration
+        DataExportFormatResponseTransfer $dataExportFormatResponseTransfer,
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportWriteResponseTransfer;
 }

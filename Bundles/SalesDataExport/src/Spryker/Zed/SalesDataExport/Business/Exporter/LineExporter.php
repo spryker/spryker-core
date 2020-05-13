@@ -8,26 +8,15 @@
 namespace Spryker\Zed\SalesDataExport\Business\Exporter;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
 use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface;
-use Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface;
+use Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface;
 use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface;
 use Spryker\Zed\SalesDataExport\SalesDataExportConfig;
 
-class CsvExporter implements CsvExporterInterface
+class LineExporter implements ExporterInterface
 {
-    /**
-     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::ACCESS_MODE_TYPE_OVERWRITE
-     */
-    protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
-
-    /**
-     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::ACCESS_MODE_TYPE_APPEND
-     */
-    protected const ACCESS_MODE_TYPE_APPEND = 'ab';
-
     protected const READ_BATCH_SIZE = 100;
 
     /**
@@ -41,9 +30,9 @@ class CsvExporter implements CsvExporterInterface
     protected $salesDataExportConfig;
 
     /**
-     * @var \Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface
+     * @var \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface
      */
-    protected $csvReader;
+    protected $reader;
 
     /**
      * @var \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface
@@ -53,18 +42,18 @@ class CsvExporter implements CsvExporterInterface
     /**
      * @param \Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\SalesDataExport\SalesDataExportConfig $salesDataExportConfig
-     * @param \Spryker\Zed\SalesDataExport\Business\Reader\CsvReaderInterface $csvReader
+     * @param \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface $reader
      * @param \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface $dataExportConfigurationResolver
      */
     public function __construct(
         SalesDataExportToDataExportServiceInterface $dataExportService,
         SalesDataExportConfig $salesDataExportConfig,
-        CsvReaderInterface $csvReader,
+        ReaderInterface $reader,
         SalesDataExportConfigurationResolverInterface $dataExportConfigurationResolver
     ) {
         $this->dataExportService = $dataExportService;
         $this->salesDataExportConfig = $salesDataExportConfig;
-        $this->csvReader = $csvReader;
+        $this->reader = $reader;
         $this->dataExportConfigurationResolver = $dataExportConfigurationResolver;
     }
 
@@ -81,17 +70,10 @@ class CsvExporter implements CsvExporterInterface
             ->setDataEntity($dataExportConfigurationTransfer->getDataEntity())
             ->setIsSuccessful(false);
 
-        $readBatchSize = static::READ_BATCH_SIZE;
-
         $offset = 0;
         do {
-            $csvData = $this->csvReader->csvReadBatch($dataExportConfigurationTransfer, $offset, $readBatchSize);
-
-            $dataExportWriteResponseTransfer = $this->dataExportService->write(
-                $csvData,
-                $dataExportConfigurationTransfer,
-                $this->createDataExportLocalWriteConfiguration($offset)
-            );
+            $dataExportBatchTransfer = $this->reader->readBatch($dataExportConfigurationTransfer, $offset, static::READ_BATCH_SIZE);
+            $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
 
             if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
                 $dataExportResultTransfer
@@ -101,31 +83,16 @@ class CsvExporter implements CsvExporterInterface
                 return $this->createDataExportReportTransfer($dataExportResultTransfer);
             }
 
-            $exportedRowsCount = count($csvData);
-            $offset += $exportedRowsCount;
+            $exportedRowCount = count($dataExportBatchTransfer->getData());
+            $offset += $exportedRowCount;
 
             $dataExportResultTransfer
                 ->setIsSuccessful(true)
-                ->setExportCount($offset - 1)
+                ->setExportCount($offset)
                 ->setFileName($dataExportWriteResponseTransfer->getFilename());
-        } while ($exportedRowsCount === $readBatchSize);
+        } while ($exportedRowCount === static::READ_BATCH_SIZE);
 
         return $this->createDataExportReportTransfer($dataExportResultTransfer);
-    }
-
-    /**
-     * @param int $offset
-     *
-     * @return \Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer
-     */
-    protected function createDataExportLocalWriteConfiguration(int $offset): DataExportLocalWriteConfigurationTransfer
-    {
-        $writeMode = $offset === 0
-            ? static::ACCESS_MODE_TYPE_OVERWRITE
-            : static::ACCESS_MODE_TYPE_APPEND;
-
-        return (new DataExportLocalWriteConfigurationTransfer())
-            ->setMode($writeMode);
     }
 
     /**

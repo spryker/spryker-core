@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesDataExport\Persistence;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
 interface SalesDataExportRepositoryInterface
@@ -16,25 +17,25 @@ interface SalesDataExportRepositoryInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
 }

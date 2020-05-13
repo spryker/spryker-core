@@ -11,13 +11,4 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class DataExportConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getDataExportDefaultLocalPath(): string
-    {
-        return realpath(sprintf('%s/data/export', APPLICATION_ROOT_DIR));
-    }
 }

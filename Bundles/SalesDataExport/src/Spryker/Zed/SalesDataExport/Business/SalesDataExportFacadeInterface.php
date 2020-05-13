@@ -14,7 +14,7 @@ interface SalesDataExportFacadeInterface
 {
     /**
      * Specification
-     * - Exports orders in various (writer) formats
+     * - Exports orders
      * - Returns results of export
      *
      * @api
@@ -27,7 +27,7 @@ interface SalesDataExportFacadeInterface
 
     /**
      * Specification
-     * - Exports order items in various (writer) formats
+     * - Exports order items
      * - Returns results of export
      *
      * @api
@@ -40,7 +40,7 @@ interface SalesDataExportFacadeInterface
 
     /**
      * Specification
-     * - Exports order expense in various (writer) formats
+     * - Exports order expenses
      * - Returns results of export
      *
      * @api

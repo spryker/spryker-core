@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface;
 
-class OrderExpenseReader implements ReaderInterface
+class OrderItemReader implements ReaderInterface
 {
     /**
      * @var \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface
@@ -35,6 +35,6 @@ class OrderExpenseReader implements ReaderInterface
      */
     public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        return $this->salesDataExportRepository->getOrderExpenseData($dataExportConfigurationTransfer, $offset, $limit);
+        return $this->salesDataExportRepository->getOrderItemData($dataExportConfigurationTransfer, $offset, $limit);
     }
 }
