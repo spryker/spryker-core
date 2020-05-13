@@ -15,6 +15,19 @@ class ReturnExtractor implements ReturnExtractorInterface
     protected const DEFAULT_LABEL_CLASS = 'label-info';
 
     /**
+     * @var \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig
+     */
+    protected $salesReturnGuiConfig;
+
+    /**
+     * @param \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig $salesReturnGuiConfig
+     */
+    public function __construct(SalesReturnGuiConfig $salesReturnGuiConfig)
+    {
+        $this->salesReturnGuiConfig = $salesReturnGuiConfig;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string[]
@@ -45,7 +58,7 @@ class ReturnExtractor implements ReturnExtractorInterface
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $state = $returnItemTransfer->getOrderItem()->getState()->getName();
 
-            $uniqueItemStates[$state] = SalesReturnGuiConfig::ITEM_STATE_TO_LABEL_CLASS_MAPPING[$state] ?? static::DEFAULT_LABEL_CLASS;
+            $uniqueItemStates[$state] = $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? static::DEFAULT_LABEL_CLASS;
         }
 
         return $uniqueItemStates;

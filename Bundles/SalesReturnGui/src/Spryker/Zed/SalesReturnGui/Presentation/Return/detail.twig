@@ -7,14 +7,13 @@
 
 {% block action %}
     {{ backActionButton(url('/sales-return-gui/return'), 'Back to Returns' | trans) }}
-    {{ createActionButton(url('/sales-return-gui/return-slip/print', {'id-sales-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
+    {{ createActionButton(url('/sales-return-gui/return-slip/print', {'id-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-lg-9">
             {% include '@SalesReturnGui/Return/_partials/returned-items-column.twig' with {
-                customer: customer,
                 return: return,
                 orderItemManualEvents: orderItemManualEvents,
                 uniqueOrderItemManualEvents: uniqueOrderItemManualEvents,

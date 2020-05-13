@@ -9,15 +9,15 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class AbstractController extends SprykerAbstractController
+abstract class AbstractReturnController extends AbstractController
 {
-    protected const PARAM_ID_SALES_RETURN = 'id-sales-return';
+    protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,7 +27,7 @@ class AbstractController extends SprykerAbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_SALES_RETURN)
+            $request->get(static::PARAM_ID_RETURN)
         );
 
         return $this->getFactory()

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class ReturnSlipController extends AbstractController
+class ReturnSlipController extends AbstractReturnController
 {
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
@@ -47,7 +47,7 @@ class ReturnSlipController extends AbstractController
      */
     protected function executePrintAction(Request $request)
     {
-        $idReturn = $this->castId($request->query->get(static::PARAM_ID_SALES_RETURN));
+        $idReturn = $this->castId($request->query->get(static::PARAM_ID_RETURN));
 
         $returnTransfer = $this->findReturn($request);
 

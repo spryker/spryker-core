@@ -7,49 +7,33 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Generated\Shared\Transfer\OrderItemFilterTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
  */
-class ReturnController extends AbstractController
+class ReturnController extends AbstractReturnController
 {
     protected const PARAM_ID_ORDER = 'id-order';
-    protected const PARAM_ID_RETURN = 'id-return';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
+     */
+    protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
+
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     */
+    protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
 
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
     protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
-    protected const MESSAGE_PARAM_ID = '%id%';
-
     protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
-
-    /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
-     */
-    protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
-
-    /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
-     */
-    protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
-
-    /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::indexAction()
-     */
-    protected const ROUTE_RETURN_LIST = '/sales-return-gui/return';
-
-    /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
-     */
-    protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/return/detail';
-
     protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
     protected const MESSAGE_PARAM_ID = '%id%';
 
@@ -99,7 +83,7 @@ class ReturnController extends AbstractController
     protected function executeDetailAction(Request $request)
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_SALES_RETURN)
+            $request->get(static::PARAM_ID_RETURN)
         );
 
         $returnTransfer = $this->findReturn($request);
@@ -124,7 +108,7 @@ class ReturnController extends AbstractController
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
 
         $triggerButtonRedirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
-            static::PARAM_ID_SALES_RETURN => $idSalesReturn,
+            static::PARAM_ID_RETURN => $idSalesReturn,
         ]);
 
         $orderItemManualEvents = $this->getFactory()->getOmsFacade()->getOrderItemManualEvents($orderItemFilterTransfer);
