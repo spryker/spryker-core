@@ -20,7 +20,8 @@ class DataExportLocalWriter implements DataExportWriterInterface
     protected const MESSAGE_INVALID_WRITE_CONFIGURATION = 'Expected write configuration of type "%s", "%s" given.';
     protected const MESSAGE_WRITE_FAIL = 'Failed to write file "%s".';
 
-    protected const ACCESS_MODE_DEFAULT = 'wb';
+    protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
+    protected const ACCESS_MODE_TYPE_APPEND = 'ab';
 
     /**
      * @var \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface
@@ -74,7 +75,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
             return $dataExportWriteResponseTransfer->addMessage($this->createWriteFailErrorMessage($filePath));
         }
 
-        $file = fopen($filePath, $writeConfiguration->getMode() ?? static::ACCESS_MODE_DEFAULT);
+        $file = fopen($filePath, $writeConfiguration->getMode() ?? static::ACCESS_MODE_TYPE_OVERWRITE);
         $result = fwrite($file, $dataFormatResponseTransfer->getDataFormatted());
         if ($result === false) {
             return $dataExportWriteResponseTransfer->addMessage($this->createWriteFailErrorMessage($filePath));
