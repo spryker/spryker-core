@@ -18,11 +18,9 @@ interface DataEntityExporterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     *
-     * @return bool
+     * @return string
      */
-    public function isApplicable(DataExportConfigurationTransfer $dataExportConfigurationTransfer): bool;
+    public static function getDataEntity(): string;
 
     /**
      * Specification:

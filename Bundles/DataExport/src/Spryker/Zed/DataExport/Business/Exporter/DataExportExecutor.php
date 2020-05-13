@@ -35,7 +35,7 @@ class DataExportExecutor
     protected $dataExportConfig;
 
     /**
-     * @param array $dataEntityExporterPlugins
+     * @param \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[] $dataEntityExporterPlugins
      * @param \Spryker\Service\DataExport\DataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\DataExport\DataExportConfig $dataExportConfig
      */
@@ -96,12 +96,9 @@ class DataExportExecutor
      */
     protected function runExport(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        foreach ($this->dataEntityExporterPlugins as $dataEntityExporterPlugin) {
-            if (!$dataEntityExporterPlugin->isApplicable($dataExportConfigurationTransfer)) {
-                continue;
-            }
-
-            return $dataEntityExporterPlugin->export($dataExportConfigurationTransfer);
+        $dataEntity = $dataExportConfigurationTransfer->getDataEntity();
+        if (isset($this->dataEntityExporterPlugins[$dataEntity])) {
+            return $this->dataEntityExporterPlugins[$dataEntity]->export($dataExportConfigurationTransfer);
         }
 
         throw new DataExporterNotFoundException(sprintf(

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesDataExport\Persistence;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
@@ -26,10 +27,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
-    public const FILTER_CRITERIA_KEY_DATE_FROM = 'from';
-    public const FILTER_CRITERIA_KEY_DATE_TO = 'to';
-    public const FILTER_CRITERIA_KEY_DATE_MIN = 'min';
-    public const FILTER_CRITERIA_KEY_DATE_MAX = 'max';
+    public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+    public const FILTER_CRITERIA_PARAM_DATE_TO = 'to';
+
+    public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+    public const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
 
     /**
      * @module Country
@@ -39,10 +41,16 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
+        $selectedColumns = $this->getSalesOrderSelectColumns($dataExportConfigurationTransfer);
+        $dataExportBatchTransfer = (new DataExportBatchTransfer())
+            ->setOffset($offset)
+            ->setFields(array_flip($selectedColumns))
+            ->setData([]);
+
         $salesOrderQuery = $this->getFactory()->getSalesOrderPropelQuery()
             ->joinLocale()
             ->joinOrderTotal()
@@ -54,14 +62,16 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->offset($offset)
             ->limit($limit);
 
+        $selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
+
         $salesOrderQuery = $this->applyFilterCriteriaToSalesOrderQuery($dataExportConfigurationTransfer->getFilterCriteria(), $salesOrderQuery);
-        $salesOrderQuery->select($this->getSalesOrderSelectFields($dataExportConfigurationTransfer));
+        $salesOrderQuery->select($selectedColumns);
 
         $salesOrderData = $salesOrderQuery->find()
             ->getArrayCopy(SpySalesOrderTableMap::COL_ID_SALES_ORDER);
 
         if ($salesOrderData === []) {
-            return [];
+            return $dataExportBatchTransfer;
         }
 
         $salesOrderIds = array_keys($salesOrderData);
@@ -71,9 +81,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             unset($salesOrderData[$idSalesOrder][SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
         }
 
-        return $this->getFactory()
+        $data = $this->getFactory()
             ->createSalesOrderMapper()
             ->mapSalesOrderDataByField($salesOrderData);
+
+        return $dataExportBatchTransfer->setData($data);
     }
 
     /**
@@ -85,10 +97,16 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
+        $selectedColumns = $this->getSalesOrderItemSelectColumns($dataExportConfigurationTransfer);
+        $dataExportBatchTransfer = (new DataExportBatchTransfer())
+            ->setOffset($offset)
+            ->setFields(array_flip($selectedColumns))
+            ->setData([]);
+
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemPropelQuery()
             ->joinOrder()
@@ -111,17 +129,19 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesOrderItemQuery
         );
 
-        $salesOrderItemQuery->select($this->getSalesOrderItemSelectFields($dataExportConfigurationTransfer));
+        $salesOrderItemQuery->select($selectedColumns);
 
         $salesOrderItemData = $salesOrderItemQuery->find()->getArrayCopy();
 
         if ($salesOrderItemData === []) {
-            return [];
+            return $dataExportBatchTransfer;
         }
 
-        return $this->getFactory()
+        $data = $this->getFactory()
             ->createSalesOrderItemMapper()
             ->mapSalesOrderItemDataByField($salesOrderItemData);
+
+        return $dataExportBatchTransfer->setData($data);
     }
 
     /**
@@ -129,10 +149,16 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
+        $selectedColumns = $this->getSalesExpenseSelectFields($dataExportConfigurationTransfer);
+        $dataExportBatchTransfer = (new DataExportBatchTransfer())
+            ->setOffset($offset)
+            ->setFields(array_flip($selectedColumns))
+            ->setData([]);
+
         $salesExpenseQuery = SpySalesExpenseQuery::create()
             ->joinOrder()
             ->leftJoinSpySalesShipment()
@@ -144,12 +170,14 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesExpenseQuery
         );
 
-        $salesExpenseQuery->select($this->getSalesExpenseSelectFields($dataExportConfigurationTransfer));
+        $salesExpenseQuery->select($selectedColumns);
         $orderExpenseData = $salesExpenseQuery->find()->getArrayCopy();
 
-        return $this->getFactory()
+        $data = $this->getFactory()
             ->createSalesExpenseMapper()
             ->mapSalesExpenseDataByField($orderExpenseData);
+
+        return $dataExportBatchTransfer->setData($data);
     }
 
     /**
@@ -173,15 +201,15 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderQuery->filterByCreatedAt_Between([
-                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
             ]);
         }
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT])) {
             $salesOrderQuery->filterByUpdatedAt_Between([
-                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
             ]);
         }
 
@@ -205,15 +233,15 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderItemQuery->filterByCreatedAt_Between([
-                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
             ]);
         }
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT])) {
             $salesOrderItemQuery->filterByUpdatedAt_Between([
-                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
             ]);
         }
 
@@ -239,8 +267,8 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesExpenseQuery
                 ->useOrderQuery()
                     ->filterByCreatedAt_Between([
-                        static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                        static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                        static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                        static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
                     ])
                 ->endUse();
         }
@@ -249,8 +277,8 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesExpenseQuery
                 ->useOrderQuery()
                     ->filterByUpdatedAt_Between([
-                        static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
-                        static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                        static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
+                        static::PROPEL_CRITERIA_BETWEEN_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_PARAM_DATE_TO],
                     ])
                 ->endUse();
         }
@@ -263,14 +291,13 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    protected function getSalesOrderSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    protected function getSalesOrderSelectColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesOrderMapper()
             ->getFieldMapping();
 
         $selectedFields = array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
-        $selectedFields[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
 
         return $selectedFields;
     }
@@ -280,7 +307,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    protected function getSalesOrderItemSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    public function getSalesOrderItemSelectColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesOrderItemMapper()
@@ -294,7 +321,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return array<string, string>
      */
-    protected function getSalesExpenseSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
+    public function getSalesExpenseSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
         $fieldMapping = $this->getFactory()
             ->createSalesExpenseMapper()
@@ -308,7 +335,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    protected function getCommentsByOrderId(array $salesOrderIds): array
+    public function getCommentsByOrderId(array $salesOrderIds): array
     {
         $salesOrderCommentEntities = SpySalesOrderCommentQuery::create()
             ->filterByFkSalesOrder_In($salesOrderIds)

@@ -30,10 +30,10 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function lineExportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
+    public function exportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderLineExporter()
+            ->createOrderExporter()
             ->export($dataExportConfigurationTransfer);
     }
 
@@ -46,10 +46,10 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function lineExportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
+    public function exportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderItemLineExporter()
+            ->createOrderItemExporter()
             ->export($dataExportConfigurationTransfer);
     }
 
@@ -62,10 +62,10 @@ class SalesDataExportFacade extends AbstractFacade implements SalesDataExportFac
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function lineExportOrderExpense(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
+    public function exportOrderExpense(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         return $this->getFactory()
-            ->createOrderExpenseLineExporter()
+            ->createOrderExpenseExporter()
             ->export($dataExportConfigurationTransfer);
     }
 }

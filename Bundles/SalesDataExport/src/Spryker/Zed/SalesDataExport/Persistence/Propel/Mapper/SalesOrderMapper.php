@@ -89,7 +89,7 @@ class SalesOrderMapper
             $mappedSalesOrderRow = array_combine($fields, $salesOrderRow);
 
             $mappedSalesOrderRow[static::KEY_ORDER_COMMENTS] = $this->salesOrderCommentMapper
-                ->mapSalesOrderCommentTransfersToJson($salesOrderRow[static::KEY_ORDER_COMMENTS]);
+                ->mapSalesOrderCommentTransfersToJson($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS]);
 
             $mappedSalesOrders[] = $mappedSalesOrderRow;
         }

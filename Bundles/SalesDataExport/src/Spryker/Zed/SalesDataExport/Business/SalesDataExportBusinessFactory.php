@@ -12,10 +12,10 @@ use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportCo
 use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface;
 use Spryker\Zed\SalesDataExport\Business\Exporter\ExporterInterface;
 use Spryker\Zed\SalesDataExport\Business\Exporter\LineExporter;
-use Spryker\Zed\SalesDataExport\Business\Reader\LineReaderInterface;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseLineReader;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemLineReader;
-use Spryker\Zed\SalesDataExport\Business\Reader\OrderLineReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderItemReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\OrderReader;
+use Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface;
 use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface;
 use Spryker\Zed\SalesDataExport\SalesDataExportDependencyProvider;
 
@@ -28,12 +28,12 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesDataExport\Business\Exporter\ExporterInterface
      */
-    public function createOrderLineExporter(): ExporterInterface
+    public function createOrderExporter(): ExporterInterface
     {
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderLineReader(),
+            $this->createOrderReader(),
             $this->createSalesDataExportConfigurationResolver()
         );
     }
@@ -41,12 +41,12 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesDataExport\Business\Exporter\ExporterInterface
      */
-    public function createOrderItemLineExporter(): ExporterInterface
+    public function createOrderItemExporter(): ExporterInterface
     {
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderItemLineReader(),
+            $this->createOrderItemReader(),
             $this->createSalesDataExportConfigurationResolver()
         );
     }
@@ -54,38 +54,38 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesDataExport\Business\Exporter\ExporterInterface
      */
-    public function createOrderExpenseLineExporter(): ExporterInterface
+    public function createOrderExpenseExporter(): ExporterInterface
     {
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderExpenseLineReader(),
+            $this->createOrderExpenseReader(),
             $this->createSalesDataExportConfigurationResolver()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SalesDataExport\Business\Reader\LineReaderInterface
+     * @return \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface
      */
-    public function createOrderLineReader(): LineReaderInterface
+    public function createOrderReader(): ReaderInterface
     {
-        return new OrderLineReader($this->getRepository());
+        return new OrderReader($this->getRepository());
     }
 
     /**
-     * @return \Spryker\Zed\SalesDataExport\Business\Reader\LineReaderInterface
+     * @return \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface
      */
-    public function createOrderItemLineReader(): LineReaderInterface
+    public function createOrderItemReader(): ReaderInterface
     {
-        return new OrderItemLineReader($this->getRepository());
+        return new OrderItemReader($this->getRepository());
     }
 
     /**
-     * @return \Spryker\Zed\SalesDataExport\Business\Reader\LineReaderInterface
+     * @return \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface
      */
-    public function createOrderExpenseLineReader(): LineReaderInterface
+    public function createOrderExpenseReader(): ReaderInterface
     {
-        return new OrderExpenseLineReader($this->getRepository());
+        return new OrderExpenseReader($this->getRepository());
     }
 
     /**

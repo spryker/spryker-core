@@ -45,10 +45,9 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
         $dataExportFormatResponseTransfer = (new DataExportFormatResponseTransfer())->setIsSuccessful(false);
 
         if ($dataExportBatchTransfer->getOffset() === 0) {
-            $data = $dataExportBatchTransfer->getData() ?? [];
-            array_unshift($data, array_keys($data[0] ?? []));
-            $dataExportBatchTransfer->setData($data);
+            $this->csvFormatter->addRecord($dataExportBatchTransfer->getFields());
         }
+
         foreach ($dataExportBatchTransfer->getData() as $row) {
             if (!is_array($row)) {
                 return $dataExportFormatResponseTransfer->addMessage($this->createInvalidDataSetResponseMessage());

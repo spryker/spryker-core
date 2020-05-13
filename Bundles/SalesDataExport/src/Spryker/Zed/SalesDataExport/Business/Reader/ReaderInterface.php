@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
-interface LineReaderInterface
+interface ReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
      * @param int $limit
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function lineReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
 }

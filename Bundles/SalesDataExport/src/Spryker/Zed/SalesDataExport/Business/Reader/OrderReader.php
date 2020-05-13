@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface;
 
-class OrderExpenseLineReader implements LineReaderInterface
+class OrderReader implements ReaderInterface
 {
     /**
      * @var \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface
@@ -30,10 +31,10 @@ class OrderExpenseLineReader implements LineReaderInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function lineReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
+    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        return $this->salesDataExportRepository->getOrderExpenseData($dataExportConfigurationTransfer, $offset, $limit);
+        return $this->salesDataExportRepository->getOrderData($dataExportConfigurationTransfer, $offset, $limit);
     }
 }
