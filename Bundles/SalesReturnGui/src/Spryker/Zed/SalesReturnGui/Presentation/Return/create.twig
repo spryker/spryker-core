@@ -6,7 +6,7 @@
 
 
 {% block action %}
-    {{ backActionButton(url('/sales/detail', {'id-sales-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
+    {{ backActionButton(url('/sales/detail', {'id-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
 {% endblock %}
 
 {% block content %}
