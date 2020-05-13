@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\DataExport;
 
-use Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface;
+use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface;
 use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServiceInterface;
 use Spryker\Service\DataExport\Formatter\DataExportCsvFormatter;
 use Spryker\Service\DataExport\Formatter\DataExportFormatter;
@@ -83,7 +83,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
      */
     public function createDataExportCsvFormatter(): DataExportFormatterInterface
     {
-        return new DataExportCsvFormatter($this->getCsvWriter());
+        return new DataExportCsvFormatter($this->getCsvFormatter());
     }
 
     /**
@@ -127,10 +127,10 @@ class DataExportServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface
+     * @return \Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface
      */
-    public function getCsvWriter(): DataExportToCsvWriterInterface
+    public function getCsvFormatter(): DataExportToCsvFormatterInterface
     {
-        return $this->getProvidedDependency(DataExportDependencyProvider::CSV_WRITER);
+        return $this->getProvidedDependency(DataExportDependencyProvider::CSV_FORMATTER);
     }
 }

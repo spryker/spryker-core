@@ -14,6 +14,9 @@ class DataExportConfig extends AbstractBundleConfig
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * Specification:
+     * - TODO
+     *
      * @api
      *
      * @return string
@@ -24,13 +27,18 @@ class DataExportConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - TODO
+     *
      * @api
      *
      * @return string
      */
     public function getExportConfigurationsPath(): string
     {
-        return realpath(sprintf('%s/data/export/config', APPLICATION_ROOT_DIR));
+        return realpath(
+            APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config'
+        );
     }
 
     /**

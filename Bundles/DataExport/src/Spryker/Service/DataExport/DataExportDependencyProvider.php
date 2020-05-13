@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\DataExport;
 
-use Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface;
+use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface;
 use Spryker\Service\DataExport\Dependency\External\DataExportToLeagueCsvWriterAdapter;
 use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServiceBridge;
 use Spryker\Service\DataExport\Dependency\Service\DataExportToUtilDataReaderServiceInterface;
@@ -24,7 +24,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     public const DATA_EXPORT_CONNECTION_PLUGINS = 'DATA_EXPORT_CONNECTION_PLUGINS';
     public const DATA_EXPORT_FORMATTER_PLUGINS = 'DATA_EXPORT_FORMATTER_PLUGINS';
 
-    public const CSV_WRITER = 'CSV_WRITER';
+    public const CSV_FORMATTER = 'CSV_FORMATTER';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -37,7 +37,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addDataExportFormatterPlugins($container);
         $container = $this->addDataExportConnectionPlugins($container);
-        $container = $this->addCsvWriter($container);
+        $container = $this->addCsvFormatter($container);
 
         return $container;
     }
@@ -91,9 +91,9 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addCsvWriter(Container $container): Container
+    protected function addCsvFormatter(Container $container): Container
     {
-        $container->set(static::CSV_WRITER, $container->factory(function (): DataExportToCsvWriterInterface {
+        $container->set(static::CSV_FORMATTER, $container->factory(function (): DataExportToCsvFormatterInterface {
             return new DataExportToLeagueCsvWriterAdapter();
         }));
 

@@ -84,7 +84,7 @@ class CsvExporter implements CsvExporterInterface
             if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
                 $dataExportResultTransfer
                     ->fromArray($dataExportWriteResponseTransfer->toArray(), true)
-                    ->setExportedRows($offset);
+                    ->setExportCount($offset);
 
                 return $this->createDataExportReportTransfer($dataExportResultTransfer);
             }
@@ -94,7 +94,7 @@ class CsvExporter implements CsvExporterInterface
 
             $dataExportResultTransfer
                 ->setIsSuccessful(true)
-                ->setExportedRows($offset)
+                ->setExportCount($offset)
                 ->setFileName($dataExportWriteResponseTransfer->getFilename());
         } while ($exportedRowsCount === $readBatchSize);
 

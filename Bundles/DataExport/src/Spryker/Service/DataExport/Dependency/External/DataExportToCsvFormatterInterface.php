@@ -7,17 +7,17 @@
 
 namespace Spryker\Service\DataExport\Dependency\External;
 
-interface DataExportToCsvWriterInterface
+interface DataExportToCsvFormatterInterface
 {
     /**
      * @param array $record
      *
      * @return int
      */
-    public function insertOne(array $record): int;
+    public function addRecord(array $record): int;
 
     /**
      * @return string
      */
-    public function getContent(): string;
+    public function getFormattedRecords(): string;
 }

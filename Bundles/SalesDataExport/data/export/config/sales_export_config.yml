@@ -41,8 +41,6 @@ actions:
           - order_totals_refund_total
           - order_totals_subtotal
           - order_totals_tax_total
-      filter_criteria:
-          locale_is_active: true
 
     - data_entity: order-item
       fields:

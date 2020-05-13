@@ -9,7 +9,7 @@ namespace Spryker\Service\DataExport\Dependency\External;
 
 use League\Csv\Writer;
 
-class DataExportToLeagueCsvWriterAdapter implements DataExportToCsvWriterInterface
+class DataExportToLeagueCsvWriterAdapter implements DataExportToCsvFormatterInterface
 {
     /**
      * @var \League\Csv\Writer
@@ -26,7 +26,7 @@ class DataExportToLeagueCsvWriterAdapter implements DataExportToCsvWriterInterfa
      *
      * @return int
      */
-    public function insertOne(array $record): int
+    public function addRecord(array $record): int
     {
         return $this->writer->insertOne($record);
     }
@@ -34,7 +34,7 @@ class DataExportToLeagueCsvWriterAdapter implements DataExportToCsvWriterInterfa
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getFormattedRecords(): string
     {
         return $this->writer->getContent();
     }

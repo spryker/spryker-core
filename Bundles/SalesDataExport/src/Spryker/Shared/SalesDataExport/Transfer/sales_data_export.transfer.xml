@@ -12,7 +12,7 @@
         <property name="isSuccessful" type="bool"/>
         <property name="dataEntity" type="string"/>
         <property name="fileName" type="string"/>
-        <property name="exportedRows" type="int"/>
+        <property name="exportCount" type="int"/>
     </transfer>
 
     <transfer name="DataExportConfigurations">
@@ -22,7 +22,7 @@
 
     <transfer name="DataExportConfiguration">
         <property name="dataEntity" type="string"/>
-        <property name="fields" type="string[]" singular="field"/>
+        <property name="fields" type="array" singular="field"/>
         <property name="format" type="DataExportFormatConfiguration"/>
         <property name="filterCriteria" type="array" singular="filterCriterion" associative="true"/>
     </transfer>

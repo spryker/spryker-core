@@ -10,7 +10,7 @@ namespace Spryker\Service\DataExport\Formatter;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface;
+use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface;
 
 class DataExportCsvFormatter implements DataExportFormatterInterface
 {
@@ -19,38 +19,38 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     protected const EXTENSION_CSV = 'csv';
 
     /**
-     * @var \Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface
+     * @var \Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface
      */
-    protected $csvWriter;
+    protected $csvFormatter;
 
     /**
-     * @param \Spryker\Service\DataExport\Dependency\External\DataExportToCsvWriterInterface $csvWriter
+     * @param \Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInterface $csvFormatter
      */
-    public function __construct(DataExportToCsvWriterInterface $csvWriter)
+    public function __construct(DataExportToCsvFormatterInterface $csvFormatter)
     {
-        $this->csvWriter = $csvWriter;
+        $this->csvFormatter = $csvFormatter;
     }
 
     /**
-     * @param array $data
+     * @param array $rows
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportFormatResponseTransfer
      */
-    public function formatBatch(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
+    public function formatBatch(array $rows, DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
     {
         $dataExportFormatResponseTransfer = (new DataExportFormatResponseTransfer())->setIsSuccessful(false);
 
-        foreach ($data as $row) {
+        foreach ($rows as $row) {
             if (!is_array($row)) {
                 return $dataExportFormatResponseTransfer->addMessage($this->createInvalidDataSetResponseMessage());
             }
-            $this->csvWriter->insertOne($row);
+            $this->csvFormatter->addRecord($row);
         }
 
         return $dataExportFormatResponseTransfer
             ->setIsSuccessful(true)
-            ->setDataFormatted($this->csvWriter->getContent());
+            ->setDataFormatted($this->csvFormatter->getFormattedRecords());
     }
 
     /**

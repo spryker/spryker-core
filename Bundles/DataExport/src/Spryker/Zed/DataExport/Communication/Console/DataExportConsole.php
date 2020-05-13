@@ -72,9 +72,10 @@ class DataExportConsole extends Console
             }
             foreach ($dataExportReportTransfer->getDataExportResults() as $dataExportResultTransfer) {
                 $output->writeln(sprintf(
-                    '<fg=white>Document: %s (Objects: %d)</fg=white>',
+                    '<fg=white>File name: %s, DataEntity: %s, Count: %d</fg=white>',
+                    $dataExportResultTransfer->getFileName(),
                     $dataExportResultTransfer->getDataEntity(),
-                    $dataExportResultTransfer->getExportedRows()
+                    $dataExportResultTransfer->getExportCount()
                 ));
             }
         }
