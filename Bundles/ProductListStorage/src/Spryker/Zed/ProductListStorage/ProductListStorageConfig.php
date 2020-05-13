@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductListStorageConfig extends AbstractBundleConfig
 {
-    protected const PUBLISH_PRODUCT_ABSTRACT_CHUNK = 500;
-    protected const PUBLISH_PRODUCT_CONCRETE_CHUNK = 500;
+    protected const PRODUCT_LIST_PRODUCT_ABSTRACT_PUBLISH_CHUNK_SIZE = 500;
+    protected const PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH_CHUNK_SIZE = 500;
 
     /**
      * @api
@@ -51,9 +51,9 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getPublishProductAbstractChunkSize(): int
+    public function getProductListProductAbstractPublishChunkSize(): int
     {
-        return static::PUBLISH_PRODUCT_ABSTRACT_CHUNK;
+        return static::PRODUCT_LIST_PRODUCT_ABSTRACT_PUBLISH_CHUNK_SIZE;
     }
 
     /**
@@ -61,8 +61,8 @@ class ProductListStorageConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getPublishProductConcreteChunkSize(): int
+    public function getProductListProductConcretePublishChunkSize(): int
     {
-        return static::PUBLISH_PRODUCT_CONCRETE_CHUNK;
+        return static::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH_CHUNK_SIZE;
     }
 }

@@ -12,8 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductPageSearchConfig extends AbstractBundleConfig
 {
     public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
-    protected const PUBLISH_PRODUCT_CONCRETE_CHUNK_SIZE = 500;
-    protected const REFRESH_PRODUCT_ABSTRACT_CHUNK_SIZE = 500;
+
+    protected const PRODUCT_CONCRETE_PAGE_PUBLISH_CHUNK_SIZE = 500;
+    protected const PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE = 500;
 
     /**
      * @api
@@ -42,9 +43,9 @@ class ProductPageSearchConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getPublishProductConcreteChunkSize(): int
+    public function getProductConcretePagePublishChunkSize(): int
     {
-        return static::PUBLISH_PRODUCT_CONCRETE_CHUNK_SIZE;
+        return static::PRODUCT_CONCRETE_PAGE_PUBLISH_CHUNK_SIZE;
     }
 
     /**
@@ -52,8 +53,8 @@ class ProductPageSearchConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getRefreshProductAbstractChunkSize(): int
+    public function getProductAbstractPagePublishChunkSize(): int
     {
-        return static::REFRESH_PRODUCT_ABSTRACT_CHUNK_SIZE;
+        return static::PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE;
     }
 }

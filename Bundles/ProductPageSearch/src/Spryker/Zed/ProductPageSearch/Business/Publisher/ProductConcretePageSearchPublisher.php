@@ -116,7 +116,10 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             return;
         }
 
-        $productConcreteIdsChunks = array_chunk($productConcreteIds, $this->productPageSearchConfig->getPublishProductConcreteChunkSize());
+        $productConcreteIdsChunks = array_chunk(
+            $productConcreteIds,
+            $this->productPageSearchConfig->getProductConcretePagePublishChunkSize()
+        );
 
         foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
             $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIdsChunk);

@@ -109,7 +109,10 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     {
         $isPoolingStateChanged = Propel::disableInstancePooling();
 
-        $productAbstractIdsChunks = array_chunk($productAbstractIds, $this->productPageSearchConfig->getRefreshProductAbstractChunkSize());
+        $productAbstractIdsChunks = array_chunk(
+            $productAbstractIds,
+            $this->productPageSearchConfig->getProductAbstractPagePublishChunkSize()
+        );
 
         foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
             $this->publishEntities($productAbstractIdsChunk, $pageDataExpanderPluginNames, true);

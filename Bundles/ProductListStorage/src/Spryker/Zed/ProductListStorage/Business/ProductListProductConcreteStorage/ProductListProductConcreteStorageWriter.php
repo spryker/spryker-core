@@ -55,9 +55,13 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     {
         $isPoolingStateChanged = Propel::disableInstancePooling();
 
+        $productConcreteIds = array_unique($productConcreteIds);
         $productLists = $this->productListFacade->getProductListsIdsByProductIds($productConcreteIds);
 
-        $productConcreteIdsChunks = array_chunk($productConcreteIds, $this->productListStorageConfig->getPublishProductConcreteChunkSize());
+        $productConcreteIdsChunks = array_chunk(
+            $productConcreteIds,
+            $this->productListStorageConfig->getProductListProductConcretePublishChunkSize()
+        );
 
         foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
             $productConcreteProductListStorageEntities = $this->findProductConcreteProductListStorageEntities($productConcreteIdsChunk);

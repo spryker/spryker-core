@@ -55,9 +55,13 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     {
         $isPoolingStateChanged = Propel::disableInstancePooling();
 
+        $productAbstractIds = array_unique($productAbstractIds);
         $productLists = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productAbstractIds);
 
-        $productAbstractIdsChunks = array_chunk($productAbstractIds, $this->productListStorageConfig->getPublishProductAbstractChunkSize());
+        $productAbstractIdsChunks = array_chunk(
+            $productAbstractIds,
+            $this->productListStorageConfig->getProductListProductAbstractPublishChunkSize()
+        );
 
         foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
             $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIdsChunk);
