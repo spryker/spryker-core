@@ -94,15 +94,15 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             return [];
         }
 
-        $salesOrderItemEntities = $this->indexSalesOrderItemEntitiesByFkSalesOrderItemBundle($salesOrderItemEntities);
         $salesOrderItemBundleEntities = $this->getFactory()
             ->createSalesOrderItemBundleQuery()
-            ->filterByIdSalesOrderItemBundle_In(array_keys($salesOrderItemEntities))
+            ->filterByIdSalesOrderItemBundle_In($this->getSalesOrderItemBundleIds($salesOrderItemEntities))
             ->find();
+        $salesOrderItemBundleEntities = $this->indexSalesOrderItemEntitiesByFkSalesOrderItemBundle($salesOrderItemBundleEntities);
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapSalesOrderItemBundleEntitiesToBundleItemTransfers($salesOrderItemBundleEntities, $salesOrderItemEntities);
+            ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemEntities, $salesOrderItemBundleEntities);
     }
 
     /**
@@ -122,16 +122,32 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return int[]
      */
-    protected function indexSalesOrderItemEntitiesByFkSalesOrderItemBundle(ObjectCollection $salesOrderItemEntities): array
+    protected function getSalesOrderItemBundleIds(ObjectCollection $salesOrderItemEntities): array
     {
-        $indexedSalesOrderItemEntities = [];
+        $salesOrderItemBundleIds = [];
 
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
-            $indexedSalesOrderItemEntities[$salesOrderItemEntity->getFkSalesOrderItemBundle()] = $salesOrderItemEntity;
+            $salesOrderItemBundleIds[] = $salesOrderItemEntity->getFkSalesOrderItemBundle();
         }
 
-        return $indexedSalesOrderItemEntities;
+        return $salesOrderItemBundleIds;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]
+     */
+    protected function indexSalesOrderItemEntitiesByFkSalesOrderItemBundle(ObjectCollection $salesOrderItemBundleEntities): array
+    {
+        $indexedSalesOrderItemBundleEntities = [];
+
+        foreach ($salesOrderItemBundleEntities as $salesOrderItemBundleEntity) {
+            $indexedSalesOrderItemBundleEntities[$salesOrderItemBundleEntity->getIdSalesOrderItemBundle()] = $salesOrderItemBundleEntity;
+        }
+
+        return $indexedSalesOrderItemBundleEntities;
     }
 }

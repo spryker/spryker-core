@@ -59,28 +59,28 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[] $salesOrderItemEntities
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
+     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle[] $salesOrderItemBundleEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function mapSalesOrderItemBundleEntitiesToBundleItemTransfers(
-        ObjectCollection $salesOrderItemBundleEntities,
-        array $salesOrderItemEntities
+    public function mapSalesOrderItemEntitiesToBundleItemTransfers(
+        ObjectCollection $salesOrderItemEntities,
+        array $salesOrderItemBundleEntities
     ): array {
         $uniqueBundleItemTransfers = [];
         $bundleItemTransfers = [];
 
-        foreach ($salesOrderItemBundleEntities as $salesOrderItemBundleEntity) {
-            $bundleItemIdentifier = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $bundleItemIdentifier = $salesOrderItemEntity->getFkSalesOrderItemBundle();
             if (!isset($uniqueBundleItemTransfers[$bundleItemIdentifier])) {
                 $uniqueBundleItemTransfers[$bundleItemIdentifier] = $this->mapSalesOrderItemEntityToBundleItemTransfer(
-                    $salesOrderItemBundleEntity,
-                    $salesOrderItemEntities[$bundleItemIdentifier]
+                    $salesOrderItemBundleEntities[$bundleItemIdentifier],
+                    $salesOrderItemEntity
                 );
             }
 
-            $bundleItemTransfers[$salesOrderItemEntities[$bundleItemIdentifier]->getIdSalesOrderItem()] = $uniqueBundleItemTransfers[$bundleItemIdentifier];
+            $bundleItemTransfers[$salesOrderItemEntity->getIdSalesOrderItem()] = $uniqueBundleItemTransfers[$bundleItemIdentifier];
         }
 
         return $bundleItemTransfers;
