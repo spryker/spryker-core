@@ -71,7 +71,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         $indexDefinitions = [];
 
-        $jsonFiles = $this->getSortedJsonFiles();
+        $jsonFiles = $this->getJsonFiles();
+        usort($jsonFiles, [$this, 'sortJsonFilesByStorePrefix']);
 
         foreach ($jsonFiles as $jsonFile) {
             if (!$this->isFileValidForCurrentStores($jsonFile)) {
@@ -100,28 +101,32 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @return \Symfony\Component\Finder\SplFileInfo[]
      */
-    protected function getSortedJsonFiles(): array
+    protected function getJsonFiles(): array
     {
         $finder = (new Finder())
             ->in($this->sourceDirectories)
             ->name('*' . self::FILE_EXTENSION);
 
-        $result = [];
+        $jsonFiles = [];
         foreach ($finder as $file) {
-            $result[] = $file;
+            $jsonFiles[] = $file;
         }
 
-        usort(
-            $result,
-            function (SplFileInfo $firstJsonFile, SplFileInfo $secondJsonFile) {
-                $firstJsonFileStorePrefix = $this->getFileStorePrefix($firstJsonFile->getFilename());
-                $secondJsonFileStorePrefix = $this->getFileStorePrefix($secondJsonFile->getFilename());
+        return $jsonFiles;
+    }
 
-                return (int)((bool)$firstJsonFileStorePrefix > (bool)$secondJsonFileStorePrefix);
-            }
-        );
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $firstJsonFile
+     * @param \Symfony\Component\Finder\SplFileInfo $secondJsonFile
+     *
+     * @return int
+     */
+    protected function sortJsonFilesByStorePrefix(SplFileInfo $firstJsonFile, SplFileInfo $secondJsonFile): int
+    {
+        $firstJsonFileStorePrefix = $this->getFileStorePrefix($firstJsonFile->getFilename());
+        $secondJsonFileStorePrefix = $this->getFileStorePrefix($secondJsonFile->getFilename());
 
-        return $result;
+        return (int)((bool)$firstJsonFileStorePrefix > (bool)$secondJsonFileStorePrefix);
     }
 
     /**
@@ -224,11 +229,12 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getStorePrefixes(array $stores)
     {
-        array_walk($stores, function (&$store) {
-            $store = mb_strtolower($store) . '_';
-        });
+        $storePrefixes = [];
+        foreach ($stores as $store) {
+            $storePrefixes[] = mb_strtolower($store) . '_';
+        }
 
-        return $stores;
+        return $storePrefixes;
     }
 
     /**

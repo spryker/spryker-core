@@ -74,7 +74,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
             $this->getUtilEncodingService(),
-            [Store::getInstance()->getStoreName()],
+            [APPLICATION_STORE],
             Store::getInstance()->getAllowedStores()
         );
     }
