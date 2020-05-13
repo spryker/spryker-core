@@ -22,7 +22,6 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOG = 'FACADE_LOG';
     public const FACADE_TRANSFER = 'FACADE_TRANSFER';
     public const PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER = 'PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER';
-    public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
