@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
@@ -52,11 +53,10 @@ class MerchantBusinessTester extends Actor
      */
     public function createMerchantTransfer(?int $merchantId = null): MerchantTransfer
     {
-        $merchantTransfer = (new MerchantBuilder())
+        return (new MerchantBuilder())
             ->build()
-            ->setIdMerchant($merchantId);
-
-        return $merchantTransfer;
+            ->setIdMerchant($merchantId)
+            ->setStoreRelation((new StoreRelationBuilder())->build());
     }
 
     /**

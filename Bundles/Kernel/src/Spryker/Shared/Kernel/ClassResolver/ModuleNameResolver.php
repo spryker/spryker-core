@@ -7,15 +7,8 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Kernel\Store;
-
 class ModuleNameResolver
 {
-    /**
-     * @var string|null
-     */
-    protected $store;
-
     /**
      * @param string $moduleName
      *
@@ -23,13 +16,13 @@ class ModuleNameResolver
      */
     public function resolve(string $moduleName): string
     {
-        $storeName = $this->getStoreName();
+        $codeBucket = $this->getCodeBucket();
 
-        $storeIdentifierLength = mb_strlen($storeName);
-        $storeSuffix = mb_substr($moduleName, -$storeIdentifierLength);
+        $codeBucketIdentifierLength = mb_strlen($codeBucket);
+        $codeBucketSuffix = mb_substr($moduleName, -$codeBucketIdentifierLength);
 
-        if ($storeSuffix === $storeName) {
-            $moduleName = mb_substr($moduleName, 0, -$storeIdentifierLength);
+        if ($codeBucketSuffix === $codeBucket) {
+            $moduleName = mb_substr($moduleName, 0, -$codeBucketIdentifierLength);
         }
 
         return $moduleName;
@@ -38,12 +31,8 @@ class ModuleNameResolver
     /**
      * @return string
      */
-    protected function getStoreName(): string
+    protected function getCodeBucket(): string
     {
-        if ($this->store === null) {
-            $this->store = Store::getInstance()->getStoreName();
-        }
-
-        return $this->store;
+        return APPLICATION_CODE_BUCKET;
     }
 }
