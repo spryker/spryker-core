@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Dependency\External;
 
-interface PropelToFileSystemAdapterInterface
+interface PropelToFilesystemAdapterInterface
 {
     /**
      * @param string|iterable $dirs
