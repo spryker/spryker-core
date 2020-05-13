@@ -9,21 +9,21 @@ namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\MerchantProductOfferStorageReaderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
 
 class CartItemExpander implements CartItemExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\MerchantProductOfferStorageReaderInterface
+     * @var \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
      */
-    protected $merchantProductOfferStorageReader;
+    protected $merchantProductOfferStorageClient;
 
     /**
-     * @param \Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\MerchantProductOfferStorageReaderInterface $merchantProductOfferStorageReader
+     * @param \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      */
-    public function __construct(MerchantProductOfferStorageReaderInterface $merchantProductOfferStorageReader)
+    public function __construct(MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient)
     {
-        $this->merchantProductOfferStorageReader = $merchantProductOfferStorageReader;
+        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
     }
 
     /**
@@ -40,7 +40,7 @@ class CartItemExpander implements CartItemExpanderInterface
             return $cartItemRequestTransfer;
         }
 
-        $productOfferStorageTransfer = $this->merchantProductOfferStorageReader->findProductOfferStorageByReference(
+        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient->findProductOfferStorageByReference(
             $restCartItemsAttributesTransfer->getProductOfferReference()
         );
 

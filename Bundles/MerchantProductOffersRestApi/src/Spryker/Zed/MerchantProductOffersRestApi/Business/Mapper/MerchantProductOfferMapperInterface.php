@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProductOffersRestApi\Business\Mapper;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
-class MerchantProductOfferMapper implements MerchantProductOfferMapperInterface
+interface MerchantProductOfferMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
@@ -21,18 +21,5 @@ class MerchantProductOfferMapper implements MerchantProductOfferMapperInterface
     public function mapCartItemRequestTransferToPersistentCartChangeTransfer(
         CartItemRequestTransfer $cartItemRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
-    ): PersistentCartChangeTransfer {
-        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() !== $cartItemRequestTransfer->getSku()) {
-                continue;
-            }
-
-            $itemTransfer->setProductOfferReference($cartItemRequestTransfer->getProductOfferReference());
-            $itemTransfer->setMerchantReference($cartItemRequestTransfer->getMerchantReference());
-
-            break;
-        }
-
-        return $persistentCartChangeTransfer;
-    }
+    ): PersistentCartChangeTransfer;
 }
