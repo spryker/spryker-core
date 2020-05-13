@@ -24,3 +24,20 @@ Qty,Qty
 "Return with id ""%id%"" was not found.","Return with id ""%id%"" was not found."
 "Items to Return","Items to Return"
 "Remuneration Total","Remuneration Total"
+"Custom reason","Custom reason"
+"Select reason","Select reason"
+"Return has not been created.","Return has not been created."
+"Order with id ""%id%"" was not found.","Order with id ""%id%"" was not found."
+"Return was successfully created.","Return was successfully created."
+"Create Return","Create Return"
+"Back to Order","Back to Order"
+"General information","General information"
+"Order reference","Order reference"
+"Select Items to Return","Select Items to Return"
+Product,Product
+Quantity,Quantity
+Price,Price
+"Item total","Item total"
+"Return Policy","Return Policy"
+State,State
+"Create return","Create return"

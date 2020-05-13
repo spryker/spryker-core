@@ -32,6 +32,16 @@ class SalesReturnConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getGuestReturnReferenceFormat(): string
+    {
+        return '%s-G%s';
+    }
+
+    /**
+     * @api
+     *
      * @return string[]
      */
     public function getReturnableStateNames(): array

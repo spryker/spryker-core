@@ -14,6 +14,20 @@
 {% endblock %}
 
 {% block body %}
+    {% set returnItemGroups = [] %}
+    {% set currencyIsoCode = (return.returnItems | first).orderItem.currencyIsoCode ?? null %}
+
+    {% for returnItem in return.returnItems %}
+        {% set orderReference = returnItem.orderItem.orderReference %}
+
+        {% if returnItemGroups[orderReference] is defined %}
+            {% set tempReturnItems = returnItemGroups[orderReference] | merge([returnItem]) %}
+            {% set returnItemGroups = returnItemGroups | merge({(orderReference): tempReturnItems}) %}
+        {% else %}
+            {% set returnItemGroups = returnItemGroups | merge({(orderReference): [returnItem]}) %}
+        {% endif %}
+    {% endfor %}
+
     {{ barcode(return.returnReference) }}
 
     <br><br>
@@ -47,33 +61,26 @@
         </thead>
 
         <tbody>
-        {% set orderReference = '' %}
-        {% set returnItems = return.returnItems | filter(returnItem => not (returnItem.orderItem.productBundle or returnItem.orderItem.salesOrderConfiguredBundle)) %}
-        {% set currencyIsoCode = (returnItems | first).orderItem.currencyIsoCode ?? null %}
 
-        {% for returnItem in returnItems %}
-            {% if returnItem.orderItem.orderReference != orderReference %}
-                <tr>
-                    <td>{{ 'Order Ref' | trans }}</td>
-                    <td>{{ returnItem.orderItem.orderReference }}</td>
-                </tr>
-            {% endif %}
-
-            {% set orderReference = returnItem.orderItem.orderReference %}
-
+        {% for orderReference, returnItemGroup in returnItemGroups %}
             <tr>
-                <td>{{ barcode(returnItem.orderItem.sku) }}</td>
-                <td>{{ returnItem.orderItem.sku }}</td>
-                <td>{{ returnItem.orderItem.name }}</td>
-                <td>{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-                <td>{{ returnItem.orderItem.quantity }}</td>
-                <td>{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
-                <td>{{ returnItem.reason ?? '-' }}</td>
+                <td>{{ 'Order Ref' | trans }}</td>
+                <td colspan="6">{{ orderReference }}</td>
             </tr>
-        {% endfor %}
 
-{#        Configured bundles #}
-{#        Product bundles #}
+            {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-items.twig' with {
+                returnItemGroup: returnItemGroup,
+                currencyIsoCode: currencyIsoCode,
+            } only %}
+
+            {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-configured-bundles.twig' with {
+                returnItemGroup: returnItemGroup,
+                currencyIsoCode: currencyIsoCode,
+            } only %}
+
+            {#        Product bundles #}
+
+        {% endfor %}
 
         </tbody>
     </table>

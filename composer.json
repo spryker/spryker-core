@@ -580,6 +580,7 @@
     "spryker/sales-reclamation-gui": "*",
     "spryker/sales-return": "*",
     "spryker/sales-return-gui": "*",
+    "spryker/sales-return-gui-extension": "*",
     "spryker/sales-return-data-import": "*",
     "spryker/sales-returns-rest-api": "*",
     "spryker/sales-split": "*",

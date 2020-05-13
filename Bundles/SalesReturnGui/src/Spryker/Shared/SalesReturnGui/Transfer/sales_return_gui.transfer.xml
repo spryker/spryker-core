@@ -7,6 +7,10 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="returnPolicyMessages" singular="returnPolicyMessage" type="Message[]"/>
+    </transfer>
+
     <transfer name="Money">
     </transfer>
 
