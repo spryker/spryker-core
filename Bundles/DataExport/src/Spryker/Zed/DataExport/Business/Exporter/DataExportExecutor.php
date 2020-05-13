@@ -66,8 +66,8 @@ class DataExportExecutor
 
         foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
             $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
-                $dataExportDefaultsConfigurationTransfer,
-                $dataExportConfigurationTransfer
+                $dataExportConfigurationTransfer,
+                $dataExportDefaultsConfigurationTransfer
             );
             $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
 

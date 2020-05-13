@@ -25,8 +25,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     public const FILTER_CRITERIA_KEY_LOCALE_IS_ACTIVE = 'locale_is_active';
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
-    public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM = 'from';
-    public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO = 'to';
+    public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
+    public const FILTER_CRITERIA_KEY_DATE_FROM = 'from';
+    public const FILTER_CRITERIA_KEY_DATE_TO = 'to';
+    public const FILTER_CRITERIA_KEY_DATE_MIN = 'min';
+    public const FILTER_CRITERIA_KEY_DATE_MAX = 'max';
 
     /**
      * @module Country
@@ -136,6 +139,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->offset($offset)
             ->limit($limit);
 
+        $salesExpenseQuery = $this->applyFilterCriteriaToSalesExpenseQuery(
+            $dataExportConfigurationTransfer->getFilterCriteria(),
+            $salesExpenseQuery
+        );
+
         $salesExpenseQuery->select($this->getSalesExpenseSelectFields($dataExportConfigurationTransfer));
         $orderExpenseData = $salesExpenseQuery->find()->getArrayCopy();
 
@@ -165,8 +173,15 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderQuery->filterByCreatedAt_Between([
-                'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
-                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
+                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+            ]);
+        }
+
+        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT])) {
+            $salesOrderQuery->filterByUpdatedAt_Between([
+                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
             ]);
         }
 
@@ -190,8 +205,15 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT])) {
             $salesOrderItemQuery->filterByCreatedAt_Between([
-                'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
-                'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
+                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+            ]);
+        }
+
+        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT])) {
+            $salesOrderItemQuery->filterByUpdatedAt_Between([
+                static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
             ]);
         }
 
@@ -217,8 +239,18 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesExpenseQuery
                 ->useOrderQuery()
                     ->filterByCreatedAt_Between([
-                        'min' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_FROM],
-                        'max' => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT_TO],
+                        static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                        static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_CREATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
+                    ])
+                ->endUse();
+        }
+
+        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT])) {
+            $salesExpenseQuery
+                ->useOrderQuery()
+                    ->filterByUpdatedAt_Between([
+                        static::FILTER_CRITERIA_KEY_DATE_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_FROM],
+                        static::FILTER_CRITERIA_KEY_DATE_MAX => $filterCriteria[static::FILTER_CRITERIA_KEY_ORDER_UPDATED_AT][static::FILTER_CRITERIA_KEY_DATE_TO],
                     ])
                 ->endUse();
         }
