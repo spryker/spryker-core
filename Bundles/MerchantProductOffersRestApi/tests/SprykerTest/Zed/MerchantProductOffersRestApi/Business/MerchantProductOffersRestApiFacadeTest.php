@@ -24,7 +24,7 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class MerchantProductOffersRestApiFacadeTest extends Unit
 {
-    protected const TEST_SKU = 'test123';
+    protected const TEST_SKU = 'test-sku-123';
 
     /**
      * @var \SprykerTest\Zed\MerchantProductOffersRestApi\MerchantProductOffersRestApiBusinessTester
