@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesDataExport\Business\Reader;
+namespace Spryker\Zed\SalesDataExport\Business\Exporter;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
+use Generated\Shared\Transfer\DataExportReportTransfer;
 
-interface CsvReaderInterface
+interface ExporterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param int $offset
-     * @param int $limit
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function csvReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
+    public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 }

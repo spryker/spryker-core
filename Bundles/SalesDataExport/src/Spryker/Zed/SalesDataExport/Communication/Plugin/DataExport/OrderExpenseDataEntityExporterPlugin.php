@@ -52,6 +52,6 @@ class OrderExpenseDataEntityExporterPlugin extends AbstractPlugin implements Dat
      */
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return $this->getFacade()->exportOrderExpense($dataExportConfigurationTransfer);
+        return $this->getFacade()->lineExportOrderExpense($dataExportConfigurationTransfer);
     }
 }

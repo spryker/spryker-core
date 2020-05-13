@@ -19,7 +19,7 @@ class SalesOrderMapper
     /**
      * @var array
      */
-    protected $csvMapping = [
+    protected $fieldMapping = [
         'order_reference' => 'SpySalesOrder.OrderReference',
         'customer_reference' => 'SpySalesOrder.CustomerReference',
         'order_created_at' => 'SpySalesOrder.CreatedAt',
@@ -71,37 +71,37 @@ class SalesOrderMapper
     /**
      * @return array<string, string>
      */
-    public function getCsvMapping(): array
+    public function getFieldMapping(): array
     {
-        return $this->csvMapping;
+        return $this->fieldMapping;
     }
 
     /**
-     * @param array $salesOrderData
+     * @param array $salesOrderRows
      *
      * @return array
      */
-    public function mapSalesOrderDataToCsvFormattedArray(array $salesOrderData): array
+    public function mapSalesOrderDataByField(array $salesOrderRows): array
     {
-        $csvHeader = $this->getCsvHeader();
-        $salesOrderCsvFormattedData = [];
-        foreach ($salesOrderData as $salesOrderRow) {
-            $salesOrderCsvFormattedRow = array_combine($csvHeader, $salesOrderRow);
+        $fields = $this->getFields();
+        $mappedSalesOrders = [];
+        foreach ($salesOrderRows as $salesOrderRow) {
+            $mappedSalesOrderRow = array_combine($fields, $salesOrderRow);
 
-            $salesOrderCsvFormattedRow[static::KEY_ORDER_COMMENTS] = $this->salesOrderCommentMapper
-                ->mapSalesOrderCommentTransfersToCsvFormattedJson($salesOrderRow[static::KEY_ORDER_COMMENTS]);
+            $mappedSalesOrderRow[static::KEY_ORDER_COMMENTS] = $this->salesOrderCommentMapper
+                ->mapSalesOrderCommentTransfersToJson($salesOrderRow[static::KEY_ORDER_COMMENTS]);
 
-            $salesOrderCsvFormattedData[] = $salesOrderCsvFormattedRow;
+            $mappedSalesOrders[] = $mappedSalesOrderRow;
         }
 
-        return $salesOrderCsvFormattedData;
+        return $mappedSalesOrders;
     }
 
     /**
      * @return string[]
      */
-    protected function getCsvHeader(): array
+    protected function getFields(): array
     {
-        return array_merge(array_keys($this->csvMapping), [static::KEY_ORDER_COMMENTS]);
+        return array_merge(array_keys($this->fieldMapping), [static::KEY_ORDER_COMMENTS]);
     }
 }

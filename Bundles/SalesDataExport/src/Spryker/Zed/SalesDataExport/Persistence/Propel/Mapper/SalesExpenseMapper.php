@@ -12,7 +12,7 @@ class SalesExpenseMapper
     /**
      * @var array
      */
-    protected $csvMapping = [
+    protected $fieldMapping = [
         'order_reference' => 'Order.OrderReference',
         'order_shipment_id' => 'SpySalesShipment.IdSalesShipment',
         'canceled_amount' => 'SpySalesExpense.CanceledAmount',
@@ -34,32 +34,32 @@ class SalesExpenseMapper
     /**
      * @return array
      */
-    public function getCsvMapping(): array
+    public function getFieldMapping(): array
     {
-        return $this->csvMapping;
+        return $this->fieldMapping;
     }
 
     /**
-     * @param array $salesOrderData
+     * @param array $salesExpenseRows
      *
      * @return array
      */
-    public function mapSalesExpenseDataToCsvFormattedArray(array $salesOrderData): array
+    public function mapSalesExpenseDataByField(array $salesExpenseRows): array
     {
-        $csvHeader = $this->getCsvHeader();
-        $salesOrderCsvFormattedData = [];
-        foreach ($salesOrderData as $salesOrderRow) {
-            $salesOrderCsvFormattedData[] = array_combine($csvHeader, $salesOrderRow);
+        $fields = $this->getFields();
+        $mappedSalesExpenses = [];
+        foreach ($salesExpenseRows as $salesOrderRow) {
+            $mappedSalesExpenses[] = array_combine($fields, $salesOrderRow);
         }
 
-        return $salesOrderCsvFormattedData;
+        return $mappedSalesExpenses;
     }
 
     /**
      * @return string[]
      */
-    protected function getCsvHeader(): array
+    protected function getFields(): array
     {
-        return array_keys($this->csvMapping);
+        return array_keys($this->fieldMapping);
     }
 }

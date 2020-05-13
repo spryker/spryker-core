@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
+use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface;
 
-abstract class AbstractCsvReader implements CsvReaderInterface
+class OrderItemLineReader implements LineReaderInterface
 {
     /**
      * @var \Spryker\Zed\SalesDataExport\Persistence\SalesDataExportRepositoryInterface
@@ -25,22 +26,14 @@ abstract class AbstractCsvReader implements CsvReaderInterface
     }
 
     /**
-     * @param array $fields
-     * @param array $exportData
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param int $offset
+     * @param int $limit
      *
-     * @return array
+     * @return string[][]
      */
-    protected function formatExportData(array $fields, array $exportData, int $offset): array
+    public function lineReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
     {
-        $exportData = array_map(function (array $exportRow) use ($fields): array {
-            return array_merge(array_flip($fields), $exportRow);
-        }, $exportData);
-
-        if ($offset === 0) {
-            array_unshift($exportData, $fields);
-        }
-
-        return $exportData;
+        return $this->salesDataExportRepository->getOrderItemData($dataExportConfigurationTransfer, $offset, $limit);
     }
 }

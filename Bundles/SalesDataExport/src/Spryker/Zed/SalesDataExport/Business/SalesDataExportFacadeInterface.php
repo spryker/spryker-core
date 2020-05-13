@@ -23,7 +23,7 @@ interface SalesDataExportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
+    public function lineExportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 
     /**
      * Specification
@@ -36,7 +36,7 @@ interface SalesDataExportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
+    public function lineExportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 
     /**
      * Specification
@@ -49,5 +49,5 @@ interface SalesDataExportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataExportReportTransfer
      */
-    public function exportOrderExpense(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
+    public function lineExportOrderExpense(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 }

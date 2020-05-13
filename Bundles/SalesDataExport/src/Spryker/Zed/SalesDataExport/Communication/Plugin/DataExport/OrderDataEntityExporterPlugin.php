@@ -52,6 +52,6 @@ class OrderDataEntityExporterPlugin extends AbstractPlugin implements DataEntity
      */
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        return $this->getFacade()->exportOrder($dataExportConfigurationTransfer);
+        return $this->getFacade()->lineExportOrder($dataExportConfigurationTransfer);
     }
 }

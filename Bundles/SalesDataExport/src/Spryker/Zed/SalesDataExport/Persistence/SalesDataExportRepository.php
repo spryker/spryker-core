@@ -73,7 +73,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         return $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderDataToCsvFormattedArray($salesOrderData);
+            ->mapSalesOrderDataByField($salesOrderData);
     }
 
     /**
@@ -121,7 +121,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         return $this->getFactory()
             ->createSalesOrderItemMapper()
-            ->mapSalesOrderItemDataToCsvFormattedArray($salesOrderItemData);
+            ->mapSalesOrderItemDataByField($salesOrderItemData);
     }
 
     /**
@@ -149,7 +149,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         return $this->getFactory()
             ->createSalesExpenseMapper()
-            ->mapSalesExpenseDataToCsvFormattedArray($orderExpenseData);
+            ->mapSalesExpenseDataByField($orderExpenseData);
     }
 
     /**
@@ -265,11 +265,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     protected function getSalesOrderSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
-        $csvMapping = $this->getFactory()
+        $fieldMapping = $this->getFactory()
             ->createSalesOrderMapper()
-            ->getCsvMapping();
+            ->getFieldMapping();
 
-        $selectedFields = array_intersect_key($csvMapping, array_flip($dataExportConfigurationTransfer->getFields()));
+        $selectedFields = array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
         $selectedFields[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
 
         return $selectedFields;
@@ -282,11 +282,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     protected function getSalesOrderItemSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
-        $csvMapping = $this->getFactory()
+        $fieldMapping = $this->getFactory()
             ->createSalesOrderItemMapper()
-            ->getCsvMapping();
+            ->getFieldMapping();
 
-        return array_intersect_key($csvMapping, array_flip($dataExportConfigurationTransfer->getFields()));
+        return array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
     }
 
     /**
@@ -296,11 +296,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      */
     protected function getSalesExpenseSelectFields(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
-        $csvMapping = $this->getFactory()
+        $fieldMapping = $this->getFactory()
             ->createSalesExpenseMapper()
-            ->getCsvMapping();
+            ->getFieldMapping();
 
-        return array_intersect_key($csvMapping, array_flip($dataExportConfigurationTransfer->getFields()));
+        return array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
     }
 
     /**
@@ -320,6 +320,6 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         return $this->getFactory()
             ->createSalesOrderCommentMapper()
-            ->mapSalesOrderCommentEntitiesToCommentTransfersGropedByIdSalesOrder($salesOrderCommentEntities, []);
+            ->mapSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder($salesOrderCommentEntities, []);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\DataExport\Formatter;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -37,13 +38,15 @@ class DataExportFormatter implements DataExportFormatterInterface
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportFormatResponseTransfer
      */
-    public function formatBatch(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
-    {
+    public function formatBatch(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportFormatResponseTransfer {
         $dataExportConfigurationTransfer->requireFormat();
 
         foreach ($this->dataExportFormatterPlugins as $dataExportFormatterPlugin) {
@@ -51,11 +54,11 @@ class DataExportFormatter implements DataExportFormatterInterface
                 continue;
             }
 
-            return $dataExportFormatterPlugin->format($data, $dataExportConfigurationTransfer);
+            return $dataExportFormatterPlugin->format($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
         if ($dataExportConfigurationTransfer->getFormat()->getType() === static::FORMAT_CSV) {
-            return $this->dataExportCsvFormatter->formatBatch($data, $dataExportConfigurationTransfer);
+            return $this->dataExportCsvFormatter->formatBatch($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
         return $this->createFormatterNotFoundResponse($dataExportConfigurationTransfer);

@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\DataExportExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatResponseTransfer;
 
@@ -30,12 +31,15 @@ interface DataExportFormatterPluginInterface
      *
      * @api
      *
-     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportFormatResponseTransfer
      */
-    public function format(array $data, DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer;
+    public function format(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportFormatResponseTransfer;
 
     /**
      * Specification:

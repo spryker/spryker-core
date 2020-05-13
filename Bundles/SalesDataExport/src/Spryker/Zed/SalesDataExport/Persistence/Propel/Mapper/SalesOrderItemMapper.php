@@ -12,7 +12,7 @@ class SalesOrderItemMapper
     /**
      * @var array
      */
-    protected $csvMapping = [
+    protected $fieldMapping = [
         'order_reference' => 'Order.OrderReference',
         'product_name' => 'SpySalesOrderItem.Name',
         'product_sku' => 'SpySalesOrderItem.Sku',
@@ -75,32 +75,32 @@ class SalesOrderItemMapper
     /**
      * @return array<string, string>
      */
-    public function getCsvMapping(): array
+    public function getFieldMapping(): array
     {
-        return $this->csvMapping;
+        return $this->fieldMapping;
     }
 
     /**
-     * @param array $salesOrderData
+     * @param array $salesOrderItemRows
      *
      * @return array
      */
-    public function mapSalesOrderItemDataToCsvFormattedArray(array $salesOrderData): array
+    public function mapSalesOrderItemDataByField(array $salesOrderItemRows): array
     {
-        $csvHeader = $this->getCsvHeader();
-        $salesOrderCsvFormattedData = [];
-        foreach ($salesOrderData as $salesOrderRow) {
-            $salesOrderCsvFormattedData[] = array_combine($csvHeader, $salesOrderRow);
+        $fields = $this->getFields();
+        $mappedSalesOrderItems = [];
+        foreach ($salesOrderItemRows as $salesOrderRow) {
+            $mappedSalesOrderItems[] = array_combine($fields, $salesOrderRow);
         }
 
-        return $salesOrderCsvFormattedData;
+        return $mappedSalesOrderItems;
     }
 
     /**
      * @return string[]
      */
-    protected function getCsvHeader(): array
+    protected function getFields(): array
     {
-        return array_keys($this->csvMapping);
+        return array_keys($this->fieldMapping);
     }
 }

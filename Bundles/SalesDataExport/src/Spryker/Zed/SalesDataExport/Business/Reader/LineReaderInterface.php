@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesDataExport\Business\Reader;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
-class OrderCsvReader extends AbstractCsvReader
+interface LineReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
@@ -18,10 +18,5 @@ class OrderCsvReader extends AbstractCsvReader
      *
      * @return string[][]
      */
-    public function csvReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array
-    {
-        $ordersData = $this->salesDataExportRepository->getOrderData($dataExportConfigurationTransfer, $offset, $limit);
-
-        return $this->formatExportData($dataExportConfigurationTransfer->getFields(), $ordersData, $offset);
-    }
+    public function lineReadBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): array;
 }

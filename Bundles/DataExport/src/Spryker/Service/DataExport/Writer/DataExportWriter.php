@@ -7,12 +7,12 @@
 
 namespace Spryker\Service\DataExport\Writer;
 
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
 use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class DataExportWriter implements DataExportWriterInterface
 {
@@ -58,16 +58,14 @@ class DataExportWriter implements DataExportWriterInterface
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $writeConfiguration
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
     public function write(
-        array $data,
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
-        AbstractTransfer $writeConfiguration
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportWriteResponseTransfer {
         $dataExportConfigurationTransfer
             ->requireDestination()
@@ -82,21 +80,21 @@ class DataExportWriter implements DataExportWriterInterface
                 continue;
             }
 
-            $dataFormatResponseTransfer = $this->dataExportFormatter->formatBatch($data, $dataExportConfigurationTransfer);
+            $dataFormatResponseTransfer = $this->dataExportFormatter->formatBatch($dataExportBatchTransfer, $dataExportConfigurationTransfer);
             if (!$dataFormatResponseTransfer->getIsSuccessful()) {
                 return $dataExportWriteResponseTransfer->setMessages($dataFormatResponseTransfer->getMessages());
             }
 
             return $dataExportConnectionPlugin->write(
                 $dataFormatResponseTransfer->getDataFormatted(),
-                $dataExportConfigurationTransfer,
-                $writeConfiguration
+                $dataExportBatchTransfer,
+                $dataExportConfigurationTransfer
             );
         }
 
         $connectionType = $dataExportConfigurationTransfer->getConnection()->getType();
         if ($connectionType === static::CONNECTION_TYPE_LOCAL) {
-            return $this->dataExportLocalWriter->write($data, $dataExportConfigurationTransfer, $writeConfiguration);
+            return $this->dataExportLocalWriter->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
         return $dataExportWriteResponseTransfer->addMessage($this->createConnectionPluginNotFoundMessage($connectionType));

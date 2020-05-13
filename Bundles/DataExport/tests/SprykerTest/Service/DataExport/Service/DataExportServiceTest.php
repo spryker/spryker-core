@@ -9,10 +9,10 @@ namespace SprykerTest\Service\DataExport\Service;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportLocalWriteConfigurationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -108,9 +108,8 @@ class DataExportServiceTest extends Unit
     {
         //Arrange
         $data = [
-            ['header 1', 'header 2'],
-            ['data 1.1', 'data 1.2'],
-            ['data 2.1', 'data 2.2'],
+            ['header 1' => 'data 1.1', 'header 2' => 'data 1.2'],
+            ['header 1' => 'data 2.1', 'header 2' => 'data 2.2'],
         ];
 
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType('csv');
@@ -121,13 +120,15 @@ class DataExportServiceTest extends Unit
             ->setFormat($dataExportFormatConfigurationTransfer)
             ->setDestination($destination);
 
-        $writeConfiguration = (new DataExportLocalWriteConfigurationTransfer())->setMode('wb');
+        $batch = (new DataExportBatchTransfer())
+            ->setOffset(0)
+            ->setData($data)
+            ->setFields(array_keys($data[0]));
 
         //Act
         $dataExportWriteResponseTransfer = $this->tester->getService()->write(
-            $data,
-            $dataExportConfigurationTransfer,
-            $writeConfiguration
+            $batch,
+            $dataExportConfigurationTransfer
         );
 
         //Assert
