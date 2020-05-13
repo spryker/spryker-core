@@ -15,7 +15,7 @@ use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttribute
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiFactory getFactory()
  */
-class MerchantsRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
+class MerchantRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
      * {@inheritDoc}
