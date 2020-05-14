@@ -1,5 +1,3 @@
-{% set numberOfItemAdditions = not orderItem.relatedBundleItemIdentifier ? (orderItem.productOptions | length + 1) : 1 %}
-
 <tr>
     <td>
         <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
@@ -32,7 +30,7 @@
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
         {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
     </td>
-    <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
+    <td rowspan="{{ orderItem.productOptions | length + 1 }}" class="state-history">
         <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
 
         <br>
@@ -50,7 +48,7 @@
             </a>
         {% endif %}
     </td>
-    <td rowspan="{{ numberOfItemAdditions }}">
+    <td rowspan="{{ orderItem.productOptions | length + 1 }}">
         {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] is defined %}
             {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
                 redirectUrl: changeStatusRedirectUrl,
