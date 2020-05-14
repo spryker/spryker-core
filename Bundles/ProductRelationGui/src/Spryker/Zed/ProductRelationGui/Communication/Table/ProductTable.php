@@ -24,7 +24,7 @@ use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToPricePr
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductRelationGui\Communication\Table\ProductAttributeTable instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductRelationGui\Communication\Table\ProductAbstractTable} instead.
  */
 class ProductTable extends AbstractProductTable
 {
