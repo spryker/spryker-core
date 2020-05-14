@@ -35,65 +35,78 @@ class MerchantTranslator implements MerchantTranslatorInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         string $localeName
     ): MerchantStorageTransfer {
-        $glossaryStorageKeys = $this->getGlossaryStorageKeysFromMerchantStorageTransfer($merchantStorageTransfer);
+        $glossaryStorageKeys = $this->getGlossaryStorageKeysFromMerchantStorageTransfers([$merchantStorageTransfer]);
 
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
 
-        return $this->setTranslationsToMerchantStorageTransfer($merchantStorageTransfer, $translations);
+        return $this->setTranslationsToMerchantStorageTransfers([$merchantStorageTransfer], $translations)[0]
+            ?? $merchantStorageTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
      * @return string[]
      */
-    protected function getGlossaryStorageKeysFromMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer): array
+    protected function getGlossaryStorageKeysFromMerchantStorageTransfers(array $merchantStorageTransfers): array
     {
-        $glossaryKeys = [
-            $merchantStorageTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getImprintGlossaryKey(),
-            $merchantStorageTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
-        ];
+        $glossaryKeys = [];
+
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantStorageTransferGlossaryKeys = [
+                $merchantStorageTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getImprintGlossaryKey(),
+                $merchantStorageTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
+            ];
+
+            $glossaryKeys = array_merge($glossaryKeys, $merchantStorageTransferGlossaryKeys);
+        }
 
         return array_unique(array_filter($glossaryKeys));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    protected function setTranslationsToMerchantStorageTransfer(MerchantStorageTransfer $merchantStorageTransfer, array $translations): MerchantStorageTransfer
+    protected function setTranslationsToMerchantStorageTransfers(array $merchantStorageTransfers, array $translations): array
     {
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+        $translatedMerchantStorageTransfers = [];
 
-        if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setBannerUrlGlossaryKey($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setCancellationPolicyGlossaryKey($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setDataPrivacyGlossaryKey($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setDeliveryTimeGlossaryKey($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setDescriptionGlossaryKey($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setImprintGlossaryKey($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()]);
-        }
-        if (isset($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()])) {
-            $merchantStorageProfileTransfer->setTermsConditionsGlossaryKey($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()]);
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+
+            if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setBannerUrlGlossaryKey($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setCancellationPolicyGlossaryKey($translations[$merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setDataPrivacyGlossaryKey($translations[$merchantStorageProfileTransfer->getDataPrivacyGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setDeliveryTimeGlossaryKey($translations[$merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setDescriptionGlossaryKey($translations[$merchantStorageProfileTransfer->getDescriptionGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setImprintGlossaryKey($translations[$merchantStorageProfileTransfer->getImprintGlossaryKey()]);
+            }
+            if (isset($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()])) {
+                $merchantStorageProfileTransfer->setTermsConditionsGlossaryKey($translations[$merchantStorageProfileTransfer->getTermsConditionsGlossaryKey()]);
+            }
+
+            $translatedMerchantStorageTransfers[] = $merchantStorageTransfer->setMerchantProfile($merchantStorageProfileTransfer);
         }
 
-        return $merchantStorageTransfer->setMerchantProfile($merchantStorageProfileTransfer);
+        return $translatedMerchantStorageTransfers;
     }
 }
