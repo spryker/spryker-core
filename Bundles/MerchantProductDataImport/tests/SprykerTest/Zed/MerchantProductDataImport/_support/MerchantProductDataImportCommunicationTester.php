@@ -41,7 +41,7 @@ class MerchantProductDataImportCommunicationTester extends Actor
     /**
      * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
      */
-    public function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
+    protected function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {
         return SpyMerchantProductAbstractQuery::create();
     }
