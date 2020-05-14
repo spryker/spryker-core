@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesDataExport\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolver;
-use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface;
 use Spryker\Zed\SalesDataExport\Business\Exporter\ExporterInterface;
 use Spryker\Zed\SalesDataExport\Business\Exporter\LineExporter;
 use Spryker\Zed\SalesDataExport\Business\Reader\OrderExpenseReader;
@@ -33,8 +31,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderReader(),
-            $this->createSalesDataExportConfigurationResolver()
+            $this->createOrderReader()
         );
     }
 
@@ -46,8 +43,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderItemReader(),
-            $this->createSalesDataExportConfigurationResolver()
+            $this->createOrderItemReader()
         );
     }
 
@@ -59,8 +55,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderExpenseReader(),
-            $this->createSalesDataExportConfigurationResolver()
+            $this->createOrderExpenseReader()
         );
     }
 
@@ -86,17 +81,6 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpenseReader(): ReaderInterface
     {
         return new OrderExpenseReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface
-     */
-    public function createSalesDataExportConfigurationResolver(): SalesDataExportConfigurationResolverInterface
-    {
-        return new SalesDataExportConfigurationResolver(
-            $this->getConfig(),
-            $this->getDataExportService()
-        );
     }
 
     /**

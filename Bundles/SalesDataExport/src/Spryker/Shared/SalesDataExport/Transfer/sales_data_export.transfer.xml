@@ -29,7 +29,7 @@
 
     <transfer name="DataExportWriteResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="filename" type="string"/>
+        <property name="fileName" type="string"/>
     </transfer>
 
     <transfer name="Comment">

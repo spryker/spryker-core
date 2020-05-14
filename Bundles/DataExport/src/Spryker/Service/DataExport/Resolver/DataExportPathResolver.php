@@ -25,8 +25,6 @@ class DataExportPathResolver implements DataExportPathResolverInterface
             $placeholders[sprintf('{%s}', $hookKey)] = $hookValue;
         }
 
-        $resolvedPath = str_replace(array_keys($placeholders), $placeholders, $fullPath);
-
-        return $resolvedPath;
+        return str_replace(array_keys($placeholders), $placeholders, $fullPath);
     }
 }

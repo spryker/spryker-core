@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesDataExport\Business\Exporter;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
-use Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface;
 use Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface;
 use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface;
 use Spryker\Zed\SalesDataExport\SalesDataExportConfig;
@@ -35,26 +34,18 @@ class LineExporter implements ExporterInterface
     protected $reader;
 
     /**
-     * @var \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface
-     */
-    protected $dataExportConfigurationResolver;
-
-    /**
      * @param \Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToDataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\SalesDataExport\SalesDataExportConfig $salesDataExportConfig
      * @param \Spryker\Zed\SalesDataExport\Business\Reader\ReaderInterface $reader
-     * @param \Spryker\Zed\SalesDataExport\Business\ConfigurationResolver\SalesDataExportConfigurationResolverInterface $dataExportConfigurationResolver
      */
     public function __construct(
         SalesDataExportToDataExportServiceInterface $dataExportService,
         SalesDataExportConfig $salesDataExportConfig,
-        ReaderInterface $reader,
-        SalesDataExportConfigurationResolverInterface $dataExportConfigurationResolver
+        ReaderInterface $reader
     ) {
         $this->dataExportService = $dataExportService;
         $this->salesDataExportConfig = $salesDataExportConfig;
         $this->reader = $reader;
-        $this->dataExportConfigurationResolver = $dataExportConfigurationResolver;
     }
 
     /**
@@ -64,7 +55,7 @@ class LineExporter implements ExporterInterface
      */
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        $dataExportConfigurationTransfer = $this->dataExportConfigurationResolver->resolveSalesDataExportActionConfiguration($dataExportConfigurationTransfer);
+        $dataExportConfigurationTransfer = $this->resolveDataExportConfigurationActionTransfer($dataExportConfigurationTransfer);
 
         $dataExportResultTransfer = (new DataExportResultTransfer())
             ->setDataEntity($dataExportConfigurationTransfer->getDataEntity())
@@ -89,7 +80,7 @@ class LineExporter implements ExporterInterface
             $dataExportResultTransfer
                 ->setIsSuccessful(true)
                 ->setExportCount($offset)
-                ->setFileName($dataExportWriteResponseTransfer->getFilename());
+                ->setFileName($dataExportWriteResponseTransfer->getFileName());
         } while ($exportedRowCount === static::READ_BATCH_SIZE);
 
         return $this->createDataExportReportTransfer($dataExportResultTransfer);
@@ -105,5 +96,24 @@ class LineExporter implements ExporterInterface
         return (new DataExportReportTransfer())
             ->setIsSuccessful($dataExportResultTransfer->getIsSuccessful())
             ->addDataExportResult($dataExportResultTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     */
+    protected function resolveDataExportConfigurationActionTransfer(
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportConfigurationTransfer {
+        $salesDataExportDataExportConfigurationsTransfer = $this->dataExportService->parseConfiguration(
+            $this->salesDataExportConfig->getDefaultExportConfigurationPath()
+        );
+        $dataExportConfigurationTransfer = $this->dataExportService->resolveDataExportActionConfiguration(
+            $dataExportConfigurationTransfer,
+            $salesDataExportDataExportConfigurationsTransfer
+        );
+
+        return $dataExportConfigurationTransfer;
     }
 }

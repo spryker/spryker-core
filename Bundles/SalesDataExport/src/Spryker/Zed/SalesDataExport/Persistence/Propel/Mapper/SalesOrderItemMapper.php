@@ -90,17 +90,18 @@ class SalesOrderItemMapper
         $fields = $this->getFields();
         $mappedSalesOrderItems = [];
         foreach ($salesOrderItemRows as $salesOrderRow) {
-            $mappedSalesOrderItems[] = array_combine($fields, $salesOrderRow);
+            $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
+            $mappedSalesOrderItems[] = array_combine($selectedFields, $salesOrderRow);
         }
 
         return $mappedSalesOrderItems;
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     protected function getFields(): array
     {
-        return array_keys($this->fieldMapping);
+        return array_flip($this->fieldMapping);
     }
 }

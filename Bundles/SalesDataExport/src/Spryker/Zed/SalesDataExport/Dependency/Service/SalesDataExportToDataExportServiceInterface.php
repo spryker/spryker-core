@@ -15,17 +15,6 @@ use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 interface SalesDataExportToDataExportServiceInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
-     */
-    public function write(
-        DataExportBatchTransfer $dataExportBatchTransfer,
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer
-    ): DataExportWriteResponseTransfer;
-
-    /**
      * @param string $filePath
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer
@@ -42,4 +31,26 @@ interface SalesDataExportToDataExportServiceInterface
         DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
         DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     */
+    public function resolveDataExportActionConfiguration(
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
+    ): DataExportConfigurationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
+     */
+    public function write(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportWriteResponseTransfer;
 }

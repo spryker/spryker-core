@@ -65,9 +65,9 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SALES_ORDER, function (): SpySalesOrderQuery {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER, $container->factory(function (): SpySalesOrderQuery {
             return SpySalesOrderQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -79,9 +79,9 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function (): SpySalesOrderItemQuery {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function (): SpySalesOrderItemQuery {
             return SpySalesOrderItemQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -93,9 +93,9 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesExpensePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SALES_EXPENSE, function (): SpySalesExpenseQuery {
+        $container->set(static::PROPEL_QUERY_SALES_EXPENSE, $container->factory(function (): SpySalesExpenseQuery {
             return SpySalesExpenseQuery::create();
-        });
+        }));
 
         return $container;
     }

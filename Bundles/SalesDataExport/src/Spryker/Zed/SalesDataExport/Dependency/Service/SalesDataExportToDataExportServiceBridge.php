@@ -28,19 +28,6 @@ class SalesDataExportToDataExportServiceBridge implements SalesDataExportToDataE
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransferExportBatchTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
-     */
-    public function write(
-        DataExportBatchTransfer $dataExportBatchTransferExportBatchTransfer,
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer
-    ): DataExportWriteResponseTransfer {
-        return $this->dataExportService->write($dataExportBatchTransferExportBatchTransfer, $dataExportConfigurationTransfer);
-    }
-
-    /**
      * @param string $filePath
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer
@@ -64,5 +51,34 @@ class SalesDataExportToDataExportServiceBridge implements SalesDataExportToDataE
             $masterDataExportConfigurationTransfer,
             $slaveDataExportConfigurationTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     */
+    public function resolveDataExportActionConfiguration(
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
+    ): DataExportConfigurationTransfer {
+        return $this->dataExportService->resolveDataExportActionConfiguration(
+            $dataExportConfigurationTransfer,
+            $additionalDataExportConfigurationsTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
+     */
+    public function write(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
+    ): DataExportWriteResponseTransfer {
+        return $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
     }
 }

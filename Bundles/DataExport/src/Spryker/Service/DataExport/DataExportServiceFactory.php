@@ -18,6 +18,8 @@ use Spryker\Service\DataExport\Merger\DataExportConfigurationMerger;
 use Spryker\Service\DataExport\Merger\DataExportConfigurationMergerInterface;
 use Spryker\Service\DataExport\Parser\DataExportConfigurationParserInterface;
 use Spryker\Service\DataExport\Parser\DataExportConfigurationYamlParser;
+use Spryker\Service\DataExport\Resolver\DataExportConfigurationResolver;
+use Spryker\Service\DataExport\Resolver\DataExportConfigurationResolverInterface;
 use Spryker\Service\DataExport\Resolver\DataExportPathResolver;
 use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 use Spryker\Service\DataExport\Writer\DataExportLocalWriter;
@@ -47,6 +49,14 @@ class DataExportServiceFactory extends AbstractServiceFactory
     public function createDataExportConfigurationMapper(): DataExportConfigurationMapperInterface
     {
         return new DataExportConfigurationMapper();
+    }
+
+    /**
+     * @return \Spryker\Service\DataExport\Resolver\DataExportConfigurationResolverInterface
+     */
+    public function createDataExportConfigurationResolver(): DataExportConfigurationResolverInterface
+    {
+        return new DataExportConfigurationResolver($this->createDataExportConfigurationMerger());
     }
 
     /**

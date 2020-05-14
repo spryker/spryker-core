@@ -33,7 +33,7 @@ class DataExportConsole extends Console
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
-        $this->addOption(static::OPTION_CONFIG, static::OPTION_SHORTCUT_CONFIG, InputOption::VALUE_REQUIRED, 'Define configuration file');
+        $this->addOption(static::OPTION_CONFIG, static::OPTION_SHORTCUT_CONFIG, InputOption::VALUE_OPTIONAL, 'Define configuration file');
 
         parent::configure();
     }
@@ -46,6 +46,12 @@ class DataExportConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (!$this->isConfigOptionProvided($input)) {
+            $this->error(sprintf('Option "--%s" with configuration file name should be provided for data exporting.', static::OPTION_CONFIG));
+
+            return static::CODE_ERROR;
+        }
+
         $exportConfigurationsPath = $this->getConfig()
                 ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $input->getOption(static::OPTION_CONFIG);
         $exportConfigurations = $this->getFactory()
@@ -81,5 +87,18 @@ class DataExportConsole extends Console
         }
 
         return $isSuccessful ? static::CODE_SUCCESS : static::CODE_ERROR;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return bool
+     */
+    protected function isConfigOptionProvided(InputInterface $input): bool
+    {
+        return $input->hasParameterOption([
+                '--' . static::OPTION_CONFIG,
+                '-' . static::OPTION_SHORTCUT_CONFIG,
+            ]) && $input->getOption(static::OPTION_CONFIG) !== null;
     }
 }

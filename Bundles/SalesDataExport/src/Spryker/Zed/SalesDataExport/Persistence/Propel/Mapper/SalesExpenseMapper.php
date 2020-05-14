@@ -49,17 +49,18 @@ class SalesExpenseMapper
         $fields = $this->getFields();
         $mappedSalesExpenses = [];
         foreach ($salesExpenseRows as $salesOrderRow) {
-            $mappedSalesExpenses[] = array_combine($fields, $salesOrderRow);
+            $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
+            $mappedSalesExpenses[] = array_combine($selectedFields, $salesOrderRow);
         }
 
         return $mappedSalesExpenses;
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     protected function getFields(): array
     {
-        return array_keys($this->fieldMapping);
+        return array_flip($this->fieldMapping);
     }
 }
