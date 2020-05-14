@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
-class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequestMapperInterface
+class GuiTableDataRequestBuilder implements GuiTableDataRequestBuilderInterface
 {
     use BundleConfigResolverAwareTrait;
 
@@ -26,17 +26,17 @@ class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequest
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[]
      */
-    private $filterValueNormalizerPlugins;
+    protected $filterValueNormalizerPlugins;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    private $utilEncodingService;
+    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
      */
-    private $localeFacade;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
@@ -55,22 +55,22 @@ class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequest
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $configurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    public function mapRequestToGuiTableDataRequest(Request $request, GuiTableConfigurationTransfer $configurationTransfer): GuiTableDataRequestTransfer
+    public function buildGuiTableDataRequest(Request $request, GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableDataRequestTransfer
     {
-        $guiTableRequest = new GuiTableDataRequestTransfer();
+        $guiTableDataRequestTransfer = new GuiTableDataRequestTransfer();
 
-        $guiTableRequest->setSearchTerm($request->query->get('search'));
-        $guiTableRequest->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
+        $guiTableDataRequestTransfer->setSearchTerm($request->query->get('search'));
+        $guiTableDataRequestTransfer->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
-        $this->hydratePagination($guiTableRequest, $request);
-        $this->hydrateOrder($request, $guiTableRequest);
-        $this->hydrateFilters($request, $configurationTransfer, $guiTableRequest);
+        $guiTableDataRequestTransfer = $this->hydratePagination($guiTableDataRequestTransfer, $request);
+        $guiTableDataRequestTransfer = $this->hydrateOrder($request, $guiTableDataRequestTransfer);
+        $guiTableDataRequestTransfer = $this->hydrateFilters($request, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);
 
-        return $guiTableRequest;
+        return $guiTableDataRequestTransfer;
     }
 
     /**
@@ -85,9 +85,8 @@ class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequest
             if (!$filterValueNormalizerPlugin->isApplicable($filterType)) {
                 continue;
             }
-            $value = $filterValueNormalizerPlugin->normalizeValue($value);
 
-            break;
+            $value = $filterValueNormalizerPlugin->normalizeValue($value);
         }
 
         return $value;
@@ -95,55 +94,61 @@ class RequestToGuiTableDataRequestMapper implements RequestToGuiTableDataRequest
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $configurationTransfer
-     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
     protected function hydrateFilters(
         Request $request,
-        GuiTableConfigurationTransfer $configurationTransfer,
-        GuiTableDataRequestTransfer $guiTableRequest
-    ): void {
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
+        GuiTableDataRequestTransfer $guiTableDataRequestTransfer
+    ): GuiTableDataRequestTransfer {
         $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'), true);
 
-        foreach ($configurationTransfer->getFilters() as $filterDefinition) {
+        foreach ($guiTableConfigurationTransfer->getFilters() as $filterDefinition) {
             $filterId = $filterDefinition->getId();
             if (!array_key_exists($filterId, $requestFilters)) {
                 continue;
             }
 
             $filterValue = $requestFilters[$filterDefinition->getId()];
-            $normalizedFilterValue = $this->normalizeFilterValue($filterDefinition->getId(), $filterValue);
+            $normalizedFilterValue = $this->normalizeFilterValue($filterDefinition->getType(), $filterValue);
 
-            $guiTableRequest->addFilters($filterId, $normalizedFilterValue);
+            $guiTableDataRequestTransfer->addFilters($filterId, $normalizedFilterValue);
         }
+
+        return $guiTableDataRequestTransfer;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    protected function hydrateOrder(Request $request, GuiTableDataRequestTransfer $guiTableRequest): void
+    protected function hydrateOrder(Request $request, GuiTableDataRequestTransfer $guiTableDataRequestTransfer): GuiTableDataRequestTransfer
     {
         if ($request->query->get('sortBy')) {
-            $guiTableRequest->setOrderBy($request->query->get('sortBy'));
-            $guiTableRequest->setOrderDirection($request->query->get('sortDirection', static::DEFAULT_SORT_DIRECTION));
+            $guiTableDataRequestTransfer->setOrderBy($request->query->get('sortBy'));
+            $guiTableDataRequestTransfer->setOrderDirection($request->query->get('sortDirection', static::DEFAULT_SORT_DIRECTION));
         }
+
+        return $guiTableDataRequestTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableRequest
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
-    protected function hydratePagination(GuiTableDataRequestTransfer $guiTableRequest, Request $request): void
+    protected function hydratePagination(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, Request $request): GuiTableDataRequestTransfer
     {
-        $guiTableRequest
+        $guiTableDataRequestTransfer
             ->setPage($request->query->get('page', $this->getConfig()->getTableDefaultPage()))
             ->setPageSize($request->query->get('pageSize', $this->getConfig()->getTableDefaultPageSize()));
+
+        return $guiTableDataRequestTransfer;
     }
 }

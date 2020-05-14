@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
@@ -51,9 +51,9 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     protected $merchantUserFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
      */
-    protected $requestToGuiTableDataRequestHydrator;
+    protected $guiTableDataRequestBuilder;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
@@ -61,7 +61,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface $requestToGuiTableDataRequestHydrator
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface $guiTableDataRequestBuilder
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
@@ -69,22 +69,22 @@ class ProductTableDataProvider extends AbstractTableDataProvider
         ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService,
         ProductNameBuilderInterface $productNameBuilder,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        RequestToGuiTableDataRequestMapperInterface $requestToGuiTableDataRequestHydrator
+        GuiTableDataRequestBuilderInterface $guiTableDataRequestBuilder
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->translatorFacade = $translatorFacade;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->productNameBuilder = $productNameBuilder;
         $this->merchantUserFacade = $merchantUserFacade;
-        $this->requestToGuiTableDataRequestHydrator = $requestToGuiTableDataRequestHydrator;
+        $this->guiTableDataRequestBuilder = $guiTableDataRequestBuilder;
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
      */
-    protected function getRequestToGuiTableDataRequestMapper(): RequestToGuiTableDataRequestMapperInterface
+    protected function getGuiTableDataRequestBuilder(): GuiTableDataRequestBuilderInterface
     {
-        return $this->requestToGuiTableDataRequestHydrator;
+        return $this->guiTableDataRequestBuilder;
     }
 
     /**
@@ -94,23 +94,21 @@ class ProductTableDataProvider extends AbstractTableDataProvider
      */
     protected function createCriteria(Request $request): AbstractTransfer
     {
-        $criteria = new ProductTableCriteriaTransfer();
-        $criteria->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
-
-        return $criteria;
+        return (new ProductTableCriteriaTransfer())
+            ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductTableCriteriaTransfer $persistenceCriteria
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $persistenceCriteria
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
     protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer
     {
-        $productTableDataTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($persistenceCriteria);
+        $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($persistenceCriteria);
         $productTableDataArray = [];
 
-        foreach ($productTableDataTransfer->getProducts() as $productConcreteTransfer) {
+        foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $productTableDataArray[] = [
                 ProductTable::COL_KEY_SKU => $productConcreteTransfer->getSku(),
                 ProductTable::COL_KEY_NAME => $this->productNameBuilder->buildProductName($productConcreteTransfer),
@@ -123,7 +121,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
             ];
         }
 
-        $paginationTransfer = $productTableDataTransfer->getPagination();
+        $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
 
         return (new GuiTableDataTransfer())->setData($productTableDataArray)
             ->setPage($paginationTransfer->getPage())

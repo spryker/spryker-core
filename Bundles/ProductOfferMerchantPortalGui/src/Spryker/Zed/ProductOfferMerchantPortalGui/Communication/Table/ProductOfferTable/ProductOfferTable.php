@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable;
 
-use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductOfferTable extends AbstractTable
 {
@@ -38,51 +38,39 @@ class ProductOfferTable extends AbstractTable
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/table-data';
 
-    protected const DEFAULT_PAGE_SIZE = 25;
-
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
      */
     protected $productOfferTableDataProvider;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface[]
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $productOfferTableFilters;
+    protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface
-     */
-    protected $productOfferCriteriaFilterBuilder;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider\ProductOfferTableDataProviderInterface $productTableDataProvider
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Filter\TableFilterInterface[] $productOfferTableFilters
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\CriteriaBuilder\ProductOfferCriteriaFilterBuilderInterface $productOfferCriteriaFilterBuilder
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface $productOfferTableDataProvider
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
-        ProductOfferTableDataProviderInterface $productTableDataProvider,
-        array $productOfferTableFilters,
-        ProductOfferCriteriaFilterBuilderInterface $productOfferCriteriaFilterBuilder
+        TableDataProviderInterface $productOfferTableDataProvider,
+        ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade
     ) {
-        parent::__construct($utilEncodingService, $translatorFacade);
-        $this->productOfferTableDataProvider = $productTableDataProvider;
-        $this->productOfferTableFilters = $productOfferTableFilters;
-        $this->productOfferCriteriaFilterBuilder = $productOfferCriteriaFilterBuilder;
+        parent::__construct($translatorFacade);
+        $this->productOfferTableDataProvider = $productOfferTableDataProvider;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    protected function provideTableData(): GuiTableDataTransfer
+    protected function provideTableData(Request $request): GuiTableDataTransfer
     {
-        $productOfferCriteriaFilterTransfer = $this->buildProductOfferCriteriaFilterTransfer();
-
-        return $this->productOfferTableDataProvider->getProductOfferTableData($productOfferCriteriaFilterTransfer);
+        return $this->productOfferTableDataProvider->getData($request, $this->buildTableConfiguration());
     }
 
     /**
@@ -107,95 +95,22 @@ class ProductOfferTable extends AbstractTable
      */
     protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_OFFER_REFERENCE)
-                ->setTitle('Reference')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_MERCHANT_SKU)
-                ->setTitle('Merchant SKU')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_CONCRETE_SKU)
-                ->setTitle('SKU')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_IMAGE)
-                ->setTitle('Image')
-                ->setType(static::COLUMN_TYPE_IMAGE)
-                ->setSortable(false)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_PRODUCT_NAME)
-                ->setTitle('Name')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STORES)
-                ->setTitle('Stores')
-                ->setType(static::COLUMN_TYPE_CHIP)
-                ->setSortable(false)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STOCK)
-                ->setTitle('Stock')
-                ->setType(static::COLUMN_TYPE_CHIP)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VISIBILITY)
-                ->setTitle('Visibility')
-                ->setType(static::COLUMN_TYPE_CHIP)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_FROM)
-                ->setTitle('Valid From')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_TO)
-                ->setTitle('Valid To')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_CREATED_AT)
-                ->setTitle('Created')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(true)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_UPDATED_AT)
-                ->setTitle('Updated')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(true)
-        );
+        $columns = new ArrayObject([
+            $this->createColumnText(static::COL_KEY_OFFER_REFERENCE, 'Reference', true, false),
+            $this->createColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, true),
+            $this->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
+            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
+            $this->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
+            $this->createColumnChip(static::COL_KEY_STORES, 'Stores', false, true),
+            $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true),
+            $this->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true),
+            $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true),
+            $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true),
+            $this->createColumnDate(static::COL_KEY_CREATED_AT, 'Created', true, true),
+            $this->createColumnDate(static::COL_KEY_UPDATED_AT, 'Updated', true, true),
+        ]);
+
+        $guiTableConfigurationTransfer->setColumns($columns);
 
         return $guiTableConfigurationTransfer;
     }
@@ -227,10 +142,37 @@ class ProductOfferTable extends AbstractTable
      */
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        foreach ($this->productOfferTableFilters as $productOfferTableFilter) {
-            $guiTableConfigurationTransfer->addFilter($productOfferTableFilter->getFilter());
-        }
+        $filters = new ArrayObject([
+            $this->createFilterSelect('hasStock', 'Stock', false, [
+                '1' => 'Has stock',
+                '0' => 'Out of stock',
+            ]),
+            $this->createFilterSelect('isActive', 'Visibility', false, [
+                '1' => 'Online',
+                '0' => 'Offline',
+            ]),
+            $this->createFilterSelect('inStores', 'Stores', true, $this->getStoreOptions()),
+            $this->createFilterDateRange('createdAt', 'Created'),
+            $this->createFilterDateRange('updatedAt', 'Updated'),
+            $this->createFilterDateRange('validity', 'Validity'),
+        ]);
+        $guiTableConfigurationTransfer->setFilters($filters);
 
         return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getStoreOptions(): array
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $storeOptions = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeOptions[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+        }
+
+        return $storeOptions;
     }
 }

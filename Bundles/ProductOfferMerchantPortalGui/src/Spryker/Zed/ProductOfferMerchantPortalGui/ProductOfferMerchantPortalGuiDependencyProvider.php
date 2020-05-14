@@ -40,6 +40,8 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_OFFER_STORE = 'PROPEL_PRODUCT_OFFER_STORE';
 
+    public const PLUGINS_FILTER_VALUE_NORMALIZER = 'PLUGINS_FILTER_VALUE_NORMALIZER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -53,6 +55,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addFilterValueNormalizerPlugins($container);
 
         return $container;
     }
@@ -238,5 +241,27 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFilterValueNormalizerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILTER_VALUE_NORMALIZER, function () {
+            return $this->getFilterValueNormalizerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[]
+     */
+    protected function getFilterValueNormalizerPlugins(): array
+    {
+        return [];
     }
 }

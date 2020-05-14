@@ -52,13 +52,12 @@
         <property name="page" type="int" />
         <property name="pageSize" type="int" />
         <property name="filters" type="array" associative="true" />
-        <property name="idLocale" type="string"/>
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="ProductTableCriteria">
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasOffers" type="bool"/>
-        <property name="filterCategoriesIn" type="string[]" singular="inCategory"/>
         <property name="searchTerm" type="string"/>
         <property name="idLocale" type="int"/>
         <property name="idMerchant" type="int"/>
@@ -73,20 +72,18 @@
         <property name="to" type="string"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="isActive" type="bool"/>
-        <property name="hasStock" type="bool"/>
-        <property name="inStores" type="int[]" singular="inStore"/>
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
-        <property name="createdFrom" type="string"/>
-        <property name="createdTo" type="string"/>
-        <property name="updatedFrom" type="string"/>
-        <property name="updatedTo" type="string"/>
+    <transfer name="ProductOfferTableCriteria">
+        <property name="filterIsActive" type="bool"/>
+        <property name="filterHasStock" type="bool"/>
+        <property name="filterInStores" type="int[]" singular="inStore"/>
+        <property name="filterValidity" type="CriteriaRangeFilter"/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
         <property name="searchTerm" type="string"/>
         <property name="idLocale" type="int"/>
         <property name="idMerchant" type="int"/>
-        <property name="pagination" type="Pagination"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
     </transfer>

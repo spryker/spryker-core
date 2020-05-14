@@ -12,15 +12,15 @@ use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTableDataProvider implements TableDataProviderInterface
 {
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\RequestToGuiTableDataRequestMapperInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
      */
-    abstract protected function getRequestToGuiTableDataRequestMapper(): RequestToGuiTableDataRequestMapperInterface;
+    abstract protected function getGuiTableDataRequestBuilder(): GuiTableDataRequestBuilderInterface;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,12 +44,13 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
      */
     public function getData(Request $request, GuiTableConfigurationTransfer $guiTableConfiguration)
     {
-        $guiTableDataRequest = $this->getRequestToGuiTableDataRequestMapper()->map($request, $guiTableConfiguration);
+        $guiTableDataRequestTransfer = $this->getGuiTableDataRequestBuilder()
+            ->buildGuiTableDataRequest($request, $guiTableConfiguration);
         $criteriaTransfer = $this->createCriteria($request);
-        $criteriaTransfer = $this->mapFiltersToCriteria($guiTableDataRequest, $criteriaTransfer);
-        $criteriaTransfer = $this->mapPagingToCriteria($guiTableDataRequest, $criteriaTransfer);
-        $criteriaTransfer = $this->mapSortingToCriteria($guiTableDataRequest, $criteriaTransfer);
-        $criteriaTransfer = $this->mapLocaleToCriteria($guiTableDataRequest, $criteriaTransfer);
+        $criteriaTransfer = $this->mapFiltersToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
+        $criteriaTransfer = $this->mapPagingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
+        $criteriaTransfer = $this->mapSortingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
+        $criteriaTransfer = $this->mapLocaleToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
 
         return $this->fetchData($criteriaTransfer);
     }
@@ -58,9 +59,9 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
      *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function mapFiltersToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
@@ -81,9 +82,9 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
      *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function mapPagingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {
@@ -103,9 +104,9 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     *@throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\Exception\InvalidCriteriaPropertyException
      *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function mapSortingToCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, AbstractTransfer $criteriaTransfer): AbstractTransfer
     {

@@ -5,19 +5,23 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\DataProvider;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable;
 
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInterface
+class ProductOfferTableDataProvider extends AbstractTableDataProvider
 {
     protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
     protected const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
@@ -44,31 +48,66 @@ class ProductOfferTableDataProvider implements ProductOfferTableDataProviderInte
     protected $utilDateTimeService;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
+     */
+    protected $merchantUserFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
+     */
+    protected $guiTableDataRequestBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface $guiTableDataRequestBuilder
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface $utilDateTimeService,
-        ProductNameBuilderInterface $productNameBuilder
+        ProductNameBuilderInterface $productNameBuilder,
+        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
+        GuiTableDataRequestBuilderInterface $guiTableDataRequestBuilder
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->translatorFacade = $translatorFacade;
         $this->productNameBuilder = $productNameBuilder;
         $this->utilDateTimeService = $utilDateTimeService;
+        $this->merchantUserFacade = $merchantUserFacade;
+        $this->guiTableDataRequestBuilder = $guiTableDataRequestBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
+     */
+    protected function getGuiTableDataRequestBuilder(): GuiTableDataRequestBuilderInterface
+    {
+        return $this->guiTableDataRequestBuilder;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function createCriteria(Request $request): AbstractTransfer
+    {
+        return (new ProductOfferTableCriteriaTransfer())
+            ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $persistenceCriteria
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    public function getProductOfferTableData(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer): GuiTableDataTransfer
+    protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer
     {
-        $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($persistenceCriteria);
         $productTableDataArray = [];
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table;
 
 use ArrayObject;
+use Generated\Shared\Transfer\DateRangeGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
@@ -57,9 +58,8 @@ abstract class AbstractTable
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
-    public function __construct(
-        ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
-    ) {
+    public function __construct(ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade)
+    {
         $this->translatorFacade = $translatorFacade;
     }
 
@@ -386,11 +386,11 @@ abstract class AbstractTable
     protected function createColumnText(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
     {
         return (new GuiTableColumnConfigurationTransfer())
-                ->setId($id)
-                ->setTitle($title)
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable($sortable)
-                ->setHideable($hidable);
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_TEXT)
+            ->setSortable($sortable)
+            ->setHideable($hidable);
     }
 
     /***
@@ -404,11 +404,11 @@ abstract class AbstractTable
     protected function createColumnImage(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
     {
         return (new GuiTableColumnConfigurationTransfer())
-                ->setId($id)
-                ->setTitle($title)
-                ->setType(static::COL_KEY_IMAGE)
-                ->setSortable($sortable)
-                ->setHideable($hidable);
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_IMAGE)
+            ->setSortable($sortable)
+            ->setHideable($hidable);
     }
 
     /**
@@ -436,6 +436,24 @@ abstract class AbstractTable
             ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultUiDateFormat());
     }
 
+    /***
+     * @param string $id
+     * @param string $title
+     * @param bool $sortable
+     * @param bool $hidable
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function createColumnChip(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
+    {
+        return (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_CHIP)
+            ->setSortable($sortable)
+            ->setHideable($hidable);
+    }
+
     /**
      * @param string $id
      * @param string $title
@@ -449,10 +467,10 @@ abstract class AbstractTable
         $typeOptionTransfers = (new SelectGuiTableFilterTypeOptionsTransfer())
             ->setMultiselect($multiselect);
 
-        foreach ($values as $value => $title) {
+        foreach ($values as $value => $optionTitle) {
             $optionTransfer = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
                 ->setValue($value)
-                ->setTitle($title);
+                ->setTitle($optionTitle);
             $typeOptionTransfers->addValue($optionTransfer);
         }
 
@@ -461,6 +479,36 @@ abstract class AbstractTable
             ->setTitle($title)
             ->setType(static::FILTER_TYPE_SELECT)
             ->setTypeOptions($typeOptionTransfers);
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param string|null $placeholderFrom
+     * @param string|null $placeholderTo
+     *
+     * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
+     */
+    protected function createFilterDateRange(
+        string $id,
+        string $title,
+        ?string $placeholderFrom = null,
+        ?string $placeholderTo = null
+    ): GuiTableFilterTransfer {
+        $guiTableFilterTransfer = (new GuiTableFilterTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::FILTER_TYPE_DATE_RANGE);
+
+        if ($placeholderFrom || $placeholderTo) {
+            $guiTableFilterTransfer->setTypeOptions(
+                (new DateRangeGuiTableFilterTypeOptionsTransfer())
+                    ->setPlaceholderFrom($placeholderFrom)
+                    ->setPlaceholderTo($placeholderTo)
+            );
+        }
+
+        return $guiTableFilterTransfer;
     }
 
     /**

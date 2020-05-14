@@ -111,11 +111,11 @@ class ProductTable extends AbstractTable
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $filters = new ArrayObject([
-            $this->createFilterSelect('HasOffers', 'Offers', false, [
+            $this->createFilterSelect('hasOffers', 'Offers', false, [
                 '1' => 'With Offers',
                 '0' => 'Without Offers',
             ]),
-            $this->createFilterSelect('IsActive', 'Status', false, [
+            $this->createFilterSelect('isActive', 'Status', false, [
                 '1' => 'Active',
                 '0' => 'Inactive',
             ]),
