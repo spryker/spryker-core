@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
@@ -27,7 +28,22 @@ use Symfony\Component\Form\FormEvents;
  */
 class ReturnCreateBundleItemsSubForm extends AbstractType
 {
+    /**
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON
+     */
     public const FIELD_CUSTOM_REASON = 'customReason';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired([
+            ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -50,13 +66,10 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
     protected function addIsReturnable(FormBuilderInterface $builder)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $itemTransfer = $event->getData()[ReturnItemTransfer::ORDER_ITEM];
-
             $event->getForm()->add(ItemTransfer::IS_RETURNABLE, CheckboxType::class, [
                 'label' => false,
                 'required' => false,
-                'disabled' => !$itemTransfer->getIsReturnable(),
+                'disabled' => !$this->isBundleReturnable($event->getData()[ProductBundleReturnCreateFormDataProvider::BUNDLE_ITEMS]),
             ]);
         });
 
@@ -72,15 +85,12 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
     protected function addReason(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
-            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $itemTransfer = $event->getData()[ReturnItemTransfer::ORDER_ITEM];
-
             $event->getForm()->add(ReturnItemTransfer::REASON, ChoiceType::class, [
                 'label' => false,
                 'placeholder' => 'Select reason',
                 'choices' => $options[ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS],
                 'required' => false,
-                'disabled' => !$itemTransfer->getIsReturnable(),
+                'disabled' => !$this->isBundleReturnable($event->getData()[ProductBundleReturnCreateFormDataProvider::BUNDLE_ITEMS]),
             ]);
         });
 
@@ -100,5 +110,21 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return bool
+     */
+    protected function isBundleReturnable(array $itemTransfers): bool
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getIsReturnable()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
