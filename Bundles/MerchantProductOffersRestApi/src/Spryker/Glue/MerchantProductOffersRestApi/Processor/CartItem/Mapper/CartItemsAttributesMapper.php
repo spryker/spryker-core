@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\Mapper;
+namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 
-interface CartItemsAttributesMapperInterface
+class CartItemsAttributesMapper implements CartItemsAttributesMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -21,5 +21,9 @@ interface CartItemsAttributesMapperInterface
     public function mapItemTransferToRestItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestItemsAttributesTransfer $restItemsAttributesTransfer
-    ): RestItemsAttributesTransfer;
+    ): RestItemsAttributesTransfer {
+        return $restItemsAttributesTransfer
+            ->setProductOfferReference($itemTransfer->getProductOfferReference())
+            ->setMerchantReference($itemTransfer->getMerchantReference());
+    }
 }

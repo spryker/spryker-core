@@ -19,7 +19,7 @@ class MerchantProductOfferRestCartItemsAttributesMapperPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Maps `ItemTransfer` merchant offer reference and merchant reference to `RestItemsAttributesTransfer`.
+     * - Maps `ItemTransfer.productOfferReference` and `ItemTransfer.merchantReference` to `RestItemsAttributesTransfer`.
      *
      * @api
      *

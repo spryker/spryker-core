@@ -9,15 +9,15 @@ namespace Spryker\Glue\MerchantProductOffersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
-use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpander;
-use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpanderInterface;
-use Spryker\Glue\MerchantProductOffersRestApi\Processor\Mapper\CartItemsAttributesMapper;
-use Spryker\Glue\MerchantProductOffersRestApi\Processor\Mapper\CartItemsAttributesMapperInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapper;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface;
 
 class MerchantProductOffersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\CartItemExpanderInterface
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface
      */
     public function createCartItemExpander(): CartItemExpanderInterface
     {
@@ -25,7 +25,7 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Mapper\CartItemsAttributesMapperInterface
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface
      */
     public function createCartItemsAttributesMapper(): CartItemsAttributesMapperInterface
     {

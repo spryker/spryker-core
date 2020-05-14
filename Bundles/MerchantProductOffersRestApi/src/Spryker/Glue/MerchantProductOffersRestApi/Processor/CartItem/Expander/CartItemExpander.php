@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander;
+namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
