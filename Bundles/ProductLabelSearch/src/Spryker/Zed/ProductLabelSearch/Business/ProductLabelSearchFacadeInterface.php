@@ -16,7 +16,7 @@ interface ProductLabelSearchFacadeInterface
      * - Gets product label IDs from $eventTransfers.
      * - Retrieves a list of abstract product ids by product label IDs.
      * - Queries all product abstract with the given abstract product IDs.
-     * - Stores data as JSON encoded to storage table.
+     * - Stores data as JSON encoded to search table.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
@@ -31,7 +31,7 @@ interface ProductLabelSearchFacadeInterface
      * Specification:
      * - Gets abstract product IDs from eventTransfers.
      * - Queries all product abstract with the given abstract product IDs.
-     * - Stores data as JSON encoded to storage table.
+     * - Stores data as JSON encoded to search table.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
@@ -46,7 +46,7 @@ interface ProductLabelSearchFacadeInterface
      * Specification:
      * - Gets abstract product IDs from $eventTransfers.
      * - Retrieves a list of abstract products with the given abstract product IDs.
-     * - Stores data as JSON encoded to storage table.
+     * - Stores data as JSON encoded to search table.
      * - Sends a copy of data to queue based on module config.
      *
      * @api

@@ -67,7 +67,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
             $productLabelTransfer = new ProductLabelTransfer();
             $productLabelTransfer->setName($this->config->getProductAlternativesLabelName());
             $productLabelTransfer->setFrontEndReference($this->config->getProductAlternativesLabelFrontEndReference());
-            $productLabelTransfer->setPosition($this->config->getProductLabelDefaultPriority());
+            $productLabelTransfer->setPosition($this->config->getProductLabelDefaultPosition());
 
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->createLabel(

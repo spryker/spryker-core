@@ -14,6 +14,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves labels collection for given abstract product ID, locale and store name.
+     * - Only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -29,6 +30,7 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Retrieves product labels by abstract product IDs and by locale and store.
      * - Returns array of ProductLabelDictionaryItemTransfers indexed by id of product abstract.
+     * - Only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -43,6 +45,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves labels collection for the given list of labels IDs, locale and store name.
+     * - Only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -57,6 +60,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves label for given label name, locale and store name.
+     * - Only labels assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -72,6 +76,7 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Expands ProductViewTransfer with product labels.
      * - Requires ProductViewTransfer.idProductAbstract to be set.
+     * - Only labels assigned with passed $storeName and $localeName will be used for expansion.
      *
      * @api
      *

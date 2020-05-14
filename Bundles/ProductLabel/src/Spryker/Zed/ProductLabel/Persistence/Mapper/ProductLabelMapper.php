@@ -14,10 +14,11 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductLabel\ProductLabelConfig;
 
 class ProductLabelMapper
 {
+    protected const VALIDITY_DATE_FORMAT = 'Y-m-d';
+
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper
      */
@@ -81,10 +82,10 @@ class ProductLabelMapper
         $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
 
         $productLabelTransfer->setValidFrom(
-            $productLabelEntity->getValidFrom(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidFrom(static::VALIDITY_DATE_FORMAT)
         );
         $productLabelTransfer->setValidTo(
-            $productLabelEntity->getValidTo(ProductLabelConfig::VALIDITY_DATE_FORMAT)
+            $productLabelEntity->getValidTo(static::VALIDITY_DATE_FORMAT)
         );
 
         $storeRelationTransfer = new StoreRelationTransfer();
