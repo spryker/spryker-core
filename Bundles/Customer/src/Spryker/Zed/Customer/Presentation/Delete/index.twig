@@ -18,10 +18,12 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
+            {{ form_start(customerDeleteForm, {'action': url('/customer/delete/confirm')}) }}
+                {{ form_widget(customerDeleteForm.idCustomer) }}
 
-            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
-            <a href="{{ url('/customer/delete/confirm', {'id-customer': idCustomer}) }}" class="btn btn-danger safe-submit">{{ 'Delete account' | trans}}</a>
-
+                <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+                <button class="btn btn-danger safe-submit">{{ 'Delete account' | trans}}</button>
+            {{ form_end(customerDeleteForm) }}
         {% endblock %}
 
     {% endembed %}

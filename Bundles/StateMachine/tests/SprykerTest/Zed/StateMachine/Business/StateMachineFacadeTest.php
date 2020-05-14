@@ -680,7 +680,7 @@ class StateMachineFacadeTest extends Unit
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
-        $stateMachineName = $stateMachineHandler->getStateMachineName() . "SomethingElse";
+        $stateMachineName = $stateMachineHandler->getStateMachineName() . 'SomethingElse';
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
         $expectedResult = false;
 
