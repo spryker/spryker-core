@@ -20,7 +20,7 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_sales_return_reason"/>
             <parameter name="queue_group" value="sync.search.return"/>
-            <parameter name="params" value='{"type":"page"}'/>
+            <parameter name="params" value='{"type":"return_reason"}'/>
         </behavior>
         <behavior name="timestampable"/>
     </table>
