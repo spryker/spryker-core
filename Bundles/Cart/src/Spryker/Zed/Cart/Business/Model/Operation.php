@@ -292,6 +292,7 @@ class Operation implements OperationInterface
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
+            ->setCustomer($originalQuoteTransfer->getCustomer())
             ->setQuoteTransfer($originalQuoteTransfer);
 
         if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
@@ -587,7 +588,7 @@ class Operation implements OperationInterface
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculate($quoteTransfer, false);
     }
 
     /**

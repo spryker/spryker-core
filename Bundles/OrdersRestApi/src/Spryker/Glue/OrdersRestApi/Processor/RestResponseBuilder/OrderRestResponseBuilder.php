@@ -8,34 +8,39 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
+    protected const FORMAT_SELF_LINK_ORDER_ITEMS_RESOURCE = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
     protected $orderResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderResourceMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderResourceMapper = $orderResourceMapper;
@@ -110,5 +115,62 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             ->setDetail(OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array
+    {
+        $restResources = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $restResources[$itemTransfer->getUuid()] = $this->createOrderItemRestResource($itemTransfer);
+        }
+
+        return $restResources;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createOrderItemRestResource(ItemTransfer $itemTransfer): RestResourceInterface
+    {
+        $restOrderItemsAttributesTransfer = $this->orderResourceMapper
+            ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, new RestOrderItemsAttributesTransfer());
+
+        $orderItemResource = $this->restResourceBuilder->createRestResource(
+            OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
+            $itemTransfer->getUuid(),
+            $restOrderItemsAttributesTransfer
+        );
+
+        $orderItemResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLinkForOrderItem($itemTransfer->getOrderReference(), $itemTransfer->getUuid())
+        );
+
+        return $orderItemResource;
+    }
+
+    /**
+     * @param string $idOrder
+     * @param string $idOrderItem
+     *
+     * @return string
+     */
+    protected function createSelfLinkForOrderItem(string $idOrder, string $idOrderItem): string
+    {
+        return sprintf(
+            static::FORMAT_SELF_LINK_ORDER_ITEMS_RESOURCE,
+            OrdersRestApiConfig::RESOURCE_ORDERS,
+            $idOrder,
+            OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
+            $idOrderItem
+        );
     }
 }

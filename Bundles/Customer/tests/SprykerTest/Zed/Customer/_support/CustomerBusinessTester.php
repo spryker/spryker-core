@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 /**
  * Inherited Methods
@@ -30,4 +31,18 @@ use Codeception\Actor;
 class CustomerBusinessTester extends Actor
 {
     use _generated\CustomerBusinessTesterActions;
+
+    /**
+     * @param string $hash
+     * @param string $rowPassword
+     * @param string $salt
+     *
+     * @return void
+     */
+    public function assertPasswordsEqual(string $hash, string $rowPassword, string $salt = ''): void
+    {
+        $nativePasswordEncoder = new NativePasswordEncoder();
+
+        $this->assertTrue($nativePasswordEncoder->isPasswordValid($hash, $rowPassword, $salt), 'Passwords are now equal.');
+    }
 }

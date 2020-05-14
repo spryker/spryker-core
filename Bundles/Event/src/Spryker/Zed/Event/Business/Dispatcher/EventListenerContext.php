@@ -86,7 +86,7 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void

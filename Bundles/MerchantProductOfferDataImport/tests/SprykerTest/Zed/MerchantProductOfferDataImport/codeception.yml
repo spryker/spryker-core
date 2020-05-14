@@ -27,3 +27,6 @@ suites:
              - \SprykerTest\Zed\MerchantProductOfferDataImport\Helper\MerchantProductOfferDataImportHelper
              - \SprykerTest\Zed\MerchantProductOfferDataImport\Helper\MerchantProductOfferStoreDataImportHelper
              - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
+             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+             - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+             - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper

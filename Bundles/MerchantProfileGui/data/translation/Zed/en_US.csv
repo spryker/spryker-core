@@ -1,36 +1,29 @@
-Role,Role
-Title,Title
-"First Name","First Name"
-"Last Name","Last Name"
-Phone,Phone
+"Addition to address","Addition to Address"
+"Average Delivery Time","Average Delivery Time"
 "Banner URL","Banner URL"
+"Banner url","Banner url"
+"Cancellation Policy","Cancellation Policy"
+City,City
+"Contact Person","Contact Person"
+Country,Country
+"Data Privacy","Data Privacy"
+Description,Description
+"Fax number","Fax Number"
+"First Name","First Name"
+Imprint,Imprint
+"Last Name","Last Name"
+Latitude,Latitude
+"Legal Information","Legal Information"
 "Logo URL","Logo URL"
+Longitude,Longitude
+"Merchant Profile","Merchant Profile"
+"Merchant Reference","Merchant reference"
+Number,Number
+Phone,Phone
 "Public Email","Public Email"
 "Public Phone","Public Phone"
-Description,Description
-"Banner url","Banner url"
-"Average Delivery Time","Average Delivery Time"
-"Terms and Conditions","Terms and Conditions"
-"Cancellation Policy","Cancellation Policy"
-Imprint,Imprint
-"Data Privacy","Data Privacy"
-"Is Active","Is Active"
-active,Active
-inactive,Inactive
-Activate,Activate
-Deactivate,Deactivate
-merchant_profile.activated,"Merchant Profile successfully activated."
-merchant_profile.deactivated,"Merchant Profile successfully deactivated."
-"Contact Person","Contact Person"
-"Merchant Profile","Merchant Profile"
-"Legal Information","Legal Information"
-City,City
-"Zip Code","Zip Code"
-Country,Country
+Role,Role
 Street,Street
-Number,Number
-"Addition to address","Addition to Address"
-"Fax number","Fax Number"
-Latitude,Latitude
-Longitude,Longitude
-"Merchant Reference","Merchant reference"
+"Terms and Conditions","Terms and Conditions"
+Title,Title
+"Zip Code","Zip Code"

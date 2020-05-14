@@ -17,7 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateServiceIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:generate-service-auto-completion';
+    protected const OLD_COMMAND_NAME = 'dev:ide:generate-service-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:service:generate';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
 
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Generate IDE auto completion files for Service.');
+        $this->setAliases([static::OLD_COMMAND_NAME]);
     }
 
     /**
@@ -41,5 +43,7 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateServiceIdeAutoCompletion();
 
         $this->info('Generated Service IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

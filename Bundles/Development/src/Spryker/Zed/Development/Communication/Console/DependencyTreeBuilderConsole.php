@@ -60,5 +60,7 @@ class DependencyTreeBuilderConsole extends Console
         $this->info('Build dependency tree.');
 
         $this->getFacade()->buildDependencyTree($module);
+
+        return static::CODE_SUCCESS;
     }
 }

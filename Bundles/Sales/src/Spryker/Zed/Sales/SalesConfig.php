@@ -118,6 +118,16 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isHydrateOrderHistoryToItems(): bool
+    {
+        return true;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

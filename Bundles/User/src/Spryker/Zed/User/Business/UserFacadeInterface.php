@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserFacadeInterface
@@ -60,11 +61,26 @@ interface UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::findUser()} instead.
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findUserById(int $idUser): ?UserTransfer;
+
+    /**
+     * Specification:
+     * - Returns User transfer found by criteria.
+     * - Returns null otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 
     /**
      * @api

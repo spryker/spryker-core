@@ -53,6 +53,16 @@ class OauthConfig extends AbstractBundleConfig
      *
      * @return string
      */
+    public function getRefreshTokenRetentionInterval(): string
+    {
+        return $this->getSharedConfig()->getRefreshTokenRetentionInterval();
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
     public function getRefreshTokenTTL(): string
     {
         return $this->getSharedConfig()->getRefreshTokenTTL();
