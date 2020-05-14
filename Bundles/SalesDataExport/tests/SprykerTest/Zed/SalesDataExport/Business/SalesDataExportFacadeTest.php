@@ -144,7 +144,7 @@ class SalesDataExportFacadeTest extends Unit
                     'from' => (new DateTime('-1 minute'))->format('Y-m-d H:i:s'),
                     'to' => (new DateTime('+1 minute'))->format('Y-m-d H:i:s'),
                 ],
-                'order_store' => ['DE'],
+                'store_name' => ['DE'],
             ])
             ->setHooks([
                 'data_entity' => $dataEntity,
