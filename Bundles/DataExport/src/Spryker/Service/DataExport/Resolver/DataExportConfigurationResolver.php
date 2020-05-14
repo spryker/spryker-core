@@ -27,31 +27,31 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportActionConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function resolveDataExportActionConfiguration(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $dataExportActionConfigurationTransfer,
         DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
     ): DataExportConfigurationTransfer {
-        $dataExportConfigurationTransfer = $this->dataExportConfigurationMerger->mergeDataExportConfigurationTransfers(
-            $dataExportConfigurationTransfer,
+        $dataExportActionConfigurationTransfer = $this->dataExportConfigurationMerger->mergeDataExportConfigurationTransfers(
+            $dataExportActionConfigurationTransfer,
             $additionalDataExportConfigurationsTransfer->getDefaults()
         );
 
-        $additionalDataExportActionConfigurationTransfer = $this->findDataExportActionConfiguration(
-            $dataExportConfigurationTransfer->getDataEntity(),
+        $additionalDataExportActionConfigurationTransfer = $this->findDataExportActionConfigurationByDataEntity(
+            $dataExportActionConfigurationTransfer->getDataEntity(),
             $additionalDataExportConfigurationsTransfer
         );
 
         if (!$additionalDataExportActionConfigurationTransfer) {
-            return $dataExportConfigurationTransfer;
+            return $dataExportActionConfigurationTransfer;
         }
 
         return $this->dataExportConfigurationMerger->mergeDataExportConfigurationTransfers(
-            $dataExportConfigurationTransfer,
+            $dataExportActionConfigurationTransfer,
             $additionalDataExportActionConfigurationTransfer
         );
     }
@@ -62,7 +62,7 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer|null
      */
-    protected function findDataExportActionConfiguration(
+    protected function findDataExportActionConfigurationByDataEntity(
         string $dataEntity,
         DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
     ): ?DataExportConfigurationTransfer {

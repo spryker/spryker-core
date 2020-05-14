@@ -48,13 +48,13 @@ interface DataExportServiceInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportActionConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function resolveDataExportActionConfiguration(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $dataExportActionConfigurationTransfer,
         DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
     ): DataExportConfigurationTransfer;
 
