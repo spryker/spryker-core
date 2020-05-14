@@ -1,0 +1,45 @@
+{% set returnItems = returnItemGroup | filter(returnItem => returnItem.orderItem.productBundle) %}
+
+{% set mappedReturnItems = [] %}
+{% set productBundles = [] %}
+
+{% for returnItem in returnItems %}
+    {% set relatedBundleItemIdentifier = returnItem.orderItem.relatedBundleItemIdentifier %}
+
+    {% if mappedReturnItems['_' ~ relatedBundleItemIdentifier] is defined %}
+        {% set bundleReturnItems = mappedReturnItems['_' ~ relatedBundleItemIdentifier] | merge([returnItem]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ relatedBundleItemIdentifier): bundleReturnItems}) %}
+    {% else %}
+        {% set productBundles = productBundles | merge([returnItem.orderItem.productBundle]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ relatedBundleItemIdentifier): [returnItem]}) %}
+    {% endif %}
+{% endfor %}
+
+{% for productBundle in productBundles %}
+    <tr>
+        <td>{{ barcode(productBundle.sku) }}</td>
+        <td>{{ productBundle.sku }}</td>
+        <td>
+            <strong>{{ productBundle.name }}</strong>
+        </td>
+        <td>{{ (productBundle.sumPrice - productBundle.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
+        <td>{{ productBundle.quantity }}</td>
+        <td>
+            {{ productBundle.sumPriceToPayAggregation | money(true, currencyIsoCode) }}
+        </td>
+        <td>
+            {{ (mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] | first).reason ?? '-' }}
+        </td>
+    </tr>
+
+    {% for returnItem in mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] %}
+        <tr>
+            <td colspan="2"></td>
+            <td>{{ returnItem.orderItem.name }}</td>
+            <td></td>
+            <td>{{ returnItem.orderItem.quantity }}</td>
+            <td colspan="2"></td>
+        </tr>
+    {% endfor %}
+
+{% endfor %}
