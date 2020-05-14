@@ -40,6 +40,7 @@ $(document).ready(function () {
     });
 
     toggleReturnItems();
+    toggleReturnReasonMessage();
 });
 
 function updateItemCounter(count) {
@@ -62,6 +63,7 @@ function toggleReturnItems() {
     var totalItems = $table.find($checkItem).length;
 
 
+
     $checkItem.click(function() {
         var checkedItems = $table.find('.js-check-item:checked').length;
 
@@ -77,5 +79,27 @@ function toggleReturnItems() {
 
     $checkAllItems.click(function() {
         $checkItem.prop('checked', $(this).prop('checked'));
+    });
+}
+
+function toggleReturnReasonMessage() {
+    var $select = $('.js-select-reason');
+    var toggleValue = 'custom_reason';
+
+    $select.each(function (index, item) {
+        $(item).on('change', function () {
+            var targetClassName = $(this).attr('data-target');
+            var $target = $('.' + targetClassName);
+            var isToggleValueSelected = toggleValue === $(this).val();
+            console.log($target, '$target');
+
+            if (isToggleValueSelected) {
+                $target.removeClass('hidden');
+
+                return;
+            }
+
+            $target.addClass('hidden');
+        });
     });
 }

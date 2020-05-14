@@ -12,7 +12,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             {% include '@SalesReturnGui/Return/_partials/returned-items-column.twig' with {
                 return: return,
                 orderItemManualEvents: orderItemManualEvents,
@@ -21,7 +21,7 @@
                 salesOrderItemIds: salesOrderItemIds,
             } only %}
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             {% include '@SalesReturnGui/Return/_partials/general-information-column.twig' with {
                 return: return,
                 uniqueOrderReferences: uniqueOrderReferences,
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             {% include '@SalesReturnGui/Return/_partials/total-column.twig' with {
                 return: return,
             } only %}

@@ -33,18 +33,13 @@
     </tr>
 
     {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
-        <tr>
-            {% include '@Sales/Detail/boxes/order-item.twig' with {
-                orderItem: returnItem.orderItem,
-                displayImage: true,
-                image: returnItem.orderItem.metadata.image,
-                displayTotals: true,
-                group: false,
-                order: order,
-                eventsGroupedByItem: orderItemManualEvents,
-                changeStatusRedirectUrl: triggerButtonRedirectUrl,
-            } only %}
-        </tr>
+        {% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
+            returnItem: returnItem,
+            orderItem: returnItem.orderItem,
+            order: order,
+            eventsGroupedByItem: orderItemManualEvents,
+            changeStatusRedirectUrl: triggerButtonRedirectUrl,
+        } only %}
     {% endfor %}
 
     <tr>

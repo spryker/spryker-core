@@ -3,16 +3,14 @@
 } %}
     {% block content %}
         <div class="row">
-            <div class="col-lg-3">
-                <h5>
-                    {{ 'Trigger all matching states' | trans }}
-                    <span id="item-counter-wrapper" class="hidden">{{ 'of ' | trans }}
-                        <span id="item-counter"></span>
-                        {{ ' selected items' | trans }}
-                    </span>
-                </h5>
+            <div class="col-lg-6">
+                {{ 'Trigger all matching states' | trans }}
+                <span id="item-counter-wrapper" class="hidden">{{ 'of ' | trans }}
+                    <span id="item-counter"></span>
+                    {{ ' selected items' | trans }}
+                </span>
             </div>
-            <div id="return-bulk-trigger-buttons" class="col-lg-9 text-right">
+            <div id="return-bulk-trigger-buttons" class="header-actions col-lg-6">
                 {% include '@Oms/RenderForm/_partial/order-items-actions.twig' ignore missing with {
                     redirectUrl: triggerButtonRedirectUrl,
                     salesOrderItemIds: salesOrderItemIds,
@@ -27,11 +25,11 @@
             <table id="return-items-table" class="table" data-qa="return-items-table">
                 <thead>
                     <tr class="text-left">
-                        <th><input type="checkbox" class="check-all-orders"></th>
+                        <th><input type="checkbox" class="js-check-all-items"></th>
                         <th colspan="2">{{ 'Product' | trans }}</th>
                         <th>{{ 'Quantity' | trans }}</th>
                         <th>{{ 'Price' | trans }}</th>
-                        <th>{{ 'Item total' | trans }}</th>
+                        <th>{{ 'Total' | trans }}</th>
                         <th>{{ 'State' | trans }}</th>
                         <th>{{ 'Trigger event' | trans }}</th>
                     </tr>
@@ -46,26 +44,16 @@
 
                     {% for returnItem in return.returnItems %}
                         {% if returnItem.orderItem.salesOrderConfiguredBundle is empty %}
-                            <tr>
-                                {% include '@Sales/Detail/boxes/order-item.twig' with {
-                                    orderItem: returnItem.orderItem,
-                                    displayImage: true,
-                                    image: returnItem.orderItem.metadata.image,
-                                    displayTotals: true,
-                                    group: false,
-                                    order: order,
-                                    eventsGroupedByItem: orderItemManualEvents,
-                                    changeStatusRedirectUrl: triggerButtonRedirectUrl,
-                                } only %}
-                            </tr>
+                            {% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
+                                returnItem: returnItem,
+                                orderItem: returnItem.orderItem,
+                                order: order,
+                                eventsGroupedByItem: orderItemManualEvents,
+                                changeStatusRedirectUrl: triggerButtonRedirectUrl,
+                            } only %}
                         {% else %}
                             {% set returnItemsWithConfiguredBundles = returnItemsWithConfiguredBundles | merge([returnItem]) %}
                         {% endif %}
-
-                        {% include '@Sales/Detail/boxes/order-item-option.twig' with {
-                            orderItem: returnItem.orderItem,
-                            order: order,
-                        } only %}
                     {% endfor %}
 
                     {% include '@SalesReturnGui/Return/_partials/return-detail-configured-bundles.twig' with {
