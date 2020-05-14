@@ -6,18 +6,34 @@
 'use strict';
 
 $(document).ready(function () {
-    $('#return-bulk-trigger-buttons button').click(function (e) {
-        e.preventDefault();
-        var $table = $('#return-items-table');
-        var $orderItems = $table.find('input[name="order-item"]');
-        var checkedItemIds = [];
+    var $table = $('.js-return-items-table');
+    var $checkAllItems = $table.find('.js-check-all-items');
+    var $checkItem = $table.find('.js-check-item').not(':disabled');
+
+    setFormAction($checkItem);
+    setItemCounter($checkItem, $table);
+    setItemCounter($checkAllItems, $table);
+    toggleReturnItems($checkAllItems, $checkItem, $table);
+    toggleReturnReasonMessage();
+});
+
+function setFormAction($checkItem) {
+    var $actionButton = $('.js-return-bulk-trigger-buttons button');
+    var checkedItemIds = [];
+
+    $actionButton.on('click', function(event) {
+        event.preventDefault();
+
         var $form = $(this).closest('form');
         var formUrl = decodeURI($form.attr('action'));
 
-        $orderItems.each(function () {
-            if ($(this).prop('checked')) {
-                checkedItemIds.push($(this).val());
+        $checkItem.each(function () {
+            if (!$(this).prop('checked')) {
+                return;
             }
+
+            checkedItemIds.push($(this).val());
+            console.log(checkedItemIds);
         });
 
         if (checkedItemIds.length) {
@@ -31,23 +47,22 @@ $(document).ready(function () {
 
         $form.submit();
     });
+}
 
-    $('.item-check, .check-all-orders').click(function () {
-        var $table = $(this).closest('table');
-        var count = $table.find('.item-check:checked').length;
+function setItemCounter($item, $table) {
+    $item.on('change', function() {
+        var checkedItems = $table.find('.js-check-item:checked').length;
 
-        updateItemCounter(count);
+        updateItemCounter(checkedItems);
     });
-
-    toggleReturnItems();
-    toggleReturnReasonMessage();
-});
+}
 
 function updateItemCounter(count) {
-    var $wrapper = $('#item-counter-wrapper');
+    var $wrapper = $('.js-item-counter-wrapper');
+    var $counter = $('.js-item-counter');
 
     if (count) {
-        $('#item-counter').text(count);
+        $counter.text(count);
         $wrapper.removeClass('hidden');
 
         return;
@@ -56,13 +71,8 @@ function updateItemCounter(count) {
     $wrapper.addClass('hidden');
 }
 
-function toggleReturnItems() {
-    var $table = $('.js-create-return-table');
-    var $checkAllItems = $table.find('.js-check-all-items');
-    var $checkItem = $table.find('.js-check-item').not(':disabled');
+function toggleReturnItems($checkAllItems, $checkItem, $table) {
     var totalItems = $table.find($checkItem).length;
-
-
 
     $checkItem.click(function() {
         var checkedItems = $table.find('.js-check-item:checked').length;
