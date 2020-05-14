@@ -149,8 +149,9 @@ class DataExportServiceTest extends Unit
         $this->assertTrue($dataExportWriteResponseTransfer->getIsSuccessful());
         $this->assertFileExists($expectedFilePath);
 
+        $headerSize = 1;
         $fileData = $this->tester->getCsvFileData($expectedFilePath);
-        $this->assertCount(count($data), $fileData);
+        $this->assertCount(count($data), $fileData - $headerSize);
         $this->assertEquals($data, $fileData);
 
         $this->tester->removeCreatedFiles(static::DESTINATION_DIR);
