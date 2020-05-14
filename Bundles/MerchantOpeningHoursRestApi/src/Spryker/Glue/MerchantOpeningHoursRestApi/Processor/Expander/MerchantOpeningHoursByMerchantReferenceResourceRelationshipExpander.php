@@ -40,7 +40,7 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
 
         foreach ($resources as $resource) {
             $merchantReference = $resource->getId();
-            if (!$merchantReference || !isset($merchantOpeningHoursResources[$merchantReference])) {
+            if (!isset($merchantOpeningHoursResources[$merchantReference])) {
                 continue;
             }
 
