@@ -46,10 +46,12 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
         $productBundles = $this->getProductBundlesExpandedWithProductOptions($itemTransfers);
-        $productBundles = $this->sortProductBundlesProductOptions($productBundles);
+        if (!$productBundles) {
+            return $itemTransfers;
+        }
 
         foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+            if ($itemTransfer->getProductBundle() && $itemTransfer->getRelatedBundleItemIdentifier()) {
                 $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
             }
         }
@@ -67,29 +69,24 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         $productBundles = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if (!$itemTransfer->getProductBundle()) {
+            if (!$itemTransfer->getProductBundle() || !$itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
 
+            if (!isset($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()])) {
+                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $itemTransfer->getProductBundle();
+            }
+
             $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $this->expandBundleItemWithProductOptions(
-                $itemTransfer->getProductBundle(),
+                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()],
                 $itemTransfer
             );
         }
 
-        return $productBundles;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function sortProductBundlesProductOptions(array $productBundles): array
-    {
         foreach ($productBundles as $productBundle) {
-            $productOptions = $productBundle->getProductOptions()->getArrayCopy();
-            $productBundle->setProductOptions(new ArrayObject($this->sortBundleProductOptions($productOptions)));
+            $productBundle->setProductOptions(
+                new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy()))
+            );
         }
 
         return $productBundles;
