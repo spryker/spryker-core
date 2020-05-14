@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -62,10 +64,12 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateStorageEntityTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundleStorage\Persistence\Base\SpyConfigurableBundleTemplateStorage[]
      */
-    public function getFilteredConfigurableBundleTemplateStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array
-    {
+    public function getFilteredConfigurableBundleTemplateStorageEntities(
+        FilterTransfer $filterTransfer,
+        array $configurableBundleTemplateIds
+    ): ObjectCollection {
         $configurableBundleTemplateStoragePropelQuery = $this->getFactory()
             ->getConfigurableBundleTemplateStoragePropelQuery();
 
@@ -73,8 +77,12 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
             $configurableBundleTemplateStoragePropelQuery->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds);
         }
 
-        return $this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)
-            ->find();
+        $configurableBundleTemplateStoragePropelQuery = $this->buildQueryFromCriteria(
+            $configurableBundleTemplateStoragePropelQuery,
+            $filterTransfer
+        )->setFormatter(ObjectFormatter::class);
+
+        return $configurableBundleTemplateStoragePropelQuery->find();
     }
 
     /**

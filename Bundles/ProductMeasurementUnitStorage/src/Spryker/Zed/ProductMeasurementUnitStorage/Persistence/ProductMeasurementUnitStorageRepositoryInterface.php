@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductMeasurementUnitStorageRepositoryInterface
 {
@@ -39,9 +40,9 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage[]
      */
-    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
+    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): ObjectCollection;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

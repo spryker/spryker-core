@@ -67,9 +67,8 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
 
         foreach ($configurableBundleTemplateStorageEntities as $configurableBundleTemplateStorageEntity) {
             $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->fromArray($configurableBundleTemplateStorageEntity->virtualProperties(), true)
-                ->setData($configurableBundleTemplateStorageEntity->getData())
-                ->setKey($configurableBundleTemplateStorageEntity->getKey());
+                ->fromArray($configurableBundleTemplateStorageEntity->toArray(), true)
+                ->setReference(null);
         }
 
         return $synchronizationDataTransfers;

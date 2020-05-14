@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -75,17 +77,22 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage[]
      */
-    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
+    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): ObjectCollection
     {
-        $query = $this->getFactory()->createProductMeasurementUnitStorageQuery();
+        $productMeasurementUnitStoragePropelQuery = $this->getFactory()->createProductMeasurementUnitStorageQuery();
 
         if ($productMeasurementUnitIds) {
-            $query->filterByFkProductMeasurementUnit_In($productMeasurementUnitIds);
+            $productMeasurementUnitStoragePropelQuery->filterByFkProductMeasurementUnit_In($productMeasurementUnitIds);
         }
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $productMeasurementUnitStoragePropelQuery = $this->buildQueryFromCriteria(
+            $productMeasurementUnitStoragePropelQuery,
+            $filterTransfer
+        )->setFormatter(ObjectFormatter::class);
+
+        return $productMeasurementUnitStoragePropelQuery->find();
     }
 
     /**
