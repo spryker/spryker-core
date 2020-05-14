@@ -73,7 +73,6 @@
         <property name="cancellationPolicy" type="string"/>
         <property name="imprint" type="string"/>
         <property name="dataPrivacy" type="string"/>
-
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
