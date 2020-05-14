@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantsRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToGlossaryStorageClientBridge;
-use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientBridge;
+use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig getConfig()
@@ -42,7 +42,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addMerchantStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
-            return new MerchantsRestApiToMerchantsStorageClientBridge(
+            return new MerchantsRestApiToMerchantStorageClientBridge(
                 $container->getLocator()->merchantStorage()->client()
             );
         });

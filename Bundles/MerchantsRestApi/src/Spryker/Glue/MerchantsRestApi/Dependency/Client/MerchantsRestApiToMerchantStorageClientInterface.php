@@ -9,7 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
-interface MerchantsRestApiToMerchantsStorageClientInterface
+interface MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
      * @param string[] $merchantReferences

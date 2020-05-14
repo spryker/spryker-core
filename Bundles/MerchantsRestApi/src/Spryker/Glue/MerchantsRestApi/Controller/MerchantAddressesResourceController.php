@@ -18,9 +18,9 @@ class MerchantAddressesResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieves merchant addresses by id."
+     *              "Retrieves merchant addresses."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

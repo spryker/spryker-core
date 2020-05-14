@@ -42,6 +42,23 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createMerchantRestResources(array $merchantStorageTransfers, string $localeName): array
+    {
+        $merchantRestResources = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $merchantRestResources[$merchantStorageTransfer->getMerchantReference()]
+                = $this->createMerchantsRestResource($merchantStorageTransfer, $localeName);
+        }
+
+        return $merchantRestResources;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param string $localeName
      *
@@ -98,7 +115,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         MerchantStorageTransfer $merchantStorageTransfer,
         string $localeName
     ): RestResourceInterface {
-        $restMerchantsAttributesTransfer = $this->merchantMapper->mapMerchantStorageTransferToRestMerchantAttributesTransfer(
+        $restMerchantsAttributesTransfer = $this->merchantMapper->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
             $merchantStorageTransfer,
             new RestMerchantsAttributesTransfer(),
             $localeName

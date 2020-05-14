@@ -9,21 +9,21 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface;
+use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface;
 
 class MerchantReader implements MerchantReaderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface
+     * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface
      */
     protected $merchantStorageClient;
 
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface
      */
-    protected $merchantsRestResponseBuilder;
+    protected $merchantRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface
@@ -31,18 +31,36 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantTranslator;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient
+     * @param \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface $merchantStorageClient
      * @param \Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface $merchantTranslator
      * @param \Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
      */
     public function __construct(
-        MerchantsRestApiToMerchantsStorageClientInterface $merchantStorageClient,
+        MerchantsRestApiToMerchantStorageClientInterface $merchantStorageClient,
         MerchantTranslatorInterface $merchantTranslator,
         MerchantRestResponseBuilderInterface $merchantsRestResponseBuilder
     ) {
         $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantTranslator = $merchantTranslator;
-        $this->merchantsRestResponseBuilder = $merchantsRestResponseBuilder;
+        $this->merchantRestResponseBuilder = $merchantsRestResponseBuilder;
+    }
+
+    /**
+     * @param string[] $merchantReferences
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getMerchantsResources(array $merchantReferences, string $localeName): array
+    {
+        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+
+        $translatedMerchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
+            $merchantStorageTransfers,
+            $localeName
+        );
+
+        return $this->merchantRestResponseBuilder->createMerchantRestResources($translatedMerchantStorageTransfers, $localeName);
     }
 
     /**
@@ -53,12 +71,12 @@ class MerchantReader implements MerchantReaderInterface
     public function getMerchantById(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getResource()->getId()) {
-            return $this->merchantsRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
+            return $this->merchantRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
         if (!$merchantStorageTransfer) {
-            return $this->merchantsRestResponseBuilder->createMerchantNotFoundErrorResponse();
+            return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
         $translatedMerchantStorageTransfer = $this->merchantTranslator->translateMerchantStorageTransfer(
@@ -66,7 +84,7 @@ class MerchantReader implements MerchantReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        return $this->merchantsRestResponseBuilder->createMerchantsRestResponse(
+        return $this->merchantRestResponseBuilder->createMerchantsRestResponse(
             $translatedMerchantStorageTransfer,
             $restRequest->getMetadata()->getLocale()
         );

@@ -45,6 +45,23 @@ class MerchantTranslator implements MerchantTranslatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function translateMerchantStorageTransfers(
+        array $merchantStorageTransfers,
+        string $localeName
+    ): array {
+        $glossaryStorageKeys = $this->getGlossaryStorageKeysFromMerchantStorageTransfers($merchantStorageTransfers);
+
+        $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
+
+        return $this->setTranslationsToMerchantStorageTransfers($merchantStorageTransfers, $translations);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
      * @return string[]
      */

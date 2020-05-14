@@ -42,6 +42,18 @@
         <property name="dataPrivacy" type="string"/>
     </transfer>
 
+    <transfer name="RestOrdersAttributes">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
     <transfer name="MerchantStorage">
         <property name="idMerchant" type="int"/>
         <property name="name" type="string"/>

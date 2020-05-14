@@ -21,4 +21,15 @@ interface MerchantTranslatorInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         string $localeName
     ): MerchantStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function translateMerchantStorageTransfers(
+        array $merchantStorageTransfers,
+        string $localeName
+    ): array;
 }

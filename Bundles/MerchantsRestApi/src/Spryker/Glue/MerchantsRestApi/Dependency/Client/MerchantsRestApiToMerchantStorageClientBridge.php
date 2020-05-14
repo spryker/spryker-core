@@ -9,7 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
-class MerchantsRestApiToMerchantsStorageClientBridge implements MerchantsRestApiToMerchantsStorageClientInterface
+class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
      * @var \Spryker\Client\MerchantStorage\MerchantStorageClientInterface
