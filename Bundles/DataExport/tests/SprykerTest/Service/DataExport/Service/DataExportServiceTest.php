@@ -7,16 +7,14 @@
 
 namespace SprykerTest\Service\DataExport\Service;
 
+use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataExportBatchTransfer;
+use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
-use Spryker\Service\DataExport\DataExportConfig;
-use Spryker\Service\DataExport\DataExportService;
-use Spryker\Service\DataExport\DataExportServiceFactory;
-use Spryker\Service\DataExport\DataExportServiceInterface;
 
 /**
  * Auto-generated group annotations
@@ -153,7 +151,8 @@ class DataExportServiceTest extends Unit
         $header = array_shift($fileData); // header is not part of object count
 
         $this->assertCount(count($data), $fileData);
-        $this->assertEquals($data, $fileData);
+        $this->assertEquals(array_values($data[0]), $fileData[0]);
+        $this->assertEquals(array_values($data[1]), $fileData[1]);
 
         $this->tester->removeCreatedFiles(static::DESTINATION_DIR);
     }
@@ -176,33 +175,38 @@ class DataExportServiceTest extends Unit
     }
 
     /**
-     * @deprecated
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\DataExport\DataExportConfig
+     * @return void
      */
-    protected function mockDataExportConfig(): DataExportConfig
+    public function testResolveDataExportActionConfigurationWillResolveConfigurations(): void
     {
-        $dataExportConfigMock = $this->getMockBuilder(DataExportConfig::class)->getMock();
+        //Arrange
+        $originalDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setDestination(static::DESTINATION_FILE)
+            ->setDataEntity(static::DATA_ENTITY_MASTER);
 
-        $dataExportConfigMock->method('getDataExportDefaultLocalPath')
-            ->willReturn(Configuration::outputDir());
+        $fields = ['test-field-1', 'test-field-2'];
+        $format = 'csv';
+        $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())->setType($format);
+        $additionalDefaultsDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setFormat($dataExportFormatConfigurationTransfer);
+        $additionalActionDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setDataEntity(static::DATA_ENTITY_MASTER)
+            ->setFields($fields);
+        $additionalDataExportConfigurationsTransfer = (new DataExportConfigurationsTransfer())
+            ->setDefaults($additionalDefaultsDataExportConfigurationTransfer)
+            ->setActions(new ArrayObject([$additionalActionDataExportConfigurationTransfer]));
 
-        return $dataExportConfigMock;
-    }
+        //Act
+        $dataExportConfigurationTransfer = $this->tester->getService()->resolveDataExportActionConfiguration(
+            $originalDataExportConfigurationTransfer,
+            $additionalDataExportConfigurationsTransfer
+        );
 
-    /**
-     * @deprecated
-     *
-     * @return \Spryker\Service\DataExport\DataExportServiceInterface
-     */
-    public function getDataExportServiceWithConfigMock(): DataExportServiceInterface
-    {
-        $dataExportServiceFactory = new DataExportServiceFactory();
-        $dataExportServiceFactory->setConfig($this->mockDataExportConfig());
-
-        $dataExportService = new DataExportService();
-        $dataExportService->setFactory($dataExportServiceFactory);
-
-        return $dataExportService;
+        //Assert
+        $this->assertSame(static::DATA_ENTITY_MASTER, $dataExportConfigurationTransfer->getDataEntity());
+        $this->assertSame(static::DESTINATION_FILE, $dataExportConfigurationTransfer->getDestination());
+        $this->assertNotNull($dataExportConfigurationTransfer->getFormat());
+        $this->assertSame($format, $dataExportConfigurationTransfer->getFormat()->getType());
+        $this->assertSame($dataExportConfigurationTransfer->getFields(), $fields);
     }
 }
