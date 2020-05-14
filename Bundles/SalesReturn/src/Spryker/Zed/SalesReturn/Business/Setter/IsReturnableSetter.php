@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesReturn\Business\Setter;
 use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class IsReturnableSetter implements IsReturnableSetterInterface
@@ -23,11 +24,20 @@ class IsReturnableSetter implements IsReturnableSetterInterface
     protected $salesReturnConfig;
 
     /**
-     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @var \Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface
      */
-    public function __construct(SalesReturnConfig $salesReturnConfig)
-    {
+    protected $utilDateTimeService;
+
+    /**
+     * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @param \Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface $utilDateTimeService
+     */
+    public function __construct(
+        SalesReturnConfig $salesReturnConfig,
+        SalesReturnToUtilDateTimeServiceInterface $utilDateTimeService
+    ) {
         $this->salesReturnConfig = $salesReturnConfig;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -62,10 +72,12 @@ class IsReturnableSetter implements IsReturnableSetterInterface
         $retunrableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
             ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
 
+        $formatedRetunrableTillDateTime = $this->utilDateTimeService->formatDate($retunrableTillDateTime);
+
         $messageTransfer = (new MessageTransfer())
             ->setValue(static::GLOSSARY_KEY_RETURNABLE_TILL_DATE)
             ->setParameters([
-                static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $retunrableTillDateTime,
+                static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $formatedRetunrableTillDateTime,
             ]);
 
         $itemTransfer->addReturnPolicyMessage($messageTransfer);
