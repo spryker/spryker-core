@@ -8,10 +8,10 @@
         {% set currencyIsoCode = (return.returnItems | first).orderItem.currencyIsoCode %}
 
         <div class="row">
-            <div class="col-lg-10 font-bold">
+            <div class="col-sm-9 font-bold">
                 {{ 'Remuneration Total' | trans ~ ':' }}
             </div>
-            <div class="col-lg-2 text-right">
+            <div class="col-sm-3 text-right">
                 {{ return.returnTotals.remunerationTotal | money(true, currencyIsoCode) }}
             </div>
         </div>
