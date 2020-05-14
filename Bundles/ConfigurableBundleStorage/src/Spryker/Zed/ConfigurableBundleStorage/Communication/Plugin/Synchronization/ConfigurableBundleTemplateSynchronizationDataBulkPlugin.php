@@ -66,11 +66,10 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
             ->getFilteredConfigurableBundleTemplateStorageEntities($filterTransfer, $ids);
 
         foreach ($configurableBundleTemplateStorageEntities as $configurableBundleTemplateStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($configurableBundleTemplateStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($configurableBundleTemplateStorageEntity->getKey());
-
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->fromArray($configurableBundleTemplateStorageEntity->virtualProperties(), true)
+                ->setData($configurableBundleTemplateStorageEntity->getData())
+                ->setKey($configurableBundleTemplateStorageEntity->getKey());
         }
 
         return $synchronizationDataTransfers;

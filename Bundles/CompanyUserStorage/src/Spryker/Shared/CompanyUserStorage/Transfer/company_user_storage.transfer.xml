@@ -19,8 +19,6 @@
 
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
-        <property name="data" type="string"/>
-        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="Filter">

@@ -65,10 +65,10 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
         $productMeasurementUnitEntityTransfers = $this->getRepository()->findFilteredProductMeasurementUnitStorageEntities($filterTransfer, $ids);
 
         foreach ($productMeasurementUnitEntityTransfers as $productMeasurementUnitEntityTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productMeasurementUnitEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($productMeasurementUnitEntityTransfer->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->fromArray($productMeasurementUnitEntityTransfer->virtualProperties(), true)
+                ->setData($productMeasurementUnitEntityTransfer->getData())
+                ->setKey($productMeasurementUnitEntityTransfer->getKey());
         }
 
         return $synchronizationDataTransfers;
