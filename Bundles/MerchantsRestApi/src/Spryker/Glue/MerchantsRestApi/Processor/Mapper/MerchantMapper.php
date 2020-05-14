@@ -28,18 +28,18 @@ class MerchantMapper implements MerchantMapperInterface
         $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
 
         $restLegalInformationTransfer = (new RestLegalInformationTransfer())
-            ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey())
-            ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacyGlossaryKey())
-            ->setImprint($merchantStorageProfileTransfer->getImprintGlossaryKey())
-            ->setTerms($merchantStorageProfileTransfer->getTermsConditionsGlossaryKey());
+            ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicy())
+            ->setDataPrivacy($merchantStorageProfileTransfer->getDataPrivacy())
+            ->setImprint($merchantStorageProfileTransfer->getImprint())
+            ->setTerms($merchantStorageProfileTransfer->getTermsConditions());
 
         return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
             ->fromArray($merchantStorageProfileTransfer->toArray(), true)
             ->setMerchantName($merchantStorageTransfer->getName())
             ->setLegalInformation($restLegalInformationTransfer)
-            ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrlGlossaryKey())
-            ->setDescription($merchantStorageProfileTransfer->getDescriptionGlossaryKey())
-            ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey())
+            ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrl())
+            ->setDescription($merchantStorageProfileTransfer->getDescription())
+            ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
             ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
     }
 

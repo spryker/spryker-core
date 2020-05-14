@@ -73,14 +73,14 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
         ArrayObject $merchantStorageProfileAddressTransfers,
         string $merchantReference
     ): RestResponseInterface {
-        $merchantsRestResource = $this->createMerchantAddressesRestResource(
+        $merchantAddressesRestResource = $this->createMerchantAddressesRestResource(
             $merchantStorageProfileAddressTransfers,
             $merchantReference
         );
 
         return $this->restResourceBuilder
             ->createRestResponse()
-            ->addResource($merchantsRestResource);
+            ->addResource($merchantAddressesRestResource);
     }
 
     /**
@@ -122,24 +122,24 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
         ArrayObject $merchantStorageProfileAddressTransfers,
         string $merchantReference
     ): RestResourceInterface {
-        $restMerchantsAttributesTransfer = $this->merchantsAddressResourceMapper
+        $restMerchantAddressesAttributesTransfer = $this->merchantsAddressResourceMapper
             ->mapMerchantStorageProfileAddressTransfersToRestMerchantAddressesAttributesTransfer(
                 $merchantStorageProfileAddressTransfers,
                 new RestMerchantAddressesAttributesTransfer()
             );
 
-        $restResource = $this->restResourceBuilder->createRestResource(
+        $merchantAddressesRestResource = $this->restResourceBuilder->createRestResource(
             MerchantsRestApiConfig::RESOURCE_MERCHANT_ADDRESSES,
             $merchantReference,
-            $restMerchantsAttributesTransfer
+            $restMerchantAddressesAttributesTransfer
         );
 
-        $restResource->addLink(
+        $merchantAddressesRestResource->addLink(
             RestLinkInterface::LINK_SELF,
             $this->getMerchantAddressesResourceSelfLink($merchantReference)
         );
 
-        return $restResource;
+        return $merchantAddressesRestResource;
     }
 
     /**
