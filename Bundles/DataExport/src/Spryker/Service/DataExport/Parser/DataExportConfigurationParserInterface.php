@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 interface DataExportConfigurationParserInterface
 {
     /**
-     * @param string $filename
+     * @param string $fileName
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer
      */
-    public function parseConfigurationFile(string $filename): DataExportConfigurationsTransfer;
+    public function parseConfigurationFile(string $fileName): DataExportConfigurationsTransfer;
 }

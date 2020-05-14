@@ -40,13 +40,13 @@ class DataExportConfigurationYamlParser implements DataExportConfigurationParser
     }
 
     /**
-     * @param string $filename
+     * @param string $fileName
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer
      */
-    public function parseConfigurationFile(string $filename): DataExportConfigurationsTransfer
+    public function parseConfigurationFile(string $fileName): DataExportConfigurationsTransfer
     {
-        $yamlBatchIterator = $this->utilDataReaderService->getYamlBatchIterator($filename);
+        $yamlBatchIterator = $this->utilDataReaderService->getYamlBatchIterator($fileName);
         $configData = $yamlBatchIterator->current();
 
         $dataExportConfigurationsTransfer = $this->dataExportConfigurationMapper
