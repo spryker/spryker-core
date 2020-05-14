@@ -35,6 +35,14 @@ class MerchantProductDataImportCommunicationTester extends Actor
      */
     public function ensureMerchantProductAbstractTablesIsEmpty(): void
     {
-        SpyMerchantProductAbstractQuery::create()->deleteAll();
+        $this->createMerchantProductAbstractPropelQuery()->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     */
+    public function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
+    {
+        return SpyMerchantProductAbstractQuery::create();
     }
 }

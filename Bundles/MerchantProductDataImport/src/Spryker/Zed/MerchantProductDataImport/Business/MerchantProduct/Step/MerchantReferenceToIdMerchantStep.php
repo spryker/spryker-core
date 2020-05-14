@@ -60,7 +60,7 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
         $idMerchant = $merchantQuery->findOneByMerchantReference($merchantReference);
 
         if (!$idMerchant) {
-            throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantReference));
+            throw new EntityNotFoundException(sprintf('Could not find Merchant by reference "%s"', $merchantReference));
         }
 
         $this->idMerchantCache[$merchantReference] = $idMerchant;

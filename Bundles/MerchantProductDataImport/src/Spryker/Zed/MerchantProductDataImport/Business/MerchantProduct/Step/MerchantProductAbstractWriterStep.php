@@ -42,27 +42,16 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
      * @return void
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
         foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
-            $this->validateRequireDataSetByKey($dataSet, $requiredDataSetKey);
-        }
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param string $requiredDataSetKey
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
-     */
-    protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
-    {
-        if (!$dataSet[$requiredDataSetKey]) {
-            throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
+            if (!$dataSet[$requiredDataSetKey]) {
+                throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
+            }
         }
     }
 

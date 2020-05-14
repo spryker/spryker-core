@@ -21,6 +21,7 @@ class MerchantProductDataImportPlugin extends AbstractPlugin implements DataImpo
 {
     /**
      * {@inheritDoc}
+     * - Imports data for relations between merchants and product abstracts.
      *
      * @api
      *

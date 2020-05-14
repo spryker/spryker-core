@@ -14,7 +14,7 @@ interface MerchantProductDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports data from a specified file.
+     * - Imports data for relations between abstract products and merchants.
      * - Iterates over the data sets and imports the data into the database.
      *
      * @api

@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\MerchantProductAbstractWriterStep;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\MerchantReferenceToIdMerchantStep;
-use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\ProductAbstractSkuToIdAbstractProductStep;
+use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step\ProductAbstractSkuToIdProductAbstractStep;
 
 /**
  * @method \Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportConfig getConfig()
@@ -33,7 +33,7 @@ class MerchantProductDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
             ->addStep($this->createMerchantReferenceToIdMerchantStep())
-            ->addStep($this->createProductAbstractSkuToIdAbstractProductStep())
+            ->addStep($this->createProductAbstractSkuToIdProductAbstractStep())
             ->addStep($this->createMerchantProductAbstractWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -60,8 +60,8 @@ class MerchantProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductAbstractSkuToIdAbstractProductStep(): DataImportStepInterface
+    public function createProductAbstractSkuToIdProductAbstractStep(): DataImportStepInterface
     {
-        return new ProductAbstractSkuToIdAbstractProductStep();
+        return new ProductAbstractSkuToIdProductAbstractStep();
     }
 }

@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\MerchantProductDataSetInterface;
 
-class ProductAbstractSkuToIdAbstractProductStep implements DataImportStepInterface
+class ProductAbstractSkuToIdProductAbstractStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -51,7 +51,7 @@ class ProductAbstractSkuToIdAbstractProductStep implements DataImportStepInterfa
         $idProductAbstract = $productAbstractQuery->findOneBySku($sku);
 
         if (!$idProductAbstract) {
-            throw new EntityNotFoundException(sprintf('Could not find Abstract PRoduct by sku "%s"', $sku));
+            throw new EntityNotFoundException(sprintf('Could not find Abstract Product by sku "%s"', $sku));
         }
 
         return $idProductAbstract;

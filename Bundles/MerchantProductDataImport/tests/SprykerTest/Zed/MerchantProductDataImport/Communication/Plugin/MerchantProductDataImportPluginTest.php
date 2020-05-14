@@ -30,8 +30,8 @@ use Spryker\Zed\MerchantProductDataImport\MerchantProductDataImportConfig;
  */
 class MerchantProductDataImportPluginTest extends Unit
 {
-    public const MERCHANT_REFERENCE = 'MERCHANT_TEST';
-    public const PRODUCT_ABSTRACT_SKU = 'test_sku';
+    protected const MERCHANT_REFERENCE = 'MERCHANT_TEST';
+    protected const PRODUCT_ABSTRACT_SKU = 'test_sku';
 
     /**
      * @var \SprykerTest\Zed\MerchantProductDataImport\MerchantProductDataImportCommunicationTester
