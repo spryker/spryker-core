@@ -47,10 +47,11 @@ class SalesExpenseMapper
     public function mapSalesExpenseDataByField(array $salesExpenseRows): array
     {
         $fields = $this->getFields();
+        $selectedFields = array_values(array_intersect_key($fields, $salesExpenseRows[0] ?? []));
+
         $mappedSalesExpenses = [];
-        foreach ($salesExpenseRows as $salesOrderRow) {
-            $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
-            $mappedSalesExpenses[] = array_combine($selectedFields, $salesOrderRow);
+        foreach ($salesExpenseRows as $salesExpenseRow) {
+            $mappedSalesExpenses[] = array_combine($selectedFields, $salesExpenseRow);
         }
 
         return $mappedSalesExpenses;

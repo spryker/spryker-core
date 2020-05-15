@@ -88,10 +88,11 @@ class SalesOrderItemMapper
     public function mapSalesOrderItemDataByField(array $salesOrderItemRows): array
     {
         $fields = $this->getFields();
+        $selectedFields = array_values(array_intersect_key($fields, $salesOrderItemRows[0] ?? []));
+
         $mappedSalesOrderItems = [];
-        foreach ($salesOrderItemRows as $salesOrderRow) {
-            $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
-            $mappedSalesOrderItems[] = array_combine($selectedFields, $salesOrderRow);
+        foreach ($salesOrderItemRows as $salesOrderItemRow) {
+            $mappedSalesOrderItems[] = array_combine($selectedFields, $salesOrderItemRow);
         }
 
         return $mappedSalesOrderItems;

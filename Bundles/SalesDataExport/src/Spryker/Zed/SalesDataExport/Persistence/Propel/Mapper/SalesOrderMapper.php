@@ -84,9 +84,10 @@ class SalesOrderMapper
      */
     public function mapSalesOrderDataByField(array $salesOrderRows, array $fields): array
     {
+        $selectedFields = array_values(array_intersect_key($fields, $salesOrderRows[0] ?? []));
+
         $mappedSalesOrders = [];
         foreach ($salesOrderRows as $salesOrderRow) {
-            $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
             $mappedSalesOrderRow = array_combine($selectedFields, $salesOrderRow);
 
             if (isset($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS])) {
