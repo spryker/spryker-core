@@ -45,27 +45,6 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
-        $productBundles = $this->getProductBundlesExpandedWithProductOptions($itemTransfers);
-        if (!$productBundles) {
-            return $itemTransfers;
-        }
-
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getProductBundle() && $itemTransfer->getRelatedBundleItemIdentifier()) {
-                $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
-            }
-        }
-
-        return $itemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getProductBundlesExpandedWithProductOptions(array $itemTransfers): array
-    {
         $productBundles = [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -81,6 +60,8 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
                 $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()],
                 $itemTransfer
             );
+
+            $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
         }
 
         foreach ($productBundles as $productBundle) {
@@ -89,7 +70,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             );
         }
 
-        return $productBundles;
+        return $itemTransfers;
     }
 
     /**
