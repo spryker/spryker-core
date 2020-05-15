@@ -142,17 +142,15 @@ class RepositoryExporter implements ExporterInterface
     protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities): void
     {
         $queueSendTransfers = [];
-        foreach ($synchronizationEntities as $synchronizedEntity) {
-            $store = $this->getStore($plugin->hasStore(), $synchronizedEntity);
+        foreach ($synchronizationEntities as $synchronizationEntity) {
+            $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
 
-            foreach ($this->getSynchronizationKeys($synchronizedEntity) as $synchronizationKey) {
-                $syncQueueMessage = (new SynchronizationQueueMessageTransfer())
-                    ->setKey($synchronizationKey)
-                    ->setValue($synchronizedEntity->getData())
-                    ->setResource($plugin->getResourceName())
-                    ->setParams($plugin->getParams());
-
-                $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
+            foreach ($this->getSynchronizationKeys($synchronizationEntity) as $synchronizationKey) {
+                $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage(
+                    $this->createSynchronizationQueueMessageTransfer($plugin, $synchronizationKey, $synchronizationEntity),
+                    $plugin,
+                    $store
+                );
             }
         }
 
@@ -189,5 +187,27 @@ class RepositoryExporter implements ExporterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     * @param string $synchronizationKey
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationEntity
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer
+     */
+    protected function createSynchronizationQueueMessageTransfer(
+        SynchronizationDataPluginInterface $plugin,
+        string $synchronizationKey,
+        SynchronizationDataTransfer $synchronizationEntity
+    ): SynchronizationQueueMessageTransfer {
+        /** @var array $data */
+        $data = $synchronizationEntity->getData();
+
+        return (new SynchronizationQueueMessageTransfer())
+            ->setKey($synchronizationKey)
+            ->setValue($data)
+            ->setResource($plugin->getResourceName())
+            ->setParams($plugin->getParams());
     }
 }

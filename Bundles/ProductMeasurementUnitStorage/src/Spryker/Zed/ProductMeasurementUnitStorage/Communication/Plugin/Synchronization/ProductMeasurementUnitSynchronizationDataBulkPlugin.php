@@ -66,8 +66,7 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
 
         foreach ($productMeasurementUnitStorageEntities as $productMeasurementUnitStorageEntity) {
             $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->fromArray($productMeasurementUnitStorageEntity->toArray(), true)
-                ->setReference(null);
+                ->fromArray($productMeasurementUnitStorageEntity->toArray(), true);
         }
 
         return $synchronizationDataTransfers;
