@@ -25,7 +25,7 @@ class MerchantStoragePublisherPlugin extends AbstractPlugin implements Publisher
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
