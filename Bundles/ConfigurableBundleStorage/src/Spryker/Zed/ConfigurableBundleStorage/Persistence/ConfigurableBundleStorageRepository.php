@@ -8,9 +8,8 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStoragePersistenceFactory getFactory()
@@ -64,12 +63,12 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundleStorage\Persistence\Base\SpyConfigurableBundleTemplateStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getFilteredConfigurableBundleTemplateStorageEntities(
+    public function getFilteredConfigurableBundleTemplateStorageDataTransfers(
         FilterTransfer $filterTransfer,
         array $configurableBundleTemplateIds
-    ): ObjectCollection {
+    ): array {
         $configurableBundleTemplateStoragePropelQuery = $this->getFactory()
             ->getConfigurableBundleTemplateStoragePropelQuery();
 
@@ -77,12 +76,9 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
             $configurableBundleTemplateStoragePropelQuery->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds);
         }
 
-        $configurableBundleTemplateStoragePropelQuery = $this->buildQueryFromCriteria(
-            $configurableBundleTemplateStoragePropelQuery,
-            $filterTransfer
-        )->setFormatter(ObjectFormatter::class);
-
-        return $configurableBundleTemplateStoragePropelQuery->find();
+        return $this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 
     /**

@@ -8,9 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStoragePersistenceFactory getFactory()
@@ -77,9 +76,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): ObjectCollection
+    public function findFilteredProductMeasurementUnitStorageDataTransfers(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
     {
         $productMeasurementUnitStoragePropelQuery = $this->getFactory()->createProductMeasurementUnitStorageQuery();
 
@@ -87,12 +86,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
             $productMeasurementUnitStoragePropelQuery->filterByFkProductMeasurementUnit_In($productMeasurementUnitIds);
         }
 
-        $productMeasurementUnitStoragePropelQuery = $this->buildQueryFromCriteria(
-            $productMeasurementUnitStoragePropelQuery,
-            $filterTransfer
-        )->setFormatter(ObjectFormatter::class);
-
-        return $productMeasurementUnitStoragePropelQuery->find();
+        return $this->buildQueryFromCriteria($productMeasurementUnitStoragePropelQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 
     /**

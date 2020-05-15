@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ConfigurableBundleStorageRepositoryInterface
 {
@@ -30,12 +29,12 @@ interface ConfigurableBundleStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundleStorage\Persistence\Base\SpyConfigurableBundleTemplateStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getFilteredConfigurableBundleTemplateStorageEntities(
+    public function getFilteredConfigurableBundleTemplateStorageDataTransfers(
         FilterTransfer $filterTransfer,
         array $configurableBundleTemplateIds
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

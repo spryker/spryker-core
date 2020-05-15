@@ -11,7 +11,6 @@
     "spryker/locale": "^3.0.0",
     "spryker/product-image": "^3.8.0",
     "spryker/product-storage": "^1.7.0",
-    "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
