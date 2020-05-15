@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -51,13 +51,13 @@ class AbstractStoragePublishListenerTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMerchantProductOfferStorageToProductOfferFacadeInterfaceMock(
+    protected function getMerchantProductOfferStorageRepositoryMock(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
-    ): MerchantProductOfferStorageToProductOfferFacadeInterface {
-        $productOfferFacade = $this->getMockBuilder(MerchantProductOfferStorageToProductOfferFacadeInterface::class)->getMock();
-        $productOfferFacade->method('find')->willReturn($productOfferCollectionTransfer);
+    ): MerchantProductOfferStorageRepositoryInterface {
+        $productOfferFacade = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
+        $productOfferFacade->method('getProductOffersByFilterCriteria')->willReturn($productOfferCollectionTransfer);
 
         return $productOfferFacade;
     }

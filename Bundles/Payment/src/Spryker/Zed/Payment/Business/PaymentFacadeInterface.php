@@ -149,4 +149,23 @@ interface PaymentFacadeInterface
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if selected payment methods exist.
+     * - Checks `QuoteTransfer.payments` and `QuoteTransfer.payment` for BC reasons.
+     * - Returns `false` and add an error in case at least one of the payment methods
+     *  does not exist or is not available for `QuoteTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuotePaymentMethodValid(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

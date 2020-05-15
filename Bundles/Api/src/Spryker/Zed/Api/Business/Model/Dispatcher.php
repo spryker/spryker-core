@@ -147,7 +147,7 @@ class Dispatcher implements DispatcherInterface
     /**
      * @param string $resource
      * @param string $method
-     * @param string|null $id
+     * @param int|null $id
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiOptionsTransfer

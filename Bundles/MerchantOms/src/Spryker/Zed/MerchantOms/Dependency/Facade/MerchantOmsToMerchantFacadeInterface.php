@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantOmsToMerchantFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer;
 }

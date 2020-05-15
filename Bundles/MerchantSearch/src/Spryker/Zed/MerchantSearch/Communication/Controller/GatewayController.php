@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantSearch\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,13 +17,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getActiveMerchantsAction(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function getAction(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        return $this->getFacade()
-            ->getActiveMerchants($merchantCriteriaFilterTransfer);
+        return $this->getFacade()->get($merchantCriteriaTransfer);
     }
 }
