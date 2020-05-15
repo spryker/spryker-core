@@ -225,9 +225,9 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $stores
      *
-     * @return array
+     * @return string[]
      */
-    protected function getStorePrefixes(array $stores)
+    protected function getStorePrefixes(array $stores): array
     {
         $storePrefixes = [];
         foreach ($stores as $store) {
