@@ -1,6 +1,8 @@
 <tr>
     <td>
-        <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
+        {% if not isBundleProduct %}
+            <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
+        {% endif %}
     </td>
     <td>
         <div class="image-wrap">
