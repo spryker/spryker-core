@@ -109,7 +109,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $storeName
      *
      * @return array

@@ -218,7 +218,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $processOutputBuffer = '';
 
-        $process->run(function ($type, $buffer) use ($output, $progressBar, &$processOutputBuffer) {
+        $process->run(function ($type, $buffer) use ($path, $output, $progressBar, &$processOutputBuffer) {
             $this->addErrors($buffer);
 
             preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
@@ -236,6 +236,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
             }
 
             $output->write($processOutputBuffer);
+            if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+                $module = str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $path);
+                $output->writeln(sprintf('Errors in module %s', $module));
+            }
+
             $progressBar->display();
             $processOutputBuffer = '';
         });
