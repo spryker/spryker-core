@@ -15,7 +15,7 @@ interface DataExportFormatterPluginInterface
 {
     /**
      * Specification:
-     * - TODO
+     * - - Checks if plugin is applicable for formatting configuration defined in DataExportConfigurationTransfer.
      *
      * @api
      *
@@ -27,7 +27,8 @@ interface DataExportFormatterPluginInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Formats data from `DataExportBatchTransfer` to a format specified in `DataExportConfigurationTransfer`.
+     * - Returns `DataExportFormatResponseTransfer` with isSuccessful=true if data was formatted successfully.
      *
      * @api
      *
@@ -43,7 +44,7 @@ interface DataExportFormatterPluginInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Returns file extension according to format configuration in DataExportConfigurationTransfer.
      *
      * @api
      *

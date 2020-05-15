@@ -13,7 +13,9 @@ interface DataExportFacadeInterface
 {
     /**
      * Specification:
-     * - Todo
+     * - Merges `DataExportConfigurationsTransfer` with the module's default configuration.
+     * - Uses stack of `DataEntityExporterPluginInterface` plugins to export data.
+     * - Returns a collection of `DataExportReportTransfer` collected from `DataEntityExporterPluginInterface` plugins execution results.
      *
      * @api
      *

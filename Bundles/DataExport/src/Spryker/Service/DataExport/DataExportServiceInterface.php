@@ -16,7 +16,8 @@ interface DataExportServiceInterface
 {
     /**
      * Specification:
-     * - TODO
+     * - Reads configurations from the file defined in $filePath.
+     * - Maps read configurations to DataExportConfigurationsTransfer.
      *
      * @api
      *
@@ -28,7 +29,9 @@ interface DataExportServiceInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Merges two `DataExportConfigurationTransfer` transfers into one.
+     * - Properties of the `$masterDataExportConfigurationTransfer` will override same properties in the `$slaveDataExportConfigurationTransfer`.
+     * - Properties `DataExportConfigurationTransfer.hooks` and `DataExportConfigurationTransfer.filterCriteria` will be merged.
      *
      * @api
      *
@@ -44,7 +47,8 @@ interface DataExportServiceInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Adds properties from `$additionalDataExportConfigurationsTransfer` to `$dataExportActionConfigurationTransfer` if they are missing.
+     * - Returns data export action configuration.
      *
      * @api
      *
@@ -60,7 +64,13 @@ interface DataExportServiceInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Formats data from `DataExportBatchTransfer` to a format specified in `DataExportConfigurationTransfer`.
+     * - Uses stack of `DataExportFormatterPluginInterface` plugins for formatting data.
+     * - If applicable formatter plugin is not found will fallback to default `csv` formatter.
+     * - Writes formatted data according to connection configuration in `DataExportConfigurationTransfer`.
+     * - Uses stack of `DataExportConnectionPluginInterface` plugins for writing data.
+     * - If applicable connection plugin is not found will fallback to default `local` connection.
+     * - Returns `DataExportWriteResponseTransfer` with isSuccessful=true if data was written successfully.
      *
      * @api
      *
@@ -76,7 +86,7 @@ interface DataExportServiceInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Returns file extension according to format configuration in DataExportConfigurationTransfer.
      *
      * @api
      *

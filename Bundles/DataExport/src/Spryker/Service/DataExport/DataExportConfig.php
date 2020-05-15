@@ -11,30 +11,4 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class DataExportConfig extends AbstractBundleConfig
 {
-    protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
-
-    /**
-     * Specification:
-     * - TODO
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getExportConfigurationDefaultsPath(): string
-    {
-        return $this->getModuleExportConfigurationPath() . 'defaults_config.yml';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModuleExportConfigurationPath(): string
-    {
-        $moduleRoot = realpath(
-            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
-        );
-
-        return $moduleRoot . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
-    }
 }

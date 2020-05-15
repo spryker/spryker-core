@@ -14,8 +14,9 @@ interface SalesDataExportFacadeInterface
 {
     /**
      * Specification
-     * - Exports orders
-     * - Returns results of export
+     * - Exports orders according to configuration in `DataExportConfigurationTransfer`.
+     * - Merges module level configuration with `DataExportConfigurationTransfer`.
+     * - Returns results of export in `DataExportReportTransfer`.
      *
      * @api
      *
@@ -27,8 +28,9 @@ interface SalesDataExportFacadeInterface
 
     /**
      * Specification
-     * - Exports order items
-     * - Returns results of export
+     * - Exports order items according to configuration in `DataExportConfigurationTransfer`.
+     * - Merges module level configuration with `DataExportConfigurationTransfer`.
+     * - Returns results of export in `DataExportReportTransfer`.
      *
      * @api
      *
@@ -40,8 +42,9 @@ interface SalesDataExportFacadeInterface
 
     /**
      * Specification
-     * - Exports order expenses
-     * - Returns results of export
+     * - Exports order expensess according to configuration in `DataExportConfigurationTransfer`.
+     * - Merges module level configuration with `DataExportConfigurationTransfer`.
+     * - Returns results of export in `DataExportReportTransfer`.
      *
      * @api
      *

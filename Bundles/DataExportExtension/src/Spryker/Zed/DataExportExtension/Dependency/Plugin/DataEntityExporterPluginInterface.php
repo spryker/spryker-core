@@ -14,7 +14,7 @@ interface DataEntityExporterPluginInterface
 {
     /**
      * Specification:
-     * - TODO
+     * - Return data entity name.
      *
      * @api
      *
@@ -24,7 +24,8 @@ interface DataEntityExporterPluginInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Exports data according to configuration in `DataExportConfigurationTransfer`.
+     * - Returns results of export in `DataExportReportTransfer`.
      *
      * @api
      *

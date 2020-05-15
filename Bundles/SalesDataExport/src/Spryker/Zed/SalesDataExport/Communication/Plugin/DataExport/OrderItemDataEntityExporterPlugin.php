@@ -33,7 +33,7 @@ class OrderItemDataEntityExporterPlugin extends AbstractPlugin implements DataEn
 
     /**
      * {@inheritDoc}
-     * - TODO
+     * - Exports order items data according to configuration in `DataExportConfigurationTransfer`.
      *
      * @api
      *

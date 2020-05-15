@@ -33,7 +33,7 @@ class OrderExpenseDataEntityExporterPlugin extends AbstractPlugin implements Dat
 
     /**
      * {@inheritDoc}
-     * - TODO
+     * - Exports order expenses data according to configuration in `DataExportConfigurationTransfer`.
      *
      * @api
      *

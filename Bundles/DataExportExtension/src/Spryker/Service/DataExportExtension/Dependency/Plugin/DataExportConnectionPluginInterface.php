@@ -16,7 +16,7 @@ interface DataExportConnectionPluginInterface
 {
     /**
      * Specification:
-     * - TODO
+     * - Checks if plugin is applicable for connection configuration defined in DataExportConfigurationTransfer.
      *
      * @api
      *
@@ -28,7 +28,8 @@ interface DataExportConnectionPluginInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Writes formatted data from `DataExportFormatResponseTransfer` according to connection configuration in `DataExportConfigurationTransfer`.
+     * - Returns `DataExportWriteResponseTransfer` with isSuccessful=true if data was written successfully.
      *
      * @api
      *
