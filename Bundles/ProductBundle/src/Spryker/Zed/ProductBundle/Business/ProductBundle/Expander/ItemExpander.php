@@ -49,6 +49,8 @@ class ItemExpander implements ItemExpanderInterface
             return $itemTransfers;
         }
 
+        $bundleItemTransfers = $this->expandBundleItemsWithIds($bundleItemTransfers);
+
         foreach ($itemTransfers as $itemTransfer) {
             if (!isset($bundleItemTransfers[$itemTransfer->getIdSalesOrderItem()])) {
                 continue;
@@ -61,6 +63,45 @@ class ItemExpander implements ItemExpanderInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandBundleItemsWithIds(array $bundleItemTransfers): array
+    {
+        $productConcreteTransfers = $this->productBundleRepository->getProductConcretesByProductConcreteSkus(
+            $this->getProductConcreteSkus($bundleItemTransfers)
+        );
+
+        foreach ($bundleItemTransfers as $bundleItemTransfer) {
+            if (!isset($productConcreteTransfers[$bundleItemTransfer->getSku()])) {
+                continue;
+            }
+
+            $bundleItemTransfer->setId($productConcreteTransfers[$bundleItemTransfer->getSku()]->getIdProductConcrete())
+                ->setIdProductAbstract($productConcreteTransfers[$bundleItemTransfer->getSku()]->getFkProductAbstract());
+        }
+
+        return $bundleItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkus(array $itemTransfers): array
+    {
+        $productConcreteSkus = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $productConcreteSkus[] = $itemTransfer->getSku();
+        }
+
+        return $productConcreteSkus;
     }
 
     /**

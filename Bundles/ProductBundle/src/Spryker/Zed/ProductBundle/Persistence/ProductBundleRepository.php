@@ -98,4 +98,21 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleMapper()
             ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemBundleEntities);
     }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByProductConcreteSkus(array $productConcreteSkus): array
+    {
+        $productEntities = $this->getFactory()
+            ->createProductQuery()
+            ->filterBySku_In($productConcreteSkus)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductEntitiesToProductConcreteTransfers($productEntities);
+    }
 }

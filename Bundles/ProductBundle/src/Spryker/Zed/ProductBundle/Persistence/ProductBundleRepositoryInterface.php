@@ -41,4 +41,11 @@ interface ProductBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByProductConcreteSkus(array $productConcreteSkus): array;
 }
