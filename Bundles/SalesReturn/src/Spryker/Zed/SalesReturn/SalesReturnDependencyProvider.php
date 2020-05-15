@@ -40,7 +40,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addDateTimeService($container);
+        $container = $this->addUtilDateTimeService($container);
 
         return $container;
     }
@@ -122,7 +122,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDateTimeService(Container $container): Container
+    protected function addUtilDateTimeService(Container $container): Container
     {
         $container->set(static::SERVICE_DATETIME, $container->factory(function (Container $container) {
             return new SalesReturnToUtilDateTimeServiceBridge(

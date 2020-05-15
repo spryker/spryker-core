@@ -132,7 +132,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new IsReturnableSetter(
             $this->getConfig(),
-            $this->getDateTimeService()
+            $this->getUtilDateTimeService()
         );
     }
 
@@ -163,7 +163,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface
      */
-    protected function getDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
+    protected function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_DATETIME);
     }
