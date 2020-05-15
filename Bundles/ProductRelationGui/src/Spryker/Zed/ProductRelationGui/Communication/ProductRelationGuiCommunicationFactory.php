@@ -27,9 +27,9 @@ use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\MappingProviderInterface;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreator;
 use Spryker\Zed\ProductRelationGui\Communication\QueryCreator\RuleQueryCreatorInterface;
-use Spryker\Zed\ProductRelationGui\Communication\Table\ProductAbstractTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRelationTable;
 use Spryker\Zed\ProductRelationGui\Communication\Table\ProductRuleTable;
+use Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable;
 use Spryker\Zed\ProductRelationGui\Communication\Tabs\ProductRelationTabs;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToMoneyFacadeInterface;
@@ -172,11 +172,11 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @param int|null $idProductRelation
      *
-     * @return \Spryker\Zed\ProductRelationGui\Communication\Table\ProductAbstractTable
+     * @return \Spryker\Zed\ProductRelationGui\Communication\Table\ProductTable
      */
-    public function createProductAbstractTable(?int $idProductRelation = null): ProductAbstractTable
+    public function createProductTable(?int $idProductRelation = null): ProductTable
     {
-        return new ProductAbstractTable(
+        return new ProductTable(
             $this->getProductAbstractPropelQuery(),
             $this->getLocaleFacade(),
             $this->getUtilEncodingService(),

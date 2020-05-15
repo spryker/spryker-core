@@ -17,7 +17,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface;
 
-class ProductAbstractTable extends AbstractProductTable
+class ProductTable extends AbstractProductTable
 {
     protected const COL_ACTIONS = 'Actions';
     protected const COL_STATUS = 'Status';

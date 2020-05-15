@@ -52,7 +52,7 @@ class CreateController extends BaseProductRelationController
             return $this->handleSubmitForm($productRelationForm);
         }
 
-        $productTable = $this->getFactory()->createProductAbstractTable();
+        $productTable = $this->getFactory()->createProductTable();
         $productRuleTable = $this->getFactory()->createProductRuleTable(
             $productRelationFormTypeDataProvider->getData()
         );
@@ -102,7 +102,7 @@ class CreateController extends BaseProductRelationController
      */
     public function tableAction(): JsonResponse
     {
-        $productTable = $this->getFactory()->createProductAbstractTable();
+        $productTable = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
             $productTable->fetchData()
