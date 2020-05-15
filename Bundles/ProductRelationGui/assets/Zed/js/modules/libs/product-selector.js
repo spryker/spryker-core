@@ -78,7 +78,7 @@ ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
     this.selectedProductContainer.show();
     this.selectedProductContainer.find('#product-img').attr({'src': imageUrl});
     this.selectedProductContainer.find('.product-name').text(name);
-    this.selectedProductContainer.find('#product-description').html(description);
+    this.selectedProductContainer.find('#product-description').text(description);
     this.selectedProductContainer.find('#product-category').text(categories);
     this.idProductAbstractElement.val(idProductAbstract);
 };
