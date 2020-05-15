@@ -47,7 +47,8 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         $selectedColumns = $this->getSalesOrderSelectedColumns($dataExportConfigurationTransfer);
         $selectedFields = array_flip($selectedColumns);
 
-        if (in_array(SalesOrderMapper::KEY_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true)) {
+        $hasComments = in_array(SalesOrderMapper::KEY_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true);
+        if ($hasComments) {
             $selectedFields[SalesOrderMapper::KEY_ORDER_COMMENTS] = SalesOrderMapper::KEY_ORDER_COMMENTS;
             $selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
         }
@@ -83,12 +84,13 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             $salesOrderData = $this->formatSingleColumnData($salesOrderData, $selectedColumns);
         }
 
-        if (isset($selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER])) {
+        if ($hasComments) {
             $salesOrderIds = array_column($salesOrderData, SpySalesOrderTableMap::COL_ID_SALES_ORDER);
             $salesOrderCommentTransfers = $this->getCommentsByOrderId($salesOrderIds);
-            foreach ($salesOrderIds as $key => $idSalesOrder) {
-                $salesOrderData[$key][SalesOrderMapper::KEY_ORDER_COMMENTS] = $salesOrderCommentTransfers[$idSalesOrder] ?? [];
-                unset($salesOrderData[$key][SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+
+            foreach ($salesOrderIds as $salesOrderDataKey => $idSalesOrder) {
+                $salesOrderData[$salesOrderDataKey][SalesOrderMapper::KEY_ORDER_COMMENTS] = $salesOrderCommentTransfers[$idSalesOrder] ?? [];
+                unset($salesOrderData[$salesOrderDataKey][SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
             }
         }
 
