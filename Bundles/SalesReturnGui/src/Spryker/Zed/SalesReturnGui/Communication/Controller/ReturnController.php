@@ -108,11 +108,10 @@ class ReturnController extends AbstractReturnController
         ]);
 
         $orderItemManualEvents = $this->getFactory()->getOmsFacade()->getOrderItemManualEvents($orderItemFilterTransfer);
-        $customerReference = $returnTransfer->getCustomerReference();
 
         return [
             'return' => $returnTransfer,
-            'customer' => $customerReference ? $this->findCustomerByReference($customerReference) : null,
+            'customer' => $this->getFactory()->createCustomerReader()->findCustomerFromReturn($returnTransfer),
             'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
             'triggerButtonRedirectUrl' => $triggerButtonRedirectUrl,
