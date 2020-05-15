@@ -45,41 +45,69 @@
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
-    <transfer name="GuiTableFilter">
-        <property name="id" type="string"/>
+    <transfer name="GuiTableDataRequest" >
+        <property name="searchTerm" type="string" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
+        <property name="page" type="int" />
+        <property name="pageSize" type="int" />
+        <property name="filters" type="array" associative="true" />
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductTableCriteria">
+        <property name="filterIsActive" type="bool"/>
+        <property name="filterHasOffers" type="bool"/>
+        <property name="searchTerm" type="string"/>
+        <property name="idLocale" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferTableCriteria">
+        <property name="filterIsActive" type="bool"/>
+        <property name="filterHasStock" type="bool"/>
+        <property name="filterInStores" type="int[]" singular="inStore"/>
+        <property name="filterValidity" type="CriteriaRangeFilter"/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
+        <property name="searchTerm" type="string"/>
+        <property name="idLocale" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableFilter" >
         <property name="title" type="string"/>
+        <property name="id" type="string"/>
         <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+        <property name="typeOptions" type="object"/>
     </transfer>
 
-    <transfer name="ProductCriteriaFilter">
-        <property name="inCategories" type="string[]" singular="inCategory"/>
-        <property name="isActive" type="bool"/>
-        <property name="hasOffers" type="bool"/>
-        <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
-        <property name="idMerchant" type="int"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="orderBy" type="string"/>
-        <property name="orderDirection" type="string"/>
+    <transfer name="SelectGuiTableFilterTypeOptions">
+        <property name="multiselect" type="boolean"/>
+        <property name="values" type="OptionSelectGuiTableFilterTypeOptions[]" singular="value"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="isActive" type="bool"/>
-        <property name="hasStock" type="bool"/>
-        <property name="inStores" type="int[]" singular="inStore"/>
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
-        <property name="createdFrom" type="string"/>
-        <property name="createdTo" type="string"/>
-        <property name="updatedFrom" type="string"/>
-        <property name="updatedTo" type="string"/>
-        <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
-        <property name="idMerchant" type="int"/>
-        <property name="pagination" type="Pagination"/>
-        <property name="orderBy" type="string"/>
-        <property name="orderDirection" type="string"/>
+    <transfer name="DateRangeGuiTableFilterTypeOptions">
+        <property name="placeholderFrom" type="string"/>
+        <property name="placeholderTo" type="string"/>
+    </transfer>
+
+    <transfer name="OptionSelectGuiTableFilterTypeOptions">
+        <property name="value" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteCollection">

@@ -50,18 +50,6 @@ interface UtilDateTimeServiceInterface
 
     /**
      * Specification:
-     * - Formats a given datetime string into the DB datetime format.
-     *
-     * @api
-     *
-     * @param \DateTime|string $dateTime
-     *
-     * @return string
-     */
-    public function formatToDbDateTime($dateTime): string;
-
-    /**
-     * Specification:
      * - Formats a given datetime string into a configured time
      *
      * @api

@@ -31,14 +31,4 @@ class ProductOfferMerchantPortalGuiToUtilDateTimeServiceBridge implements Produc
     {
         return $this->utilDateTimeService->formatDateTimeToIso8601($dateTime);
     }
-
-    /**
-     * @param \DateTime|string $dateTime
-     *
-     * @return string
-     */
-    public function formatToDbDateTime($dateTime): string
-    {
-        return $this->utilDateTimeService->formatToDbDateTime($dateTime);
-    }
 }
