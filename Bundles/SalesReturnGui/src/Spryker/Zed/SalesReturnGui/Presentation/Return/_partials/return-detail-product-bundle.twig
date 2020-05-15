@@ -1,0 +1,15 @@
+{% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
+    returnItem: returnBundleItems[0],
+    orderItem: bundleProduct,
+    order: order,
+    eventsGroupedByItem: eventsGroupedByItem,
+    changeStatusRedirectUrl: changeStatusRedirectUrl,
+    isBundleProduct: true,
+} only %}
+
+{% for returnBundleItem in returnBundleItems %}
+    {% include '@SalesReturnGui/Return/_partials/product-bundles.twig' with {
+        orderItem: returnBundleItem.orderItem,
+        order: order,
+    } only %}
+{% endfor %}

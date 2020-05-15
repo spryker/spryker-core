@@ -40,27 +40,48 @@
                         currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
                     } %}
 
-                    {% set returnItemsWithConfiguredBundles = [] %}
+                    {#{% set returnItemsWithConfiguredBundles = [] %}#}
 
-                    {% for returnItem in return.returnItems %}
-                        {% if returnItem.orderItem.salesOrderConfiguredBundle is empty %}
-                            {% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
-                                returnItem: returnItem,
-                                orderItem: returnItem.orderItem,
-                                order: order,
-                                eventsGroupedByItem: orderItemManualEvents,
-                                changeStatusRedirectUrl: triggerButtonRedirectUrl,
-                            } only %}
-                        {% else %}
-                            {% set returnItemsWithConfiguredBundles = returnItemsWithConfiguredBundles | merge([returnItem]) %}
-                        {% endif %}
-                    {% endfor %}
+                    {#{% for returnItem in return.returnItems %}#}
+                        {#{% if returnItem.orderItem.salesOrderConfiguredBundle is empty %}#}
+                            {#{% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {#}
+                                {#returnItem: returnItem,#}
+                                {#orderItem: returnItem.orderItem,#}
+                                {#order: order,#}
+                                {#eventsGroupedByItem: orderItemManualEvents,#}
+                                {#changeStatusRedirectUrl: triggerButtonRedirectUrl,#}
+                            {#} only %}#}
+                        {#{% else %}#}
+                            {#{% set returnItemsWithConfiguredBundles = returnItemsWithConfiguredBundles | merge([returnItem]) %}#}
+                        {#{% endif %}#}
+                    {#{% endfor %}#}
+
+                    {#{% include '@SalesReturnGui/Return/_partials/return-detail-configured-bundles.twig' with {#}
+                        {#returnItems: returnItemsWithConfiguredBundles,#}
+                        {#order: order,#}
+                        {#orderItemManualEvents: orderItemManualEvents,#}
+                        {#triggerButtonRedirectUrl: triggerButtonRedirectUrl,#}
+                    {#} only %}#}
+
+                    {% include '@SalesReturnGui/Return/_partials/return-detail-items.twig' with {
+                        return: return,
+                        order: order,
+                        eventsGroupedByItem: orderItemManualEvents,
+                        changeStatusRedirectUrl: triggerButtonRedirectUrl,
+                    } only %}
 
                     {% include '@SalesReturnGui/Return/_partials/return-detail-configured-bundles.twig' with {
-                        returnItems: returnItemsWithConfiguredBundles,
+                        return: return,
                         order: order,
-                        orderItemManualEvents: orderItemManualEvents,
-                        triggerButtonRedirectUrl: triggerButtonRedirectUrl,
+                        eventsGroupedByItem: orderItemManualEvents,
+                        changeStatusRedirectUrl: triggerButtonRedirectUrl,
+                    } only %}
+
+                    {% include '@SalesReturnGui/Return/_partials/return-detail-product-bundles.twig' with {
+                        return: return,
+                        order: order,
+                        eventsGroupedByItem: orderItemManualEvents,
+                        changeStatusRedirectUrl: triggerButtonRedirectUrl,
                     } only %}
                 </tbody>
             </table>

@@ -111,16 +111,6 @@ $chat-box-background-color: #f0f0f0;
   background-color: #e7eaec;
 }
 
-img.product-image {
-  width: 150px;
-  border: 1px solid #e7eaec;
-}
-
-span.discounted {
-  text-decoration: line-through;
-  color: #AAAAAA;
-}
-
 .table > tbody.single-item {
   border-top: none;
 }
@@ -130,15 +120,6 @@ span.discounted {
   border-top: none;
 }
 
-.state-history {
-  width: 300px;
-}
-
-.sku {
-  color: #AAAAAA;
-  font-size: 10px;
-}
-
 .variant-details {
   margin-top: 10px;
 
@@ -146,9 +127,4 @@ span.discounted {
     font-size: 12px;
     margin-bottom: 2px;
   }
-}
-
-.tax-info {
-  color: #AAAAAA;
-  font-size: 10px;
 }

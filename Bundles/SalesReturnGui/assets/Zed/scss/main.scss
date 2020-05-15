@@ -1,49 +1,5 @@
-.image-wrap {
-    height: 60px;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 2px;
-
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.05);
-        border-radius: 3px;
-    }
-}
-
-.product-image {
-    max-width: 100%;
-    max-height: 100%;
-    flex-shrink: 0;
-}
-
 .select-reason {
     min-width: 250px;
-}
-
-.tax-info {
-    color: #a1a5a8;
-    font-size: 12px;
-}
-
-.sku {
-    color: #6f7274;
-    font-size: 12px;
-}
-
-.discounted {
-    color: #a1a5a8;
-    font-size: 12px;
-    text-decoration: line-through;
-    display: block;
 }
 
 .form-group {
@@ -67,5 +23,13 @@
 .addition-row {
     td {
         border-top: none !important;
+    }
+}
+
+.bundle-item {
+    display: flex;
+
+    .image-wrap {
+        margin-right: 16px;
     }
 }

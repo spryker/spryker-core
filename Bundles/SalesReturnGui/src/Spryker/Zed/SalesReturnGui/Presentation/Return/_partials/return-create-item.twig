@@ -1,3 +1,9 @@
+{% set productUniqueKey = orderItem.idSalesOrderItem %}
+
+{% if isBundleProduct %}
+    {% set productUniqueKey = orderItem.bundleItemIdentifier ~ '-bundle' %}
+{% endif %}
+
 <tr>
     <td>
         {{ form_row(returnItem.isReturnable, {
@@ -16,19 +22,19 @@
             {{ orderItem.name }}
         </a>
         <div class="sku m-b-sm">
-            {{ 'Sku' | trans }}: {{ orderItem.Sku }}
+            {{ 'Sku' | trans }}: {{ orderItem.sku }}
         </div>
 
         {{ form_row(returnItem.reason, {
             attr: {
                 class: 'select-reason js-select-reason',
-                'data-target': 'js-custom-reason-' ~ returnItem.vars.data.orderItem.idSalesOrderItem,
+                'data-target': 'js-custom-reason-' ~ productUniqueKey,
             },
         }) }}
 
         {{ form_row(returnItem.customReason, {
             attr: {
-                class: 'js-custom-reason-' ~ returnItem.vars.data.orderItem.idSalesOrderItem ~ ' hidden',
+                class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
             },
         }) }}
     </td>
@@ -38,7 +44,7 @@
     </td>
     <td>
         {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
-        <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate|default(0)}) }}</div>
+        <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
         {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
@@ -51,21 +57,23 @@
         </ul>
     </td>
     <td rowspan="{{ orderItem.productOptions | length + 1 }}" class="state-history">
-        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+        {% if not isBundleProduct %}
+            <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
 
-        <br>
+            <br>
 
-        {% if orderItem.stateHistory | length > 1 %}
-            <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
-                {% for stateHistory in orderItem.stateHistory | slice(1) %}
-                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
-                {% endfor %}
-            </div>
+            {% if orderItem.stateHistory | length > 1 %}
+                <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                    {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                        <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                    {% endfor %}
+                </div>
 
-            <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
-                <span class="show-more">{{ 'Show history' | trans }}</span>
-                <span class="show-less">{{ 'Hide history' | trans }}</span>
-            </a>
+                <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show history' | trans }}</span>
+                    <span class="show-less">{{ 'Hide history' | trans }}</span>
+                </a>
+            {% endif %}
         {% endif %}
     </td>
 </tr>

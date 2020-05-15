@@ -102,15 +102,6 @@ $chat-box-background-color: #f0f0f0;
     }
 }
 
-.is-hidden .show-less,
-.is-shown .show-more {
-    display: none;
-}
-
-.more-history {
-  color: #337ab7;
-}
-
 .addition-row {
     td {
         border-top: none !important;
@@ -133,33 +124,6 @@ $chat-box-background-color: #f0f0f0;
     padding-bottom: 10px;
 }
 
-.image-wrap {
-    height: 60px;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 2px;
-
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.05);
-        border-radius: 3px;
-    }
-}
-
-.product-image {
-    max-width: 100%;
-    max-height: 100%;
-    flex-shrink: 0;
-}
-
 .table > tbody.single-item {
     border-top: none;
 }
@@ -169,15 +133,6 @@ $chat-box-background-color: #f0f0f0;
     border-top: none;
 }
 
-.state-history {
-    width: 300px;
-}
-
-.sku {
-    color: #6f7274;
-    font-size: 12px;
-}
-
 .variant-details {
     margin-top: 10px;
 
@@ -185,18 +140,6 @@ $chat-box-background-color: #f0f0f0;
         font-size: 12px;
         margin-bottom: 2px;
     }
-}
-
-.tax-info {
-    color: #a1a5a8;
-    font-size: 12px;
-}
-
-.discounted {
-    color: #a1a5a8;
-    font-size: 12px;
-    text-decoration: line-through;
-    display: block;
 }
 
 a.edit_billing_address {

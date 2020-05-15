@@ -1,3 +1,4 @@
+{% set returnItems = return.returnItems | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle) %}
 {% set mappedReturnItems = [] %}
 {% set configuredBundles = [] %}
 
@@ -37,8 +38,9 @@
             returnItem: returnItem,
             orderItem: returnItem.orderItem,
             order: order,
-            eventsGroupedByItem: orderItemManualEvents,
-            changeStatusRedirectUrl: triggerButtonRedirectUrl,
+            eventsGroupedByItem: eventsGroupedByItem,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            isBundleProduct: false,
         } only %}
     {% endfor %}
 

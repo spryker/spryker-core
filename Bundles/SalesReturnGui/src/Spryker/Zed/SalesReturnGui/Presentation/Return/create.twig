@@ -31,32 +31,32 @@
             <div class="table-responsive">
                 <table class="table js-return-items-table" data-qa="order-item-list">
                     <thead>
-                    <tr class="text-left">
-                        <th><input type="checkbox" class="js-check-all-items"></th>
-                        <th colspan="2">{{ 'Product' | trans }}</th>
-                        <th>{{ 'Quantity' | trans }}</th>
-                        <th>{{ 'Price' | trans }}</th>
-                        <th>{{ 'Total' | trans }}</th>
-                        <th>{{ 'Return policy' | trans }}</th>
-                        <th>{{ 'State' | trans }}</th>
-                    </tr>
+                        <tr class="text-left">
+                            <th><input type="checkbox" class="js-check-all-items"></th>
+                            <th colspan="2">{{ 'Product' | trans }}</th>
+                            <th>{{ 'Quantity' | trans }}</th>
+                            <th>{{ 'Price' | trans }}</th>
+                            <th>{{ 'Total' | trans }}</th>
+                            <th>{{ 'Return policy' | trans }}</th>
+                            <th>{{ 'State' | trans }}</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
-                        form: returnCreateForm,
-                        order: order,
-                    } only %}
+                        {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
 
-                    {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
-                        form: returnCreateForm,
-                        order: order,
-                    } only %}
+                        {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
 
-                    {% include '@SalesReturnGui/Return/_partials/return-create-product-bundles.twig' with {
-                        form: returnCreateForm,
-                        order: order,
-                    } only %}
+                        {% include '@SalesReturnGui/Return/_partials/return-create-product-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
                     </tbody>
                 </table>
             </div>
@@ -75,6 +75,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="{{ assetsPath('js/spryker-zed-sales-main.js') }}"></script>
     <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
 {% endblock %}

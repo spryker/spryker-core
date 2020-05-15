@@ -1,0 +1,12 @@
+{% set returnItems = return.returnItems | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle is empty and returnItem.orderItem.productBundle is empty) %}
+
+{% for returnItem in returnItems %}
+    {% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
+        returnItem: returnItem,
+        orderItem: returnItem.orderItem,
+        order: order,
+        eventsGroupedByItem: eventsGroupedByItem,
+        changeStatusRedirectUrl: changeStatusRedirectUrl,
+        isBundleProduct: false,
+    } only %}
+{% endfor %}
