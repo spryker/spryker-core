@@ -43,9 +43,9 @@
     </transfer>
 
     <transfer name="DataExportBatch">
-        <property name="data" type="array" singular="dataItem" />
+        <property name="data" type="array" singular="dataItem"/>
         <property name="offset" type="int"/>
-        <property name="fields" type="string[]" singular="field" />
+        <property name="fields" type="string[]" singular="field"/>
     </transfer>
 
     <transfer name="DataExportFormatResponse">
