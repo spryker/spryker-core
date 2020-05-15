@@ -94,6 +94,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         $productLabelTransfer
             ->setIsActive(true)
             ->setIsExclusive(false)
+            ->setIsDynamic(true)
             ->setIsPublished(true);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {

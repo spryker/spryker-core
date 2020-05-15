@@ -94,6 +94,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         $productLabelTransfer
             ->setIsActive(true)
             ->setIsExclusive(false)
+            ->setIsDynamic(true)
             ->setIsPublished(true);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
