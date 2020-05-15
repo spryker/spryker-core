@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig as SharedProductPageSearchConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
@@ -22,6 +22,8 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
+    use InstancePoolingTrait;
+
     public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
     public const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
     public const STORE_NAME = 'STORE_NAME';
@@ -107,7 +109,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = [])
     {
-        $isPoolingStateChanged = Propel::disableInstancePooling();
+        $isPoolingStateChanged = $this->disableInstancePooling();
 
         $productAbstractIdsChunks = array_chunk(
             array_unique($productAbstractIds),
@@ -119,7 +121,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         if ($isPoolingStateChanged) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
     }
 

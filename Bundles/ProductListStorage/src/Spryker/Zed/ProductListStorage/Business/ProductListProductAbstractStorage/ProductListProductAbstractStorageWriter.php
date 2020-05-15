@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductListStorage\Business\ProductListProductAbstractStor
 
 use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage;
-use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
 
 class ProductListProductAbstractStorageWriter implements ProductListProductAbstractStorageWriterInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface
      */
@@ -53,7 +55,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
-        $isPoolingStateChanged = Propel::disableInstancePooling();
+        $isPoolingStateChanged = $this->disableInstancePooling();
 
         $productAbstractIds = array_unique($productAbstractIds);
         $productLists = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productAbstractIds);
@@ -80,7 +82,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
         }
 
         if ($isPoolingStateChanged) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
     }
 

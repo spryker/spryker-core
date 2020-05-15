@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStor
 
 use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage;
-use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageConfig;
 
 class ProductListProductConcreteStorageWriter implements ProductListProductConcreteStorageWriterInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface
      */
@@ -53,7 +55,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
      */
     public function publish(array $productConcreteIds): void
     {
-        $isPoolingStateChanged = Propel::disableInstancePooling();
+        $isPoolingStateChanged = $this->disableInstancePooling();
 
         $productConcreteIds = array_unique($productConcreteIds);
         $productLists = $this->productListFacade->getProductListsIdsByProductIds($productConcreteIds);
@@ -80,7 +82,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         }
 
         if ($isPoolingStateChanged) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
     }
 

@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
@@ -27,6 +27,7 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPublisherInterface
 {
     use TransactionTrait;
+    use InstancePoolingTrait;
 
     protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
     protected const IDENTIFIER_STRUCTURED_DATA = 'structured_data';
@@ -108,7 +109,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function publish(array $productConcreteIds): void
     {
-        $isPoolingStateChanged = Propel::disableInstancePooling();
+        $isPoolingStateChanged = $this->disableInstancePooling();
 
         $productConcreteIds = array_unique(array_filter($productConcreteIds));
 
@@ -132,7 +133,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         }
 
         if ($isPoolingStateChanged) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
     }
 
