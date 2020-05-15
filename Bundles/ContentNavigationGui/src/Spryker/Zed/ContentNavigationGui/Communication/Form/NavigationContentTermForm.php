@@ -56,14 +56,14 @@ class NavigationContentTermForm extends AbstractType
             'choices' => $this->getNavigationChoices(),
             'multiple' => false,
             'required' => true,
-            'constraints' => !$this->hasNotBlankConstraint($builderConstraints) ? new NotBlank() : [],
+            static::CONSTRAINTS => !$this->hasNotBlankConstraint($builderConstraints) ? new NotBlank() : [],
         ]);
 
         return $this;
     }
 
     /**
-     * @param array $builderConstraints
+     * @param \Symfony\Component\Validator\Constraint[] $builderConstraints
      *
      * @return bool
      */
