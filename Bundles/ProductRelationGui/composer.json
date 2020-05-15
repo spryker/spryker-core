@@ -15,7 +15,6 @@
     "spryker/product": "^6.0.0",
     "spryker/product-attribute": "^1.5.0",
     "spryker/product-category": "^4.0.0",
-    "spryker/product-image": "^3.0.0",
     "spryker/product-relation": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/propel-query-builder": "^0.3.0",

@@ -66,7 +66,7 @@ class ViewController extends BaseProductRelationController
     {
         $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
 
-        $productTable = $this->resolveProductTable($idProductRelation);
+        $productTable = $this->getFactory()->createProductAbstractTable($idProductRelation);
 
         return $this->jsonResponse(
             $productTable->fetchData()

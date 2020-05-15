@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductRelationGui\Communication\Table\AbstractProductTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,19 +55,5 @@ class BaseProductRelationController extends AbstractController
         $productRelationTransfer->setQuerySet($propelQueryBuilderRuleSetTransfer);
 
         return $productRelationTransfer;
-    }
-
-    /**
-     * @param int|null $idProductRelation
-     *
-     * @return \Spryker\Zed\ProductRelationGui\Communication\Table\AbstractProductTable
-     */
-    protected function resolveProductTable(?int $idProductRelation = null): AbstractProductTable
-    {
-        if (!$this->getFactory()->getConfig()->useOptimizedProductTable()) {
-            return $this->getFactory()->createProductTable($idProductRelation);
-        }
-
-        return $this->getFactory()->createProductAbstractTable($idProductRelation);
     }
 }

@@ -73,7 +73,7 @@ class EditController extends BaseProductRelationController
 
         $productRuleTable = $this->getFactory()
             ->createProductRuleTable($productRelationTransfer);
-        $productTable = $this->resolveProductTable();
+        $productTable = $this->getFactory()->createProductAbstractTable();
 
         return [
             'productRelationTabs' => $productRelationTabs->createView(),
@@ -90,7 +90,7 @@ class EditController extends BaseProductRelationController
      */
     public function tableAction(): JsonResponse
     {
-        $productTable = $this->resolveProductTable();
+        $productTable = $this->getFactory()->createProductAbstractTable();
 
         return $this->jsonResponse(
             $productTable->fetchData()
