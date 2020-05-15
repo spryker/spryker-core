@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Symfony\Component\Validator\Constraint;
 
@@ -59,9 +59,9 @@ class UniqueMerchantReference extends Constraint
      */
     public function findMerchantByReference(string $merchantReference): ?MerchantTransfer
     {
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setMerchantReference($merchantReference);
 
-        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
+        return $this->merchantFacade->findOne($merchantCriteriaTransfer);
     }
 }

@@ -194,13 +194,15 @@ interface ProductLabelFacadeInterface
     /**
      * Specification:
      * - Calls a stack of `ProductLabelRelationUpdaterPluginInterface` to collect necessary information to update product label relations.
+     * - Touches product abstract product label relations if isTouchEnabled flag set to TRUE.
      * - The results of the plugins are used to persist product label relation changes into database.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null, bool $isTouchEnabled = true);
 }

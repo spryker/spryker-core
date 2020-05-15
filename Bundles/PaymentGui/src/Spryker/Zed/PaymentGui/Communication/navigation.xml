@@ -15,7 +15,7 @@
                         <bundle>payment-gui</bundle>
                         <controller>payment-method</controller>
                         <action>index</action>
-                        <icon>fa fa-angle-right</icon>
+                        <icon>fa-angle-right</icon>
                         <pages>
                             <payment-method-view>
                                 <label>View</label>

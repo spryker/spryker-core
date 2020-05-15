@@ -14,6 +14,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscon
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
 class PostProductDiscontinuedPlugin extends AbstractPlugin implements PostProductDiscontinuePluginInterface
 {
