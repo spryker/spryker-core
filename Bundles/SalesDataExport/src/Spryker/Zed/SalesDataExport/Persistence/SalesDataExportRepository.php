@@ -46,14 +46,19 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     {
         $selectedColumns = $this->getSalesOrderSelectedColumns($dataExportConfigurationTransfer);
 
-        $fields = array_keys($selectedColumns);
-        $fields[] = SalesOrderMapper::KEY_ORDER_COMMENTS;
+        $fields = array_flip($selectedColumns);
+        if (in_array(SalesOrderMapper::KEY_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true)) {
+            $fields[SalesOrderMapper::KEY_ORDER_COMMENTS] = SalesOrderMapper::KEY_ORDER_COMMENTS;
+            $selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
+        }
+
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
             ->setFields($fields)
             ->setData([]);
 
-        $salesOrderQuery = $this->getFactory()->getSalesOrderPropelQuery()
+        $salesOrderQuery = $this->getFactory()
+            ->getSalesOrderPropelQuery()
             ->joinLocale()
             ->joinOrderTotal()
             ->leftJoinBillingAddress()
@@ -65,28 +70,32 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->offset($offset)
             ->limit($limit);
 
-        $selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
-
         $salesOrderQuery = $this->applyFilterCriteriaToSalesOrderQuery($dataExportConfigurationTransfer->getFilterCriteria(), $salesOrderQuery);
         $salesOrderQuery->select($selectedColumns);
 
         $salesOrderData = $salesOrderQuery->find()
-            ->getArrayCopy(SpySalesOrderTableMap::COL_ID_SALES_ORDER);
+            ->getArrayCopy($selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] ?? null);
 
         if ($salesOrderData === []) {
             return $dataExportBatchTransfer;
         }
 
-        $salesOrderIds = array_keys($salesOrderData);
-        $salesOrderCommentTransfers = $this->getCommentsByOrderId($salesOrderIds);
-        foreach ($salesOrderIds as $idSalesOrder) {
-            $salesOrderData[$idSalesOrder][SalesOrderMapper::KEY_ORDER_COMMENTS] = $salesOrderCommentTransfers[$idSalesOrder] ?? [];
-            unset($salesOrderData[$idSalesOrder][SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+        if (count($selectedColumns) === 1) {
+            $salesOrderData = $this->formatSingleColumnData($salesOrderData, $selectedColumns);
+        }
+
+        if (isset($selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER])) {
+            $salesOrderIds = array_keys($salesOrderData);
+            $salesOrderCommentTransfers = $this->getCommentsByOrderId($salesOrderIds);
+            foreach ($salesOrderIds as $idSalesOrder) {
+                $salesOrderData[$idSalesOrder][SalesOrderMapper::KEY_ORDER_COMMENTS] = $salesOrderCommentTransfers[$idSalesOrder] ?? [];
+                unset($salesOrderData[$idSalesOrder][SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+            }
         }
 
         $data = $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderDataByField($salesOrderData);
+            ->mapSalesOrderDataByField($salesOrderData, $fields);
 
         return $dataExportBatchTransfer->setData($data);
     }
@@ -141,6 +150,10 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             return $dataExportBatchTransfer;
         }
 
+        if (count($selectedColumns) === 1) {
+            $salesOrderItemData = $this->formatSingleColumnData($salesOrderItemData, $selectedColumns);
+        }
+
         $data = $this->getFactory()
             ->createSalesOrderItemMapper()
             ->mapSalesOrderItemDataByField($salesOrderItemData);
@@ -163,7 +176,8 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->setFields(array_flip($selectedColumns))
             ->setData([]);
 
-        $salesExpenseQuery = SpySalesExpenseQuery::create()
+        $salesExpenseQuery = $this->getFactory()
+            ->getSalesExpensePropelQuery()
             ->joinOrder()
             ->leftJoinSpySalesShipment()
             ->orderByFkSalesOrder()
@@ -176,7 +190,15 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         );
 
         $salesExpenseQuery->select($selectedColumns);
-        $orderExpenseData = $salesExpenseQuery->find()->getArrayCopy();
+        $orderExpenseData = $salesExpenseQuery->find()->toArray();
+
+        if ($orderExpenseData === []) {
+            return $dataExportBatchTransfer;
+        }
+
+        if (count($selectedColumns) === 1) {
+            $orderExpenseData = $this->formatSingleColumnData($orderExpenseData, $selectedColumns);
+        }
 
         $data = $this->getFactory()
             ->createSalesExpenseMapper()
@@ -295,9 +317,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->createSalesOrderMapper()
             ->getFieldMapping();
 
-        $selectedFields = array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
-
-        return $selectedFields;
+        return array_intersect_key($fieldMapping, array_flip($dataExportConfigurationTransfer->getFields()));
     }
 
     /**
@@ -346,5 +366,22 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         return $this->getFactory()
             ->createSalesOrderCommentMapper()
             ->mapSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder($salesOrderCommentEntities, []);
+    }
+
+    /**
+     * @param array $data
+     * @param array $selectedColumns
+     *
+     * @return array
+     */
+    protected function formatSingleColumnData(array $data, array $selectedColumns): array
+    {
+        $columnKey = array_shift($selectedColumns);
+        $formattedData = [];
+        foreach ($data as $orderExpenseRow) {
+            $formattedData[] = [$columnKey => $orderExpenseRow];
+        }
+
+        return $formattedData;
     }
 }

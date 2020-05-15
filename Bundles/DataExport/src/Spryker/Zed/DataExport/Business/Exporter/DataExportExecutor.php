@@ -70,7 +70,7 @@ class DataExportExecutor
         foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
             $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
                 $dataExportConfigurationTransfer,
-                $dataExportDefaultsConfigurationTransfer
+                clone $dataExportDefaultsConfigurationTransfer
             );
             $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
 

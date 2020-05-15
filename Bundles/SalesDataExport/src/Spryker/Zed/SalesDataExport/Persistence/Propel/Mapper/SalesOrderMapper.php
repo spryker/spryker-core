@@ -78,31 +78,25 @@ class SalesOrderMapper
 
     /**
      * @param array $salesOrderRows
+     * @param array $fields
      *
      * @return array
      */
-    public function mapSalesOrderDataByField(array $salesOrderRows): array
+    public function mapSalesOrderDataByField(array $salesOrderRows, array $fields): array
     {
-        $fields = $this->getFields();
         $mappedSalesOrders = [];
         foreach ($salesOrderRows as $salesOrderRow) {
             $selectedFields = array_values(array_intersect_key($fields, $salesOrderRow));
             $mappedSalesOrderRow = array_combine($selectedFields, $salesOrderRow);
 
-            $mappedSalesOrderRow[static::KEY_ORDER_COMMENTS] = $this->salesOrderCommentMapper
-                ->mapSalesOrderCommentTransfersToJson($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS]);
+            if (isset($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS])) {
+                $mappedSalesOrderRow[static::KEY_ORDER_COMMENTS] = $this->salesOrderCommentMapper
+                    ->mapSalesOrderCommentTransfersToJson($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS]);
+            }
 
             $mappedSalesOrders[] = $mappedSalesOrderRow;
         }
 
         return $mappedSalesOrders;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    protected function getFields(): array
-    {
-        return array_flip(array_merge($this->fieldMapping, [static::KEY_ORDER_COMMENTS => static::KEY_ORDER_COMMENTS]));
     }
 }
