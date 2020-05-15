@@ -14,19 +14,22 @@ class SalesDataExportConfig extends AbstractBundleConfig
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**
+     * Specification:
+     * - Returns the fully qualified file path that contains the module data export configurations.
+     *
      * @api
      *
      * @return string
      */
-    public function getDefaultExportConfigurationPath(): string
+    public function getModuleDataExportConfigurationsFilePath(): string
     {
-        return $this->getModuleExportConfigurationPath() . 'sales_export_config.yml';
+        return $this->getModuleDataExportConfigurationPath() . 'sales_export_config.yml';
     }
 
     /**
      * @return string
      */
-    protected function getModuleExportConfigurationPath(): string
+    protected function getModuleDataExportConfigurationPath(): string
     {
         $moduleRoot = realpath(
             dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
