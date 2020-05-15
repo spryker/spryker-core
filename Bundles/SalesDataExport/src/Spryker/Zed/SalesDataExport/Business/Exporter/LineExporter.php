@@ -55,7 +55,7 @@ class LineExporter implements ExporterInterface
      */
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
-        $dataExportConfigurationTransfer = $this->resolveDataExportConfigurationActionTransfer($dataExportConfigurationTransfer);
+        $dataExportConfigurationTransfer = $this->resolveDataExportActionConfigurationTransfer($dataExportConfigurationTransfer);
 
         $dataExportResultTransfer = (new DataExportResultTransfer())
             ->setDataEntity($dataExportConfigurationTransfer->getDataEntity())
@@ -103,7 +103,7 @@ class LineExporter implements ExporterInterface
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    protected function resolveDataExportConfigurationActionTransfer(
+    protected function resolveDataExportActionConfigurationTransfer(
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         $salesDataExportDataExportConfigurationsTransfer = $this->dataExportService->parseConfiguration(

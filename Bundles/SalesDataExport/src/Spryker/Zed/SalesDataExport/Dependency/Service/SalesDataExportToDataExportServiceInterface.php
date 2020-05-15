@@ -22,24 +22,13 @@ interface SalesDataExportToDataExportServiceInterface
     public function parseConfiguration(string $filePath): DataExportConfigurationsTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
-     */
-    public function mergeDataExportConfigurationTransfers(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
-    ): DataExportConfigurationTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportActionConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function resolveDataExportActionConfiguration(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $dataExportActionConfigurationTransfer,
         DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
     ): DataExportConfigurationTransfer;
 

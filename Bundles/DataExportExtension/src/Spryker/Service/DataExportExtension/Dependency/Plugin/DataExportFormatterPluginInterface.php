@@ -15,7 +15,7 @@ interface DataExportFormatterPluginInterface
 {
     /**
      * Specification:
-     * - - Checks if plugin is applicable for formatting configuration defined in DataExportConfigurationTransfer.
+     * - Checks if plugin is applicable for formatting configuration defined in DataExportConfigurationTransfer.
      *
      * @api
      *

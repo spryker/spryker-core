@@ -43,18 +43,18 @@ class DataExportService extends AbstractService implements DataExportServiceInte
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function mergeDataExportConfigurationTransfers(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         return $this->getFactory()
             ->createDataExportConfigurationMerger()
-            ->mergeDataExportConfigurationTransfers($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer);
+            ->mergeDataExportConfigurationTransfers($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer);
     }
 
     /**

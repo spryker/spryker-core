@@ -33,8 +33,8 @@ class DataExportServiceTest extends Unit
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
 
-    protected const DATA_ENTITY_MASTER = 'data-entity-master';
-    protected const DATA_ENTITY_SLAVE = 'data-entity-slave';
+    protected const DATA_ENTITY_PRIMARY = 'data-entity-primary';
+    protected const DATA_ENTITY_SECONDARY = 'data-entity-secondary';
 
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
     protected const HOOK_KEY_EXTENSION = 'extension';
@@ -70,19 +70,19 @@ class DataExportServiceTest extends Unit
     public function testMergeDataExportConfigurationsWillMergeConfigurationCorrectly(): void
     {
         //Arrange
-        $masterDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
-            ->setDataEntity(static::DATA_ENTITY_MASTER);
-        $slaveDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
-            ->setDataEntity(static::DATA_ENTITY_SLAVE);
+        $primaryDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setDataEntity(static::DATA_ENTITY_PRIMARY);
+        $secondaryDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+            ->setDataEntity(static::DATA_ENTITY_SECONDARY);
 
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
-            $masterDataExportConfigurationTransfer,
-            $slaveDataExportConfigurationTransfer
+            $primaryDataExportConfigurationTransfer,
+            $secondaryDataExportConfigurationTransfer
         );
 
         //Assert
-        $this->assertEquals(static::DATA_ENTITY_MASTER, $dataExportConfigurationTransfer->getDataEntity());
+        $this->assertEquals(static::DATA_ENTITY_PRIMARY, $dataExportConfigurationTransfer->getDataEntity());
     }
 
     /**
@@ -91,15 +91,15 @@ class DataExportServiceTest extends Unit
     public function testMergeDataExportConfigurationsWillMergeHooks(): void
     {
         //Arrange
-        $masterDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+        $primaryDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->addHook(static::HOOK_KEY_TIMESTAMP, time());
-        $slaveDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
+        $secondaryDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->addHook(static::HOOK_KEY_EXTENSION, 'csv');
 
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
-            $masterDataExportConfigurationTransfer,
-            $slaveDataExportConfigurationTransfer
+            $primaryDataExportConfigurationTransfer,
+            $secondaryDataExportConfigurationTransfer
         );
 
         //Assert
@@ -182,7 +182,7 @@ class DataExportServiceTest extends Unit
         //Arrange
         $originalDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->setDestination(static::DESTINATION_FILE)
-            ->setDataEntity(static::DATA_ENTITY_MASTER);
+            ->setDataEntity(static::DATA_ENTITY_PRIMARY);
 
         $fields = ['test-field-1', 'test-field-2'];
         $format = 'csv';
@@ -190,7 +190,7 @@ class DataExportServiceTest extends Unit
         $additionalDefaultsDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
             ->setFormat($dataExportFormatConfigurationTransfer);
         $additionalActionDataExportConfigurationTransfer = (new DataExportConfigurationTransfer())
-            ->setDataEntity(static::DATA_ENTITY_MASTER)
+            ->setDataEntity(static::DATA_ENTITY_PRIMARY)
             ->setFields($fields);
         $additionalDataExportConfigurationsTransfer = (new DataExportConfigurationsTransfer())
             ->setDefaults($additionalDefaultsDataExportConfigurationTransfer)
@@ -203,7 +203,7 @@ class DataExportServiceTest extends Unit
         );
 
         //Assert
-        $this->assertSame(static::DATA_ENTITY_MASTER, $dataExportConfigurationTransfer->getDataEntity());
+        $this->assertSame(static::DATA_ENTITY_PRIMARY, $dataExportConfigurationTransfer->getDataEntity());
         $this->assertSame(static::DESTINATION_FILE, $dataExportConfigurationTransfer->getDestination());
         $this->assertNotNull($dataExportConfigurationTransfer->getFormat());
         $this->assertSame($format, $dataExportConfigurationTransfer->getFormat()->getType());

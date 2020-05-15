@@ -16,7 +16,7 @@ interface DataExportServiceInterface
 {
     /**
      * Specification:
-     * - Reads configurations from the file defined in $filePath.
+     * - Reads configurations from the fully qualified file name defined in $filePath.
      * - Maps read configurations to DataExportConfigurationsTransfer.
      *
      * @api
@@ -30,25 +30,26 @@ interface DataExportServiceInterface
     /**
      * Specification:
      * - Merges two `DataExportConfigurationTransfer` transfers into one.
-     * - Properties of the `$masterDataExportConfigurationTransfer` will override same properties in the `$slaveDataExportConfigurationTransfer`.
+     * - Merges values from secondary configuration into primary configuration without overriding values.
      * - Properties `DataExportConfigurationTransfer.hooks` and `DataExportConfigurationTransfer.filterCriteria` will be merged.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function mergeDataExportConfigurationTransfers(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer;
 
     /**
      * Specification:
-     * - Adds properties from `$additionalDataExportConfigurationsTransfer` to `$dataExportActionConfigurationTransfer` if they are missing.
-     * - Returns data export action configuration.
+     * - Merges additional configuration's defaults on the provided action configuration.
+     * - Merges values from additional configuration, based on matching "data_entity" name, into action configuration without overriding values.
+     * - Returns merged action configuration.
      *
      * @api
      *
@@ -66,10 +67,10 @@ interface DataExportServiceInterface
      * Specification:
      * - Formats data from `DataExportBatchTransfer` to a format specified in `DataExportConfigurationTransfer`.
      * - Uses stack of `DataExportFormatterPluginInterface` plugins for formatting data.
-     * - If applicable formatter plugin is not found will fallback to default `csv` formatter.
+     * - If no applicable formatter plugin is found, will fallback to default `csv` formatter.
      * - Writes formatted data according to connection configuration in `DataExportConfigurationTransfer`.
      * - Uses stack of `DataExportConnectionPluginInterface` plugins for writing data.
-     * - If applicable connection plugin is not found will fallback to default `local` connection.
+     * - If no applicable connection plugin is found, will fallback to default `local` connection.
      * - Returns `DataExportWriteResponseTransfer` with isSuccessful=true if data was written successfully.
      *
      * @api

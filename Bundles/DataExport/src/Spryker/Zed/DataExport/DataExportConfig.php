@@ -15,7 +15,7 @@ class DataExportConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - TODO
+     * - Returns the path that contains the module independent configuration defaults.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class DataExportConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - TODO
+     * - Returns the path that contains the project specific data export configurations.
      *
      * @api
      *

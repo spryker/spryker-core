@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 interface DataExportConfigurationMergerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $secondaryDataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function mergeDataExportConfigurationTransfers(
-        ?DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        ?DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        ?DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        ?DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer;
 }

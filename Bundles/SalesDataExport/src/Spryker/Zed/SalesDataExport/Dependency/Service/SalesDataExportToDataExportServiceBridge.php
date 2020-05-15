@@ -38,33 +38,17 @@ class SalesDataExportToDataExportServiceBridge implements SalesDataExportToDataE
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
-     */
-    public function mergeDataExportConfigurationTransfers(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
-    ): DataExportConfigurationTransfer {
-        return $this->dataExportService->mergeDataExportConfigurationTransfers(
-            $masterDataExportConfigurationTransfer,
-            $slaveDataExportConfigurationTransfer
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportActionConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function resolveDataExportActionConfiguration(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $dataExportActionConfigurationTransfer,
         DataExportConfigurationsTransfer $additionalDataExportConfigurationsTransfer
     ): DataExportConfigurationTransfer {
         return $this->dataExportService->resolveDataExportActionConfiguration(
-            $dataExportConfigurationTransfer,
+            $dataExportActionConfigurationTransfer,
             $additionalDataExportConfigurationsTransfer
         );
     }

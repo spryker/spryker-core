@@ -12,58 +12,58 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 class DataExportConfigurationMerger implements DataExportConfigurationMergerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer|null $secondaryDataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
     public function mergeDataExportConfigurationTransfers(
-        ?DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        ?DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        ?DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        ?DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
-        if (!($masterDataExportConfigurationTransfer && $slaveDataExportConfigurationTransfer)) {
-            return $masterDataExportConfigurationTransfer ?? $slaveDataExportConfigurationTransfer;
+        if (!($primaryDataExportConfigurationTransfer && $secondaryDataExportConfigurationTransfer)) {
+            return $primaryDataExportConfigurationTransfer ?? $secondaryDataExportConfigurationTransfer;
         }
 
-        $masterDataExportConfigurationTransfer->setHooks(
-            $this->mergeDataExportConfigurationHooks($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer)
+        $primaryDataExportConfigurationTransfer->setHooks(
+            $this->mergeDataExportConfigurationHooks($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer)
         );
-        $masterDataExportConfigurationTransfer->setFilterCriteria(
-            $this->mergeDataExportConfigurationFilterCriteria($masterDataExportConfigurationTransfer, $slaveDataExportConfigurationTransfer)
+        $primaryDataExportConfigurationTransfer->setFilterCriteria(
+            $this->mergeDataExportConfigurationFilterCriteria($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer)
         );
 
-        return $slaveDataExportConfigurationTransfer->fromArray($masterDataExportConfigurationTransfer->modifiedToArray());
+        return $secondaryDataExportConfigurationTransfer->fromArray($primaryDataExportConfigurationTransfer->modifiedToArray());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
      *
      * @return array
      */
     protected function mergeDataExportConfigurationHooks(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): array {
         return array_merge(
-            $slaveDataExportConfigurationTransfer->getHooks(),
-            $masterDataExportConfigurationTransfer->getHooks()
+            $secondaryDataExportConfigurationTransfer->getHooks(),
+            $primaryDataExportConfigurationTransfer->getHooks()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $masterDataExportConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
      *
      * @return array
      */
     protected function mergeDataExportConfigurationFilterCriteria(
-        DataExportConfigurationTransfer $masterDataExportConfigurationTransfer,
-        DataExportConfigurationTransfer $slaveDataExportConfigurationTransfer
+        DataExportConfigurationTransfer $primaryDataExportConfigurationTransfer,
+        DataExportConfigurationTransfer $secondaryDataExportConfigurationTransfer
     ): array {
         return array_merge(
-            $slaveDataExportConfigurationTransfer->getFilterCriteria(),
-            $masterDataExportConfigurationTransfer->getFilterCriteria()
+            $secondaryDataExportConfigurationTransfer->getFilterCriteria(),
+            $primaryDataExportConfigurationTransfer->getFilterCriteria()
         );
     }
 }
