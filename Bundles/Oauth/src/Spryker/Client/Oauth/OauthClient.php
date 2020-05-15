@@ -35,6 +35,8 @@ class OauthClient extends AbstractClient implements OauthClientInterface
     }
 
     /**
+     * @deprecated
+     *
      * {@inheritDoc}
      *
      * @api
@@ -47,6 +49,21 @@ class OauthClient extends AbstractClient implements OauthClientInterface
         OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
     ): OauthAccessTokenValidationResponseTransfer {
         return $this->getFactory()->createAccessTokenValidator()->validate($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
+        return $this->getFactory()->createOauthAccessTokenValidator()->validate($authAccessTokenValidationRequestTransfer);
     }
 
     /**

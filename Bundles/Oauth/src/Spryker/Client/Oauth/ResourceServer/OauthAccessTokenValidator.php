@@ -14,10 +14,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer;
 
-/**
- * @deprecated
- */
-class AccessTokenValidator implements AccessTokenValidatorInterface
+class OauthAccessTokenValidator implements AccessTokenValidatorInterface
 {
     /**
      * @var \League\OAuth2\Server\ResourceServer

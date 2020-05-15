@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\Oauth\ResourceServer;
 
-use League\OAuth2\Server\ResourceServer;
+use Spryker\Client\OauthCryptography\ResourceServer\ResourceServer;
 
 interface ResourceServerBuilderInterface
 {
     /**
-     * @return \League\OAuth2\Server\ResourceServer
+     * @return \Spryker\Client\OauthCryptography\ResourceServer\ResourceServer
      */
     public function create(): ResourceServer;
 }
