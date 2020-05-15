@@ -165,6 +165,6 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
     {
-        return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_DATETIME);
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

@@ -27,7 +27,6 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group Sales
  * @group Business
  * @group Facade
- * @group Facade
  * @group SalesFacadeExpandItemsTest
  * Add your own group annotations below this line
  */

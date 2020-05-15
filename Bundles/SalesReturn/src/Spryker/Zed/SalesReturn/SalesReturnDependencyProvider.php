@@ -24,7 +24,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_OMS = 'FACADE_OMS';
 
-    public const SERVICE_DATETIME = 'SERVICE_DATETIME';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
@@ -124,11 +124,11 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container->set(static::SERVICE_DATETIME, $container->factory(function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new SalesReturnToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service()
             );
-        }));
+        });
 
         return $container;
     }
