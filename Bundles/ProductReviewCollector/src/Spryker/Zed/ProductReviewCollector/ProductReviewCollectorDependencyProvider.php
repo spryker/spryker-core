@@ -102,5 +102,7 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
         $container[static::STORE] = function () {
             return Store::getInstance();
         };
+
+        return $container;
     }
 }

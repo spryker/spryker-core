@@ -10,6 +10,6 @@ import { ToJson } from '@spryker/utils';
     encapsulation: ViewEncapsulation.None
 })
 export class ProductOfferTableComponent {
-    @Input() @ToJson() config: TableConfig;
+    @Input() config: TableConfig;
     tableLocation = TableFeatureLocation;
 }

@@ -53,9 +53,9 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
      *
      * @return string
      */
-    public function formatDateTimeToIso($dateTime): string
+    public function formatDateTimeToIso8601($dateTime): string
     {
-        return $this->getFactory()->createDateFormatter()->formatDateTimeToIso($dateTime);
+        return $this->getFactory()->createDateFormatter()->formatDateTimeToIso8601($dateTime);
     }
 
     /**

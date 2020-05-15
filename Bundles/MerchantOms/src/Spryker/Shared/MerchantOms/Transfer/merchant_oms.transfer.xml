@@ -34,7 +34,7 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
         <property name="merchantReference" type="string"/>
     </transfer>
 

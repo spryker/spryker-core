@@ -35,7 +35,7 @@ interface DateTimeFormatterInterface
      *
      * @return string
      */
-    public function formatDateTimeToIso($dateTime): string;
+    public function formatDateTimeToIso8601($dateTime): string;
 
     /**
      * @param \DateTime|string $dateTime

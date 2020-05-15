@@ -146,6 +146,6 @@ class ProductTableDataProvider implements ProductTableDataProviderInterface
      */
     protected function getFormattedDateTime(?string $dateTime): ?string
     {
-        return $dateTime ? $this->utilDateTimeService->formatDateTimeToIso($dateTime) : null;
+        return $dateTime ? $this->utilDateTimeService->formatDateTimeToIso8601($dateTime) : null;
     }
 }

@@ -132,7 +132,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         return $quoteTransfer->getCustomer() &&
             $quoteTransfer->getCustomer()->getCompanyUserTransfer() &&
             $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit() &&
-            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit()->getMerchantRelationships();
+            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit()->getMerchantRelationships()->count();
     }
 
     /**

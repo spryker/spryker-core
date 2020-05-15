@@ -17,7 +17,7 @@ abstract class AbstractClassResolver
 {
     public const KEY_NAMESPACE = '%namespace%';
     public const KEY_BUNDLE = '%bundle%';
-    public const KEY_STORE = '%store%';
+    public const KEY_CODE_BUCKET = '%codeBucket%';
 
     protected const CLASS_NAME_PATTERN = null;
     protected const RESOLVABLE_TYPE = null;
@@ -105,6 +105,14 @@ abstract class AbstractClassResolver
     abstract public function resolve($callerClass);
 
     /**
+     * @param string $namespace
+     * @param string|null $codeBucket
+     *
+     * @return string
+     */
+    abstract protected function buildClassName($namespace, $codeBucket = null);
+
+    /**
      * @param object|string $callerClass
      *
      * @return object|null
@@ -188,24 +196,12 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement. This is no longer required as all class name patterns are now
+     * configurable in {@link \Spryker\Shared\Kernel\KernelConfig::getResolvableTypeClassNamePatternMap}
      *
      * @return string
      */
     protected function getClassPattern()
-    {
-        return '';
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $namespace
-     * @param string|null $store
-     *
-     * @return string
-     */
-    protected function buildClassName($namespace, $store = null)
     {
         return '';
     }
@@ -516,10 +512,12 @@ abstract class AbstractClassResolver
      */
     private function addProjectClassNames(array $classNames)
     {
-        $storeName = $this->getStoreName();
-
+        $codeBucket = APPLICATION_CODE_BUCKET;
         foreach ($this->getProjectNamespaces() as $namespace) {
-            $classNames[] = $this->buildClassName($namespace, $storeName);
+            if ($codeBucket !== '') {
+                $classNames[] = $this->buildClassName($namespace, $codeBucket);
+            }
+
             $classNames[] = $this->buildClassName($namespace);
         }
 

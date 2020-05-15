@@ -42,4 +42,15 @@ interface ShoppingListItemMapperInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         SpyShoppingListItem $shoppingListItemEntity
     ): SpyShoppingListItem;
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem $shoppingListItemEntity
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapSpyShoppingListItemEntityToShoppingListItemTransfer(
+        SpyShoppingListItem $shoppingListItemEntity,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer;
 }
