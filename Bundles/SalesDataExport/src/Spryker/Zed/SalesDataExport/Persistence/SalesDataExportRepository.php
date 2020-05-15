@@ -45,16 +45,16 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     public function getOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
         $selectedColumns = $this->getSalesOrderSelectedColumns($dataExportConfigurationTransfer);
+        $selectedFields = array_flip($selectedColumns);
 
-        $fields = array_flip($selectedColumns);
         if (in_array(SalesOrderMapper::KEY_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true)) {
-            $fields[SalesOrderMapper::KEY_ORDER_COMMENTS] = SalesOrderMapper::KEY_ORDER_COMMENTS;
+            $selectedFields[SalesOrderMapper::KEY_ORDER_COMMENTS] = SalesOrderMapper::KEY_ORDER_COMMENTS;
             $selectedColumns[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = SpySalesOrderTableMap::COL_ID_SALES_ORDER;
         }
 
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
-            ->setFields($fields)
+            ->setFields($selectedFields)
             ->setData([]);
 
         $salesOrderQuery = $this->getFactory()
@@ -94,7 +94,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         $data = $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderDataByField($salesOrderData, $fields);
+            ->mapSalesOrderDataByField($salesOrderData, $selectedFields);
 
         return $dataExportBatchTransfer->setData($data);
     }
@@ -113,9 +113,10 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     public function getOrderItemData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
         $selectedColumns = $this->getSalesOrderItemSelectedColumns($dataExportConfigurationTransfer);
+        $selectedFields = array_flip($selectedColumns);
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
-            ->setFields(array_flip($selectedColumns))
+            ->setFields($selectedFields)
             ->setData([]);
 
         $salesOrderItemQuery = $this->getFactory()
@@ -170,9 +171,10 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     public function getOrderExpenseData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
         $selectedColumns = $this->getSalesExpenseSelectedColumns($dataExportConfigurationTransfer);
+        $selectedFields = array_flip($selectedColumns);
         $dataExportBatchTransfer = (new DataExportBatchTransfer())
             ->setOffset($offset)
-            ->setFields(array_flip($selectedColumns))
+            ->setFields($selectedFields)
             ->setData([]);
 
         $salesExpenseQuery = $this->getFactory()
@@ -368,19 +370,22 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @param array $data
+     * Specification:
+     * - Compensates magic functionality of propel, so single-column select returns the same format as a multi-columns select
+     *
+     * @param array $rows
      * @param array $selectedColumns
      *
      * @return array
      */
-    protected function formatSingleColumnData(array $data, array $selectedColumns): array
+    protected function formatSingleColumnData(array $rows, array $selectedColumns): array
     {
-        $columnKey = array_shift($selectedColumns);
-        $formattedData = [];
-        foreach ($data as $orderExpenseRow) {
-            $formattedData[] = [$columnKey => $orderExpenseRow];
+        $selectedSingleColumnKey = array_shift($selectedColumns);
+        $formattedRows = [];
+        foreach ($rows as $row) {
+            $formattedRows[] = [$selectedSingleColumnKey => $row];
         }
 
-        return $formattedData;
+        return $formattedRows;
     }
 }
