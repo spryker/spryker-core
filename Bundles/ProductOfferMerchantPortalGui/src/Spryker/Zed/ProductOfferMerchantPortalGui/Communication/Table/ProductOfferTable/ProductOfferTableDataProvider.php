@@ -101,13 +101,13 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $persistenceCriteria
+     * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $criteriaTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer
+    protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataTransfer
     {
-        $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($persistenceCriteria);
+        $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($criteriaTransfer);
         $productTableDataArray = [];
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {

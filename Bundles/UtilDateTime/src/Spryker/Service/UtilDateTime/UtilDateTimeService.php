@@ -59,20 +59,6 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \DateTime|string $dateTime
-     *
-     * @return string
-     */
-    public function formatToDbDateTime($dateTime): string
-    {
-        return $this->getFactory()->createDateFormatter()->formatToDbDateTime($dateTime);
-    }
-
-    /**
      * Specification:
      * - Formats a given datetime string into a configured time
      *

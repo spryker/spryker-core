@@ -30,11 +30,11 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
     abstract protected function createCriteria(Request $request): AbstractTransfer;
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $persistenceCriteria
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    abstract protected function fetchData(AbstractTransfer $persistenceCriteria): GuiTableDataTransfer;
+    abstract protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataTransfer;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

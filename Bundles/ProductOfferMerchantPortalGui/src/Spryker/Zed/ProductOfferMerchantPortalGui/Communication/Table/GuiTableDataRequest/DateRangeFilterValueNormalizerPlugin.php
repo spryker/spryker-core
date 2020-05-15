@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest;
 
+use DateTime;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
@@ -16,6 +17,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
  */
 class DateRangeFilterValueNormalizerPlugin extends AbstractPlugin implements FilterValueNormalizerPluginInterface
 {
+    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @param string $filterType
      *
@@ -39,12 +42,12 @@ class DateRangeFilterValueNormalizerPlugin extends AbstractPlugin implements Fil
 
         $from = $value['from'] ?? null;
         if ($from) {
-            $from = $this->getFactory()->getUtilDateTimeService()->formatToDbDateTime($from);
+            $from = DateTime::createFromFormat(DateTime::ATOM, $from)->format(self::DATE_TIME_FORMAT);
         }
 
         $to = $value['to'] ?? null;
         if ($to) {
-            $to = $this->getFactory()->getUtilDateTimeService()->formatToDbDateTime($to);
+            $to = DateTime::createFromFormat(DateTime::ATOM, $to)->format(self::DATE_TIME_FORMAT);
         }
 
         return (new CriteriaRangeFilterTransfer())
