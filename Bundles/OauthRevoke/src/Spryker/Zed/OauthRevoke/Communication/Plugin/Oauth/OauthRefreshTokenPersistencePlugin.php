@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth;
 
-use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistancePluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenPersistencePlugin instead.
- *
  * @method \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthRevoke\OauthRevokeConfig getConfig()
  */
-class OauthRefreshTokenSaverPlugin extends AbstractPlugin implements OauthRefreshTokenSaverPluginInterface
+class OauthRefreshTokenPersistencePlugin extends AbstractPlugin implements OauthRefreshTokenPersistancePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -25,12 +23,12 @@ class OauthRefreshTokenSaverPlugin extends AbstractPlugin implements OauthRefres
      *
      * @api
      *
-     * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $refreshTokenTransfer
      *
      * @return void
      */
-    public function saveRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void
+    public function saveRefreshToken(OauthRefreshTokenTransfer $refreshTokenTransfer): void
     {
-        $this->getFacade()->saveRefreshToken($refreshTokenEntity);
+        $this->getFacade()->saveRefreshTokenFromTransfer($refreshTokenTransfer);
     }
 }

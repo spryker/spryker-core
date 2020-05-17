@@ -9,6 +9,9 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistancePluginInterface instead.
+ */
 interface OauthRefreshTokenSaverPluginInterface
 {
     /**

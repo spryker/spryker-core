@@ -29,6 +29,7 @@ use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthExpiredRefreshTokenRemoverPlugin;
+use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenPersistencePlugin;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenReaderPlugin;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenSaverPlugin;
 
@@ -467,6 +468,9 @@ class OauthFacadeTest extends Unit
         ]);
         $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER, [
             new OauthRefreshTokenSaverPlugin(),
+        ]);
+        $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE, [
+            new OauthRefreshTokenPersistencePlugin(),
         ]);
         $this->tester->setDependency(OauthDependencyProvider::PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER, [
             new OauthExpiredRefreshTokenRemoverPlugin(),
