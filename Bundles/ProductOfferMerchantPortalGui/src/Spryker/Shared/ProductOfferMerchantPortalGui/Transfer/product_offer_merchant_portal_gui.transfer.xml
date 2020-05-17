@@ -43,6 +43,7 @@
         <property name="hideable" type="bool"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+        <property name="typeOptionsMappings" type="array" singular="typeOptionMapping" associative="true"/>
     </transfer>
 
     <transfer name="GuiTableDataRequest" >

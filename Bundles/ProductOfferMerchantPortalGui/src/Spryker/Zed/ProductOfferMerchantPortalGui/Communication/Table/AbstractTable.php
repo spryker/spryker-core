@@ -46,6 +46,7 @@ abstract class AbstractTable
     public const COLUMN_TYPE_DATE = 'date';
     public const COLUMN_TYPE_DATE_RANGE = 'date_range';
     public const COLUMN_TYPE_CHIP = 'chip';
+    public const COLUMN_TYPE_LIST = 'list';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_DATE_RANGE = 'date_range';
@@ -393,7 +394,7 @@ abstract class AbstractTable
             ->setHideable($hidable);
     }
 
-    /***
+    /**
      * @param string $id
      * @param string $title
      * @param bool $sortable
@@ -436,22 +437,69 @@ abstract class AbstractTable
             ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultUiDateFormat());
     }
 
-    /***
+    /**
      * @param string $id
      * @param string $title
      * @param bool $sortable
      * @param bool $hidable
+     * @param array|null $typeOptions
+     * @param array|null $typeOptionsMappings
      *
      * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
      */
-    protected function createColumnChip(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
-    {
-        return (new GuiTableColumnConfigurationTransfer())
+    protected function createColumnChip(
+        string $id,
+        string $title,
+        bool $sortable,
+        bool $hidable,
+        ?array $typeOptions = [],
+        ?array $typeOptionsMappings = []
+    ): GuiTableColumnConfigurationTransfer {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_CHIP)
             ->setSortable($sortable)
             ->setHideable($hidable);
+
+        foreach ($typeOptions as $key => $typeOption) {
+            $guiTableColumnConfigurationTransfer->addTypeOption($key, $typeOption);
+        }
+
+        foreach ($typeOptionsMappings as $key => $typeOptionsMapping) {
+            $guiTableColumnConfigurationTransfer->addTypeOptionMapping($key, $typeOptionsMapping);
+        }
+
+        return $guiTableColumnConfigurationTransfer;
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param bool $sortable
+     * @param bool $hidable
+     * @param array|null $typeOptions
+     * @param array|null $typeOptionsMappings
+     *
+     * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
+     */
+    protected function createColumnChips(
+        string $id,
+        string $title,
+        bool $sortable,
+        bool $hidable,
+        ?array $typeOptions = [],
+        ?array $typeOptionsMappings = []
+    ): GuiTableColumnConfigurationTransfer {
+        return (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_LIST)
+            ->setSortable($sortable)
+            ->setHideable($hidable)
+            ->addTypeOption('type', static::COLUMN_TYPE_CHIP)
+            ->addTypeOption('typeOption', $typeOptions)
+            ->addTypeOption('typeOptionsMappings', $typeOptionsMappings);
     }
 
     /**

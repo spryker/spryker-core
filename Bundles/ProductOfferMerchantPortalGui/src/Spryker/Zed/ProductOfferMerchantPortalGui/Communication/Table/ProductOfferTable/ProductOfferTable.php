@@ -101,9 +101,17 @@ class ProductOfferTable extends AbstractTable
             $this->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
             $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
             $this->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
-            $this->createColumnChip(static::COL_KEY_STORES, 'Stores', false, true),
-            $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true),
-            $this->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true),
+            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, ['color' => 'gray']),
+            $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
+                'color' => 'gray',
+            ], [
+                'color' => [0 => 'red'],
+            ]),
+            $this->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, [
+                'color' => 'gray',
+            ], [
+                'color' => [$this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green'],
+            ]),
             $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true),
             $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true),
             $this->createColumnDate(static::COL_KEY_CREATED_AT, 'Created', true, true),

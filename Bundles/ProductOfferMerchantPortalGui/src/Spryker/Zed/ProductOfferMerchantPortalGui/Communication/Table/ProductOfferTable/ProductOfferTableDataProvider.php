@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductOfferTableDataProvider extends AbstractTableDataProvider
 {
-    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
-    protected const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
+    public const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
     protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'offline';
+    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
@@ -152,9 +152,9 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return string
+     * @return string[]
      */
-    protected function getStoresColumnData(ProductOfferTransfer $productOfferTransfer): string
+    protected function getStoresColumnData(ProductOfferTransfer $productOfferTransfer): array
     {
         $storeTransfers = $productOfferTransfer->getStores();
         $storeNames = [];
@@ -163,7 +163,7 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
             $storeNames[] = $storeTransfer->getName();
         }
 
-        return implode(', ', $storeNames);
+        return $storeNames;
     }
 
     /**
