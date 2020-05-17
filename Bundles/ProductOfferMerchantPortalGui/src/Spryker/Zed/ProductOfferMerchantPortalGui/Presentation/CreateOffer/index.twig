@@ -6,9 +6,14 @@
 
 {% block content %}
     {% set config = {
-        dataUrl: dataUrl,
+        dataSource: {
+            type: 'http',
+            url: dataUrl,
+        },
         columns: columns,
-        selectable: true,
+        itemSelection: true,
+        syncStateUrl: true,
+        total: true,
         rowActions: rowActions,
         pagination: pagination,
         search: search,

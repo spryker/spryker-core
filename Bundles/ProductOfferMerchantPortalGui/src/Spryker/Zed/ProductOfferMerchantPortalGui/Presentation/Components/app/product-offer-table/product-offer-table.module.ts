@@ -22,6 +22,7 @@ import {
     TableFilterSelectComponent,
     TableFilterSelectModule
 } from '@spryker/table/filters';
+import { TableDatasourceHttpService } from '@spryker/table/datasources';
 
 @NgModule({
     imports: [
@@ -33,14 +34,26 @@ import {
         TableFiltersFeatureModule,
         TableFilterSelectModule,
         TableSyncStateFeatureModule,
-        TableModule,
+        TableModule.forRoot(),
+        TableModule.withFeatures({
+            filters: () => import('@spryker/table/features').then(m => m.TableFiltersFeatureModule),
+            pagination: () => import('@spryker/table/features').then(m => m.TablePaginationFeatureModule),
+            rowActions: () => import('@spryker/table/features').then(m => m.TableRowActionsFeatureModule),
+            search: () => import('@spryker/table/features').then(m => m.TableSearchFeatureModule),
+            syncStateUrl: () => import('@spryker/table/features').then(m => m.TableSyncStateFeatureModule),
+            total: () => import('@spryker/table/features').then(m => m.TableTotalFeatureModule),
+            itemSelection: () => import('@spryker/table/features').then(m => m.TableSelectableFeatureModule),
+        }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,
             date: TableColumnDateComponent
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
-            select: TableFilterSelectComponent as any,
+            select: TableFilterSelectComponent,
+        } as any),
+        TableModule.withDatasourceTypes({
+            http: TableDatasourceHttpService,
         }),
     ],
     declarations: [
