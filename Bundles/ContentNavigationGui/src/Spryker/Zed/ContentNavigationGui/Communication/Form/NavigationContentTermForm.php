@@ -11,10 +11,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ContentNavigationGui\Communication\ContentNavigationGuiCommunicationFactory getFactory()
@@ -53,10 +51,8 @@ class NavigationContentTermForm extends AbstractType
             },
         ]);
 
-        $resolver->setNormalizer('constraints', function (Options $options, $value) {
-            return array_merge($value, [
-                $this->getFactory()->createContentNavigationConstraint(),
-            ]);
+        $resolver->setNormalizer('constraints', function () {
+            return [$this->getFactory()->createContentNavigationConstraint()];
         });
     }
 
@@ -91,9 +87,6 @@ class NavigationContentTermForm extends AbstractType
             'choices' => $this->getNavigationChoices(),
             'multiple' => false,
             'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         return $this;
