@@ -25,7 +25,6 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
-                - \SprykerTest\Shared\Propel\Helper\InstancePoolingHelper
 
     Communication:
         path: Communication

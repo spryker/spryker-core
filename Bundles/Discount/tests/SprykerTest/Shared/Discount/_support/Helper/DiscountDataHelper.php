@@ -18,15 +18,15 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\InstancePoolingTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class DiscountDataHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
-    use InstancePoolingTrait;
+    use InstancePoolingHelperTrait;
 
     /**
      * @param array $override

@@ -7,10 +7,9 @@
 
 namespace SprykerTest\Shared\Propel\Helper;
 
-use Codeception\Module;
 use Propel\Runtime\Propel;
 
-class InstancePoolingHelper extends Module
+trait InstancePoolingHelperTrait
 {
     /**
      * Returns true if method changed the instance pooling state.

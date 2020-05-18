@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Shared\ProductSet\ProductSetConfig;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -30,10 +31,7 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class UpdateProductSetTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\ProductSet\ProductSetBusinessTester
-     */
-    protected $tester;
+    use InstancePoolingHelperTrait;
 
     /**
      * @return void
@@ -42,7 +40,7 @@ class UpdateProductSetTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->disableInstancePooling();
+        $this->disableInstancePooling();
     }
 
     /**
