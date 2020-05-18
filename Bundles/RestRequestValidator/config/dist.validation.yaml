@@ -7,3 +7,8 @@ access-tokens:
         pattern: '/^\w+/'
     password:
       - NotBlank
+
+refresh-tokens:
+  post:
+    refresh_token:
+      - NotBlank
