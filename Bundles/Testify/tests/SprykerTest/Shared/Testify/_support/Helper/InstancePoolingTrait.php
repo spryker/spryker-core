@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Persistence\EntityManager;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use Propel\Runtime\Propel;
 

@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductSet\ProductSetConfig;
 
 /**
@@ -32,13 +31,18 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 class UpdateProductSetTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductSet\ProductSetBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        Propel::disableInstancePooling();
+        $this->tester->disableInstancePooling();
     }
 
     /**

@@ -415,7 +415,7 @@ class ProductOptionFacadeTest extends Unit
         $expectedCurrencies = ['EUR', 'USD'];
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->tester->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductGroupOption = $this->getProductOptionFacade()->getProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup());
 
         // Assert
@@ -463,7 +463,7 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->tester->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );
@@ -507,7 +507,7 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->tester->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );
@@ -553,7 +553,7 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->tester->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );

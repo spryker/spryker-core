@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Persistence\EntityManager;
+namespace SprykerTest\Shared\Propel\Helper;
 
+use Codeception\Module;
 use Propel\Runtime\Propel;
 
-trait InstancePoolingTrait
+class InstancePoolingHelper extends Module
 {
     /**
      * Returns true if method changed the instance pooling state.

@@ -34,6 +34,7 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Propel\Helper\InstancePoolingHelper
 
     Communication:
         path: Communication
