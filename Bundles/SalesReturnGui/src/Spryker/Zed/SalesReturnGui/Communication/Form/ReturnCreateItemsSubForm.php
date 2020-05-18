@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {
-    protected const MESSAGE_LOST_RETURN_ITEM = 'Selected return item doesn\'t exist anymore.';
+    protected const MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN = 'Item selected for return is not eligible for return anymore.';
 
     public const FIELD_CUSTOM_REASON = 'customReason';
 
@@ -129,7 +129,7 @@ class ReturnCreateItemsSubForm extends AbstractType
             $isChecked = $formEvent->getData()[ItemTransfer::IS_RETURNABLE] ?? false;
 
             if ($isChecked && !$itemTransfer->getIsReturnable()) {
-                $form->addError(new FormError(static::MESSAGE_LOST_RETURN_ITEM));
+                $form->addError(new FormError(static::MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN));
             }
         };
     }
