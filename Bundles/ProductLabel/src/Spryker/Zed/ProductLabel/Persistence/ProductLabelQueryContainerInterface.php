@@ -32,7 +32,7 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
-     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelByName} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelByName} instead.
      *
      * @param string $labelName
      *
@@ -43,7 +43,7 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
-     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelsByIdProductAbstract} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
@@ -54,7 +54,7 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
-     * @depreacted Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getActiveProductLabelIdsByIdProductAbstract} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getActiveProductLabelIdsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
