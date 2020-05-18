@@ -268,9 +268,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $output->write($outputBuffer);
 
-        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL || !$isAttemptSuccess) {
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
             $module = str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $path);
             $output->writeln(sprintf('Errors in module %s', $module));
+
+            if ($output->isDecorated()) {
+                $output->writeln('');
+            }
         }
 
         $progressBar->display();
