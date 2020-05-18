@@ -51,7 +51,7 @@ interface ProductRelationStorageWriterInterface
     public function publish(array $productAbstractIds);
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
