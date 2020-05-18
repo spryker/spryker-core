@@ -14,14 +14,14 @@
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
         <property name="dataUrl" type="string"/>
         <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
-        <property name="isPageSizeEnabled" type="bool"/>
         <property name="filters" type="GuiTableFilter[]" singular="filter"/>
-        <property name="isFiltersEnabled" type="bool"/>
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
-        <property name="isRowActionsEnabled" type="bool"/>
         <property name="search" type="array" associative="true" singular="searchOption"/>
+        <property name="isPageSizeEnabled" type="bool"/>
+        <property name="isFiltersEnabled" type="bool"/>
+        <property name="isRowActionsEnabled" type="bool"/>
         <property name="isSearchEnabled" type="bool"/>
         <property name="isColumnConfiguratorEnabled" type="bool"/>
         <property name="isItemSelectionEnabled" type="bool"/>
@@ -52,7 +52,7 @@
         <property name="orderDirection" type="string" />
         <property name="page" type="int" />
         <property name="pageSize" type="int" />
-        <property name="filters" type="array" associative="true" />
+        <property name="filters" type="array" singular="filter" associative="true"/>
         <property name="idLocale" type="int"/>
     </transfer>
 

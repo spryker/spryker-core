@@ -91,7 +91,7 @@ class ProductTable extends AbstractTable
             $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
             $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
             $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
-            $this->createColumnText(static::COL_KEY_STORES, 'Stores', false, false),
+            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, ['color' => 'grey']),
             $this->createColumnText(static::COL_KEY_STATUS, 'Status', true, false),
             $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false),
             $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false),

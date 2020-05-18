@@ -19,8 +19,6 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     public const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
     public const DEFAULT_FORMAT_DATE = 'M. d, Y';
 
-    protected const DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
-
     /**
      * @var \Spryker\Shared\Config\Config
      */

@@ -380,43 +380,43 @@ abstract class AbstractTable
      * @param string $id
      * @param string $title
      * @param bool $sortable
-     * @param bool $hidable
+     * @param bool $hideable
      *
      * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
      */
-    protected function createColumnText(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
+    protected function createColumnText(string $id, string $title, bool $sortable, bool $hideable): GuiTableColumnConfigurationTransfer
     {
         return (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_TEXT)
             ->setSortable($sortable)
-            ->setHideable($hidable);
+            ->setHideable($hideable);
     }
 
     /**
      * @param string $id
      * @param string $title
      * @param bool $sortable
-     * @param bool $hidable
+     * @param bool $hideable
      *
      * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
      */
-    protected function createColumnImage(string $id, string $title, bool $sortable, bool $hidable): GuiTableColumnConfigurationTransfer
+    protected function createColumnImage(string $id, string $title, bool $sortable, bool $hideable): GuiTableColumnConfigurationTransfer
     {
         return (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_IMAGE)
             ->setSortable($sortable)
-            ->setHideable($hidable);
+            ->setHideable($hideable);
     }
 
     /**
      * @param string $id
      * @param string $title
      * @param bool $sortable
-     * @param bool $hidable
+     * @param bool $hideable
      * @param string|null $dateFormat
      *
      * @return \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer
@@ -425,7 +425,7 @@ abstract class AbstractTable
         string $id,
         string $title,
         bool $sortable,
-        bool $hidable,
+        bool $hideable,
         ?string $dateFormat = null
     ): GuiTableColumnConfigurationTransfer {
         return (new GuiTableColumnConfigurationTransfer())
@@ -433,7 +433,7 @@ abstract class AbstractTable
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_DATE)
             ->setSortable($sortable)
-            ->setHideable($hidable)
+            ->setHideable($hideable)
             ->addTypeOption('format', $dateFormat ?? $this->getConfig()->getTableDefaultUiDateFormat());
     }
 
@@ -441,7 +441,7 @@ abstract class AbstractTable
      * @param string $id
      * @param string $title
      * @param bool $sortable
-     * @param bool $hidable
+     * @param bool $hideable
      * @param array|null $typeOptions
      * @param array|null $typeOptionsMappings
      *
@@ -451,7 +451,7 @@ abstract class AbstractTable
         string $id,
         string $title,
         bool $sortable,
-        bool $hidable,
+        bool $hideable,
         ?array $typeOptions = [],
         ?array $typeOptionsMappings = []
     ): GuiTableColumnConfigurationTransfer {
@@ -460,7 +460,7 @@ abstract class AbstractTable
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_CHIP)
             ->setSortable($sortable)
-            ->setHideable($hidable);
+            ->setHideable($hideable);
 
         foreach ($typeOptions as $key => $typeOption) {
             $guiTableColumnConfigurationTransfer->addTypeOption($key, $typeOption);
@@ -477,7 +477,7 @@ abstract class AbstractTable
      * @param string $id
      * @param string $title
      * @param bool $sortable
-     * @param bool $hidable
+     * @param bool $hideable
      * @param array|null $typeOptions
      * @param array|null $typeOptionsMappings
      *
@@ -487,7 +487,7 @@ abstract class AbstractTable
         string $id,
         string $title,
         bool $sortable,
-        bool $hidable,
+        bool $hideable,
         ?array $typeOptions = [],
         ?array $typeOptionsMappings = []
     ): GuiTableColumnConfigurationTransfer {
@@ -496,9 +496,9 @@ abstract class AbstractTable
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_LIST)
             ->setSortable($sortable)
-            ->setHideable($hidable)
+            ->setHideable($hideable)
             ->addTypeOption('type', static::COLUMN_TYPE_CHIP)
-            ->addTypeOption('typeOption', $typeOptions)
+            ->addTypeOption('typeOptions', $typeOptions)
             ->addTypeOption('typeOptionsMappings', $typeOptionsMappings);
     }
 
@@ -506,7 +506,7 @@ abstract class AbstractTable
      * @param string $id
      * @param string $title
      * @param bool $multiselect
-     * @param array $values select values in form of ['value1' => 'title1', 'value2' => 'title2' ]
+     * @param array $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return \Generated\Shared\Transfer\GuiTableFilterTransfer
      */

@@ -8,6 +8,8 @@ import {
     TableColumnImageModule,
     TableColumnDateComponent,
     TableColumnDateModule,
+    TableColumnChipComponent,
+    TableColumnChipModule
 } from '@spryker/table/columns';
 import { ProductOfferTableComponent } from './product-offer-table.component';
 import {
@@ -27,6 +29,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
 @NgModule({
     imports: [
         CommonModule,
+        TableColumnChipModule,
         TableColumnTextModule,
         TableColumnImageModule,
         TableColumnDateModule,
@@ -47,7 +50,8 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,
-            date: TableColumnDateComponent
+            date: TableColumnDateComponent,
+            chip: TableColumnChipComponent
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,

@@ -132,9 +132,9 @@ class ProductTableDataProvider extends AbstractTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return string
+     * @return string[]
      */
-    protected function getStoresColumnData(ProductConcreteTransfer $productConcreteTransfer)
+    protected function getStoresColumnData(ProductConcreteTransfer $productConcreteTransfer): array
     {
         $storeTransfers = $productConcreteTransfer->getStores();
         $storeNames = [];
@@ -143,7 +143,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
             $storeNames[] = $storeTransfer->getName();
         }
 
-        return implode(', ', $storeNames);
+        return $storeNames;
     }
 
     /**

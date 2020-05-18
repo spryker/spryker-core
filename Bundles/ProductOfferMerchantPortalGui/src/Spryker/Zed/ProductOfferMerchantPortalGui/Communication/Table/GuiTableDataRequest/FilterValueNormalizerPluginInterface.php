@@ -11,8 +11,6 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTable
  * Provides capabilities to normalize data for filters.
  *
  * Use this plugin when a filter is type-sensitive or uses complex data structure.
- *
- * @todo move to Dependency/Plugin when GuiTable is extracted out of ProductOfferMerchantPortalGui
  */
 interface FilterValueNormalizerPluginInterface
 {

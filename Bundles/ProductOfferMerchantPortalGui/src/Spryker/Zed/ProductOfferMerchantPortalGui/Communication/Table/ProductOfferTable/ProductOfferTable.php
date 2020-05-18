@@ -31,8 +31,6 @@ class ProductOfferTable extends AbstractTable
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
-    protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
-
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::tableDataAction()
      */
@@ -101,14 +99,14 @@ class ProductOfferTable extends AbstractTable
             $this->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
             $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
             $this->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
-            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, ['color' => 'gray']),
+            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, ['color' => 'grey']),
             $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
-                'color' => 'gray',
+                'color' => 'grey',
             ], [
                 'color' => [0 => 'red'],
             ]),
             $this->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, [
-                'color' => 'gray',
+                'color' => 'grey',
             ], [
                 'color' => [$this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green'],
             ]),

@@ -51,6 +51,7 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
         $criteriaTransfer = $this->mapPagingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
         $criteriaTransfer = $this->mapSortingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
         $criteriaTransfer = $this->mapLocaleToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
+        $criteriaTransfer = $this->mapSearchTermToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
 
         return $this->fetchData($criteriaTransfer);
     }
@@ -137,6 +138,27 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
         }
 
         $criteriaTransfer->setIdLocale($guiTableDataRequestTransfer->getIdLocale());
+
+        return $criteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function mapSearchTermToCriteria(
+        GuiTableDataRequestTransfer $guiTableDataRequestTransfer,
+        AbstractTransfer $criteriaTransfer
+    ): AbstractTransfer {
+        $searchTermSetter = 'setSearchTerm';
+
+        if (!method_exists($criteriaTransfer, $searchTermSetter)) {
+            return $criteriaTransfer;
+        }
+
+        $criteriaTransfer->setSearchTerm($guiTableDataRequestTransfer->getSearchTerm());
 
         return $criteriaTransfer;
     }

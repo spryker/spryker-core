@@ -106,16 +106,16 @@ class GuiTableDataRequestBuilder implements GuiTableDataRequestBuilderInterface
     ): GuiTableDataRequestTransfer {
         $requestFilters = $this->utilEncodingService->decodeJson($request->query->get('filter', '[]'), true);
 
-        foreach ($guiTableConfigurationTransfer->getFilters() as $filterDefinition) {
-            $filterId = $filterDefinition->getId();
-            if (!array_key_exists($filterId, $requestFilters)) {
+        foreach ($guiTableConfigurationTransfer->getFilters() as $guiTableFilterTransfer) {
+            $idFilter = $guiTableFilterTransfer->getId();
+            if (!array_key_exists($idFilter, $requestFilters)) {
                 continue;
             }
 
-            $filterValue = $requestFilters[$filterDefinition->getId()];
-            $normalizedFilterValue = $this->normalizeFilterValue($filterDefinition->getType(), $filterValue);
+            $filterValue = $requestFilters[$guiTableFilterTransfer->getId()];
+            $normalizedFilterValue = $this->normalizeFilterValue($guiTableFilterTransfer->getType(), $filterValue);
 
-            $guiTableDataRequestTransfer->addFilters($filterId, $normalizedFilterValue);
+            $guiTableDataRequestTransfer->addFilter($idFilter, $normalizedFilterValue);
         }
 
         return $guiTableDataRequestTransfer;
@@ -146,8 +146,8 @@ class GuiTableDataRequestBuilder implements GuiTableDataRequestBuilderInterface
     protected function hydratePagination(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, Request $request): GuiTableDataRequestTransfer
     {
         $guiTableDataRequestTransfer
-            ->setPage($request->query->get('page', $this->getConfig()->getTableDefaultPage()))
-            ->setPageSize($request->query->get('pageSize', $this->getConfig()->getTableDefaultPageSize()));
+            ->setPage((int)$request->query->get('page', $this->getConfig()->getTableDefaultPage()))
+            ->setPageSize((int)$request->query->get('pageSize', $this->getConfig()->getTableDefaultPageSize()));
 
         return $guiTableDataRequestTransfer;
     }
