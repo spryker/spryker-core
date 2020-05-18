@@ -13,6 +13,7 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
 {
     protected const PRODUCT_ALTERNATIVES_LABEL_NAME = 'Alternatives available';
     protected const PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE = 'alternatives';
+    protected const PRODUCT_LABEL_DEFAULT_POSITION = 0;
 
     /**
      * Specification:
@@ -38,5 +39,18 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
     public function getProductAlternativesLabelFrontEndReference(): string
     {
         return static::PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE;
+    }
+
+    /**
+     * Specification:
+     * - Returns default position for product label.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getProductLabelDefaultPosition(): int
+    {
+        return static::PRODUCT_LABEL_DEFAULT_POSITION;
     }
 }
