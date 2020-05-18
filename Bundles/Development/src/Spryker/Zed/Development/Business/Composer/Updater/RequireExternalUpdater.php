@@ -108,7 +108,13 @@ class RequireExternalUpdater implements UpdaterInterface
                 $dependency[DependencyTree::META_MODULE] === $bundleName
                 && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies)
             ) {
-                $dependentModules[] = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
+                $dependentModule = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
+
+                if ($dependentModule === null) {
+                    continue;
+                }
+
+                $dependentModules[] = $dependentModule;
             }
         }
         $dependentModules = array_unique($dependentModules);
@@ -120,7 +126,7 @@ class RequireExternalUpdater implements UpdaterInterface
     /**
      * @param string $composerName
      *
-     * @return string
+     * @return string|null
      */
     protected function mapExternalToInternal($composerName)
     {
@@ -133,5 +139,7 @@ class RequireExternalUpdater implements UpdaterInterface
                 return $internal;
             }
         }
+
+        return null;
     }
 }

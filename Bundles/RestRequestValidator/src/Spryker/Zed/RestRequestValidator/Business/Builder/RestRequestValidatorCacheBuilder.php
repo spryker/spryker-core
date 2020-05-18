@@ -12,6 +12,9 @@ use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaM
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilder} instead.
+ */
 class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuilderInterface
 {
     /**

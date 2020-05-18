@@ -64,6 +64,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string[]
      */
     public function getYvesInstallMultiPathDirectoryPatterns(): array
@@ -75,6 +77,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string
      */
@@ -123,6 +127,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string[]
      */
     public function getZedInstallMultiPathDirectoryPatterns(): array
@@ -134,6 +140,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string
      */
@@ -150,5 +158,27 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedBuildCommand()
     {
         return 'npm run zed';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
+     * @return string
+     */
+    public function getMerchantPortalInstallCommand(): string
+    {
+        return 'yarn install';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalBuildCommand(): string
+    {
+        return 'npm run mp:build';
     }
 }

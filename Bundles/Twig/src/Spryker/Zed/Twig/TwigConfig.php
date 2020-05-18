@@ -9,7 +9,6 @@ namespace Spryker\Zed\Twig;
 
 use ReflectionClass;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -51,10 +50,9 @@ class TwigConfig extends AbstractBundleConfig
     protected function addProjectTemplatePaths(array $paths)
     {
         $namespaces = $this->getProjectNamespaces();
-        $storeName = $this->getStoreName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
         }
 
@@ -97,14 +95,6 @@ class TwigConfig extends AbstractBundleConfig
     public function getCoreNamespaces(): array
     {
         return $this->getSharedConfig()->getCoreNamespaces();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
     }
 
     /**

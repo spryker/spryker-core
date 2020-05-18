@@ -69,24 +69,24 @@ class DependencyInjectorResolver extends AbstractClassResolver
             self::CLASS_NAME_PATTERN,
             self::KEY_NAMESPACE,
             self::KEY_FROM_BUNDLE,
-            self::KEY_STORE,
+            static::KEY_CODE_BUCKET,
             self::KEY_BUNDLE
         );
     }
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             self::KEY_FROM_BUNDLE => $this->fromBundle,
-            self::KEY_STORE => $store,
+            static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
         $className = str_replace(

@@ -1,5 +1,3 @@
-Activate,Aktivieren
-active,Aktiv
 "Addition to address","Zusatz zur Adresse"
 "Average Delivery Time","Durchschnittliche Lieferzeit"
 "Banner URL","Banner URL"
@@ -9,13 +7,10 @@ City,Stadt
 "Contact Person",Kontaktperson
 Country,Land
 "Data Privacy",Datenschutz
-Deactivate,Deaktivieren
 Description,Beschreibung
 "Fax number",Faxnummer
 "First Name",Vorname
 Imprint,Impressum
-inactive,Inaktiv
-"Is Active","Ist Aktiv"
 "Last Name",Nachname
 Latitude,Längengrad
 "Legal Information",Rechtsinformation
@@ -23,8 +18,6 @@ Latitude,Längengrad
 Longitude,Breitengrad
 "Merchant Profile",Händler-Profil
 "Merchant Reference",Händler-Referenznummer
-merchant_profile.activated,"Händlerprofil erfolgreich aktiviert."
-merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
 Number,Nummer
 Phone,Telefonnummer
 "Public Email",Kontakt-E-Mail-Adresse

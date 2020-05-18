@@ -39,5 +39,7 @@ class ProductValidityConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->checkProductValidityDateRangeAndTouch();
+
+        return static::CODE_SUCCESS;
     }
 }
