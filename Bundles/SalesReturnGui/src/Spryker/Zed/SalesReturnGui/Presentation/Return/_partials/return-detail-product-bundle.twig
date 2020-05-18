@@ -12,7 +12,7 @@
         <td></td>
         <td></td>
         <td>
-            <div class="bundle-item">
+            <div class="bundle-item bundle-item--with-checkbox">
                 <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
                 <div class="image-wrap">
                     <img class="product-image" src="{{ orderItem.metadata.image }}">
@@ -27,9 +27,7 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
         </td>
-        <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
-        </td>
+        <td></td>
         <td class="state-history">
             <div>
                 <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})

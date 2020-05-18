@@ -128,3 +128,18 @@ $chat-box-background-color: #f0f0f0;
     margin-bottom: 2px;
   }
 }
+
+.addition-row {
+  td {
+    border-top: none !important;
+  }
+}
+
+.bundle-item {
+    display: flex;
+
+    .image-wrap {
+        margin: 0 16px;
+        flex-shrink: 0;
+    }
+}
