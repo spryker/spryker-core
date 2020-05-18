@@ -10,7 +10,7 @@
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/form-extension": "^1.0.0",
     "spryker/http-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.48.0",
     "spryker/locale": "^3.2.0",
     "spryker/symfony": "^3.3.0",
     "spryker/twig": "^3.7.0",
