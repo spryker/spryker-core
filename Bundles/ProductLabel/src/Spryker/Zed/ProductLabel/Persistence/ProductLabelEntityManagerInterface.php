@@ -7,14 +7,37 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+
 interface ProductLabelEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    public function createProductLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return string[]
+     */
+    public function updateProductLabel(ProductLabelTransfer $productLabelTransfer): array;
+
     /**
      * @param int $idProductLabel
      *
      * @return void
      */
     public function deleteProductLabel(int $idProductLabel): void;
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function deleteProductLabelStoreRelations(int $idProductLabel): void;
 
     /**
      * @param int $idProductLabel
@@ -29,4 +52,20 @@ interface ProductLabelEntityManagerInterface
      * @return void
      */
     public function deleteProductLabelProductAbstractRelations(int $idProductLabel): void;
+
+    /**
+     * @param int[] $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function removeProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
+
+    /**
+     * @param int[] $idStores
+     * @param int $idProductLabel
+     *
+     * @return void
+     */
+    public function createProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
 }
