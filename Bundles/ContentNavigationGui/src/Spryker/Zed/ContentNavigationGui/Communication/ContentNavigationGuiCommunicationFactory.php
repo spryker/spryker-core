@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentNavigationGui\Communication;
 
+use Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNavigationConstraint;
 use Spryker\Zed\ContentNavigationGui\Communication\Form\DataProvider\NavigationContentTermFormDataProvider;
 use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationContentGuiEditorConfigurationMapper;
 use Spryker\Zed\ContentNavigationGui\Communication\Mapper\ContentNavigationContentGuiEditorConfigurationMapperInterface;
@@ -25,6 +26,17 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ContentNavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\ContentNavigationGui\Communication\Form\Constraint\ContentNavigationConstraint
+     */
+    public function createContentNavigationConstraint(): ContentNavigationConstraint
+    {
+        return new ContentNavigationConstraint(
+            $this->getContentNavigationFacade(),
+            $this->getUtilEncodeService()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\ContentNavigationGui\Communication\Form\DataProvider\NavigationContentTermFormDataProvider
      */
