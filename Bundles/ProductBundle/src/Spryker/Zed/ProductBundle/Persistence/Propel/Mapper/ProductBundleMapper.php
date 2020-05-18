@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -77,25 +76,6 @@ class ProductBundleMapper
         }
 
         return $bundleItemTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productEntities
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function mapProductEntitiesToProductConcreteTransfers(ObjectCollection $productEntities): array
-    {
-        $productConcreteTransfers = [];
-
-        foreach ($productEntities as $productEntity) {
-            $productConcreteTransfers[$productEntity->getSku()] = (new ProductConcreteTransfer())
-                ->fromArray($productEntity->toArray(), true)
-                ->setFkProductAbstract($productEntity->getFkProductAbstract())
-                ->setIdProductConcrete($productEntity->getIdProduct());
-        }
-
-        return $productConcreteTransfers;
     }
 
     /**

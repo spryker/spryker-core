@@ -45,7 +45,7 @@ interface ProductBundleRepositoryInterface
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array
      */
-    public function getProductConcretesByProductConcreteSkus(array $productConcreteSkus): array;
+    public function getProductConcretesRawDataByProductConcreteSkus(array $productConcreteSkus): array;
 }

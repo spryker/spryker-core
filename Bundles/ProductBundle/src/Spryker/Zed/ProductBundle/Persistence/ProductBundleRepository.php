@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Persistence;
 
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,6 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductBundleRepository extends AbstractRepository implements ProductBundleRepositoryInterface
 {
+    protected const COL_ID_PRODUCT = 'id_product';
+    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    protected const COL_SKU = 'sku';
+
     /**
      * @param string $sku
      *
@@ -102,17 +107,20 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array
      */
-    public function getProductConcretesByProductConcreteSkus(array $productConcreteSkus): array
+    public function getProductConcretesRawDataByProductConcreteSkus(array $productConcreteSkus): array
     {
-        $productEntities = $this->getFactory()
-            ->createProductQuery()
-            ->filterBySku_In($productConcreteSkus)
-            ->find();
-
         return $this->getFactory()
-            ->createProductBundleMapper()
-            ->mapProductEntitiesToProductConcreteTransfers($productEntities);
+            ->createProductBundleQuery()
+            ->clearSelectColumns()
+            ->addAsColumn(static::COL_ID_PRODUCT, SpyProductTableMap::COL_ID_PRODUCT)
+            ->addAsColumn(static::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addAsColumn(static::COL_SKU, SpyProductTableMap::COL_SKU)
+            ->useSpyProductRelatedByFkProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
+            ->find()
+            ->toArray(static::COL_SKU);
     }
 }

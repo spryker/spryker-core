@@ -64,13 +64,25 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
             $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
         }
 
+        $this->sortProductBundlesProductOptions($productBundles);
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function sortProductBundlesProductOptions(array $productBundles): array
+    {
         foreach ($productBundles as $productBundle) {
             $productBundle->setProductOptions(
                 new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy()))
             );
         }
 
-        return $itemTransfers;
+        return $productBundles;
     }
 
     /**
