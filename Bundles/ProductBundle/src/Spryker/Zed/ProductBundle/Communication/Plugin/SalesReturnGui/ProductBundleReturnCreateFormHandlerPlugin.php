@@ -26,7 +26,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Expands form data for ReturnCreateForm with additional data.
+     * - Expands ReturnCreateForm with product bundles field.
      *
      * @api
      *
@@ -44,7 +44,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
-     * - Expands form data for ReturnCreateForm with additional data.
+     * - Expands ReturnCreateForm with product bundle subforms.
      *
      * @api
      *
@@ -72,7 +72,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
-     * - Expands form data for ReturnCreateForm with additional data.
+     * - Adds submitted product bundle items to ReturnCreateRequestTransfer.
      *
      * @api
      *
