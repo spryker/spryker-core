@@ -224,8 +224,6 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @module ProductImage
-     *
      * @param int $idLocale
      * @param int $idProductRelation
      *
