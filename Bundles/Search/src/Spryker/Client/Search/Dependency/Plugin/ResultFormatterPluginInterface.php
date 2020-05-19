@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface as ExtensionResultFormatterPluginInterface;
 
-/** 
+/**
  * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface} instead.
  */
 class_alias(
