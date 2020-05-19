@@ -24,6 +24,11 @@ class NavigationTable extends AbstractTable
     public const COL_ACTIONS = 'actions';
 
     /**
+     * @uses \Spryker\Zed\Gui\Communication\Table\AbstractTable::ENTITY_ID
+     */
+    public const ENTITY_ID = 'entity_id';
+
+    /**
      * @var \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface
      */
     protected $navigationGuiQueryContainer;
@@ -138,7 +143,8 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateRemoveButton(
             Url::generate('/navigation-gui/delete', [DeleteController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Delete'
+            'Delete',
+            [static::ENTITY_ID => $idNavigation]
         );
     }
 

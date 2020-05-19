@@ -18,6 +18,8 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -34,6 +36,8 @@ abstract class AbstractTable
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
     public const URL_ANCHOR = '#';
+
+    public const ENTITY_ID = 'entity_id';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -922,17 +926,37 @@ abstract class AbstractTable
     {
         $formFactory = $this->getFormFactory();
 
+        $name = isset($options[static::ENTITY_ID]) ? 'delete_form' . $options[static::ENTITY_ID] : '';
+
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create(DeleteForm::class, [], $options);
-
+        $form = $this->createDeleteForm($formFactory, $options, $name);
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
         return $this->twig->render('delete-form.twig', $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
+     * @param array $options
+     * @param string $name
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createDeleteForm(
+        FormFactoryInterface $formFactory,
+        array $options,
+        string $name = ''
+    ): FormInterface {
+        if (!$name) {
+            return $formFactory->create(DeleteForm::class, [], $options);
+        }
+
+        return $formFactory->createNamed($name, DeleteForm::class, [], $options);
     }
 
     /**
