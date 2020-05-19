@@ -98,7 +98,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @deprecated Use `getProductCategoryFilterForm()` instead.
+     * @deprecated Use {@link getProductCategoryFilterForm()} instead.
      *
      * @param array|null $data
      * @param array $options

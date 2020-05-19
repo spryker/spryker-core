@@ -30,7 +30,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderHydrator} instead.
  */
 class OrderHydrator implements OrderHydratorInterface
 {

@@ -86,7 +86,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade::expandShoppingListItemCollection()} instead.
+     * @deprecated Use {@link expandShoppingListItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

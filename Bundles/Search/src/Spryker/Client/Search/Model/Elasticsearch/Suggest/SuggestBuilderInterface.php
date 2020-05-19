@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Suggest;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface} instead.
  */
 interface SuggestBuilderInterface
 {

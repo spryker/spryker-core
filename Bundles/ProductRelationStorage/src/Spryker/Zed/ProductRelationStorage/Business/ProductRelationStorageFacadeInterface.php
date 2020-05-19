@@ -19,6 +19,12 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationStoreEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationPublishingEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
+     *   instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return void
@@ -31,6 +37,12 @@ interface ProductRelationStorageFacadeInterface
      * - Sends delete message to queue based on module config
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationStoreEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationPublishingEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
+     *   instead.
      *
      * @param int[] $productAbstractIds
      *

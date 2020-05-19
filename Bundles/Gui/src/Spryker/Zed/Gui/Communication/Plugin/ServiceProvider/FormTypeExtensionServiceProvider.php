@@ -13,7 +13,7 @@ use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Form\NoValidateFormTypeExtensionFormPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Form\NoValidateFormTypeExtensionFormPlugin} instead.
  *
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
