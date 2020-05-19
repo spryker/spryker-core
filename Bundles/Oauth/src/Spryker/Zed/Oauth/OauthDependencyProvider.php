@@ -161,7 +161,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use addOauthRefreshTokenPersistencePlugins() instead.
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthDependencyProvider::addOauthRefreshTokenPersistencePlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -298,7 +298,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated use getOauthRefreshTokenPersistencePlugins() instead
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthDependencyProvider::getOauthRefreshTokenPersistencePlugins()} instead.
      *
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
      */
