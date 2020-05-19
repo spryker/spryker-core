@@ -3,4 +3,4 @@ parameters:
     - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
     - '#Call to an undefined method .+Criteria::withColumn\(\).#'
     - '#Method .+CmsQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
-    - '#Parameter \#1 $glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int|null, string given#'
+    - '#Parameter \#1 \$glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int\|null, string given#'

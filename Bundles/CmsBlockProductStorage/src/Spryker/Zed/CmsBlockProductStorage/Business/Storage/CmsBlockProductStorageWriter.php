@@ -68,7 +68,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -80,7 +80,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -139,7 +139,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -164,7 +164,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -188,7 +188,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

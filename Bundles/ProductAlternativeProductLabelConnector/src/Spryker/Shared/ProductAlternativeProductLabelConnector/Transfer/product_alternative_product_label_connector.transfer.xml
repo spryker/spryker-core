@@ -14,10 +14,12 @@
         <property name="name" type="string"/>
         <property name="frontEndReference" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="isDynamic" type="bool"/>
         <property name="idProductLabel" type="int"/>
         <property name="isExclusive" type="bool"/>
         <property name="isPublished" type="bool"/>
         <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
+        <property name="position" type="int"/>
     </transfer>
 
     <transfer name="Locale">

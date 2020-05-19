@@ -24,16 +24,16 @@ class CategoryImagePublishStorageListener extends AbstractPlugin implements Even
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
 
-        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
+        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH) {
             $this->getFacade()->publishCategoryImages($categoryIds);

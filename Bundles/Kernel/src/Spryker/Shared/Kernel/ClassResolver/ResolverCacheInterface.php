@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+ */
 interface ResolverCacheInterface
 {
     /**

@@ -30,5 +30,7 @@ class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleD
                 $container->getLocator()->product()->queryContainer()
             );
         };
+
+        return $container;
     }
 }
