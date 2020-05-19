@@ -27,22 +27,6 @@ interface MerchantProductOfferSearchFacadeInterface
 
     /**
      * Specification:
-     *  - Gets merchant profile ids from eventTransfers.
-     *  - Retrieves a list of abstract product ids by merchant profile ids.
-     *  - Queries all product abstract with the given abstract product ids.
-     *  - Stores data as json encoded to storage table.
-     *  - Sends a copy of data to queue based on module config.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByIdMerchantProfileEvents(array $eventTransfers): void;
-
-    /**
-     * Specification:
      *  - Gets merchant product offer ids from eventTransfers.
      *  - Retrieves a list of abstract product ids by product offer ids.
      *  - Queries all product abstract with the given abstract product ids.

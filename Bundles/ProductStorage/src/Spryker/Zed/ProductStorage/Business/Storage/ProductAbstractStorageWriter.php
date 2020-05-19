@@ -80,7 +80,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -99,7 +99,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -432,7 +432,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

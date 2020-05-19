@@ -19,7 +19,6 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface as LegacyCommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
@@ -187,10 +186,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEvent($eventId, array $orderItems, $data)
     {
-        if ($this->checkForEventRepetitions($eventId) === false) {
-            return [];
-        }
-
         $data = $this->makeDataReadOnly($data);
 
         $processes = $this->getProcesses($orderItems);
@@ -203,7 +198,11 @@ class OrderStateMachine implements OrderStateMachineInterface
         $sourceStateBuffer = [];
 
         $allProcessedOrderItems = [];
-        foreach ($orderGroup as $groupedOrderItems) {
+        foreach ($orderGroup as $orderGroupKey => $groupedOrderItems) {
+            if (!$this->checkOrderGroupForEventRepetitions($eventId, $orderGroupKey)) {
+                continue;
+            }
+
             $this->logSourceState($groupedOrderItems, $log);
 
             $processedOrderItems = $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
@@ -527,13 +526,14 @@ class OrderStateMachine implements OrderStateMachineInterface
                 continue;
             }
 
+            /** @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command */
             $command = $this->getCommand($event->getCommand());
             $type = $this->getCommandType($command);
 
             $log->addCommand($orderItemEntity, $command);
 
             try {
-                if ($command instanceof CommandByOrderInterface || $command instanceof LegacyCommandByOrderInterface) {
+                if ($command instanceof CommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
@@ -542,7 +542,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     return $orderItems;
                 }
 
-                if ($command instanceof CommandByItemInterface || $command instanceof LegacyCommandByOrderInterface) {
+                if ($command instanceof CommandByItemInterface) {
                     $returnData = $command->run($orderItemEntity, $data);
                     $this->returnData = array_merge($this->returnData, $returnData);
                     $processedOrderItems[] = $orderItemEntity;
@@ -726,20 +726,22 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * To protect of loops, every event can only be used some times
+     * To protect against loops, every event can only be used several times per order group.
      *
      * @param string $eventId
+     * @param string $orderGroupKey
      *
      * @return bool
      */
-    protected function checkForEventRepetitions($eventId)
+    protected function checkOrderGroupForEventRepetitions(string $eventId, string $orderGroupKey): bool
     {
-        if (array_key_exists($eventId, $this->eventCounter) === false) {
-            $this->eventCounter[$eventId] = 0;
+        if (!isset($this->eventCounter[$eventId][$orderGroupKey])) {
+            $this->eventCounter[$eventId][$orderGroupKey] = 0;
         }
-        $this->eventCounter[$eventId]++;
 
-        return $this->eventCounter[$eventId] < self::MAX_EVENT_REPEATS;
+        $this->eventCounter[$eventId][$orderGroupKey]++;
+
+        return $this->eventCounter[$eventId][$orderGroupKey] < self::MAX_EVENT_REPEATS;
     }
 
     /**
@@ -973,16 +975,16 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function saveTimeoutEvent($eventId, array $orderItems)
     {
-        if ($this->checkForEventRepetitions($eventId) === false) {
-            return;
-        }
-
         $processes = $this->getProcesses($orderItems);
         $orderItems = $this->filterAffectedOrderItems($eventId, $orderItems, $processes);
         $sourceStateBuffer = $this->getStateByEvent($orderItems);
         $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
 
-        foreach ($orderGroup as $groupedOrderItems) {
+        foreach ($orderGroup as $orderGroupKey => $groupedOrderItems) {
+            if (!$this->checkOrderGroupForEventRepetitions($eventId, $orderGroupKey)) {
+                return;
+            }
+
             $this->saveOrderItemsTimeout($groupedOrderItems, $processes, $sourceStateBuffer);
         }
     }
