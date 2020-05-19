@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface SalesReturnPageSearchFacadeInterface
 {
     /**
@@ -39,11 +41,10 @@ interface SalesReturnPageSearchFacadeInterface
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
-     * @param int[] $ids
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $returnReasonIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findReturnReasonSearchDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function getReturnReasonSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $returnReasonIds = []): array;
 }

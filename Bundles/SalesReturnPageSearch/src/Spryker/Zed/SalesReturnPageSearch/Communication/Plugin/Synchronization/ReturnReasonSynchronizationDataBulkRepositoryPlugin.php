@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\SalesReturnPageSearch\SalesReturnPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -51,7 +52,7 @@ class ReturnReasonSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     public function getParams(): array
     {
-        return [];
+        return ['type' => 'return-reason'];
     }
 
     /**
@@ -79,7 +80,10 @@ class ReturnReasonSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findReturnReasonSearchDataTransferByIds($offset, $limit, $ids);
+        return $this->getFacade()->getReturnReasonSynchronizationDataTransfersByIds(
+            (new FilterTransfer())->setLimit($limit)->setOffset($offset),
+            $ids
+        );
     }
 
     /**

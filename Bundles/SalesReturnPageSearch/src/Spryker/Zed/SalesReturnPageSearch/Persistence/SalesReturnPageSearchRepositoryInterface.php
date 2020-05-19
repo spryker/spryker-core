@@ -7,14 +7,22 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface SalesReturnPageSearchRepositoryInterface
 {
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param int[] $ids
+     * @param int[] $returnReasonIds
+     *
+     * @return \Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[]
+     */
+    public function getReturnReasonPageSearchTransfersByReturnReasonIds(array $returnReasonIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $returnReasonIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findReturnReasonSearchDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function getReturnReasonSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $returnReasonIds = []): array;
 }

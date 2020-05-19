@@ -41,8 +41,8 @@ class ReturnReasonSearchDeleter implements ReturnReasonSearchDeleterInterface
      */
     public function deleteCollectionByReturnReasonEvents(array $eventTransfers): void
     {
-        $returnReasonsIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $returnReasonIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        $this->entityManager->deleteReturnReasonSearchByReturnReasonIds($returnReasonsIds);
+        $this->entityManager->deleteReturnReasonSearchByReturnReasonIds($returnReasonIds);
     }
 }

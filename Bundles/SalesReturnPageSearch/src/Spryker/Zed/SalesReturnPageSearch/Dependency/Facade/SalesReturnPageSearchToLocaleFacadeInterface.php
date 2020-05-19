@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Dependency\Facade;
 
-interface SalesReturnPageSearchToEventBehaviorFacadeInterface
+interface SalesReturnPageSearchToLocaleFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getLocaleCollection();
 }

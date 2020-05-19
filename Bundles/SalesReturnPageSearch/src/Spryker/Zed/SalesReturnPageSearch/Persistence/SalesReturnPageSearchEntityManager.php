@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Persistence;
 
+use Generated\Shared\Transfer\ReturnReasonPageSearchTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -15,20 +16,41 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SalesReturnPageSearchEntityManager extends AbstractEntityManager implements SalesReturnPageSearchEntityManagerInterface
 {
     /**
-     * @param int[] $returnReasonsIds
+     * @param int[] $returnReasonIds
      *
      * @return void
      */
-    public function deleteReturnReasonSearchByReturnReasonIds(array $returnReasonsIds): void
+    public function deleteReturnReasonSearchByReturnReasonIds(array $returnReasonIds): void
     {
-        if (!$returnReasonsIds) {
+        if (!$returnReasonIds) {
             return;
         }
 
         $this->getFactory()
             ->getSalesReturnReasonPageSearchPropelQuery()
-            ->filterByFkSalesReturnReason_In($returnReasonsIds)
+            ->filterByFkSalesReturnReason_In($returnReasonIds)
             ->find()
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnReasonPageSearchTransfer $returnReasonPageSearchTransfer
+     *
+     * @return void
+     */
+    public function saveReturnReasonSearchPageSearch(ReturnReasonPageSearchTransfer $returnReasonPageSearchTransfer): void
+    {
+        $returnReasonPageSearchEntity = $this->getFactory()
+            ->getSalesReturnReasonPageSearchPropelQuery()
+            ->filterByIdSalesReturnReasonPageSearch($returnReasonPageSearchTransfer->getIdSalesReturnReasonPageSearch())
+            ->findOneOrCreate();
+
+        $returnReasonPageSearchEntity->fromArray(
+            $returnReasonPageSearchTransfer->toArray()
+        );
+
+        $returnReasonPageSearchEntity->setFkSalesReturnReason($returnReasonPageSearchTransfer->getIdSalesReturnReason());
+
+        $returnReasonPageSearchEntity->save();
     }
 }

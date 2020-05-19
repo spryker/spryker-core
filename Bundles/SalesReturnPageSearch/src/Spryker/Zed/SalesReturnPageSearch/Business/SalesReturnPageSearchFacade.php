@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -53,14 +54,13 @@ class SalesReturnPageSearchFacade extends AbstractFacade implements SalesReturnP
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
-     * @param int[] $ids
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $returnReasonIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findReturnReasonSearchDataTransferByIds(int $offset, int $limit, array $ids): array
+    public function getReturnReasonSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $returnReasonIds = []): array
     {
-        return $this->getRepository()->findReturnReasonSearchDataTransferByIds($offset, $limit, $ids);
+        return $this->getRepository()->getReturnReasonSynchronizationDataTransfersByIds($filterTransfer, $returnReasonIds);
     }
 }
