@@ -22,8 +22,8 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
-     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
+}     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
      * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents(),
      * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents() instead.
      *
@@ -46,8 +46,8 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
-     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationEvents(),
+}     * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationStoreEvents(),
      * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents(),
      * \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents() instead.
      *

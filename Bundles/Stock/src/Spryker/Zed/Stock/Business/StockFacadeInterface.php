@@ -102,7 +102,7 @@ interface StockFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock() instead.
+     * @deprecated Use {@link \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock()} instead.
      *
      * Specification:
      * - Persists a new stock type entity to database.

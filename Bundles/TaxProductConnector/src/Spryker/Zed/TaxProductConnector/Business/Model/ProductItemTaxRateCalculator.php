@@ -17,7 +17,7 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\TaxProductConnector\Business\Calculator\ProductItemTaxRateCalculator instead.
+ * @deprecated Use {@link \Spryker\Zed\TaxProductConnector\Business\Calculator\ProductItemTaxRateCalculator} instead.
  */
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {

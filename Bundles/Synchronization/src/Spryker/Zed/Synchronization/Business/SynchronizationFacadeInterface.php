@@ -12,7 +12,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages()} instead.
      *
      * Specification:
      * - Writes json encoded data to storage
@@ -28,7 +28,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages()} instead.
      *
      * Specification:
      * - Deletes all data keys from storage
@@ -44,7 +44,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
      * Specification:
      * - Writes json encoded data to search
@@ -60,7 +60,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
      * Specification:
      * - Deletes all data keys from search

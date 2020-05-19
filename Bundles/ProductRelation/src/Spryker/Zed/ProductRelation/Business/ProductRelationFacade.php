@@ -101,7 +101,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation() instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()} instead.
      *
      * @see \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()
      *
@@ -123,7 +123,7 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation() instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()} instead.
      *
      * @see \Spryker\Zed\ProductRelation\Business\ProductRelationFacade::updateProductRelation()
      *
