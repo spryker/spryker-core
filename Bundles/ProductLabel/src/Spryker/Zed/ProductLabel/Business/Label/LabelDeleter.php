@@ -49,15 +49,14 @@ class LabelDeleter implements LabelDeleterInterface
      */
     public function remove(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
     {
-        $productLabelId = $productLabelTransfer->getIdProductLabel();
-
         $this->assertProductLabel($productLabelTransfer);
 
         $productLabelResponseTransfer = (new ProductLabelResponseTransfer())
             ->setIsSuccessful(true);
 
+        $productLabelId = $productLabelTransfer->getIdProductLabel();
         $productLabelTransfer = $this->productLabelRepository
-            ->findProductLabelById($productLabelTransfer->getIdProductLabel());
+            ->findProductLabelById($productLabelId);
 
         if ($productLabelTransfer === null) {
             return $productLabelResponseTransfer
@@ -81,6 +80,7 @@ class LabelDeleter implements LabelDeleterInterface
     {
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations($productLabelTransfer->getIdProductLabel());
         $this->productLabelEntityManager->deleteProductLabelLocalizedAttributes($productLabelTransfer->getIdProductLabel());
+        $this->productLabelEntityManager->deleteProductLabelStoreRelations($productLabelTransfer->getIdProductLabel());
         $this->productLabelEntityManager->deleteProductLabel($productLabelTransfer->getIdProductLabel());
     }
 
