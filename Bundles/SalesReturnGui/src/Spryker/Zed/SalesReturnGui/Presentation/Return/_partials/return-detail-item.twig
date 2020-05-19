@@ -1,3 +1,5 @@
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
+
 <tr>
     <td>
         {% if not isBundleProduct %}
@@ -32,7 +34,7 @@
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
         {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
     </td>
-    <td rowspan="{{ orderItem.productOptions | length + 1 }}" class="state-history">
+    <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
             <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
 
@@ -52,7 +54,7 @@
             {% endif %}
         {% endif %}
     </td>
-    <td rowspan="{{ orderItem.productOptions | length + 1 }}">
+    <td rowspan="{{ numberOfItemAdditions }}">
         {% if eventsGroupedByItem[orderItem.idSalesOrderItem] is defined %}
             {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
                 redirectUrl: changeStatusRedirectUrl,

@@ -32,6 +32,7 @@ $(document).ready(function() {
         allItemsSelector: '.js-check-all-items',
         itemSelector: '.js-check-item',
         checkedItemSelector: '.js-check-item:checked',
+        submitButtonSelector: '.js-create-return-submit',
     });
 
     new ReasonMessageToggler({

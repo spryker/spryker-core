@@ -1,4 +1,5 @@
 {% set productUniqueKey = orderItem.idSalesOrderItem %}
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
 
 {% if isBundleProduct %}
     {% set productUniqueKey = orderItem.bundleItemIdentifier ~ '-bundle' %}
@@ -56,7 +57,7 @@
             {% endfor %}
         </ul>
     </td>
-    <td rowspan="{{ orderItem.productOptions | length + 1 }}" class="state-history">
+    <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
             <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
 

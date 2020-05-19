@@ -1,3 +1,5 @@
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
+
 <td class="item-checker">
     {% if not isBundleProduct %}
         <input type="checkbox" name="id-order-item[]" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
@@ -59,7 +61,7 @@
         } %} {% endembed %}
     </td>
 {% endif %}
-<td rowspan="{{ orderItem.productOptions | length + 1 }}" class="state-history">
+<td rowspan="{{ numberOfItemAdditions }}" class="state-history">
     {% if not isBundleProduct %}
         <div>
             <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}"
