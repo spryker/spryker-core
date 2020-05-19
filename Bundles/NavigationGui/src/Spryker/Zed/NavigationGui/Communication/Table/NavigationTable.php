@@ -138,7 +138,8 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateRemoveButton(
             Url::generate('/navigation-gui/delete', [DeleteController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Delete'
+            'Delete',
+            [static::DELETE_FORM_NAME_SUFFIX => $idNavigation]
         );
     }
 
