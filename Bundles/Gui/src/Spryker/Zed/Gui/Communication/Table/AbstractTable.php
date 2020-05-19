@@ -45,7 +45,7 @@ abstract class AbstractTable
      *    'name_suffix' => $id,
      * ]
      */
-    public const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
+    protected const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
 
     protected const DELETE_FORM_NAME = 'delete_form';
 

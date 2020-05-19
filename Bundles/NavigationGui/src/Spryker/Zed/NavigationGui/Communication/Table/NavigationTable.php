@@ -24,11 +24,6 @@ class NavigationTable extends AbstractTable
     public const COL_ACTIONS = 'actions';
 
     /**
-     * @uses \Spryker\Zed\Gui\Communication\Table\AbstractTable::DELETE_FORM_NAME_SUFFIX
-     */
-    public const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
-
-    /**
      * @var \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface
      */
     protected $navigationGuiQueryContainer;
