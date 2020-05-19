@@ -19,7 +19,7 @@ use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller` instead.
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller} instead.
  */
 class IndexInstaller implements SearchInstallerInterface
 {

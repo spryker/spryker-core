@@ -69,7 +69,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsVersionForm
+     * @deprecated Use instead getCmsVersionForm
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
      * @param int|null $idCmsPage
@@ -99,7 +99,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsPageForm
+     * @deprecated Use instead getCmsPageForm
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
@@ -122,7 +122,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsGlossaryForm
+     * @deprecated Use instead getCmsGlossaryForm
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
      * @param int $idCmsPage

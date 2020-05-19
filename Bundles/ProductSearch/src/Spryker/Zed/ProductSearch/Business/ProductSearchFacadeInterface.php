@@ -31,7 +31,7 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface::mapDynamicProductAttributes()` instead.
+     * @deprecated Use {@link mapDynamicProductAttributes()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

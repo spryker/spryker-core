@@ -12,7 +12,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages()} instead.
+     * @deprecated Use {@link processStorageMessages()} instead.
      *
      * Specification:
      * - Writes json encoded data to storage
@@ -28,7 +28,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages()} instead.
+     * @deprecated Use {@link processStorageMessages()} instead.
      *
      * Specification:
      * - Deletes all data keys from storage
@@ -102,7 +102,7 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use SynchronizationFacadeInterface::executeResolvedPluginsBySourcesWithIds() instead.
+     * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
      *
      * @param string[] $resources
      *
