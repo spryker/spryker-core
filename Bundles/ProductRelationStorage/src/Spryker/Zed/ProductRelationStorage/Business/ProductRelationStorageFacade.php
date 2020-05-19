@@ -32,7 +32,7 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents()
      * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents()
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
      * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationPublishingEvents()
      * @see \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacade::writeCollectionByProductRelationProductAbstractEvents()
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

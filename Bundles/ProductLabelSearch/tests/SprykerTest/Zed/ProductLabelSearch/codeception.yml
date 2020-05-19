@@ -13,6 +13,21 @@ coverage:
 
 suites:
     Business:
+        path: Business
+        class_name: ProductLabelSearchBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+    Communication:
         path: Communication
         class_name: ProductLabelSearchCommunicationTester
         modules:
@@ -24,3 +39,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper

@@ -11,26 +11,49 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\EditController;
-use Spryker\Zed\ProductLabelGui\Communication\Controller\SetStatusController;
 use Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 
 class ProductLabelTable extends AbstractTable
 {
-    public const TABLE_IDENTIFIER = 'product-label-table';
     public const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
-    public const COL_POSITION = SpyProductLabelTableMap::COL_POSITION;
     public const COL_NAME = SpyProductLabelTableMap::COL_NAME;
     public const COL_IS_EXCLUSIVE = SpyProductLabelTableMap::COL_IS_EXCLUSIVE;
-    public const COL_VALIDITY = 'validity';
-    public const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+    public const COL_IS_DYNAMIC = SpyProductLabelTableMap::COL_IS_DYNAMIC;
     public const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
+    public const COL_STORES = SpyStoreTableMap::COL_NAME;
+    public const COL_PRIORITY = SpyProductLabelTableMap::COL_POSITION;
+    public const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
     public const COL_ACTIONS = 'actions';
+
+    public const TABLE_IDENTIFIER = 'product-label-table';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\IndexController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\EditController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+
+    /**
+     * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController::indexAction()
+     */
+    protected const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface
@@ -70,13 +93,14 @@ class ProductLabelTable extends AbstractTable
     protected function configureHeader(TableConfiguration $config)
     {
         $config->setHeader([
-            static::COL_ID_PRODUCT_LABEL => '#',
-            static::COL_POSITION => 'Priority',
+            static::COL_ID_PRODUCT_LABEL => 'ID',
             static::COL_NAME => 'Name',
             static::COL_IS_EXCLUSIVE => 'Is Exclusive',
-            static::COL_VALIDITY => 'Validity',
-            static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => 'Products Applied to',
+            static::COL_IS_DYNAMIC => 'Is Dynamic',
             static::COL_STATUS => 'Status',
+            static::COL_STORES => 'Stores',
+            static::COL_PRIORITY => 'Priority',
+            static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => '# of Products',
             static::COL_ACTIONS => 'Actions',
         ]);
     }
@@ -88,8 +112,11 @@ class ProductLabelTable extends AbstractTable
      */
     protected function configureRawColumns(TableConfiguration $config)
     {
-        $config->addRawColumn(static::COL_STATUS);
-        $config->addRawColumn(static::COL_ACTIONS);
+        $config->setRawColumns([
+            static::COL_STATUS,
+            static::COL_STORES,
+            static::COL_ACTIONS,
+        ]);
     }
 
     /**
@@ -106,9 +133,10 @@ class ProductLabelTable extends AbstractTable
 
         $config->setSortable([
             static::COL_ID_PRODUCT_LABEL,
-            static::COL_POSITION,
+            static::COL_PRIORITY,
             static::COL_NAME,
             static::COL_IS_EXCLUSIVE,
+            static::COL_IS_DYNAMIC,
             static::COL_STATUS,
         ]);
     }
@@ -142,12 +170,13 @@ class ProductLabelTable extends AbstractTable
         foreach ($productLabelEntities as $productLabelEntity) {
             $tableRows[] = [
                 static::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
-                static::COL_POSITION => $productLabelEntity->getPosition(),
                 static::COL_NAME => $productLabelEntity->getName(),
                 static::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
-                static::COL_VALIDITY => $this->getValidityDateRangeLabel($productLabelEntity),
-                static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
+                static::COL_IS_DYNAMIC => $this->getIsDynamicLabel($productLabelEntity),
                 static::COL_STATUS => $this->createStatusMarker($productLabelEntity->getIsActive()),
+                static::COL_STORES => $this->getStoreNames($productLabelEntity),
+                static::COL_PRIORITY => $productLabelEntity->getPosition(),
+                static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
                 static::COL_ACTIONS => $this->createActionButtons($productLabelEntity),
             ];
         }
@@ -187,17 +216,9 @@ class ProductLabelTable extends AbstractTable
      *
      * @return string
      */
-    protected function getValidityDateRangeLabel(SpyProductLabel $productLabelEntity)
+    protected function getIsDynamicLabel(SpyProductLabel $productLabelEntity)
     {
-        if (!$productLabelEntity->getValidFrom() && !$productLabelEntity->getValidTo()) {
-            return 'n/a';
-        }
-
-        return sprintf(
-            '%s - %s',
-            $productLabelEntity->getValidFrom('Y/m/d'),
-            $productLabelEntity->getValidTo('Y/m/d')
-        );
+        return $productLabelEntity->getIsDynamic() ? 'Yes' : 'No';
     }
 
     /**
@@ -218,13 +239,28 @@ class ProductLabelTable extends AbstractTable
      *
      * @return string
      */
+    protected function getStoreNames(SpyProductLabel $productLabelEntity): string
+    {
+        $storeNames = [];
+        foreach ($productLabelEntity->getProductLabelStores() as $productLabelStore) {
+            $storeNames[] = $this->generateLabel($productLabelStore->getStore()->getName(), 'label-info');
+        }
+
+        return implode(' ', $storeNames);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabelEntity
+     *
+     * @return string
+     */
     protected function createActionButtons(SpyProductLabel $productLabelEntity)
     {
         $idProductLabel = $productLabelEntity->getIdProductLabel();
         $actionButtons = [
             $this->createViewButton($idProductLabel),
             $this->createEditButton($idProductLabel),
-            $this->createStatusToggleButton($idProductLabel, $productLabelEntity->getIsActive()),
+            $this->createDeleteButton($idProductLabel),
         ];
 
         return implode(' ', $actionButtons);
@@ -239,12 +275,15 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(
-                '/product-label-gui/view',
+                static::URL_PRODUCT_LABEL_VIEW,
                 [
                     ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
             ),
-            'View'
+            'View',
+            [
+                'icon' => 'fa-eye',
+            ]
         );
     }
 
@@ -257,7 +296,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                '/product-label-gui/edit',
+                static::URL_PRODUCT_LABEL_EDIT,
                 [
                     EditController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                 ]
@@ -268,55 +307,20 @@ class ProductLabelTable extends AbstractTable
 
     /**
      * @param int $idProductLabel
-     * @param bool $isActive
      *
      * @return string
      */
-    protected function createStatusToggleButton($idProductLabel, $isActive)
-    {
-        if ($isActive) {
-            return $this->createDeactivateButton($idProductLabel);
-        }
-
-        return $this->createActivateButton($idProductLabel);
-    }
-
-    /**
-     * @param int $idProductLabel
-     *
-     * @return string
-     */
-    protected function createDeactivateButton($idProductLabel)
+    protected function createDeleteButton(int $idProductLabel): string
     {
         return $this->generateRemoveButton(
             Url::generate(
-                '/product-label-gui/set-status/inactive',
+                static::URL_PRODUCT_LABEL_DELETE,
                 [
-                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
+                    DeleteController::URL_PARAM_ID_PRODUCT_LABEL => $idProductLabel,
+                    DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_LABEL_LIST,
                 ]
             ),
-            'Deactivate'
-        );
-    }
-
-    /**
-     * @param int $idProductLabel
-     *
-     * @return string
-     */
-    protected function createActivateButton($idProductLabel)
-    {
-        return $this->generateViewButton(
-            Url::generate(
-                'product-label-gui/set-status/active',
-                [
-                    SetStatusController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
-            ),
-            'Activate',
-            [
-                static::BUTTON_ICON => '',
-            ]
+            'Delete'
         );
     }
 }
