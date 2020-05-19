@@ -43,27 +43,27 @@
     {% endfor %}
 
     {% for productOption in productBundle.productOptions %}
-        {% set noBorderBottomClass = not loop.last ? 'no-bottom-border' %}
+        {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
         {% set firstProductOptionClass = loop.first ? 'product-option--first' %}
 
         <tr>
-            <td class="no-top-border {{ noBorderBottomClass }}"></td>
-            <td class="no-top-border {{ noBorderBottomClass }}"></td>
-            <td class="no-top-border {{ noBorderBottomClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}
                 {{ productOption.value }}
             </td>
-            <td class="no-top-border {{ noBorderBottomClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}
                 {{ productOption.unitPrice | money(true, currencyIsoCode) }}
             </td>
-            <td class="no-top-border {{ noBorderBottomClass }}"></td>
-            <td class="no-top-border {{ noBorderBottomClass }}"></td>
-            <td class="no-top-border {{ noBorderBottomClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
         </tr>
     {% endfor %}
 {% endfor %}
