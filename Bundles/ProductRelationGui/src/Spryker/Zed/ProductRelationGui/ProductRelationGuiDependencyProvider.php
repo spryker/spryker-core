@@ -52,8 +52,6 @@ class ProductRelationGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductRelationFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addMoneyFacade($container);
-        $container = $this->addPriceProductFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductAttributeFacade($container);
         $container = $this->addProductRelationPropelQuery($container);
