@@ -39,7 +39,7 @@ class ProductBundleReturnCreateFormDataProvider
      *
      * @return array
      */
-    public function expandData(array $returnCreateFormData, OrderTransfer $orderTransfer): array
+    public function getData(array $returnCreateFormData, OrderTransfer $orderTransfer): array
     {
         $returnCreateFormData = $this->excludeBundleItems($returnCreateFormData);
         $returnCreateFormData = $this->addReturnBundleItems($returnCreateFormData, $orderTransfer);
@@ -81,7 +81,7 @@ class ProductBundleReturnCreateFormDataProvider
      *
      * @return array
      */
-    public function addReturnBundleItems(array $returnCreateFormData, OrderTransfer $orderTransfer): array
+    protected function addReturnBundleItems(array $returnCreateFormData, OrderTransfer $orderTransfer): array
     {
         $returnBundleItems = [];
 

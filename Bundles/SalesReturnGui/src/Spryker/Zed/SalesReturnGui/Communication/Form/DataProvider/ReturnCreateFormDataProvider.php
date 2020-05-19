@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
@@ -56,6 +57,8 @@ class ReturnCreateFormDataProvider
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
+        $orderTransfer = $this->translateReturnPolicyMessages($orderTransfer);
+
         $returnCreateFormData = [
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
         ];
@@ -123,5 +126,46 @@ class ReturnCreateFormDataProvider
         }
 
         return $returnCreateFormData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function translateReturnPolicyMessages(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $this->translateReturnPolicyMessage($itemTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function translateReturnPolicyMessage(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getReturnPolicyMessages()->count()) {
+            return $itemTransfer;
+        }
+
+        foreach ($itemTransfer->getReturnPolicyMessages() as $returnPolicyMessage) {
+            if (!$returnPolicyMessage->getValue()) {
+                continue;
+            }
+
+            $translatedMessage = $this->glossaryFacade->translate(
+                $returnPolicyMessage->getValue(),
+                $returnPolicyMessage->getParameters()
+            );
+
+            $returnPolicyMessage->setMessage($translatedMessage);
+        }
+
+        return $itemTransfer;
     }
 }

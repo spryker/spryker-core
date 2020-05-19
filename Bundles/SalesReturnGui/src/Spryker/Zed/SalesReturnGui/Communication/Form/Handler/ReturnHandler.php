@@ -74,9 +74,7 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setStore($orderTransfer->getStore())
             ->setReturnItems(new ArrayObject());
 
-        $returnItemsFormData = isset($returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS])
-            ? $returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS]
-            : [];
+        $returnItemsFormData = $returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS] ?? [];
 
         foreach ($returnItemsFormData as $returnItemFormData) {
             if (!$this->isReturnItemChecked($returnItemFormData)) {
@@ -85,7 +83,7 @@ class ReturnHandler implements ReturnHandlerInterface
 
             $returnItemTransfer = (new ReturnItemTransfer())
                 ->fromArray($returnItemFormData, true)
-                ->setReason($this->getReason($returnItemFormData));
+                ->setReason($this->extractReason($returnItemFormData));
 
             $returnCreateRequestTransfer->addReturnItem($returnItemTransfer);
         }
@@ -98,7 +96,7 @@ class ReturnHandler implements ReturnHandlerInterface
      *
      * @return string|null
      */
-    protected function getReason(array $returnItemFormData): ?string
+    protected function extractReason(array $returnItemFormData): ?string
     {
         if ($returnItemFormData[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_KEY && $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]) {
             return $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON];
@@ -114,7 +112,7 @@ class ReturnHandler implements ReturnHandlerInterface
      */
     protected function isReturnItemChecked(array $returnItemFormData): bool
     {
-        return isset($returnItemFormData[ItemTransfer::IS_RETURNABLE]) && $returnItemFormData[ItemTransfer::IS_RETURNABLE];
+        return !empty($returnItemFormData[ItemTransfer::IS_RETURNABLE]);
     }
 
     /**

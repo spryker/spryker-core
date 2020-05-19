@@ -53,8 +53,8 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIsReturnable($builder)
-            ->addReason($builder, $options)
+        $this->addIsReturnableField($builder)
+            ->addReasonField($builder, $options)
             ->addCustomReasonField($builder);
     }
 
@@ -63,7 +63,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsReturnable(FormBuilderInterface $builder)
+    protected function addIsReturnableField(FormBuilderInterface $builder)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $event->getForm()->add(ItemTransfer::IS_RETURNABLE, CheckboxType::class, [
@@ -82,7 +82,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addReason(FormBuilderInterface $builder, array $options)
+    protected function addReasonField(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
             $event->getForm()->add(ReturnItemTransfer::REASON, ChoiceType::class, [
