@@ -3,14 +3,14 @@
 } %}
     {% block content %}
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 {{ 'Trigger all matching states' | trans }}
                 <span class="js-item-counter-wrapper hidden">{{ 'of ' | trans }}
                     <span class="js-item-counter"></span>
                     {{ ' selected items' | trans }}
                 </span>
             </div>
-            <div class="header-actions js-return-bulk-trigger-buttons col-lg-6">
+            <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
                 {% include '@Oms/RenderForm/_partial/order-items-actions.twig' ignore missing with {
                     redirectUrl: triggerButtonRedirectUrl,
                     salesOrderItemIds: salesOrderItemIds,
@@ -39,29 +39,6 @@
                     {% set order = {
                         currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
                     } %}
-
-                    {#{% set returnItemsWithConfiguredBundles = [] %}#}
-
-                    {#{% for returnItem in return.returnItems %}#}
-                        {#{% if returnItem.orderItem.salesOrderConfiguredBundle is empty %}#}
-                            {#{% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {#}
-                                {#returnItem: returnItem,#}
-                                {#orderItem: returnItem.orderItem,#}
-                                {#order: order,#}
-                                {#eventsGroupedByItem: orderItemManualEvents,#}
-                                {#changeStatusRedirectUrl: triggerButtonRedirectUrl,#}
-                            {#} only %}#}
-                        {#{% else %}#}
-                            {#{% set returnItemsWithConfiguredBundles = returnItemsWithConfiguredBundles | merge([returnItem]) %}#}
-                        {#{% endif %}#}
-                    {#{% endfor %}#}
-
-                    {#{% include '@SalesReturnGui/Return/_partials/return-detail-configured-bundles.twig' with {#}
-                        {#returnItems: returnItemsWithConfiguredBundles,#}
-                        {#order: order,#}
-                        {#orderItemManualEvents: orderItemManualEvents,#}
-                        {#triggerButtonRedirectUrl: triggerButtonRedirectUrl,#}
-                    {#} only %}#}
 
                     {% include '@SalesReturnGui/Return/_partials/return-detail-items.twig' with {
                         return: return,

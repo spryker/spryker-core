@@ -45,3 +45,8 @@
         </td>
     </tr>
 {% endfor %}
+
+{% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    orderItem: bundleProduct,
+    order: order,
+} only %}

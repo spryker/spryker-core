@@ -59,7 +59,7 @@
                 {% if loop.first %}
                     <hr>
                 {% endif %}
-                {{ productOption.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                {{ productOption.unitPrice | money(true, currencyIsoCode) }}
             </td>
             <td class="no-top-border {{ noBorderBottomClass }}"></td>
             <td class="no-top-border {{ noBorderBottomClass }}"></td>

@@ -65,7 +65,9 @@
     </td>
 </tr>
 
-{% include '@Sales/Detail/boxes/order-item-option.twig' with {
-    orderItem: orderItem,
-    order: order,
-} only %}
+{% if not isBundleProduct %}
+    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        order: order,
+    } only %}
+{% endif %}

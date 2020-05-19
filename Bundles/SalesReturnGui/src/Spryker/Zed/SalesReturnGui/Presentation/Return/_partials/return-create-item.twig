@@ -51,11 +51,11 @@
         {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
     </td>
     <td>
-        <ul class="list">
-            {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
-                <li class="list__item">{{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}</li>
-            {% endfor %}
-        </ul>
+        {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
+            {% if returnPolicyMessage.message is not null %}
+                <div>{{ returnPolicyMessage.message | trans }}</div>
+            {% endif %}
+        {% endfor %}
     </td>
     <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
@@ -79,7 +79,9 @@
     </td>
 </tr>
 
-{% include '@Sales/Detail/boxes/order-item-option.twig' with {
-    orderItem: orderItem,
-    order: order,
-} only %}
+{% if not isBundleProduct %}
+    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        order: order,
+    } only %}
+{% endif %}
