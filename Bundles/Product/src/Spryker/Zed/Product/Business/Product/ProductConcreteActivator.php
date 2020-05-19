@@ -136,8 +136,6 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      */
     protected function updateIsActive(ProductConcreteTransfer $productConcreteTransfer, $isActive)
     {
-        $productConcreteTransfer = $this->getProductConcreteTransfer($productConcreteTransfer->getIdProductConcrete());
-
         $productConcreteTransfer->setIsActive($isActive);
         $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
 

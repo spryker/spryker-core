@@ -34,4 +34,8 @@
         <property name="fkProduct" type="int"/>
     </transfer>
 
+    <transfer name="ProductDiscontinuedCollection">
+        <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
+    </transfer>
+
 </transfers>

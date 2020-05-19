@@ -91,11 +91,31 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     {
         foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
             $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
-            $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
-            $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
-            $this->productDiscontinuedPluginExecutor->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);
-            $this->addProductDeactivatedMessage($productDiscontinuedTransfer->getFkProduct());
+
         }
+
+        $productDiscontinuedIds = $this->getProductDiscontinuedIdsFromProductDiscontinuedCollection($productDiscontinuedCollectionTransfer);
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotesInBulk($productDiscontinuedIds);
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedInBulk($productDiscontinuedIds);
+        $this->productDiscontinuedPluginExecutor->executeBulkPostDeleteProductDiscontinuedPlugins($productDiscontinuedCollectionTransfer);
+        $this->addProductDeactivatedMessages($productDiscontinuedCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getProductDiscontinuedIdsFromProductDiscontinuedCollection(
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): array {
+        $productDiscontinuedIds = [];
+
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $productDiscontinuedIds = $productDiscontinuedTransfer->getIdProductDiscontinued();
+        }
+
+        return $productDiscontinuedIds;
     }
 
     /**
@@ -117,22 +137,21 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
         );
     }
 
-    /**
-     * @param int $idProduct
-     *
-     * @return void
-     */
-    protected function addProductDeactivatedMessage(int $idProduct): void
+
+    protected function addProductDeactivatedMessages(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
         if (!$this->logger) {
             return;
         }
 
-        $this->logger->info(
-            sprintf(
-                'Product %d was deactivated.',
-                $idProduct
-            )
-        );
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $this->logger->info(
+                sprintf(
+                    'Product %d was deactivated.',
+                    $productDiscontinuedTransfer->getFkProduct()
+                )
+            );
+        }
+
     }
 }

@@ -9,4 +9,7 @@
     <transfer name="ProductDiscontinuedResponse">
     </transfer>
 
+    <transfer name="ProductDiscontinuedCollection">
+    </transfer>
+
 </transfers>

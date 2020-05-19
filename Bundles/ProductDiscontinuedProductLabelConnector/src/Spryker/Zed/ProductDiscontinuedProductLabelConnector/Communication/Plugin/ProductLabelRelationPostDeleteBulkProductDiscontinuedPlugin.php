@@ -7,30 +7,29 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface;
+use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Communication\Plugin\ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin} instead.
- *
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig getConfig()
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
-class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteProductDiscontinuedPluginInterface
+class ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteBulkProductDiscontinuedPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Removes ProductAbstract relations for label.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
      * @return void
      */
-    public function execute(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
+    public function execute(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
-        $this->getFacade()->removeProductAbstractRelationsForLabel($productDiscontinuedTransfer->getFkProduct());
+
     }
 }
