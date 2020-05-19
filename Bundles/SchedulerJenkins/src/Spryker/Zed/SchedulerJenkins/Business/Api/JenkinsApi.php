@@ -189,6 +189,9 @@ class JenkinsApi implements JenkinsApiInterface
         if ($configurationProvider->isJenkinsCsrfProtectionEnabled()) {
             $crumbIssuer = $this->getCrumbIssuer($configurationProvider);
             $request = $request->withHeader($crumbIssuer['crumbRequestField'], $crumbIssuer['crumb']);
+            if ($crumbIssuer['cookie']) {
+                $request = $request->withHeader('Cookie', $crumbIssuer['cookie']);
+            }
         }
 
         return $request;
@@ -217,6 +220,7 @@ class JenkinsApi implements JenkinsApiInterface
         }
 
         $crumbIssuer = $this->utilEncodingService->decodeJson($payload, true);
+        $crumbIssuer['cookie'] = $responseTransfer->getCookie();
 
         return $crumbIssuer;
     }

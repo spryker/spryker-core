@@ -49,8 +49,9 @@ class RequestExecutor implements RequestExecutorInterface
         }
 
         $payload = $response->getBody()->getContents();
+        $cookie = $response->hasHeader('set-cookie') ? $response->getHeaderLine('set-cookie') : null;
 
-        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload);
+        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload, $cookie);
     }
 
     /**
@@ -75,13 +76,15 @@ class RequestExecutor implements RequestExecutorInterface
 
     /**
      * @param string $payload
+     * @param string|null $cookie
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload): SchedulerJenkinsResponseTransfer
+    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload, ?string $cookie = null): SchedulerJenkinsResponseTransfer
     {
         return (new SchedulerJenkinsResponseTransfer())
             ->setPayload($payload)
+            ->setCookie($cookie)
             ->setStatus(true);
     }
 
