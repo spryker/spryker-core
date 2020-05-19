@@ -26,7 +26,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Expands ReturnCreateForm with product bundles field.
+     * - Expands ReturnCreateForm data with product bundles information.
      *
      * @api
      *
@@ -39,7 +39,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
     {
         return $this->getFactory()
             ->createProductBundleReturnCreateFormDataProvider()
-            ->expandData($returnCreateFormData, $orderTransfer);
+            ->getData($returnCreateFormData, $orderTransfer);
     }
 
     /**

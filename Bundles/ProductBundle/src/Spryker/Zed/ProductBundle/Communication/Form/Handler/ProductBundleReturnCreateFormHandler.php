@@ -28,9 +28,7 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
      */
     public function handle(array $returnCreateFormData, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
-        $returnBundleItemsFormData = isset($returnCreateFormData[ProductBundleReturnCreateFormDataProvider::FIELD_RETURN_BUNDLE_ITEMS])
-            ? $returnCreateFormData[ProductBundleReturnCreateFormDataProvider::FIELD_RETURN_BUNDLE_ITEMS]
-            : [];
+        $returnBundleItemsFormData = $returnCreateFormData[ProductBundleReturnCreateFormDataProvider::FIELD_RETURN_BUNDLE_ITEMS] ?? [];
 
         foreach ($returnBundleItemsFormData as $returnBundleItemFormData) {
             if (!$this->isReturnBundleItemChecked($returnBundleItemFormData)) {
@@ -56,7 +54,7 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
         array $returnBundleItemFormData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        $reason = $this->getReason($returnBundleItemFormData);
+        $reason = $this->extractReason($returnBundleItemFormData);
         $itemTransfers = $returnBundleItemFormData[ProductBundleReturnCreateFormDataProvider::BUNDLE_ITEMS] ?? [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -75,7 +73,7 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
      *
      * @return string|null
      */
-    protected function getReason(array $returnBundleItemFormData): ?string
+    protected function extractReason(array $returnBundleItemFormData): ?string
     {
         if ($returnBundleItemFormData[ReturnItemTransfer::REASON] === static::CUSTOM_REASON_KEY && $returnBundleItemFormData[ReturnCreateBundleItemsSubForm::FIELD_CUSTOM_REASON]) {
             return $returnBundleItemFormData[ReturnCreateBundleItemsSubForm::FIELD_CUSTOM_REASON];
@@ -91,6 +89,6 @@ class ProductBundleReturnCreateFormHandler implements ProductBundleReturnCreateF
      */
     protected function isReturnBundleItemChecked(array $returnBundleItemFormData): bool
     {
-        return isset($returnBundleItemFormData[ItemTransfer::IS_RETURNABLE]) && $returnBundleItemFormData[ItemTransfer::IS_RETURNABLE];
+        return !empty($returnBundleItemFormData[ItemTransfer::IS_RETURNABLE]);
     }
 }
