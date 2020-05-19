@@ -158,7 +158,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      * @see \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationEvents()
      * @see \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationProductAbstractEvents()
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -168,7 +168,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
