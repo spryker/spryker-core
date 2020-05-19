@@ -85,6 +85,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     }
 
     /**
+     * @module Sales
+     *
      * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -105,6 +107,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     }
 
     /**
+     * @module Product
+     *
      * @param string[] $productConcreteSkus
      *
      * @return array
