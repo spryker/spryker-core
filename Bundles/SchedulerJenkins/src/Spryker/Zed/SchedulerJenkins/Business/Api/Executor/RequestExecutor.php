@@ -16,6 +16,7 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInter
 class RequestExecutor implements RequestExecutorInterface
 {
     protected const AUTH_KEY = 'auth';
+    protected const HEADER_SET_COOKIE = 'set-cookie';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
@@ -49,7 +50,7 @@ class RequestExecutor implements RequestExecutorInterface
         }
 
         $payload = $response->getBody()->getContents();
-        $cookie = $response->hasHeader('set-cookie') ? $response->getHeaderLine('set-cookie') : null;
+        $cookie = $response->hasHeader(static::HEADER_SET_COOKIE) ? $response->getHeaderLine(static::HEADER_SET_COOKIE) : null;
 
         return $this->createSchedulerJenkinsSuccessResponseTransfer($payload, $cookie);
     }
