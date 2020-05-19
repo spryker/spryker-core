@@ -36,7 +36,19 @@ abstract class AbstractTable
     public const SORT_BY_DIRECTION = 'dir';
     public const URL_ANCHOR = '#';
 
-    public const ENTITY_ID = 'entity_id';
+    /**
+     * Defines delete form name suffix allowing to avoid non-unique attributes (e.g. form name or id) for delete forms on one page.
+     * It is recommended to fill parameter $options in AbstractTable:generateRemoveButton() to avoid non-unique id warning in browser console.
+     *
+     * $options parameter example:
+     * [
+     *    'name_suffix' => $id,
+     * ]
+     *
+     */
+    public const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
+
+    protected const DELETE_FORM_NAME = 'delete_form';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -923,7 +935,7 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $name = isset($options[static::ENTITY_ID]) ? 'delete_form' . $options[static::ENTITY_ID] : '';
+        $name = isset($options[static::DELETE_FORM_NAME_SUFFIX]) ? static::DELETE_FORM_NAME . $options[static::DELETE_FORM_NAME_SUFFIX] : '';
 
         $options = [
             'fields' => $options,
