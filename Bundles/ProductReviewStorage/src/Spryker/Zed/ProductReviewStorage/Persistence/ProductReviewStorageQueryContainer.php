@@ -25,7 +25,7 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery
      */
@@ -42,7 +42,7 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
