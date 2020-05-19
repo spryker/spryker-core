@@ -924,8 +924,6 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $formFactory = $this->getFormFactory();
-
         $name = isset($options[static::ENTITY_ID]) ? 'delete_form' . $options[static::ENTITY_ID] : '';
 
         $options = [
@@ -933,7 +931,7 @@ abstract class AbstractTable
             'action' => $url,
         ];
 
-        $form = $this->createDeleteForm($formFactory, $options, $name);
+        $form = $this->createDeleteForm($options, $name);
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
@@ -941,22 +939,18 @@ abstract class AbstractTable
     }
 
     /**
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param array $options
      * @param string $name
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createDeleteForm(
-        FormFactoryInterface $formFactory,
-        array $options,
-        string $name = ''
-    ): FormInterface {
+    protected function createDeleteForm(array $options, string $name = ''): FormInterface
+    {
         if (!$name) {
-            return $formFactory->create(DeleteForm::class, [], $options);
+            return $this->getFormFactory()->create(DeleteForm::class, [], $options);
         }
 
-        return $formFactory->createNamed($name, DeleteForm::class, [], $options);
+        return $this->getFormFactory()->createNamed($name, DeleteForm::class, [], $options);
     }
 
     /**
