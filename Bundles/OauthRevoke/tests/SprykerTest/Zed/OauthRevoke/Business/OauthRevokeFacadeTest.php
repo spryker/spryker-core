@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\OauthRevoke\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use DateTime;
+use DateTimeImmutable;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
@@ -243,7 +243,7 @@ class OauthRevokeFacadeTest extends Unit
         $accessToken->setUserIdentifier($userIdentifier);
 
         $refreshToken = new RefreshTokenEntity();
-        $refreshToken->setExpiryDateTime(new DateTime());
+        $refreshToken->setExpiryDateTime(new DateTimeImmutable());
         $refreshToken->setAccessToken($accessToken);
         $refreshToken->setIdentifier('identifier');
 
