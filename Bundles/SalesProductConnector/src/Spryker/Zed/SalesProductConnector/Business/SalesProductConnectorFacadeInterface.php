@@ -62,6 +62,8 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithProductIds()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -79,4 +81,16 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Hydrates product ids (abstract / concrete) into an order items based on their skus.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductIds(array $itemTransfers): array;
 }

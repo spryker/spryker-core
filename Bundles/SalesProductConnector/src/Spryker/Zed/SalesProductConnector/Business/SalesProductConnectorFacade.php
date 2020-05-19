@@ -100,4 +100,20 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
             ->createItemMetadataExpander()
             ->expandOrderItemsWithMetadata($itemTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductIds(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductIdExpander()
+            ->expandOrderItemsWithProduct($itemTransfers);
+    }
 }

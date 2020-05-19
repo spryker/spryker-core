@@ -78,6 +78,29 @@ class SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSetOrderItemIsReturnableByGlobalReturnableNumberOfDaysReturnPolicyMessage(): void
+    {
+        // Arrange
+        $itemTransfers = [
+            new ItemTransfer(),
+            $this->buildItemTransferByCreatedAtTime('-4 day'),
+            $this->buildItemTransferByCreatedAtTime('-50 day'),
+        ];
+
+        // Act
+        $sanitizedItemTransfers = $this->tester
+            ->getFacade()
+            ->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
+
+        // Assert
+        $this->assertEmpty($sanitizedItemTransfers[0]->getReturnPolicyMessages());
+        $this->assertNotEmpty($sanitizedItemTransfers[1]->getReturnPolicyMessages());
+        $this->assertNotEmpty($sanitizedItemTransfers[2]->getReturnPolicyMessages());
+    }
+
+    /**
      * @param string $time
      *
      * @return \Generated\Shared\Transfer\ItemTransfer

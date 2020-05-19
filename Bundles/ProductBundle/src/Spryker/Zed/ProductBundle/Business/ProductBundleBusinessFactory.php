@@ -347,6 +347,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpanderInterface
+     */
+    public function createItemExpander(): ItemExpanderInterface
+    {
+        return new ItemExpander(
+            $this->getRepository(),
+            $this->createProductBundlePriceCalculator()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
      */
     public function getProductFacade()

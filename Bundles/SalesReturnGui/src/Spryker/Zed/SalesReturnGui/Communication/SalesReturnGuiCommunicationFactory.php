@@ -16,6 +16,8 @@ use Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider\ReturnCreateFormD
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandler;
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandlerInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm;
+use Spryker\Zed\SalesReturnGui\Communication\Reader\CustomerReader;
+use Spryker\Zed\SalesReturnGui\Communication\Reader\CustomerReaderInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable;
 use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToCustomerFacadeInterface;
@@ -104,6 +106,17 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createReturnExtractor(): ReturnExtractorInterface
     {
         return new ReturnExtractor($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Communication\Reader\CustomerReaderInterface
+     */
+    public function createCustomerReader(): CustomerReaderInterface
+    {
+        return new CustomerReader(
+            $this->getCustomerFacade(),
+            $this->getSalesFacade()
+        );
     }
 
     /**

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {
+    protected const MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN = 'Item selected for return is not eligible for return anymore.';
+
     public const FIELD_CUSTOM_REASON = 'customReason';
 
     /**
@@ -49,6 +52,8 @@ class ReturnCreateItemsSubForm extends AbstractType
         $this->addIsReturnable($builder)
             ->addReason($builder, $options)
             ->addCustomReasonField($builder);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getReturnItemPreSubmitCallback());
     }
 
     /**
@@ -109,5 +114,23 @@ class ReturnCreateItemsSubForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getReturnItemPreSubmitCallback(): callable
+    {
+        return function (FormEvent $formEvent) {
+            $form = $formEvent->getForm();
+
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $itemTransfer = $form->getData()[ReturnItemTransfer::ORDER_ITEM];
+            $isChecked = $formEvent->getData()[ItemTransfer::IS_RETURNABLE] ?? false;
+
+            if ($isChecked && !$itemTransfer->getIsReturnable()) {
+                $form->addError(new FormError(static::MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN));
+            }
+        };
     }
 }

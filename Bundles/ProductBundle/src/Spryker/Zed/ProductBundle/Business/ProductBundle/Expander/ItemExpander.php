@@ -13,6 +13,16 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 class ItemExpander implements ItemExpanderInterface
 {
     /**
+     * @uses \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository::COL_ID_PRODUCT
+     */
+    protected const COL_ID_PRODUCT = 'id_product';
+
+    /**
+     * @uses \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository::COL_FK_PRODUCT_ABSTRACT
+     */
+    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
+    /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
     protected $productBundleRepository;
@@ -49,6 +59,8 @@ class ItemExpander implements ItemExpanderInterface
             return $itemTransfers;
         }
 
+        $bundleItemTransfers = $this->expandBundleItemsWithIds($bundleItemTransfers);
+
         foreach ($itemTransfers as $itemTransfer) {
             if (!isset($bundleItemTransfers[$itemTransfer->getIdSalesOrderItem()])) {
                 continue;
@@ -61,6 +73,45 @@ class ItemExpander implements ItemExpanderInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandBundleItemsWithIds(array $bundleItemTransfers): array
+    {
+        $productConcretesRawData = $this->productBundleRepository->getProductConcretesRawDataByProductConcreteSkus(
+            $this->getProductConcreteSkus($bundleItemTransfers)
+        );
+
+        foreach ($bundleItemTransfers as $bundleItemTransfer) {
+            if (!isset($productConcretesRawData[$bundleItemTransfer->getSku()])) {
+                continue;
+            }
+
+            $bundleItemTransfer->setId($productConcretesRawData[$bundleItemTransfer->getSku()][static::COL_ID_PRODUCT])
+                ->setIdProductAbstract($productConcretesRawData[$bundleItemTransfer->getSku()][static::COL_FK_PRODUCT_ABSTRACT]);
+        }
+
+        return $bundleItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkus(array $itemTransfers): array
+    {
+        $productConcreteSkus = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $productConcreteSkus[] = $itemTransfer->getSku();
+        }
+
+        return $productConcreteSkus;
     }
 
     /**
