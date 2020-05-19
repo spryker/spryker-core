@@ -423,4 +423,31 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Expands items with product bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithProductBundles(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands item product bundle with product options.
+     * - Copies unique product options from related bundle items to bundle.
+     * - Expects ItemTransfer::productBundle to be set.
+     * - Expects ItemTransfer::relatedBundleItemIdentifier to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array;
 }
