@@ -7,8 +7,6 @@
                 {{ 'Order Reference' | trans }}
             </div>
             <div class="col-sm-6">
-                {% set links = [] %}
-
                 {% for idSalesOrder, orderReference in uniqueOrderReferences %}
                     <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': idSalesOrder}) }}">
                         {{ orderReference }}

@@ -3,14 +3,16 @@
 } %}
     {% block content %}
         <div class="row m-b-sm">
-            <div class="col-sm-6 font-bold">
-                {{ 'Customer reference' | trans }}
-            </div>
-            <div class="col-sm-6">
-                <a target="_blank" href="{{ url('/customer/view', {'id-customer': customer.idCustomer}) }}">
-                    {{ customer.customerReference }}
-                </a>
-            </div>
+            {% if customer.customerReference %}
+                <div class="col-sm-6 font-bold">
+                    {{ 'Customer reference' | trans }}
+                </div>
+                <div class="col-sm-6">
+                    <a target="_blank" href="{{ url('/customer/view', {'id-customer': customer.idCustomer}) }}">
+                        {{ customer.customerReference }}
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="row m-b-sm">

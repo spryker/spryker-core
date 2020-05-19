@@ -39,6 +39,53 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
+    {
+        $productBundles = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getProductBundle() || !$itemTransfer->getRelatedBundleItemIdentifier()) {
+                continue;
+            }
+
+            if (!isset($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()])) {
+                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $itemTransfer->getProductBundle();
+            }
+
+            $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $this->expandBundleItemWithProductOptions(
+                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()],
+                $itemTransfer
+            );
+
+            $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
+        }
+
+        $this->sortProductBundlesProductOptions($productBundles);
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function sortProductBundlesProductOptions(array $productBundles): array
+    {
+        foreach ($productBundles as $productBundle) {
+            $productBundle->setProductOptions(
+                new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy()))
+            );
+        }
+
+        return $productBundles;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItem
      *
