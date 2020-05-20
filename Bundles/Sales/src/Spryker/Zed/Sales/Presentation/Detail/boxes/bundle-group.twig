@@ -8,7 +8,7 @@
             <div class="bundle-item">
                 <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
                 <div class="image-wrap">
-                    <img class="product-image" src="{{ orderItem.metadata.image }}">
+                    <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
                 </div>
                 <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
                     {{ orderItem.name }}
@@ -17,7 +17,11 @@
         </td>
         <td>x {{ orderItem.quantity }}</td>
         <td>
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: orderItem.sumPrice,
+                priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+            } only %}
+
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
         </td>
         <td></td>
@@ -50,8 +54,12 @@
     </tr>
 
     {% if not (bundleItem.productOptions | length) %}
-        {% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: orderItem} %}{% endembed %}
+        {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+            orderItem: orderItem,
+        } only %}
     {% endif %}
 {% endfor %}
 
-{% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: bundleItem} %}{% endembed %}
+{% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    orderItem: bundleItem,
+} only %}

@@ -8,7 +8,7 @@
 {% if displayImage %}
     <td>
         <div class="image-wrap">
-            <img class="product-image" src="{{ orderItem.metadata.image }}">
+            <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
         </div>
     </td>
 {% endif %}
@@ -22,7 +22,7 @@
         {{ 'Sku' | trans }}: {{ orderItem.sku }}
     </div>
 
-    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
+    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length %}
         <div class="variant-details">
             <h3>{{ 'Variant Details' | trans }}</h3>
             {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0, 2) %}
@@ -43,19 +43,32 @@
             {% endif %}
         </div>
     {% endif %}
-    {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
+
+    {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+        orderItem: orderItem,
+    } only %}
 </td>
 <td>
     x {{ orderItem.quantity }}
-    {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+
+    {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+        orderItem: orderItem,
+    } only %}
 </td>
 <td>
-    {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
+    {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        subtotal: orderItem.sumPrice,
+        priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+    } only %}
+
     <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
 </td>
 {% if displayTotals %}
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumSubtotalAggregation,
+            priceToPay: orderItem.sumPriceToPayAggregation,
+        } only %}
     </td>
 {% endif %}
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">

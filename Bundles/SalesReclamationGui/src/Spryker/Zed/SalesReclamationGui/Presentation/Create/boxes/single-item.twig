@@ -1,9 +1,12 @@
 <tr>
-    {% embed '@SalesReclamationGui/Create/boxes/order-item.twig' with {
+    {% include '@SalesReclamationGui/Create/boxes/order-item.twig' with {
         orderItem: item,
         isBundleProduct: false,
         displayImage: item.metadata is not null,
-        displayTotals: true
-    } %}{% endembed %}
+        displayTotals: true,
+    } only %}
 </tr>
-{% embed '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {orderItem: item} %}{% endembed %}
+
+{% include '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {
+    orderItem: item,
+} only %}

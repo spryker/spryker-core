@@ -29,7 +29,11 @@
                 {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.orderItem.sumPriceToPayAggregation %}
             {% endfor %}
 
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %}{% endembed %}</td>
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: bundleSumSubtotalAggregation,
+                priceToPay: bundleSumPriceToPayAggregation,
+            } only %}
+        </td>
         <td colspan="2"></td>
     </tr>
 

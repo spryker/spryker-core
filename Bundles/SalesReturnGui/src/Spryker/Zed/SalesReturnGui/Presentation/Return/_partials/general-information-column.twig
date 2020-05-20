@@ -11,7 +11,7 @@
                     <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': idSalesOrder}) }}">
                         {{ orderReference }}
                     </a>
-                    {% if not loop.last %},&nbsp{% endif %}
+                    {% if not loop.last %},&nbsp;{% endif %}
                 {% endfor %}
             </div>
         </div>

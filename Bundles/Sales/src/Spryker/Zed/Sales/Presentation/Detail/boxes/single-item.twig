@@ -1,4 +1,12 @@
 <tr>
-    {% embed '@Sales/Detail/boxes/order-item.twig' with {orderItem: item, isBundleProduct: false, displayImage: true, displayTotals: true} %}{% endembed %}
+    {% include '@Sales/Detail/boxes/order-item.twig' with {
+        orderItem: item,
+        isBundleProduct: false,
+        displayImage: true,
+        displayTotals: true,
+    } only %}
 </tr>
-{% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: item} %} {% endembed %}
+
+{% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    orderItem: item,
+} only %}

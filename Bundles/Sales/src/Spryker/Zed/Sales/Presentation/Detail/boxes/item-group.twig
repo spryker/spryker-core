@@ -1,16 +1,19 @@
 {% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem | default %}
-    {% if (group.isBundle) %}
-        {% embed '@Sales/Detail/boxes/order-item.twig' with {
+    {% if group.isBundle %}
+        {% include '@Sales/Detail/boxes/order-item.twig' with {
             orderItem: group.bundleItem,
             isBundleProduct: true,
             displayImage: true,
-            displayTotals: true
-        } %}{% endembed %}
-        {% embed '@Sales/Detail/boxes/bundle-group.twig' with {
+            displayTotals: true,
+        } only %}
+
+        {% include '@Sales/Detail/boxes/bundle-group.twig' with {
             items: group.groupItems,
-            bundleItem: group.bundleItem
-        } %}{% endembed %}
+            bundleItem: group.bundleItem,
+        } only %}
     {% else %}
-        {% embed '@Sales/Detail/boxes/single-item.twig' with {item: group.groupItems | first} %}{% endembed %}
+        {% include '@Sales/Detail/boxes/single-item.twig' with {
+            item: group.groupItems | first,
+        } only %}
     {% endif %}
 {% endfor %}

@@ -8,7 +8,7 @@
 {% if displayImage %}
     <td>
         <div class="image-wrap">
-            <img class="product-image" src="{{ orderItem.metadata.image }}">
+            <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
         </div>
     </td>
 {% endif %}
@@ -46,19 +46,19 @@
 </td>
 <td>
     <div>
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitPrice,
-            priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)
-        } %} {% endembed %}
+            priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0),
+        } only %}
     </div>
     <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
 </td>
 {% if displayTotals %}
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.unitPriceToPayAggregation }}">
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitSubtotalAggregation,
-            priceToPay: orderItem.unitPriceToPayAggregation
-        } %} {% endembed %}
+            priceToPay: orderItem.unitPriceToPayAggregation,
+        } only %}
     </td>
 {% endif %}
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">

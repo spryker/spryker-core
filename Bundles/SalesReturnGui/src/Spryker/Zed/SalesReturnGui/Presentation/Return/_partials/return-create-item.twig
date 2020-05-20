@@ -26,7 +26,9 @@
             {{ 'Sku' | trans }}: {{ orderItem.sku }}
         </div>
         <div class="m-b-sm">
-            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
+            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+                orderItem: orderItem,
+            } only %}
         </div>
 
         {{ form_row(returnItem.reason, {
@@ -44,14 +46,24 @@
     </td>
     <td>
         x {{ orderItem.quantity }}
-        {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+
+        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+            orderItem: orderItem,
+        } only %}
     </td>
     <td>
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumPrice,
+            priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+        } only %}
+
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}{% endembed %}
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumSubtotalAggregation,
+            priceToPay: orderItem.sumPriceToPayAggregation,
+        } only %}
     </td>
     <td>
         {% for returnPolicyMessage in orderItem.returnPolicyMessages %}

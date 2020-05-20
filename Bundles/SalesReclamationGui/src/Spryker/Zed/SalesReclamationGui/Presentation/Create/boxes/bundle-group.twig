@@ -8,7 +8,7 @@
             <div class="bundle-item">
                 <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
                 <div class="image-wrap">
-                    <img class="product-image" src="{{ orderItem.metadata.image }}">
+                    <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
                 </div>
                 <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
                     {{ orderItem.name }}

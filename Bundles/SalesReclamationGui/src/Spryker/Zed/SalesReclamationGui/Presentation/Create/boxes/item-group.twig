@@ -1,20 +1,23 @@
 {% for group in groups %}
-    {% if (group.isBundle) %}
+    {% if group.isBundle %}
         <tbody class="product-bundle">
-            {% embed '@SalesReclamationGui/Create/boxes/order-item.twig' with {
+            {% include '@SalesReclamationGui/Create/boxes/order-item.twig' with {
                 orderItem: group.bundleItem,
                 isBundleProduct: true,
                 displayImage: true,
-                displayTotals: true
-            } %}{% endembed %}
-            {% embed '@SalesReclamationGui/Create/boxes/bundle-group.twig' with {
+                displayTotals: true,
+            } only %}
+
+            {% include '@SalesReclamationGui/Create/boxes/bundle-group.twig' with {
                 items: group.groupItems,
-                bundleItem: group.bundleItem
-            } %}{% endembed %}
+                bundleItem: group.bundleItem,
+            } only %}
         </tbody>
     {% else %}
         <tbody class="single-item">
-            {% embed '@SalesReclamationGui/Create/boxes/single-item.twig' with {item: group.groupItems | first} %}{% endembed %}
+            {% include '@SalesReclamationGui/Create/boxes/single-item.twig' with {
+                item: group.groupItems | first,
+            } only %}
         </tbody>
     {% endif %}
 {% endfor %}
