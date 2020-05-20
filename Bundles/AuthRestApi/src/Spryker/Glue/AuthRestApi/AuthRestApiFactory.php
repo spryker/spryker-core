@@ -69,7 +69,7 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createOauthAccessTokenValidator() instead.
+     * @deprecated Use {@link createOauthAccessTokenValidator()} instead.
      *
      * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface
      */

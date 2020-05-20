@@ -71,7 +71,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER} instead.
      */
     public const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
@@ -340,7 +340,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getProductAbstractPageMapExpanderPlugins` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getProductAbstractPageMapExpanderPlugins()} instead.
      *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
@@ -378,7 +378,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getConcreteProductPageMapExpanderPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getConcreteProductPageMapExpanderPlugins()} instead.
      *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */

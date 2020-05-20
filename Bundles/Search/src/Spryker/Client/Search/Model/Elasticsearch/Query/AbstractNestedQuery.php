@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\AbstractNestedQuery` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\AbstractNestedQuery} instead.
  */
 abstract class AbstractNestedQuery implements NestedQueryInterface
 {

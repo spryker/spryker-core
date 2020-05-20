@@ -133,7 +133,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */
@@ -150,7 +150,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -280,7 +280,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 /**
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

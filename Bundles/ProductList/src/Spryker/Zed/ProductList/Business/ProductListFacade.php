@@ -26,7 +26,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @deprecated Use createProductList() or updateProductList() instead.
+     * @deprecated Use {@link createProductList()} or updateProductList() instead.
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
@@ -106,7 +106,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
+     * @deprecated Use {@link getProductBlacklistIdsByIdProductAbstract()} instead.
      *
      * @param int $idProductAbstract
      *
@@ -170,7 +170,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
+     * @deprecated Use {@link getProductWhitelistIdsByIdProductAbstract()} instead.
      *
      * @param int $idProductAbstract
      *
@@ -218,7 +218,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
+     * @deprecated Use {@link getProductBlacklistIdsByIdProduct()} instead.
      *
      * @param int $idProduct
      *
@@ -250,7 +250,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
+     * @deprecated Use {@link getProductWhitelistIdsByIdProduct()} instead.
      *
      * @param int $idProduct
      *

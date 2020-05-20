@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductStorage\Dependency\Plugin;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface as SprykerProductViewExpanderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface} instead.
  */
 interface ProductViewExpanderPluginInterface extends SprykerProductViewExpanderPluginInterface
 {

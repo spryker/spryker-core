@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\PriceRangeExtractor` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\PriceRangeExtractor} instead.
  */
 class PriceRangeExtractor extends RangeExtractor
 {

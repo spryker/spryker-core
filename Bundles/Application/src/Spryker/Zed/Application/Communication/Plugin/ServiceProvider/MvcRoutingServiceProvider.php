@@ -14,7 +14,7 @@ use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
- * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Router\ZedRouterPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Router\ZedRouterPlugin} instead.
  */
 class MvcRoutingServiceProvider implements ServiceProviderInterface
 {

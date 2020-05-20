@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface as ShipmentDiscountWithMultiShipmentCollectorInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface} instead.
  */
 interface ShipmentDiscountCollectorInterface extends ShipmentDiscountWithMultiShipmentCollectorInterface
 {
