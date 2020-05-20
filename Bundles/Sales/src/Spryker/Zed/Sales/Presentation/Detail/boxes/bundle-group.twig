@@ -54,6 +54,7 @@
         </td>
     </tr>
 
+    {# Fallback product options display is kept for BC reasons. #}
     {% if not (bundleItem.productOptions | length) %}
         {% include '@Sales/Detail/boxes/order-item-option.twig' with {
             orderItem: orderItem,

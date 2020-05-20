@@ -17,7 +17,7 @@
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong>
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
