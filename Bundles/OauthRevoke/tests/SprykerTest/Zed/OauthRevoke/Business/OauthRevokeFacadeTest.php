@@ -63,7 +63,7 @@ class OauthRevokeFacadeTest extends Unit
         $this->tester->deleteAllOauthRefreshTokens();
         $this->tester->persistOauthRefreshToken('identifier');
         $criteriaTransfer = new OauthTokenCriteriaFilterTransfer();
-        $criteriaTransfer->setExpiresAt((new DateTime())->format('Y-m-d'));
+        $criteriaTransfer->setExpiresAt((new DateTimeImmutable())->format('Y-m-d'));
 
         // Act
         $count = $this->oauthRevokeFacade->deleteExpiredRefreshTokens($criteriaTransfer);
@@ -209,8 +209,8 @@ class OauthRevokeFacadeTest extends Unit
             ->setUserIdentifier('user identifier')
             ->setFkOauthClient($oauthClient->getIdentifier())
             ->setCustomerReference('customer reference')
-            ->setExpiresAt((new DateTime())->format('Y-m-d'))
-            ->setRevokedAt((new DateTime())->format('Y-m-d'))
+            ->setExpiresAt((new DateTimeImmutable())->format('Y-m-d'))
+            ->setRevokedAt((new DateTimeImmutable())->format('Y-m-d'))
             ->save();
 
         $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
