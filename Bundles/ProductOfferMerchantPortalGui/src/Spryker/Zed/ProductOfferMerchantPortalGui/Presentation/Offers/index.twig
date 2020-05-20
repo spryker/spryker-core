@@ -3,3 +3,34 @@
 {% block headTitle %}
     {{ 'Offers' | trans }}
 {% endblock %}
+
+{% block content %}
+    {% set config = {
+        dataSource: {
+            type: 'http',
+            url: dataUrl,
+        },
+        columns: columns,
+        itemSelection: true,
+        syncStateUrl: true,
+        total: true,
+        rowActions: rowActions,
+        pagination: pagination,
+        search: search,
+        filters: filters
+    } %}
+
+    <mp-offers-list
+        title="{{ 'Offers' | trans }}"
+        link-href="/product-offer-merchant-portal-gui/create-offer"
+        link-title="{{ 'Add Offer' | trans }}"
+        table-config="{{ config | json_encode() }}"
+    >
+    </mp-offers-list>
+{% endblock %}
+
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-product-offer/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp-product-offer/main-es5.js') }}" nomodule defer></script>
+{% endblock %}

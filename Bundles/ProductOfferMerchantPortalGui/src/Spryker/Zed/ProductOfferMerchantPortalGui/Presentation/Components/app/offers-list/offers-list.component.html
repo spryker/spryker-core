@@ -1,0 +1,12 @@
+<div class="offers-list-heading">
+    <h1 class="offers-list-heading__title">{{ title }}</h1>
+
+    <div class="offers-list-heading__actions">
+        <div class="offers-list-heading__actions-col">
+            <!-- TODO: change to the link-button component -->
+            <a [href]="linkHref" class="button">{{ linkTitle }}</a>
+        </div>
+    </div>
+</div>
+
+<mp-offers-list-table [config]="tableConfig"></mp-offers-list-table>

@@ -11,7 +11,7 @@ import {
     TableColumnChipComponent,
     TableColumnChipModule
 } from '@spryker/table/columns';
-import { ProductOfferTableComponent } from './product-offer-table.component';
+import { OffersListTableComponent, } from './offers-list-table.component';
 import {
     TableSearchFeatureComponent,
     TableSearchFeatureModule,
@@ -61,11 +61,11 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         }),
     ],
     declarations: [
-        ProductOfferTableComponent,
+        OffersListTableComponent,
     ],
     exports: [
-        ProductOfferTableComponent,
+        OffersListTableComponent,
     ],
 })
-export class ProductOfferTableModule {
+export class OffersListTableModule {
 }

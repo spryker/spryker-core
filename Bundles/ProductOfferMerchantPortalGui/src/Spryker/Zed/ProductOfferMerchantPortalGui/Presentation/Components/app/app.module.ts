@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule } from '@spryker/table';
 import { ProductOfferModule } from './product-offer/product-offer.module';
 import { ProductOfferComponent } from './product-offer/product-offer.component';
+import { OffersListModule } from './offers-list/offers-list.module';
+import { OffersListComponent } from './offers-list/offers-list.component';
 
 @NgModule({
     imports: [
@@ -13,15 +15,19 @@ import { ProductOfferComponent } from './product-offer/product-offer.component';
         HttpClientModule,
         BrowserAnimationsModule,
         ProductOfferModule,
-        TableModule.forRoot(),
+        OffersListModule,
     ],
     providers: []
 })
 export class AppModule extends CustomElementModule {
     protected components = [
         {
+            selector: 'mp-offers-list',
+            component: OffersListComponent,
+        },
+        {
             selector: 'mp-product-offer',
-            component: ProductOfferComponent
+            component: ProductOfferComponent,
         },
     ];
 }
