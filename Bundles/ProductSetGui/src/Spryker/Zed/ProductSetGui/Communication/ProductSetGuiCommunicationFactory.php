@@ -50,7 +50,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getProductSetForm()` instead.
+     * @deprecated Use {@link getProductSetForm()} instead.
      *
      * @param array $data
      * @param array $options
@@ -74,7 +74,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getUpdateProductSetForm()` instead.
+     * @deprecated Use {@link getUpdateProductSetForm()} instead.
      *
      * @param array $data
      * @param array $options

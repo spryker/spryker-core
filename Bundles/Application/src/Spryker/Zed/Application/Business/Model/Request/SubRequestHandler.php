@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler` instead.
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler} instead.
  */
 class SubRequestHandler implements SubRequestHandlerInterface
 {

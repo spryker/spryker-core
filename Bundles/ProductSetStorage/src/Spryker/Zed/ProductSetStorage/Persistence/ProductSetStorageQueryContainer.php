@@ -29,7 +29,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @deprecated Use queryProductSetDataByProductSetIds() instead.
+     * @deprecated Use {@link queryProductSetDataByProductSetIds()} instead.
      *
      * @param array $productSetIds
      *

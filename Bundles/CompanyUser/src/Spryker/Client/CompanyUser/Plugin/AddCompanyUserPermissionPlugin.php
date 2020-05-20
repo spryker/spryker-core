@@ -10,7 +10,7 @@ namespace Spryker\Client\CompanyUser\Plugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin as PluginAddCompanyUserPermissionPlugin;
 
 /**
- * @deprecated Use \Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin instead
+ * @deprecated Use {@link \Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin} instead
  *
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */

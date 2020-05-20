@@ -61,7 +61,7 @@ class GroupForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -132,7 +132,7 @@ class GroupForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */
