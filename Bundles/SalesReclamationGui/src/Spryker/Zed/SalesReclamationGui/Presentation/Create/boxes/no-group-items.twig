@@ -5,10 +5,12 @@
             isBundleProduct: false,
             displayImage: reclamationItem.metadata is not null,
             displayTotals: true,
+            reclamation: reclamation,
         } only %}
     </tr>
 
     {% include '@SalesReclamationGui/partials/items/order-item-option.twig' with {
         orderItem: reclamationItem,
+        reclamation: reclamation,
     } only %}
 {% endfor %}

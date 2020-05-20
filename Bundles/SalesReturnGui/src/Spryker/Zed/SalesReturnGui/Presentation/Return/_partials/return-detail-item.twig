@@ -31,23 +31,23 @@
     <td>
         x {{ orderItem.quantity }}
 
-        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+        {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {
             orderItem: orderItem,
-        } only %}
+        } %}{% endembed %}
     </td>
     <td>
-        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumPrice,
             priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
-        } only %}
+        } %}{% endembed %}
 
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumSubtotalAggregation,
             priceToPay: orderItem.sumPriceToPayAggregation,
-        } only %}
+        } %}{% endembed %}
     </td>
     <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
@@ -71,18 +71,18 @@
     </td>
     <td rowspan="{{ numberOfItemAdditions }}">
         {% if eventsGroupedByItem[orderItem.idSalesOrderItem] is defined %}
-            {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+            {% embed '@Oms/RenderForm/_partial/order-item-actions.twig' with {
                 redirectUrl: changeStatusRedirectUrl,
                 idSalesOrderItem: orderItem.idSalesOrderItem,
                 eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
-            } only %}
+            } %}{% endembed %}
         {% endif %}
     </td>
 </tr>
 
 {% if not isBundleProduct %}
-    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    {% embed '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
         order: order,
-    } only %}
+    } %}{% endembed %}
 {% endif %}

@@ -6,17 +6,20 @@
                 isBundleProduct: true,
                 displayImage: true,
                 displayTotals: true,
+                reclamation: reclamation,
             } only %}
 
             {% include '@SalesReclamationGui/Create/boxes/bundle-group.twig' with {
                 items: group.groupItems,
                 bundleItem: group.bundleItem,
+                reclamation: reclamation,
             } only %}
         </tbody>
     {% else %}
         <tbody class="single-item">
             {% include '@SalesReclamationGui/Create/boxes/single-item.twig' with {
                 item: group.groupItems | first,
+                reclamation: reclamation,
             } only %}
         </tbody>
     {% endif %}

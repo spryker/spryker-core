@@ -20,6 +20,7 @@
             {% include '@Sales/Detail/boxes/discounted-price.twig' with {
                 subtotal: orderItem.sumPrice,
                 priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+                order: order,
             } only %}
 
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
@@ -56,10 +57,12 @@
     {% if not (bundleItem.productOptions | length) %}
         {% include '@Sales/Detail/boxes/order-item-option.twig' with {
             orderItem: orderItem,
+            order: order,
         } only %}
     {% endif %}
 {% endfor %}
 
 {% include '@Sales/Detail/boxes/order-item-option.twig' with {
     orderItem: bundleItem,
+    order: order,
 } only %}

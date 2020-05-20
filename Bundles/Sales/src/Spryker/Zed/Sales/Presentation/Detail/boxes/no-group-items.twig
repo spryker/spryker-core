@@ -7,10 +7,14 @@
             isBundleProduct: false,
             displayImage: true,
             displayTotals: true,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            eventsGroupedByItem: eventsGroupedByItem,
+            order: order,
         } only %}
     </tr>
 
     {% include '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
+        order: order,
     } only %}
 {% endfor %}

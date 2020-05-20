@@ -26,9 +26,9 @@
             {{ 'Sku' | trans }}: {{ orderItem.sku }}
         </div>
         <div class="m-b-sm">
-            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+            {% embed ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
                 orderItem: orderItem,
-            } only %}
+            } %}{% endembed %}
         </div>
 
         {{ form_row(returnItem.reason, {
@@ -47,23 +47,23 @@
     <td>
         x {{ orderItem.quantity }}
 
-        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+        {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {
             orderItem: orderItem,
-        } only %}
+        } %}{% endembed %}
     </td>
     <td>
-        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumPrice,
             priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
-        } only %}
+        } %}{% endembed %}
 
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumSubtotalAggregation,
             priceToPay: orderItem.sumPriceToPayAggregation,
-        } only %}
+        } %}{% endembed %}
     </td>
     <td>
         {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
@@ -95,8 +95,8 @@
 </tr>
 
 {% if not isBundleProduct %}
-    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    {% embed '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
         order: order,
-    } only %}
+    } %}{% endembed %}
 {% endif %}

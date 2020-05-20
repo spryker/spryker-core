@@ -16,7 +16,12 @@
             </div>
         </td>
         <td>
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}{% endembed %}
+            {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+                subtotal: orderItem.sumPrice,
+                priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+                reclamation: reclamation,
+            } only %}
+
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
         </td>
         <td></td>
@@ -28,5 +33,8 @@
             </div>
         </td>
     </tr>
-    {% embed '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
+    {% include '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        reclamation: reclamation,
+    } only %}
 {% endfor %}

@@ -30,21 +30,21 @@
                 {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.vars.value.orderItem.sumPriceToPayAggregation %}
             {% endfor %}
 
-            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
                 subtotal: bundleSumSubtotalAggregation,
                 priceToPay: bundleSumPriceToPayAggregation,
-            } only %}
+            } %}{% endembed %}
         </td>
         <td colspan="2"></td>
     </tr>
 
     {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
-        {% include '@SalesReturnGui/Return/_partials/return-create-item.twig' with {
+        {% embed '@SalesReturnGui/Return/_partials/return-create-item.twig' with {
             returnItem: returnItem,
             orderItem: returnItem.vars.value.orderItem,
             order: order,
             isBundleProduct: false,
-        } only %}
+        } %}{% endembed %}
     {% endfor %}
     <tr>
         <td colspan="1"></td>
