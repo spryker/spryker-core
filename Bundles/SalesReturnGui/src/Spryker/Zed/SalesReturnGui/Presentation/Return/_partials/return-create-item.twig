@@ -26,9 +26,9 @@
             {{ 'Sku' | trans }}: {{ orderItem.sku }}
         </div>
         <div class="m-b-sm">
-            {% embed ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
                 orderItem: orderItem,
-            } %}{% endembed %}
+            } only %}
         </div>
 
         {{ form_row(returnItem.reason, {
@@ -47,23 +47,25 @@
     <td>
         x {{ orderItem.quantity }}
 
-        {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
             orderItem: orderItem,
-        } %}{% endembed %}
+        } only %}
     </td>
     <td>
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumPrice,
             priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
-        } %}{% endembed %}
+            order: order,
+        } only %}
 
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumSubtotalAggregation,
             priceToPay: orderItem.sumPriceToPayAggregation,
-        } %}{% endembed %}
+            order: order,
+        } only %}
     </td>
     <td>
         {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
@@ -95,8 +97,8 @@
 </tr>
 
 {% if not isBundleProduct %}
-    {% embed '@Sales/Detail/boxes/order-item-option.twig' with {
+    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
         order: order,
-    } %}{% endembed %}
+    } only %}
 {% endif %}

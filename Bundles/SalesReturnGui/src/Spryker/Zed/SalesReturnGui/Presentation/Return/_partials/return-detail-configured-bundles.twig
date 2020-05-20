@@ -32,6 +32,7 @@
             {% include '@Sales/Detail/boxes/discounted-price.twig' with {
                 subtotal: bundleSumSubtotalAggregation,
                 priceToPay: bundleSumPriceToPayAggregation,
+                order: order,
             } only %}
         </td>
         <td colspan="2"></td>

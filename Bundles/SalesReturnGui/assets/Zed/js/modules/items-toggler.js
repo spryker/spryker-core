@@ -45,7 +45,7 @@ function ItemsToggler(options) {
     };
 
     this.toggleItemCheckbox = function($item) {
-        this.$item.prop('checked', $item.prop('checked'));
+        this.$item.not(':disabled').prop('checked', $item.prop('checked'));
     };
 
     this.toggleSubmitDisabledAttribute = function() {
