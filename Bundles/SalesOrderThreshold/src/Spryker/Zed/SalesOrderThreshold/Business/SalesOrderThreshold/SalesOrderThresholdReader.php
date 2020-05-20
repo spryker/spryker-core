@@ -13,7 +13,7 @@ use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTran
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader` instead.
+ * @deprecated Use {@link \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader} instead.
  */
 class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
 {

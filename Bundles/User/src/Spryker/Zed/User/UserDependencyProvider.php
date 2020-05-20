@@ -139,7 +139,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins() instead.
+     * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins()} instead.
      *
      * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
      */

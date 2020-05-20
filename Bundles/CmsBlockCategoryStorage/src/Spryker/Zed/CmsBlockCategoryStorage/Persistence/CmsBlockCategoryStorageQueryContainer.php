@@ -76,7 +76,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()` instead.
+     * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()} instead.
      *
      * @param int[] $cmsBlockCategoriesIds
      *

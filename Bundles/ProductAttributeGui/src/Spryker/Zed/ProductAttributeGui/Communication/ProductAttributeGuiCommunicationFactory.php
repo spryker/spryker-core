@@ -74,7 +74,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @deprecated Use `getAttributeForm()` instead.
+     * @deprecated Use {@link getAttributeForm()} instead.
      *
      * @param array $data
      * @param array $options

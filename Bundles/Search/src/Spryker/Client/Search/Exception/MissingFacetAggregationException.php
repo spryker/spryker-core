@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Exception;
 use Exception;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Exception\MissingFacetAggregationException` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Exception\MissingFacetAggregationException} instead.
  */
 class MissingFacetAggregationException extends Exception
 {

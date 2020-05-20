@@ -13,7 +13,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubm
 use Symfony\Component\Form\AbstractExtension;
 
 /**
- * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension` instead.
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension} instead.
  */
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {

@@ -384,7 +384,7 @@ interface CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderCustomer() instead
+     * @deprecated Use {@link saveOrderCustomer()} instead
      *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()

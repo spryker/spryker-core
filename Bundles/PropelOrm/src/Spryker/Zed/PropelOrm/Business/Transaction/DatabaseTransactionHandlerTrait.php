@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Throwable;
 
 /**
- * @deprecated Use \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait instead.
+ * @deprecated Use {@link \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait} instead.
  */
 trait DatabaseTransactionHandlerTrait
 {
