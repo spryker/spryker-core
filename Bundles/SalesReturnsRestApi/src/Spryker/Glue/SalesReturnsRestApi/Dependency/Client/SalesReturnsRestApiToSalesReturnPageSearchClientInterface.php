@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SalesReturnPageSearch;
+namespace Spryker\Glue\SalesReturnsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 
-interface SalesReturnPageSearchClientInterface
+interface SalesReturnsRestApiToSalesReturnPageSearchClientInterface
 {
     /**
-     * Specification:
-     * -
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
      *
      * @return array

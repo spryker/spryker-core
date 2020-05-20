@@ -24,6 +24,8 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_RETURN_CANT_BE_CREATED = 'Return can\'t be created.';
     public const RESPONSE_MESSAGE_CANT_FIND_RETURN = 'Can\'t find return by the given return reference.';
 
+    public const DEFAULT_ELASTICSEARCH_LIMIT = 10000;
+
     /**
      * @api
      *

@@ -22,6 +22,7 @@
 
     <transfer name="ReturnReasonSearchRequest">
         <property name="requestParameters" type="array" singular="requestParameter"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="SearchContext">
@@ -51,6 +52,11 @@
 
     <transfer name="ReturnReasonCollection">
         <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnReasonPageSearchCollection">
+        <property name="nbResults" type="int"/>
+        <property name="returnReasons" type="ReturnReasonPageSearch[]" singular="returnReason"/>
     </transfer>
 
     <transfer name="Filter">

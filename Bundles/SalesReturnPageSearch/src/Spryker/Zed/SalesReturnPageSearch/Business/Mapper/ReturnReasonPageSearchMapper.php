@@ -52,7 +52,9 @@ class ReturnReasonPageSearchMapper implements ReturnReasonPageSearchMapperInterf
         array $returnReasonTranslations
     ): ReturnReasonPageSearchTransfer {
         $returnReasonPageSearchTransfer->fromArray($returnReasonTransfer->toArray(), true);
-        $returnReasonPageSearchTransfer->setName($returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? null);
+        $returnReasonPageSearchTransfer->setName(
+            $returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? $returnReasonTransfer->getGlossaryKeyReason()
+        );
 
         $returnReasonPageSearchData = $returnReasonPageSearchTransfer->toArray(true, true);
 

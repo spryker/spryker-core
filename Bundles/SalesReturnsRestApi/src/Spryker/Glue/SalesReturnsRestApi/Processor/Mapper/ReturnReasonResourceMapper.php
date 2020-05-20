@@ -27,46 +27,28 @@ class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[] $returnReasonPageSearchTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[]
      */
-    public function mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-        ArrayObject $returnReasonTransfers,
+    public function mapReturnReasonPageSearchTransfersToRestReturnReasonsAttributesTransfers(
+        ArrayObject $returnReasonPageSearchTransfers,
         string $localeName
     ): array {
         $restReturnReasonsAttributesTransfers = [];
-        $translatedReturnReasons = $this->translateReturnReasons($returnReasonTransfers, $localeName);
 
-        foreach ($returnReasonTransfers as $returnReasonTransfer) {
+        foreach ($returnReasonPageSearchTransfers as $returnReasonPageSearchTransfer) {
             $restReturnReasonsAttributesTransfer = (new RestReturnReasonsAttributesTransfer())
-                ->fromArray($returnReasonTransfer->toArray(), true);
+                ->fromArray($returnReasonPageSearchTransfer->toArray(), true);
 
             $restReturnReasonsAttributesTransfer->setReason(
-                $translatedReturnReasons[$returnReasonTransfer->getGlossaryKeyReason()] ?? null
+                $returnReasonPageSearchTransfer->getName()
             );
 
             $restReturnReasonsAttributesTransfers[] = $restReturnReasonsAttributesTransfer;
         }
 
         return $restReturnReasonsAttributesTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
-     * @param string $localeName
-     *
-     * @return string[]
-     */
-    protected function translateReturnReasons(ArrayObject $returnReasonTransfers, string $localeName): array
-    {
-        $glossaryKeyReasons = [];
-
-        foreach ($returnReasonTransfers as $returnReasonTransfer) {
-            $glossaryKeyReasons[] = $returnReasonTransfer->getGlossaryKeyReason();
-        }
-
-        return $this->glossaryStorageClient->translateBulk($glossaryKeyReasons, $localeName);
     }
 }

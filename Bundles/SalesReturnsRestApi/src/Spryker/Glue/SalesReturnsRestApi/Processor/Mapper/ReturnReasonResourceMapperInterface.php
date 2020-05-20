@@ -12,13 +12,13 @@ use ArrayObject;
 interface ReturnReasonResourceMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[] $returnReasonPageSearchTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[]
      */
-    public function mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-        ArrayObject $returnReasonTransfers,
+    public function mapReturnReasonPageSearchTransfersToRestReturnReasonsAttributesTransfers(
+        ArrayObject $returnReasonPageSearchTransfers,
         string $localeName
     ): array;
 }

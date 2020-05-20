@@ -22,7 +22,7 @@ class SalesReturnPageSearchClient extends AbstractClient implements SalesReturnP
      *
      * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[]
+     * @return array
      */
     public function searchReturnReasons(ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer): array
     {

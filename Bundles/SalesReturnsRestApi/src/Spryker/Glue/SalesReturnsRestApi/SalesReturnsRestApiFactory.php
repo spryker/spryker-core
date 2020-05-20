@@ -10,6 +10,7 @@ namespace Spryker\Glue\SalesReturnsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilder;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilder;
@@ -38,7 +39,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function createReturnReasonReader(): ReturnReasonReaderInterface
     {
         return new ReturnReasonReader(
-            $this->getSalesReturnClient(),
+            $this->getSalesReturnPageSearchClient(),
             $this->createRestReturnReasonResponseBuilder()
         );
     }
@@ -123,6 +124,14 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function getSalesReturnClient(): SalesReturnsRestApiToSalesReturnClientInterface
     {
         return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_SALES_RETURN);
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientInterface
+     */
+    public function getSalesReturnPageSearchClient(): SalesReturnsRestApiToSalesReturnPageSearchClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_SALES_RETURN_PAGE_SEARCH);
     }
 
     /**

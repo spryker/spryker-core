@@ -9,10 +9,11 @@ namespace Spryker\Client\SalesReturnPageSearch\Plugin\Elasticsearch\ResultFormat
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\ReturnReasonIndexMap;
+use Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonPageSearchTransfer;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
-class SalesReturnPageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     public const NAME = 'ReturnReasonCollection';
 
@@ -30,19 +31,23 @@ class SalesReturnPageSearchResultFormatterPlugin extends AbstractElasticsearchRe
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): array
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): ReturnReasonPageSearchCollectionTransfer
     {
-        $returnReasonPageSearchTransfers = [];
+        $returnReasonPageSearchCollection = new ReturnReasonPageSearchCollectionTransfer();
 
         foreach ($searchResult->getResults() as $document) {
-            $returnReasonPageSearchTransfers[] = $this->getMappedReturnReasonPageSearchTransfer(
-                $document->getSource()[ReturnReasonIndexMap::SEARCH_RESULT_DATA]
+            $returnReasonPageSearchCollection->addReturnReason(
+                $this->getMappedReturnReasonPageSearchTransfer($document->getSource()[ReturnReasonIndexMap::SEARCH_RESULT_DATA])
             );
         }
 
-        return $returnReasonPageSearchTransfers;
+        $returnReasonPageSearchCollection->setNbResults(
+            $searchResult->getResponse()->getData()['hits']['total'] ?? 0
+        );
+
+        return $returnReasonPageSearchCollection;
     }
 
     /**

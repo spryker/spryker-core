@@ -11,6 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientBridge;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientBridge;
 
 /**
  * @method \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig getConfig()
@@ -18,6 +19,7 @@ use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSale
 class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+    public const CLIENT_SALES_RETURN_PAGE_SEARCH = 'CLIENT_SALES_RETURN_PAGE_SEARCH';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
@@ -28,8 +30,9 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        
+
         $container = $this->addSalesReturnClient($container);
+        $container = $this->addSalesReturnPageSearchClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
         return $container;
@@ -45,6 +48,22 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::CLIENT_SALES_RETURN, function (Container $container) {
             return new SalesReturnsRestApiToSalesReturnClientBridge(
                 $container->getLocator()->salesReturn()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addSalesReturnPageSearchClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES_RETURN_PAGE_SEARCH, function (Container $container) {
+            return new SalesReturnsRestApiToSalesReturnPageSearchClientBridge(
+                $container->getLocator()->salesReturnPageSearch()->client()
             );
         });
 

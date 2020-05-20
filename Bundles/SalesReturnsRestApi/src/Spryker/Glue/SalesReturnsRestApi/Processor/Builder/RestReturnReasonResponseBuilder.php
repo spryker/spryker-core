@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Builder;
 
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer;
+use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnReasonResourceMapperInterface;
@@ -39,29 +39,27 @@ class RestReturnReasonResponseBuilder implements RestReturnReasonResponseBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     * @param \Generated\Shared\Transfer\ReturnReasonCollectionTransfer $returnReasonCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer $returnReasonPageSearchCollectionTransfer
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createReturnReasonListRestResponse(
-        ReturnReasonFilterTransfer $returnReasonFilterTransfer,
-        ReturnReasonCollectionTransfer $returnReasonCollectionTransfer,
+        ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer,
+        ReturnReasonPageSearchCollectionTransfer $returnReasonPageSearchCollectionTransfer,
         string $localeName
     ): RestResponseInterface {
         $restReturnReasonsAttributesTransfers = $this->returnReasonResourceMapper
-            ->mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-                $returnReasonCollectionTransfer->getReturnReasons(),
+            ->mapReturnReasonPageSearchTransfersToRestReturnReasonsAttributesTransfers(
+                $returnReasonPageSearchCollectionTransfer->getReturnReasons(),
                 $localeName
             );
 
-        $restResponse = $this
-            ->restResourceBuilder
-            ->createRestResponse(
-                $returnReasonCollectionTransfer->getPagination()->getNbResults(),
-                $returnReasonFilterTransfer->getFilter()->getLimit() ?? 0
-            );
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $returnReasonPageSearchCollectionTransfer->getNbResults(),
+            $returnReasonSearchRequestTransfer->getFilter()->getLimit() ?? 0
+        );
 
         foreach ($restReturnReasonsAttributesTransfers as $restReturnReasonsAttributesTransfer) {
             $restResponse->addResource(

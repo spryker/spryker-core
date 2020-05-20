@@ -103,6 +103,31 @@ class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInter
 
         $query = $this->setQuery($query);
         $query = $query->setSource([ReturnReasonIndexMap::SEARCH_RESULT_DATA]);
+        $query = $this->setFilter($query);
+
+        return $query;
+    }
+
+    /**
+     * @param \Elastica\Query $query
+     *
+     * @return \Elastica\Query
+     */
+    protected function setFilter(Query $query): Query
+    {
+        $filterTransfer = $this->returnReasonSearchRequestTransfer->getFilter();
+
+        if (!$filterTransfer) {
+            return $query;
+        }
+
+        if ($filterTransfer->getLimit()) {
+            $query->setSize($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset()) {
+            $query->setFrom($filterTransfer->getOffset());
+        }
 
         return $query;
     }
