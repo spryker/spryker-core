@@ -15,7 +15,7 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin} instead.
  *
  * @method \Spryker\Yves\CmsContentWidget\CmsContentWidgetFactory getFactory()
  */

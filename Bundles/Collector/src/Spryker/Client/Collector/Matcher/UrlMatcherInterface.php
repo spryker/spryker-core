@@ -8,7 +8,7 @@
 namespace Spryker\Client\Collector\Matcher;
 
 /**
- * @deprecated Use \Spryker\Client\Url\Matcher\UrlMatcherInterface instead.
+ * @deprecated Use {@link \Spryker\Client\Url\Matcher\UrlMatcherInterface} instead.
  */
 interface UrlMatcherInterface
 {

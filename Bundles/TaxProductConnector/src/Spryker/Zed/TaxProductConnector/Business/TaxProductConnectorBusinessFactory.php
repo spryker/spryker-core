@@ -43,7 +43,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate() instead.
+     * @deprecated Use {@link createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate()} instead.
      *
      * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface
      */

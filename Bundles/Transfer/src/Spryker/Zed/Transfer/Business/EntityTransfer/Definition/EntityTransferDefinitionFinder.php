@@ -54,6 +54,10 @@ class EntityTransferDefinitionFinder implements FinderInterface
 
         $propelSchemaPath = $this->getPropelSchemaPath();
 
+        if (!is_dir($propelSchemaPath)) {
+            return [];
+        }
+
         $finder->in($propelSchemaPath)->name($this->transferConfig->getEntityFileNamePattern())->depth('< 1');
 
         return iterator_to_array($finder->getIterator());

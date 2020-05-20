@@ -88,7 +88,7 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
     }
 
     /**
-     * @deprecated Use getValidationCodeBucketConfigPath() instead.
+     * @deprecated Use {@link getValidationCodeBucketConfigPath()} instead.
      *
      * @return string
      */

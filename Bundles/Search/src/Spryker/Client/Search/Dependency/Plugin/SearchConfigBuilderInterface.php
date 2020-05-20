@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Dependency\Plugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface} instead.
  */
 interface SearchConfigBuilderInterface
 {

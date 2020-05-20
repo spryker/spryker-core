@@ -92,7 +92,7 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @deprecated Use saveCountry() instead.
+     * @deprecated Use {@link saveCountry()} instead.
      *
      * @param string $iso2code
      * @param array $countryData

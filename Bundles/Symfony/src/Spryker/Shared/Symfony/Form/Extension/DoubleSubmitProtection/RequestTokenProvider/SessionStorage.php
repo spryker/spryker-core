@@ -10,7 +10,7 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\SessionStorage` instead.
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\SessionStorage} instead.
  */
 class SessionStorage implements StorageInterface
 {

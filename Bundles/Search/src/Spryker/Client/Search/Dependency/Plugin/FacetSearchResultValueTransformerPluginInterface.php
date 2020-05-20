@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface as SearchExtensionFacetSearchResultValueTransformerPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface} instead.
  */
 interface FacetSearchResultValueTransformerPluginInterface extends SearchExtensionFacetSearchResultValueTransformerPluginInterface
 {

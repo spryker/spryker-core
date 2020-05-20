@@ -22,7 +22,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacade::importByAction()} instead.
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacadeInterface::importByAction()} instead.
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfiguration
      *

@@ -63,6 +63,8 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
@@ -84,6 +86,8 @@ interface SetupFrontendFacadeInterface
      * - Installs needed Zed dependencies.
      *
      * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -112,4 +116,30 @@ interface SetupFrontendFacadeInterface
      * @return bool
      */
     public function removeZedAssets();
+
+    /**
+     * Specification:
+     * - Installs needed Merchant Portal dependencies.
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMerchantPortalDependencies(LoggerInterface $logger): bool;
+
+    /**
+     * Specification:
+     * - Runs Merchant Portal frontend builder.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function buildMerchantPortalFrontend(LoggerInterface $logger): bool;
 }

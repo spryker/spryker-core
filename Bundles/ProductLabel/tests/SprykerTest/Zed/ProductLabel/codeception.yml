@@ -31,3 +31,4 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
