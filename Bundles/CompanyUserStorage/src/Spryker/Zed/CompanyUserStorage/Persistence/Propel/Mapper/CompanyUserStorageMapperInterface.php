@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -30,4 +31,15 @@ interface CompanyUserStorageMapperInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array;
+
+    /**
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $companyUserStorageEntity
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    public function mapCompanyUserStorageEntityToSynchronizationDataTransfer(
+        SpyCompanyUserStorage $companyUserStorageEntity,
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): SynchronizationDataTransfer;
 }
