@@ -20,7 +20,9 @@
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/installer": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
