@@ -47,7 +47,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -211,7 +211,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
@@ -379,7 +379,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
@@ -403,7 +403,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */

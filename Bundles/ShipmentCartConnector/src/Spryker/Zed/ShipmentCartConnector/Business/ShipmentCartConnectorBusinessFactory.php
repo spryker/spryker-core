@@ -31,7 +31,7 @@ use Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorDependencyProvider;
 class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @deprecated Use createShipmentCartExpanderWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createShipmentCartExpanderWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpanderInterface
      */
@@ -58,7 +58,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentCartValidatorWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createShipmentCartValidatorWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidatorInterface
      */

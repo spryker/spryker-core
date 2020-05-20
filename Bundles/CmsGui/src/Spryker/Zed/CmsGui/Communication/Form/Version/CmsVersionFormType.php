@@ -81,7 +81,7 @@ class CmsVersionFormType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

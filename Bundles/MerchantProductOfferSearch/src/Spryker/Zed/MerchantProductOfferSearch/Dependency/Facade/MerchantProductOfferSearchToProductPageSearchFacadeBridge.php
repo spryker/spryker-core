@@ -23,7 +23,7 @@ class MerchantProductOfferSearchToProductPageSearchFacadeBridge implements Merch
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param array $pageDataExpanderPluginNames
      *
      * @return void

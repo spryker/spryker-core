@@ -114,7 +114,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO = 'security.authentication_provider.guard._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO = 'security.authentication_provider.anonymous._proto';
     protected const SERVICE_LOGGER = 'logger';
-    protected const SERVICE_CSRF_TOKEN_MANAGER = 'csrf.token_manager';
+
+    /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
@@ -1156,7 +1160,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getCsrfTokenManager(ContainerInterface $container, array $options): ?CsrfTokenManager
     {
-        return !empty($options['with_csrf']) && $container->has(static::SERVICE_CSRF_TOKEN_MANAGER) ? $container->get(static::SERVICE_CSRF_TOKEN_MANAGER) : null;
+        return !empty($options['with_csrf']) && $container->has(static::SERVICE_FORM_CSRF_PROVIDER) ? $container->get(static::SERVICE_FORM_CSRF_PROVIDER) : null;
     }
 
     /**

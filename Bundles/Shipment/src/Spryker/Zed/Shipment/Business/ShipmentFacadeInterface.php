@@ -260,7 +260,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE instead.
+     * @deprecated Use {@link \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE} instead.
      *
      * @return string
      */

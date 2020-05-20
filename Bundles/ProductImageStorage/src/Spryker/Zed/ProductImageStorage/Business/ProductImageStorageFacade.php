@@ -20,7 +20,7 @@ class ProductImageStorageFacade extends AbstractFacade implements ProductImageSt
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class ProductImageStorageFacade extends AbstractFacade implements ProductImageSt
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
