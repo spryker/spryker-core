@@ -18,8 +18,6 @@ class IsReturnableSetter implements IsReturnableSetterInterface
     protected const GLOSSARY_KEY_RETURNABLE_TILL_DATE = 'return.return_policy.returnable_till.message';
     protected const GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE = '%date%';
 
-    protected const FORMAT_DATE = 'Y-m-d';
-
     /**
      * @var \Spryker\Zed\SalesReturn\SalesReturnConfig
      */
@@ -119,9 +117,8 @@ class IsReturnableSetter implements IsReturnableSetterInterface
             return true;
         }
 
-        $currentDate = new DateTime(date(static::FORMAT_DATE));
-        $formatedCreatedAt = date(static::FORMAT_DATE, strtotime($itemTransfer->getCreatedAt()));
-        $createdAt = new DateTime($formatedCreatedAt);
+        $currentDate = (new DateTime('now'))->setTime(0, 0);
+        $createdAt = (new DateTime($itemTransfer->getCreatedAt()))->setTime(0, 0);
 
         return $currentDate->diff($createdAt)->days > $this->salesReturnConfig->getGlobalReturnableNumberOfDays();
     }
