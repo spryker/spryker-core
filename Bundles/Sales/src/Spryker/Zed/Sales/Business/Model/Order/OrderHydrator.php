@@ -157,7 +157,11 @@ class OrderHydrator implements OrderHydratorInterface
             return false;
         }
 
-        if (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference()) {
+        if ($customerTransfer->getCustomerReference() === $orderEntity->getCustomerReference()) {
+            return true;
+        }
+
+        if (!$orderTransfer->getCustomer()) {
             return false;
         }
 
@@ -608,10 +612,6 @@ class OrderHydrator implements OrderHydratorInterface
     protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
     {
         $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
-
-        if ($orderTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
-            return true;
-        }
 
         foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
             if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {
