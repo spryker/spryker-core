@@ -19,6 +19,11 @@ class ClientRepository implements ClientRepositoryInterface
     protected $oauthRepository;
 
     /**
+     * @var array
+     */
+    protected static $oauthClientEntityTransferStorage = [];
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      */
     public function __construct(OauthRepositoryInterface $oauthRepository)
@@ -33,7 +38,12 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function getClientEntity($clientIdentifier)
     {
-        $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifier($clientIdentifier);
+        $oauthClientEntityTransfer = $this->getOauthEntityTransfer($clientIdentifier);
+
+        if (!$oauthClientEntityTransfer) {
+            return null;
+        }
+
         $clientEntity = new ClientEntity();
 
         $clientEntity->setIdentifier($oauthClientEntityTransfer->getIdentifier());
@@ -52,7 +62,7 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function validateClient($clientIdentifier, $clientSecret, $grantType)
     {
-        $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifier($clientIdentifier);
+        $oauthClientEntityTransfer = $this->getOauthEntityTransfer($clientIdentifier);
 
         if (!$oauthClientEntityTransfer) {
             return false;
@@ -66,5 +76,20 @@ class ClientRepository implements ClientRepositoryInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $clientIdentifier The client's identifier
+     *
+     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
+     */
+    protected function getOauthEntityTransfer($clientIdentifier)
+    {
+        if (!isset(static::$oauthClientEntityTransferStorage[$clientIdentifier])) {
+            static::$oauthClientEntityTransferStorage[$clientIdentifier] = $this->oauthRepository
+                ->findClientByIdentifier($clientIdentifier);
+        }
+
+        return static::$oauthClientEntityTransferStorage[$clientIdentifier];
     }
 }
