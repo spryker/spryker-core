@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface as OrderReaderInterfaceWithMultiShippingAddress;
 
 /**
- * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReaderInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderReaderInterface} instead.
  */
 interface OrderReaderInterface extends OrderReaderInterfaceWithMultiShippingAddress
 {

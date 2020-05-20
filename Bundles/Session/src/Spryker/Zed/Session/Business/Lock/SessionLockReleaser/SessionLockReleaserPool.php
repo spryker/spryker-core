@@ -26,7 +26,7 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` implementation instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} implementation instead.
      *
      * @param \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface $lockReleaser
      * @param string $handlerName

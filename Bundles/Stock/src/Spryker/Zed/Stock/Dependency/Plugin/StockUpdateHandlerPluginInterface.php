@@ -10,7 +10,7 @@ namespace Spryker\Zed\Stock\Dependency\Plugin;
 use Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface as ExtensionStockUpdateHandlerPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface} instead.
  */
 interface StockUpdateHandlerPluginInterface extends ExtensionStockUpdateHandlerPluginInterface
 {

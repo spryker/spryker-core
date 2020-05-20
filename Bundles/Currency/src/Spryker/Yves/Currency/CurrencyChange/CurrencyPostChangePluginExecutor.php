@@ -12,7 +12,7 @@ use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 
 /**
- * @deprecated Use \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor instead.
+ * @deprecated Use {@link \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor} instead.
  */
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {

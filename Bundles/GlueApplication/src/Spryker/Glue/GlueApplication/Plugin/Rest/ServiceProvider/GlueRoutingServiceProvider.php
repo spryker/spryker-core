@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
- * @deprecated Use `\Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin} instead.
  *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */

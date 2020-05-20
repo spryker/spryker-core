@@ -105,7 +105,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader::findProductAbstractStorageData()` instead.
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader::findProductAbstractStorageData()} instead.
      *
      * @param int $idProductAbstract
      * @param string $localeName

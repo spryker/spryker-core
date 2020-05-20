@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cart\Dependency;
 use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface as SprykerTerminationAwareCartPreCheckPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface} instead.
  */
 interface TerminationAwareCartPreCheckPluginInterface extends SprykerTerminationAwareCartPreCheckPluginInterface
 {

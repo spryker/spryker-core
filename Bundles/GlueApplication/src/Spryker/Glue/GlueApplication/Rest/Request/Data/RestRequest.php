@@ -65,7 +65,7 @@ class RestRequest implements RestRequestInterface
     protected $filters = [];
 
     /**
-     * @deprecated use $restUser instead.
+     * @deprecated Use $restUser instead.
      *
      * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
@@ -251,7 +251,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @deprecated use getRestUser() instead.
+     * @deprecated Use {@link getRestUser()} instead.
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
@@ -261,7 +261,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @deprecated use setRestUser() instead.
+     * @deprecated Use {@link setRestUser()} instead.
      *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier

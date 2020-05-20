@@ -99,7 +99,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()` instead.
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName
