@@ -24,7 +24,10 @@ class MerchantAddressMapper implements MerchantAddressMapperInterface
         RestMerchantAddressesAttributesTransfer $restMerchantAddressesAttributesTransfer
     ): RestMerchantAddressesAttributesTransfer {
         foreach ($merchantStorageProfileAddressTransfers as $merchantStorageProfileAddressTransfer) {
-            $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray($merchantStorageProfileAddressTransfer->toArray());
+            $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray(
+                $merchantStorageProfileAddressTransfer->toArray(),
+                true
+            );
             $restMerchantAddressesAttributesTransfer->addAddress($restMerchantAddressTransfer);
         }
 

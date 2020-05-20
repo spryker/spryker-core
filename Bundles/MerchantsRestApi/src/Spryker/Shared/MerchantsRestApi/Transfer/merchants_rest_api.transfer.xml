@@ -32,7 +32,6 @@
         <property name="address3" type="string"/>
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
-        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="RestLegalInformation">
