@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-return-page-search.svg)](https://travis-ci.org/spryker/sales-return-page-search)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+This module manages Elasticsearch documents for Return entities.
 
 ## Installation
 

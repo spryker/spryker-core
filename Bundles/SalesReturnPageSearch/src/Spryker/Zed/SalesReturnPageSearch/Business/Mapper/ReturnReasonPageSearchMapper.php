@@ -15,8 +15,6 @@ use Spryker\Zed\SalesReturnPageSearch\Dependency\Service\SalesReturnPageSearchTo
 
 class ReturnReasonPageSearchMapper implements ReturnReasonPageSearchMapperInterface
 {
-    protected const KEY_NAME = 'name';
-
     /**
      * @var \Spryker\Zed\SalesReturnPageSearch\Dependency\Service\SalesReturnPageSearchToUtilEncodingServiceInterface
      */
@@ -54,9 +52,9 @@ class ReturnReasonPageSearchMapper implements ReturnReasonPageSearchMapperInterf
         array $returnReasonTranslations
     ): ReturnReasonPageSearchTransfer {
         $returnReasonPageSearchTransfer->fromArray($returnReasonTransfer->toArray(), true);
+        $returnReasonPageSearchTransfer->setName($returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? null);
 
         $returnReasonPageSearchData = $returnReasonPageSearchTransfer->toArray(true, true);
-        $returnReasonPageSearchData[static::KEY_NAME] = $returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? null;
 
         $returnReasonPageSearchTransfer->setData(
             $this->returnReasonPageSearchDataMapper->mapReturnReasonDataToSearchData($returnReasonPageSearchData, $localeTransfer)
