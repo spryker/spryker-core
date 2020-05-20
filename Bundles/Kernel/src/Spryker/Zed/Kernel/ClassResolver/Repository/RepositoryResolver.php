@@ -22,13 +22,33 @@ class RepositoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $resolved */
-        $resolved = parent::doResolve($callerClass);
+        $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {
             return $resolved;
         }
 
         throw new RepositoryNotFoundException($this->getClassInfo());
+    }
+
+    /**
+     * @param string $namespace
+     * @param string|null $codeBucket
+     *
+     * @return string
+     */
+    protected function buildClassName($namespace, $codeBucket = null)
+    {
+        $searchAndReplace = [
+            self::KEY_NAMESPACE => $namespace,
+            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            static::KEY_CODE_BUCKET => $codeBucket,
+        ];
+
+        return str_replace(
+            array_keys($searchAndReplace),
+            array_values($searchAndReplace),
+            $this->getClassPattern()
+        );
     }
 }

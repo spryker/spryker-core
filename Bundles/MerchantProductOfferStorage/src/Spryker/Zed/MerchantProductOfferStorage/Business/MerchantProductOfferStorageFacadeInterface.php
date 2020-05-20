@@ -11,9 +11,26 @@ interface MerchantProductOfferStorageFacadeInterface
 {
     /**
      * Specification:
+     * - Gets merchantIds from eventTransfers.
+     * - Queries all active product offer with the given merchantIds.
+     * - Returns a list of product references for concrete sku.
+     * - Stores data as json encoded to storage table.
+     * - Removes all inactive product offer storage entities with the given concreteSkus.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteProductOffersStorageCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
      * - Gets concreteSkus from eventTransfers.
      * - Queries all active product offer with the given concreteSkus.
-     * - Lists of product references for concrete sku.
+     * - Returns a list of product references for concrete sku.
      * - Stores data as json encoded to storage table.
      * - Removes all inactive product offer storage entities with the given concreteSkus.
      * - Sends a copy of data to queue based on module config.

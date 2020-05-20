@@ -113,7 +113,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use saveOrderProductOptions() instead
+     * @deprecated Use {@link saveOrderProductOptions()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -199,6 +199,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -315,7 +317,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead
      *
      * @param int $idProductOptionValue
      *
@@ -357,5 +359,21 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     {
         return $this->getRepository()
             ->getProductAbstractOptionGroupStatusesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductOptionExpander()
+            ->expandOrderItemsWithProductOptions($itemTransfers);
     }
 }

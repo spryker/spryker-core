@@ -13,6 +13,8 @@ use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinder;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilderInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 
 /**
  * @method \Spryker\Shared\Kernel\KernelConfig getSharedConfig()
@@ -24,7 +26,18 @@ class KernelSharedFactory extends AbstractSharedFactory
      */
     public function createClassNameFinder(): ClassNameFinderInterface
     {
-        return new ClassNameFinder($this->createClassNameCandidatesBuilder());
+        return new ClassNameFinder(
+            $this->createClassNameCandidatesBuilder(),
+            $this->createResolverCacheManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    public function createResolverCacheManager(): ResolverCacheFactoryInterface
+    {
+        return new ResolverCacheManager();
     }
 
     /**

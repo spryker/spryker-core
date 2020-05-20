@@ -79,7 +79,8 @@ class AllBundleFinder implements AllBundleFinderInterface
             $directories = (new Finder())
                 ->directories()
                 ->in($path)
-                ->depth('== 0');
+                ->depth('== 0')
+                ->sortByName();
         } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
             return $allBundles;

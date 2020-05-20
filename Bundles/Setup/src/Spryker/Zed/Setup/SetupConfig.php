@@ -22,7 +22,7 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
+     * @deprecated Use {@link getCronjobsDefinitionFilePath()} instead.
      *
      * @return string
      */

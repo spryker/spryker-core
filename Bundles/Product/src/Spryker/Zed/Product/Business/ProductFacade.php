@@ -323,7 +323,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacade::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductFacadeInterface::getRawProductConcreteTransfersByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *

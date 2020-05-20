@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -54,6 +55,23 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemNotesForShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getFactory()
+            ->createShoppingListNoteWriter()
+            ->saveShoppingListItemNoteForShoppingListItemBulk($shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return void
@@ -68,6 +86,8 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
+     * @deprecated Use {@link expandShoppingListItemCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -75,6 +95,22 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()->createShoppingListItemExpander()->expandItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemExpander()
+            ->expandItemCollection($shoppingListItemCollectionTransfer);
     }
 
     /**

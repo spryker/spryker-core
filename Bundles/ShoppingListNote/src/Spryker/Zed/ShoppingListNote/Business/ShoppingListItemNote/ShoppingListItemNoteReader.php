@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface;
 
@@ -40,5 +42,35 @@ class ShoppingListItemNoteReader implements ShoppingListItemNoteReaderInterface
         }
 
         return $shoppingListItemNoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     */
+    public function getShoppingListItemNoteTransfersByShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ArrayObject {
+        $shoppingListItemIds = $this
+            ->getShoppingListItemIdsFromShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        return $this->shoppingListNoteRepository
+            ->getShoppingListItemNoteTransfersByShoppingListItemIds($shoppingListItemIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getShoppingListItemIdsFromShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
+    {
+        $shoppingListItemIds = [];
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemIds[] = $shoppingListItemTransfer->getIdShoppingListItem();
+        }
+
+        return $shoppingListItemIds;
     }
 }

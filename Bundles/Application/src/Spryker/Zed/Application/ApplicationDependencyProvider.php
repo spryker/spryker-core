@@ -137,7 +137,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use getServiceProviders() instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *

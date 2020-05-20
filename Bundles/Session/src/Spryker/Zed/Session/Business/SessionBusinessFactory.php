@@ -93,7 +93,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -111,7 +111,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -126,7 +126,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @param \Predis\Client $redisClient
      *
@@ -140,7 +140,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @return \Spryker\Zed\Session\Business\Model\SessionFactory
      */
@@ -177,7 +177,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @param \Predis\Client $redisClient
      *
@@ -192,7 +192,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
      */

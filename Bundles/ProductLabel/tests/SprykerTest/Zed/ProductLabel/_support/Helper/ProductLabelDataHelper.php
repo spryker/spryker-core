@@ -13,11 +13,13 @@ use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
@@ -32,6 +34,7 @@ class ProductLabelDataHelper extends Module
                 ProductLabelTransfer::VALID_TO => null,
             ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
+        $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
 
         $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
             ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
@@ -39,6 +42,12 @@ class ProductLabelDataHelper extends Module
         $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
 
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
+
+        $productLabelTransfer = $this->getProductLabelFacade()->findLabelByLabelName($productLabelTransfer->getName());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productLabelTransfer): void {
+            $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
+        });
 
         return $productLabelTransfer;
     }
@@ -51,9 +60,15 @@ class ProductLabelDataHelper extends Module
      */
     public function haveProductLabelToAbstractProductRelation(int $idProductLabel, int $idProductAbstract): void
     {
-        $this
-            ->getProductLabelFacade()
+        $this->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductLabel, $idProductAbstract): void {
+            $this->getProductLabelFacade()->removeProductAbstractRelationsForLabel(
+                $idProductLabel,
+                [$idProductAbstract]
+            );
+        });
     }
 
     /**

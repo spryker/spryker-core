@@ -16,6 +16,7 @@ use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchroniza
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
@@ -27,6 +28,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected const KEY_PRICES = 'prices';
     protected const KEY_IMAGE_SETS = 'imageSets';
     protected const KEY_ID = 'id';
+
+    /**
+     * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     */
+    protected const KV_PREFIX = 'kv:';
 
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
@@ -64,6 +70,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected static $productsConcreteDataCache = [];
 
     /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
@@ -88,7 +99,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()` instead.
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName
@@ -120,6 +131,70 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productConcreteData);
 
         return $productConcreteData;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = $this->getStorageKeysByMapping($mappingType, $identifiers, $localeName);
+        $mappingData = array_filter($this->storageClient->getMulti($storageKeys));
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        return $this->getFilteredProductConcreteIds($storageKeys, $mappingData);
+    }
+
+    /**
+     * @param string[] $storageKeys
+     * @param array $mappingData
+     *
+     * @return int[]
+     */
+    protected function getFilteredProductConcreteIds(array $storageKeys, array $mappingData): array
+    {
+        $identifiersByStorageKey = [];
+        foreach ($storageKeys as $identifier => $storageKey) {
+            $identifiersByStorageKey[static::KV_PREFIX . $storageKey] = $identifier;
+        }
+
+        $productConcreteIds = [];
+        foreach ($mappingData as $storageKey => $mappingDataItem) {
+            $decodedMappingDataItem = $this->utilEncodingService->decodeJson($mappingDataItem, true);
+            if (!$decodedMappingDataItem || !$decodedMappingDataItem[static::KEY_ID]) {
+                continue;
+            }
+
+            $productConcreteIds[$identifiersByStorageKey[$storageKey]] = $decodedMappingDataItem[static::KEY_ID];
+        }
+
+        return $this->filterRestrictedProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getStorageKeysByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($identifiers as $identifier) {
+            $storageKeys[$identifier] = $this->getStorageKey(
+                sprintf('%s:%s', $mappingType, $identifier),
+                $localeName
+            );
+        }
+
+        return $storageKeys;
     }
 
     /**
@@ -304,9 +379,19 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             ->setReference($reference)
             ->setLocale($localeName);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**
@@ -389,7 +474,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      * @param string $localeName
      *
      * @return array

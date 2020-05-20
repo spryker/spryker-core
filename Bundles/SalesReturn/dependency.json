@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/customer": "Defined for forward-compatibility reasons."
+  }
+}

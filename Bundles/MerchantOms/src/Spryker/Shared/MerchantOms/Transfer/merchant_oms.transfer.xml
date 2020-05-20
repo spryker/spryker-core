@@ -40,7 +40,7 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
         <property name="merchantReference" type="string"/>
     </transfer>
 

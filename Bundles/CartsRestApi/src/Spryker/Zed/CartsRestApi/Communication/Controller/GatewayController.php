@@ -72,7 +72,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use updateItemQuantityAction() instead.
+     * @deprecated Use {@link updateItemQuantityAction()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -94,7 +94,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use addToCartAction() instead.
+     * @deprecated Use {@link addToCartAction()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -116,7 +116,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use removeItemAction() instead.
+     * @deprecated Use {@link removeItemAction()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -138,7 +138,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use addToGuestCartAction() instead.
+     * @deprecated Use {@link addToGuestCartAction()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
@@ -82,13 +83,13 @@ class PriceManager implements PriceManagerInterface
         $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
 
         $priceProductFilterTransfers = $this->createPriceProductFilterTransfers($cartChangeTransfer);
-        $priceProductTransfers = $this->getIndexedPriceProductTransfersByPriceProductFilterTransfers($priceProductFilterTransfers);
+        $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
-            $priceProductTransfersForSku = $this->getPriceProductTransfersBySku($priceProductTransfers, $itemTransfer->getSku());
-            $priceProductTransfer = (count($priceProductTransfersForSku) === 1) ?
-                reset($priceProductTransfersForSku) :
-                $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfersForSku, $priceProductFilterTransfers[$key]);
+            $priceProductTransfer = $this->resolveProductPriceByPriceProductFilter(
+                $priceProductTransfers,
+                $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer)
+            );
 
             $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
 
@@ -109,52 +110,29 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
-     */
-    protected function getIndexedPriceProductTransfersByPriceProductFilterTransfers(array $priceProductFilterTransfers): array
-    {
-        $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
-
-        return $this->indexPriceProductTransfersBySku($priceProductTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductTransfersBySku(array $priceProductTransfers, string $sku): array
-    {
-        if (!isset($priceProductTransfers[$sku])) {
+    protected function resolveProductPriceByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceFilterTransfer
+    ): PriceProductTransfer {
+        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfers, $priceFilterTransfer);
+
+        if (!$priceProductTransfer) {
             throw new PriceMissingException(
                 sprintf(
                     static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
-                    $sku
+                    $priceFilterTransfer->getSku()
                 )
             );
         }
 
-        return $priceProductTransfers[$sku];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
-     */
-    protected function indexPriceProductTransfersBySku(array $priceProductTransfers): array
-    {
-        $indexedPriceProductTransfers = [];
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
-        }
-
-        return $indexedPriceProductTransfers;
+        return $priceProductTransfer;
     }
 
     /**

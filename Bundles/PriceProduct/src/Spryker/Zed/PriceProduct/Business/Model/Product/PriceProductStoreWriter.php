@@ -261,6 +261,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         if ($priceProductTransfer->getIdProductAbstract()) {
             return $this->priceProductStoreWriterPluginExecutor->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
         }
+
+        return $priceProductTransfer;
     }
 
     /**
@@ -272,9 +274,9 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-        );
+        /** @var int|null $idPriceProductDefault */
+        $idPriceProductDefault = $priceProductDefaultEntityTransfer->getIdPriceProductDefault();
+        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault($idPriceProductDefault);
 
         return $priceProductTransfer;
     }

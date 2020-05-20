@@ -11,6 +11,8 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
+use Spryker\Zed\Shipment\Business\Calculator\ShipmentTotalCalculator;
+use Spryker\Zed\Shipment\Business\Calculator\ShipmentTotalCalculatorInterface;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
@@ -255,7 +257,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutMultiShipmentOrderSaver() instead.
+     * @deprecated Use {@link createCheckoutMultiShipmentOrderSaver()} instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
@@ -283,7 +285,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     * @deprecated Use {@link createShipmentTaxCalculatorWithItemShipmentTaxRate()} instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */
@@ -624,5 +626,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentEventGrouper(): ShipmentEventGrouperInterface
     {
         return new ShipmentEventGrouper($this->getShipmentService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Calculator\ShipmentTotalCalculatorInterface
+     */
+    public function createShipmentTotalCalculator(): ShipmentTotalCalculatorInterface
+    {
+        return new ShipmentTotalCalculator();
     }
 }

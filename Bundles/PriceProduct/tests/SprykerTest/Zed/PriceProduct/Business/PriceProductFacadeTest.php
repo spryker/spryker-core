@@ -49,6 +49,8 @@ class PriceProductFacadeTest extends Unit
     public const EUR_ISO_CODE = 'EUR';
     public const USD_ISO_CODE = 'USD';
 
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
     protected const COUNT_PRODUCT_WITH_PRICES = 5;
 
     /**
@@ -883,7 +885,8 @@ class PriceProductFacadeTest extends Unit
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
                 ->setCurrencyIsoCode(self::EUR_ISO_CODE)
-                ->setSku($priceProductTransfer->getSkuProduct());
+                ->setSku($priceProductTransfer->getSkuProduct())
+                ->setPriceMode(static::PRICE_MODE_GROSS);
         }
 
         //Act
@@ -917,7 +920,8 @@ class PriceProductFacadeTest extends Unit
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
                 ->setCurrencyIsoCode(self::EUR_ISO_CODE)
-                ->setSku($priceProductTransfer->getSkuProduct());
+                ->setSku($priceProductTransfer->getSkuProduct())
+                ->setPriceMode(static::PRICE_MODE_GROSS);
         }
 
         //Act
@@ -942,7 +946,8 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
-            ->setSku($productConcreteTransfer->getSku());
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceMode(static::PRICE_MODE_GROSS);
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -978,7 +983,8 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
-            ->setSku($productConcreteTransfer->getSku());
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceMode(static::PRICE_MODE_GROSS);
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1020,7 +1026,8 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
-            ->setSku($productConcreteTransfer->getSku());
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceMode(static::PRICE_MODE_GROSS);
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1063,7 +1070,8 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
-            ->setSku($productConcreteTransfer->getSku());
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceMode(static::PRICE_MODE_GROSS);
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);

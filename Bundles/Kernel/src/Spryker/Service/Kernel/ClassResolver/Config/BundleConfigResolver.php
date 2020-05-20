@@ -22,8 +22,7 @@ class BundleConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Service\Kernel\AbstractBundleConfig $resolved */
-        $resolved = parent::doResolve($callerClass);
+        $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {
             return $resolved;

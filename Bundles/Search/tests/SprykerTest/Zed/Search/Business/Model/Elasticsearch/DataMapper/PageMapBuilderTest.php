@@ -110,7 +110,7 @@ class PageMapBuilderTest extends Unit
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
-        $name = "does not matter";
+        $name = 'does not matter';
         $expectedResult = [0, 1, 2];
 
         // Act
@@ -132,7 +132,7 @@ class PageMapBuilderTest extends Unit
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
-        $name = "does not matter";
+        $name = 'does not matter';
         $expectedResult = [0, 1, 2];
 
         // Act

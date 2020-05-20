@@ -51,4 +51,17 @@ interface UrlStorageClientInterface
      * @return \Generated\Shared\Transfer\UrlRedirectStorageTransfer|null
      */
     public function findUrlRedirectStorageById(int $idRedirectUrl): ?UrlRedirectStorageTransfer;
+
+    /**
+     * Specification:
+     * - Gets multiple URLs data from storage.
+     * - Returns collection of UrlStorageTransfer.
+     *
+     * @api
+     *
+     * @param string[] $urlCollection
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     */
+    public function getUrlStorageTransferByUrls(array $urlCollection): array;
 }

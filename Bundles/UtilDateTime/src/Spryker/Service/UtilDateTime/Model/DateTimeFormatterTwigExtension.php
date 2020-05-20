@@ -12,7 +12,7 @@ use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Shared\Twig\TwigFilter;
 
 /**
- * @deprecated Use `\Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin` instead.
+ * @deprecated Use {@link \Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin} instead.
  */
 class DateTimeFormatterTwigExtension extends TwigExtension
 {

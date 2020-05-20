@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
@@ -41,6 +43,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->createMerchantOrderTotalsCreator(),
             $this->getMerchantOrderPostCreatePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander($this->getRepository());
     }
 
     /**

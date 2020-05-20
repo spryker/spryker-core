@@ -47,6 +47,8 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacadeInterface::getSchemaDirectory()} instead.
+     *
      * @return string
      */
     public function getPathToMergedSchemas(): string

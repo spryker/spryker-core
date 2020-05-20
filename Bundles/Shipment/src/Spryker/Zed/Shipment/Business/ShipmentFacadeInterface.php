@@ -260,7 +260,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE instead.
+     * @deprecated Use {@link \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE} instead.
      *
      * @return string
      */
@@ -447,4 +447,16 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function getActiveShipmentCarriers(): array;
+
+    /**
+     * Specification:
+     * - Calculates shipment total using expenses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

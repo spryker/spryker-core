@@ -45,6 +45,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $quoteClient;
 
     /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @var \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected static $currencyTransfer;
@@ -53,11 +58,6 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      * @var string|null
      */
     protected static $currentPriceMode;
-
-    /**
-     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
-     */
-    protected $priceProductService;
 
     /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient

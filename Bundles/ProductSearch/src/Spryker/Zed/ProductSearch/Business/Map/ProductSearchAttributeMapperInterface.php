@@ -14,7 +14,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 interface ProductSearchAttributeMapperInterface
 {
     /**
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapperInterface::mapDynamicProductAttributesToSearchData()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapperInterface::mapDynamicProductAttributesToSearchData()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

@@ -54,7 +54,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
-     * @deprecated use addEvent() instead.
+     * @deprecated Use {@link addEvent()} instead.
      *
      * @param array $events
      *

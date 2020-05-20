@@ -14,7 +14,7 @@ class ProductAttributesNotBlank extends Constraint
     /**
      * @var string
      */
-    public $message = 'At least one attribute value should be specified';
+    public $message = 'All attribute values should be specified';
 
     /**
      * @param array $options
