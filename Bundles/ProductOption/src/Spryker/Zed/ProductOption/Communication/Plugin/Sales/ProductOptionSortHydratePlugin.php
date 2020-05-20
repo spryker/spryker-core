@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin} instead.
  *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()

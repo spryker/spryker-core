@@ -12,7 +12,7 @@ interface CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use emptyCache() instead
+     * @deprecated Use {@link emptyCache()} instead
      *
      * @return string[]
      */
@@ -51,7 +51,7 @@ interface CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use emptyAutoLoaderCache() instead
+     * @deprecated Use {@link emptyAutoLoaderCache()} instead
      *
      * @return string[]
      */

@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType` instead.
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType} instead.
  */
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
@@ -135,7 +135,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

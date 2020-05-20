@@ -121,7 +121,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createPriceGrossCalculator() instead.
+     * @deprecated Use {@link createPriceGrossCalculator()} instead.
      *
      * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\PriceGrossCalculator
      */

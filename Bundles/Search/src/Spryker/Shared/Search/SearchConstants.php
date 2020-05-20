@@ -13,7 +13,7 @@ namespace Spryker\Shared\Search;
 interface SearchConstants
 {
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * When executing boosted full text search queries the value of this config setting will be used as the boost factor.
      * I.e. to set the boost factor to 3 add this to your config: `$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
@@ -23,7 +23,7 @@ interface SearchConstants
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST} instead.
      *
      * Elasticsearch connection host name. (Required)
      *
@@ -32,7 +32,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT} instead.
      *
      * Elasticsearch connection port number. (Required)
      *
@@ -41,7 +41,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT} instead.
      *
      * Elasticsearch connection transport name (i.e. "http"). (Required)
      *
@@ -50,7 +50,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Search\SearchConstants::INDEX_NAME_MAP` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::INDEX_NAME_MAP} instead.
      *
      * Elasticsearch connection index name. (Required)
      *
@@ -68,7 +68,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::AUTH_HEADER` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::AUTH_HEADER} instead.
      *
      * Elasticsearch connection authentication header parameters. (Optional)
      *
@@ -77,7 +77,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::EXTRA` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::EXTRA} instead.
      *
      * Specification:
      * - Defines an array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
@@ -97,7 +97,7 @@ interface SearchConstants
     public const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::CLIENT_CONFIGURATION` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::CLIENT_CONFIGURATION} instead.
      *
      * Specification:
      * - Defines a custom configuration for \Elastica\Client.
@@ -109,7 +109,7 @@ interface SearchConstants
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::DIRECTORY_PERMISSION` instead.
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::DIRECTORY_PERMISSION} instead.
      *
      * Specification:
      * - Sets the permission mode for generated directories.

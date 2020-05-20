@@ -53,7 +53,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageDeleter::deleteGlossaryStorageCollection()` instead
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageDeleter::deleteGlossaryStorageCollection()} instead
      *
      * This is added only for BC reasons
      *

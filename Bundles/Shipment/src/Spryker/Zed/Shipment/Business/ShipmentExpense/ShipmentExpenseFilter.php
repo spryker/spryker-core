@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConfig;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter instead
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter} instead
  */
 class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
 {

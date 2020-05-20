@@ -69,7 +69,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED} instead.
      *
      * @return bool
      */
@@ -81,7 +81,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES} instead.
      *
      * @return array
      */

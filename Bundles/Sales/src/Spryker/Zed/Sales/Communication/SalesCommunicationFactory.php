@@ -32,7 +32,7 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @deprecated Use `getCustomerForm()` instead.
+     * @deprecated Use {@link getCustomerForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
@@ -72,7 +72,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getAddressForm()` instead.
+     * @deprecated Use {@link getAddressForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
@@ -96,7 +96,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getCommentForm()` instead.
+     * @deprecated Use {@link getCommentForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
