@@ -197,7 +197,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         $indexName = substr($fileName, 0, -strlen(self::FILE_EXTENSION));
 
-        if (!$this->getFileStorePrefix($indexName)) {
+        if (!$this->getFileStorePrefix($fileName)) {
             $indexName = $storePrefix . $indexName;
         }
 
