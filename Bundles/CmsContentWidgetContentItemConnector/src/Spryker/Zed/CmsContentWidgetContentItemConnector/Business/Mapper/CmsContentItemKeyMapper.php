@@ -7,8 +7,23 @@
 
 namespace Spryker\Zed\CmsContentWidgetContentItemConnector\Business\Mapper;
 
+use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface;
+
 class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface
+     */
+    protected $contentStorageClient;
+
+    /**
+     * @param \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface $contentStorageClient
+     */
+    public function __construct(CmsContentWidgetContentItemConnectorToContentStorageClientInterface $contentStorageClient)
+    {
+        $this->contentStorageClient = $contentStorageClient;
+    }
+
     /**
      * @param string[] $keyList
      *
@@ -16,6 +31,7 @@ class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
      */
     public function mapContentItemKeyList(array $keyList): array
     {
+        // TODO get content Items by keys and filter them
         return $keyList;
     }
 }
