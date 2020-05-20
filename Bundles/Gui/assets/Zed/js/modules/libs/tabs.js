@@ -28,7 +28,7 @@ Tabs.prototype.checkErrors = function() {
             tabHeader.addClass('error');
         } else {
             tabHeader.removeClass('error');
-        };
+        }
     });
 };
 
