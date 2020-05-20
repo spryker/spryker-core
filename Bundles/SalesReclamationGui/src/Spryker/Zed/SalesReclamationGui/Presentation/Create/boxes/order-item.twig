@@ -50,7 +50,7 @@
             subtotal: orderItem.unitPrice,
             priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0),
             reclamation: reclamation,
-        } only %}
+        } %}
     </div>
     <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
 </td>
@@ -60,7 +60,7 @@
             subtotal: orderItem.unitSubtotalAggregation,
             priceToPay: orderItem.unitPriceToPayAggregation,
             reclamation: reclamation,
-        } only %}
+        } %}
     </td>
 {% endif %}
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">

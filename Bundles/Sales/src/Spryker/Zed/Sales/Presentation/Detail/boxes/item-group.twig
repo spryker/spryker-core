@@ -6,7 +6,7 @@
             displayImage: true,
             displayTotals: true,
             order: order,
-        } only %}
+        } %}
 
         {% include '@Sales/Detail/boxes/bundle-group.twig' with {
             items: group.groupItems,
@@ -14,13 +14,13 @@
             changeStatusRedirectUrl: changeStatusRedirectUrl,
             eventsGroupedByItem: eventsGroupedByItem,
             order: order,
-        } only %}
+        } %}
     {% else %}
         {% include '@Sales/Detail/boxes/single-item.twig' with {
             item: group.groupItems | first,
             changeStatusRedirectUrl: changeStatusRedirectUrl,
             eventsGroupedByItem: eventsGroupedByItem,
             order: order,
-        } only %}
+        } %}
     {% endif %}
 {% endfor %}

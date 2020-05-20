@@ -5,10 +5,10 @@
         displayImage: item.metadata is not null,
         displayTotals: true,
         reclamation: reclamation,
-    } only %}
+    } %}
 </tr>
 
 {% include '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {
     orderItem: item,
     reclamation: reclamation,
-} only %}
+} %}
