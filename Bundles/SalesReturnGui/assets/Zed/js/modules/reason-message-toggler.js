@@ -17,15 +17,13 @@ function ReasonMessageToggler(options) {
     this.mapEvents = function() {
         var self = this;
 
-        this.$select.each(function(index, item) {
-            $(item).on('change', function() {
-                self.toggleMessageBlock($(this));
-            });
+        this.$select.on('change', function() {
+            self.toggleMessageBlock($(this));
         });
     };
 
     this.toggleMessageBlock = function($select) {
-        var targetClassName = $select.attr('data-target');
+        var targetClassName = $select.data('target');
         var $target = $('.' + targetClassName);
         var isToggleValueSelected = this.toggleValue === $select.val();
 

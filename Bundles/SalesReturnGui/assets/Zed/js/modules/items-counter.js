@@ -28,7 +28,7 @@ function ItemsCounter(options) {
         this.$allItems.on('change', function() {
             setTimeout(function() {
                 self.updateItemCounter();
-            });
+            }, 0);
         });
     };
 

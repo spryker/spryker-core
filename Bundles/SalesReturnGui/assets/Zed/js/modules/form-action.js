@@ -21,13 +21,12 @@ function FormAction(options) {
         var self = this;
 
         this.$actionButton.on('click', function(event) {
-            self.updateFormAction(event, $(this));
+            event.preventDefault();
+            self.updateFormAction($(this));
         });
     };
 
-    this.updateFormAction = function(event, $actionButton) {
-        event.preventDefault();
-
+    this.updateFormAction = function($actionButton) {
         var $form = $actionButton.closest('form');
         var formUrl = decodeURI($form.attr('action'));
 
