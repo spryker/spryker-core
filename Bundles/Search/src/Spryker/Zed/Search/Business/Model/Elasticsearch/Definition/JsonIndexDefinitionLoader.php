@@ -10,6 +10,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -29,39 +30,31 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $definitionMerger;
 
     /**
-     * @var string[]
-     */
-    protected $currentStorePrefixes;
-
-    /**
-     * @var string[]
-     */
-    protected $availableStorePrefixes;
-
-    /**
      * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
-     * @param string[] $currentStores
-     * @param string[] $availableStores
+     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         array $sourceDirectories,
         IndexDefinitionMergerInterface $definitionMerger,
         SearchToUtilEncodingInterface $utilEncodingService,
-        array $currentStores,
-        array $availableStores
+        SearchToStoreFacadeInterface $storeFacade
     ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
         $this->utilEncodingService = $utilEncodingService;
-        $this->currentStorePrefixes = $this->getStorePrefixes($currentStores);
-        $this->availableStorePrefixes = $this->getStorePrefixes($availableStores);
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -95,7 +88,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         $jsonFileStorePrefix = $this->getFileStorePrefix($jsonFile->getFilename());
 
-        return !$jsonFileStorePrefix || in_array($jsonFileStorePrefix, $this->currentStorePrefixes);
+        return !$jsonFileStorePrefix || in_array($jsonFileStorePrefix, $this->getStorePrefixes($this->getCurrentStores()));
     }
 
     /**
@@ -138,7 +131,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getDefinitionByStores(SplFileInfo $jsonFile, array $indexDefinitions, array $definitionData)
     {
-        foreach ($this->currentStorePrefixes as $storePrefix) {
+        foreach ($this->getStorePrefixes($this->getCurrentStores()) as $storePrefix) {
             $indexName = $this->getIndexName($jsonFile->getFilename(), $storePrefix);
 
             if (isset($indexDefinitions[$indexName])) {
@@ -213,9 +206,9 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getFileStorePrefix(string $fileName): ?string
     {
-        foreach ($this->availableStorePrefixes as $availableStorePrefix) {
-            if (strpos($fileName, $availableStorePrefix) === 0) {
-                return $availableStorePrefix;
+        foreach ($this->getStorePrefixes($this->getAllStores()) as $storePrefix) {
+            if (strpos($fileName, $storePrefix) === 0) {
+                return $storePrefix;
             }
         }
 
@@ -223,15 +216,16 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @param array $stores
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
      * @return string[]
      */
-    protected function getStorePrefixes(array $stores): array
+    protected function getStorePrefixes(array $storeTransfers): array
     {
         $storePrefixes = [];
-        foreach ($stores as $store) {
-            $storePrefixes[] = mb_strtolower($store) . '_';
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $storePrefixes[] = mb_strtolower($storeTransfer->getName()) . '_';
         }
 
         return $storePrefixes;
@@ -266,5 +260,21 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         return $this->utilEncodingService
             ->decodeJson($jsonValue, true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function getCurrentStores(): array
+    {
+        return [$this->storeFacade->getCurrentStore()];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function getAllStores(): array
+    {
+        return $this->storeFacade->getAllStores();
     }
 }

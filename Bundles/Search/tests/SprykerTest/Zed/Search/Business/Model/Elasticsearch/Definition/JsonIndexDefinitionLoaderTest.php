@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -314,7 +317,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger $definitionMerger
-     * @param array $stores
+     * @param string[] $storeNames
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingMock
      * @param string $suffix
      *
@@ -323,17 +326,26 @@ class JsonIndexDefinitionLoaderTest extends Unit
     protected function createJsonIndexDefinitionLoader(
         array $sourceDirectories,
         JsonIndexDefinitionMerger $definitionMerger,
-        array $stores,
+        array $storeNames,
         SearchToUtilEncodingInterface $utilEncodingMock,
         string $suffix = ''
     ): JsonIndexDefinitionLoader {
+        $storeTransfers = [];
+        foreach ($storeNames as $storeName) {
+            $storeTransfers[] = (new StoreTransfer())->setName($storeName);
+        }
+
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
-            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores, $stores])
-            ->setMethods(['getIndexNameSuffix'])
+            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $this->getStoreFacadeBridge()])
+            ->onlyMethods(['getIndexNameSuffix', 'getAllStores', 'getCurrentStores'])
             ->getMock();
 
         $jsonIndexDefinitionLoader->method('getIndexNameSuffix')
             ->willReturn($suffix);
+        $jsonIndexDefinitionLoader->method('getAllStores')
+            ->willReturn($storeTransfers);
+        $jsonIndexDefinitionLoader->method('getCurrentStores')
+            ->willReturn($storeTransfers);
 
         return $jsonIndexDefinitionLoader;
     }
@@ -344,6 +356,14 @@ class JsonIndexDefinitionLoaderTest extends Unit
     protected function createJsonIndexDefinitionMerger(): JsonIndexDefinitionMerger
     {
         return new JsonIndexDefinitionMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge
+     */
+    protected function getStoreFacadeBridge(): SearchToStoreFacadeBridge
+    {
+        return new SearchToStoreFacadeBridge(new StoreFacade());
     }
 
     /**

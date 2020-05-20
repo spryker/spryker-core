@@ -11,7 +11,6 @@ use Elastica\Snapshot;
 use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeChecker;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface;
@@ -30,6 +29,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -74,8 +74,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
             $this->getUtilEncodingService(),
-            [APPLICATION_STORE],
-            Store::getInstance()->getAllowedStores()
+            $this->getStoreFacade()
         );
     }
 
@@ -354,5 +353,13 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new SearchLegacyModeChecker(
             $this->getSourceInstallerPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_STORE);
     }
 }
