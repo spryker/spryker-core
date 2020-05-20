@@ -188,6 +188,22 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
+    {
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds);
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers(): array

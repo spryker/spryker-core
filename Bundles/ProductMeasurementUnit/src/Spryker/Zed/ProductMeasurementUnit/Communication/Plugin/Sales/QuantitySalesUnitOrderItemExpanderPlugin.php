@@ -7,30 +7,28 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\Sales\QuantitySalesUnitOrderItemExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
  */
-class QuantitySalesUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
+class QuantitySalesUnitOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Expands order items with quantity sales unit if applicable.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
+    public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderWithQuantitySalesUnit($orderTransfer);
+        return $this->getFacade()->expandOrderItemsWithQuantitySalesUnit($itemTransfers);
     }
 }

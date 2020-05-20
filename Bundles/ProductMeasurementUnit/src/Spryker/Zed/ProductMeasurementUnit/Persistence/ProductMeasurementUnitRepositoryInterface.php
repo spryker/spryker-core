@@ -61,6 +61,13 @@ interface ProductMeasurementUnitRepositoryInterface
     public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array;
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers(): array;
