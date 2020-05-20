@@ -13,7 +13,9 @@ interface SalesReturnPageSearchFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Retrieves all Return Reasons using IDs from $eventTransfers.
+     * - Updates entities from `spy_sales_return_reason_page_search` with actual data from obtained Return Reasons.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -25,7 +27,8 @@ interface SalesReturnPageSearchFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Deletes entities from `spy_sales_return_reason_page_search` based on IDs from $eventTransfers.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *
@@ -37,7 +40,8 @@ interface SalesReturnPageSearchFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Reads entities from `spy_sales_return_reason_page_search` based on criteria from FilterTransfer and $returnReasonIds.
+     * - Returns array of SynchronizationDataTransfer filled with data from page search entities.
      *
      * @api
      *

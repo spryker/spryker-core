@@ -13,7 +13,8 @@ interface SalesReturnPageSearchClientInterface
 {
     /**
      * Specification:
-     * -
+     * - Filters Elasticsearch records using criteria from ReturnReasonSearchRequestTransfer.
+     * - Returns search results.
      *
      * @api
      *
