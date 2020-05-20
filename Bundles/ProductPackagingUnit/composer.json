@@ -28,6 +28,7 @@
     "spryker/cart": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/stock": "*",
