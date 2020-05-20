@@ -56,4 +56,18 @@
         <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
+    <transfer name="FilePathResolverResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="filePath" type="string"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="HeaderValidatorResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
 </transfers>

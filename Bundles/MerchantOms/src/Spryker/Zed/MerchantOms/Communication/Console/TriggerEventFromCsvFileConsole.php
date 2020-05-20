@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantOms\Communication\Console;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
-use Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -99,13 +98,24 @@ class TriggerEventFromCsvFileConsole extends Console
             return static::CODE_ERROR;
         }
 
-        $csvReader = $this->resolveCsvReader($filePath);
+        $csvReader = $this->getFactory()
+            ->getUtilDataReaderService()
+            ->getCsvReader();
+        $csvReader->load($filePath);
 
-        if (!$csvReader) {
+        if (
+            !$csvReader->valid()
+            || !$this->getFactory()->createHeaderValidator()->validate($this->getMandatoryColumns(), $csvReader)->getIsSuccessful()
+        ) {
+            $this->error('CSV file is invalid.');
+
             return static::CODE_ERROR;
         }
 
         $this->prepareOutputTable();
+
+        $csvReader->rewind();
+        $csvReader->getFile()->seek($this->getStartFromOption());
 
         $totalRowsCount = $csvReader->getTotal() - 1;
         $successfullyProcessedRowsCount = 0;
@@ -152,47 +162,17 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function resolveFilePath(): ?string
     {
-        $filePathArgument = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
-        $filePaths = [
-            $filePathArgument,
-            APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $filePathArgument,
-        ];
+        $filePathResolverResponseTransfer = $this->getFactory()
+            ->createFilePathResolver()
+            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));
 
-        foreach ($filePaths as $filePath) {
-            if (is_file($filePath) && is_readable($filePath)) {
-                return $filePath;
-            }
-        }
-
-        $this->error(sprintf('File "%s" does not exist or is unreadable.', $filePathArgument));
-
-        return null;
-    }
-
-    /**
-     * @param string $filePath
-     *
-     * @return \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface|null
-     */
-    protected function resolveCsvReader(string $filePath): ?CsvReaderInterface
-    {
-        $csvReader = $this->getFactory()->getUtilDataReaderService()->getCsvReader();
-        $csvReader->load($filePath);
-
-        if (!$csvReader->valid()) {
-            $this->error('CSV file is invalid.');
+        if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
+            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());
 
             return null;
         }
 
-        if (!$this->validateHeaderColumns($csvReader)) {
-            return null;
-        }
-
-        $csvReader->rewind();
-        $csvReader->getFile()->seek($this->getStartFromOption());
-
-        return $csvReader;
+        return $filePathResolverResponseTransfer->getFilePath();
     }
 
     /**
@@ -201,28 +181,6 @@ class TriggerEventFromCsvFileConsole extends Console
     protected function getStartFromOption(): int
     {
         return max((int)$this->input->getOption(static::OPTION_START_FROM) - 1, 0);
-    }
-
-    /**
-     * @param \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface $csvReader
-     *
-     * @return bool
-     */
-    protected function validateHeaderColumns(CsvReaderInterface $csvReader): bool
-    {
-        $mandatoryColumns = $this->getMandatoryColumns();
-        if (array_diff($mandatoryColumns, $csvReader->getColumns())) {
-            $this->error(
-                sprintf(
-                    'CSV file does not contain mandatory fields: %s.',
-                    implode(', ', $mandatoryColumns)
-                )
-            );
-
-            return false;
-        }
-
-        return true;
     }
 
     /**
