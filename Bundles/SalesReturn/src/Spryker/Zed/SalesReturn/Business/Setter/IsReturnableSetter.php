@@ -117,7 +117,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
             return true;
         }
 
-        $currentDate = (new DateTime('now'))->setTime(0, 0);
+        $currentDate = (new DateTime())->setTime(0, 0);
         $createdAt = (new DateTime($itemTransfer->getCreatedAt()))->setTime(0, 0);
 
         return $currentDate->diff($createdAt)->days > $this->salesReturnConfig->getGlobalReturnableNumberOfDays();
