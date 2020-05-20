@@ -7,30 +7,28 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Sales;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Sales\AmountLeadProductOrderItemExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
-class AmountLeadProductHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
+class AmountLeadProductOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Expands order items with additional packaging unit amount lead product.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
+    public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderWithAmountLeadProduct($orderTransfer);
+        return $this->getFacade()->expandOrderItemsWithAmountLeadProduct($itemTransfers);
     }
 }
