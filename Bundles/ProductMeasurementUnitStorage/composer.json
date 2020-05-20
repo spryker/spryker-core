@@ -20,7 +20,7 @@
     "spryker/event": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "^1.5.0",
+    "spryker/propel-orm": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
   },
