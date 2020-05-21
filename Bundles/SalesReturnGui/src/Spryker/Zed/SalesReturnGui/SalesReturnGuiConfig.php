@@ -12,9 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesReturnGuiConfig extends AbstractBundleConfig
 {
     protected const ITEM_STATE_TO_LABEL_CLASS_MAPPING = [
-        'returned' => 'label-inverse',
-        'refunded' => 'label-info',
-        'closed' => 'label-danger',
+        'refunded' => 'label-danger',
+        'closed' => 'label-inverse',
+        'shipped to customer' => 'label-success',
     ];
 
     /**

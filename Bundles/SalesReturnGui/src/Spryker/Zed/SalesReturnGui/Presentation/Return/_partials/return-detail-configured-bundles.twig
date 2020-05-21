@@ -1,3 +1,4 @@
+{% set returnItems = return.returnItems | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle) %}
 {% set mappedReturnItems = [] %}
 {% set configuredBundles = [] %}
 
@@ -16,7 +17,7 @@
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            {{ (bundle.translations[0].name ?? bundle.name) | trans }} {# Fallback name display is kept for BC reasons. #}
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
@@ -28,31 +29,33 @@
                 {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.orderItem.sumPriceToPayAggregation %}
             {% endfor %}
 
-            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: bundleSumSubtotalAggregation,
+                priceToPay: bundleSumPriceToPayAggregation,
+                order: order,
+            } %}
+        </td>
         <td colspan="2"></td>
     </tr>
 
     {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
-        <tr>
-            {% include '@Sales/Detail/boxes/order-item.twig' with {
-                orderItem: returnItem.orderItem,
-                displayImage: true,
-                image: returnItem.orderItem.metadata.image,
-                displayTotals: true,
-                group: false,
-                order: order,
-                eventsGroupedByItem: orderItemManualEvents,
-                changeStatusRedirectUrl: triggerButtonRedirectUrl,
-            } only %}
-        </tr>
+        {% include '@SalesReturnGui/Return/_partials/return-detail-item.twig' with {
+            returnItem: returnItem,
+            orderItem: returnItem.orderItem,
+            order: order,
+            eventsGroupedByItem: eventsGroupedByItem,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            isBundleProduct: false,
+        } only %}
     {% endfor %}
 
     <tr>
-        <td colspan="8">
+        <td colspan="1"></td>
+        <td colspan="7">
             {{ 'Items' | trans }}: {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }} / {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }}
         </td>
     </tr>
     <tr>
-        <td colspan="8">&nbsp;</td>
+        <td colspan="8"></td>
     </tr>
 {% endfor %}

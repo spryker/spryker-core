@@ -229,7 +229,7 @@ class ReturnTable extends AbstractTable
          $stateLabels = [];
 
         foreach ($states as $state) {
-            $stateLabels[] = $this->generateLabel(ucfirst($state), $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? 'label-info');
+            $stateLabels[] = $this->generateLabel(ucfirst($state), $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? 'label-default');
         }
 
          return $stateLabels;

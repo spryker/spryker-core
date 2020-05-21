@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
@@ -56,11 +57,13 @@ class ReturnCreateFormDataProvider
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
+        $orderTransfer = $this->translateReturnPolicyMessages($orderTransfer);
+
         $returnCreateFormData = [
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
         ];
 
-        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
+        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData, $orderTransfer);
     }
 
     /**
@@ -112,15 +115,57 @@ class ReturnCreateFormDataProvider
 
     /**
      * @param array $returnCreateFormData
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
+    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData, OrderTransfer $orderTransfer): array
     {
         foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
-            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandData($returnCreateFormData);
+            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandData($returnCreateFormData, $orderTransfer);
         }
 
         return $returnCreateFormData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function translateReturnPolicyMessages(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $this->translateReturnPolicyMessage($itemTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function translateReturnPolicyMessage(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getReturnPolicyMessages()->count()) {
+            return $itemTransfer;
+        }
+
+        foreach ($itemTransfer->getReturnPolicyMessages() as $returnPolicyMessage) {
+            if (!$returnPolicyMessage->getValue()) {
+                continue;
+            }
+
+            $translatedMessage = $this->glossaryFacade->translate(
+                $returnPolicyMessage->getValue(),
+                $returnPolicyMessage->getParameters()
+            );
+
+            $returnPolicyMessage->setMessage($translatedMessage);
+        }
+
+        return $itemTransfer;
     }
 }

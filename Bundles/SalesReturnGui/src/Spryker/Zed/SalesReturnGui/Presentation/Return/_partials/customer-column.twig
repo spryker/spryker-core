@@ -2,37 +2,34 @@
     title: 'Customer'
 } %}
     {% block content %}
-        <div class="row">
+        <div class="row m-b-sm">
             {% if customer.customerReference %}
-                <div>
-                    <div class="col-sm-6 font-bold">
-                        {{ 'Customer reference' | trans }}
-                    </div>
-                    <div class="col-sm-6">
-                        <a target="_blank"
-                           href="{{ url('/customer/view', {'id-customer': customer.idCustomer}) }}">
-                            {{ customer.customerReference }}
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
-
-            <div>
                 <div class="col-sm-6 font-bold">
-                    {{ 'Name' | trans }}
+                    {{ 'Customer reference' | trans }}
                 </div>
                 <div class="col-sm-6">
-                    {{ customer.firstName ~ ' ' ~ customer.lastName }}
+                    <a target="_blank" href="{{ url('/customer/view', {'id-customer': customer.idCustomer}) }}">
+                        {{ customer.customerReference }}
+                    </a>
                 </div>
-            </div>
+            {% endif %}
+        </div>
 
-            <div>
-                <div class="col-lg-6 font-bold">
-                    {{ 'Email' | trans }}
-                </div>
-                <div class="col-lg-6">
-                    {{ customer.email }}
-                </div>
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Name' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ customer.firstName ~ ' ' ~ customer.lastName }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 font-bold">
+                {{ 'Email' | trans }}
+            </div>
+            <div class="col-sm-6 word-break-all">
+                {{ customer.email }}
             </div>
         </div>
     {% endblock %}

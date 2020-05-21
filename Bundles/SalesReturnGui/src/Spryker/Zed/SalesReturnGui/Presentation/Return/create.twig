@@ -4,7 +4,6 @@
     {{ 'Create Return' | trans }}
 {% endblock %}
 
-
 {% block action %}
     {{ backActionButton(url('/sales/detail', {'id-sales-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
 {% endblock %}
@@ -13,16 +12,13 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
         {% block widget_content %}
             <div class="row">
-                <div>
-                    <div class="col-sm-2 font-bold">
-                        {{ 'Order reference' | trans }}
-                    </div>
-                    <div class="col-sm-10">
-                        <a target="_blank"
-                           href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
-                            {{ order.orderReference }}
-                        </a>
-                    </div>
+                <div class="col-lg-2 font-bold">
+                    {{ 'Order reference' | trans }}
+                </div>
+                <div class="col-lg-10">
+                    <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
+                        {{ order.orderReference }}
+                    </a>
                 </div>
             </div>
         {% endblock %}
@@ -33,40 +29,52 @@
             {{ form_start(returnCreateForm) }}
             {{ form_errors(returnCreateForm) }}
 
-            <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
-                <thead>
-                <tr class="text-left">
-                    <th><input type="checkbox" id="check-all-orders"/></th>
-                    <th colspan="2">{{ 'Product' | trans }}</th>
-                    <th>{{ 'Quantity' | trans }}</th>
-                    <th>{{ 'Price' | trans }}</th>
-                    <th>{{ 'Item total' | trans }}</th>
-                    <th>{{ 'Return Policy' | trans }}</th>
-                    <th>{{ 'State' | trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
-                    form: returnCreateForm,
-                    order: order,
-                } only %}
+            <div class="table-responsive">
+                <table class="table js-return-items-table" data-qa="order-item-list">
+                    <thead>
+                        <tr class="text-left">
+                            <th><input type="checkbox" class="js-check-all-items"></th>
+                            <th colspan="2">{{ 'Product' | trans }}</th>
+                            <th>{{ 'Quantity' | trans }}</th>
+                            <th>{{ 'Price' | trans }}</th>
+                            <th>{{ 'Total' | trans }}</th>
+                            <th>{{ 'Return policy' | trans }}</th>
+                            <th>{{ 'State' | trans }}</th>
+                        </tr>
+                    </thead>
 
-                {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
-                    form: returnCreateForm,
-                    order: order,
-                } only %}
-                </tbody>
-            </table>
+                    <tbody>
+                        {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create return' | trans }}" />
+                        {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
+
+                        {% include '@SalesReturnGui/Return/_partials/return-create-product-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="submit" class="btn btn-primary safe-submit js-create-return-submit" value="{{ 'Create return' | trans }}" disabled>
 
             {{ form_end(returnCreateForm) }}
         {% endblock %}
     {% endembed %}
-
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-main.css') }}">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-return-gui-main.css') }}">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
 {% endblock %}

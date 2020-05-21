@@ -1,9 +1,0 @@
-<tr>
-    <td>{{ barcode(returnItem.orderItem.sku) }}</td>
-    <td>{{ returnItem.orderItem.sku }}</td>
-    <td>{{ returnItem.orderItem.name }}</td>
-    <td>{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-    <td>{{ returnItem.orderItem.quantity }}</td>
-    <td>{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
-    <td>{{ returnItem.reason ?? '-' }}</td>
-</tr>
