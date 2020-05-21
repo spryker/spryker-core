@@ -10,11 +10,12 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\Definition;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -36,15 +37,18 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testEmptyIndexDefinitionLoading(): void
     {
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/EmptyIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEmpty($definitions['de_foo']->getSettings(), 'empty foo settings');
         $this->assertEmpty($definitions['de_foo']->getMappings(), 'empty foo mapping');
         $this->assertEmpty($definitions['de_bar']->getSettings(), 'empty bar settings');
@@ -58,15 +62,18 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes(): void
     {
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals('de_foo', $definitions['de_foo']->getIndexName());
     }
 
@@ -75,11 +82,12 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testSingleIndexDefinitionSettings(): void
     {
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
         $expectedSettings = [
@@ -99,8 +107,10 @@ class JsonIndexDefinitionLoaderTest extends Unit
             ],
         ];
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals($expectedSettings, $definitions['de_foo']->getSettings());
     }
 
@@ -109,11 +119,12 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testSingleIndexDefinitionMappings(): void
     {
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
         $expectedMappings = [
@@ -131,9 +142,12 @@ class JsonIndexDefinitionLoaderTest extends Unit
             ],
         ];
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals($expectedMappings, $definitions['de_foo']->getMappings());
+        $this->assertCount(1, $definitions);
     }
 
     /**
@@ -141,13 +155,14 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testIsIndexNameSuffixUsedWhenProvided(): void
     {
+        // Arrange
         $suffix = '_suffix';
 
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock(),
+            ['DE'],
+            'DE',
             $suffix
         );
 
@@ -166,8 +181,10 @@ class JsonIndexDefinitionLoaderTest extends Unit
             ],
         ];
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals($expectedMappings, $definitions['de_foo' . $suffix]->getMappings());
     }
 
@@ -176,29 +193,33 @@ class JsonIndexDefinitionLoaderTest extends Unit
      */
     public function testMultipleIndexDefinitionLoading(): void
     {
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/MultipleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals(3, count($definitions));
     }
 
     /**
      * @return void
      */
-    public function testMultipleIndexDefinitionMerging(): void
+    public function testMultipleIndexDefinitionMergingWithStoreSpecificFile(): void
     {
+        // Arrange
         $fooExpectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
             ->setIndexName('de_foo')
             ->setSettings([
                 'index' => [
-                    'number_of_shards' => 1,
-                    'number_of_replicas' => 4,
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 2,
                 ],
             ])
             ->setMappings([
@@ -226,12 +247,14 @@ class JsonIndexDefinitionLoaderTest extends Unit
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Merge/*/'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores(),
-            $this->getUtilEncodingMock()
+            ['DE'],
+            'DE'
         );
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertEquals($fooExpectedDefinition, $definitions['de_foo']);
         $this->assertEquals($barExpectedDefinition, $definitions['de_bar']);
     }
@@ -239,44 +262,42 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testDefinitionsShouldBeCreatedPerStore(): void
+    public function testDefinitionsShouldBeCreatedOnlyForCurrentStore(): void
     {
-        $stores = ['A', 'B', 'C'];
-
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Stores/Core/'],
             $this->createJsonIndexDefinitionMerger(),
-            $stores,
-            $this->getUtilEncodingMock()
+            ['A', 'B', 'C'],
+            'A'
         );
 
+        // Act
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
+        // Assert
         $this->assertArrayHasKey('a_foo', $definitions);
-        $this->assertArrayHasKey('b_foo', $definitions);
-        $this->assertArrayHasKey('c_foo', $definitions);
+        $this->assertArrayNotHasKey('b_foo', $definitions);
+        $this->assertArrayNotHasKey('c_foo', $definitions);
     }
 
     /**
      * @return void
      */
-    public function testStoreDefinitionShouldBeOverwritable(): void
+    public function testStoreDefinitionShouldBeOverwritableFromProject(): void
     {
-        $stores = ['A', 'B'];
-
+        // Arrange
         $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [
                 __DIR__ . '/Fixtures/Stores/Core/',
                 __DIR__ . '/Fixtures/Stores/Project/',
             ],
             $this->createJsonIndexDefinitionMerger(),
-            $stores,
-            $this->getUtilEncodingMock()
+            ['A'],
+            'A'
         );
 
-        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
-
-        $store1ExpectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
+        $expectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
             ->setIndexName('a_foo')
             ->setSettings([
                 'number_of_shards' => 10,
@@ -293,32 +314,18 @@ class JsonIndexDefinitionLoaderTest extends Unit
                 ],
             ]);
 
-        $store2ExpectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
-            ->setIndexName('b_foo')
-            ->setSettings([
-                'number_of_shards' => 1,
-                'number_of_replicas' => 1,
-            ])
-            ->setMappings([
-                'page' => [
-                    'properties' => [
-                        'foo' => [
-                            'type' => 'integer',
-                        ],
-                        'bar' => [],
-                    ],
-                ],
-            ]);
+        // Act
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
-        $this->assertEquals($store1ExpectedDefinition, $definitions['a_foo']);
-        $this->assertEquals($store2ExpectedDefinition, $definitions['b_foo']);
+        // Assert
+        $this->assertEquals($expectedDefinition, $definitions['a_foo']);
     }
 
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger $definitionMerger
      * @param string[] $storeNames
-     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingMock
+     * @param string $currentStoreName
      * @param string $suffix
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
@@ -327,25 +334,19 @@ class JsonIndexDefinitionLoaderTest extends Unit
         array $sourceDirectories,
         JsonIndexDefinitionMerger $definitionMerger,
         array $storeNames,
-        SearchToUtilEncodingInterface $utilEncodingMock,
+        string $currentStoreName,
         string $suffix = ''
     ): JsonIndexDefinitionLoader {
-        $storeTransfers = [];
-        foreach ($storeNames as $storeName) {
-            $storeTransfers[] = (new StoreTransfer())->setName($storeName);
-        }
+        $storeFacadeBridgeMock = $this->getStoreFacadeBridgeMock($currentStoreName, $storeNames);
+        $jsonIndexDefinitionFinder = $this->getJsonIndexDefinitionFinder($sourceDirectories, $storeFacadeBridgeMock);
 
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
-            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $this->getStoreFacadeBridge()])
-            ->onlyMethods(['getIndexNameSuffix', 'getAllStores', 'getCurrentStores'])
+            ->setConstructorArgs([$jsonIndexDefinitionFinder, $definitionMerger, $storeFacadeBridgeMock])
+            ->onlyMethods(['getIndexNameSuffix'])
             ->getMock();
 
         $jsonIndexDefinitionLoader->method('getIndexNameSuffix')
             ->willReturn($suffix);
-        $jsonIndexDefinitionLoader->method('getAllStores')
-            ->willReturn($storeTransfers);
-        $jsonIndexDefinitionLoader->method('getCurrentStores')
-            ->willReturn($storeTransfers);
 
         return $jsonIndexDefinitionLoader;
     }
@@ -359,11 +360,57 @@ class JsonIndexDefinitionLoaderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge
+     * @param string $currentStoreName
+     * @param string[] $storeNames
+     *
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getStoreFacadeBridge(): SearchToStoreFacadeBridge
+    protected function getStoreFacadeBridgeMock(string $currentStoreName, array $storeNames): SearchToStoreFacadeBridge
     {
-        return new SearchToStoreFacadeBridge(new StoreFacade());
+        $currentStoreTransfer = (new StoreTransfer())->setName($currentStoreName);
+        $storeTransfers = [];
+        foreach ($storeNames as $storeName) {
+            $storeTransfers[] = (new StoreTransfer())->setName($storeName);
+        }
+
+        $searchToStoreFacadeBridgeMock = $this->getMockBuilder(SearchToStoreFacadeBridge::class)
+            ->onlyMethods(['getCurrentStore', 'getAllStores'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $searchToStoreFacadeBridgeMock->method('getCurrentStore')->willReturn($currentStoreTransfer);
+        $searchToStoreFacadeBridgeMock->method('getAllStores')->willReturn($storeTransfers);
+
+        return $searchToStoreFacadeBridgeMock;
+    }
+
+    /**
+     * @param string[] $sourceDirectories
+     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge $searchToStoreFacadeBridge
+     *
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder
+     */
+    protected function getJsonIndexDefinitionFinder(
+        array $sourceDirectories,
+        SearchToStoreFacadeBridge $searchToStoreFacadeBridge
+    ): JsonIndexDefinitionFinder {
+        return new JsonIndexDefinitionFinder(
+            $sourceDirectories,
+            $this->getJsonIndexDefinitionMapper($searchToStoreFacadeBridge)
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge $searchToStoreFacadeBridge
+     *
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper
+     */
+    protected function getJsonIndexDefinitionMapper(SearchToStoreFacadeBridge $searchToStoreFacadeBridge): JsonIndexDefinitionMapper
+    {
+        return new JsonIndexDefinitionMapper(
+            $this->getUtilEncodingMock(),
+            $searchToStoreFacadeBridge
+        );
     }
 
     /**
@@ -381,7 +428,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     {
         $utilEncodingMock = $this->getMockBuilder(SearchToUtilEncodingInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['decodeJson'])
+            ->onlyMethods(['decodeJson'])
             ->getMock();
 
         $utilEncodingMock

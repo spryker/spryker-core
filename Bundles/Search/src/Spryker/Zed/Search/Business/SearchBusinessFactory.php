@@ -17,7 +17,11 @@ use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterfa
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
@@ -71,8 +75,29 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
-            $this->getConfig()->getJsonIndexDefinitionDirectories(),
+            $this->createJsonIndexDefinitionFinder(),
             $this->createJsonIndexDefinitionMerger(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface
+     */
+    public function createJsonIndexDefinitionFinder(): IndexDefinitionFinderInterface
+    {
+        return new JsonIndexDefinitionFinder(
+            $this->getConfig()->getJsonIndexDefinitionDirectories(),
+            $this->createJsonIndexDefinitionMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface
+     */
+    public function createJsonIndexDefinitionMapper(): IndexDefinitionMapperInterface
+    {
+        return new JsonIndexDefinitionMapper(
             $this->getUtilEncodingService(),
             $this->getStoreFacade()
         );

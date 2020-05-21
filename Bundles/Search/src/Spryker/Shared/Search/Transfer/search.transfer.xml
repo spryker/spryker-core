@@ -150,4 +150,11 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="IndexDefinitionFile">
+        <property name="fileName" type="string"/>
+        <property name="storePrefix" type="string"/>
+        <property name="content" type="array"/>
+        <property name="realPath" type="string"/>
+    </transfer>
+
 </transfers>
