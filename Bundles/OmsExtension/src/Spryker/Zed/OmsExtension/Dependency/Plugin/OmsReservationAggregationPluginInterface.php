@@ -9,7 +9,7 @@ namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
-interface OmsReservationAggregationStrategyPluginInterface
+interface OmsReservationAggregationPluginInterface
 {
     /**
      * Specification:
