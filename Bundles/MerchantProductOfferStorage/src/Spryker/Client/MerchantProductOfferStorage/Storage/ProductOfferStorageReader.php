@@ -151,6 +151,11 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
             }
 
             $concreteProductOffer = $this->utilEncodingService->decodeJson($concreteProductOffer, true);
+
+            if (!$concreteProductOffer) {
+                continue;
+            }
+
             unset($concreteProductOffer['_timestamp']);
 
             $decodedConcreteProductOffers = array_merge($decodedConcreteProductOffers, $concreteProductOffer);
@@ -175,8 +180,14 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 continue;
             }
 
+            $decodedMerchantProductOfferStorageData = $this->utilEncodingService->decodeJson($productOfferDataItem, true);
+
+            if (!$decodedMerchantProductOfferStorageData) {
+                continue;
+            }
+
             $productOfferStorageTransfers[] = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
-                $this->utilEncodingService->decodeJson($productOfferDataItem, true),
+                $decodedMerchantProductOfferStorageData,
                 new ProductOfferStorageTransfer()
             );
         }
