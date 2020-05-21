@@ -28,7 +28,7 @@
                 subtotal: orderItem.sumPrice,
                 priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
                 order: order,
-            } only %}
+            } %}
 
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
         </td>
@@ -56,7 +56,7 @@
                     redirectUrl: changeStatusRedirectUrl,
                     idSalesOrderItem: orderItem.idSalesOrderItem,
                     eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
-                } only %}
+                } %}
             {% endif %}
         </td>
     </tr>
@@ -65,4 +65,4 @@
 {% include '@Sales/Detail/boxes/order-item-option.twig' with {
     orderItem: bundleProduct,
     order: order,
-} only %}
+} %}

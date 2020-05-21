@@ -28,7 +28,7 @@
         <div class="m-b-sm">
             {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
                 orderItem: orderItem,
-            } only %}
+            } %}
         </div>
 
         {{ form_row(returnItem.reason, {
@@ -49,14 +49,14 @@
 
         {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
             orderItem: orderItem,
-        } only %}
+        } %}
     </td>
     <td>
         {% include '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumPrice,
             priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
             order: order,
-        } only %}
+        } %}
 
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
     </td>
@@ -65,7 +65,7 @@
             subtotal: orderItem.sumSubtotalAggregation,
             priceToPay: orderItem.sumPriceToPayAggregation,
             order: order,
-        } only %}
+        } %}
     </td>
     <td>
         {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
@@ -100,5 +100,5 @@
     {% include '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
         order: order,
-    } only %}
+    } %}
 {% endif %}
