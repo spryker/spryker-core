@@ -61,4 +61,40 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
 
         return $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productOfferReferences);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return array<string, string>
+     */
+    public function getProductOfferReferences(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array
+    {
+        $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
+
+        if (!$productOfferStorageCollectionTransfer) {
+            return [];
+        }
+
+        $groupedProductOfferReferences = [];
+        foreach ($productOfferStorageCollectionTransfer->getProductOffersStorage() as $productOfferStorageTransfer) {
+            $groupedProductOfferReferences[$productOfferStorageTransfer->getProductConcreteSku()][]
+                = $productOfferStorageTransfer->getProductOfferReference();
+        }
+
+        $defaultProductOffers = [];
+        foreach ($groupedProductOfferReferences as $productConcreteSku => $productConcreteProductOffersReferences) {
+            if (
+                $productOfferStorageCriteriaTransfer->getProductOfferReference()
+                && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productConcreteProductOffersReferences)
+            ) {
+                $defaultProductOffers[$productConcreteSku] = $productOfferStorageCriteriaTransfer->getProductOfferReference();
+
+                continue;
+            }
+
+            $defaultProductOffers[$productConcreteSku] = $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productConcreteProductOffersReferences);
+        }
+
+        return $defaultProductOffers;
+    }
 }

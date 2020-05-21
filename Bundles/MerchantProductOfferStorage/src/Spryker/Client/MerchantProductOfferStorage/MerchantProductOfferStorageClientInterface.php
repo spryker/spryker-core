@@ -46,6 +46,21 @@ interface MerchantProductOfferStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves product offer references according provided criteria.
+     * - Returns empty array if product offer references do not exist.
+     * - Resolves default product offer reference by plugin.
+     * - Returns the default product offer reference indexed by product SKU.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return array<string, string>
+     */
+    public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array;
+
+    /**
+     * Specification:
      * - Finds a product offer within Storage by reference.
      * - Returns null if product offer was not found.
      *

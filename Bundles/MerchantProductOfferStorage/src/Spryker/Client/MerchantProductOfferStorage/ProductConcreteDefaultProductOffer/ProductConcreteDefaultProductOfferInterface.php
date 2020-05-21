@@ -17,4 +17,11 @@ interface ProductConcreteDefaultProductOfferInterface
      * @return string|null
      */
     public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return array<string, string>
+     */
+    public function getProductOfferReferences(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array;
 }

@@ -25,9 +25,9 @@ interface MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterfa
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
-     * @return string|null
+     * @return array<string, string>
      */
-    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
+    public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array;
 
     /**
      * @param string $productOfferReference

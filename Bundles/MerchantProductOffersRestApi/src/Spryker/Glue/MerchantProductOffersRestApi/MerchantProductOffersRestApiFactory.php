@@ -9,6 +9,8 @@ namespace Spryker\Glue\MerchantProductOffersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReader;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReaderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilder;
@@ -25,6 +27,14 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
             $this->createProductOfferRestResponseBuilder(),
             $this->getMerchantProductOfferStorageClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface
+     */
+    public function createProductOfferExpander(): ProductOfferExpanderInterface
+    {
+        return new ProductOfferExpander($this->createProductOfferReader());
     }
 
     /**

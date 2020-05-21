@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface;
 
 class ProductOfferReader implements ProductOfferReaderInterface
@@ -62,6 +63,51 @@ class ProductOfferReader implements ProductOfferReaderInterface
         return $this->productOfferRestResponseBuilder->createProductOfferRestResponse(
             $productOfferStorageTransfer,
             $defaultMerchantProductOfferReference
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getProductOffers(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $productConcreteResource = $restRequest->findParentResourceByType(MerchantProductOffersRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
+        $productConcreteSku = $productConcreteResource ? $productConcreteResource->getId() : null;
+
+        if (!$productConcreteSku) {
+            return $this->productOfferRestResponseBuilder->createProductConcreteSkuNotSpecifierErrorResponse();
+        }
+
+        $productConcreteProductOfferResources = $this->getProductOfferResources([$productConcreteSku]);
+
+        if (!isset($productConcreteProductOfferResources[$productConcreteSku])) {
+            return $this->productOfferRestResponseBuilder->createProductOfferEmptyRestResponse();
+        }
+
+        return $this->productOfferRestResponseBuilder->createProductOfferCollectionRestResponse($productConcreteProductOfferResources[$productConcreteSku]);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return array<string,array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     */
+    public function getProductOfferResources(array $productConcreteSkus): array
+    {
+        $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
+            ->setProductConcreteSkus($productConcreteSkus);
+
+        $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient
+            ->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
+
+        $defaultMerchantProductOfferReferences = $this->merchantProductOfferStorageClient
+            ->getProductConcreteDefaultProductOffers($productOfferStorageCriteriaTransfer);
+
+        return $this->productOfferRestResponseBuilder->createProductOfferRestResources(
+            $productOfferStorageCollectionTransfer,
+            $defaultMerchantProductOfferReferences
         );
     }
 
