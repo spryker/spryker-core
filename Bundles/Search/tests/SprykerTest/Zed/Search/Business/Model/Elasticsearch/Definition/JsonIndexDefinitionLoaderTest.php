@@ -293,7 +293,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
                 __DIR__ . '/Fixtures/Stores/Project/',
             ],
             $this->createJsonIndexDefinitionMerger(),
-            ['A'],
+            ['A', 'B'],
             'A'
         );
 

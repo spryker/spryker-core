@@ -25,7 +25,7 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
     protected $indexDefinitionMapper;
 
     /**
-     * @param array $sourceDirectories
+     * @param string[] $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface $indexDefinitionMapper
      */
     public function __construct(
@@ -50,14 +50,30 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
             $jsonFiles[] = $splFileInfo;
         }
 
-        $indexDefinitionFileTransfers = $this->indexDefinitionMapper->mapSplFilesToIndexDefinitionFileTransfers($jsonFiles);
+        $indexDefinitionFileTransfers = $this->indexDefinitionMapper
+            ->mapSplFilesToIndexDefinitionFileTransfers($jsonFiles);
+
         usort($indexDefinitionFileTransfers, [$this, 'sortIndexDefinitionFileTransfers']);
 
         return $indexDefinitionFileTransfers;
     }
 
     /**
-     * Sorts IndexDefinitionFile transfers by store prefixes and then by real path.
+     * Sorts IndexDefinitionFile transfers by store prefixes (without prefix in the top) and then by real path (in alphabetical order).
+     *
+     * Input:
+     *  ModuleA/de_foo.php
+     *  ModuleB/foo.php
+     *  ModuleC/at_foo.php
+     *  ModuleD/foo.php
+     *  ModuleD/de_foo.php
+     *
+     * Output:
+     *  ModuleB/foo.php
+     *  ModuleD/foo.php
+     *  ModuleA/de_foo.php
+     *  ModuleC/at_foo.php
+     *  ModuleD/de_foo.php
      *
      * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $firstIndexDefinitionFileTransfer
      * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $secondIndexDefinitionFileTransfer
