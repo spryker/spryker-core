@@ -7,14 +7,13 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToMerchantStorageClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
-use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface;
-use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
@@ -46,42 +45,34 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $merchantStorageClient;
 
     /**
+     * @var \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface
+     */
+    protected $productOfferStorageKeyGenerator;
+
+    /**
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface $merchantProductOfferMapper
-     * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient
+     * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
-        MerchantProductOfferStorageToSynchronizationServiceInterface $synchronizationService,
         MerchantProductOfferMapperInterface $merchantProductOfferMapper,
-        MerchantProductOfferStorageToStoreClientInterface $storeClient,
-        MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient
+        MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient,
+        MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
     ) {
         $this->storageClient = $storageClient;
-        $this->synchronizationService = $synchronizationService;
         $this->merchantProductOfferMapper = $merchantProductOfferMapper;
-        $this->storeClient = $storeClient;
         $this->merchantStorageClient = $merchantStorageClient;
-    }
-
-    /**
-     * @param string $productSku
-     *
-     * @return string[]
-     */
-    public function getProductOfferReferences(string $productSku): array
-    {
-        $concreteProductOffersKey = $this->generateKey($productSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
-        $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
-
-        if (!$concreteProductOffers) {
-            return [];
-        }
-        unset($concreteProductOffers['_timestamp']);
-
-        return $concreteProductOffers;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->productOfferStorageKeyGenerator = $productOfferStorageKeyGenerator;
     }
 
     /**
@@ -94,41 +85,33 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     ): ProductOfferStorageCollectionTransfer {
         $productOfferStorageCollectionTransfer = new ProductOfferStorageCollectionTransfer();
 
-        $productOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer->getSku());
+        $productConcreteSkus = array_merge(
+            $productOfferStorageCriteriaTransfer->getProductConcreteSkus(),
+            [$productOfferStorageCriteriaTransfer->getSku()]
+        );
+
+        $productOfferReferences = $this->getProductOfferReferences(array_unique(array_filter($productConcreteSkus)));
 
         if (!$productOfferReferences) {
             return $productOfferStorageCollectionTransfer;
         }
 
-        foreach ($productOfferReferences as $key => $productOfferReference) {
-            if ($key === '_timestamp') {
-                continue;
-            }
-            $productOfferStorageTransfer = $this->findProductOfferStorageByReference($productOfferReference);
+        $productOfferStorageTransfers = $this->getProductOfferStorageByReferences($productOfferReferences);
 
-            if ($productOfferStorageTransfer === null) {
-                continue;
-            }
-
-            $merchantStorageTransfer = $this->merchantStorageClient->findOne($productOfferStorageTransfer->getIdMerchant());
-
-            if ($merchantStorageTransfer === null) {
-                continue;
-            }
-
-            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfer);
-
-            if (
-                $productOfferStorageCriteriaTransfer->getMerchantReference() !== null
-                && $productOfferStorageTransfer->getMerchantReference() !== $productOfferStorageCriteriaTransfer->getMerchantReference()
-            ) {
-                continue;
-            }
-
-            $productOfferStorageCollectionTransfer->addProductOfferStorage($productOfferStorageTransfer);
+        if (!$productOfferStorageTransfers) {
+            return $productOfferStorageCollectionTransfer;
         }
 
-        return $productOfferStorageCollectionTransfer;
+        if ($productOfferStorageCriteriaTransfer->getMerchantReference()) {
+            $productOfferStorageTransfers = $this->filterProductOfferStorageTransfersByMerchantReference(
+                $productOfferStorageTransfers,
+                $productOfferStorageCriteriaTransfer->getMerchantReference()
+            );
+        }
+
+        $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
+
+        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
     }
 
     /**
@@ -138,7 +121,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      */
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {
-        $merchantProductOfferKey = $this->generateKey($productOfferReference, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
+        $merchantProductOfferKey = $this->productOfferStorageKeyGenerator->generateKey(
+            $productOfferReference,
+            MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME
+        );
         $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
 
         if (!$concreteProductOfferData) {
@@ -149,19 +135,128 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string $keyName
-     * @param string $resourceName
+     * @param string[] $productConcreteSkus
      *
-     * @return string
+     * @return string[]
      */
-    protected function generateKey(string $keyName, string $resourceName): string
+    protected function getProductOfferReferences(array $productConcreteSkus): array
     {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($keyName);
-        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
+        $concreteProductOffersKeys = $this->productOfferStorageKeyGenerator->generateProductConcreteProductOffersKeys($productConcreteSkus);
+        $concreteProductOffers = $this->storageClient->getMulti($concreteProductOffersKeys);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder($resourceName)
-            ->generateKey($synchronizationDataTransfer);
+        $decodedConcreteProductOffers = [];
+        foreach ($concreteProductOffers as $storageKey => $concreteProductOffer) {
+            if (!$concreteProductOffer) {
+                continue;
+            }
+
+            $concreteProductOffer = $this->utilEncodingService->decodeJson($concreteProductOffer, true);
+            unset($concreteProductOffer['_timestamp']);
+
+            $decodedConcreteProductOffers = array_merge($decodedConcreteProductOffers, $concreteProductOffer);
+        }
+
+        return $decodedConcreteProductOffers;
+    }
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    protected function getProductOfferStorageByReferences(array $productOfferReferences): array
+    {
+        $merchantProductOfferKeys = $this->productOfferStorageKeyGenerator->generateMerchantProductOfferKeys($productOfferReferences);
+        $productOfferData = $this->storageClient->getMulti($merchantProductOfferKeys);
+
+        $productOfferStorageTransfers = [];
+        foreach ($productOfferData as $productOfferDataItem) {
+            if (!$productOfferDataItem) {
+                continue;
+            }
+
+            $productOfferStorageTransfers[] = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
+                $this->utilEncodingService->decodeJson($productOfferDataItem, true),
+                new ProductOfferStorageTransfer()
+            );
+        }
+
+        return $productOfferStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    protected function filterProductOfferStorageTransfersByMerchantReference(
+        array $productOfferStorageTransfers,
+        string $merchantReference
+    ): array {
+        $filteredProductOfferStorageTransfers = [];
+        foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
+            if ($productOfferStorageTransfer->getMerchantReference() !== $merchantReference) {
+                continue;
+            }
+
+            $filteredProductOfferStorageTransfers[] = $productOfferStorageTransfer;
+        }
+
+        return $filteredProductOfferStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    protected function expandProductOffersWithMerchants(array $productOfferStorageTransfers): array
+    {
+        $merchantIds = $this->getMerchantIds($productOfferStorageTransfers);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(array_unique($merchantIds));
+        $merchantStorageTransfers = $this->indexMerchantStorageTransfersByIdMerchant($merchantStorageTransfers);
+
+        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
+            $merchantStorageTransfer = $merchantStorageTransfers[$productOfferStorageTransfer->getIdMerchant()] ?? null;
+
+            if (!$productOfferStorageTransfer || !$merchantStorageTransfer) {
+                unset($productOfferStorageTransfers[$key]);
+            }
+
+            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfer);
+        }
+
+        return $productOfferStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     *
+     * @return int[]
+     */
+    protected function getMerchantIds(array $productOfferStorageTransfers): array
+    {
+        $merchantIds = [];
+        foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
+            $merchantIds[] = $productOfferStorageTransfer->getIdMerchant();
+        }
+
+        return $merchantIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    protected function indexMerchantStorageTransfersByIdMerchant(array $merchantStorageTransfers): array
+    {
+        $indexedMerchantStorageTransfers = [];
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $indexedMerchantStorageTransfers[$merchantStorageTransfer->getIdMerchant()] = $merchantStorageTransfer;
+        }
+
+        return $indexedMerchantStorageTransfers;
     }
 }

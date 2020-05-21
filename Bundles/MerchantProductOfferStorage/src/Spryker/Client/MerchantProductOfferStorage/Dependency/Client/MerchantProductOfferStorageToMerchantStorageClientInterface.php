@@ -17,4 +17,11 @@ interface MerchantProductOfferStorageToMerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOne(int $idMerchant): ?MerchantStorageTransfer;
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function get(array $merchantIds): array;
 }

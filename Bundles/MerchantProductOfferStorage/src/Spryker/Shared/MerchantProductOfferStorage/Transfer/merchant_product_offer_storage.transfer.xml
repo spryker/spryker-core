@@ -57,6 +57,7 @@
 
     <transfer name="ProductOfferStorageCriteria">
         <property name="sku" type="string"/>
+        <property name="productConcreteSkus" type="string[]"/>
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
     </transfer>
