@@ -13,18 +13,6 @@ interface OmsReservationAggregationStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Checks if plugin is applicable for a given ReservationRequestTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool;
-
-    /**
-     * Specification:
      * - Aggregates reservations for a given ReservationRequestTransfer.
      *
      * @api

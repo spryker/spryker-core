@@ -319,15 +319,7 @@ class Reservation implements ReservationInterface
         ReservationRequestTransfer $reservationRequestTransfer
     ): array {
         foreach ($this->omsReservationAggregationStrategyPlugins as $omsReservationAggregationPlugin) {
-            if (!$omsReservationAggregationPlugin->isApplicable($reservationRequestTransfer)) {
-                continue;
-            }
-
-            $salesAggregationTransfers = $omsReservationAggregationPlugin->aggregateReservations($reservationRequestTransfer);
-
-            if ($salesAggregationTransfers) {
-                return $salesAggregationTransfers;
-            }
+            return $omsReservationAggregationPlugin->aggregateReservations($reservationRequestTransfer);
         }
 
         return $this->aggregateSalesOrderItemReservations(

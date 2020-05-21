@@ -20,21 +20,6 @@ class ProductPackagingUnitOmsReservationAggregationStrategyPlugin extends Abstra
 {
     /**
      * {@inheritDoc}
-     * - Always true for product packaging unit.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
      * - Aggregates reservations for product offers.
      * - Requires ReservationRequestTransfer.sku transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.

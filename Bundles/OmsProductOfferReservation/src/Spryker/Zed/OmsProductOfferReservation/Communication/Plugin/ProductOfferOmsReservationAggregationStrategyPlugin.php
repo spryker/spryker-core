@@ -20,23 +20,8 @@ class ProductOfferOmsReservationAggregationStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Checks if ReservationRequestTransfer.productOfferReference isn't empty.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
-    {
-        return (bool)$reservationRequestTransfer->getProductOfferReference();
-    }
-
-    /**
-     * {@inheritDoc}
      * - Aggregates reservations for product offers.
-     * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
+     * - Requires ReservationRequestTransfer.sku transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
      * @api

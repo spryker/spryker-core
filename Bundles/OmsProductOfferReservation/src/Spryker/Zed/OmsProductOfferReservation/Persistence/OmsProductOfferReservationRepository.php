@@ -89,20 +89,24 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
      * @module Oms
      * @module Sales
      *
-     * @param string $productOfferReference
+     * @param string $sku
      * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers
+     * @param string|null $productOfferReference
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function getAggregatedReservations(
-        string $productOfferReference,
+        string $sku,
         ArrayObject $omsStateTransfers,
+        ?string $productOfferReference = null,
         ?StoreTransfer $storeTransfer = null
     ): array {
         $salesOrderItemQuery = $this->getFactory()->getSalesOrderItemPropelQuery();
         $salesOrderItemQuery
             ->filterByProductOfferReference($productOfferReference)
+            ->filterBySku($sku)
+            ->groupByProductOfferReference()
             ->useStateQuery()
                 ->filterByName_In(array_keys($omsStateTransfers->getArrayCopy()))
             ->endUse()
