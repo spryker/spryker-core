@@ -10,10 +10,7 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\SalesReturnGui;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductBundle\Communication\Form\DataProvider\ProductBundleReturnCreateFormDataProvider;
-use Spryker\Zed\ProductBundle\Communication\Form\ReturnCreateBundleItemsSubForm;
 use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -55,19 +52,9 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        $builder->add(
-            ProductBundleReturnCreateFormDataProvider::FIELD_RETURN_BUNDLE_ITEMS,
-            CollectionType::class,
-            [
-                'entry_type' => ReturnCreateBundleItemsSubForm::class,
-                'entry_options' => [
-                    ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS => $options[ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS],
-                ],
-                'label' => false,
-            ]
-        );
-
-        return $builder;
+        return $this->getFactory()
+            ->createProductBundleReturnCreateFormExpander()
+            ->expand($builder, $options);
     }
 
     /**
