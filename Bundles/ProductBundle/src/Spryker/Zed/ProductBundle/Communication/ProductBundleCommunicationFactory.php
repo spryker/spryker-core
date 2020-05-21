@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductBundle\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductBundle\Communication\Form\DataProvider\ProductBundleReturnCreateFormDataProvider;
-use Spryker\Zed\ProductBundle\Communication\Form\Expander\ProductBundleReturnCreateFormExpander;
-use Spryker\Zed\ProductBundle\Communication\Form\Expander\ProductBundleReturnCreateFormExpanderInterface;
 use Spryker\Zed\ProductBundle\Communication\Form\Handler\ProductBundleReturnCreateFormHandler;
 use Spryker\Zed\ProductBundle\Communication\Form\Handler\ProductBundleReturnCreateFormHandlerInterface;
+use Spryker\Zed\ProductBundle\Communication\Form\ReturnCreateBundleForm;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
@@ -23,19 +23,19 @@ use Spryker\Zed\ProductBundle\Communication\Form\Handler\ProductBundleReturnCrea
 class ProductBundleCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createReturnCreateBundleForm(): FormTypeInterface
+    {
+        return new ReturnCreateBundleForm();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Communication\Form\DataProvider\ProductBundleReturnCreateFormDataProvider
      */
     public function createProductBundleReturnCreateFormDataProvider(): ProductBundleReturnCreateFormDataProvider
     {
         return new ProductBundleReturnCreateFormDataProvider();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBundle\Communication\Form\Expander\ProductBundleReturnCreateFormExpanderInterface
-     */
-    public function createProductBundleReturnCreateFormExpander(): ProductBundleReturnCreateFormExpanderInterface
-    {
-        return new ProductBundleReturnCreateFormExpander();
     }
 
     /**

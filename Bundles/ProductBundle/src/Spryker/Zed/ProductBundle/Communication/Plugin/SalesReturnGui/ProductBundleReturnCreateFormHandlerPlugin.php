@@ -53,8 +53,8 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         return $this->getFactory()
-            ->createProductBundleReturnCreateFormExpander()
-            ->expand($builder, $options);
+            ->createReturnCreateBundleForm()
+            ->buildForm($builder, $options);
     }
 
     /**
