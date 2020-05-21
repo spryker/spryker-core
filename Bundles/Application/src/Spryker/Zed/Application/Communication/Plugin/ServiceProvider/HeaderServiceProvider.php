@@ -58,6 +58,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $store = Store::getInstance();
 
         $event->getResponse()->headers->set('X-Store', $store->getStoreName());
+        $event->getResponse()->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
         $event->getResponse()->headers->set('X-Env', APPLICATION_ENV);
         $event->getResponse()->headers->set('X-Locale', $store->getCurrentLocale());
 

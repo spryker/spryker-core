@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductStorage\Business\Storage;
 interface ProductConcreteStorageWriterInterface
 {
     /**
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */
     public function publish(array $productIds);
 
     /**
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */

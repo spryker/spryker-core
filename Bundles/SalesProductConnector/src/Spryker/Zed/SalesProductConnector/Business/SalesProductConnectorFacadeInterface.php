@@ -84,6 +84,20 @@ interface SalesProductConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Expands OrderTransfers with metadata information.
+     * - Requires OrderTransfer::idSalesOrder to be set.
+     * - Requires ItemTransfer::fkSalesOrder at OrderTransfer::items to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithMetadata(array $orderTransfers): array;
+
+    /**
+     * Specification:
      * - Hydrates product ids (abstract / concrete) into an order items based on their skus.
      *
      * @api

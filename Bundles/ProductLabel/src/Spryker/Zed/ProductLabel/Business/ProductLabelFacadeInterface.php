@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
@@ -94,8 +96,24 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Persists new product-label entity to database
-     * - Touches product-label dictionary active
+     * - Finds all the active product labels using ProductLabelCriteria transfer.
+     * - Returns a collection of found product labels.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array;
+
+    /**
+     * Specification:
+     * - Requires ProductLabelTransfer.name, ProductLabelTransfer.isActive and ProductLabelTransfer.isExclusive properties to be set.
+     * - Persists new product label entity to database.
+     * - Persists product label localized attributes to database.
+     * - Persists product label to store relation to database.
+     * - Touches product label dictionary active.
      *
      * @api
      *
@@ -107,14 +125,15 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
-     * - Persists product-label changes to database
-     * - Touches product-label dictionary active
+     * - Persists product label changes to database.
+     * - Persists product label localized attributes to database.
+     * - Persists product label to store relation to database.
+     * - Touches product label dictionary active if product label was changed.
+     * - Touches product abstract active if product label was activated/deactivated.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
      *
      * @return void
      */
@@ -126,6 +145,7 @@ interface ProductLabelFacadeInterface
      * - Removes provided product label from Persistence.
      * - Removes assigned localized attributes in Persistence.
      * - Removes relations between product label and abstract products.
+     * - Removes relations between product label and store.
      * - Returns 'isSuccessful=true' if the product label was removed.
      * - Returns 'isSuccessful=false' with error messages otherwise.
      *
@@ -194,13 +214,40 @@ interface ProductLabelFacadeInterface
     /**
      * Specification:
      * - Calls a stack of `ProductLabelRelationUpdaterPluginInterface` to collect necessary information to update product label relations.
+     * - Touches product abstract product label relations if isTouchEnabled flag set to TRUE.
      * - The results of the plugins are used to persist product label relation changes into database.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null, bool $isTouchEnabled = true);
+
+    /**
+     * Specification:
+     * - Gets product label product abstract relations by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Gets product label product abstract relations by FilterTransfer.
+     * - Uses FilterTransfer for pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
 }

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TransferServer
 {
     /**
-     * @var self|null
+     * @var static|null
      */
     protected static $instance;
 
