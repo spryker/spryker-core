@@ -65,7 +65,7 @@ class Reservation implements ReservationInterface
     /**
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[]
      */
-    protected $omsReservationAggregationStrategyPlugins;
+    protected $omsReservationAggregationPlugins;
 
     /**
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
@@ -86,7 +86,7 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface $omsEntityManager
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[] $omsReservationReaderStrategyPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[] $omsReservationAggregationStrategyPlugins
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[] $omsReservationAggregationPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[] $omsReservationWriterStrategyPlugins
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[] $reservationHandlerTerminationAwareStrategyPlugins
      */
@@ -99,7 +99,7 @@ class Reservation implements ReservationInterface
         OmsEntityManagerInterface $omsEntityManager,
         array $omsReservationReaderStrategyPlugins,
         array $reservationAggregationPlugins,
-        array $omsReservationAggregationStrategyPlugins,
+        array $omsReservationAggregationPlugins,
         array $omsReservationWriterStrategyPlugins,
         array $reservationHandlerTerminationAwareStrategyPlugins
     ) {
@@ -111,7 +111,7 @@ class Reservation implements ReservationInterface
         $this->omsEntityManager = $omsEntityManager;
         $this->reservationAggregationPlugins = $reservationAggregationPlugins;
         $this->omsReservationReaderStrategyPlugins = $omsReservationReaderStrategyPlugins;
-        $this->omsReservationAggregationStrategyPlugins = $omsReservationAggregationStrategyPlugins;
+        $this->omsReservationAggregationPlugins = $omsReservationAggregationPlugins;
         $this->omsReservationWriterStrategyPlugins = $omsReservationWriterStrategyPlugins;
         $this->reservationHandlerTerminationAwareStrategyPlugins = $reservationHandlerTerminationAwareStrategyPlugins;
     }
@@ -318,7 +318,7 @@ class Reservation implements ReservationInterface
     protected function aggregateReservations(
         ReservationRequestTransfer $reservationRequestTransfer
     ): array {
-        foreach ($this->omsReservationAggregationStrategyPlugins as $omsReservationAggregationPlugin) {
+        foreach ($this->omsReservationAggregationPlugins as $omsReservationAggregationPlugin) {
             return $omsReservationAggregationPlugin->aggregateReservations($reservationRequestTransfer);
         }
 
