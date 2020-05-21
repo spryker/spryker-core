@@ -60,6 +60,10 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
                 ->endUse();
         }
 
+        if ($merchantProductOfferCriteriaFilterTransfer->getProductOfferReferences()) {
+            $productOfferQuery->filterByProductOfferReference_In($merchantProductOfferCriteriaFilterTransfer->getProductOfferReferences());
+        }
+
         return $productOfferQuery;
     }
 

@@ -48,11 +48,16 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
                 continue;
             }
 
-            $itemsWithOffers[$cartItem->getSku()] = $cartItem->getProductOfferReference();
+            $itemsWithOffers[$cartItem->getProductOfferReference()] = $cartItem->getSku();
+        }
+
+        $productOfferReferences = array_keys($itemsWithOffers);
+        if (!$productOfferReferences) {
+            return $cartPreCheckResponseTransfer;
         }
 
         $productOfferCriteriaFilterTransfer = new MerchantProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setSkus(array_keys($itemsWithOffers));
+        $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
 
         /** @var \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer */
         $productOfferCollectionTransfer = $this->merchantProductOfferRepository
@@ -69,7 +74,10 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
         }
 
         foreach ($productOffers as $productOffer) {
-            if ($productOffer->getProductOfferReference() === $itemsWithOffers[$productOffer->getConcreteSku()]) {
+            if (
+                isset($itemsWithOffers[$productOffer->getProductOfferReference()])
+                && $productOffer->getConcreteSku() === $itemsWithOffers[$productOffer->getProductOfferReference()]
+            ) {
                 continue;
             }
 
