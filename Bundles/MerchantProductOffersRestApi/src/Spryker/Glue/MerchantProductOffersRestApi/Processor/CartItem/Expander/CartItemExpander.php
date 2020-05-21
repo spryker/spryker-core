@@ -48,6 +48,8 @@ class CartItemExpander implements CartItemExpanderInterface
             return $cartItemRequestTransfer;
         }
 
+//        $this->
+
         return $cartItemRequestTransfer
             ->setProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
             ->setMerchantReference($productOfferStorageTransfer->getMerchantReference());

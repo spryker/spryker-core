@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOffer\Business\Checker\ItemProductOfferChecker;
+use Spryker\Zed\MerchantProductOffer\Business\Checker\ItemProductOfferCheckerInterface;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReader;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReaderInterface;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToProductOfferFacadeInterface;
@@ -26,6 +28,16 @@ class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductOfferReader(
             $this->getProductOfferFacade(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOffer\Business\Checker\ItemProductOfferCheckerInterface
+     */
+    public function createItemProductOfferChecker(): ItemProductOfferCheckerInterface
+    {
+        return new ItemProductOfferChecker(
             $this->getRepository()
         );
     }
