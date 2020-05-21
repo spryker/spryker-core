@@ -58,20 +58,38 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
         $productOfferCollectionTransfer = $this->merchantProductOfferRepository
             ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer);
 
-        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOffer) {
+        $productOffers = $productOfferCollectionTransfer->getProductOffers()->getArrayCopy();
+        if (!$productOffers) {
+            $cartPreCheckResponseTransfer->setIsSuccess(false);
+            foreach ($itemsWithOffers as $sku => $productOfferReference) {
+                $cartPreCheckResponseTransfer->addMessage($this->createMessage($sku));
+            }
+
+            return $cartPreCheckResponseTransfer;
+        }
+
+        foreach ($productOffers as $productOffer) {
             if ($productOffer->getProductOfferReference() === $itemsWithOffers[$productOffer->getConcreteSku()]) {
                 continue;
             }
 
             $cartPreCheckResponseTransfer->setIsSuccess(false)
-                ->addMessage(
-                    (new MessageTransfer())
-                        ->setType(static::MESSAGE_TYPE_ERROR)
-                        ->setValue(static::GLOSSARY_KEY_ERROR_INVALID_PRODUCT_OFFER_REFERENCE)
-                        ->setParameters([static::GLOSSARY_KEY_PARAM_SKU => $productOffer->getConcreteSku()])
-                );
+                ->addMessage($this->createMessage($productOffer->getConcreteSku()));
         }
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessage(string $sku): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setType(static::MESSAGE_TYPE_ERROR)
+            ->setValue(static::GLOSSARY_KEY_ERROR_INVALID_PRODUCT_OFFER_REFERENCE)
+            ->setParameters([static::GLOSSARY_KEY_PARAM_SKU => $sku]);
     }
 }

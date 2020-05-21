@@ -30,7 +30,7 @@ interface MerchantProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - If cart change operation is 'add', then validates cart items product offer if it belongs to product.
+     * - Check if cart items product offer belongs to product.
      * - Returns pre-check transfer with error messages in case of error.
      *
      * @api
