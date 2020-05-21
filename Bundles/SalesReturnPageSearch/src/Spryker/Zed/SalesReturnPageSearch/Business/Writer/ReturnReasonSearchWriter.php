@@ -92,6 +92,10 @@ class ReturnReasonSearchWriter
      */
     protected function writeCollectionByReturnReasonIds(array $returnReasonIds): void
     {
+        if (!$returnReasonIds) {
+            return;
+        }
+
         $returnReasonCollectionTransfer = $this->salesReturnFacade->getReturnReasons(
             (new ReturnReasonFilterTransfer())->setReturnReasonIds($returnReasonIds)
         );
