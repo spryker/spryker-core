@@ -54,7 +54,7 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $this->error(
                 sprintf(
                     'Argument `%s` is not a valid module.',
-                    $this->input->getArgument(static8::ARGUMENT_MODULE)
+                    $this->input->getArgument(static::ARGUMENT_MODULE)
                 )
             );
 
