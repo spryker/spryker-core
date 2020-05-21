@@ -66,7 +66,7 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use getGiftCardPaymentMethodBlacklist() instead.
+     * @deprecated Use {@link getGiftCardPaymentMethodBlacklist()} instead.
      *
      * @return array
      */

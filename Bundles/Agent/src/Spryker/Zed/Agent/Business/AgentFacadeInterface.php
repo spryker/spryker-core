@@ -29,7 +29,7 @@ interface AgentFacadeInterface
     /**
      * Specification:
      * - Returns CustomerAutocompleteResponseTransfer with list of customers found by query.
-     * - Search works by first name, last name and email.
+     * - Search matches by partial first name, last name, email or exact customer reference.
      * - If customers by query are not exist, collection will be empty.
      *
      * @api

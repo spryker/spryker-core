@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Config\SearchConfig` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Config\SearchConfig} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

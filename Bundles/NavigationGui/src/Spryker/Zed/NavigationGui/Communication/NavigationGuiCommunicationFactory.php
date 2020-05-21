@@ -34,7 +34,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getNavigationForm()` instead.
+     * @deprecated Use {@link getNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array $options
@@ -68,7 +68,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getUpdateNavigationForm()` instead.
+     * @deprecated Use {@link getUpdateNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array $options
@@ -110,7 +110,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getNavigationNodeForm()` instead.
+     * @deprecated Use {@link getNavigationNodeForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
      * @param array $options

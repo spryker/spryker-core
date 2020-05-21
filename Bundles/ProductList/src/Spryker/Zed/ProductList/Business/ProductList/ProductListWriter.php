@@ -76,7 +76,7 @@ class ProductListWriter implements ProductListWriterInterface
     }
 
     /**
-     * @deprecated Use createProductList() or updateProductList() instead.
+     * @deprecated Use {@link createProductList()} or updateProductList() instead.
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *

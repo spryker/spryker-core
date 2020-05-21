@@ -25,7 +25,7 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
     /**
      * {@inheritDoc}
      * - Generates MailTransfer for reset password functionality.
-     * - Uses `MailFacade::handleMail()` to handle generated MailTransfer.
+     * - Uses {@link \Spryker\Zed\Mail\Business\MailFacadeInterface::handleMail()} to handle generated MailTransfer.
      *
      * @api
      *

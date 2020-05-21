@@ -13,7 +13,7 @@ use Elastica\Query\QueryString;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery} instead.
  */
 class SearchStringQuery implements QueryInterface
 {
