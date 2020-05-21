@@ -189,6 +189,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @module Sales
+     *
      * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]

@@ -11,9 +11,9 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductMeasurementSalesUnitMapper;
 use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapper;
 use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
@@ -48,11 +48,11 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\SalesOrderItemMapper
+     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductMeasurementSalesUnitMapper
      */
-    public function createSalesOrderItemMapper(): SalesOrderItemMapper
+    public function createProductMeasurementSalesUnitMapper(): ProductMeasurementSalesUnitMapper
     {
-        return new SalesOrderItemMapper();
+        return new ProductMeasurementSalesUnitMapper();
     }
 
     /**

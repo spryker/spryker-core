@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class SalesOrderItemMapper
+class ProductMeasurementSalesUnitMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities

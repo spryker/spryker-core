@@ -290,6 +290,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Sales
+     *
      * @param int[] $salesOrderItemIds
      *
      * @return string[]
@@ -311,6 +313,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Sales
+     *
      * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
@@ -327,7 +331,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->filterByAmountMeasurementUnitName(null, Criteria::ISNOTNULL);
 
         return $this->getFactory()
-            ->createSalesOrderItemMapper()
+            ->createProductMeasurementSalesUnitMapper()
             ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
     }
 
