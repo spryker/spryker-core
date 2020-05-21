@@ -9,7 +9,7 @@ import {
     TableColumnDateComponent,
     TableColumnDateModule,
     TableColumnChipComponent,
-    TableColumnChipModule
+    TableColumnChipModule,
 } from '@spryker/table/columns';
 import { OffersListTableComponent, } from './offers-list-table.component';
 import {
@@ -18,11 +18,13 @@ import {
     TableFiltersFeatureComponent,
     TableFiltersFeatureModule,
     TableSyncStateFeatureComponent,
-    TableSyncStateFeatureModule
+    TableSyncStateFeatureModule,
 } from '@spryker/table/features';
 import {
     TableFilterSelectComponent,
-    TableFilterSelectModule
+    TableFilterSelectModule,
+    TableFilterDateRangeComponent,
+    TableFilterDateRangeModule,
 } from '@spryker/table/filters';
 import { TableDatasourceHttpService } from '@spryker/table/datasources';
 
@@ -37,6 +39,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         TableFiltersFeatureModule,
         TableFilterSelectModule,
         TableSyncStateFeatureModule,
+        TableFilterDateRangeModule,
         TableModule.forRoot(),
         TableModule.withFeatures({
             filters: () => import('@spryker/table/features').then(m => m.TableFiltersFeatureModule),
@@ -55,6 +58,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
+            date_range: TableFilterDateRangeComponent,
         } as any),
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
