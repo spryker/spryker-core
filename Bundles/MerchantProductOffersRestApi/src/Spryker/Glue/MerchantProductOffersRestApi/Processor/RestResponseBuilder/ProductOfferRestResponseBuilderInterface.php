@@ -42,7 +42,7 @@ interface ProductOfferRestResponseBuilderInterface
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      * @param array<string, string> $defaultMerchantProductOfferReferences
      *
-     * @return array<string,array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function createProductOfferRestResources(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer,

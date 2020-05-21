@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-product-offers-rest-api.svg)](https://travis-ci.org/spryker/merchant-product-offers-rest-api)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+MerchantProductOffersRestApi module provides Rest API endpoints to manage product offers.
 
 ## Installation
 

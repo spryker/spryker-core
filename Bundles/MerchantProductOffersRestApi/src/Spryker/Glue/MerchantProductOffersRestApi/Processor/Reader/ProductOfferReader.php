@@ -92,7 +92,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return array<string,array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function getProductOfferResources(array $productConcreteSkus): array
     {
