@@ -63,7 +63,7 @@ interface ShoppingListProductOptionConnectorFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface::expandShoppingListItemCollectionWithProductOptions()} instead.
+     * @deprecated Use {@link expandShoppingListItemCollectionWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

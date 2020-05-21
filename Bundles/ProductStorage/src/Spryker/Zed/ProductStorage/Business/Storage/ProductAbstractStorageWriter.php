@@ -47,7 +47,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $storeFacade;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -80,7 +80,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -99,7 +99,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -432,7 +432,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface as CalculatorWithItemShipmentTaxRateInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface} instead.
  */
 interface CalculatorInterface extends CalculatorWithItemShipmentTaxRateInterface
 {

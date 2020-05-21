@@ -11,7 +11,7 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 /**
- * @deprecated Use \Spryker\Client\Url\Matcher\UrlMatcher instead.
+ * @deprecated Use {@link \Spryker\Client\Url\Matcher\UrlMatcher} instead.
  */
 class UrlMatcher implements UrlMatcherInterface
 {

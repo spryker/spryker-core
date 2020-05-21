@@ -13,8 +13,8 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin` instead.
- * @deprecated Use `\Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin} instead.
  */
 class TranslationTwigPlugin implements TwigPluginInterface
 {

@@ -19,7 +19,7 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @api
      *
-     * @deprecated Use buildValidationCacheForCodeBucket() instead.
+     * @deprecated Use {@link buildValidationCacheForCodeBucket()} instead.
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @api
      *
-     * @deprecated Use removeValidationCacheForCodeBucket() instead.
+     * @deprecated Use {@link removeValidationCacheForCodeBucket()} instead.
      *
      * @return void
      */
