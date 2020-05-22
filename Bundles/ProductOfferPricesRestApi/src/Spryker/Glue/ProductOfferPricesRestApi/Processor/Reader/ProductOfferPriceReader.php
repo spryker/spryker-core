@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface;
@@ -21,8 +20,9 @@ use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 {
     protected const MAPPING_TYPE_SKU = 'sku';
-    protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const PRODUCT_CONCRETE_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const PRODUCT_CONCRETE_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const PRODUCT_CONCRETE_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface
@@ -110,8 +110,8 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
         $productOfferPriceRestResources = [];
         foreach ($productConcreteData as $productConcreteDataItem) {
-            $idProductConcrete = $productConcreteDataItem[static::ID_PRODUCT_CONCRETE] ?? null;
-            $idProductAbstract = $productConcreteDataItem[static::ID_PRODUCT_ABSTRACT] ?? null;
+            $idProductConcrete = $productConcreteDataItem[static::PRODUCT_CONCRETE_ID_PRODUCT_CONCRETE] ?? null;
+            $idProductAbstract = $productConcreteDataItem[static::PRODUCT_CONCRETE_ID_PRODUCT_ABSTRACT] ?? null;
 
             if (!$idProductConcrete || !$idProductAbstract) {
                 continue;
@@ -120,17 +120,22 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
             $priceProductTransfers = $this->priceProductStorageClient
                 ->getResolvedPriceProductConcreteTransfers($idProductConcrete, $idProductAbstract);
 
-            $productOfferReference = array_search($productConcreteDataItem[ProductConcreteStorageTransfer::SKU], $productConcreteSkus);
-            $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-                ->setProductOfferReference($productOfferReference);
+            foreach ($productConcreteSkus as $productOfferReference => $productConcreteSku) {
+                if ($productConcreteSku !== $productConcreteDataItem[static::PRODUCT_CONCRETE_SKU]) {
+                    continue;
+                }
 
-            $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
-                $priceProductTransfers,
-                $priceProductFilterTransfer
-            );
+                $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+                    ->setProductOfferReference($productOfferReference);
 
-            $productOfferPriceRestResources[$productOfferReference] = $this->productOfferPriceRestResponseBuilder
-                ->createProductOfferPriceRestResource($currentProductPriceTransfer, $productOfferReference);
+                $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+                    $priceProductTransfers,
+                    $priceProductFilterTransfer
+                );
+
+                $productOfferPriceRestResources[$productOfferReference] = $this->productOfferPriceRestResponseBuilder
+                    ->createProductOfferPriceRestResource($currentProductPriceTransfer, $productOfferReference);
+            }
         }
 
         return $productOfferPriceRestResources;

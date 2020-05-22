@@ -23,8 +23,7 @@ class ProductOfferPricesResourceController extends AbstractController
      *              "Retrieves collection of product-offer-prices."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Product offer id is not specified."

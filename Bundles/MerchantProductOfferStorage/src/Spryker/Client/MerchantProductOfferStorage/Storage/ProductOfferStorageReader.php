@@ -231,7 +231,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
             $merchantStorageTransfer = $merchantStorageTransfers[$productOfferStorageTransfer->getIdMerchant()] ?? null;
 
-            if (!$productOfferStorageTransfer || !$merchantStorageTransfer) {
+            if (!$merchantStorageTransfer) {
                 unset($productOfferStorageTransfers[$key]);
             }
 

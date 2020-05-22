@@ -19,7 +19,7 @@ interface ProductOfferRestResponseBuilderInterface
     public function createProductOfferEmptyRestResponse(): RestResponseInterface;
 
     /**
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productOfferRestResources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productOfferRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -42,7 +42,7 @@ interface ProductOfferRestResponseBuilderInterface
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      * @param array<string, string> $defaultMerchantProductOfferReferences
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function createProductOfferRestResources(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer,

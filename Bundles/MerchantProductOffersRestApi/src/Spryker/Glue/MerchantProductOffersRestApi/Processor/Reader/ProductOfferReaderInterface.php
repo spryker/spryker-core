@@ -29,7 +29,7 @@ interface ProductOfferReaderInterface
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getProductOfferResources(array $productConcreteSkus): array;
 }

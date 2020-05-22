@@ -4,7 +4,26 @@
     <transfer name="RestProductOffersAttributes">
         <property name="merchantSku" type="string"/>
         <property name="merchantReference" type="string"/>
-        <property name="isDefault" type="boolean"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="productConcreteSku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffersStorage" type="ProductOfferStorage[]" singular="productOfferStorage"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>

@@ -13,6 +13,8 @@ use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesR
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpander;
+use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpanderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Mapper\ProductOfferPriceMapper;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Mapper\ProductOfferPriceMapperInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader\ProductOfferPriceReader;
@@ -53,6 +55,14 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function createProductOfferPriceMapper(): ProductOfferPriceMapperInterface
     {
         return new ProductOfferPriceMapper($this->getPriceClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpanderInterface
+     */
+    public function createProductOfferPriceExpander(): ProductOfferPriceExpanderInterface
+    {
+        return new ProductOfferPriceExpander($this->createProductOfferPriceReader());
     }
 
     /**

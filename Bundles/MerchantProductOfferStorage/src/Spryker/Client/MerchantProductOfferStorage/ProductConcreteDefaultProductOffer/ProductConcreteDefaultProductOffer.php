@@ -71,10 +71,6 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
     {
         $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
 
-        if (!$productOfferStorageCollectionTransfer) {
-            return [];
-        }
-
         $groupedProductOfferReferences = [];
         foreach ($productOfferStorageCollectionTransfer->getProductOffersStorage() as $productOfferStorageTransfer) {
             $groupedProductOfferReferences[$productOfferStorageTransfer->getProductConcreteSku()][]

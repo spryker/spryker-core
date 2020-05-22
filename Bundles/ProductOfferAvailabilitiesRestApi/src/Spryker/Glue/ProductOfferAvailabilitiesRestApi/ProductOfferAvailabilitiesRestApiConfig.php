@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductOfferAvailabilitiesRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_PRODUCT_OFFER_AVAILABILITIES = 'd';
+    public const RESOURCE_PRODUCT_OFFER_AVAILABILITIES = 'product-offer-availabilities';
 
     /**
      * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS
