@@ -23,11 +23,19 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferStorage">
+        <property name="productConcreteSku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
     <transfer name="CurrentProductPrice">
         <property name="price" type="int"/>
         <property name="prices" type="array" singular="price"/>
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
     <transfer name="RestErrorMessage">
