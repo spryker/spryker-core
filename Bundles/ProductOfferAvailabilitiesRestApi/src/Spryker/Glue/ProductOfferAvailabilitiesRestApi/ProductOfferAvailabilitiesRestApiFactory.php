@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductOfferAvailabilitiesRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Dependency\Client\ProductOfferAvailabilitiesRestApiToProductOfferAvailabilityStorageClientInterface;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Dependency\Client\ProductOfferAvailabilitiesRestApiToStoreClientInterface;
+use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Expander\ProductOfferAvailabilityExpander;
+use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Expander\ProductOfferAvailabilityExpanderInterface;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Mapper\ProductOfferAvailabilityMapper;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Mapper\ProductOfferAvailabilityMapperInterface;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Reader\ProductOfferAvailabilityReader;
@@ -64,5 +66,15 @@ class ProductOfferAvailabilitiesRestApiFactory extends AbstractFactory
     public function getStoreClient(): ProductOfferAvailabilitiesRestApiToStoreClientInterface
     {
         return $this->getProvidedDependency(ProductOfferAvailabilitiesRestApiDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferAvailabilitiesRestApi\Processor\Expander\ProductOfferAvailabilityExpanderInterface
+     */
+    public function createProductOfferAvailabilityExpander(): ProductOfferAvailabilityExpanderInterface
+    {
+        return new ProductOfferAvailabilityExpander(
+            $this->createProductOfferAvailabilityReader()
+        );
     }
 }

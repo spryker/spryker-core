@@ -18,4 +18,11 @@ interface ProductOfferAvailabilityReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getProductOfferAvailability(RestRequestInterface $restRequest): RestResponseInterface;
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductOfferAvailabilityRestResources(array $productOfferReferences): array;
 }

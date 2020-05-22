@@ -74,7 +74,7 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function getProductOfferAvailabilityRestResources(array $productOfferReferences): array
+    public function getProductOfferAvailabilityRestResources(array $productOfferReferences): array
     {
         $currentStoreName = $this->storeClient->getCurrentStore()->getName();
 

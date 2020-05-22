@@ -14,6 +14,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPl
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\ProductOfferAvailabilitiesRestApiConfig;
 
+/**
+ * @method \Spryker\Glue\ProductOfferAvailabilitiesRestApi\ProductOfferAvailabilitiesRestApiFactory getFactory()
+ */
 class ProductOfferAvailabilitiesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**

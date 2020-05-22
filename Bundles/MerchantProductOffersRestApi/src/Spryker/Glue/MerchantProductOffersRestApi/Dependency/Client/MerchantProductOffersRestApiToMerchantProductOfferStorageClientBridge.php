@@ -40,6 +40,16 @@ class MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge impl
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
+     * @return string|null
+     */
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
+    {
+        return $this->merchantProductOfferStorageClient->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
      * @return array<string, string>
      */
     public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array
