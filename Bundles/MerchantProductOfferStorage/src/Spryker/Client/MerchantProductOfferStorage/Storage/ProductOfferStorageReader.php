@@ -169,7 +169,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    protected function getProductOfferStorageByReferences(array $productOfferReferences): array
+    public function getProductOfferStorageByReferences(array $productOfferReferences): array
     {
         $merchantProductOfferKeys = $this->productOfferStorageKeyGenerator->generateMerchantProductOfferKeys($productOfferReferences);
         $productOfferData = $this->storageClient->getMulti($merchantProductOfferKeys);

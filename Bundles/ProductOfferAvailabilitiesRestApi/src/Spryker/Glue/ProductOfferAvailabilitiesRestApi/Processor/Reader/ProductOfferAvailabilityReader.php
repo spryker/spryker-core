@@ -53,15 +53,15 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
      */
     public function getProductOfferAvailability(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $productConcreteRestResource = $restRequest->findParentResourceByType(ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
+        $productOfferRestResource = $restRequest->findParentResourceByType(ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
 
-        if (!$productConcreteRestResource || !$productConcreteRestResource->getId()) {
+        if (!$productOfferRestResource || !$productOfferRestResource->getId()) {
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
         }
 
-        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productConcreteRestResource->getId()]);
+        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productOfferRestResource->getId()]);
 
-        $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$productConcreteRestResource->getId()] ?? null;
+        $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$productOfferRestResource->getId()] ?? null;
         if (!isset($productOfferAvailabilityRestResource)) {
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferAvailabilityEmptyRestResponse();
         }

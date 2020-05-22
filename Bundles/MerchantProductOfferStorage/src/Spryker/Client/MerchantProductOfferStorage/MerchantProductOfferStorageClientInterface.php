@@ -71,4 +71,16 @@ interface MerchantProductOfferStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds product offers within Storage by references.
+     *
+     * @api
+     *
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    public function getProductOfferStorageByReferences(array $productOfferReferences): array;
 }

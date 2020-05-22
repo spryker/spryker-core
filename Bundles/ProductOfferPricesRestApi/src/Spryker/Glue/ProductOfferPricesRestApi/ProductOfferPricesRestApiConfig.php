@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductOfferAvailabilitiesRestApi;
+namespace Spryker\Glue\ProductOfferPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class ProductOfferAvailabilitiesRestApiConfig extends AbstractBundleConfig
+class ProductOfferPricesRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_PRODUCT_OFFER_AVAILABILITIES = 'd';
+    public const RESOURCE_PRODUCT_OFFER_PRICES = 'product-offer-prices';
 
     /**
      * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS

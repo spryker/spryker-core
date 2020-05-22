@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductOfferAvailabilitiesRestApi\Controller;
+namespace Spryker\Glue\ProductOfferPricesRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
- * @method \Spryker\Glue\ProductOfferAvailabilitiesRestApi\ProductOfferAvailabilitiesRestApiFactory getFactory()
+ * @method \Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiFactory getFactory()
  */
-class ProductOfferAvailabilitiesResourceController extends AbstractController
+class ProductOfferPricesResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves collection of product-offer-availabilities."
+     *              "Retrieves collection of product-offer-prices."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -39,7 +39,7 @@ class ProductOfferAvailabilitiesResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createProductOfferAvailabilityReader()
-            ->getProductOfferAvailability($restRequest);
+            ->createProductOfferPriceReader()
+            ->getProductOfferPrice($restRequest);
     }
 }
