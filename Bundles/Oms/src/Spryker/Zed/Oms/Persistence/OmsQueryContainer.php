@@ -150,7 +150,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()} instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
@@ -190,7 +190,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()} instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
@@ -318,7 +318,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @api
      *
-     * @deprecated Use `queryGroupedMatrixOrderItems()` instead
+     * @deprecated Use {@link queryGroupedMatrixOrderItems()} instead.
      *
      * @param array $processIds
      * @param array $stateBlacklist

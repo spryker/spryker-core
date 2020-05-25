@@ -340,7 +340,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
+     * @deprecated Use {@link findHydratedDiscountConfiguratorByIdDiscount()} instead.
      *
      * @param int $idDiscount
      *

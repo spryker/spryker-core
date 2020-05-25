@@ -14,7 +14,7 @@ interface CartCodePluginInterface
 {
     /**
      * Specification:
-     * - Executed by CartCodeFacade::addCartCode() method.
+     * - Executed by {@link \Spryker\Zed\CartCode\Business\CartCodeFacadeInterface::addCartCode()} method.
      * - Extends QuoteTransfer with $cartCode and its relevant data when the $cartCode is applicable.
      *
      * @api
@@ -28,7 +28,7 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed by CartCodeFacade::removeCartCode() method.
+     * - Executed by {@link \Spryker\Zed\CartCode\Business\CartCodeFacadeInterface::removeCartCode()} method.
      * - Cleans up $cartCode and its relevant data when $cartCode is present in QuoteTransfer.
      *
      * @api
@@ -42,7 +42,7 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed by CartCodeFacade::clearCartCodes() method.
+     * - Executed by {@link \Spryker\Zed\CartCode\Business\CartCodeFacadeInterface::clearCartCodes()} method.
      * - Clears all codes and their relevant data when $cartCode is present in QuoteTransfer.
      *
      * @api

@@ -20,7 +20,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
-    "spryker/propel": "^3.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

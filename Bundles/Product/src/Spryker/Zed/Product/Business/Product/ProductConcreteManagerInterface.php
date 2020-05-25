@@ -68,7 +68,7 @@ interface ProductConcreteManagerInterface
     public function getProductConcrete($concreteSku);
 
     /**
-     * @deprecated Use `Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface::getProductConcretesByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *

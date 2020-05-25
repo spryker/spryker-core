@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\NestedPriceRangeQuery` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\NestedPriceRangeQuery} instead.
  */
 class NestedPriceRangeQuery extends NestedRangeQuery
 {
