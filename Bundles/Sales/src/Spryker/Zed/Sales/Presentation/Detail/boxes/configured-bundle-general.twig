@@ -1,37 +1,38 @@
-{% set items = items ?: order.items %}
+{% set items = items ?: order.items | filter(item => item.salesOrderConfiguredBundle) %}
+{% set mappedItems = [] %}
 {% set configuredBundles = [] %}
-{% set configuredBundleIds = [] %}
-{% set configuredBundleItems = [] %}
+{% set configuredBundleItemLength = [] %}
 
 {% for item in items %}
-    {% if item.salesOrderConfiguredBundleItem %}
-        {% set configuredBundleItems = configuredBundleItems | merge([item]) %}
+    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+    {% if mappedItems['_' ~ bundleId] is defined %}
+        {% set bundleItems = mappedItems['_' ~ bundleId] | merge([item]) %}
+        {% set mappedItems = mappedItems | merge({('_' ~ bundleId): bundleItems}) %}
+    {% else %}
+        {% set configuredBundles = configuredBundles | merge([item.salesOrderConfiguredBundle]) %}
+        {% set mappedItems = mappedItems | merge({('_' ~ bundleId): [item]}) %}
     {% endif %}
 {% endfor %}
 
-{% for item in configuredBundleItems %}
+{% for item in order.items %}
     {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
-
-    {% if not (bundleId in configuredBundleIds) %}
-        {% set configuredBundleIds = configuredBundleIds | merge([bundleId]) %}
-        {% set configuredBundles = configuredBundles | merge([item.salesOrderConfiguredBundle]) %}
-    {% endif %}
+    {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId): (configuredBundleItemLength['_' ~ bundleId] ?? 0) + 1}) %}
 {% endfor %}
 
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">
-            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong>
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
             {% set bundleSumSubtotalAggregation = 0 %}
             {% set bundleSumPriceToPayAggregation = 0 %}
 
-            {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
-                {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
-                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
-                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% for item in mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
+                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + item.sumSubtotalAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + item.sumPriceToPayAggregation %}
             {% endfor %}
 
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
@@ -39,7 +40,7 @@
     </tr>
 
     {% set partialItemCount = 0 %}
-    {% for item in configuredBundleItems %}
+    {% for item in mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
         {% if item.salesOrderConfiguredBundleItem.idSalesOrderConfiguredBundle == bundle.idSalesOrderConfiguredBundle %}
             <tr>
                 {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
@@ -64,7 +65,7 @@
     <tr>
         <td colspan="1"></td>
         <td colspan="7">
-            {{ 'Items' | trans }}: {{ partialItemCount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
+            {{ 'Items' | trans }}: {{ partialItemCount }} / {{ configuredBundleItemLength['_' ~ bundle.idSalesOrderConfiguredBundle] }}
         </td>
     </tr>
     <tr>
