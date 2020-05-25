@@ -16,7 +16,7 @@ use Spryker\Zed\SalesReturnDataImport\Business\DataSet\ReturnReasonDataSetInterf
 class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @uses \Spryker\Shared\SalesReturnPageSearch\SalesReturnPageSearchConfig::RETURN_REASON_PUBLISH_WRITE
+     * @uses \Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig::RETURN_REASON_PUBLISH_WRITE
      */
     protected const EVENT_RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish';
 

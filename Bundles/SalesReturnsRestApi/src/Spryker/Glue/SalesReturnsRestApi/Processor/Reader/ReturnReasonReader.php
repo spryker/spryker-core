@@ -11,21 +11,21 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientInterface;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface;
 use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class ReturnReasonReader implements ReturnReasonReaderInterface
 {
     /**
-     * @uses \Spryker\Client\SalesReturnPageSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
      */
     protected const KEY_RETURN_REASON_COLLECTION = 'ReturnReasonCollection';
 
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientInterface
+     * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientInterface
      */
-    protected $salesReturnPageSearchClient;
+    protected $salesReturnSearchClient;
 
     /**
      * @var \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface
@@ -33,14 +33,14 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     protected $restReturnReasonResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientInterface $salesReturnPageSearchClient
+     * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientInterface $salesReturnSearchClient
      * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface $restReturnReasonResponseBuilder
      */
     public function __construct(
-        SalesReturnsRestApiToSalesReturnPageSearchClientInterface $salesReturnPageSearchClient,
+        SalesReturnsRestApiToSalesReturnSearchClientInterface $salesReturnSearchClient,
         RestReturnReasonResponseBuilderInterface $restReturnReasonResponseBuilder
     ) {
-        $this->salesReturnPageSearchClient = $salesReturnPageSearchClient;
+        $this->salesReturnSearchClient = $salesReturnSearchClient;
         $this->restReturnReasonResponseBuilder = $restReturnReasonResponseBuilder;
     }
 
@@ -52,11 +52,11 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     public function getReturnReasons(RestRequestInterface $restRequest): RestResponseInterface
     {
         $returnReasonSearchRequestTransfer = $this->createReturnReasonSearchRequest($restRequest);
-        $searchResults = $this->salesReturnPageSearchClient->searchReturnReasons(
+        $searchResults = $this->salesReturnSearchClient->searchReturnReasons(
             $returnReasonSearchRequestTransfer
         );
 
-        /** @var \Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer $returnReasonSearchPageCollectionTransfer */
+        /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchPageCollectionTransfer */
         $returnReasonSearchPageCollectionTransfer = $searchResults[static::KEY_RETURN_REASON_COLLECTION];
 
         return $this->restReturnReasonResponseBuilder->createReturnReasonListRestResponse(

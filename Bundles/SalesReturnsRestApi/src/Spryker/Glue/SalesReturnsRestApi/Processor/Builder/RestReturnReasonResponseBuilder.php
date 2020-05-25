@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Builder;
 
-use Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer;
+use Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -40,24 +40,24 @@ class RestReturnReasonResponseBuilder implements RestReturnReasonResponseBuilder
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
-     * @param \Generated\Shared\Transfer\ReturnReasonPageSearchCollectionTransfer $returnReasonPageSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createReturnReasonListRestResponse(
         ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer,
-        ReturnReasonPageSearchCollectionTransfer $returnReasonPageSearchCollectionTransfer,
+        ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer,
         string $localeName
     ): RestResponseInterface {
         $restReturnReasonsAttributesTransfers = $this->returnReasonResourceMapper
-            ->mapReturnReasonPageSearchTransfersToRestReturnReasonsAttributesTransfers(
-                $returnReasonPageSearchCollectionTransfer->getReturnReasons(),
+            ->mapReturnReasonSearchTransfersToRestReturnReasonsAttributesTransfers(
+                $returnReasonSearchCollectionTransfer->getReturnReasons(),
                 $localeName
             );
 
         $restResponse = $this->restResourceBuilder->createRestResponse(
-            $returnReasonPageSearchCollectionTransfer->getNbResults(),
+            $returnReasonSearchCollectionTransfer->getNbResults(),
             $returnReasonSearchRequestTransfer->getFilter()->getLimit() ?? 0
         );
 

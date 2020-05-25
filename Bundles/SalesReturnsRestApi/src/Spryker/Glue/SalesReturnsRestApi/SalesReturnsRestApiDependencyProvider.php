@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientBridge;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnPageSearchClientBridge;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientBridge;
 
 /**
  * @method \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig getConfig()
@@ -32,7 +32,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideDependencies($container);
 
         $container = $this->addSalesReturnClient($container);
-        $container = $this->addSalesReturnPageSearchClient($container);
+        $container = $this->addSalesReturnSearchClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
         return $container;
@@ -59,11 +59,11 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addSalesReturnPageSearchClient(Container $container): Container
+    protected function addSalesReturnSearchClient(Container $container): Container
     {
         $container->set(static::CLIENT_SALES_RETURN_PAGE_SEARCH, function (Container $container) {
-            return new SalesReturnsRestApiToSalesReturnPageSearchClientBridge(
-                $container->getLocator()->salesReturnPageSearch()->client()
+            return new SalesReturnsRestApiToSalesReturnSearchClientBridge(
+                $container->getLocator()->salesReturnSearch()->client()
             );
         });
 

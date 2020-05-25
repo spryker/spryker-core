@@ -27,23 +27,23 @@ class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonPageSearchTransfer[] $returnReasonPageSearchTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonSearchTransfer[] $returnReasonSearchTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[]
      */
-    public function mapReturnReasonPageSearchTransfersToRestReturnReasonsAttributesTransfers(
-        ArrayObject $returnReasonPageSearchTransfers,
+    public function mapReturnReasonSearchTransfersToRestReturnReasonsAttributesTransfers(
+        ArrayObject $returnReasonSearchTransfers,
         string $localeName
     ): array {
         $restReturnReasonsAttributesTransfers = [];
 
-        foreach ($returnReasonPageSearchTransfers as $returnReasonPageSearchTransfer) {
+        foreach ($returnReasonSearchTransfers as $returnReasonSearchTransfer) {
             $restReturnReasonsAttributesTransfer = (new RestReturnReasonsAttributesTransfer())
-                ->fromArray($returnReasonPageSearchTransfer->toArray(), true);
+                ->fromArray($returnReasonSearchTransfer->toArray(), true);
 
             $restReturnReasonsAttributesTransfer->setReason(
-                $returnReasonPageSearchTransfer->getName()
+                $returnReasonSearchTransfer->getName()
             );
 
             $restReturnReasonsAttributesTransfers[] = $restReturnReasonsAttributesTransfer;
