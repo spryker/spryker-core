@@ -59,12 +59,11 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
         $productOfferCriteriaFilterTransfer = new MerchantProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
 
-        /** @var \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer */
-        $productOfferCollectionTransfer = $this->merchantProductOfferRepository
-            ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer);
+        $productOffers = $this->merchantProductOfferRepository
+            ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
+            ->getProductOffers();
 
-        $productOffers = $productOfferCollectionTransfer->getProductOffers()->getArrayCopy();
-        if (!$productOffers) {
+        if (!$productOffers->count()) {
             $cartPreCheckResponseTransfer->setIsSuccess(false);
             foreach ($itemsWithOffers as $sku => $productOfferReference) {
                 $cartPreCheckResponseTransfer->addMessage($this->createMessage($sku));

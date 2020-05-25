@@ -79,9 +79,10 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
             $merchantProductOfferCriteriaFilterTransfer,
             $this->getFactory()->getProductOfferPropelQuery()
         );
+        $productOfferEntities = $productOfferQuery->find();
 
         return $this->getFactory()
             ->createMerchantProductOfferMapper()
-            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferQuery->find());
+            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities);
     }
 }
