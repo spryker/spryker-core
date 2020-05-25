@@ -12,16 +12,16 @@ use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionFinder;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeChecker;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
@@ -82,7 +82,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface
+     * @return \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface
      */
     public function createJsonIndexDefinitionFinder(): IndexDefinitionFinderInterface
     {
@@ -93,7 +93,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface
+     * @return \Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface
      */
     public function createJsonIndexDefinitionMapper(): IndexDefinitionMapperInterface
     {

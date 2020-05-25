@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
+namespace Spryker\Zed\Search\Business\Definition;
 
 use Generated\Shared\Transfer\IndexDefinitionFileTransfer;
 use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;

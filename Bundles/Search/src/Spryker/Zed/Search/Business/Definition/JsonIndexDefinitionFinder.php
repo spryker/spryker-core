@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
+namespace Spryker\Zed\Search\Business\Definition;
 
 use Generated\Shared\Transfer\IndexDefinitionFileTransfer;
 use Symfony\Component\Finder\Finder;
@@ -20,13 +20,13 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
     protected $sourceDirectories;
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface
+     * @var \Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface
      */
     protected $indexDefinitionMapper;
 
     /**
      * @param string[] $sourceDirectories
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMapperInterface $indexDefinitionMapper
+     * @param \Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface $indexDefinitionMapper
      */
     public function __construct(
         array $sourceDirectories,
@@ -62,18 +62,18 @@ class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
      * Sorts IndexDefinitionFile transfers by store prefixes (without prefix in the top) and then by real path (in alphabetical order).
      *
      * Input:
-     *  ModuleA/de_foo.php
-     *  ModuleB/foo.php
-     *  ModuleC/at_foo.php
-     *  ModuleD/foo.php
-     *  ModuleD/de_foo.php
+     *  ModuleA/de_foo.json
+     *  ModuleB/foo.json
+     *  ModuleC/at_foo.json
+     *  ModuleD/foo.json
+     *  ModuleD/de_foo.json
      *
      * Output:
-     *  ModuleB/foo.php
-     *  ModuleD/foo.php
-     *  ModuleA/de_foo.php
-     *  ModuleC/at_foo.php
-     *  ModuleD/de_foo.php
+     *  ModuleB/foo.json
+     *  ModuleD/foo.json
+     *  ModuleA/de_foo.json
+     *  ModuleC/at_foo.json
+     *  ModuleD/de_foo.json
      *
      * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $firstIndexDefinitionFileTransfer
      * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $secondIndexDefinitionFileTransfer

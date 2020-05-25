@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\IndexDefinitionFileTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface;
 use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
@@ -29,12 +30,12 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface
+     * @var \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface
      */
     protected $definitionFinder;
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionFinderInterface $definitionFinder
+     * @param \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface $definitionFinder
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface $storeFacade
      */

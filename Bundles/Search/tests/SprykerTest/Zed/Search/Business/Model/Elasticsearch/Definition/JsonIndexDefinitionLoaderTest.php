@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\Definition;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionFinder;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
@@ -388,7 +388,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
      * @param string[] $sourceDirectories
      * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge $searchToStoreFacadeBridge
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionFinder
+     * @return \Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionFinder
      */
     protected function getJsonIndexDefinitionFinder(
         array $sourceDirectories,
@@ -403,7 +403,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     /**
      * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge $searchToStoreFacadeBridge
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMapper
+     * @return \Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionMapper
      */
     protected function getJsonIndexDefinitionMapper(SearchToStoreFacadeBridge $searchToStoreFacadeBridge): JsonIndexDefinitionMapper
     {
