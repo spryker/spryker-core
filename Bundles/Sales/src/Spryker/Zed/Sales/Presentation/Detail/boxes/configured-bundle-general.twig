@@ -1,4 +1,4 @@
-{% set items = items ?: order.items | filter(item => item.salesOrderConfiguredBundle) %}
+{% set items = (items ?? order.items) | filter(item => item.salesOrderConfiguredBundle) %}
 {% set mappedItems = [] %}
 {% set configuredBundles = [] %}
 {% set configuredBundleItemLength = [] %}
@@ -16,8 +16,15 @@
 {% endfor %}
 
 {% for item in order.items %}
-    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
-    {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId): (configuredBundleItemLength['_' ~ bundleId] ?? 0) + 1}) %}
+    {% if item.salesOrderConfiguredBundle %}
+        {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+        {% if configuredBundleItemLength['_' ~ bundleId] is defined %}
+            {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId): configuredBundleItemLength['_' ~ bundleId] + 1}) %}
+        {% else %}
+            {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId): 1}) %}
+        {% endif %}
+    {% endif %}
 {% endfor %}
 
 {% for bundle in configuredBundles %}
@@ -39,19 +46,14 @@
         <td colspan="2"></td>
     </tr>
 
-    {% set partialItemCount = 0 %}
     {% for item in mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
-        {% if item.salesOrderConfiguredBundleItem.idSalesOrderConfiguredBundle == bundle.idSalesOrderConfiguredBundle %}
-            <tr>
-                {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
-                    orderItem: item,
-                    displayImage: true,
-                    image: item.metadata.image,
-                } %}
-            </tr>
-
-            {% set partialItemCount = partialItemCount + 1 %}
-        {% endif %}
+        <tr>
+            {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
+                orderItem: item,
+                displayImage: true,
+                image: item.metadata.image,
+            } %}
+        </tr>
     {% endfor %}
 
     {% if bundle.note is defined and bundle.note is not empty %}
@@ -65,7 +67,7 @@
     <tr>
         <td colspan="1"></td>
         <td colspan="7">
-            {{ 'Items' | trans }}: {{ partialItemCount }} / {{ configuredBundleItemLength['_' ~ bundle.idSalesOrderConfiguredBundle] }}
+            {{ 'Items' | trans }}: {{ mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }} / {{ configuredBundleItemLength['_' ~ bundle.idSalesOrderConfiguredBundle] }}
         </td>
     </tr>
     <tr>

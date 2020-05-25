@@ -11,7 +11,7 @@
                 </span>
             </div>
             <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
-                {% include '@Oms/RenderForm/_partial/order-items-actions.twig' ignore missing with {
+                {% include '@Oms/RenderForm/_partial/order-items-actions.twig' with {
                     redirectUrl: triggerButtonRedirectUrl,
                     salesOrderItemIds: salesOrderItemIds,
                     events: uniqueOrderItemManualEvents,

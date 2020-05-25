@@ -128,6 +128,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
+     * @module Sales
+     *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

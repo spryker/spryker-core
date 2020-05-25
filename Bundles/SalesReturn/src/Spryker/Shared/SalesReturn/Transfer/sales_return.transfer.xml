@@ -13,7 +13,6 @@
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="store" type="string"/>
-        <property name="createdAt" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
         <property name="createdAt" type="string"/>
