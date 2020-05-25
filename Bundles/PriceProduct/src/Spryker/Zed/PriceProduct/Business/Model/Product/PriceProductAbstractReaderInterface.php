@@ -88,7 +88,7 @@ interface PriceProductAbstractReaderInterface
     ): array;
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */

@@ -9,7 +9,9 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface as ExtensionQueryInterface;
 
-// @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface` instead.
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface} instead.
+ */
 class_alias(
     ExtensionQueryInterface::class,
     'Spryker\Client\Search\Dependency\Plugin\QueryInterface'

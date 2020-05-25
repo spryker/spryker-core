@@ -23,7 +23,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
@@ -53,7 +53,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */

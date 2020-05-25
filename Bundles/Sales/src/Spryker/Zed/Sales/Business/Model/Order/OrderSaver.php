@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver} instead.
  */
 class OrderSaver extends SalesOrderSaver implements OrderSaverInterface
 {

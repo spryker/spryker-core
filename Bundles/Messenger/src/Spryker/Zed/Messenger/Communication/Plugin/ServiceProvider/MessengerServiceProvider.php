@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin} instead.
  *
  * @method \Spryker\Zed\Messenger\Business\MessengerFacadeInterface getFacade()
  * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()

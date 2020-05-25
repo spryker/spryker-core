@@ -52,7 +52,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleBusinessFactory::getApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\Business\ConsoleBusinessFactory::getApplicationPlugins()} instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

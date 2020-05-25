@@ -16,7 +16,7 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 interface PageDataMapperInterface
 {
     /**
-     * @deprecated Use transferDataByMapperName() instead.
+     * @deprecated Use {@link transferDataByMapperName()} instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
