@@ -44,8 +44,8 @@ class ReturnReasonWritePublisherPlugin extends AbstractPlugin implements Publish
     {
         return [
             SalesReturnSearchConfig::RETURN_REASON_PUBLISH_WRITE,
-            SalesReturnSearchConfig::ENTITY_SPY_RETURN_REASON_CREATE,
-            SalesReturnSearchConfig::ENTITY_SPY_RETURN_REASON_UPDATE,
+            SalesReturnSearchConfig::ENTITY_SPY_SALES_RETURN_REASON_CREATE,
+            SalesReturnSearchConfig::ENTITY_SPY_SALES_RETURN_REASON_UPDATE,
         ];
     }
 }

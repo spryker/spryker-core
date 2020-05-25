@@ -17,6 +17,8 @@ use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class ReturnReasonReader implements ReturnReasonReaderInterface
 {
+    public const DEFAULT_ELASTICSEARCH_LIMIT = 10000;
+
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
      */
@@ -78,7 +80,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
         if ($restRequest->getPage()) {
             $filterTransfer
                 ->setOffset($restRequest->getPage()->getOffset())
-                ->setLimit($restRequest->getPage()->getLimit() ?? SalesReturnsRestApiConfig::DEFAULT_ELASTICSEARCH_LIMIT);
+                ->setLimit($restRequest->getPage()->getLimit() ?? static::DEFAULT_ELASTICSEARCH_LIMIT);
         }
 
         return (new ReturnReasonSearchRequestTransfer())->setFilter($filterTransfer);

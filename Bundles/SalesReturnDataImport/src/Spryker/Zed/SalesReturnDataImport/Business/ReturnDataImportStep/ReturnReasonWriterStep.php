@@ -18,7 +18,7 @@ class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepI
     /**
      * @uses \Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig::RETURN_REASON_PUBLISH_WRITE
      */
-    protected const EVENT_RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish';
+    protected const EVENT_RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish_write';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet

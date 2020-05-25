@@ -8,7 +8,6 @@
 namespace Spryker\Glue\SalesReturnsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilder;
@@ -103,9 +102,7 @@ class SalesReturnsRestApiFactory extends AbstractFactory
      */
     public function createReturnReasonResourceMapper(): ReturnReasonResourceMapperInterface
     {
-        return new ReturnReasonResourceMapper(
-            $this->getGlossaryStorageClient()
-        );
+        return new ReturnReasonResourceMapper();
     }
 
     /**
@@ -132,13 +129,5 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     public function getSalesReturnSearchClient(): SalesReturnsRestApiToSalesReturnSearchClientInterface
     {
         return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_SALES_RETURN_PAGE_SEARCH);
-    }
-
-    /**
-     * @return \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): SalesReturnsRestApiToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

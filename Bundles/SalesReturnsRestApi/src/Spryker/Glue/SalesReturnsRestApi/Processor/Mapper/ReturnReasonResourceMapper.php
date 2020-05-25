@@ -9,23 +9,9 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 
 class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
 {
-    /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface
-     */
-    protected $glossaryStorageClient;
-
-    /**
-     * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     */
-    public function __construct(SalesReturnsRestApiToGlossaryStorageClientInterface $glossaryStorageClient)
-    {
-        $this->glossaryStorageClient = $glossaryStorageClient;
-    }
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonSearchTransfer[] $returnReasonSearchTransfers
      * @param string $localeName

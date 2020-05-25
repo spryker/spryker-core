@@ -29,25 +29,25 @@ class SalesReturnSearchConfig extends AbstractBundleConfig
     /**
      * This events that will be used for key writing.
      */
-    public const RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish';
+    public const RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish_write';
 
     /**
      * This events that will be used for key deleting.
      */
-    public const RETURN_REASON_PUBLISH_DELETE = 'Return.reason.unpublish';
+    public const RETURN_REASON_PUBLISH_DELETE = 'Return.reason.publish_delete';
 
     /**
      * This events will be used for spy_sales_return_reason entity creation.
      */
-    public const ENTITY_SPY_RETURN_REASON_CREATE = 'Entity.spy_sales_return_reason.create';
+    public const ENTITY_SPY_SALES_RETURN_REASON_CREATE = 'Entity.spy_sales_return_reason.create';
 
     /**
      * This events will be used for spy_sales_return_reason entity changes.
      */
-    public const ENTITY_SPY_RETURN_REASON_UPDATE = 'Entity.spy_sales_return_reason.update';
+    public const ENTITY_SPY_SALES_RETURN_REASON_UPDATE = 'Entity.spy_sales_return_reason.update';
 
     /**
      * This events will be used for spy_sales_return_reason entity deletion.
      */
-    public const ENTITY_SPY_RETURN_REASON_DELETE = 'Entity.spy_sales_return_reason.delete';
+    public const ENTITY_SPY_SALES_RETURN_REASON_DELETE = 'Entity.spy_sales_return_reason.delete';
 }

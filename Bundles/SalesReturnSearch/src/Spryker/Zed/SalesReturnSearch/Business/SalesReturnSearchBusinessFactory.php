@@ -17,6 +17,7 @@ use Spryker\Zed\SalesReturnSearch\Business\Mapper\ReturnReasonSearchMapperInterf
 use Spryker\Zed\SalesReturnSearch\Business\Reader\GlossaryReader;
 use Spryker\Zed\SalesReturnSearch\Business\Reader\GlossaryReaderInterface;
 use Spryker\Zed\SalesReturnSearch\Business\Writer\ReturnReasonSearchWriter;
+use Spryker\Zed\SalesReturnSearch\Business\Writer\ReturnReasonSearchWriterInterface;
 use Spryker\Zed\SalesReturnSearch\Dependency\Facade\SalesReturnSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\SalesReturnSearch\Dependency\Facade\SalesReturnSearchToGlossaryFacadeInterface;
 use Spryker\Zed\SalesReturnSearch\Dependency\Facade\SalesReturnSearchToLocaleFacadeInterface;
@@ -32,9 +33,9 @@ use Spryker\Zed\SalesReturnSearch\SalesReturnSearchDependencyProvider;
 class SalesReturnSearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesReturnSearch\Business\Writer\ReturnReasonSearchWriter
+     * @return \Spryker\Zed\SalesReturnSearch\Business\Writer\ReturnReasonSearchWriterInterface
      */
-    public function createReturnReasonSearchWriter(): ReturnReasonSearchWriter
+    public function createReturnReasonSearchWriter(): ReturnReasonSearchWriterInterface
     {
         return new ReturnReasonSearchWriter(
             $this->getSalesReturnFacade(),

@@ -17,7 +17,7 @@ use Spryker\Zed\SalesReturnSearch\Dependency\Facade\SalesReturnSearchToSalesRetu
 use Spryker\Zed\SalesReturnSearch\Persistence\SalesReturnSearchEntityManagerInterface;
 use Spryker\Zed\SalesReturnSearch\Persistence\SalesReturnSearchRepositoryInterface;
 
-class ReturnReasonSearchWriter
+class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 {
     /**
      * @var \Spryker\Zed\SalesReturnSearch\Dependency\Facade\SalesReturnSearchToSalesReturnFacadeInterface

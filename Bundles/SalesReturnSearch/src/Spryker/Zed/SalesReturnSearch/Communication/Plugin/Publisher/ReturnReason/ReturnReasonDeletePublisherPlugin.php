@@ -44,7 +44,7 @@ class ReturnReasonDeletePublisherPlugin extends AbstractPlugin implements Publis
     {
         return [
             SalesReturnSearchConfig::RETURN_REASON_PUBLISH_DELETE,
-            SalesReturnSearchConfig::ENTITY_SPY_RETURN_REASON_DELETE,
+            SalesReturnSearchConfig::ENTITY_SPY_SALES_RETURN_REASON_DELETE,
         ];
     }
 }

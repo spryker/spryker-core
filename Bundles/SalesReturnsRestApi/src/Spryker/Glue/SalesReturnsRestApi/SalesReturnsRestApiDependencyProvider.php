@@ -9,7 +9,6 @@ namespace Spryker\Glue\SalesReturnsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientBridge;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientBridge;
 
@@ -20,7 +19,6 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
 {
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
     public const CLIENT_SALES_RETURN_PAGE_SEARCH = 'CLIENT_SALES_RETURN_PAGE_SEARCH';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,7 +31,6 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addSalesReturnClient($container);
         $container = $this->addSalesReturnSearchClient($container);
-        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -64,22 +61,6 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::CLIENT_SALES_RETURN_PAGE_SEARCH, function (Container $container) {
             return new SalesReturnsRestApiToSalesReturnSearchClientBridge(
                 $container->getLocator()->salesReturnSearch()->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addGlossaryStorageClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
-            return new SalesReturnsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
             );
         });
 

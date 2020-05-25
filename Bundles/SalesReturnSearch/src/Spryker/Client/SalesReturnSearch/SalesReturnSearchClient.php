@@ -27,20 +27,19 @@ class SalesReturnSearchClient extends AbstractClient implements SalesReturnSearc
     public function searchReturnReasons(ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer): array
     {
         $requestParameters = $returnReasonSearchRequestTransfer->getRequestParameters();
-
         $searchQuery = $this->getFactory()->createReturnReasonSearchQuery($returnReasonSearchRequestTransfer);
-        $searchQuery = $this->getFactory()
-            ->getSearchClient()
-            ->expandQuery(
-                $searchQuery,
-                $this->getFactory()->getReturnReasonSearchQueryExpanderPlugins(),
-                $requestParameters
-            );
+        $searchClient = $this->getFactory()->getSearchClient();
 
-        $resultFormatters = $this->getFactory()->getReturnReasonSearchResultFormatterPlugins();
+        $searchQuery = $searchClient->expandQuery(
+            $searchQuery,
+            $this->getFactory()->getReturnReasonSearchQueryExpanderPlugins(),
+            $requestParameters
+        );
 
-        return $this->getFactory()
-            ->getSearchClient()
-            ->search($searchQuery, $resultFormatters, $requestParameters);
+        return $searchClient->search(
+            $searchQuery,
+            $this->getFactory()->getReturnReasonSearchResultFormatterPlugins(),
+            $requestParameters
+        );
     }
 }
