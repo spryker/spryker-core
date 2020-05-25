@@ -57,7 +57,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacade::getApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()} instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

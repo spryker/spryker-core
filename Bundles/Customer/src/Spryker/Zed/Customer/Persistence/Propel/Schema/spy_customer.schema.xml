@@ -28,6 +28,12 @@
         <unique name="spy_customer-customer_reference">
             <unique-column name="customer_reference"/>
         </unique>
+        <index name="spy_customer-first_name">
+            <index-column name="first_name"/>
+        </index>
+        <index name="spy_customer-last_name">
+            <index-column name="last_name"/>
+        </index>
         <foreign-key name="spy_customer-default_billing_address" foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress" onDelete="SETNULL">
             <reference foreign="id_customer_address" local="default_billing_address"/>
         </foreign-key>

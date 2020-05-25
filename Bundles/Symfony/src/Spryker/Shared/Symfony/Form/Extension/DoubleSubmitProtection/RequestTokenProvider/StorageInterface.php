@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider;
 
 /**
- * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface` instead.
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface} instead.
  */
 interface StorageInterface
 {

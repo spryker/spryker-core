@@ -18,7 +18,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearchGui\Communication\Plugin\Query\DocumentListQuery` instead.
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearchGui\Communication\Plugin\Query\DocumentListQuery} instead.
  */
 class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
