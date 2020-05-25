@@ -5,6 +5,7 @@
 
     <transfer name="SalesOrderItem">
         <property name="idSalesOrderItem" type="int"/>
+        <property name="orderItemReference" type="string"/>
     </transfer>
 
     <transfer name="FilePathResolverResponse">
