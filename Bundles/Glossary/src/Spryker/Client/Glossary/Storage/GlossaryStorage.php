@@ -53,7 +53,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return string
      */
-    public function translate($keyName, array $parameters = [])
+    public function translate($keyName, array $parameters = []): string
     {
         if ((string)$keyName === '') {
             return $keyName;
@@ -75,7 +75,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    protected function loadTranslation($keyName)
+    protected function loadTranslation($keyName): void
     {
         $key = $this->keyBuilder->generateKey($keyName, $this->localeName);
         $this->addTranslation($keyName, $this->storage->get($key));
@@ -87,7 +87,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    protected function addTranslation($keyName, $translation)
+    protected function addTranslation($keyName, $translation): void
     {
         if ($translation === null) {
             $translation = $keyName;

@@ -15,5 +15,5 @@ interface GlossaryStorageInterface
      *
      * @return string
      */
-    public function translate($keyName, array $parameters = []);
+    public function translate($keyName, array $parameters = []): string;
 }
