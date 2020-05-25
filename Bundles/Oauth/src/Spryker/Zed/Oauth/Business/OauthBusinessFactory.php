@@ -58,7 +58,7 @@ use Spryker\Zed\Oauth\OauthDependencyProvider;
 class OauthBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @deprecated Use createAccessTokenRequestExecutor() instead.
+     * @deprecated Use {@link createAccessTokenRequestExecutor()} instead.
      *
      * @return \Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface
      */

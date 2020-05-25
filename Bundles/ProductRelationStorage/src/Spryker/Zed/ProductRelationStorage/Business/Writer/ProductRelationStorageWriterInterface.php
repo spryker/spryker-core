@@ -51,6 +51,12 @@ interface ProductRelationStorageWriterInterface
     public function publish(array $productAbstractIds);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationPublishingEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationStoreEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationProductAbstractEvents()}
+     *   instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return void

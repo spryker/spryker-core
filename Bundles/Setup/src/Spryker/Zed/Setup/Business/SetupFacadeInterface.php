@@ -41,7 +41,7 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use emptyGeneratedDirectory() instead
+     * @deprecated Use {@link emptyGeneratedDirectory()} instead
      *
      * @return void
      */

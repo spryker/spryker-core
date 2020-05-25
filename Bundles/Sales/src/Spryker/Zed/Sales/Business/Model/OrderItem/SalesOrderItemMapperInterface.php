@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface} instead.
  */
 interface SalesOrderItemMapperInterface
 {

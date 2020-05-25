@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Business\Deleter;
 interface GlossaryTranslationStorageDeleterInterface
 {
     /**
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface::deleteGlossaryStorageCollectionByGlossaryKeyEvents()` instead
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface::deleteGlossaryStorageCollectionByGlossaryKeyEvents()} instead
      *
      * @param array $glossaryKeyIds
      *
