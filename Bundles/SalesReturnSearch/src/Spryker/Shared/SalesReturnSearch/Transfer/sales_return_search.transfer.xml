@@ -68,4 +68,11 @@
         <property name="data" type="string"/>
     </transfer>
 
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="maxItemsPerPage" type="int"/>
+    </transfer>
+
 </transfers>

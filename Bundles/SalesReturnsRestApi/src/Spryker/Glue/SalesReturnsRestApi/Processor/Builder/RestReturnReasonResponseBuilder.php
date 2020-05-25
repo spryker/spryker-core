@@ -58,7 +58,7 @@ class RestReturnReasonResponseBuilder implements RestReturnReasonResponseBuilder
 
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $returnReasonSearchCollectionTransfer->getNbResults(),
-            $returnReasonSearchRequestTransfer->getFilter()->getLimit() ?? 0
+            $returnReasonSearchRequestTransfer->getRequestParameters()['ipp'] ?? 0
         );
 
         foreach ($restReturnReasonsAttributesTransfers as $restReturnReasonsAttributesTransfer) {

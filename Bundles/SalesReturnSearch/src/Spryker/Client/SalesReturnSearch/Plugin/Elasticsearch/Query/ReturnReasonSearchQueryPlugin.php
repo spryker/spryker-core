@@ -11,7 +11,6 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Generated\Shared\Search\ReturnReasonIndexMap;
-use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -31,21 +30,12 @@ class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInter
     protected $query;
 
     /**
-     * @var \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer
-     */
-    protected $returnReasonSearchRequestTransfer;
-
-    /**
      * @var \Generated\Shared\Transfer\SearchContextTransfer
      */
     protected $searchContextTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
-     */
-    public function __construct(ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer)
+    public function __construct()
     {
-        $this->returnReasonSearchRequestTransfer = $returnReasonSearchRequestTransfer;
         $this->query = $this->createSearchQuery();
     }
 
@@ -103,31 +93,6 @@ class ReturnReasonSearchQueryPlugin extends AbstractPlugin implements QueryInter
 
         $query = $this->setQuery($query);
         $query = $query->setSource([ReturnReasonIndexMap::SEARCH_RESULT_DATA]);
-        $query = $this->setFilter($query);
-
-        return $query;
-    }
-
-    /**
-     * @param \Elastica\Query $query
-     *
-     * @return \Elastica\Query
-     */
-    protected function setFilter(Query $query): Query
-    {
-        $filterTransfer = $this->returnReasonSearchRequestTransfer->getFilter();
-
-        if (!$filterTransfer) {
-            return $query;
-        }
-
-        if ($filterTransfer->getLimit()) {
-            $query->setSize($filterTransfer->getLimit());
-        }
-
-        if ($filterTransfer->getOffset()) {
-            $query->setFrom($filterTransfer->getOffset());
-        }
 
         return $query;
     }

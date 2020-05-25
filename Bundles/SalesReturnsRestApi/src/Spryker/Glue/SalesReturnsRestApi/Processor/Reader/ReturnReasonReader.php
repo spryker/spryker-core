@@ -7,17 +7,23 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnReasonResponseBuilderInterface;
-use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class ReturnReasonReader implements ReturnReasonReaderInterface
 {
-    public const DEFAULT_ELASTICSEARCH_LIMIT = 10000;
+    /**
+     * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_OFFSET
+     */
+    protected const PARAMETER_OFFSET = 'offset';
+
+    /**
+     * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_LIMIT
+     */
+    protected const PARAMETER_LIMIT = 'limit';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
@@ -75,14 +81,14 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
      */
     protected function createReturnReasonSearchRequest(RestRequestInterface $restRequest): ReturnReasonSearchRequestTransfer
     {
-        $filterTransfer = new FilterTransfer();
+        $requestParameters = [];
+        $page = $restRequest->getPage();
 
-        if ($restRequest->getPage()) {
-            $filterTransfer
-                ->setOffset($restRequest->getPage()->getOffset())
-                ->setLimit($restRequest->getPage()->getLimit() ?? static::DEFAULT_ELASTICSEARCH_LIMIT);
+        if ($page) {
+            $requestParameters[static::PARAMETER_OFFSET] = $page->getOffset();
+            $requestParameters[static::PARAMETER_LIMIT] = $page->getLimit();
         }
 
-        return (new ReturnReasonSearchRequestTransfer())->setFilter($filterTransfer);
+        return (new ReturnReasonSearchRequestTransfer())->setRequestParameters($requestParameters);
     }
 }
