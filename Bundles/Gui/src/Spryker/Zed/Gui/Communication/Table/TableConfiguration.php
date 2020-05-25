@@ -321,7 +321,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use setDefaultSortField() instead.
+     * @deprecated Use {@link setDefaultSortField()} instead.
      *
      * @param int $columnIndex
      *
@@ -333,7 +333,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use getDefaultSortField() instead.
+     * @deprecated Use {@link getDefaultSortField()} instead.
      *
      * @return int
      */
@@ -343,7 +343,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use setDefaultSortField() instead.
+     * @deprecated Use {@link setDefaultSortField()} instead.
      *
      * @param string $direction
      *
@@ -355,7 +355,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use getDefaultSortField() instead.
+     * @deprecated Use {@link getDefaultSortField()} instead.
      *
      * @return string
      */

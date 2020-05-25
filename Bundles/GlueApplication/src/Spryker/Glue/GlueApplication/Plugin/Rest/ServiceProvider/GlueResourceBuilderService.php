@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin} instead.
  *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */

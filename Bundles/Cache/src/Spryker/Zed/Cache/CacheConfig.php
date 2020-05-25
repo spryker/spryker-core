@@ -17,7 +17,7 @@ class CacheConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use getCodeBucketCachePath() instead.
+     * @deprecated Use {@link getCodeBucketCachePath()} instead.
      *
      * @return string
      */

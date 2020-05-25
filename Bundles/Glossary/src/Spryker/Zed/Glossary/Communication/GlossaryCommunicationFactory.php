@@ -56,7 +56,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTranslationAddForm()` instead.
+     * @deprecated Use {@link getTranslationAddForm()} instead.
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -76,7 +76,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTranslationUpdateForm()` instead.
+     * @deprecated Use {@link getTranslationUpdateForm()} instead.
      *
      * @param array $formData
      *

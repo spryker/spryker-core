@@ -15,4 +15,11 @@ interface ProductLabelSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductLabelEntityTransfer[]
      */
     public function getProductLabelsByIdProductAbstractIn(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productLabelIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array;
 }

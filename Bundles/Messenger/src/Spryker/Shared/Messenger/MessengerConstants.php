@@ -13,11 +13,11 @@ namespace Spryker\Shared\Messenger;
 interface MessengerConstants
 {
     /**
-     * @deprecated Use \Spryker\Shared\Messenger\MessengerConfig::SESSION_TRAY instead.
+     * @deprecated Use {@link \Spryker\Shared\Messenger\MessengerConfig::SESSION_TRAY} instead.
      */
     public const SESSION_TRAY = 'SESSION_TRAY';
     /**
-     * @deprecated Use \Spryker\Shared\Messenger\MessengerConfig::IN_MEMORY_TRAY instead.
+     * @deprecated Use {@link \Spryker\Shared\Messenger\MessengerConfig::IN_MEMORY_TRAY} instead.
      */
     public const IN_MEMORY_TRAY = 'IN_MEMORY_TRAY';
 
