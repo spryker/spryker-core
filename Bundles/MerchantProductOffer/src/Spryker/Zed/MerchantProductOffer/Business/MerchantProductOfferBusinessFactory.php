@@ -37,9 +37,7 @@ class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemProductOfferChecker(): ItemProductOfferCheckerInterface
     {
-        return new ItemProductOfferChecker(
-            $this->getRepository()
-        );
+        return new ItemProductOfferChecker($this->getRepository());
     }
 
     /**
