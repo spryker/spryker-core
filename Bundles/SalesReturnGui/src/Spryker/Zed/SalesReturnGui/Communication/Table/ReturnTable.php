@@ -30,14 +30,14 @@ class ReturnTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
      */
-    protected const ROUTE_VIEW_RETURN = '/sales-return-gui/return/detail';
+    protected const ROUTE_DETAIL = '/sales-return-gui/detail';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::printAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::indexAction()
      */
-    protected const ROUTE_RETURN_SLIP_PRINT = '/sales-return-gui/return-slip/print';
+    protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
@@ -245,14 +245,14 @@ class ReturnTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateViewButton(
-            Url::generate(static::ROUTE_VIEW_RETURN, [
+            Url::generate(static::ROUTE_DETAIL, [
                 static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
             'View'
         );
 
         $buttons[] = $this->generateViewButton(
-            Url::generate(static::ROUTE_RETURN_SLIP_PRINT, [
+            Url::generate(static::ROUTE_RETURN_SLIP, [
                 static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
             'Print Slip',

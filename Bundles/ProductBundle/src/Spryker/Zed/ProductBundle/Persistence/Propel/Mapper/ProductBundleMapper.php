@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Orm\Zed\ProductBundle\Persistence\Base\SpySalesOrderItemBundle;
+use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
@@ -58,16 +58,16 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[] $salesOrderItemBundleEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function mapSalesOrderItemEntitiesToBundleItemTransfers(ObjectCollection $salesOrderItemBundleEntities): array
+    public function mapSalesOrderItemBundleEntitiesToItemTransfers(ObjectCollection $salesOrderItemBundleEntities): array
     {
         $bundleItemTransfers = [];
 
         foreach ($salesOrderItemBundleEntities as $salesOrderItemBundleEntity) {
-            $bundleItemTransfer = $this->mapSalesOrderItemEntityToBundleItemTransfer($salesOrderItemBundleEntity);
+            $bundleItemTransfer = $this->mapSalesOrderItemBundleEntityToItemTransfer($salesOrderItemBundleEntity);
 
             foreach ($salesOrderItemBundleEntity->getSalesOrderItems() as $salesOrderItemEntity) {
                 $bundleItemTransfer->setQuantity($salesOrderItemEntity->getQuantity());
@@ -76,22 +76,6 @@ class ProductBundleMapper
         }
 
         return $bundleItemTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle $salesOrderItemBundleEntity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function mapSalesOrderItemEntityToBundleItemTransfer(SpySalesOrderItemBundle $salesOrderItemBundleEntity): ItemTransfer
-    {
-        $productMetadataTransfer = (new ItemMetadataTransfer())
-            ->setImage($salesOrderItemBundleEntity->getImage());
-
-        return (new ItemTransfer())
-            ->setBundleItemIdentifier((string)$salesOrderItemBundleEntity->getIdSalesOrderItemBundle())
-            ->setMetadata($productMetadataTransfer)
-            ->fromArray($salesOrderItemBundleEntity->toArray(), true);
     }
 
     /**
@@ -110,5 +94,21 @@ class ProductBundleMapper
         }
 
         return $productForBundleTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle $salesOrderItemBundleEntity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapSalesOrderItemBundleEntityToItemTransfer(SpySalesOrderItemBundle $salesOrderItemBundleEntity): ItemTransfer
+    {
+        $productMetadataTransfer = (new ItemMetadataTransfer())
+            ->setImage($salesOrderItemBundleEntity->getImage());
+
+        return (new ItemTransfer())
+            ->setBundleItemIdentifier((string)$salesOrderItemBundleEntity->getIdSalesOrderItemBundle())
+            ->setMetadata($productMetadataTransfer)
+            ->fromArray($salesOrderItemBundleEntity->toArray(), true);
     }
 }

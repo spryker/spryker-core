@@ -45,28 +45,44 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {
-        $productBundles = [];
+        $mappedProductBundles = $this->extractMappedProductBundlesWithProductOptions($itemTransfers);
 
         foreach ($itemTransfers as $itemTransfer) {
-            if (!$itemTransfer->getProductBundle() || !$itemTransfer->getRelatedBundleItemIdentifier()) {
+            $productBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if (!$productBundleItemIdentifier || !isset($mappedProductBundles[$productBundleItemIdentifier])) {
                 continue;
             }
 
-            if (!isset($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()])) {
-                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $itemTransfer->getProductBundle();
-            }
-
-            $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()] = $this->expandBundleItemWithProductOptions(
-                $productBundles[$itemTransfer->getRelatedBundleItemIdentifier()],
-                $itemTransfer
-            );
-
-            $itemTransfer->setProductBundle($productBundles[$itemTransfer->getRelatedBundleItemIdentifier()]);
+            $itemTransfer->setProductBundle($mappedProductBundles[$productBundleItemIdentifier]);
         }
 
-        $this->sortProductBundlesProductOptions($productBundles);
-
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function extractMappedProductBundlesWithProductOptions(array $itemTransfers): array
+    {
+        $mappedProductBundles = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $productBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if (!$productBundleItemIdentifier || !$itemTransfer->getProductBundle()) {
+                continue;
+            }
+
+            $mappedProductBundles[$productBundleItemIdentifier] = $this->expandBundleItemWithProductOptions(
+                $mappedProductBundles[$productBundleItemIdentifier] ?? $itemTransfer->getProductBundle(),
+                $itemTransfer
+            );
+        }
+
+        return $this->sortProductBundlesProductOptions($mappedProductBundles);
     }
 
     /**

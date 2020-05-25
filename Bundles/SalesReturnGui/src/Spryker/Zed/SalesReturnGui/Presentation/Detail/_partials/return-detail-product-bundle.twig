@@ -1,16 +1,19 @@
-{% include '@SalesReturnGui/Return/_partials/return-create-item.twig' with {
-    returnItem: returnBundleItem,
+{% include '@SalesReturnGui/Detail/_partials/return-detail-item.twig' with {
+    returnItem: returnBundleItems[0],
     orderItem: bundleProduct,
     order: order,
     isBundleProduct: true,
 } only %}
 
-{% for orderItem in bundleItems %}
+{% for returnBundleItem in returnBundleItems %}
+    {% set orderItem = returnBundleItem.orderItem %}
+
     <tr class="addition-row">
         <td></td>
         <td></td>
         <td>
-            <div class="bundle-item">
+            <div class="bundle-item bundle-item--with-checkbox">
+                <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
                 <div class="image-wrap">
                     <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
                 </div>
@@ -30,7 +33,6 @@
             <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
         </td>
         <td></td>
-        <td></td>
         <td class="state-history">
             <div>
                 <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
@@ -46,6 +48,15 @@
                     <span class="show-more">{{ 'Show history' | trans }}</span>
                     <span class="show-less">{{ 'Hide history' | trans }}</span>
                 </a>
+            {% endif %}
+        </td>
+        <td>
+            {% if eventsGroupedByItem[orderItem.idSalesOrderItem] is defined %}
+                {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+                    redirectUrl: changeStatusRedirectUrl,
+                    idSalesOrderItem: orderItem.idSalesOrderItem,
+                    eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
+                } %}
             {% endif %}
         </td>
     </tr>

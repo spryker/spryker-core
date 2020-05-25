@@ -32,9 +32,9 @@ class OrderReturnTable extends AbstractTable
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::detailAction()
+     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
      */
-    protected const URL_RETURN_DETAIL = '/sales-return-gui/return/detail';
+    protected const URL_RETURN_DETAIL = '/sales-return-gui/detail';
     protected const BUTTON_VIEW = 'View';
 
     /**

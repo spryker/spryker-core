@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -17,10 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductBundleRepository extends AbstractRepository implements ProductBundleRepositoryInterface
 {
-    protected const COL_ID_PRODUCT = 'id_product';
-    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    protected const COL_SKU = 'sku';
-
     /**
      * @param string $sku
      *
@@ -93,17 +90,16 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      */
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array
     {
-        $salesOrderItemBundleEntities = $this->getFactory()
+        $salesOrderItemBundleQuery = $this->getFactory()
             ->createSalesOrderItemBundleQuery()
             ->joinWithSalesOrderItem()
             ->useSalesOrderItemQuery()
                 ->filterByIdSalesOrderItem_In($salesOrderItemIds)
-            ->endUse()
-            ->find();
+            ->endUse();
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapSalesOrderItemEntitiesToBundleItemTransfers($salesOrderItemBundleEntities);
+            ->mapSalesOrderItemBundleEntitiesToItemTransfers($salesOrderItemBundleQuery->find());
     }
 
     /**
@@ -118,13 +114,18 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         return $this->getFactory()
             ->createProductBundleQuery()
             ->clearSelectColumns()
-            ->addAsColumn(static::COL_ID_PRODUCT, SpyProductTableMap::COL_ID_PRODUCT)
-            ->addAsColumn(static::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addAsColumn(static::COL_SKU, SpyProductTableMap::COL_SKU)
             ->useSpyProductRelatedByFkProductQuery()
                 ->filterBySku_In($productConcreteSkus)
             ->endUse()
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ItemTransfer::ID)
+            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, ItemTransfer::ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyProductTableMap::COL_SKU, ItemTransfer::SKU)
+            ->select([
+                ItemTransfer::ID,
+                ItemTransfer::ID_PRODUCT_ABSTRACT,
+                ItemTransfer::SKU,
+            ])
             ->find()
-            ->toArray(static::COL_SKU);
+            ->toArray(ItemTransfer::SKU);
     }
 }

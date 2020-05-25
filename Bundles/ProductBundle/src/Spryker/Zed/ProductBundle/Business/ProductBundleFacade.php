@@ -530,7 +530,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     public function expandItemsWithProductBundles(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createItemExpander()
+            ->createProductBundleItemExpander()
             ->expandItemsWithProductBundles($itemTransfers);
     }
 

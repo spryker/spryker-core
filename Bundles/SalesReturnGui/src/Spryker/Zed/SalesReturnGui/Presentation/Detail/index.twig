@@ -6,30 +6,29 @@
 {% block section_title title | trans %}
 
 {% block action %}
-    {{ backActionButton(url('/sales-return-gui/return'), 'Back to Returns' | trans) }}
-    {{ createActionButton(url('/sales-return-gui/return-slip/print', {'id-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
+    {{ backActionButton(url('/sales-return-gui'), 'Back to Returns' | trans) }}
+    {{ createActionButton(url('/sales-return-gui/return-slip', {'id-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-lg-8">
-            {% include '@SalesReturnGui/Return/_partials/returned-items-column.twig' with {
+            {% include '@SalesReturnGui/Detail/_partials/returned-items-column.twig' with {
                 return: return,
                 orderItemManualEvents: orderItemManualEvents,
                 uniqueOrderItemManualEvents: uniqueOrderItemManualEvents,
-                triggerButtonRedirectUrl: triggerButtonRedirectUrl,
                 salesOrderItemIds: salesOrderItemIds,
             } only %}
         </div>
         <div class="col-lg-4">
-            {% include '@SalesReturnGui/Return/_partials/general-information-column.twig' with {
+            {% include '@SalesReturnGui/Detail/_partials/general-information-column.twig' with {
                 return: return,
                 uniqueOrderReferences: uniqueOrderReferences,
                 uniqueItemStateLabels: uniqueItemStateLabels,
             } only %}
 
             {% if customer is not null %}
-                {% include '@SalesReturnGui/Return/_partials/customer-column.twig' with {
+                {% include '@SalesReturnGui/Detail/_partials/customer-column.twig' with {
                     customer: customer,
                 } only %}
             {% endif %}
@@ -37,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-lg-8">
-            {% include '@SalesReturnGui/Return/_partials/total-column.twig' with {
+            {% include '@SalesReturnGui/Detail/_partials/total-column.twig' with {
                 return: return,
             } only %}
         </div>

@@ -1,7 +1,7 @@
 {% set returnItems = form.returnItems | filter(returnItem => returnItem.vars.value.orderItem.salesOrderConfiguredBundle is empty) %}
 
 {% for returnItem in returnItems %}
-    {% include '@SalesReturnGui/Return/_partials/return-create-item.twig' with {
+    {% include '@SalesReturnGui/Create/_partials/return-create-item.twig' with {
         returnItem: returnItem,
         orderItem: returnItem.vars.value.orderItem,
         order: order,

@@ -7,21 +7,12 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Expander;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculationInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
-class ItemExpander implements ItemExpanderInterface
+class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
 {
-    /**
-     * @uses \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository::COL_ID_PRODUCT
-     */
-    protected const COL_ID_PRODUCT = 'id_product';
-
-    /**
-     * @uses \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository::COL_FK_PRODUCT_ABSTRACT
-     */
-    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
@@ -91,8 +82,9 @@ class ItemExpander implements ItemExpanderInterface
                 continue;
             }
 
-            $bundleItemTransfer->setId($productConcretesRawData[$bundleItemTransfer->getSku()][static::COL_ID_PRODUCT])
-                ->setIdProductAbstract($productConcretesRawData[$bundleItemTransfer->getSku()][static::COL_FK_PRODUCT_ABSTRACT]);
+            $bundleItemTransfer
+                ->setId($productConcretesRawData[$bundleItemTransfer->getSku()][ItemTransfer::ID])
+                ->setIdProductAbstract($productConcretesRawData[$bundleItemTransfer->getSku()][ItemTransfer::ID_PRODUCT_ABSTRACT]);
         }
 
         return $bundleItemTransfers;

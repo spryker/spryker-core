@@ -25,10 +25,12 @@
     <transfer name="Item">
         <property name="productBundle" type="Item"/>
         <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
-        <property name="salesReturnIds" type="int[]" singular="salesReturnIds"/>
     </transfer>
 
     <transfer name="Return">
@@ -46,12 +48,6 @@
     </transfer>
 
     <transfer name="Customer">
-    </transfer>
-
-    <transfer name="Item">
-        <property name="fkSalesOrder" type="int"/>
-        <property name="orderReference" type="string"/>
-        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="ItemState">

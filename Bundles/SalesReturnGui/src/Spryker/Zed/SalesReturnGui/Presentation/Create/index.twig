@@ -44,17 +44,17 @@
                     </thead>
 
                     <tbody>
-                        {% include '@SalesReturnGui/Return/_partials/return-create-items.twig' with {
+                        {% include '@SalesReturnGui/Create/_partials/return-create-items.twig' with {
                             form: returnCreateForm,
                             order: order,
                         } only %}
 
-                        {% include '@SalesReturnGui/Return/_partials/return-create-configured-bundles.twig' with {
+                        {% include '@SalesReturnGui/Create/_partials/return-create-configured-bundles.twig' with {
                             form: returnCreateForm,
                             order: order,
                         } only %}
 
-                        {% include '@SalesReturnGui/Return/_partials/return-create-product-bundles.twig' with {
+                        {% include '@SalesReturnGui/Create/_partials/return-create-product-bundles.twig' with {
                             form: returnCreateForm,
                             order: order,
                         } only %}

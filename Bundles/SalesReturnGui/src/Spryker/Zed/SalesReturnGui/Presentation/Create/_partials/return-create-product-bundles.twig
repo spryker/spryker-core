@@ -1,6 +1,6 @@
 {% if form.returnBundleItems is defined %}
     {% for returnBundleItem in form.returnBundleItems %}
-        {% include '@SalesReturnGui/Return/_partials/return-create-product-bundle.twig' with {
+        {% include '@SalesReturnGui/Create/_partials/return-create-product-bundle.twig' with {
             returnBundleItem: returnBundleItem,
             bundleProduct: returnBundleItem.vars.value.bundleProduct,
             bundleItems: returnBundleItem.vars.value.bundleItems,

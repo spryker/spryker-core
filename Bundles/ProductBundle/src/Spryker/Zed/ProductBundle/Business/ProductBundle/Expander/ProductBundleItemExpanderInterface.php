@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Expander;
 
-interface ItemExpanderInterface
+interface ProductBundleItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

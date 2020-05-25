@@ -32,7 +32,7 @@ class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createSalesOrderItemBundleQuery(): SpySalesOrderItemBundleQuery
     {
-        return new SpySalesOrderItemBundleQuery();
+        return SpySalesOrderItemBundleQuery::create();
     }
 
     /**
