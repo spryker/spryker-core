@@ -2,4 +2,3 @@ parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Method .+AvailabilityQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
-    - '#Method .+AvailabilityQueryContainer::query.+\(\) should return .+Spy.+Query|.+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'

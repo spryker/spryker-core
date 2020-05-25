@@ -12,7 +12,7 @@ use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory} instead.
  */
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {

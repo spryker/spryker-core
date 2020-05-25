@@ -23,7 +23,7 @@ class ProductOptionCartConnectorToProductOptionFacadeBridge implements ProductOp
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValueById()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValueById()} instead.
      *
      * @param int $idProductOptionValueUsage
      *

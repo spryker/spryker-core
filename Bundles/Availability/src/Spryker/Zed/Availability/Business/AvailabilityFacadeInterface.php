@@ -122,7 +122,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -138,7 +138,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -154,7 +154,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore()} instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *

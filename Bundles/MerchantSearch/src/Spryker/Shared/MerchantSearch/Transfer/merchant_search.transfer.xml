@@ -7,15 +7,16 @@
         <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
+        <property name="isActive" type="bool"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Merchant">
-        <property name="merchantProfile" type="MerchantProfile"/>
     </transfer>
 
-    <transfer name="MerchantProfile">
-        <property name="isActive" type="bool"/>
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

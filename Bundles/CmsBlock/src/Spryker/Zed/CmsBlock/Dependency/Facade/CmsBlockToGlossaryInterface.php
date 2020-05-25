@@ -21,7 +21,7 @@ interface CmsBlockToGlossaryInterface
     /**
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteKeys(array $idKeys);
 

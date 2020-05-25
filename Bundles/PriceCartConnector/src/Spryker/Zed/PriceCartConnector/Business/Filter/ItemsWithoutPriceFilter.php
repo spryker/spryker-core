@@ -11,11 +11,11 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
 
 class ItemsWithoutPriceFilter implements ItemFilterInterface
 {
@@ -38,18 +38,26 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceCartToPriceInterface $priceFacade,
         PriceCartToPriceProductInterface $priceProductFacade,
-        PriceCartToMessengerInterface $messengerFacade
+        PriceCartToMessengerInterface $messengerFacade,
+        PriceCartConnectorToPriceProductServiceInterface $priceProductService
     ) {
         $this->priceFacade = $priceFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->messengerFacade = $messengerFacade;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -62,23 +70,24 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         $priceProductFilters = $this->createPriceProductFilters($quoteTransfer);
         $validPrices = $this->priceProductFacade->getValidPrices($priceProductFilters);
 
-        $productWithoutProductSkus = $this->getProductWithoutPriceSkus($validPrices, $quoteTransfer->getItems()->getArrayCopy());
-
-        return $this->removeItemsWithoutPrice($quoteTransfer, $productWithoutProductSkus);
+        return $this->removeItemsWithoutPrice($quoteTransfer, $validPrices);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $productWithoutPricesSkus
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $productWithoutPricesSkus): QuoteTransfer
+    protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $priceProductTransfers): QuoteTransfer
     {
-        foreach ($productWithoutPricesSkus as $sku) {
-            $key = $this->findItemKeyBySku($quoteTransfer->getItems(), $sku);
-            if ($key !== null) {
-                $this->addFilterMessage($sku);
+        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+            $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
+
+            if (!$priceProductTransfer) {
+                $this->addFilterMessage($itemTransfer->getSku());
+
                 $quoteTransfer->getItems()->offsetUnset($key);
             }
         }
@@ -216,24 +225,5 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         }
 
         return $priceProductFilters;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return string[]
-     */
-    protected function getProductWithoutPriceSkus(array $priceProductTransfers, array $items): array
-    {
-        $itemSkus = array_map(function (ItemTransfer $item) {
-            return $item->getSku();
-        }, $items);
-
-        $validProductSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getSkuProduct();
-        }, $priceProductTransfers);
-
-        return array_diff($itemSkus, $validProductSkus);
     }
 }

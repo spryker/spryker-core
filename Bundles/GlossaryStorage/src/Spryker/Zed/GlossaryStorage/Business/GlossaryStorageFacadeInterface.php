@@ -17,7 +17,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()} instead.
      *
      * @param array $glossaryKeyIds
      *
@@ -32,7 +32,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()} instead.
      *
      * @param array $glossaryKeyIds
      *

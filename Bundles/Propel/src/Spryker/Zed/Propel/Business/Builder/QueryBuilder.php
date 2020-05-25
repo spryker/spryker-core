@@ -14,7 +14,7 @@ namespace Spryker\Zed\Propel\Business\Builder;
 use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder as PropelOrmQueryBuilder;
 
 /**
- * @deprecated Use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder class instead.
+ * @deprecated Use {@link \Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder} instead.
  */
 class QueryBuilder extends PropelOrmQueryBuilder
 {
