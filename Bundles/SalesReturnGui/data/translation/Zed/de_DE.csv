@@ -1,59 +1,59 @@
-Return,Return
-"Return Reference","Retouren Referenz"
-Items,Items
-"Remuneration total","Remuneration total"
+Return, Rückgabe
+"Return Reference", "Retourenreferenz"
+Items, Artikel
+"Remuneration total","Neuberechnung insgesamt"
 Actions,Aktionen
 View,Anzeigen
-"Return ID","Retouren ID"
+"Return ID","Retour ID"
 "Order Reference",Bestellreferenz
 "Returned Items","Retournierte Artikel"
-"Return Date","Retouren Datum"
+"Return Date","Retoure Datum"
 State,Status
 "Print Slip","Beleg drucken"
 "List of Returns","Alle Retouren"
 Returns,Retouren
-"Return Ref","Return Ref"
+"Return Ref","Retourenref."
 Barcode,Barcode
 "Product SKU","Product SKU"
-"Product Name","Product Name"
-"Default Price","Default Price"
-Qty,Qty
-"Total Price","Total Price"
-"Return Reason","Return Reason"
-Reason,Reason
-"Order Ref","Order Ref"
-"Return with id ""%id%"" was not found.","Return with id ""%id%"" was not found."
-"Items to Return","Items to Return"
-"Remuneration Total","Remuneration Total"
-"Custom reason","Custom reason"
-"Select reason","Select reason"
-"Return has not been created.","Return has not been created."
-"Order with id ""%id%"" was not found.","Order with id ""%id%"" was not found."
-"Return was successfully created.","Return was successfully created."
-"Create Return","Create Return"
-"Back to Order","Back to Order"
-"General information","General information"
-"Order reference","Order reference"
-"Select Items to Return","Select Items to Return"
-Product,Product
-Quantity,Quantity
-Price,Price
-"Item total","Item total"
-"Return Policy","Return Policy"
-State,State
-"Create return","Create return"
+"Product Name","Productname"
+"Default Price","Standardpreis"
+Qty,Anz
+"Total Price","Gesamtpreis"
+"Return Reason","Rücksendegrund"
+Reason,Grund
+"Order Ref","Orderref."
+"Return with id ""%id%"" was not found.","Retoure mit id ""%id%"" wurde nicht gefunden."
+"Items to Return","Artikeln zum Zurückgeben"
+"Remuneration Total","Neuberechnung insgesamt"
+"Custom reason","Benutzerdefinierter Grund"
+"Select reason","Grund auswählen"
+"Return has not been created.","Rückgabe wurde nicht erstellt."
+"Order with id ""%id%"" was not found.","Bestellung mit ID ""%id%"" wurde nicht gefunden."
+"Return was successfully created.","Rückgabe wurde erfolgreich erstellt."
+"Create Return","Rückgabe erstellen"
+"Back to Order","Zurück zur Bestellung"
+"General information","Allgemeine Information"
+"Order reference","Bestellnummer"
+"Select Items to Return","Artikeln zum Zurückgeben auswählen"
+Product,Produkt
+Quantity,Anzahl
+Price,Preis
+"Item total","Artikel Insgesamt"
+"Return Policy","Rücknahmegarantie"
+State,Zustand
+"Create return","Rückgabe erstellen"
 "Requested return with ID ""%id%"" was not found.","Gewünschte Retoure mit ID ""%id%"" wurde nicht gefunden."
 "Customer reference",Kundennummer
 Customer,Kunde
 Name,Name
 Email,E-Mail
-"General information","General information"
+"General information","Allgemeine Information"
 "Retured Items","Retournierte Artikel"
 "Trigger all matching states","Alle passenden Stati anstoßen"
 Total,Gesamt
 "Back to Returns","Zurück zu Retouren"
 "Print Return Slip","Retourenbeleg drucken"
 "Overview of Return","Übersicht der Retoure"
-"selected items","ausgewählte artikel"
+"selected items","ausgewählte Artikel"
 of,von
 "Item selected for return is not eligible for return anymore.","Der für die Rücksendung ausgewählte Artikel kann nicht mehr zurückgegeben werden."
