@@ -134,7 +134,7 @@ class ImportOrderItemsStatusConsole extends Console
                 $countTransitionedItem = 0;
 
                 if (!$salesOrderItemTransfer) {
-                    throw new Exception(sprintf('Sales oreder item not found for %s order item reference.', $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]));
+                    throw new Exception(sprintf('Sales order item not found for %s order item reference.', $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]));
                 }
 
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
