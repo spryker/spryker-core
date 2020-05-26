@@ -7,10 +7,6 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
-    <transfer name="Item">
-        <property name="returnPolicyMessages" singular="returnPolicyMessage" type="Message[]"/>
-    </transfer>
-
     <transfer name="Money">
     </transfer>
 
@@ -28,6 +24,7 @@
         <property name="fkSalesOrder" type="int"/>
         <property name="orderReference" type="string"/>
         <property name="state" type="ItemState"/>
+        <property name="returnPolicyMessages" singular="returnPolicyMessage" type="Message[]"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
