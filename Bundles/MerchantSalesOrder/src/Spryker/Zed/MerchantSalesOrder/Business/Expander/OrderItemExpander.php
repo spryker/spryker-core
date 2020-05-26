@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesOrder\Business\OrderItem;
+namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
-interface OrderItemExpanderInterface
+class OrderItemExpander implements OrderItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
@@ -21,5 +21,13 @@ interface OrderItemExpanderInterface
     public function expandOrderItemWithMerchant(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
-    ): SpySalesOrderItemEntityTransfer;
+    ): SpySalesOrderItemEntityTransfer {
+        $merchantReference = $itemTransfer->getMerchantReference();
+
+        if (!$merchantReference) {
+            return $salesOrderItemEntityTransfer;
+        }
+
+        return $salesOrderItemEntityTransfer->setMerchantReference($merchantReference);
+    }
 }
