@@ -13,6 +13,9 @@ class ProductPageSearchConfig extends AbstractBundleConfig
 {
     public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
 
+    protected const PRODUCT_CONCRETE_PAGE_PUBLISH_CHUNK_SIZE = 500;
+    protected const PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE = 500;
+
     /**
      * @api
      *
@@ -33,5 +36,25 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     public function getProductPageSynchronizationPoolName(): ?string
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductConcretePagePublishChunkSize(): int
+    {
+        return static::PRODUCT_CONCRETE_PAGE_PUBLISH_CHUNK_SIZE;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductAbstractPagePublishChunkSize(): int
+    {
+        return static::PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE;
     }
 }
