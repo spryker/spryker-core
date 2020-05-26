@@ -1935,7 +1935,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated use `createAllModuleFinder` instead.
+     * @deprecated Use {@link createAllModuleFinder()} instead.
      *
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinderInterface
      */

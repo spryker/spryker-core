@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\RangeExtractor` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\RangeExtractor} instead.
  */
 class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {

@@ -12,9 +12,24 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 interface MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
+     * @param string[] $merchantReferences
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function getByMerchantReferences(array $merchantReferences): array;
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
+
+    /**
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOne(int $idMerchant): ?MerchantStorageTransfer;
+
 }

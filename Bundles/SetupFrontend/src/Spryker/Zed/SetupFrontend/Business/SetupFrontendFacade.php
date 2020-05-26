@@ -74,6 +74,8 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
@@ -99,6 +101,8 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -133,5 +137,35 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     public function removeZedAssets()
     {
         return $this->getFactory()->createZedAssetsCleaner()->clean();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMerchantPortalDependencies(LoggerInterface $logger): bool
+    {
+        return $this->getFactory()->createMerchantPortalDependencyInstaller()->install($logger);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function buildMerchantPortalFrontend(LoggerInterface $logger): bool
+    {
+        return $this->getFactory()->createMerchantPortalBuilder()->build($logger);
     }
 }

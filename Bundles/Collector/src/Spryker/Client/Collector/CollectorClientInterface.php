@@ -8,7 +8,7 @@
 namespace Spryker\Client\Collector;
 
 /**
- * @deprecated Use \Spryker\Client\Url\UrlClientInterface instead.
+ * @deprecated Use {@link \Spryker\Client\Url\UrlClientInterface} instead.
  */
 interface CollectorClientInterface
 {
@@ -18,7 +18,7 @@ interface CollectorClientInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Client\Url\UrlClientInterface:matchUrl() instead.
+     * @deprecated Use {@link \Spryker\Client\Url\UrlClientInterface:matchUrl()} instead.
      *
      * @param string $url
      * @param string $localeName

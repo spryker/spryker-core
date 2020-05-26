@@ -10,7 +10,7 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Iterator;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataQueryContainerPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
@@ -18,6 +18,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 
 class QueryContainerExporter implements ExporterInterface
 {
+    use InstancePoolingTrait;
+
     protected const DEFAULT_CHUNK_SIZE = 100;
 
     /**
@@ -63,17 +65,14 @@ class QueryContainerExporter implements ExporterInterface
      */
     public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
-        $isPoolingEnabled = Propel::isInstancePoolingEnabled();
-        if ($isPoolingEnabled) {
-            Propel::disableInstancePooling();
-        }
+        $isPoolingStateChanged = $this->disableInstancePooling();
 
         foreach ($plugins as $plugin) {
             $this->exportData($ids, $plugin);
         }
 
-        if ($isPoolingEnabled) {
-            Propel::enableInstancePooling();
+        if ($isPoolingStateChanged) {
+            $this->enableInstancePooling();
         }
     }
 

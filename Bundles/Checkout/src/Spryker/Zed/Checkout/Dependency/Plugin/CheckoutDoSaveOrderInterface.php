@@ -10,7 +10,7 @@ namespace Spryker\Zed\Checkout\Dependency\Plugin;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface as ExtensionCheckoutDoSaveOrderInterface;
 
 /**
- * @deprecated Use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface} instead.
  */
 interface CheckoutDoSaveOrderInterface extends ExtensionCheckoutDoSaveOrderInterface
 {

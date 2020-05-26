@@ -56,7 +56,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getLocale($localeName) instead
+     * @deprecated Use {@link getLocale()} instead
      *
      * @param string $localeCode
      *

@@ -12,7 +12,7 @@ use Elastica\Suggest\Phrase;
 use Elastica\Suggest\Term;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder} instead.
  */
 class SuggestBuilder implements SuggestBuilderInterface
 {
