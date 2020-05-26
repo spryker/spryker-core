@@ -15,7 +15,7 @@ use Spryker\Shared\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector} instead.
  */
 class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
 {
