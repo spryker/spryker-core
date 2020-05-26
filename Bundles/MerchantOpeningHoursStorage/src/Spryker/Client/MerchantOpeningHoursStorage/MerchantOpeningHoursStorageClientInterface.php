@@ -23,4 +23,18 @@ interface MerchantOpeningHoursStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer|null
      */
     public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant opening hours within Storage with given merchant IDs.
+     * - Returned data is indexed by merchant IDs.
+     * - Returns an empty array if merchant opening hours were not found.
+     *
+     * @api
+     *
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array;
 }

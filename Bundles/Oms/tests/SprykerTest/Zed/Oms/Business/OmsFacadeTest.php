@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
@@ -235,6 +237,40 @@ class OmsFacadeTest extends Unit
             $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState(),
             'Order item state ID does not equal to an expected value.'
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithOmsStatesReturnsUpdatedTransferWithCorrectData(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemBuilder())->withState()->build();
+        $orderTransfer = (new OrderTransfer())->addItem($itemTransfer);
+
+        // Act
+        $expandedOrderTransfer = $this->createOmsFacade()
+            ->expandOrderWithOmsStates($orderTransfer);
+
+        // Assert
+        $this->assertSame([$itemTransfer->getState()->getName()], $expandedOrderTransfer->getItemStates());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithOmsStatesDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+        $orderTransfer = (new OrderTransfer())->addItem($itemTransfer);
+
+        // Act
+        $expandedOrderTransfer = $this->createOmsFacade()
+            ->expandOrderWithOmsStates($orderTransfer);
+
+        // Assert
+        $this->assertEmpty($expandedOrderTransfer->getItemStates());
     }
 
     /**
