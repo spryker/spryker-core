@@ -12,11 +12,6 @@ import { LocaleModule } from '@spryker/locale';
 import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 
-// TODO: Remove after locale module will be fixed
-import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -28,13 +23,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
         EnLocaleModule,
         DeLocaleModule,
     ],
-    providers: [
-        // TODO: Remove after locale module will be fixed
-        {
-            provide: NZ_I18N,
-            useValue: en_US,
-        },
-    ],
+    providers: [],
 })
 export class AppModule extends CustomElementModule {
     protected components = [
@@ -48,7 +37,4 @@ export class AppModule extends CustomElementModule {
         },
     ];
 }
-
-// TODO: Remove after locale module will be fixed
-registerLocaleData(en);
 
