@@ -18,7 +18,7 @@ use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSale
 class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
-    public const CLIENT_SALES_RETURN_PAGE_SEARCH = 'CLIENT_SALES_RETURN_PAGE_SEARCH';
+    public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -58,7 +58,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesReturnSearchClient(Container $container): Container
     {
-        $container->set(static::CLIENT_SALES_RETURN_PAGE_SEARCH, function (Container $container) {
+        $container->set(static::CLIENT_SALES_RETURN_SEARCH, function (Container $container) {
             return new SalesReturnsRestApiToSalesReturnSearchClientBridge(
                 $container->getLocator()->salesReturnSearch()->client()
             );

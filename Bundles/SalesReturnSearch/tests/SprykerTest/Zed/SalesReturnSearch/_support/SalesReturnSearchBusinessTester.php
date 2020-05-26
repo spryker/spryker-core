@@ -48,7 +48,7 @@ class SalesReturnSearchBusinessTester extends Actor
      */
     public function cleanUpDatabase(): void
     {
-        $this->cleanUpConfigurableBundlePageSearchTable();
+        $this->cleanUpReturnReasonSearchTable();
     }
 
     /**
@@ -114,7 +114,7 @@ class SalesReturnSearchBusinessTester extends Actor
     /**
      * @return void
      */
-    protected function cleanUpConfigurableBundlePageSearchTable(): void
+    protected function cleanUpReturnReasonSearchTable(): void
     {
         SpySalesReturnReasonSearchQuery::create()->deleteAll();
     }

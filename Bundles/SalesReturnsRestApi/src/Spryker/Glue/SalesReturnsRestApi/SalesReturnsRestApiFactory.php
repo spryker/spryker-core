@@ -128,6 +128,6 @@ class SalesReturnsRestApiFactory extends AbstractFactory
      */
     public function getSalesReturnSearchClient(): SalesReturnsRestApiToSalesReturnSearchClientInterface
     {
-        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_SALES_RETURN_PAGE_SEARCH);
+        return $this->getProvidedDependency(SalesReturnsRestApiDependencyProvider::CLIENT_SALES_RETURN_SEARCH);
     }
 }
