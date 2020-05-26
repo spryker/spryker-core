@@ -35,6 +35,7 @@ class ImportOrderItemsStatusConsole extends Console
     protected const TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE = 'order_item_oms_event_state';
     protected const TABLE_HEADER_COLUMN_COUNT_TRANSITIONED_ITEM = 'count_transitioned_item';
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+    protected const TABLE_HEADER_COLUMN_MESSAGE = 'message';
 
     /**
      * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
@@ -124,17 +125,15 @@ class ImportOrderItemsStatusConsole extends Console
         $successfullyProcessedRowsCount = 0;
         $rowNumber = $this->getStartFromOption();
 
-        try {
-            while ($rowNumber < $totalRowsCount) {
-                $rowData = $csvReader->read();
-                $rowNumber++;
-
+        while ($rowNumber < $totalRowsCount) {
+            $rowData = $csvReader->read();
+            $rowNumber++;
+            try {
                 $salesOrderItemTransfer = $this->getFacade()
                     ->findSalesOrderItemTranferByOrderItemReference($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]);
-                $countTransitionedItem = 0;
 
                 if (!$salesOrderItemTransfer) {
-                    throw new Exception(sprintf('Sales order item not found for %s order item reference.', $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]));
+                    throw new Exception('Sales order item not found');
                 }
 
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
@@ -142,23 +141,23 @@ class ImportOrderItemsStatusConsole extends Console
                     $salesOrderItemTransfer->getIdSalesOrderItem()
                 );
 
-                if ($result !== null) {
-                    $successfullyProcessedRowsCount++;
+                if ($result === null) {
+                    throw new Exception('Can\'t trigger event.');
                 }
+                $successfullyProcessedRowsCount++;
 
                 $this->logOutput(
                     $rowNumber,
-                    $successfullyProcessedRowsCount,
-                    $totalRowsCount,
                     $rowData,
                     ($result !== null)
                 );
-            }
-        } catch (Throwable $exception) {
-            $this->error($exception->getMessage());
-
-            if ($exception->getMessage() == !$input->getOption(static::OPTION_IGNORE_ERRORS)) {
-                return static::CODE_ERROR;
+            } catch (Throwable $exception) {
+                $this->logOutput(
+                    $rowNumber,
+                    $rowData,
+                    false,
+                    $exception->getMessage()
+                );
             }
         }
 
@@ -208,6 +207,7 @@ class ImportOrderItemsStatusConsole extends Console
             static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE,
             static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE,
             static::TABLE_HEADER_COLUMN_RESULT,
+            static::TABLE_HEADER_COLUMN_MESSAGE,
         ]);
         $table->render();
 
@@ -216,19 +216,17 @@ class ImportOrderItemsStatusConsole extends Console
 
     /**
      * @param int $rowNumber
-     * @param int $successfullyProcessedRowsCount
-     * @param int $totalRowsCount
      * @param array $rowData
      * @param bool $result
+     * @param string|null $message
      *
      * @return void
      */
     protected function logOutput(
         int $rowNumber,
-        int $successfullyProcessedRowsCount,
-        int $totalRowsCount,
         array $rowData,
-        bool $result
+        bool $result,
+        $message = null
     ): void {
         if ($this->output->isVerbose()) {
             $this->outputTable->appendRow([
@@ -236,7 +234,8 @@ class ImportOrderItemsStatusConsole extends Console
                 $rowData[static::TABLE_HEADER_COLUMN_ORDER_REFERENCE],
                 $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE],
                 $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE],
-                $result,
+                $result ? 'success' : 'fail',
+                $message,
             ]);
         }
     }
