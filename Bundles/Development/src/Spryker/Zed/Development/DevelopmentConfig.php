@@ -132,7 +132,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath() instead.
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath()} instead.
      *
      * Gets path to Spryker core modules.
      *
@@ -152,7 +152,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath() instead.
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerSdk core modules.
      *
@@ -166,7 +166,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath() instead.
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerShop core modules.
      *
@@ -180,7 +180,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath() instead.
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerEco core modules.
      *

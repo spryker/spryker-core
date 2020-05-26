@@ -115,7 +115,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @deprecated Use findProductConcreteBySku() instead.
+     * @deprecated Use {@link findProductConcreteBySku()} instead.
      *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
