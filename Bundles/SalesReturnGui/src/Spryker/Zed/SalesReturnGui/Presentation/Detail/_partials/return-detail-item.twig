@@ -24,9 +24,7 @@
             } %}
         </div>
 
-        {% if returnItem.reason is not null %}
-            {{ 'Reason' | trans }}: {{ returnItem.reason | trans }}
-        {% endif %}
+        {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
     </td>
     <td>
         x {{ orderItem.quantity }}

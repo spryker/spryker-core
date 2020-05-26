@@ -113,7 +113,6 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     {
         return $this->getFactory()
             ->createProductBundleQuery()
-            ->clearSelectColumns()
             ->useSpyProductRelatedByFkProductQuery()
                 ->filterBySku_In($productConcreteSkus)
             ->endUse()

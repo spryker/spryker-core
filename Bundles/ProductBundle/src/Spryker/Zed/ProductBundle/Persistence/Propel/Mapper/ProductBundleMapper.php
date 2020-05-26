@@ -58,7 +58,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle[] $salesOrderItemBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
