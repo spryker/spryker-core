@@ -28,7 +28,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_URL_BEFORE_DELETE = 'PLUGINS_URL_BEFORE_DELETE';
     public const PLUGINS_URL_AFTER_DELETE = 'PLUGINS_URL_AFTER_DELETE';
     /**
-     * @deprecated Use `getConnection()` method from query container instead.
+     * @deprecated Use the `getConnection()` method from query container instead.
      */
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 

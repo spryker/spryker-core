@@ -140,7 +140,7 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacade::getSchemaDirectory()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacadeInterface::getSchemaDirectory()} instead.
      *
      * @return string[]
      */

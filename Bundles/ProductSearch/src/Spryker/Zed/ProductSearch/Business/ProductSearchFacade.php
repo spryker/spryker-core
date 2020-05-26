@@ -32,7 +32,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\ProductSearchFacade::mapDynamicProductAttributesToSearchData` instead.
+     * @deprecated Use {@link mapDynamicProductAttributesToSearchData()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

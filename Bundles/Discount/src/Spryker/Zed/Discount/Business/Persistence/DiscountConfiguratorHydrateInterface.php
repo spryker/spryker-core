@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 interface DiscountConfiguratorHydrateInterface
 {
     /**
-     * @deprecated Use `findByIdDiscount()` instead.
+     * @deprecated Use {@link findByIdDiscount()} instead.
      *
      * @param int $idDiscount
      *

@@ -48,7 +48,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()} instead.
      *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
      */
@@ -79,7 +79,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::getInstallerPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchBusinessFactory::getInstallerPlugins()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -128,7 +128,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::createSearchSourceInstaller()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchBusinessFactory::createSearchSourceInstaller()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -313,7 +313,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndexCopier()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndexCopier()} instead.
      *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
      */

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Index\IndexInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\Index\IndexInterface} instead.
  */
 interface SearchIndexManagerInterface
 {
