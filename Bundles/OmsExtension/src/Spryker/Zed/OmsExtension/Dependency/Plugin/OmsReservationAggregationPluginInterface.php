@@ -9,11 +9,14 @@ namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
+/**
+ * Provides the ability to aggregate reservation for product.
+ */
 interface OmsReservationAggregationPluginInterface
 {
     /**
      * Specification:
-     * - Aggregates reservations for a given ReservationRequestTransfer.
+     * - Aggregates reservations for a given ReservationRequest.
      *
      * @api
      *

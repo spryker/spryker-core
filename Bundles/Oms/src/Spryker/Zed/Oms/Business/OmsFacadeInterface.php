@@ -664,7 +664,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     * - Returns reserved quantity for provided ReservationRequestTransfer.
+     * - Returns reserved quantity for provided ReservationRequest.
      *
      * @api
      *

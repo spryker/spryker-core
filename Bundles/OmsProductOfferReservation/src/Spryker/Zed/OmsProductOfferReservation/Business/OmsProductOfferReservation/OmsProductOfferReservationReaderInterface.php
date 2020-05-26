@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 
+/**
+ * Provides the ability to get data about reservation for product.
+ */
 interface OmsProductOfferReservationReaderInterface
 {
     /**
