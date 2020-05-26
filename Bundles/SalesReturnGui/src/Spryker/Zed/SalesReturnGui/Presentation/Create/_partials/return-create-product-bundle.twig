@@ -1,3 +1,5 @@
+{% do bundleProduct.setReturnPolicyMessages((bundleItems | first).returnPolicyMessages) %}
+
 {% include '@SalesReturnGui/Create/_partials/return-create-item.twig' with {
     returnItem: returnBundleItem,
     orderItem: bundleProduct,
