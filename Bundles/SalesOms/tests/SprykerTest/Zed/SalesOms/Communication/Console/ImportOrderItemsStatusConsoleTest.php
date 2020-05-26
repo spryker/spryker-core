@@ -100,9 +100,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
         $this->tester->setDependency(SalesOmsDependencyProvider::FACADE_OMS, function (Container $container) {
             $omsFacadeMock = $this->createMock(OmsFacadeInterface::class);
 
-            $omsFacadeMock->method('triggerEventForOneOrderItem')->willReturn(
-                []
-            );
+            $omsFacadeMock->method('triggerEventForOneOrderItem')->willReturn([]);
 
             return new SalesOmsToOmsFacadeBridge($omsFacadeMock);
         });

@@ -28,6 +28,7 @@ class SalesOmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addOmsFacade($container);
 

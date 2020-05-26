@@ -22,12 +22,12 @@ interface SalesOmsFacadeInterface
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer|null
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
     public function expandOrderItemWithReference(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
-    ): ?SpySalesOrderItemEntityTransfer;
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * Specification:

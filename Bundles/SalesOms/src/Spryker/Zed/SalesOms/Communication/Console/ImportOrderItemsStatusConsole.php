@@ -35,6 +35,7 @@ class ImportOrderItemsStatusConsole extends Console
     protected const TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE = 'order_item_oms_event_state';
     protected const TABLE_HEADER_COLUMN_COUNT_TRANSITIONED_ITEM = 'count_transitioned_item';
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+
     /**
      * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
      */

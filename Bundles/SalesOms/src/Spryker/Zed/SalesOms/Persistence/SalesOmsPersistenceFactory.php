@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesOms\Persistence;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesOms\Persistence\Mapper\SalesOmsMapper;
-use Spryker\Zed\SalesOms\Persistence\Mapper\SalesOmsMapperInterface;
 
 /**
  * @method \Spryker\Zed\SalesOms\SalesOmsConfig getConfig()
@@ -28,9 +27,9 @@ class SalesOmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesOms\Persistence\Mapper\SalesOmsMapperInterface
+     * @return \Spryker\Zed\SalesOms\Persistence\Mapper\SalesOmsMapper
      */
-    public function createSalesOmsMapper(): SalesOmsMapperInterface
+    public function createSalesOmsMapper(): SalesOmsMapper
     {
         return new SalesOmsMapper();
     }
