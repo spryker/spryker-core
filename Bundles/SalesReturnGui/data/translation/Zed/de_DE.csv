@@ -38,7 +38,7 @@ Product,Produkt
 Quantity,Anzahl
 Price,Preis
 "Item total","Artikel Insgesamt"
-"Return Policy","Rücknahmegarantie"
+"Return Policy",Rücknahmegarantie
 State,Zustand
 "Create return","Rückgabe erstellen"
 "Requested return with ID ""%id%"" was not found.","Gewünschte Retoure mit ID ""%id%"" wurde nicht gefunden."
