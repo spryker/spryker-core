@@ -190,4 +190,8 @@
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

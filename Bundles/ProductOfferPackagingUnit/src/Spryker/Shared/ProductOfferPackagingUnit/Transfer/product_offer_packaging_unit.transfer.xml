@@ -7,6 +7,7 @@
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
         <property name="sumAmount" type="decimal"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -18,6 +19,13 @@
         <property name="sku" type="string"/>
         <property name="reservedStates" type="OmsStateCollection"/>
         <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+    </transfer>
+
+    <transfer name="OmsState">
     </transfer>
 
 </transfers>

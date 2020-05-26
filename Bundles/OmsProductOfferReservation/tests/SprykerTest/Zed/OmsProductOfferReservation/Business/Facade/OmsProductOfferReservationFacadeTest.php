@@ -52,7 +52,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setIdStore($storeTransfer->getIdStore());
+            ->setStore($storeTransfer);
 
         // Act
         $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
@@ -73,7 +73,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setIdStore($storeTransfer->getIdStore());
+            ->setStore($storeTransfer);
 
         // Act
         $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
@@ -100,7 +100,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->setIdStore($wrongStoreTransfer->getIdStore());
+            ->setStore($wrongStoreTransfer);
 
         // Act
         $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
@@ -133,6 +133,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
         $salesAggregationTransfers = $this->tester->getFacade()->getAggregatedReservations(
             (new ReservationRequestTransfer())
                 ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->setSku($productOfferTransfer->getConcreteSku())
                 ->setReservedStates(
                     $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
                 )
@@ -168,7 +169,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
         // Assert
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($reservationRequestTransfer->getProductOfferReference())
-            ->setIdStore($reservationRequestTransfer->getStore()->getIdStore());
+            ->setStore($reservationRequestTransfer->getStore());
 
         $reservationResponseTransfer = $this->tester->getFacade()->getQuantity($omsProductOfferReservationCriteriaTransfer);
         $this->assertInstanceOf(Decimal::class, $reservationResponseTransfer->getReservationQuantity());

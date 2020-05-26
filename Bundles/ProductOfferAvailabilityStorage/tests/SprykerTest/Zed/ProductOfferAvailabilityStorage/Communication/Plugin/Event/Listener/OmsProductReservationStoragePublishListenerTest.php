@@ -90,7 +90,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $omsProductReservationStoragePublishListener->setFacade($this->tester->getFacade());
 
         $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($omsProductOfferReservationTransfer->getIdProductOfferReservation()),
+            (new EventEntityTransfer())->setId($omsProductOfferReservationTransfer->getIdOmsProductOfferReservation()),
         ];
 
         // Act

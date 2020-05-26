@@ -32,7 +32,7 @@ class OmsProductOfferReservationHelper extends Module
         $omsProductOfferReservationEntity->fromArray($omsProductOfferReservationTransfer->toArray());
         $omsProductOfferReservationEntity->save();
 
-        $omsProductOfferReservationTransfer->setIdProductOfferReservation($omsProductOfferReservationEntity->getIdOmsProductOfferReservation());
+        $omsProductOfferReservationTransfer->setIdOmsProductOfferReservation($omsProductOfferReservationEntity->getIdOmsProductOfferReservation());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($omsProductOfferReservationEntity): void {
             $omsProductOfferReservationEntity->delete();

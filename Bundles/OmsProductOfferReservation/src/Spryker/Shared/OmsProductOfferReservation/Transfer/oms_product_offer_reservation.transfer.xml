@@ -20,6 +20,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="store" type="Store"/>
         <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ReservationResponse">
@@ -27,12 +28,22 @@
     </transfer>
 
     <transfer name="SalesOrderItemStateAggregation">
+        <property name="sku" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
     <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
     </transfer>
 
     <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="OmsState">
     </transfer>
 
 </transfers>

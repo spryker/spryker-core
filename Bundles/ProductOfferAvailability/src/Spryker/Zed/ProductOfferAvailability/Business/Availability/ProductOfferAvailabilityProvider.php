@@ -75,7 +75,8 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
 
         $reservationRequestTransfer = (new ReservationRequestTransfer())
             ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore())
+            ->setSku($productOfferAvailabilityRequestTransfer->getSku());
 
         $reservationResponseTransfer = $this->omsFacade->getOmsReservedProductQuantity($reservationRequestTransfer);
 
