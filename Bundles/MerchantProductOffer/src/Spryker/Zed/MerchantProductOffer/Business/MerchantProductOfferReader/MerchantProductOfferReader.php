@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface;
 
@@ -45,7 +46,9 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     public function getMerchantProductOfferCollection(
         MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
     ): ProductOfferCollectionTransfer {
-        $productOfferIds = $this->merchantProductOfferRepository->getProductOfferIds($merchantProductOfferCriteriaFilterTransfer);
+        $productOfferIds = $this->merchantProductOfferRepository->getProductOfferData($merchantProductOfferCriteriaFilterTransfer, [
+            SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
+        ]);
 
         if (!$productOfferIds) {
             return new ProductOfferCollectionTransfer();

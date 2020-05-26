@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -20,17 +18,20 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param string[] $columnsToSelect
      *
-     * @return int[]
+     * @return mixed[]
      */
-    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
-    {
+    public function getProductOfferData(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer,
+        array $columnsToSelect
+    ): array {
         $productOfferQuery = $this->applyFilters(
             $merchantProductOfferCriteriaFilterTransfer,
             $this->getFactory()->getProductOfferPropelQuery()
         );
 
-        $productOfferQuery->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER]);
+        $productOfferQuery->select($columnsToSelect);
 
         return $productOfferQuery->find()->getData();
     }
@@ -56,7 +57,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
         if ($merchantProductOfferCriteriaFilterTransfer->getMerchantReference()) {
             $productOfferQuery
                 ->useSpyMerchantQuery()
-                    ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
+                ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
                 ->endUse();
         }
 
@@ -65,24 +66,5 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
         }
 
         return $productOfferQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    public function getProductOfferCollectionTransfer(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-    ): ProductOfferCollectionTransfer {
-        $productOfferQuery = $this->applyFilters(
-            $merchantProductOfferCriteriaFilterTransfer,
-            $this->getFactory()->getProductOfferPropelQuery()
-        );
-        $productOfferEntities = $productOfferQuery->find();
-
-        return $this->getFactory()
-            ->createMerchantProductOfferMapper()
-            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities);
     }
 }

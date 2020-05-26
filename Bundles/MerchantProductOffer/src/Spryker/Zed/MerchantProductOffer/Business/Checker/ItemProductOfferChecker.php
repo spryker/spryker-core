@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
@@ -42,46 +43,49 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
-        $itemsWithOffers = [];
+        $productConcreteSkusByOfferReference = [];
         foreach ($cartChangeTransfer->getItems() as $cartItem) {
             if (!$cartItem->getProductOfferReference()) {
                 continue;
             }
 
-            $itemsWithOffers[$cartItem->getProductOfferReference()] = $cartItem->getSku();
+            $productConcreteSkusByOfferReference[$cartItem->getProductOfferReference()] = $cartItem->getSku();
         }
 
-        $productOfferReferences = array_keys($itemsWithOffers);
+        $productOfferReferences = array_keys($productConcreteSkusByOfferReference);
         if (!$productOfferReferences) {
             return $cartPreCheckResponseTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = new MerchantProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
+        $productOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences($productOfferReferences)
+            ->setIsActive(true);
 
-        $productOffers = $this->merchantProductOfferRepository
-            ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
-            ->getProductOffers();
+        $columnsToSelect = [SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, SpyProductOfferTableMap::COL_CONCRETE_SKU];
+        $productOfferData = $this->merchantProductOfferRepository
+            ->getProductOfferData($productOfferCriteriaFilterTransfer, $columnsToSelect);
 
-        if (!$productOffers->count()) {
+        if (!$productOfferData) {
             $cartPreCheckResponseTransfer->setIsSuccess(false);
-            foreach ($itemsWithOffers as $sku => $productOfferReference) {
-                $cartPreCheckResponseTransfer->addMessage($this->createMessage($sku));
+            foreach ($productConcreteSkusByOfferReference as $sku => $productOfferReference) {
+                $cartPreCheckResponseTransfer->addMessage($this->createErrorMessage($sku));
             }
 
             return $cartPreCheckResponseTransfer;
         }
 
-        foreach ($productOffers as $productOffer) {
+        foreach ($productOfferData as $productOfferDatum) {
+            $productOfferReference = $productOfferDatum[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE];
+            $productOfferConcreteSku = $productOfferDatum[SpyProductOfferTableMap::COL_CONCRETE_SKU];
             if (
-                isset($itemsWithOffers[$productOffer->getProductOfferReference()])
-                && $productOffer->getConcreteSku() === $itemsWithOffers[$productOffer->getProductOfferReference()]
+                isset($productConcreteSkusByOfferReference[$productOfferReference])
+                && $productOfferConcreteSku === $productConcreteSkusByOfferReference[$productOfferReference]
             ) {
                 continue;
             }
 
             $cartPreCheckResponseTransfer->setIsSuccess(false)
-                ->addMessage($this->createMessage($productOffer->getConcreteSku()));
+                ->addMessage($this->createErrorMessage($productOfferConcreteSku));
         }
 
         return $cartPreCheckResponseTransfer;
@@ -92,7 +96,7 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessage(string $sku): MessageTransfer
+    protected function createErrorMessage(string $sku): MessageTransfer
     {
         return (new MessageTransfer())
             ->setType(static::MESSAGE_TYPE_ERROR)

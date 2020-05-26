@@ -8,23 +8,17 @@
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 
 interface MerchantProductOfferRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param string[] $columnsToSelect
      *
-     * @return int[]
+     * @return mixed[]
      */
-    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    public function getProductOfferCollectionTransfer(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-    ): ProductOfferCollectionTransfer;
+    public function getProductOfferData(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer,
+        array $columnsToSelect
+    ): array;
 }
