@@ -50,12 +50,13 @@ class OmsProductOfferReservationReader implements OmsProductOfferReservationRead
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        $reservationRequestTransfer->requireProductOfferReference();
+        $reservationRequestTransfer->requireSku();
         $reservationRequestTransfer->requireReservedStates();
 
         return $this->omsProductOfferReservationRepository->getAggregatedReservations(
-            $reservationRequestTransfer->getProductOfferReference(),
+            $reservationRequestTransfer->getSku(),
             $reservationRequestTransfer->getReservedStates()->getStates(),
+            $reservationRequestTransfer->getProductOfferReference(),
             $reservationRequestTransfer->getStore()
         );
     }

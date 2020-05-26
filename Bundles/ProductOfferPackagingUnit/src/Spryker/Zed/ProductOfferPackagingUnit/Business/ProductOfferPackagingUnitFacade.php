@@ -28,12 +28,13 @@ class ProductOfferPackagingUnitFacade extends AbstractFacade implements ProductO
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
-        $reservationRequestTransfer->requireProductOfferReference();
+        $reservationRequestTransfer->requireSku();
         $reservationRequestTransfer->requireReservedStates();
 
         return $this->getRepository()->getAggregatedReservations(
-            $reservationRequestTransfer->getProductOfferReference(),
+            $reservationRequestTransfer->getSku(),
             $reservationRequestTransfer->getReservedStates()->getStates(),
+            $reservationRequestTransfer->getProductOfferReference(),
             $reservationRequestTransfer->getStore()
         );
     }
