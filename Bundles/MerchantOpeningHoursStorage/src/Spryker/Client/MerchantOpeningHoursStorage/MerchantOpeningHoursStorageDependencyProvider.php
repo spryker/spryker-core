@@ -11,11 +11,14 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientBridge;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceBridge;
+use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceBridge;
 
 class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,6 +30,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyPr
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -54,6 +58,22 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new MerchantOpeningHoursStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
         });
 
         return $container;

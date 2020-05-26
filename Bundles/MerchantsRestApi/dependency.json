@@ -1,0 +1,5 @@
+{
+    "include": {
+        "spryker/merchant-profile": "MerchantProfile provides basic merchant attributes and merchant address attributes."
+    }
+}
