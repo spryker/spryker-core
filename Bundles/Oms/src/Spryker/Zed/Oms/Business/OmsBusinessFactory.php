@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oms\Business\Expander\OrderExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpanderInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -348,6 +350,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createStateHistoryExpander(): StateHistoryExpanderInterface
     {
         return new StateHistoryExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander();
     }
 
     /**
