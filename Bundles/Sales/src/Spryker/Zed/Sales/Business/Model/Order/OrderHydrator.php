@@ -174,7 +174,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($idSalesOrder)
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
         if ($orderEntity === null) {
