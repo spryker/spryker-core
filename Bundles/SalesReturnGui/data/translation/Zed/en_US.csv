@@ -8,7 +8,6 @@ View,View
 "Order Reference","Order Reference"
 "Returned Items","Returned Items"
 "Return Date","Return Date"
-State,State
 "Print Slip","Print Slip"
 "List of Returns","List of Returns"
 Returns,Returns
@@ -32,7 +31,6 @@ Reason,Reason
 "Return was successfully created.","Return was successfully created."
 "Create Return","Create Return"
 "Back to Order","Back to Order"
-"General information","General information"
 "Order reference","Order reference"
 "Select Items to Return","Select Items to Return"
 Product,Product

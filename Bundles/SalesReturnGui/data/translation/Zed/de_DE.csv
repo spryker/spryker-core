@@ -1,27 +1,26 @@
-Return, Rückgabe
-"Return Reference", "Retourenreferenz"
-Items, Artikel
-"Remuneration total","Rückerstattungsbetrag"
+Return,Rückgabe
+"Return Reference",Retourenreferenz
+Items,Artikel
+"Remuneration total",Rückerstattungsbetrag
 Actions,Aktionen
 View,Anzeigen
 "Return ID","Retour ID"
 "Order Reference",Bestellreferenz
 "Returned Items","Retournierte Artikel"
 "Return Date","Retoure Datum"
-State,Status
 "Print Slip","Beleg drucken"
 "List of Returns","Alle Retouren"
 Returns,Retouren
-"Return Ref","Retourenref."
+"Return Ref",Retourenref.
 Barcode,Barcode
 "Product SKU","Product SKU"
-"Product Name","Productname"
-"Default Price","Standardpreis"
+"Product Name",Productname
+"Default Price",Standardpreis
 Qty,Anz
-"Total Price","Gesamtpreis"
-"Return Reason","Rücksendegrund"
+"Total Price",Gesamtpreis
+"Return Reason",Rücksendegrund
 Reason,Grund
-"Order Ref","Orderref."
+"Order Ref",Orderref.
 "Return with id ""%id%"" was not found.","Retoure mit id ""%id%"" wurde nicht gefunden."
 "Items to Return","Artikeln zum Zurückgeben"
 "Remuneration Total","Neuberechnung insgesamt"
@@ -33,7 +32,7 @@ Reason,Grund
 "Create Return","Rückgabe erstellen"
 "Back to Order","Zurück zur Bestellung"
 "General information","Allgemeine Information"
-"Order reference","Bestellnummer"
+"Order reference",Bestellnummer
 "Select Items to Return","Artikeln zum Zurückgeben auswählen"
 Product,Produkt
 Quantity,Anzahl
@@ -47,7 +46,6 @@ State,Zustand
 Customer,Kunde
 Name,Name
 Email,E-Mail
-"General information","Allgemeine Information"
 "Retured Items","Retournierte Artikel"
 "Trigger all matching states","Alle passenden Stati anstoßen"
 Total,Gesamt
