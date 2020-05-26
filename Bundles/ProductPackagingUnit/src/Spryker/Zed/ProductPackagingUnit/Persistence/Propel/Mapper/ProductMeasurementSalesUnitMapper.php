@@ -53,7 +53,6 @@ class ProductMeasurementSalesUnitMapper
         $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($salesOrderItemEntity);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
             $salesOrderItemEntity->getAmountMeasurementUnitName(),
             $salesOrderItemEntity->getAmountMeasurementUnitCode()

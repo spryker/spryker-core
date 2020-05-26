@@ -49,7 +49,7 @@ class SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest extends Unit
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
-        $this->assertFalse($sanitizedItemTransfers[1]->getIsReturnable());
+        $this->assertTrue($sanitizedItemTransfers[1]->getIsReturnable());
         $this->assertTrue($sanitizedItemTransfers[2]->getIsReturnable());
         $this->assertTrue($sanitizedItemTransfers[3]->getIsReturnable());
     }

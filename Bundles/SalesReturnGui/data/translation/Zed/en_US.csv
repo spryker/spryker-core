@@ -31,6 +31,7 @@ Reason,Reason
 "Return was successfully created.","Return was successfully created."
 "Create Return","Create Return"
 "Back to Order","Back to Order"
+"General information","General information"
 "Order reference","Order reference"
 "Select Items to Return","Select Items to Return"
 Product,Product
@@ -45,7 +46,6 @@ State,State
 Customer,Customer
 Name,Name
 Email,Email
-"General information","General information"
 "Retured Items","Retured Items"
 "Trigger all matching states","Trigger all matching states"
 Total,Total
