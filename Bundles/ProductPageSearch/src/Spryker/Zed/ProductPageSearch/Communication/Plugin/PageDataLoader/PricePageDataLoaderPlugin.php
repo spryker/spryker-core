@@ -42,7 +42,7 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

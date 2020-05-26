@@ -30,8 +30,8 @@ interface TransferFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferFacadeInterface::deleteGeneratedDataTransferObjects()` instead to generate data transfers.
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferFacadeInterface::deleteGeneratedEntityTransferObjects()` instead to generate entity transfers.
+     * @deprecated Use {@link deleteGeneratedDataTransferObjects()} instead to generate data transfers.
+     *   Use {@link deleteGeneratedEntityTransferObjects()} instead to generate entity transfers.
      *
      * @return void
      */

@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToP
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator} instead.
  */
 class ShipmentCartValidator implements ShipmentCartValidatorInterface
 {

@@ -67,6 +67,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
             $productLabelTransfer = new ProductLabelTransfer();
             $productLabelTransfer->setName($this->config->getProductDiscontinueLabelName());
             $productLabelTransfer->setFrontEndReference($this->config->getProductDiscontinueLabelFrontEndReference());
+            $productLabelTransfer->setPosition($this->config->getProductLabelDefaultPosition());
 
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->createLabel(
@@ -93,6 +94,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         $productLabelTransfer
             ->setIsActive(true)
             ->setIsExclusive(false)
+            ->setIsDynamic(true)
             ->setIsPublished(true);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {

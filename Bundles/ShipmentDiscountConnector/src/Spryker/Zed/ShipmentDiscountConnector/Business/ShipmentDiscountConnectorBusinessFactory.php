@@ -42,7 +42,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCarrierDiscountDecisionRuleWithMultiShipment() instead.
+     * @deprecated Use {@link createCarrierDiscountDecisionRuleWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */
@@ -66,7 +66,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCarrierDiscountDecisionRuleWithMultiShipment() instead.
+     * @deprecated Use {@link createCarrierDiscountDecisionRuleWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
@@ -90,7 +90,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createMethodDiscountCollectorWithMultiShipment() instead.
+     * @deprecated Use {@link createMethodDiscountCollectorWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */
@@ -114,7 +114,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createMethodDiscountDecisionRuleWithMultiShipment() instead.
+     * @deprecated Use {@link createMethodDiscountDecisionRuleWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
@@ -136,7 +136,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentPriceDiscountCollectorWithMultiShipment() instead.
+     * @deprecated Use {@link createShipmentPriceDiscountCollectorWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */
@@ -160,7 +160,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentPriceDiscountDecisionRuleWithMultiShipment() instead.
+     * @deprecated Use {@link createShipmentPriceDiscountDecisionRuleWithMultiShipment()} instead.
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */

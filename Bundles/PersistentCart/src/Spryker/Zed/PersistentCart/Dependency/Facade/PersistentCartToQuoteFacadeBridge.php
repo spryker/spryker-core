@@ -60,7 +60,7 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     }
 
     /**
-     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     * @deprecated Use {@link findQuoteByCustomerAndStore()} instead.
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

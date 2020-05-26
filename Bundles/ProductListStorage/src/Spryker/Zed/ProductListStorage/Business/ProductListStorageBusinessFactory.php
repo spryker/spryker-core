@@ -35,7 +35,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductListProductAbstractStorageWriter(
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()
         );
     }
 
@@ -47,7 +47,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductListProductConcreteStorageWriter(
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()
         );
     }
 

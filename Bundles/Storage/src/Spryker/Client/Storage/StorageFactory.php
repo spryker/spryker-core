@@ -32,7 +32,7 @@ class StorageFactory extends AbstractFactory
     protected static $storageService;
 
     /**
-     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface} instead.
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
@@ -69,7 +69,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getConnectionParameters() instead.
+     * @deprecated Use {@link getConnectionParameters()} instead.
      *
      * @return array
      */

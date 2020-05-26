@@ -96,7 +96,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()} instead.
      *
      * @return void
      */
