@@ -47,15 +47,16 @@ class ProductMeasurementSalesUnitMapper
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
     ): ProductMeasurementSalesUnitTransfer {
         $productMeasurementSalesUnitTransfer = $productMeasurementSalesUnitTransfer
-            ->setConversion($salesOrderItemEntity->getQuantityMeasurementUnitConversion())
-            ->setPrecision($salesOrderItemEntity->getQuantityMeasurementUnitPrecision());
+            ->setConversion($salesOrderItemEntity->getAmountMeasurementUnitConversion())
+            ->setPrecision($salesOrderItemEntity->getAmountMeasurementUnitPrecision());
 
         $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($salesOrderItemEntity);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
+
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
-            $salesOrderItemEntity->getQuantityMeasurementUnitName(),
-            $salesOrderItemEntity->getQuantityMeasurementUnitCode()
+            $salesOrderItemEntity->getAmountMeasurementUnitName(),
+            $salesOrderItemEntity->getAmountMeasurementUnitCode()
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
@@ -70,8 +71,8 @@ class ProductMeasurementSalesUnitMapper
     protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItem $salesOrderItemEntity): ProductMeasurementBaseUnitTransfer
     {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($salesOrderItemEntity->getAmountBaseMeasurementUnitName() ?? '');
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($salesOrderItemEntity->getQuantityBaseMeasurementUnitName());
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementBaseUnitTransfer;
