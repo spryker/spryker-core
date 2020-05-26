@@ -56,18 +56,18 @@ class VoucherRestResponseBuilder implements VoucherRestResponseBuilderInterface
                 );
 
             $voucherCode = $discountTransfer->getVoucherCode();
-            $discountResource = $this->restResourceBuilder->createRestResource(
+            $voucherResource = $this->restResourceBuilder->createRestResource(
                 CartCodesRestApiConfig::RESOURCE_VOUCHERS,
                 $voucherCode,
                 $restDiscountsAttributesTransfer
             );
 
-            $discountResource->addLink(
+            $voucherResource->addLink(
                 RestLinkInterface::LINK_SELF,
                 $this->getDiscountsResourceSelfLink($parentResourceType, $parentResourceId, $voucherCode)
             );
 
-            $voucherResources[] = $discountResource;
+            $voucherResources[] = $voucherResource;
         }
 
         return $voucherResources;
