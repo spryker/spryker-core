@@ -38,7 +38,7 @@ class SalesReturnSearchEntityManager extends AbstractEntityManager implements Sa
      *
      * @return void
      */
-    public function saveReturnReasonSearchPageSearch(ReturnReasonSearchTransfer $returnReasonSearchTransfer): void
+    public function saveReturnReasonSearch(ReturnReasonSearchTransfer $returnReasonSearchTransfer): void
     {
         $returnReasonSearchEntity = $this->getFactory()
             ->getSalesReturnReasonSearchPropelQuery()

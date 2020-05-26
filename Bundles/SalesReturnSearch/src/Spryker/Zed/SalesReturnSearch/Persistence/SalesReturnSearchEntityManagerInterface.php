@@ -23,5 +23,5 @@ interface SalesReturnSearchEntityManagerInterface
      *
      * @return void
      */
-    public function saveReturnReasonSearchPageSearch(ReturnReasonSearchTransfer $returnReasonSearchTransfer): void;
+    public function saveReturnReasonSearch(ReturnReasonSearchTransfer $returnReasonSearchTransfer): void;
 }

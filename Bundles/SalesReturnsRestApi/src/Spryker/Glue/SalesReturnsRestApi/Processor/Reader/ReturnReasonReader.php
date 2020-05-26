@@ -64,12 +64,12 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
             $returnReasonSearchRequestTransfer
         );
 
-        /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchPageCollectionTransfer */
-        $returnReasonSearchPageCollectionTransfer = $searchResults[static::KEY_RETURN_REASON_COLLECTION];
+        /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer */
+        $returnReasonSearchCollectionTransfer = $searchResults[static::KEY_RETURN_REASON_COLLECTION];
 
         return $this->restReturnReasonResponseBuilder->createReturnReasonListRestResponse(
             $returnReasonSearchRequestTransfer,
-            $returnReasonSearchPageCollectionTransfer,
+            $returnReasonSearchCollectionTransfer,
             $restRequest->getMetadata()->getLocale()
         );
     }

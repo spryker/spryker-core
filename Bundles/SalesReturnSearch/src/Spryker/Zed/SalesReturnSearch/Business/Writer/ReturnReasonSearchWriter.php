@@ -171,7 +171,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
                 $returnReasonTranslations
             );
 
-            $this->entityManager->saveReturnReasonSearchPageSearch($returnReasonSearchTransfer);
+            $this->entityManager->saveReturnReasonSearch($returnReasonSearchTransfer);
         }
     }
 
