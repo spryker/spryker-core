@@ -29,7 +29,7 @@
         "@spryker/dropdown": "^0.1.0-next.6",
         "@spryker/icon": "^0.1.0-next.15",
         "@spryker/input": "^0.1.0-next.22",
-        "@spryker/locale": "^0.1.0-next.5",
+        "@spryker/locale": "^0.1.0-next.6",
         "@spryker/pagination": "^0.1.0-next.10",
         "@spryker/select": "^0.1.0-next.21",
         "@spryker/styles": "^0.1.0-next.55",
