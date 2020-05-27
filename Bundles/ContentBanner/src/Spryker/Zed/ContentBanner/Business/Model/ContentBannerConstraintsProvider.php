@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentBanner\Business\Model;
 use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class ContentBannerConstraintsProvider implements ContentBannerConstraintsProviderInterface
 {
@@ -34,7 +33,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     protected function getTitleConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 64]),
         ];
@@ -46,7 +44,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     protected function getSubtitleConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 128]),
         ];
@@ -58,7 +55,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     protected function getImageUrlConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
         ];
@@ -70,7 +66,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     protected function getClickUrlConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
         ];
@@ -82,7 +77,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     protected function getAltTextConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 125]),
         ];

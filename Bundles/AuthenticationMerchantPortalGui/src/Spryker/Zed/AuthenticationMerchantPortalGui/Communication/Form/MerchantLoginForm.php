@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\AuthenticationMerchantPortalGui\AuthenticationMerchantPortalGuiConfig getConfig()
@@ -51,7 +50,6 @@ class MerchantLoginForm extends AbstractType
             [
                 'label' => static::LABEL_USERNAME,
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                     new Email(),
                 ],
@@ -77,7 +75,6 @@ class MerchantLoginForm extends AbstractType
             [
                 'label' => static::LABEL_PASSWORD,
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                 ],
                 'attr' => [
