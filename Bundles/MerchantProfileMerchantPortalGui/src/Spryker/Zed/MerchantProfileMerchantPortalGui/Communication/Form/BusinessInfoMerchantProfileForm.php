@@ -18,7 +18,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig getConfig()
@@ -272,7 +271,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
             new Length(['max' => 255]),
         ];
     }
@@ -285,7 +283,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
