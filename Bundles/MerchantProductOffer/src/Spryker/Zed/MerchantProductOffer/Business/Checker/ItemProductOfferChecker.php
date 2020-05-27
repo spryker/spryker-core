@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
@@ -61,11 +60,11 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true);
 
-        $columnsToSelect = [SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, SpyProductOfferTableMap::COL_CONCRETE_SKU];
-        $productOfferData = $this->merchantProductOfferRepository
-            ->getProductOfferData($productOfferCriteriaFilterTransfer, $columnsToSelect);
+        $productOfferTransfers = $this->merchantProductOfferRepository
+            ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
+            ->getProductOffers();
 
-        if (!$productOfferData) {
+        if (!$productOfferTransfers->count()) {
             $cartPreCheckResponseTransfer->setIsSuccess(false);
             foreach ($productConcreteSkusByOfferReference as $sku => $productOfferReference) {
                 $cartPreCheckResponseTransfer->addMessage($this->createErrorMessage($sku));
@@ -74,18 +73,16 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             return $cartPreCheckResponseTransfer;
         }
 
-        foreach ($productOfferData as $productOfferDatum) {
-            $productOfferReference = $productOfferDatum[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE];
-            $productOfferConcreteSku = $productOfferDatum[SpyProductOfferTableMap::COL_CONCRETE_SKU];
+        foreach ($productOfferTransfers as $productOfferTransfer) {
             if (
-                isset($productConcreteSkusByOfferReference[$productOfferReference])
-                && $productOfferConcreteSku === $productConcreteSkusByOfferReference[$productOfferReference]
+                isset($productConcreteSkusByOfferReference[$productOfferTransfer->getProductOfferReference()])
+                && $productOfferTransfer->getConcreteSku() === $productConcreteSkusByOfferReference[$productOfferTransfer->getProductOfferReference()]
             ) {
                 continue;
             }
 
             $cartPreCheckResponseTransfer->setIsSuccess(false)
-                ->addMessage($this->createErrorMessage($productOfferConcreteSku));
+                ->addMessage($this->createErrorMessage($productOfferTransfer->getConcreteSku()));
         }
 
         return $cartPreCheckResponseTransfer;
