@@ -42,6 +42,7 @@
         <property name="createdAt" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="idSalesReturn" type="int"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -55,6 +56,7 @@
 
     <transfer name="Customer">
         <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
     </transfer>
 
     <transfer name="ItemState">
@@ -77,11 +79,13 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="ReturnCreateRequest">
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -91,6 +95,7 @@
     </transfer>
 
     <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
     </transfer>
 
 </transfers>
