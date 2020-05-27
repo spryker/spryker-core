@@ -31,5 +31,4 @@ interface MerchantsRestApiToMerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOne(int $idMerchant): ?MerchantStorageTransfer;
-
 }
