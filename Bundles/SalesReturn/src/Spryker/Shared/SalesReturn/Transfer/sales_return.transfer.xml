@@ -48,6 +48,7 @@
 
     <transfer name="ReturnReasonFilter">
         <property name="filter" type="Filter"/>
+        <property name="returnReasonIds" type="int[]" singular="returnReasonId"/>
     </transfer>
 
     <transfer name="Filter">
