@@ -84,7 +84,7 @@ class ExpandItemsWithProductBundlesTest extends Unit
         // Assert
         $this->assertNotEmpty($itemTransfers[0]->getProductBundle());
         $this->assertSame($itemTransfers[0]->getRelatedBundleItemIdentifier(), $itemTransfers[0]->getProductBundle()->getBundleItemIdentifier());
-        $this->assertSame($bundleTransfer->getIdProductConcrete(), $itemTransfers[0]->getProductBundle()->getId());
+        $this->assertEquals($bundleTransfer->getIdProductConcrete(), $itemTransfers[0]->getProductBundle()->getId());
         $this->assertSame($bundleTransfer->getFkProductAbstract(), $itemTransfers[0]->getProductBundle()->getIdProductAbstract());
     }
 
