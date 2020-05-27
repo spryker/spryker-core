@@ -49,7 +49,7 @@ class SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest extends Unit
 
         // Assert
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
-        $this->assertFalse($sanitizedItemTransfers[1]->getIsReturnable());
+        $this->assertTrue($sanitizedItemTransfers[1]->getIsReturnable());
         $this->assertTrue($sanitizedItemTransfers[2]->getIsReturnable());
         $this->assertTrue($sanitizedItemTransfers[3]->getIsReturnable());
     }
@@ -75,6 +75,29 @@ class SetOrderItemIsReturnableByGlobalReturnableNumberOfDaysTest extends Unit
         $this->assertFalse($sanitizedItemTransfers[0]->getIsReturnable());
         $this->assertTrue($sanitizedItemTransfers[1]->getIsReturnable());
         $this->assertFalse($sanitizedItemTransfers[2]->getIsReturnable());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetOrderItemIsReturnableByGlobalReturnableNumberOfDaysReturnPolicyMessage(): void
+    {
+        // Arrange
+        $itemTransfers = [
+            new ItemTransfer(),
+            $this->buildItemTransferByCreatedAtTime('-4 day'),
+            $this->buildItemTransferByCreatedAtTime('-50 day'),
+        ];
+
+        // Act
+        $sanitizedItemTransfers = $this->tester
+            ->getFacade()
+            ->setOrderItemIsReturnableByGlobalReturnableNumberOfDays($itemTransfers);
+
+        // Assert
+        $this->assertEmpty($sanitizedItemTransfers[0]->getReturnPolicyMessages());
+        $this->assertNotEmpty($sanitizedItemTransfers[1]->getReturnPolicyMessages());
+        $this->assertNotEmpty($sanitizedItemTransfers[2]->getReturnPolicyMessages());
     }
 
     /**

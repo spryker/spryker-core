@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface OrderExpanderInterface
 {
     /**

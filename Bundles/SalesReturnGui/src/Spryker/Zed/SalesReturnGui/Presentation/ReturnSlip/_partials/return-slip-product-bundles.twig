@@ -1,0 +1,69 @@
+{% set returnItems = returnItemGroup | filter(returnItem => returnItem.orderItem.productBundle) %}
+
+{% set mappedReturnItems = [] %}
+{% set productBundles = [] %}
+
+{% for returnItem in returnItems %}
+    {% set relatedBundleItemIdentifier = returnItem.orderItem.relatedBundleItemIdentifier %}
+
+    {% if mappedReturnItems['_' ~ relatedBundleItemIdentifier] is defined %}
+        {% set bundleReturnItems = mappedReturnItems['_' ~ relatedBundleItemIdentifier] | merge([returnItem]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ relatedBundleItemIdentifier): bundleReturnItems}) %}
+    {% else %}
+        {% set productBundles = productBundles | merge([returnItem.orderItem.productBundle]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ relatedBundleItemIdentifier): [returnItem]}) %}
+    {% endif %}
+{% endfor %}
+
+{% for productBundle in productBundles %}
+    {% set hasBundleOptions = productBundle.productOptions | length %}
+
+    <tr>
+        <td class="no-bottom-border">{{ barcode(productBundle.sku) }}</td>
+        <td class="no-bottom-border">{{ productBundle.sku }}</td>
+        <td class="no-bottom-border"><strong>{{ productBundle.name }}</strong></td>
+        <td class="no-bottom-border">{{ (productBundle.sumPrice - productBundle.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
+        <td class="no-bottom-border">{{ productBundle.quantity }}</td>
+        <td class="no-bottom-border">{{ productBundle.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
+        <td class="no-bottom-border">{{ (mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] | first).reason ?? '--' }}</td>
+    </tr>
+
+    {% for returnItem in mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] %}
+        {% set noBottomBorderClass = not loop.last or hasBundleOptions ? 'no-bottom-border' %}
+
+        <tr>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+        </tr>
+    {% endfor %}
+
+    {% for productOption in productBundle.productOptions %}
+        {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+        {% set firstProductOptionClass = loop.first ? 'product-option--first' %}
+
+        <tr>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+                {% if loop.first %}
+                    <hr>
+                {% endif %}
+                {{ productOption.value }}
+            </td>
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+                {% if loop.first %}
+                    <hr>
+                {% endif %}
+                {{ productOption.unitPrice | money(true, currencyIsoCode) }}
+            </td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+        </tr>
+    {% endfor %}
+{% endfor %}
