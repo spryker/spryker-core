@@ -17,4 +17,11 @@ interface SalesOmsToOmsFacadeInterface
      * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = []);
+
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem);
 }

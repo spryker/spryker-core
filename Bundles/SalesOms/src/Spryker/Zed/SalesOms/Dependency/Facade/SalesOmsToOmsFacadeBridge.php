@@ -33,4 +33,14 @@ class SalesOmsToOmsFacadeBridge implements SalesOmsToOmsFacadeInterface
     {
         return $this->omsFacade->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
     }
+
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem)
+    {
+        return $this->omsFacade->getManualEvents($idOrderItem);
+    }
 }

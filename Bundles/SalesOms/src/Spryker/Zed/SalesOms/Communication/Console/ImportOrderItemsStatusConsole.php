@@ -135,7 +135,14 @@ class ImportOrderItemsStatusConsole extends Console
                 if (!$salesOrderItemTransfer) {
                     throw new Exception('Sales order item not found');
                 }
+                $manualEvents = $this->getFactory()->getOmsFacade()->getManualEvents($salesOrderItemTransfer->getIdSalesOrderItem());
 
+                if (!in_array($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE], $manualEvents)) {
+                    throw new Exception(sprintf(
+                        'Item can\'t be triggered. Available events for item: %s',
+                        implode(', ', $manualEvents)
+                    ));
+                }
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
                     $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE],
                     $salesOrderItemTransfer->getIdSalesOrderItem()
