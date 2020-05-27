@@ -1,7 +1,6 @@
 Return,Return
 "Return Reference","Return reference"
 Items,Items
-"Remuneration total","Remuneration total"
 Actions,Actions
 View,View
 "Return ID","Return ID"
@@ -24,6 +23,7 @@ Reason,Reason
 "Return with id ""%id%"" was not found.","Return with id ""%id%"" was not found."
 "Items to Return","Items to Return"
 "Remuneration Total","Remuneration Total"
+"Remuneration total","Remuneration total"
 "Custom reason","Custom reason"
 "Select reason","Select reason"
 "Return has not been created.","Return has not been created."
