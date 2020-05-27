@@ -30,7 +30,7 @@ class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundleQuery
      */
-    public function createSalesOrderItemBundleQuery(): SpySalesOrderItemBundleQuery
+    public function createSalesOrderItemBundlePropelQuery(): SpySalesOrderItemBundleQuery
     {
         return SpySalesOrderItemBundleQuery::create();
     }

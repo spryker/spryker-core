@@ -5,6 +5,12 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="Money">
@@ -25,6 +31,8 @@
         <property name="orderReference" type="string"/>
         <property name="state" type="ItemState"/>
         <property name="returnPolicyMessages" singular="returnPolicyMessage" type="Message[]"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="isReturnable" type="bool"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
@@ -34,6 +42,7 @@
         <property name="createdAt" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="idSalesReturn" type="int"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -42,13 +51,51 @@
 
     <transfer name="ReturnItem">
         <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
     </transfer>
 
     <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
     </transfer>
 
     <transfer name="ItemState">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="return" type="Return"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+    </transfer>
+
+    <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
     </transfer>
 
 </transfers>

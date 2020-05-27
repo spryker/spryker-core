@@ -20,7 +20,7 @@ interface SalesReturnFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves return reasons from persistence by criteria from FilterTransfer.
+     * - Retrieves return reasons from persistence by criteria from ReturnReasonFilterTransfer.
      *
      * @api
      *

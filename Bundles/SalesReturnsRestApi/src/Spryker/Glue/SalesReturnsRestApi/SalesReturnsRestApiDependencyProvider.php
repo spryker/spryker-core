@@ -9,8 +9,8 @@ namespace Spryker\Glue\SalesReturnsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientBridge;
+use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnSearchClientBridge;
 
 /**
  * @method \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig getConfig()
@@ -18,7 +18,7 @@ use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSale
 class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,9 +28,9 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        
+
         $container = $this->addSalesReturnClient($container);
-        $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addSalesReturnSearchClient($container);
 
         return $container;
     }
@@ -56,11 +56,11 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addGlossaryStorageClient(Container $container): Container
+    protected function addSalesReturnSearchClient(Container $container): Container
     {
-        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
-            return new SalesReturnsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+        $container->set(static::CLIENT_SALES_RETURN_SEARCH, function (Container $container) {
+            return new SalesReturnsRestApiToSalesReturnSearchClientBridge(
+                $container->getLocator()->salesReturnSearch()->client()
             );
         });
 
