@@ -63,4 +63,34 @@ class LocaleReader implements LocaleReaderInterface
             )
         );
     }
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById(int $idLocale): LocaleTransfer
+    {
+        $localeTransfer = $this->localeCache->findById($idLocale);
+        if ($localeTransfer) {
+            return $localeTransfer;
+        }
+
+        $localeTransfer = $this->localeRepository->findLocaleByIdLocale($idLocale);
+
+        if ($localeTransfer) {
+            $this->localeCache->set($localeTransfer);
+
+            return $localeTransfer;
+        }
+
+        throw new MissingLocaleException(
+            sprintf(
+                'Tried to retrieve locale with id %s, but it does not exist',
+                $idLocale
+            )
+        );
+    }
 }

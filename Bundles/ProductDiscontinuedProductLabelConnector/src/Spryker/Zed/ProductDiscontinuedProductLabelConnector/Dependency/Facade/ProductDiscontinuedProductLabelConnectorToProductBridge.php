@@ -23,13 +23,13 @@ class ProductDiscontinuedProductLabelConnectorToProductBridge implements Product
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idConcrete
      *
      * @return int|null
      */
-    public function findProductAbstractIdByConcreteId(int $idProduct): ?int
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
-        return $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        return $this->productFacade->findProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**
@@ -40,5 +40,15 @@ class ProductDiscontinuedProductLabelConnectorToProductBridge implements Product
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param array $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->productFacade->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
     }
 }

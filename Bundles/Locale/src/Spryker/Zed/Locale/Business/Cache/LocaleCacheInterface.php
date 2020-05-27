@@ -19,6 +19,13 @@ interface LocaleCacheInterface
     public function findByName(string $localeName): ?LocaleTransfer;
 
     /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    public function findById(int $idLocale): ?LocaleTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void

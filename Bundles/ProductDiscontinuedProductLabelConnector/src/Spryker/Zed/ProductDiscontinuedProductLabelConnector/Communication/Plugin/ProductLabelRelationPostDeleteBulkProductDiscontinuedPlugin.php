@@ -30,6 +30,24 @@ class ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin extends Abstra
      */
     public function execute(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
+        $productConcreteIds = $this->getProductConcreteIds($productDiscontinuedCollectionTransfer);
 
+        $this->getFacade()->removeProductAbstractRelationsForLabelInBulk($productConcreteIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getProductConcreteIds(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): array
+    {
+        $productConcreteIds = [];
+
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $productConcreteIds[] = $productDiscontinuedTransfer->getFkProduct();
+        }
+
+        return $productConcreteIds;
     }
 }

@@ -22,4 +22,11 @@ interface ProductConcreteActivatorInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void;
 }

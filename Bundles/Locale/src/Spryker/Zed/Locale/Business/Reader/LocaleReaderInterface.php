@@ -17,4 +17,13 @@ interface LocaleReaderInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleByName(string $localeName): LocaleTransfer;
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 }

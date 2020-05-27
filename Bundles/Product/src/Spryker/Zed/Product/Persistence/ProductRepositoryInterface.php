@@ -152,4 +152,11 @@ interface ProductRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getNotActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
 }

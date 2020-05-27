@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Product\Touch;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ProductConcreteTouchInterface
 {
     /**
@@ -15,6 +17,13 @@ interface ProductConcreteTouchInterface
      * @return void
      */
     public function touchProductConcrete($idProductConcrete);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function touchProductConcreteByTransfer(ProductConcreteTransfer $productConcreteTransfer): void;
 
     /**
      * @param int $idProductConcrete

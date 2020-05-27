@@ -19,6 +19,8 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
 {
     use TransactionTrait;
 
+    protected const DEACTIVATE_BATCH_SIZE = 1000;
+
     /**
      * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface
      */
@@ -70,16 +72,16 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
      */
     public function deactivate(): void
     {
-        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedRepository->findProductsToDeactivate();
-        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
-            return;
-        }
+        do {
+            $productDiscontinuedCollectionTransfer = $this->productDiscontinuedRepository
+                ->findProductsToDeactivate(static::DEACTIVATE_BATCH_SIZE);
 
-        $this->addStartMessage($productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count());
+            $this->addStartMessage($productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count());
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedCollectionTransfer) {
-            $this->executeDeactivateTransaction($productDiscontinuedCollectionTransfer);
-        });
+            $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedCollectionTransfer) {
+                $this->executeDeactivateTransaction($productDiscontinuedCollectionTransfer);
+            });
+        } while ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count() > 0);
     }
 
     /**
@@ -89,16 +91,31 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
      */
     protected function executeDeactivateTransaction(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
-        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
-            $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
-
-        }
-
+        $productConcreteSkus = $this->getProductConcreteSkusFromProductDiscontinuedCollection($productDiscontinuedCollectionTransfer);
         $productDiscontinuedIds = $this->getProductDiscontinuedIdsFromProductDiscontinuedCollection($productDiscontinuedCollectionTransfer);
+
+        $this->productFacade->deactivateProductConcretesByConcreteSkus($productConcreteSkus);
         $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotesInBulk($productDiscontinuedIds);
         $this->productDiscontinuedEntityManager->deleteProductDiscontinuedInBulk($productDiscontinuedIds);
         $this->productDiscontinuedPluginExecutor->executeBulkPostDeleteProductDiscontinuedPlugins($productDiscontinuedCollectionTransfer);
         $this->addProductDeactivatedMessages($productDiscontinuedCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkusFromProductDiscontinuedCollection(
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): array {
+        $productConcreteSkus = [];
+
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $productConcreteSkus[] = $productDiscontinuedTransfer->getSku();
+        }
+
+        return $productConcreteSkus;
     }
 
     /**
@@ -112,7 +129,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
         $productDiscontinuedIds = [];
 
         foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
-            $productDiscontinuedIds = $productDiscontinuedTransfer->getIdProductDiscontinued();
+            $productDiscontinuedIds[] = $productDiscontinuedTransfer->getIdProductDiscontinued();
         }
 
         return $productDiscontinuedIds;
@@ -137,7 +154,11 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
         );
     }
 
-
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return void
+     */
     protected function addProductDeactivatedMessages(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
         if (!$this->logger) {
@@ -152,6 +173,5 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
                 )
             );
         }
-
     }
 }

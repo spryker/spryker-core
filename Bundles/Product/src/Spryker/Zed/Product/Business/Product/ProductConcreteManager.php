@@ -611,7 +611,10 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
+            $jsonAttributes = $localizedAttributes->getAttributes();
+            if (is_array($jsonAttributes)) {
+                $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
+            }
 
             $localizedProductAttributesEntity = $this->productQueryContainer
                 ->queryProductConcreteAttributeCollection($idProductConcrete, $locale->getIdLocale())

@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedPersistenceFactory getFactory()
@@ -72,19 +72,32 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @param int $batchSize
+     *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
+    public function findProductsToDeactivate(int $batchSize = 1000): ProductDiscontinuedCollectionTransfer
     {
+        $isPoolingEnabled = Propel::isInstancePoolingEnabled();
+        if ($isPoolingEnabled) {
+            Propel::disableInstancePooling();
+        }
+
         $productDiscontinuedEntityCollection = $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->joinWithProduct()
+            //->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->limit($batchSize)
             ->find();
 
         if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
                 ->mapTransferCollection($productDiscontinuedEntityCollection);
+        }
+
+        if ($isPoolingEnabled) {
+            Propel::enableInstancePooling();
         }
 
         return new ProductDiscontinuedCollectionTransfer();

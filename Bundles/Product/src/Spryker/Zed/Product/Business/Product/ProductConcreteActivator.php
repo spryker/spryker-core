@@ -99,6 +99,18 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteSkus) {
+            $this->executeDeactivateProductConcretesTransactionByConcreteSkus($productConcreteSkus);
+        });
+    }
+
+    /**
      * @param int $idProductConcrete
      *
      * @return void
@@ -129,6 +141,26 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    protected function executeDeactivateProductConcretesTransactionByConcreteSkus(array $productConcreteSkus): void
+    {
+        $productConcreteTransfers = $this->productConcreteManager->getProductConcretesByConcreteSkus($productConcreteSkus);
+        $productAbstractIds = [];
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->updateIsActive($productConcreteTransfer, false);
+            $productAbstractIds[] = $productConcreteTransfer->getFkProductAbstract();
+        }
+
+        $notActiveProductAbstractTransfers = $this->productAbstractStatusChecker->filterNotActive($productAbstractIds);
+        foreach ($notActiveProductAbstractTransfers as $productAbstractTransfer) {
+            $this->productUrlManager->deleteProductUrl($productAbstractTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param bool $isActive
      *
@@ -139,7 +171,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         $productConcreteTransfer->setIsActive($isActive);
         $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
 
-        $this->productConcreteTouch->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        $this->productConcreteTouch->touchProductConcreteByTransfer($productConcreteTransfer);
     }
 
     /**

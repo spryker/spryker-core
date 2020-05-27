@@ -74,4 +74,20 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
             ->createProductAbstractRelationReader()
             ->findProductLabelProductAbstractRelationChanges();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabelInBulk(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductDiscontinuedProductLabelWriter()
+            ->removeProductAbstractRelationsForLabelInBulk($productConcreteIds);
+    }
 }

@@ -89,8 +89,9 @@ class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExec
      *
      * @return void
      */
-    protected function executePostDeleteProductDiscontinuedPluginsForProductDiscontinuedCollection(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
-    {
+    protected function executePostDeleteProductDiscontinuedPluginsForProductDiscontinuedCollection(
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): void {
         if (!$this->postDeleteProductDiscontinuedPlugins) {
             return;
         }
