@@ -37,6 +37,25 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollectionTransfer(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer {
+        $productOfferQuery = $this->applyFilters(
+            $merchantProductOfferCriteriaFilterTransfer,
+            $this->getFactory()->getProductOfferPropelQuery()
+        );
+        $productOfferEntities = $productOfferQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantProductOfferMapper()
+            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
@@ -56,7 +75,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
         if ($merchantProductOfferCriteriaFilterTransfer->getMerchantReference()) {
             $productOfferQuery
                 ->useSpyMerchantQuery()
-                ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
+                    ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
                 ->endUse();
         }
 
@@ -65,24 +84,5 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
         }
 
         return $productOfferQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    public function getProductOfferCollectionTransfer(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
-    ): ProductOfferCollectionTransfer {
-        $productOfferQuery = $this->applyFilters(
-            $merchantProductOfferCriteriaFilterTransfer,
-            $this->getFactory()->getProductOfferPropelQuery()
-        );
-        $productOfferEntities = $productOfferQuery->find();
-
-        return $this->getFactory()
-            ->createMerchantProductOfferMapper()
-            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities);
     }
 }
