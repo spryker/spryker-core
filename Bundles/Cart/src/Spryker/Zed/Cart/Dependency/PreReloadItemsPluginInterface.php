@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cart\Dependency;
 use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface as SprykerPreReloadItemsPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface} instead.
  */
 interface PreReloadItemsPluginInterface extends SprykerPreReloadItemsPluginInterface
 {
