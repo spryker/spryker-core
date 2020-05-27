@@ -69,15 +69,15 @@ class IsReturnableSetter implements IsReturnableSetterInterface
             return;
         }
 
-        $retunrableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
+        $returnableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
             ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
 
-        $formatedRetunrableTillDateTime = $this->utilDateTimeService->formatDate($retunrableTillDateTime);
+        $formattedReturnableTillDateTime = $this->utilDateTimeService->formatDate($returnableTillDateTime);
 
         $messageTransfer = (new MessageTransfer())
             ->setValue(static::GLOSSARY_KEY_RETURNABLE_TILL_DATE)
             ->setParameters([
-                static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $formatedRetunrableTillDateTime,
+                static::GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE => $formattedReturnableTillDateTime,
             ]);
 
         $itemTransfer->addReturnPolicyMessage($messageTransfer);

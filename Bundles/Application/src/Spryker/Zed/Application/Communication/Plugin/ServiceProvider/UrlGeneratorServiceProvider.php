@@ -13,7 +13,7 @@ use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin} instead.
  *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()

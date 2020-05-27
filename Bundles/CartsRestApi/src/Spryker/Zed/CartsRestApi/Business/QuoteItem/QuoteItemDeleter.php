@@ -51,7 +51,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     }
 
     /**
-     * @deprecated Use removeItem() instead.
+     * @deprecated Use {@link removeItem()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

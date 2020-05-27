@@ -12,7 +12,6 @@ use Spryker\Zed\Content\Business\ContentValidator\Constraints\NotWhitespace;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 class ContentConstraintsProvider implements ContentConstraintsProviderInterface
 {
@@ -35,7 +34,6 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     {
         return [
             new NotWhitespace(),
-            new Required(),
             new Length(['max' => 255]),
         ];
     }
@@ -47,7 +45,6 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     {
         return [
             new NotWhitespace(),
-            new Required(),
             new Length(['max' => 1024]),
         ];
     }
@@ -59,7 +56,6 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     {
         return [
             new NotBlank(),
-            new Required(),
             new Length(['max' => 255]),
             new Regex([
                'pattern' => '/^[a-z0-9\-]+$/',

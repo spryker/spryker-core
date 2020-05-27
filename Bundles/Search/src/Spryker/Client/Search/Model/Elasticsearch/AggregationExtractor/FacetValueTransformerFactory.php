@@ -12,7 +12,7 @@ use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPlu
 use Spryker\Client\Search\Exception\InvalidFacetSearchResultValueTransformerPluginException;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory} instead.
  */
 class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterface
 {

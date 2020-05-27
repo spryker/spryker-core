@@ -10,7 +10,7 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder;
 use Symfony\Component\Finder\Finder;
 
 /**
- * @deprecated Use \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallMultiPathFinder instead.
+ * @deprecated Use {@link \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallMultiPathFinder} instead.
  */
 class InstallPathFinder implements PathFinderInterface
 {

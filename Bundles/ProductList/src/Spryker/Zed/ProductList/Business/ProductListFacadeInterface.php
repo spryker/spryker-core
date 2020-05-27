@@ -112,7 +112,7 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ProductListFacadeInterface::getProductBlacklistIdsByIdProductAbstract() instead.
+     * @deprecated Use {@link getProductBlacklistIdsByIdProductAbstract()} instead.
      *
      * @param int $idProductAbstract
      *
@@ -165,7 +165,7 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ProductListFacadeInterface::getProductWhitelistIdsByIdProductAbstract() instead.
+     * @deprecated Use {@link getProductWhitelistIdsByIdProductAbstract()} instead.
      *
      * @param int $idProductAbstract
      *
@@ -204,7 +204,7 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ProductListFacadeInterface::getProductBlacklistIdsByIdProduct() instead.
+     * @deprecated Use {@link getProductBlacklistIdsByIdProduct()} instead.
      *
      * @param int $idProduct
      *
@@ -230,7 +230,7 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ProductListFacadeInterface::getProductWhitelistIdsByIdProduct() instead.
+     * @deprecated Use {@link getProductWhitelistIdsByIdProduct()} instead.
      *
      * @param int $idProduct
      *

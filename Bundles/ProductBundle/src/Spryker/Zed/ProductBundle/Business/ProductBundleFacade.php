@@ -259,7 +259,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @deprecated Use saveOrderBundleItems() instead
+     * @deprecated Use {@link saveOrderBundleItems()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -530,7 +530,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     public function expandItemsWithProductBundles(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createItemExpander()
+            ->createProductBundleItemExpander()
             ->expandItemsWithProductBundles($itemTransfers);
     }
 

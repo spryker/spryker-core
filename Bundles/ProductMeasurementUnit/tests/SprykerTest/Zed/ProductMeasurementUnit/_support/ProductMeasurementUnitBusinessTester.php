@@ -9,12 +9,17 @@ namespace SprykerTest\Zed\ProductMeasurementUnit;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Inherited Methods
@@ -29,6 +34,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -122,5 +128,66 @@ class ProductMeasurementUnitBusinessTester extends Actor
             ->setProductMeasurementBaseUnit($productMeasurementBaseUnit);
 
         return $quantitySalesUnit;
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderWithProductMeasurementUnits(string $stateMachineProcessName): OrderTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->addItem($this->createItemWithQuantitySalesUnit())
+            ->addItem($this->createItemWithQuantitySalesUnit());
+
+        $quoteTransfer
+            ->setCustomer($this->haveCustomer())
+            ->setStore($this->haveStore([StoreTransfer::NAME => 'DE']));
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithQuantitySalesUnit(): ItemTransfer
+    {
+        $productTransfer = $this->haveProduct();
+
+        $productMeasurementUnitTransfer = $this->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => 'MYCODE' . random_int(1, 100),
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
+
+        return (new ItemBuilder())->build()
+            ->setSku($productTransfer->getSku())
+            ->setQuantitySalesUnit($quantitySalesUnit);
     }
 }

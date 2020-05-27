@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ReturnItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
+use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -54,6 +55,8 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         $paginationTransfer = (new PaginationTransfer())->setNbResults($returnReasonQuery->count());
 
+        $returnReasonQuery = $this->setSalesReturnReasonFilters($returnReasonQuery, $returnReasonFilterTransfer);
+
         $returnReasonQuery = $this->buildQueryFromCriteria(
             $returnReasonQuery,
             $returnReasonFilterTransfer->getFilter()
@@ -68,11 +71,11 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
     }
 
     /**
-     * @param string $customerReference
+     * @param string|null $customerReference
      *
      * @return int
      */
-    public function countCustomerReturns(string $customerReference): int
+    public function countCustomerReturns(?string $customerReference = null): int
     {
         return $this->getFactory()
             ->getSalesReturnPropelQuery()
@@ -155,7 +158,28 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
             $salesReturnQuery->filterByCustomerReference($returnFilterTransfer->getCustomerReference());
         }
 
+        if ($returnFilterTransfer->getReturnIds()) {
+            $salesReturnQuery->filterByIdSalesReturn_In($returnFilterTransfer->getReturnIds());
+        }
+
         return $salesReturnQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery $salesReturnReasonQuery
+     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
+     *
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery
+     */
+    protected function setSalesReturnReasonFilters(
+        SpySalesReturnReasonQuery $salesReturnReasonQuery,
+        ReturnReasonFilterTransfer $returnReasonFilterTransfer
+    ): SpySalesReturnReasonQuery {
+        if ($returnReasonFilterTransfer->getReturnReasonIds()) {
+            $salesReturnReasonQuery->filterByIdSalesReturnReason_In($returnReasonFilterTransfer->getReturnReasonIds());
+        }
+
+        return $salesReturnReasonQuery;
     }
 
     /**

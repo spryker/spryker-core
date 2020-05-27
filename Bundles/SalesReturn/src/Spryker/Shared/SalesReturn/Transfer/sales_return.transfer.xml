@@ -13,9 +13,9 @@
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="store" type="string"/>
-        <property name="createdAt" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="ReturnItem">
@@ -38,6 +38,7 @@
     <transfer name="ReturnFilter">
         <property name="returnReference" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="returnIds" singular="idReturn" type="int[]"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
@@ -47,6 +48,7 @@
 
     <transfer name="ReturnReasonFilter">
         <property name="filter" type="Filter"/>
+        <property name="returnReasonIds" type="int[]" singular="returnReasonId"/>
     </transfer>
 
     <transfer name="Filter">

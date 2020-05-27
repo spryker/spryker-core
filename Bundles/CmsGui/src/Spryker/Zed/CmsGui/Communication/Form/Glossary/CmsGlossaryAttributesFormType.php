@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -186,7 +185,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected function getPlaceholderConstants()
     {
         $placeholderConstraints = [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];
@@ -213,7 +211,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

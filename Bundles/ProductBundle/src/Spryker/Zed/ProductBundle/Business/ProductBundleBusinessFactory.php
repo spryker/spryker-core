@@ -26,10 +26,10 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFi
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpander;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
@@ -336,11 +336,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ItemExpanderInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface
      */
-    public function createItemExpander(): ItemExpanderInterface
+    public function createProductBundleItemExpander(): ProductBundleItemExpanderInterface
     {
-        return new ItemExpander(
+        return new ProductBundleItemExpander(
             $this->getRepository(),
             $this->createProductBundlePriceCalculator()
         );
