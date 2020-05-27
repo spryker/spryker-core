@@ -17,7 +17,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "deployUrl": "",
+            "deployUrl": "/assets/js/mp-product-offer/",
             "outputPath": "dist",
             "index": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/main.ts",
