@@ -91,7 +91,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array
     {
         $salesOrderItemBundleQuery = $this->getFactory()
-            ->createSalesOrderItemBundleQuery()
+            ->createSalesOrderItemBundlePropelQuery()
             ->joinWithSalesOrderItem()
             ->useSalesOrderItemQuery()
                 ->filterByIdSalesOrderItem_In($salesOrderItemIds)
