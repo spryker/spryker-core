@@ -1,7 +1,6 @@
 Return,Rückgabe
 "Return Reference",Retourenreferenz
 Items,Artikel
-"Remuneration total",Rückerstattungsbetrag
 Actions,Aktionen
 View,Anzeigen
 "Return ID","Retour ID"
@@ -23,7 +22,8 @@ Reason,Grund
 "Order Ref",Orderref.
 "Return with id ""%id%"" was not found.","Retoure mit id ""%id%"" wurde nicht gefunden."
 "Items to Return","Artikeln zum Zurückgeben"
-"Remuneration Total","Neuberechnung insgesamt"
+"Remuneration Total",Rückerstattungsbetrag
+"Remuneration total",Rückerstattungsbetrag
 "Custom reason","Benutzerdefinierter Grund"
 "Select reason","Grund auswählen"
 "Return has not been created.","Rückgabe wurde nicht erstellt."
