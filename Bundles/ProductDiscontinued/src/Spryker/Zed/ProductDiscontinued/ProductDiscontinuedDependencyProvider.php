@@ -113,8 +113,6 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider::getPostDeleteBulkProductDiscontinuedPlugins()} instead.
-     *
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
      */
     protected function getPostProductDiscontinuePlugins(): array
@@ -123,6 +121,8 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider::getPostDeleteBulkProductDiscontinuedPlugins()} instead.
+     *
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
     protected function getPostDeleteProductDiscontinuedPlugins(): array
