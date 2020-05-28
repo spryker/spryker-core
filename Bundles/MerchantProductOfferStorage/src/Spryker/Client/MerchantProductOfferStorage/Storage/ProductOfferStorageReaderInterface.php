@@ -14,13 +14,6 @@ use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 interface ProductOfferStorageReaderInterface
 {
     /**
-     * @param string $productSku
-     *
-     * @return string[]
-     */
-    public function getProductOfferReferences(string $productSku): array;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
@@ -35,4 +28,11 @@ interface ProductOfferStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    public function getProductOfferStorageByReferences(array $productOfferReferences): array;
 }
