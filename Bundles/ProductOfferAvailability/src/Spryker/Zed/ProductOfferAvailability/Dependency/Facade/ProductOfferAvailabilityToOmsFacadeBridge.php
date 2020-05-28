@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
 
 class ProductOfferAvailabilityToOmsFacadeBridge implements ProductOfferAvailabilityToOmsFacadeInterface
 {
@@ -25,17 +23,6 @@ class ProductOfferAvailabilityToOmsFacadeBridge implements ProductOfferAvailabil
     public function __construct($omsFacade)
     {
         $this->omsFacade = $omsFacade;
-    }
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
-    {
-        return $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
 
     /**

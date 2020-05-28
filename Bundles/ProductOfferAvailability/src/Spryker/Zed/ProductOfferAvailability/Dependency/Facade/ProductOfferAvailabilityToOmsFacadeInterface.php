@@ -9,19 +9,9 @@ namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
 
 interface ProductOfferAvailabilityToOmsFacadeInterface
 {
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
-
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
