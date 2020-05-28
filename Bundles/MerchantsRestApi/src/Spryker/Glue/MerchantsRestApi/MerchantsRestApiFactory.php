@@ -30,6 +30,8 @@ use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResp
 use Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder\MerchantRestResponseBuilderInterface;
 use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslator;
 use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterface;
+use Spryker\Glue\MerchantsRestApi\Processor\UrlResolver\MerchantUrlResolver;
+use Spryker\Glue\MerchantsRestApi\Processor\UrlResolver\MerchantUrlResolverInterface;
 
 /**
  * @method \Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig getConfig()
@@ -127,6 +129,14 @@ class MerchantsRestApiFactory extends AbstractFactory
     public function createMerchantAddressMapper(): MerchantAddressMapperInterface
     {
         return new MerchantAddressMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantsRestApi\Processor\UrlResolver\MerchantUrlResolverInterface
+     */
+    public function createMerchantUrlResolver(): MerchantUrlResolverInterface
+    {
+        return new MerchantUrlResolver($this->getMerchantStorageClient());
     }
 
     /**
