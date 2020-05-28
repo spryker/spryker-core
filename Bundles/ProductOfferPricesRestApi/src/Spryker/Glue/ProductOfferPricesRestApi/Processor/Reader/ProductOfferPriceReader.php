@@ -75,7 +75,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getProductOfferPrice(RestRequestInterface $restRequest): RestResponseInterface
+    public function getProductOfferPrices(RestRequestInterface $restRequest): RestResponseInterface
     {
         $productOfferRestResource = $restRequest->findParentResourceByType(ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
 

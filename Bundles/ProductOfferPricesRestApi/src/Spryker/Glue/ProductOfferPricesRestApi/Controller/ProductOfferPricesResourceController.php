@@ -39,6 +39,6 @@ class ProductOfferPricesResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createProductOfferPriceReader()
-            ->getProductOfferPrice($restRequest);
+            ->getProductOfferPrices($restRequest);
     }
 }
