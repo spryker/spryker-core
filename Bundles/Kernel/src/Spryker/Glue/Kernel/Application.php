@@ -10,7 +10,7 @@ namespace Spryker\Glue\Kernel;
 use Spryker\Shared\Kernel\Communication\Application as SharedApplication;
 
 /**
- * @deprecated Use `\Spryker\Shared\Kernel\Communication\Application` instead.
+ * @deprecated Use {@link \Spryker\Shared\Kernel\Communication\Application} instead.
  */
 class Application extends SharedApplication
 {

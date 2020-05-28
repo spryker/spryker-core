@@ -105,14 +105,19 @@ class SalesReturnBusinessTester extends Actor
     /**
      * @param string $stateMachineProcessName
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param array|null $currencyData
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function createOrderByStateMachineProcessName(string $stateMachineProcessName, ?CustomerTransfer $customerTransfer = null): OrderTransfer
-    {
+    public function createOrderByStateMachineProcessName(
+        string $stateMachineProcessName,
+        ?CustomerTransfer $customerTransfer = null,
+        ?array $currencyData = []
+    ): OrderTransfer {
         $quoteTransfer = $this->buildFakeQuote(
             $customerTransfer ?? $this->haveCustomer(),
-            $this->haveStore([StoreTransfer::NAME => 'DE'])
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
+            $currencyData
         );
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
@@ -128,10 +133,11 @@ class SalesReturnBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array $currencyData
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer, array $currencyData): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
@@ -139,7 +145,7 @@ class SalesReturnBusinessTester extends Actor
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
-            ->withCurrency()
+            ->withCurrency($currencyData)
             ->build();
 
         $quoteTransfer

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 /**
- * @deprecated Use `Spryker\Zed\Development\Communication\Console\DependencyViolationFinderConsole` instead.
+ * @deprecated Use {@link \Spryker\Zed\Development\Communication\Console\DependencyViolationFinderConsole} instead.
  *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */

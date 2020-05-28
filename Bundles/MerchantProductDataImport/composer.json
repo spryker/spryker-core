@@ -18,8 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\MerchantProductDataImport\\Helper\\": "tests/SprykerTest/Shared/MerchantProductDataImport/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

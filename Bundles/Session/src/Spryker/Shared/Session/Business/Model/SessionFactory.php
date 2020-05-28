@@ -81,7 +81,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -96,7 +96,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -109,7 +109,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -129,7 +129,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -142,7 +142,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param \Predis\Client $redisClient
      *
@@ -160,7 +160,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
      */
@@ -172,7 +172,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface
      */
@@ -195,7 +195,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param string $savePath
      *

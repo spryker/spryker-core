@@ -16,7 +16,7 @@ use Twig\Environment;
 use Twig\TwigFilter;
 
 /**
- * @deprecated Use `Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin} instead.
  *
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
  */

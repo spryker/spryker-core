@@ -30,7 +30,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderHydrator} instead.
  */
 class OrderHydrator implements OrderHydratorInterface
 {
@@ -157,7 +157,11 @@ class OrderHydrator implements OrderHydratorInterface
             return false;
         }
 
-        if (!$orderTransfer->getCustomer() && $customerTransfer->getCustomerReference() !== $orderEntity->getCustomerReference()) {
+        if ($customerTransfer->getCustomerReference() === $orderEntity->getCustomerReference()) {
+            return true;
+        }
+
+        if (!$orderTransfer->getCustomer()) {
             return false;
         }
 
@@ -174,7 +178,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($idSalesOrder)
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
         if ($orderEntity === null) {
@@ -608,10 +612,6 @@ class OrderHydrator implements OrderHydratorInterface
     protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
     {
         $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
-
-        if ($orderTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
-            return true;
-        }
 
         foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
             if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {

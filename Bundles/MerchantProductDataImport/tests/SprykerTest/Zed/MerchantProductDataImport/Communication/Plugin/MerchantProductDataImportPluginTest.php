@@ -89,6 +89,9 @@ class MerchantProductDataImportPluginTest extends Unit
         $merchantProductDataImportPlugin = new MerchantProductDataImportPlugin();
 
         // Assert
-        $this->assertSame(MerchantProductDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT, $merchantProductDataImportPlugin->getImportType());
+        $this->assertSame(
+            MerchantProductDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT,
+            $merchantProductDataImportPlugin->getImportType()
+        );
     }
 }

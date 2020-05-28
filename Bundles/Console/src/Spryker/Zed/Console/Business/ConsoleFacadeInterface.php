@@ -48,7 +48,7 @@ interface ConsoleFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()} instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

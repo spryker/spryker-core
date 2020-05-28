@@ -10,6 +10,7 @@ namespace Spryker\Client\MerchantOpeningHoursStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapper;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Reader\MerchantOpeningHoursStorageReader;
@@ -25,7 +26,8 @@ class MerchantOpeningHoursStorageFactory extends AbstractFactory
         return new MerchantOpeningHoursStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createMerchantOpeningHoursMapper()
+            $this->createMerchantOpeningHoursMapper(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -51,5 +53,13 @@ class MerchantOpeningHoursStorageFactory extends AbstractFactory
     public function getSynchronizationService(): MerchantOpeningHoursStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): MerchantOpeningHoursStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

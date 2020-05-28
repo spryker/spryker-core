@@ -6,4 +6,3 @@
 'use strict';
 
 require('./modules/re-sort/main');
-require('../sass/main.scss');

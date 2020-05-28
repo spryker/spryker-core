@@ -10,6 +10,9 @@ namespace Spryker\Zed\SalesProductConnector\Business\Model;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductIdHydrator implements ProductIdHydratorInterface
 {
     /**

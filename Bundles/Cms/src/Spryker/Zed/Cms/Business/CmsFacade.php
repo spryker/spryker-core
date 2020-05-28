@@ -81,7 +81,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Cms\Business\CmsFacade::createPage()` or `\Spryker\Zed\Cms\Business\CmsFacade::updatePage()` instead.
+     * @deprecated Use {@link createPage()} or {@link updatePage()} instead.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *

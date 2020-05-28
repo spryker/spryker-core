@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
 /**
@@ -55,7 +54,6 @@ class StockSubForm extends AbstractType
             'attr' => ['min' => PHP_INT_MIN, 'max' => PHP_INT_MAX],
             'html5' => true,
             'constraints' => [
-                new Required(),
                 new Type('numeric'),
                 new Regex([
                     'pattern' => static::DECIMAL_QUANTITY_VALIDATION_PATTERN,
@@ -126,7 +124,7 @@ class StockSubForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */
