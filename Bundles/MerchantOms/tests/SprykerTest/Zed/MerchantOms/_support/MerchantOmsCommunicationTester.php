@@ -25,17 +25,16 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class MerchantOmsBusinessTester extends Actor
+class MerchantOmsCommunicationTester extends Actor
 {
-    use _generated\MerchantOmsBusinessTesterActions;
+    use _generated\MerchantOmsCommunicationTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+   /**
+    * Define custom actions here
+    */
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
