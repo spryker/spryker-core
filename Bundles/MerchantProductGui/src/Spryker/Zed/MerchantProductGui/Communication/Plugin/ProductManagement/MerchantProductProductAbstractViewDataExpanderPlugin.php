@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement;
+
+use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewDataExpanderPluginInterface;
+
+/**
+ * @method \Spryker\Zed\MerchantProductGui\Communication\MerchantProductGuiCommunicationFactory getFactory()
+ */
+class MerchantProductProductAbstractViewDataExpanderPlugin extends AbstractPlugin implements ProductAbstractViewDataExpanderPluginInterface
+{
+    /**
+     * {@inheritDoc}
+     * - Expands view data for abstract product with merchant data.
+     *
+     * @api
+     *
+     * @param array<string, mixed> $viewData
+     *
+     * @return array<string, mixed>
+     */
+    public function expand(array $viewData): array
+    {
+        $viewData['merchant'] = $this->getFactory()
+            ->getMerchantProductFacade()
+            ->findMerchant(
+                (new MerchantProductCriteriaTransfer())->setIdProductAbstract($viewData['currentProduct']['id_product_abstract'])
+            );
+
+        return $viewData;
+    }
+}

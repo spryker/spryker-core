@@ -16,6 +16,7 @@ use Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -35,7 +36,9 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createProductAvailabilityHelper(),
             $this->getStoreFacade(),
             $idStore,
-            $idLocale
+            $idLocale,
+            $this->getPropelQueryBuilderFacade(),
+            $this->getAvailabilityAbstractQueryCriteriaExpanderPlugins()
         );
     }
 
@@ -172,5 +175,37 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeInterface
+     */
+    public function getPropelQueryBuilderFacade(): AvailabilityGuiToPropelQueryBuilderFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_PROPEL_QUERY_BUILDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListDataExpanderPluginInterface[]
+     */
+    public function getAvailabilityListDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_LIST_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewDataExpanderPluginInterface[]
+     */
+    public function getAvailabilityViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface[]
+     */
+    public function getAvailabilityAbstractQueryCriteriaExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_ABSTRACT_QUERY_CRITERIA_EXPANDER);
     }
 }

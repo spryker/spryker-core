@@ -10,6 +10,8 @@
 
 {% block content %}
 
+    {% include '@AvailabilityGui/_partials/filters.twig' %}
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' } %}
 
         {% block widget_content %}

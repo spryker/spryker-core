@@ -38,11 +38,11 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return [
+        return $this->executeAvailabilityListDataExpanderPlugins([
             'indexTable' => $availabilityAbstractTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
-        ];
+        ]);
     }
 
     /**
@@ -76,13 +76,13 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return [
+        return $this->executeAvailabilityViewDataExpanderPlugins([
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,
-        ];
+        ]);
     }
 
     /**
@@ -282,5 +282,33 @@ class IndexController extends AbstractController
         }
 
         return $this->castId($idStore);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeAvailabilityListDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getAvailabilityListDataExpanderPlugins() as $availabilityListDataExpanderPlugin) {
+            $viewData = $availabilityListDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeAvailabilityViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getAvailabilityViewDataExpanderPlugins() as $availabilityViewDataExpanderPlugin) {
+            $viewData = $availabilityViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

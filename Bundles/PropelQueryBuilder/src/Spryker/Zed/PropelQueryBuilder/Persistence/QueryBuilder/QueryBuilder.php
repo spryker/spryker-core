@@ -10,6 +10,7 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\ColumnQueryMapperInterface;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface;
 
 class QueryBuilder implements QueryBuilderInterface
@@ -30,18 +31,26 @@ class QueryBuilder implements QueryBuilderInterface
     protected $paginationMapper;
 
     /**
+     * @var \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper
+     */
+    protected $joinQueryMapper;
+
+    /**
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapperInterface $criteriaMapper
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\ColumnQueryMapperInterface $columnMapper
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface $paginationMapper
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper $joinQueryMapper
      */
     public function __construct(
         CriteriaMapperInterface $criteriaMapper,
         ColumnQueryMapperInterface $columnMapper,
-        PaginationQueryMapperInterface $paginationMapper
+        PaginationQueryMapperInterface $paginationMapper,
+        JoinQueryMapper $joinQueryMapper
     ) {
         $this->criteriaMapper = $criteriaMapper;
         $this->columnMapper = $columnMapper;
         $this->paginationMapper = $paginationMapper;
+        $this->joinQueryMapper = $joinQueryMapper;
     }
 
     /**
@@ -57,6 +66,7 @@ class QueryBuilder implements QueryBuilderInterface
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
+        $query = $this->mergeQueryWithJoin($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }
@@ -113,5 +123,16 @@ class QueryBuilder implements QueryBuilderInterface
     protected function toCriteria(PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
         return $this->criteriaMapper->toCriteria($propelQueryBuilderCriteriaTransfer);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function mergeQueryWithJoin(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
+    {
+        return $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer->getJoins());
     }
 }

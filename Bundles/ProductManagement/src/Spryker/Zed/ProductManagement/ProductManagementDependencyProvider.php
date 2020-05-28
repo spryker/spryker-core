@@ -22,6 +22,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBr
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeBridge;
@@ -53,6 +54,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_PROPEL_QUERY_BUILDER = 'FACADE_PROPEL_QUERY_BUILDER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -76,6 +78,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER';
     public const PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER';
     public const PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -225,6 +230,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         $container = $this->addStockFacade($container);
+        $container = $this->addPropelQueryBuilderFacade($container);
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
@@ -238,6 +244,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductAbstractFormEditTabsExpanderPlugins($container);
         $container = $this->addProductAbstractEditViewExpanderPlugins($container);
         $container = $this->addProductConcreteEditViewExpanderPlugins($container);
+        $container = $this->addProductAbstractListDataExpanderPlugins($container);
+        $container = $this->addProductAbstractViewDataExpanderPlugins($container);
+        $container = $this->addProductAbstractQueryCriteriaExpanderPlugins($container);
 
         return $container;
     }
@@ -365,6 +374,20 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_STOCK, function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPropelQueryBuilderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PROPEL_QUERY_BUILDER, function (Container $container) {
+            return new ProductManagementToPropelQueryBuilderFacadeBridge($container->getLocator()->propelQueryBuilder()->facade());
         });
 
         return $container;
@@ -564,6 +587,72 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
      */
     protected function getProductConcreteEditViewExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractListDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER, function () {
+            return $this->getProductAbstractListDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListDataExpanderPluginInterface[]
+     */
+    protected function getProductAbstractListDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractViewDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER, function () {
+            return $this->getProductAbstractViewDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewDataExpanderPluginInterface[]
+     */
+    protected function getProductAbstractViewDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractQueryCriteriaExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER, function () {
+            return $this->getProductAbstractQueryCriteriaExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[]
+     */
+    protected function getProductAbstractQueryCriteriaExpanderPlugins(): array
     {
         return [];
     }

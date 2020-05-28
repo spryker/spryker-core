@@ -10,6 +10,8 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence;
 use Exception;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\ColumnQueryMapper;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\CriteriaQueryMapper;
+use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\JsonCriterionMapper;
@@ -21,6 +23,7 @@ use Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderDependencyProvider;
 /**
  * @method \Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderConfig getConfig()
  * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderRepositoryInterface getRepository()
  */
 class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -42,7 +45,8 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
         return new QueryBuilder(
             $this->createQueryBuilderCriteriaMapper(),
             $this->createColumnQueryMapper(),
-            $this->createPaginationQueryMapper()
+            $this->createPaginationQueryMapper(),
+            $this->createJoinQueryMapper()
         );
     }
 
@@ -60,6 +64,14 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     protected function createPaginationQueryMapper()
     {
         return new PaginationQueryMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper
+     */
+    protected function createJoinQueryMapper(): JoinQueryMapper
+    {
+        return new JoinQueryMapper();
     }
 
     /**
@@ -112,5 +124,13 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(PropelQueryBuilderDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\CriteriaQueryMapper
+     */
+    public function createCriteriaQueryMapper(): CriteriaQueryMapper
+    {
+        return new CriteriaQueryMapper();
     }
 }

@@ -174,4 +174,7 @@
     <transfer name="Category">
     </transfer>
 
+    <transfer name="QueryCriteria">
+    </transfer>
+
 </transfers>

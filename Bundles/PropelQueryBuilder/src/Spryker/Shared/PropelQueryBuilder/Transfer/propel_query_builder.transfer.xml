@@ -19,6 +19,7 @@
         <property name="mappings" type="PropelQueryBuilderCriteriaMapping[]" singular="mapping"/>
         <property name="pagination" type="PropelQueryBuilderPagination"/>
         <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="joins" type="PropelQueryBuilderJoin[]" singular="join"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderCriteriaMapping">
@@ -48,6 +49,27 @@
     <transfer name="PropelQueryBuilderColumn">
         <property name="name" type="string"/>
         <property name="alias" type="string"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="left" type="array" singular="left"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+        <property name="withColumns" type="array" singular="withColumn"/>
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="left" type="array" singular="left"/>
     </transfer>
 
 </transfers>

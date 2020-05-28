@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/availability": "^9.2.0",
+    "spryker/availability-gui-extension": "^1.0.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/gui": "^3.30.0",
     "spryker/kernel": "^3.30.0",
@@ -14,6 +15,7 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-bundle": "^7.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-query-builder": "^0.3.1",
     "spryker/stock": "^8.0.0",
     "spryker/store": "^1.5.0",
     "spryker/symfony": "^3.0.0",
