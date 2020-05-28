@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
