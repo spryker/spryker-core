@@ -290,7 +290,11 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->getProductFacade(),
+            $this->getProductMeasurementUnitFacade()
+        );
     }
 
     /**
@@ -346,6 +350,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrderInterface
      */
     public function createAmountLeadProductHydrateOrder(): AmountLeadProductHydrateOrderInterface
@@ -357,6 +363,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrderInterface
      */
     public function createAmountSalesUnitHydrateOrder(): AmountSalesUnitHydrateOrderInterface

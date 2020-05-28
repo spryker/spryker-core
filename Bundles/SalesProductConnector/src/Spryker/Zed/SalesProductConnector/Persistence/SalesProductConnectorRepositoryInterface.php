@@ -15,4 +15,11 @@ interface SalesProductConnectorRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemMetadataTransfer[]
      */
     public function getSalesOrderItemMetadataByOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 }

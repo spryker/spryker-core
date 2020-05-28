@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Communication\Factory;
 
 use Spryker\Zed\Oms\Communication\Form\DataProvider\OrderItemOmsTriggerFormDataProvider;
+use Spryker\Zed\Oms\Communication\Form\DataProvider\OrderItemsOmsTriggerFormDataProvider;
 use Spryker\Zed\Oms\Communication\Form\DataProvider\OrderOmsTriggerFormDataProvider;
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -42,6 +43,30 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
     public function createOrderItemOmsTriggerFormDataProvider(): OrderItemOmsTriggerFormDataProvider
     {
         return new OrderItemOmsTriggerFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Communication\Form\DataProvider\OrderItemsOmsTriggerFormDataProvider
+     */
+    public function createOrderItemsOmsTriggerFormDataProvider(): OrderItemsOmsTriggerFormDataProvider
+    {
+        return new OrderItemsOmsTriggerFormDataProvider();
+    }
+
+    /**
+     * @param string $redirectUrl
+     * @param string $event
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getOrderItemsOmsTriggerForm(string $redirectUrl, string $event, array $salesOrderItemIds): FormInterface
+    {
+        return $this->formFactory->create(
+            OmsTriggerForm::class,
+            null,
+            $this->createOrderItemsOmsTriggerFormDataProvider()->getOptions($redirectUrl, $event, $salesOrderItemIds)
+        );
     }
 
     /**
