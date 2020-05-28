@@ -32,7 +32,7 @@ class ImportOrderItemsStatusConsole extends Console
     protected const TABLE_HEADER_COLUMN_ROW_NUMBER = 'row_number';
     protected const TABLE_HEADER_COLUMN_ORDER_REFERENCE = 'order_reference';
     protected const TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE = 'order_item_reference';
-    protected const TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE = 'order_item_oms_event_state';
+    protected const TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS = 'order_item_event_oms';
     protected const TABLE_HEADER_COLUMN_COUNT_TRANSITIONED_ITEM = 'count_transitioned_item';
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
     protected const TABLE_HEADER_COLUMN_MESSAGE = 'message';
@@ -54,7 +54,7 @@ class ImportOrderItemsStatusConsole extends Console
     {
         return [
             static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE,
-            static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE,
+            static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS,
         ];
     }
 
@@ -137,14 +137,14 @@ class ImportOrderItemsStatusConsole extends Console
                 }
                 $manualEvents = $this->getFactory()->getOmsFacade()->getManualEvents($salesOrderItemTransfer->getIdSalesOrderItem());
 
-                if (!in_array($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE], $manualEvents)) {
+                if (!in_array($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS], $manualEvents)) {
                     throw new Exception(sprintf(
                         'Item can\'t be triggered. Available events for item: %s',
                         implode(', ', $manualEvents)
                     ));
                 }
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
-                    $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE],
+                    $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS],
                     $salesOrderItemTransfer->getIdSalesOrderItem()
                 );
 
@@ -212,7 +212,7 @@ class ImportOrderItemsStatusConsole extends Console
             static::TABLE_HEADER_COLUMN_ROW_NUMBER,
             static::TABLE_HEADER_COLUMN_ORDER_REFERENCE,
             static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE,
-            static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE,
+            static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS,
             static::TABLE_HEADER_COLUMN_RESULT,
             static::TABLE_HEADER_COLUMN_MESSAGE,
         ]);
@@ -240,7 +240,7 @@ class ImportOrderItemsStatusConsole extends Console
                 $rowNumber,
                 $rowData[static::TABLE_HEADER_COLUMN_ORDER_REFERENCE],
                 $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE],
-                $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_OMS_EVENT_STATE],
+                $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS],
                 $result ? 'success' : 'fail',
                 $message,
             ]);
