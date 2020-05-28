@@ -96,7 +96,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductConcreteSkuNotSpecifierErrorResponse(): RestResponseInterface
+    public function createProductConcreteSkuNotSpecifiedErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(MerchantProductOffersRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
@@ -109,7 +109,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductOfferIdNotSpecifierErrorResponse(): RestResponseInterface
+    public function createProductOfferIdNotSpecifiedErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(MerchantProductOffersRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_ID_IS_NOT_SPECIFIED)

@@ -49,7 +49,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
         $merchantProductOfferReference = $restRequest->getResource()->getId() ?? null;
 
         if (!$merchantProductOfferReference) {
-            return $this->productOfferRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
+            return $this->productOfferRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
         $productOfferStorageTransfer = $this->merchantProductOfferStorageClient->findProductOfferStorageByReference($merchantProductOfferReference);
@@ -77,7 +77,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
         $productConcreteSku = $productConcreteResource ? $productConcreteResource->getId() : null;
 
         if (!$productConcreteSku) {
-            return $this->productOfferRestResponseBuilder->createProductConcreteSkuNotSpecifierErrorResponse();
+            return $this->productOfferRestResponseBuilder->createProductConcreteSkuNotSpecifiedErrorResponse();
         }
 
         $productConcreteProductOfferResources = $this->getProductOfferResources([$productConcreteSku]);

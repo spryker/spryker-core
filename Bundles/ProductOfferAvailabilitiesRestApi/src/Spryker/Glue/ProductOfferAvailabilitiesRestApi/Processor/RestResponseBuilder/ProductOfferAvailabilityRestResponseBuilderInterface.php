@@ -13,11 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface ProductOfferAvailabilityRestResponseBuilderInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createProductOfferIdNotSpecifierErrorResponse(): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer[] $productOfferAvailabilityStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
@@ -35,4 +30,9 @@ interface ProductOfferAvailabilityRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createProductOfferAvailabilityRestResponse(RestResourceInterface $productOfferAvailabilityRestResource): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferIdNotSpecifiedErrorResponse(): RestResponseInterface;
 }

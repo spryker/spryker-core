@@ -41,19 +41,6 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createProductOfferIdNotSpecifierErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_ID_IS_NOT_SPECIFIED)
-            ->setDetail(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_ID_SKU_IS_NOT_SPECIFIED)
-            ->setStatus(Response::HTTP_BAD_REQUEST);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer[] $productOfferAvailabilityStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
@@ -88,6 +75,19 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
         RestResourceInterface $productOfferAvailabilityRestResource
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()->addResource($productOfferAvailabilityRestResource);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferIdNotSpecifiedErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_ID_IS_NOT_SPECIFIED)
+            ->setDetail(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_ID_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**

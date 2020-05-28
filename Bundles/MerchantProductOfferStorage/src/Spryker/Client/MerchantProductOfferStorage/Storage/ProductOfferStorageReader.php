@@ -131,7 +131,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
             return null;
         }
 
-        return $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer($concreteProductOfferData, (new ProductOfferStorageTransfer()));
+        return $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
+            $concreteProductOfferData,
+            new ProductOfferStorageTransfer()
+        );
     }
 
     /**
@@ -141,27 +144,28 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      */
     protected function getProductOfferReferences(array $productConcreteSkus): array
     {
-        $concreteProductOffersKeys = $this->productOfferStorageKeyGenerator->generateProductConcreteProductOffersKeys($productConcreteSkus);
+        $concreteProductOffersKeys = $this->productOfferStorageKeyGenerator
+            ->generateProductConcreteProductOffersKeys($productConcreteSkus);
         $concreteProductOffers = $this->storageClient->getMulti($concreteProductOffersKeys);
 
-        $decodedConcreteProductOffers = [];
+        $concreteProductOfferReferences = [];
         foreach ($concreteProductOffers as $storageKey => $concreteProductOffer) {
             if (!$concreteProductOffer) {
                 continue;
             }
 
-            $concreteProductOffer = $this->utilEncodingService->decodeJson($concreteProductOffer, true);
+            $decodedConcreteProductOffer = $this->utilEncodingService->decodeJson($concreteProductOffer, true);
 
-            if (!$concreteProductOffer) {
+            if (!$decodedConcreteProductOffer) {
                 continue;
             }
 
-            unset($concreteProductOffer['_timestamp']);
+            unset($decodedConcreteProductOffer['_timestamp']);
 
-            $decodedConcreteProductOffers = array_merge($decodedConcreteProductOffers, $concreteProductOffer);
+            $concreteProductOfferReferences = array_merge($concreteProductOfferReferences, $decodedConcreteProductOffer);
         }
 
-        return $decodedConcreteProductOffers;
+        return $concreteProductOfferReferences;
     }
 
     /**

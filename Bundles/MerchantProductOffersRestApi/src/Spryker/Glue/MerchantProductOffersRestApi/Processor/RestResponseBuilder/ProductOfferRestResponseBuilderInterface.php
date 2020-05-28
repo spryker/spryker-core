@@ -52,12 +52,12 @@ interface ProductOfferRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductConcreteSkuNotSpecifierErrorResponse(): RestResponseInterface;
+    public function createProductConcreteSkuNotSpecifiedErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductOfferIdNotSpecifierErrorResponse(): RestResponseInterface;
+    public function createProductOfferIdNotSpecifiedErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -39,6 +39,6 @@ class ProductOfferAvailabilitiesResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createProductOfferAvailabilityReader()
-            ->getProductOfferAvailability($restRequest);
+            ->getProductOfferAvailabilities($restRequest);
     }
 }

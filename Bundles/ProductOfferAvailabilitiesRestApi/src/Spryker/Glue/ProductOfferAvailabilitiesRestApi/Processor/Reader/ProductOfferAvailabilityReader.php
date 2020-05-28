@@ -51,12 +51,12 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getProductOfferAvailability(RestRequestInterface $restRequest): RestResponseInterface
+    public function getProductOfferAvailabilities(RestRequestInterface $restRequest): RestResponseInterface
     {
         $productOfferRestResource = $restRequest->findParentResourceByType(ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
 
         if (!$productOfferRestResource || !$productOfferRestResource->getId()) {
-            return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
+            return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
         $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productOfferRestResource->getId()]);

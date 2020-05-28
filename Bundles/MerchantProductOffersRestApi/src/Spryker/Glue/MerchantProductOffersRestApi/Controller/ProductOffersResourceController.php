@@ -18,7 +18,7 @@ class ProductOffersResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getCollection": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieves a collection of product offers."
      *          ],
@@ -29,7 +29,7 @@ class ProductOffersResourceController extends AbstractController
      *              "400": "Product offer id is not specified.",
      *              "404": "Product offer not found."
      *          }
-     *     }
+     *      }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

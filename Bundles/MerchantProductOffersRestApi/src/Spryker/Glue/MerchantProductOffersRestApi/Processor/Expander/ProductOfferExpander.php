@@ -32,9 +32,9 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      */
     public function expandProductConcretesWithProductOffers(array $resources): void
     {
-        $productConcreteSku = $this->getProductConcreteSkus($resources);
+        $productConcreteSkus = $this->getProductConcreteSkus($resources);
 
-        $productOffersRestResources = $this->productOfferReader->getProductOfferResources($productConcreteSku);
+        $productOffersRestResources = $this->productOfferReader->getProductOfferResources($productConcreteSkus);
 
         foreach ($resources as $resource) {
             if ($resource->getType() !== MerchantProductOffersRestApiConfig::RESOURCE_CONCRETE_PRODUCTS) {
@@ -54,20 +54,20 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      *
-     * @return array<string>
+     * @return string[]
      */
     protected function getProductConcreteSkus(array $resources): array
     {
-        $productConcreteSku = [];
+        $productConcreteSkus = [];
 
         foreach ($resources as $resource) {
             if ($resource->getType() !== MerchantProductOffersRestApiConfig::RESOURCE_CONCRETE_PRODUCTS) {
                 continue;
             }
 
-            $productConcreteSku[] = $resource->getId();
+            $productConcreteSkus[] = $resource->getId();
         }
 
-        return $productConcreteSku;
+        return $productConcreteSkus;
     }
 }
