@@ -491,15 +491,23 @@ abstract class AbstractTable
         ?array $typeOptions = [],
         ?array $typeOptionsMappings = []
     ): GuiTableColumnConfigurationTransfer {
-        return (new GuiTableColumnConfigurationTransfer())
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_LIST)
             ->setSortable($sortable)
             ->setHideable($hideable)
-            ->addTypeOption('type', static::COLUMN_TYPE_CHIP)
-            ->addTypeOption('typeOptions', $typeOptions)
-            ->addTypeOption('typeOptionsMappings', $typeOptionsMappings);
+            ->addTypeOption('type', static::COLUMN_TYPE_CHIP);
+
+        foreach ($typeOptions as $key => $typeOption) {
+            $guiTableColumnConfigurationTransfer->addTypeOption($key, $typeOption);
+        }
+
+        foreach ($typeOptionsMappings as $key => $typeOptionsMapping) {
+            $guiTableColumnConfigurationTransfer->addTypeOptionMapping($key, $typeOptionsMapping);
+        }
+
+        return $guiTableColumnConfigurationTransfer;
     }
 
     /**

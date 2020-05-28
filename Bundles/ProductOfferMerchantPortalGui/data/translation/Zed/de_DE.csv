@@ -1,35 +1,35 @@
 Active,Aktiv
 Approved,Genehmigt
-"always in stock","always in stock"
-Created,Created
-"Created from","Created from"
-"Created to","Created to"
+"always in stock","immer auf lager"
+Created,Erstellt
+"Created from","Erstellt von"
+"Created to","Erstellt bis"
 "Create Offer","Angebot erstellen"
 Denied,Verweigert
 "Has stock","Has stock"
 Image,Bild
 Inactive,Inaktiv
-"Merchant SKU","Merchant SKU"
+"Merchant SKU","Händler-SKU"
 Name,Name
 Offers,Angeboten
 Offline,Offline
 offline,offline
 Online,Online
 online,online
-"Out of stock","Out of stock"
-Pending,Pending
-Reference,Reference
+"Out of stock","Ausverkauft"
+Pending,Ausstehend
+Reference,ID
 Search,Suche
 "Search by SKU, Name","Suche nach SKU, Name"
 Sku,SKU
 Status,Status
-Stock,Stock
+Stock,Bestand
 Stores,Stores
-Updated,Updated
-"Updated from","Updated from"
-"Updated to","Updated to"
+Updated,Aktualisiert
+"Updated from","Aktualisiert von"
+"Updated to","Aktualisiert bis"
 "Valid From","Gültig Von"
 "Valid To","Gültig Bis"
-Visibility,Visibility
+Visibility,Sichtbarkeit
 "With Offers","Mit Angeboten"
 "Without Offers","Ohne Angeboten"

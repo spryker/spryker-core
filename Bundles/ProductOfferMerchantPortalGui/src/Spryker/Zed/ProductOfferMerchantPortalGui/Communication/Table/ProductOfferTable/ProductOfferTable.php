@@ -99,7 +99,12 @@ class ProductOfferTable extends AbstractTable
             $this->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
             $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
             $this->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
-            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, ['color' => 'grey']),
+            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
+                'limit' => 3,
+                'typeOptions' => [
+                    'color' => 'grey',
+                ],
+            ]),
             $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
                 'color' => 'grey',
             ], [

@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductTableDataProvider extends AbstractTableDataProvider
 {
-    protected const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+    public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
     protected const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
 
     /**
