@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 interface ProductAbstractRelationUpdaterInterface
 {
     /**
+     * @param bool $isTouchEnabled
+     *
      * @return void
      */
-    public function updateProductLabelRelations();
+    public function updateProductLabelRelations(bool $isTouchEnabled = true);
 }

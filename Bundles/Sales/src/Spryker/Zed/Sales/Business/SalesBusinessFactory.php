@@ -10,6 +10,8 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpander;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -121,7 +123,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderSaver() instead.
+     * @deprecated Use {@link createSalesOrderSaver()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
      */
@@ -169,7 +171,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderReaderWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createOrderReaderWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReaderInterface
      */
@@ -220,7 +222,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderHydratorWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createOrderHydratorWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
@@ -267,7 +269,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderAddressWriter() instead.
+     * @deprecated Use {@link createOrderAddressWriter()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdaterInterface
      */
@@ -324,7 +326,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderItemMapper() instead.
+     * @deprecated Use {@link createSalesOrderItemMapper()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
      */
@@ -377,6 +379,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getSearchOrderExpanderPlugins(),
             $this->getOrderSearchQueryExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface
+     */
+    public function createItemCurrencyExpander(): ItemCurrencyExpanderInterface
+    {
+        return new ItemCurrencyExpander($this->getRepository());
     }
 
     /**

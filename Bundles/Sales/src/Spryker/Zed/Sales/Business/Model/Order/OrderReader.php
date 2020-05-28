@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReader instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderReader} instead.
  */
 class OrderReader implements OrderReaderInterface
 {

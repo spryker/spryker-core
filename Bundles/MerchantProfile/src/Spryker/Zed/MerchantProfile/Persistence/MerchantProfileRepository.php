@@ -118,10 +118,6 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
             $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile());
         }
 
-        if ($merchantProfileCriteriaFilterTransfer->getIsActive() !== null) {
-            $merchantProfileQuery->filterByIsActive($merchantProfileCriteriaFilterTransfer->getIsActive());
-        }
-
         return $merchantProfileQuery;
     }
 }

@@ -34,6 +34,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
 use Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder;
+use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 use Spryker\Zed\Transfer\Dependency\Service\TransferToUtilGlobServiceInterface;
 use Spryker\Zed\Transfer\TransferDependencyProvider;
 
@@ -182,7 +183,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createTransferGeneratedDirectory() instead
+     * @deprecated Use {@link createTransferGeneratedDirectory()} instead
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
@@ -194,8 +195,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createDataTransferGeneratedDirectory()` instead to manipulate regular transfers.
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createEntityTransferGeneratedDirectory()` instead to manipulate entity transfers.
+     * @deprecated Use {@link \Spryker\Zed\Transfer\Business\TransferBusinessFactory::createDataTransferGeneratedDirectory()} instead to manipulate regular transfers.
+     * @deprecated Use {@link \Spryker\Zed\Transfer\Business\TransferBusinessFactory::createEntityTransferGeneratedDirectory()} instead to manipulate entity transfers.
      *
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
@@ -364,7 +365,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new EntityTransferDefinitionFinder(
             $this->getConfig(),
-            $this->getUtilGlobService()
+            $this->getUtilGlobService(),
+            $this->getPropelFacade()
         );
     }
 
@@ -385,5 +387,13 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function getUtilGlobService(): TransferToUtilGlobServiceInterface
     {
         return $this->getProvidedDependency(TransferDependencyProvider::SERVICE_UTIL_GLOB);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface
+     */
+    public function getPropelFacade(): TransferToPropelFacadeInterface
+    {
+        return $this->getProvidedDependency(TransferDependencyProvider::FACADE_PROPEL);
     }
 }

@@ -259,7 +259,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @deprecated Use saveOrderBundleItems() instead
+     * @deprecated Use {@link saveOrderBundleItems()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -516,5 +516,37 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductBundleExpander()
             ->expandUniqueOrderItemsWithProductBundles($itemTransfers, $orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithProductBundles(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductBundleItemExpander()
+            ->expandItemsWithProductBundles($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductOptionExpander()
+            ->expandItemProductBundlesWithProductOptions($itemTransfers);
     }
 }

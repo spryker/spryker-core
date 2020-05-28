@@ -10,7 +10,7 @@ namespace Spryker\Zed\User\Dependency\Plugin;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface} instead.
  */
 interface UsersTableExpanderPluginInterface extends UserTableActionExpanderPluginInterface
 {

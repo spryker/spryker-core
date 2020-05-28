@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonFunction;
 
 /**
- * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonTwig` instead.
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonTwig} instead.
  */
 abstract class AbstractActionButtonFunction extends AbstractButtonFunction
 {

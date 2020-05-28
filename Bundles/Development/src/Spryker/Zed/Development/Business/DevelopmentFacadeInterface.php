@@ -131,7 +131,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use `getModules()` instead.
+     * @deprecated Use {@link getModules()} instead.
      *
      * @return array
      */
@@ -140,7 +140,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `getAllModules()` instead.
+     * @deprecated Use {@link getAllModules()} instead.
      *
      * @return array
      */
@@ -366,7 +366,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `listAllModules` instead.
+     * @deprecated Use {@link listAllModules()} instead.
      *
      * @return array
      */

@@ -15,7 +15,7 @@ interface CustomerAccessPermissionClientInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Client\CustomerAccessPermission\Plugin\CustomerSecuredPatternPermissionPlugin plugin instead.
+     * @deprecated Use {@link \Spryker\Client\CustomerAccessPermission\Plugin\CustomerSecuredPatternPermissionPlugin} plugin instead.
      *
      * @return string
      */

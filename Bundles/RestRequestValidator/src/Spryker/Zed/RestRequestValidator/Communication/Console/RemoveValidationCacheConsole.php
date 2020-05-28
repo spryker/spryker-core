@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Communication\Console\RemoveRestApiValidationCacheConsole} instead.
+ *
  * @method \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorFacadeInterface getFacade()
  */
 class RemoveValidationCacheConsole extends Console

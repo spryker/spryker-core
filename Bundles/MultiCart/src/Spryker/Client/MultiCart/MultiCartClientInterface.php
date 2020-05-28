@@ -31,7 +31,7 @@ interface MultiCartClientInterface
      *
      * @api
      *
-     * @deprecated Use `markQuoteAsDefault()` instead.
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

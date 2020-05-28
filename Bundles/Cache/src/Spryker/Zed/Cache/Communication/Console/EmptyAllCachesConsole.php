@@ -39,7 +39,41 @@ class EmptyAllCachesConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->emptyCache($output);
+        $this->emptyCodeBucketCache($output);
+        $this->emptyDefaultCodeBucketCache($output);
         $this->emptyAutoLoadCache($output);
+
+        return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function emptyCodeBucketCache(OutputInterface $output): void
+    {
+        if (APPLICATION_CODE_BUCKET === '') {
+            return;
+        }
+
+        $emptiedDirectories = $this->getFacade()->emptyCodeBucketCache();
+
+        $this->info('Removed cache files', true);
+        $output->writeln($emptiedDirectories);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function emptyDefaultCodeBucketCache(OutputInterface $output): void
+    {
+        $emptiedDirectories = $this->getFacade()->emptyDefaultCodeBucketCache();
+
+        $this->info('Removed cache files', true);
+        $output->writeln($emptiedDirectories);
     }
 
     /**
@@ -52,7 +86,7 @@ class EmptyAllCachesConsole extends Console
         $emptiedDirectories = $this->getFacade()->emptyCache();
 
         $this->info('Removed cache files', true);
-        $this->printEmptiedDirectories($emptiedDirectories, $output);
+        $output->writeln($emptiedDirectories);
     }
 
     /**
@@ -65,19 +99,6 @@ class EmptyAllCachesConsole extends Console
         $emptiedDirectories = $this->getFacade()->emptyAutoLoaderCache();
 
         $this->info('Removed auto-load cache files', true);
-        $this->printEmptiedDirectories($emptiedDirectories, $output);
-    }
-
-    /**
-     * @param string[] $directories
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    protected function printEmptiedDirectories(array $directories, OutputInterface $output)
-    {
-        foreach ($directories as $directory) {
-            $output->writeln($directory, OutputInterface::VERBOSITY_NORMAL);
-        }
+        $output->writeln($emptiedDirectories);
     }
 }

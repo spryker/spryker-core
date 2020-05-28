@@ -30,5 +30,7 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
                 $container->getLocator()->productSet()->queryContainer()
             );
         };
+
+        return $container;
     }
 }
