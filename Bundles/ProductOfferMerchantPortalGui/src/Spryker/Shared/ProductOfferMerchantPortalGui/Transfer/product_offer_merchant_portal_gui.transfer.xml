@@ -46,12 +46,12 @@
         <property name="typeOptionsMappings" type="array" singular="typeOptionMapping" associative="true"/>
     </transfer>
 
-    <transfer name="GuiTableDataRequest" >
-        <property name="searchTerm" type="string" />
-        <property name="orderBy" type="string" />
-        <property name="orderDirection" type="string" />
-        <property name="page" type="int" />
-        <property name="pageSize" type="int" />
+    <transfer name="GuiTableDataRequest">
+        <property name="searchTerm" type="string"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
         <property name="filters" type="array" singular="filter" associative="true"/>
         <property name="idLocale" type="int"/>
     </transfer>
@@ -89,7 +89,7 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="GuiTableFilter" >
+    <transfer name="GuiTableFilter">
         <property name="title" type="string"/>
         <property name="id" type="string"/>
         <property name="type" type="string"/>
