@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -45,6 +46,13 @@ interface OmsRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemStateTransfer[]
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer

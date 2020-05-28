@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
@@ -15,6 +16,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -125,6 +127,47 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         return $this->getFactory()
             ->createOrderItemMapper()
             ->mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers($omsOrderItemStateHistoryQuery->find());
+    }
+
+    /**
+     * @module Sales
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->joinWithState()
+            ->joinWithProcess();
+
+        $salesOrderItemQuery = $this->setSalesOrderItemQueryFilters(
+            $salesOrderItemQuery,
+            $orderItemFilterTransfer
+        );
+
+        return $this->getFactory()
+            ->createOrderItemMapper()
+            ->mapSalesOrderItemEntityCollectionToOrderItemTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function setSalesOrderItemQueryFilters(
+        SpySalesOrderItemQuery $salesOrderItemQuery,
+        OrderItemFilterTransfer $orderItemFilterTransfer
+    ): SpySalesOrderItemQuery {
+        if ($orderItemFilterTransfer->getSalesOrderItemIds()) {
+            $salesOrderItemQuery->filterByIdSalesOrderItem_In($orderItemFilterTransfer->getSalesOrderItemIds());
+        }
+
+        return $salesOrderItemQuery;
     }
 
     /**

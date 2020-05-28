@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
@@ -744,6 +745,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrderWithOmsStates($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return string[][]
+     */
+    public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        return $this->getFactory()
+            ->createStateMachineReader()
+            ->getOrderItemManualEvents($orderItemFilterTransfer);
     }
 
     /**

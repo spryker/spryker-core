@@ -29,6 +29,8 @@ use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Reader\StateMachineReader;
+use Spryker\Zed\Oms\Business\Reader\StateMachineReaderInterface;
 use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
 use Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandler;
 use Spryker\Zed\Oms\Business\Reservation\ReservationWriter;
@@ -362,6 +364,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reader\StateMachineReaderInterface
+     */
+    public function createStateMachineReader(): StateMachineReaderInterface
+    {
+        return new StateMachineReader(
+            $this->getRepository(),
+            $this->createOrderStateMachineBuilder()
+        );
     }
 
     /**

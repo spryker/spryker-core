@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
@@ -661,6 +662,19 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithOmsStates(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence using criteria from filter.
+     * - Returns available manual events for found order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return string[][]
+     */
+    public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 
     /**
      * Specification:

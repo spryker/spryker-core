@@ -130,6 +130,10 @@
     <transfer name="ShipmentCarrier">
     </transfer>
 
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
     <transfer name="ReservationRequest">
         <property name="reservedStates" type="OmsStateCollection"/>
         <property name="sku" type="string"/>
