@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderJoinTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderSortTransfer;
@@ -40,6 +41,7 @@ class QueryContainerTest extends Unit
     public const PAGE = 2;
 
     public const EXPECTED_COUNT = 8;
+    public const EXPECTED_COUNT_WITH_JOIN = 4;
     public const EXPECTED_OFFSET = 10;
     public const EXPECTED_SKU_COLLECTION = [
         'test_concrete_sku_1',
@@ -120,6 +122,11 @@ class QueryContainerTest extends Unit
     }';
 
     /**
+     * @var string
+     */
+    protected $joinCondition = 'IN (\'test_abstract_sku_1\',\'test_abstract_sku_2\',\'test_abstract_sku_3\',\'test_abstract_sku_4\')';
+
+    /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
      */
     protected $queryContainer;
@@ -135,6 +142,11 @@ class QueryContainerTest extends Unit
     protected $query;
 
     /**
+     * @var \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected $queryWithoutJoin;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -145,6 +157,8 @@ class QueryContainerTest extends Unit
 
         $this->query = SpyProductQuery::create();
         $this->query->innerJoinSpyProductAbstract();
+
+        $this->queryWithoutJoin = SpyProductQuery::create();
 
         $this->prepareTestProducts();
     }
@@ -247,6 +261,36 @@ class QueryContainerTest extends Unit
         $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
         $this->assertSkuCollectionWithSelectedColumns($results->toArray(), static::EXPECTED_SKU_COLLECTION);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPropelCreateQueryWithJoin(): void
+    {
+        $criteriaTransfer = $this->getCriteriaWithJoin();
+
+        $query = $this->queryContainer->createQuery($this->queryWithoutJoin, $criteriaTransfer);
+
+        $results = $query->find();
+        $this->assertCount(static::EXPECTED_COUNT_WITH_JOIN, $results);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
+     */
+    protected function getCriteriaWithJoin(): PropelQueryBuilderCriteriaTransfer
+    {
+        $propelQueryBuilderCriteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
+        $propelQueryBuilderCriteriaTransfer->setRuleSet(new PropelQueryBuilderRuleSetTransfer());
+
+        $joinTransfer = (new PropelQueryBuilderJoinTransfer())
+            ->setRelation('SpyProductAbstract')
+            ->setCondition(sprintf('%s %s', SpyProductAbstractTableMap::COL_SKU, $this->joinCondition))
+            ->setJoinType(Criteria::INNER_JOIN);
+        $propelQueryBuilderCriteriaTransfer->addJoin($joinTransfer);
+
+        return $propelQueryBuilderCriteriaTransfer;
     }
 
     /**

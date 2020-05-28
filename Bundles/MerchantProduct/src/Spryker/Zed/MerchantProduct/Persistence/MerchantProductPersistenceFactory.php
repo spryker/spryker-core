@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
  */
 class MerchantProductPersistenceFactory extends AbstractPersistenceFactory
 {

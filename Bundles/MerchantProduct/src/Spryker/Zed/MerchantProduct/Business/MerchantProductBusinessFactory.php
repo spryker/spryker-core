@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantProduct\Business\Merchant\MerchantReaderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {
