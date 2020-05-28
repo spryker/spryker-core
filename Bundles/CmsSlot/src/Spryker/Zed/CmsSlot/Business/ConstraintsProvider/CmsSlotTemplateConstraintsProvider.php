@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
 {
@@ -33,7 +32,6 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     protected function getPathConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Regex([
                 'pattern' => '/^@.+\.twig$/',
@@ -47,7 +45,6 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     protected function getNameConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];
@@ -59,7 +56,6 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
     protected function getDescriptionConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 1024]),
         ];

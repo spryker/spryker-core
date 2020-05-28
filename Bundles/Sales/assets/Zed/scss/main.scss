@@ -102,15 +102,6 @@ $chat-box-background-color: #f0f0f0;
     }
 }
 
-.is-hidden .show-less,
-.is-shown .show-more {
-    display: none;
-}
-
-.more-history {
-  color: #337ab7;
-}
-
 .addition-row {
     td {
         border-top: none !important;
@@ -133,39 +124,6 @@ $chat-box-background-color: #f0f0f0;
     padding-bottom: 10px;
 }
 
-img.product-image {
-  width: 150px;
-  border: 1px solid #e7eaec;
-
-    &--small {
-        width: 60px;
-    }
-
-    &--borderless {
-        border: none;
-    }
-}
-
-.image-wrap {
-    position: relative;
-    display: inline-block;
-
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-}
-
-span.discounted {
-    text-decoration: line-through;
-    color: #aaa;
-}
-
 .table > tbody.single-item {
     border-top: none;
 }
@@ -175,15 +133,6 @@ span.discounted {
     border-top: none;
 }
 
-.state-history {
-    width: 300px;
-}
-
-.sku {
-    color: #aaa;
-    font-size: 10px;
-}
-
 .variant-details {
     margin-top: 10px;
 
@@ -191,11 +140,6 @@ span.discounted {
         font-size: 12px;
         margin-bottom: 2px;
     }
-}
-
-.tax-info {
-    color: #aaa;
-    font-size: 10px;
 }
 
 a.edit_billing_address {
@@ -224,5 +168,14 @@ dd {
 
     .form-group {
         margin-bottom: 0;
+    }
+}
+
+.bundle-item {
+    display: flex;
+
+    .image-wrap {
+        margin: 0 16px;
+        flex-shrink: 0;
     }
 }
