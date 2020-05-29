@@ -7,7 +7,7 @@
 
     {% include '@AvailabilityGui/_partials/filters.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product availability list    ' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product availability list' | trans } %}
 
         {% block widget_content %}
             {{ indexTable | raw }}

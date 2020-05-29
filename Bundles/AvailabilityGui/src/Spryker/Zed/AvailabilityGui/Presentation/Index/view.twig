@@ -12,7 +12,7 @@
 
     {% include '@AvailabilityGui/_partials/filters.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' | trans } %}
         {% block widget_content %}
             <div class="row">
 

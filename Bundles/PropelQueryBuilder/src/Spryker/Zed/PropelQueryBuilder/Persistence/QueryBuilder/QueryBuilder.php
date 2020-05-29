@@ -131,7 +131,7 @@ class QueryBuilder implements QueryBuilderInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mergeQueryWithJoin(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
+    protected function mergeQueryWithJoin(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer): ModelCriteria
     {
         return $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer->getJoins());
     }

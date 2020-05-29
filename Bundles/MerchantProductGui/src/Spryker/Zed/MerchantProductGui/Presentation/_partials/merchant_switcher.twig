@@ -1,4 +1,4 @@
-{% if merchants is defined %}
+{% if merchants is defined and merchants is not empty %}
     <span class="m-r-sm">
         <label>{{ 'Merchants' | trans }}</label>
         <select name="id-merchant" onchange="this.form.submit()" onblur="this.form.submit()">
@@ -11,5 +11,5 @@
 {% endif %}
 
 {% if merchant is defined and merchant is not empty %}
-    <b>{{ 'Merchant' | trans }}</b> {{ merchant.name }}
+    <strong>{{ 'Merchant' | trans }}</strong> {{ merchant.name }}
 {%  endif %}

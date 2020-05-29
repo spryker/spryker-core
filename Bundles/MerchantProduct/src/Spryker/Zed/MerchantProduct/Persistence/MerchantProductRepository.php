@@ -35,7 +35,9 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
             return null;
         }
 
-        return (new MerchantTransfer())->fromArray($merchantProductEntity->getMerchant()->toArray(), true);
+        return $this->getFactory()
+            ->createMerchantMapper()
+            ->mapMerchantEntityToMerchantTransfer($merchantProductEntity->getMerchant(), new MerchantTransfer());
     }
 
     /**

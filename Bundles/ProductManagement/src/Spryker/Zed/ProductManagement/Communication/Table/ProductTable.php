@@ -305,9 +305,9 @@ class ProductTable extends AbstractProductTable
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function expandPropelQuery(ModelCriteria $query)
+    protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
     {
-        $queryCriteriaTransfer = $this->executeProductbstractQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
+        $queryCriteriaTransfer = $this->executeProductAbstractQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
 
         return $this->propelQueryBuilderFacade->expandQuery($query, $queryCriteriaTransfer);
     }
@@ -317,7 +317,7 @@ class ProductTable extends AbstractProductTable
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    protected function executeProductbstractQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
+    protected function executeProductAbstractQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
         foreach ($this->productAbstractQueryCriteriaExpanderPlugins as $productAbstractQueryCriteriaExpanderPlugin) {
             $queryCriteriaTransfer = $productAbstractQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
