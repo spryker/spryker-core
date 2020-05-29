@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\DevelopmentConfig;
@@ -42,31 +43,71 @@ class Manager implements ManagerInterface
      *
      * @return array
      */
-    public function parseIncomingDependencies($moduleName)
+    public function parseIncomingDependencies(string $moduleName): array
     {
         $allForeignModules = $this->collectAllForeignModules($moduleName);
 
         $incomingDependencies = [];
+
         foreach ($allForeignModules as $foreignModule) {
-            $organizationTransfer = new OrganizationTransfer();
-            $organizationTransfer->setName('Spryker');
-            $moduleTransfer = new ModuleTransfer();
-            $moduleTransfer
-                ->setName($moduleName)
+            $organizationTransfer = (new OrganizationTransfer())->setName('Spryker');
+            $moduleTransfer = (new ModuleTransfer())
+                ->setName($foreignModule)
                 ->setOrganization($organizationTransfer);
 
             $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
-            $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
-            if ($dependencyModule) {
-                if (array_key_exists($foreignModule, $incomingDependencies) === false) {
-                    $incomingDependencies[$foreignModule] = 0;
-                }
-                $incomingDependencies[$foreignModule] += count($dependencyModule->getDependencies());
+            $dependencyModule = $this->hasDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
+
+            if ($dependencyModule === false) {
+                continue;
             }
+
+            $incomingDependencies[] = $foreignModule;
         }
 
         return $incomingDependencies;
+    }
+
+    /**
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function hasDependencyTo(
+        string $moduleName,
+        DependencyCollectionTransfer $moduleDependencyCollectionTransfer
+    ): bool {
+        foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $dependencyModule) {
+            if ($dependencyModule->getModule() !== $moduleName) {
+                continue;
+            }
+
+            if ($this->isDependencyRequired($dependencyModule)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyModuleTransfer $dependencyModule
+     *
+     * @return bool
+     */
+    protected function isDependencyRequired(DependencyModuleTransfer $dependencyModule): bool
+    {
+        foreach ($dependencyModule->getDependencies() as $dependencyTransfer) {
+            if ($dependencyTransfer->getIsInTest() || $dependencyTransfer->getIsOptional()) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

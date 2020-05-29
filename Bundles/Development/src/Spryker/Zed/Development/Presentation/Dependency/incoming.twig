@@ -5,11 +5,9 @@
         <table class="table table-striped spy-grid">
             <tr class="text-left">
                 <th>{{ 'Dependency' | trans }}</th>
-                <th>{{ 'Count' | trans }}</th>
             </tr>
-            {% for count, dependency in dependencies %}
+            {% for dependency in dependencies %}
                 <tr>
-                    <td>{{ count }}</td>
                     <td>{{ dependency }}</td>
                 </tr>
             {% endfor %}

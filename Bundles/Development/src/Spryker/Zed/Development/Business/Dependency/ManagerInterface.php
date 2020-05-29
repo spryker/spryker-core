@@ -14,7 +14,7 @@ interface ManagerInterface
      *
      * @return array
      */
-    public function parseIncomingDependencies($moduleName);
+    public function parseIncomingDependencies(string $moduleName): array;
 
     /**
      * @return array
