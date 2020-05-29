@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface getFacade()
@@ -162,7 +161,6 @@ class ContentForm extends AbstractType
     {
         return [
                 new NotBlank(),
-                new Required(),
             ];
     }
 

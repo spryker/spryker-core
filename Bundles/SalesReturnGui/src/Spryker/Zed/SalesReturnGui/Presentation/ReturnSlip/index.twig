@@ -1,0 +1,159 @@
+{% block meta %}
+    <meta charset="utf-8">
+{% endblock %}
+
+{% block headStyles %}
+    <style type="text/css">
+        td {
+            font-size: 13px;
+        }
+
+        th, .th {
+            font-size: 12px;
+        }
+
+        td, th {
+            padding: 5px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 0 0 5px;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .return-slip-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .return-slip-order-reference, .return-slip-total {
+            margin-bottom: 12px;
+        }
+
+        .return-slip-items {
+            margin-bottom: 36px;
+        }
+
+        .return-slip-items--last {
+            margin-bottom: 26px;
+        }
+
+        .product-option {
+            font-size: 11px;
+            padding: 2px 5px;
+        }
+
+        .product-option--first {
+            padding-top: 0;
+        }
+
+        .no-bottom-border {
+            border-bottom: none;
+        }
+
+        .no-top-border {
+            border-top: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% set returnItemGroups = [] %}
+    {% set currencyIsoCode = (return.returnItems | first).orderItem.currencyIsoCode ?? null %}
+
+    {% for returnItem in return.returnItems %}
+        {% set orderReference = returnItem.orderItem.orderReference %}
+
+        {% if returnItemGroups[orderReference] is defined %}
+            {% set tempReturnItems = returnItemGroups[orderReference] | merge([returnItem]) %}
+            {% set returnItemGroups = returnItemGroups | merge({(orderReference): tempReturnItems}) %}
+        {% else %}
+            {% set returnItemGroups = returnItemGroups | merge({(orderReference): [returnItem]}) %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="wrapper">
+        <div class="return-slip-header">
+            <div>
+                <table>
+                    <tr>
+                        <td width="90" class="th"><strong>{{ 'Return Ref' | trans }}</strong></td>
+                        <td width="125">{{ return.returnReference }}</td>
+                    </tr>
+                    <tr>
+                        <td width="90" class="th"><strong>{{ 'Return Date' | trans }}</strong></td>
+                        <td width="125">{{ return.createdAt | formatDateTime }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                {{ barcode(return.returnReference) }}
+            </div>
+        </div>
+
+        {% for orderReference, returnItemGroup in returnItemGroups %}
+            {% set lastReturnSlipItemClass = loop.last ? 'return-slip-items--last' %}
+
+            <table class="return-slip-order-reference">
+                <tr>
+                    <td width="90" class="th"><strong>{{ 'Order Ref' | trans }}</strong></td>
+                    <td width="125">{{ orderReference }}</td>
+                </tr>
+            </table>
+
+            <table class="return-slip-items {{ lastReturnSlipItemClass }}">
+                <thead>
+                    <tr>
+                        <th width="100">{{ 'Barcode' | trans }}</th>
+                        <th width="75">{{ 'Product SKU' | trans }}</th>
+                        <th width="240">{{ 'Product Name' | trans }}</th>
+                        <th width="85">{{ 'Default Price' | trans }}</th>
+                        <th width="45">{{ 'Qty' | trans }}</th>
+                        <th width="75">{{ 'Total Price' | trans }}</th>
+                        <th width="130">{{ 'Return Reason' | trans }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-items.twig' with {
+                        returnItemGroup: returnItemGroup,
+                        currencyIsoCode: currencyIsoCode,
+                    } only %}
+
+                    {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-configured-bundles.twig' with {
+                        returnItemGroup: returnItemGroup,
+                        currencyIsoCode: currencyIsoCode,
+                    } only %}
+
+                    {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-product-bundles.twig' with {
+                        returnItemGroup: returnItemGroup,
+                        currencyIsoCode: currencyIsoCode,
+                    } only %}
+                </tbody>
+            </table>
+        {% endfor %}
+
+        <table align="right" class="return-slip-total">
+            <tbody>
+                <tr>
+                    <td width="120" class="th"><strong>{{ 'Items to Return' | trans }}</strong></td>
+                    <td width="90">{{ return.returnItems | length }}</td>
+                </tr>
+                <tr>
+                    <td width="120" class="th"><strong>{{ 'Remuneration Total' | trans }}</strong></td>
+                    <td width="90">{{ return.returnTotals.remunerationTotal | money(true, currencyIsoCode) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

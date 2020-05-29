@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
@@ -75,7 +74,6 @@ class PriceProductScheduleListForm extends AbstractType
             [
                 'label' => 'Name',
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                     new Length(['max' => static::FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH]),
                 ],

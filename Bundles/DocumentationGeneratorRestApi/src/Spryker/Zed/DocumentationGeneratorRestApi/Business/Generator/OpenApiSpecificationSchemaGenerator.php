@@ -184,14 +184,11 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         }
 
         foreach ($resourceAttributesClassNames as $resourceAttributesClassName) {
-            $responseAttributesSchema = $this
-                ->resourceTransferAnalyzer
-                ->createResponseAttributesSchemaNameFromTransferClassName($resourceAttributesClassName);
+            $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($resourceAttributesClassName);
+            $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($resourceAttributesClassName);
 
-            $this->addResponseDataAttributesSchemaFromTransfer(
-                new $resourceAttributesClassName(),
-                $responseAttributesSchema
-            );
+            $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, false));
+            $this->addResponseDataAttributesSchemaFromTransfer(new $resourceAttributesClassName(), $responseAttributesSchemaName);
         }
     }
 

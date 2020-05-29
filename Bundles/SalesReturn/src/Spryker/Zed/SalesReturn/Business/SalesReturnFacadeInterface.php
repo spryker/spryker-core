@@ -20,7 +20,7 @@ interface SalesReturnFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves return reasons from persistence by criteria from FilterTransfer.
+     * - Retrieves return reasons from persistence by criteria from ReturnReasonFilterTransfer.
      *
      * @api
      *
@@ -47,6 +47,7 @@ interface SalesReturnFacadeInterface
     /**
      * Specification:
      * - Validates return request.
+     * - Expects that order items have same currency.
      * - Expects order items state to be returnable.
      * - Generates unique reference number.
      * - Stores return.
@@ -96,6 +97,7 @@ interface SalesReturnFacadeInterface
      * Specification:
      * - Verifies difference between order item creation date and config const.
      * - If difference more than config const, sets `Item::isReturnable=false`.
+     * - Adds return policy message to `Item::returnPolicyMessages`.
      *
      * @api
      *
