@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-oms.svg)](https://travis-ci.org/spryker/sales-oms)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-The SalesOms module provides an external manual function management system for orders.
+The SalesOms module provides ability to manipulate order item states.
 
 ## Installation
 

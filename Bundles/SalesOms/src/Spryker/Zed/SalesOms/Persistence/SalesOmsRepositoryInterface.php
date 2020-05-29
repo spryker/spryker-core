@@ -16,5 +16,5 @@ interface SalesOmsRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemTransfer|null
      */
-    public function findSalesOrderItemTranferByOrderItemReference(string $orderItemReference): ?SalesOrderItemTransfer;
+    public function findSalesOrderItemByOrderItemReference(string $orderItemReference): ?SalesOrderItemTransfer;
 }

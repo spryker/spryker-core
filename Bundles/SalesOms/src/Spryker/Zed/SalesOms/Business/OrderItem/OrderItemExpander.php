@@ -22,7 +22,31 @@ class OrderItemExpander implements OrderItemExpanderInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
-        $salesOrderItemEntityTransfer->setOrderItemReference(md5(uniqid(implode(
+        $salesOrderItemEntityTransfer->setOrderItemReference(
+            $this->generateOrderItemReference($salesOrderItemEntityTransfer)
+        );
+
+        return $salesOrderItemEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     *
+     * @return string
+     */
+    protected function generateOrderItemReference(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): string
+    {
+        return md5(uniqid($this->getUniqueKeyFromEntity($salesOrderItemEntityTransfer)));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     *
+     * @return string
+     */
+    protected function getUniqueKeyFromEntity(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): string
+    {
+        return implode(
             '-',
             array_filter(
                 $salesOrderItemEntityTransfer->toArray(false),
@@ -30,8 +54,6 @@ class OrderItemExpander implements OrderItemExpanderInterface
                     return is_int($elements) || is_string($elements);
                 }
             )
-        ))));
-
-        return $salesOrderItemEntityTransfer;
+        );
     }
 }
