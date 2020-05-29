@@ -399,6 +399,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
+     * @module ProductOffer
+     * @module MerchantProductOffer
+     * @module ProductOfferValidity
+     * @module ProductOfferStock
+     * @module Product
+     * @module ProductImage
+     *
      * @param \Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
