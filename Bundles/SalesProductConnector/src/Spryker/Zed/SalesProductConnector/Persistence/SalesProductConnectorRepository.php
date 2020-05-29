@@ -33,4 +33,21 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
             ->createSalesOrderItemMetadataMapper()
             ->mapSalesOrderItemMetadataEntityCollectionToItemMetadataTransfers($salesOrderItemMetadataQuery->find());
     }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
+    {
+        $productQuery = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterBySku_In($productConcreteSkus);
+
+        return $this->getFactory()
+            ->createProductMapper()
+            ->mapProductEntityCollectionToRawProductConcreteTransfers($productQuery->find());
+    }
 }

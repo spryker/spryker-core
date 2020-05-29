@@ -31,7 +31,13 @@
     <transfer name="MerchantOmsTriggerRequest">
         <property name="merchantReference" type="string"/>
         <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItemReference" type="string"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
@@ -47,6 +53,21 @@
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
+        <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
+    <transfer name="FilePathResolverResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="filePath" type="string"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="HeaderValidatorResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
 </transfers>

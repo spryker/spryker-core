@@ -63,6 +63,8 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="name" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="productBundle" type="Item"/>
+        <property name="isReturnable" type="bool"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -188,6 +190,15 @@
     <transfer name="CalculableObject">
         <property name="items" type="Item[]" singular="item"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
 </transfers>

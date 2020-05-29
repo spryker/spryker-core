@@ -1,0 +1,46 @@
+.select-reason {
+    min-width: 250px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.header-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .form-group {
+        margin-bottom: 0;
+        margin-left: 5px;
+    }
+
+    .btn {
+        margin-bottom: 0;
+    }
+}
+
+.addition-row {
+    td {
+        border-top: none !important;
+    }
+}
+
+.bundle-item {
+    display: flex;
+
+    .image-wrap {
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+
+    &--with-checkbox {
+        .image-wrap {
+            margin-left: 16px;
+        }
+    }
+}
+
+.word-break-all {
+    word-break: break-all;
+}

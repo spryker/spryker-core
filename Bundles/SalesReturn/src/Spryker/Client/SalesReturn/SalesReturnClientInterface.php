@@ -48,6 +48,7 @@ interface SalesReturnClientInterface
      * Specification:
      * - Makes Zed request.
      * - Validates return request.
+     * - Expects that order items have same currency.
      * - Expects order items state to be returnable.
      * - Generates unique reference number.
      * - Stores return.
