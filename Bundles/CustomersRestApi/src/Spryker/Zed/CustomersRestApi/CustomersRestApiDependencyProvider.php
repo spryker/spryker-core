@@ -53,9 +53,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerAddressPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CUSTOMER_ADDRESS] = function () {
+        $container->set(static::PROPEL_QUERY_CUSTOMER_ADDRESS, function () {
             return SpyCustomerAddressQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new CustomersRestApiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }

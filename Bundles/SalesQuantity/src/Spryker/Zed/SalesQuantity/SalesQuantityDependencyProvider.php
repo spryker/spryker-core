@@ -41,9 +41,9 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container): SpyProductQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT, function (Container $container): SpyProductQuery {
             return SpyProductQuery::create();
-        };
+        });
 
         return $container;
     }

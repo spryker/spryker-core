@@ -46,9 +46,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanySupplierFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_SUPPLIER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_SUPPLIER, function (Container $container) {
             return new CompanySupplierGuiToCompanySupplierFacadeBridge($container->getLocator()->companySupplier()->facade());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new CompanySupplierGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new CompanySupplierGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new CompanySupplierGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductQuery(Container $container)
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT, function (Container $container) {
             return SpyProductQuery::create();
-        };
+        });
 
         return $container;
     }

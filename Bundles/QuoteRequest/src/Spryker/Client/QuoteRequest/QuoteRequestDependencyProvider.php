@@ -49,9 +49,9 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new QuoteRequestToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteRequestToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new QuoteRequestToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteRequestQuoteCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK, function (Container $container) {
             return $this->getQuoteRequestQuoteCheckPlugins();
-        };
+        });
 
         return $container;
     }

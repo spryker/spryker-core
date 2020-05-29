@@ -65,11 +65,11 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -81,11 +81,11 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
             return SpyProductQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, function () {
             return SpyProductAbstractQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPostProductAlternativeCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE] = function () {
+        $container->set(static::PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE, function () {
             return $this->getPostProductAlternativeCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPostProductAlternativeDeletePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE] = function () {
+        $container->set(static::PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE, function () {
             return $this->getPostProductAlternativeDeletePlugins();
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addAlternativeProductApplicablePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE] = function () {
+        $container->set(static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE, function () {
             return $this->getAlternativeProductApplicablePlugins();
-        };
+        });
 
         return $container;
     }

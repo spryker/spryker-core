@@ -54,11 +54,11 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new TaxSetStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTaxSetPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_TAX_SET] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_TAX_SET, function (Container $container) {
             return SpyTaxSetQuery::create();
-        };
+        });
 
         return $container;
     }

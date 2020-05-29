@@ -60,11 +60,11 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductAlternativeStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductAlternativePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ALTERNATIVE] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ALTERNATIVE, function () {
             return SpyProductAlternativeQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
             return SpyProductQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -104,9 +104,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, function () {
             return SpyProductAbstractQuery::create();
-        };
+        });
 
         return $container;
     }

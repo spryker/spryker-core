@@ -51,9 +51,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new CompanyUserToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -65,9 +65,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPreSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_PRE_SAVE] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_PRE_SAVE, function () {
             return $this->getCompanyUserPreSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -79,9 +79,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_POST_SAVE, function () {
             return $this->getCompanyUserPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPostCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_POST_CREATE] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_POST_CREATE, function () {
             return $this->getCompanyUserPostCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserHydrationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_HYDRATE] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_HYDRATE, function () {
             return $this->getCompanyUserHydrationPlugins();
-        };
+        });
 
         return $container;
     }
@@ -121,9 +121,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPreDeletePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_PRE_DELETE] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_PRE_DELETE, function () {
             return $this->getCompanyUserPreDeletePlugins();
-        };
+        });
 
         return $container;
     }
@@ -135,9 +135,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserSavePreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK, function () {
             return $this->getCompanyUserSavePreCheckPlugins();
-        };
+        });
 
         return $container;
     }

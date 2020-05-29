@@ -48,9 +48,9 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addShipmentFacade(Container $container)
     {
-        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new ShipmentDiscountConnectorToShipmentBridge($container->getLocator()->shipment()->facade());
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addDiscountFacade(Container $container)
     {
-        $container[static::FACADE_DISCOUNT] = function (Container $container) {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new ShipmentDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addMoneyFacade(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ShipmentDiscountConnectorToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }

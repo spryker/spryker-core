@@ -34,11 +34,11 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPluginApplication(Container $container)
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

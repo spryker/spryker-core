@@ -63,11 +63,11 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserGuiToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -79,11 +79,11 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyUserGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -95,11 +95,11 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new CompanyUserGuiToCustomerFacadeBridge(
                 $container->getLocator()->customer()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_USER_FORM_EXPANDER, function (Container $container) {
             return $this->getCompanyUserFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, function (Container $container) {
             return SpyCompanyUserQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER, function (Container $container) {
             return $this->getCompanyUserTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserAttachCustomerFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER, function (Container $container) {
             return $this->getCompanyUserAttachCustomerFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -167,9 +167,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTablePrepareDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER, function (Container $container) {
             return $this->getCompanyUserTablePrepareDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -181,9 +181,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER, function (Container $container) {
             return $this->getCompanyUserTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -195,9 +195,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserTableDeleteActionPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION] = function (Container $container) {
+        $container->set(static::PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION, function (Container $container) {
             return $this->getCompanyUserTableDeleteActionPlugin();
-        };
+        });
 
         return $container;
     }
