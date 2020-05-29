@@ -130,5 +130,9 @@
     <transfer name="ShipmentCarrier">
     </transfer>
 
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
 </transfers>
 

@@ -76,6 +76,8 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithProductIds()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -115,5 +117,21 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrdersWithMetadata($orderTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductIds(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductIdExpander()
+            ->expandOrderItemsWithProduct($itemTransfers);
     }
 }

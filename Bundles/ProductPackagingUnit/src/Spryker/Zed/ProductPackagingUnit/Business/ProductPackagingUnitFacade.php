@@ -419,6 +419,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountSalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -435,6 +437,24 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithAmountSalesUnit($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountLeadProduct()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -444,6 +464,22 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createAmountLeadProductHydrateOrder()
             ->expandOrderWithAmountLeadProduct($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithAmountLeadProduct($itemTransfers);
     }
 
     /**
