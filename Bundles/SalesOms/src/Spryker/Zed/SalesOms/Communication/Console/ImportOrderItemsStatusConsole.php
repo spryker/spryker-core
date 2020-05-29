@@ -130,7 +130,7 @@ class ImportOrderItemsStatusConsole extends Console
             $rowNumber++;
             try {
                 $salesOrderItemTransfer = $this->getFacade()
-                    ->findSalesOrderItemTranferByOrderItemReference($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]);
+                    ->findSalesOrderItemByOrderItemReference($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_REFERENCE]);
 
                 if (!$salesOrderItemTransfer) {
                     throw new Exception('Sales order item not found');

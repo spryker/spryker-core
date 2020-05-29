@@ -85,7 +85,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
     {
         $salesOmsFacadeMock = $this->createMock(SalesOmsFacade::class);
 
-        $salesOmsFacadeMock->method('findSalesOrderItemTranferByOrderItemReference')->willReturn(
+        $salesOmsFacadeMock->method('findSalesOrderItemByOrderItemReference')->willReturn(
             (new SalesOrderItemTransfer())
         );
 

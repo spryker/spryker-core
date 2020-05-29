@@ -65,7 +65,7 @@ class SalesOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindSalesOrderItemTranferByOrderItemReference(): void
+    public function testFindSalesOrderItemByOrderItemReference(): void
     {
         // Arrange
         $this->tester->createSalesOrderItemForOrder(
@@ -75,7 +75,7 @@ class SalesOmsFacadeTest extends Unit
 
         // Act
         $salesOrderItemTransfer = $this->tester->getFacade()
-            ->findSalesOrderItemTranferByOrderItemReference(static::ORDER_ITEM_REFERENCE);
+            ->findSalesOrderItemByOrderItemReference(static::ORDER_ITEM_REFERENCE);
 
         // Assert
         $this->assertInstanceOf(SalesOrderItemTransfer::class, $salesOrderItemTransfer);
