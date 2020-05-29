@@ -3,6 +3,6 @@
   "name": "spryker-zed-statemachine",
   "version": "1.0.0",
   "dependencies": {
-    "js-image-zoom": "^0.7.0"
+    "drift-zoom": "~1.4.0"
   }
 }

@@ -5,18 +5,18 @@
 
 'use strict';
 
-var ImageZoom = require('js-image-zoom');
+import Drift from 'drift-zoom';
 
 $(document).ready(function () {
-    var imagePreview = document.getElementById('preview');
+    var imagePreview = document.getElementsByClassName('preview-image')[0];
+    var zoomContainer = document.getElementsByClassName('zoom-container')[0];
 
-    new ImageZoom(imagePreview, {
-        width: 200,
-        height: 400,
-        zoomWidth: 350,
-        offset: {
-            vertical: 0,
-            horizontal: 10
-        }
+    new Drift(imagePreview, {
+        containInline: true,
+        sourceAttribute: 'src',
+        hoverBoundingBox: true,
+        paneContainer: zoomContainer,
+        inlinePane: 900,
+        inlineOffsetY: -85
     });
 });
