@@ -7,11 +7,9 @@
 
 namespace Spryker\Client\Oauth\ResourceServer;
 
-use League\OAuth2\Server\AuthorizationValidators\BearerTokenValidator;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use League\OAuth2\Server\ResourceServer;
 use Spryker\Client\Oauth\OauthConfig;
-use Spryker\Client\OauthCryptography\ResourceServer\KeyLoader;
-use Spryker\Client\OauthCryptography\ResourceServer\ResourceServer;
 
 class ResourceServerBuilder implements ResourceServerBuilderInterface
 {
@@ -38,14 +36,13 @@ class ResourceServerBuilder implements ResourceServerBuilderInterface
     }
 
     /**
-     * @return \Spryker\Client\OauthCryptography\ResourceServer\ResourceServer
+     * @return \League\OAuth2\Server\ResourceServer
      */
     public function create(): ResourceServer
     {
-        // Todo: move the creation to a factory. Inject the validators via DP.
         return new ResourceServer(
-            new KeyLoader($this->oauthConfig),
-            [new BearerTokenValidator($this->accessTokenRepository)]
+            $this->accessTokenRepository,
+            $this->oauthConfig->getPublicKeyPath()
         );
     }
 }
