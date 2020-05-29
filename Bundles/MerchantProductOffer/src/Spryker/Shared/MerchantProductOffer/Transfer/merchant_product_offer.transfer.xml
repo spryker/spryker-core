@@ -6,6 +6,8 @@
     <transfer name="ProductOffer">
         <property name="fkMerchant" type="int"/>
         <property name="merchantSku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="concreteSku" type="string"/>
     </transfer>
 
     <transfer name="MerchantProductOfferCriteriaFilter">
