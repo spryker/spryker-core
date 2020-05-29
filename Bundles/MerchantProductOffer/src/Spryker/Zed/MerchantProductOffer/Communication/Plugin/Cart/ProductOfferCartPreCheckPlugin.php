@@ -19,7 +19,7 @@ class ProductOfferCartPreCheckPlugin extends AbstractPlugin implements CartPreCh
 {
     /**
      * {@inheritDoc}
-     * - Validates cart items product offer if it belongs to product.
+     * - Check if cart items product offer belongs to product.
      * - Returns pre-check transfer with error messages in case of error.
      *
      * @api

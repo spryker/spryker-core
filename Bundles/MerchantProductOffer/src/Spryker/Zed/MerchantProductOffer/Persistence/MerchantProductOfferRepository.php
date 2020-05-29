@@ -51,7 +51,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
 
         return $this->getFactory()
             ->createMerchantProductOfferMapper()
-            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities);
+            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities, new ProductOfferCollectionTransfer());
     }
 
     /**

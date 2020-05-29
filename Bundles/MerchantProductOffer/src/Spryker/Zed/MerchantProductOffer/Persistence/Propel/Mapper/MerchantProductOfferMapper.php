@@ -15,13 +15,14 @@ class MerchantProductOfferMapper
 {
     /**
      * @param \Propel\Runtime\Collection\Collection $productOfferEntities
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function mapProductOfferEntityCollectionToProductOfferTransferCollection(Collection $productOfferEntities): ProductOfferCollectionTransfer
-    {
-        $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
-
+    public function mapProductOfferEntityCollectionToProductOfferTransferCollection(
+        Collection $productOfferEntities,
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): ProductOfferCollectionTransfer {
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = (new ProductOfferTransfer())->fromArray($productOfferEntity->toArray(), true);
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
