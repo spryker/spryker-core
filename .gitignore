@@ -29,6 +29,7 @@ Bundles/*/tests/**/_support/_generated
 
 # assets
 .sass-cache
+dist/
 node_modules/
 /static/public/
 yarn.lock

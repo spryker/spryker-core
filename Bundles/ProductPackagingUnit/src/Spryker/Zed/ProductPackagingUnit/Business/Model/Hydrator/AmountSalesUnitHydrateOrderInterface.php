@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface AmountSalesUnitHydrateOrderInterface
 {
     /**

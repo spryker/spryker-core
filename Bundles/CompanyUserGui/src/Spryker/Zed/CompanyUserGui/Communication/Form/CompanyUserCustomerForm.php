@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -173,9 +172,6 @@ class CompanyUserCustomerForm extends AbstractType
             'label' => 'Gender',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'constraints' => [
-                new Required(),
-            ],
             'required' => false,
         ]);
 
@@ -246,7 +242,6 @@ class CompanyUserCustomerForm extends AbstractType
     {
         $emailConstraints = [
             new NotBlank(),
-            new Required(),
             new Email(),
         ];
 
@@ -269,7 +264,6 @@ class CompanyUserCustomerForm extends AbstractType
     protected function getTextFieldConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 100]),
         ];

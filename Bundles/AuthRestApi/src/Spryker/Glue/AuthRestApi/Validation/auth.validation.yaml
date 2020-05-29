@@ -9,5 +9,4 @@ access-tokens:
 refresh-tokens:
   post:
     refreshToken:
-      - Required
       - NotBlank

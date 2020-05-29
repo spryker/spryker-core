@@ -1,29 +1,26 @@
 {% for group in groups %}
-  {% if (group.isBundle) %}
-    <tbody class="product-bundle">
-    <tr>
-      <td colspan="6">
-        <a target="_blank"
-           href="{{ url('/product-management/view/variant', {
-               'id-product-abstract': group.bundleItem.idProductAbstract,
-               'id-product': group.bundleItem.id,
-               'type': 'regular'
-           }) }}"
-        >
-            {{ group.bundleItem.name }}
-        </a> ({{ 'Sku' | trans }}: {{ group.bundleItem.sku }})
-      </td>
-    </tr>
-    {% embed '@SalesReclamationGui/Create/boxes/bundle-group.twig' with {
-        items: group.groupItems,
-        image: group.groupImage,
-        rowCount: group.rowCount,
-        bundleItem: group.bundleItem
-    } %}{% endembed %}
-    </tbody>
-  {% else %}
-    <tbody class="single-item">
-      {% embed '@SalesReclamationGui/Create/boxes/single-item.twig' with {item: group.groupItems | first} %}{% endembed %}
-    </tbody>
-  {% endif %}
+    {% if group.isBundle %}
+        <tbody class="product-bundle">
+            {% include '@SalesReclamationGui/Create/boxes/order-item.twig' with {
+                orderItem: group.bundleItem,
+                isBundleProduct: true,
+                displayImage: true,
+                displayTotals: true,
+                reclamation: reclamation,
+            } %}
+
+            {% include '@SalesReclamationGui/Create/boxes/bundle-group.twig' with {
+                items: group.groupItems,
+                bundleItem: group.bundleItem,
+                reclamation: reclamation,
+            } %}
+        </tbody>
+    {% else %}
+        <tbody class="single-item">
+            {% include '@SalesReclamationGui/Create/boxes/single-item.twig' with {
+                item: group.groupItems | first,
+                reclamation: reclamation,
+            } %}
+        </tbody>
+    {% endif %}
 {% endfor %}

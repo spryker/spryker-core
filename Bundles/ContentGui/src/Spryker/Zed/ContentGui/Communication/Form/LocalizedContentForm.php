@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface getFacade()
@@ -109,7 +108,6 @@ class LocalizedContentForm extends AbstractType
             [
                 'error_bubbling' => false,
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                 ],
             ]
