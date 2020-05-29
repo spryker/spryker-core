@@ -63,4 +63,11 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\TotalsTransfer[]
      */
     public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array;
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return string[]
+     */
+    public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array;
 }

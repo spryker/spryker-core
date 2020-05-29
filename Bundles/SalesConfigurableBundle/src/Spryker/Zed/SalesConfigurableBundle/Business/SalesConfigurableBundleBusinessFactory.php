@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpander;
+use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformer;
@@ -51,6 +53,17 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
     {
         return new ConfigurableBundleItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->getGlossaryFacade()
+        );
     }
 
     /**

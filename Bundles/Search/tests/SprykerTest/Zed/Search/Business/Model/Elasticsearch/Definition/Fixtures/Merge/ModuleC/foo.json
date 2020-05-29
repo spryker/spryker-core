@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "index": {
+      "number_of_replicas": 2
+    }
+  },
+  "mappings": {
+    "page": {
+      "properties": {
+        "foo": {
+          "type": "integer"
+        },
+        "baz": {
+          "type": "string"
+        }
+      }
+    },
+    "page2": {}
+  }
+}
