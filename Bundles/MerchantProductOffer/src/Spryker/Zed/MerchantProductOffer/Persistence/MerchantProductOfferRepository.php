@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -36,6 +37,25 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollectionTransfer(
+        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer {
+        $productOfferQuery = $this->applyFilters(
+            $merchantProductOfferCriteriaFilterTransfer,
+            $this->getFactory()->getProductOfferPropelQuery()
+        );
+        $productOfferEntities = $productOfferQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantProductOfferMapper()
+            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities, new ProductOfferCollectionTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
@@ -57,6 +77,10 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
                 ->useSpyMerchantQuery()
                     ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
                 ->endUse();
+        }
+
+        if ($merchantProductOfferCriteriaFilterTransfer->getProductOfferReferences()) {
+            $productOfferQuery->filterByProductOfferReference_In($merchantProductOfferCriteriaFilterTransfer->getProductOfferReferences());
         }
 
         return $productOfferQuery;
