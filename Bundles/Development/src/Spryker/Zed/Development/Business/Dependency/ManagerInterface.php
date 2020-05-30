@@ -12,7 +12,7 @@ interface ManagerInterface
     /**
      * @param string $moduleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleDependencyViewTransfer[]
      */
     public function parseIncomingDependencies(string $moduleName): array;
 
