@@ -49,9 +49,15 @@ class CustomerReader implements CustomerReaderInterface
             return $this->getGuestCustomerFromOrder($returnTransfer);
         }
 
-        return $this->customerFacade
+        $customerTransfer = $this->customerFacade
             ->findCustomerByReference($customerReference)
             ->getCustomerTransfer();
+
+        if (!$customerTransfer) {
+            return $this->getGuestCustomerFromOrder($returnTransfer);
+        }
+
+        return $customerTransfer;
     }
 
     /**
