@@ -66,7 +66,7 @@ class QueryBuilder implements QueryBuilderInterface
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
-        $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer);
+        $query = $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }
