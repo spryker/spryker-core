@@ -51,6 +51,20 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentByKeys(array $contentKeys): array
+    {
+        return $this->getFactory()->createContentReader()->getContentByKeys($contentKeys);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @throws \Spryker\Zed\Content\Business\Exception\ContentKeyNotCreatedException

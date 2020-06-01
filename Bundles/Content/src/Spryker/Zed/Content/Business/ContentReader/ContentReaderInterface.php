@@ -24,4 +24,11 @@ interface ContentReaderInterface
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
     public function findContentByKey(string $contentKey): ?ContentTransfer;
+
+    /**
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentByKeys(array $contentKeys): array;
 }

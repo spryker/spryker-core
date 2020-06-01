@@ -44,4 +44,13 @@ class ContentReader implements ContentReaderInterface
     {
         return $this->contentRepository->findContentByKey($contentKey);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getContentByKeys(array $contentKeys): array
+    {
+        // TODO: Implement getContentByKeys() method.
+        return [new ContentTransfer()];
+    }
 }
