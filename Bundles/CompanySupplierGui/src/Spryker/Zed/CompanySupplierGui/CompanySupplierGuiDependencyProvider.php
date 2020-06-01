@@ -102,9 +102,9 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductQuery(Container $container)
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }

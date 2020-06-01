@@ -52,9 +52,9 @@ class CartNoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container->set(static::SALES_ORDER_QUERY, function (Container $container) {
+        $container->set(static::SALES_ORDER_QUERY, $container->factory(function () {
             return SpySalesOrderQuery::create();
-        });
+        }));
 
         return $container;
     }

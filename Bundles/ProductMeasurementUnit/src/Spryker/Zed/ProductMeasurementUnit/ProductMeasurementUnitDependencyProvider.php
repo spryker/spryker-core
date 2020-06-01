@@ -95,9 +95,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        };
+        }));
 
         return $container;
     }

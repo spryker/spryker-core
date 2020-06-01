@@ -83,9 +83,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesReclamationPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_RECLAMATION] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SALES_RECLAMATION, $container->factory(function () {
             return SpySalesReclamationQuery::create();
-        };
+        }));
 
         return $container;
     }

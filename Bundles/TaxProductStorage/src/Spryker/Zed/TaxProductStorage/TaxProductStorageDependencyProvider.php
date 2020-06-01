@@ -54,9 +54,9 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }

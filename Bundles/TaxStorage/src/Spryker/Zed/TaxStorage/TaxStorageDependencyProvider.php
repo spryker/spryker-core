@@ -70,9 +70,9 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTaxSetPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_TAX_SET] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_TAX_SET, $container->factory(function () {
             return SpyTaxSetQuery::create();
-        };
+        }));
 
         return $container;
     }

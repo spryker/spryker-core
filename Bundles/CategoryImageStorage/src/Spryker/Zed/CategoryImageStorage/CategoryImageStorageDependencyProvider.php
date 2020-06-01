@@ -71,9 +71,9 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCategoryImageSetQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET] = function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET, $container->factory(function () {
             return SpyCategoryImageSetQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -85,9 +85,9 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCategoryImageSetToCategoryImageQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE] = function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE, $container->factory(function () {
             return SpyCategoryImageSetToCategoryImageQuery::create();
-        };
+        }));
 
         return $container;
     }

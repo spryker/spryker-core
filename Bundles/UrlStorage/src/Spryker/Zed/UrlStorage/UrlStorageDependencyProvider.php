@@ -115,9 +115,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_URL] = function () {
+        $container->set(static::PROPEL_QUERY_URL, $container->factory(function () {
             return SpyUrlQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -87,9 +87,9 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductReviewQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_REVIEW] = function (): SpyProductReviewQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_REVIEW, $container->factory(function (): SpyProductReviewQuery {
             return SpyProductReviewQuery::create();
-        };
+        }));
 
         return $container;
     }

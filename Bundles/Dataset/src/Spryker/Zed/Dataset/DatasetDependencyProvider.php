@@ -68,9 +68,9 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelDatasetQuery(Container $container): Container
     {
-        $container[static::PROPEL_DATASET_QUERY] = function () {
+        $container->set(static::PROPEL_DATASET_QUERY, $container->factory(function () {
             return SpyDatasetQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -246,9 +246,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelQueryOffer(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_OFFER] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_OFFER, $container->factory(function () {
             return SpyOfferQuery::create();
-        };
+        }));
 
         return $container;
     }

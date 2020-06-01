@@ -58,9 +58,9 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductQueryContainer(Container $container): void
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
     }
 
     /**

@@ -106,9 +106,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelContentQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CONTENT] = function () {
+        $container->set(static::PROPEL_QUERY_CONTENT, $container->factory(function () {
             return SpyContentQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -76,9 +76,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductAlternativePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ALTERNATIVE] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ALTERNATIVE, $container->factory(function () {
             return SpyProductAlternativeQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -90,9 +90,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -104,9 +104,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -185,9 +185,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_MERCHANT_RELATIONSHIP] = function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_RELATIONSHIP, $container->factory(function () {
             return SpyMerchantRelationshipQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -199,9 +199,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipSalesOrderThresholdPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD] = function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, $container->factory(function () {
             return SpyMerchantRelationshipSalesOrderThresholdQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -104,9 +104,9 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addShoppingListPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SHOPPING_LIST] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SHOPPING_LIST, $container->factory(function () {
             return SpyShoppingListQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -118,9 +118,9 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addShoppingListItemPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SHOPPING_LIST_ITEM] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SHOPPING_LIST_ITEM, $container->factory(function () {
             return SpyShoppingListItemQuery::create();
-        };
+        }));
 
         return $container;
     }
