@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CartCodesRestApi;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -40,6 +41,7 @@ class CartCodesRestApiBusinessTester extends Actor
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
     public const ID_DISCOUNT = 3446;
+    public const ID_GIFT_CARD = 3447;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -71,6 +73,28 @@ class CartCodesRestApiBusinessTester extends Actor
                 (new DiscountTransfer())
                     ->setVoucherCode(static::CODE)
                     ->setIdDiscount(static::ID_DISCOUNT)
+                    ->toArray()
+            )
+            ->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransferWithGiftCard(): QuoteTransfer
+    {
+        return (new QuoteBuilder([QuoteTransfer::UUID => static::TEST_QUOTE_UUID]))
+            ->withStore(
+                [
+                    StoreTransfer::NAME => 'DE',
+                    StoreTransfer::ID_STORE => 1,
+                ]
+            )
+            ->withCustomer()
+            ->withGiftCard(
+                (new GiftCardTransfer())
+                    ->setCode(static::CODE)
+                    ->setIdGiftCard(static::ID_GIFT_CARD)
                     ->toArray()
             )
             ->build();
