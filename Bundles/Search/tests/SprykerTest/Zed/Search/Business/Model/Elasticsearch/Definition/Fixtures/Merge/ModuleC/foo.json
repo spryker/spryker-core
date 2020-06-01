@@ -1,20 +1,20 @@
 {
   "settings": {
     "index": {
-      "number_of_shards": 1,
-      "number_of_replicas": 1
+      "number_of_replicas": 2
     }
   },
   "mappings": {
     "page": {
       "properties": {
         "foo": {
-          "type": "string"
+          "type": "integer"
         },
-        "bar": {
+        "baz": {
           "type": "string"
         }
       }
-    }
+    },
+    "page2": {}
   }
 }
