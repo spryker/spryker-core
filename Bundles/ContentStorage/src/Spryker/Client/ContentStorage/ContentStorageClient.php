@@ -31,20 +31,4 @@ class ContentStorageClient extends AbstractClient implements ContentStorageClien
             ->createContentStorage()
             ->findContentTypeContextByKey($contentKey, $localeName);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $contentKeys
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array
-    {
-        // TODO create storage bundle method
-        return $contentKeys;
-    }
 }

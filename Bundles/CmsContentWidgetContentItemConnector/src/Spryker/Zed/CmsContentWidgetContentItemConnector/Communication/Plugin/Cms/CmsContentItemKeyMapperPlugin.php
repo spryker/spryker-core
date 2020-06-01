@@ -27,7 +27,6 @@ class CmsContentItemKeyMapperPlugin extends AbstractPlugin implements CmsContent
      */
     public function map(array $parameters)
     {
-        return $this->getFacade()
-            ->mapContentItemKeyList($parameters);
+        return $this->getFacade()->mapContentItemKeyList($parameters);
     }
 }
