@@ -58,6 +58,23 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     /**
      * {@inheritDoc}
      *
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentByKeys(array $contentKeys): array
+    {
+        $contentEntities = $this->getFactory()
+            ->createContentQuery()
+            ->filterByKey_In($contentKeys)
+            ->find();
+
+        return $this->getFactory()->createContentMapper()->mapContentEntitiesToTransfers($contentEntities);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param string $key
      *
      * @return bool

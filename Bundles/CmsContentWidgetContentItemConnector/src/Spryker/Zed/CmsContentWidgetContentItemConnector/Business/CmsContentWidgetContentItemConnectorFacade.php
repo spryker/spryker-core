@@ -22,7 +22,7 @@ class CmsContentWidgetContentItemConnectorFacade extends AbstractFacade implemen
      *
      * @param string[] $keyList
      *
-     * @return array
+     * @return string[]
      */
     public function mapContentItemKeyList(array $keyList): array
     {

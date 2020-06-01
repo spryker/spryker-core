@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsContentWidgetContentItemConnector;
 
-use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientBridge;
+use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsContentWidgetContentItemConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CONTENT_STORAGE = 'content storage client';
+    public const FACADE_CONTENT = 'FACADE_CONTENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,7 +26,7 @@ class CmsContentWidgetContentItemConnectorDependencyProvider extends AbstractBun
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addContentStorageClient($container);
+        $container = $this->addContentFacade($container);
 
         return $container;
     }
@@ -36,11 +36,11 @@ class CmsContentWidgetContentItemConnectorDependencyProvider extends AbstractBun
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addContentStorageClient(Container $container): Container
+    protected function addContentFacade(Container $container): Container
     {
-        $container->set(static::CLIENT_CONTENT_STORAGE, function (Container $container) {
-            return new CmsContentWidgetContentItemConnectorToContentStorageClientBridge(
-                $container->getLocator()->contentStorage()->client()
+        $container->set(static::FACADE_CONTENT, function (Container $container) {
+            return new CmsContentWidgetContentItemConnectorToContentFacadeBridge(
+                $container->getLocator()->content()->facade()
             );
         });
 

@@ -46,11 +46,12 @@ class ContentReader implements ContentReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
     public function getContentByKeys(array $contentKeys): array
     {
-        // TODO: Implement getContentByKeys() method.
-        return [new ContentTransfer()];
+        return $this->contentRepository->getContentByKeys($contentKeys);
     }
 }

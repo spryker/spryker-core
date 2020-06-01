@@ -12,7 +12,7 @@ interface CmsContentItemKeyMapperInterface
     /**
      * @param string[] $keyList
      *
-     * @return array
+     * @return string[]
      */
     public function mapContentItemKeyList(array $keyList): array;
 }

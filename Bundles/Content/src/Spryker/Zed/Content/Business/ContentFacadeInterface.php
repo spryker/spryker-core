@@ -40,6 +40,19 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
+     * - Gets content by content keys.
+     * - Returns ContentTransfer[] if found, otherwise it returns empty array.
+     *
+     * @api
+     *
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentByKeys(array $contentKeys): array;
+
+    /**
+     * Specification:
      * - Creates a new content entity.
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.

@@ -7,31 +7,38 @@
 
 namespace Spryker\Zed\CmsContentWidgetContentItemConnector\Business\Mapper;
 
-use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface;
+use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeInterface;
 
 class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
 {
     /**
-     * @var \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface
+     * @var \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeInterface
      */
-    protected $contentStorageClient;
+    protected $contentFacade;
 
     /**
-     * @param \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface $contentStorageClient
+     * @param \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeInterface $contentFacade
      */
-    public function __construct(CmsContentWidgetContentItemConnectorToContentStorageClientInterface $contentStorageClient)
-    {
-        $this->contentStorageClient = $contentStorageClient;
+    public function __construct(
+        CmsContentWidgetContentItemConnectorToContentFacadeInterface $contentFacade
+    ) {
+        $this->contentFacade = $contentFacade;
     }
 
     /**
      * @param string[] $keyList
      *
-     * @return array
+     * @return string[]
      */
     public function mapContentItemKeyList(array $keyList): array
     {
-        // TODO get content Items by keys and filter them
-        return $keyList;
+        $contentTransferCollection = $this->contentFacade->getContentByKeys($keyList);
+
+        $contentItemKeys = [];
+        foreach ($contentTransferCollection as $contentTransfer) {
+            $contentItemKeys[] = $contentTransfer->getKey();
+        }
+
+        return $contentItemKeys;
     }
 }

@@ -33,6 +33,16 @@ interface ContentRepositoryInterface
 
     /**
      * Specification:
+     * - Gets content by content keys.
+     *
+     * @param string[] $contentKeys
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentByKeys(array $contentKeys): array;
+
+    /**
+     * Specification:
      * - Checks whether such content key already exists.
      *
      * @param string $key

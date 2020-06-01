@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsContentWidgetContentItemConnector\Business;
 use Spryker\Zed\CmsContentWidgetContentItemConnector\Business\Mapper\CmsContentItemKeyMapper;
 use Spryker\Zed\CmsContentWidgetContentItemConnector\Business\Mapper\CmsContentItemKeyMapperInterface;
 use Spryker\Zed\CmsContentWidgetContentItemConnector\CmsContentWidgetContentItemConnectorDependencyProvider;
-use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface;
+use Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,14 +24,14 @@ class CmsContentWidgetContentItemConnectorBusinessFactory extends AbstractBusine
      */
     public function createCmsContentItemKeyMapper(): CmsContentItemKeyMapperInterface
     {
-        return new CmsContentItemKeyMapper($this->getContentStorageClient());
+        return new CmsContentItemKeyMapper($this->getContentFacade());
     }
 
     /**
-     * @return \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Client\CmsContentWidgetContentItemConnectorToContentStorageClientInterface
+     * @return \Spryker\Zed\CmsContentWidgetContentItemConnector\Dependency\Facade\CmsContentWidgetContentItemConnectorToContentFacadeInterface
      */
-    public function getContentStorageClient(): CmsContentWidgetContentItemConnectorToContentStorageClientInterface
+    public function getContentFacade(): CmsContentWidgetContentItemConnectorToContentFacadeInterface
     {
-        return $this->getProvidedDependency(CmsContentWidgetContentItemConnectorDependencyProvider::CLIENT_CONTENT_STORAGE);
+        return $this->getProvidedDependency(CmsContentWidgetContentItemConnectorDependencyProvider::FACADE_CONTENT);
     }
 }
