@@ -42,7 +42,7 @@ class MerchantProductGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addApplication(Container $container): Container
     {
-        $container->set(self::PLUGIN_APPLICATION, function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
@@ -58,7 +58,7 @@ class MerchantProductGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addMerchantFacade(Container $container): Container
     {
-        $container->set(self::FACADE_MERCHANT, function (Container $container) {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantProductGuiToMerchantFacadeBridge(
                 $container->getLocator()->merchant()->facade()
             );

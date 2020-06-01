@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantProduct\Business\Merchant\MerchantReader;
-use Spryker\Zed\MerchantProduct\Business\Merchant\MerchantReaderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
@@ -17,11 +15,4 @@ use Spryker\Zed\MerchantProduct\Business\Merchant\MerchantReaderInterface;
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantProduct\Business\Merchant\MerchantReaderInterface
-     */
-    public function createMerchantReader(): MerchantReaderInterface
-    {
-        return new MerchantReader($this->getRepository());
-    }
 }

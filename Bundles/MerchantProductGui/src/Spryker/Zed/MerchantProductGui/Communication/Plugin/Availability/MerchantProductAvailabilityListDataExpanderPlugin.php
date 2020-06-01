@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\Availability;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,8 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class MerchantProductAvailabilityListDataExpanderPlugin extends AbstractPlugin implements AvailabilityListDataExpanderPluginInterface
 {
-    protected const URL_PARAM_ID_PRODUCT = 'id-merchant';
-
     /**
      * {@inheritDoc}
      * - Expands view data for list of product availabilities with merchants data.
@@ -30,19 +27,8 @@ class MerchantProductAvailabilityListDataExpanderPlugin extends AbstractPlugin i
      */
     public function expand(array $viewData): array
     {
-        $viewData['idMerchant'] = $this->getFactory()
-            ->getRequest()
-            ->get(static::URL_PARAM_ID_PRODUCT);
-
-        $viewData['merchants'] = [];
-        $merchantCollectionTransfer = $this->getFactory()
-            ->getMerchantFacade()
-            ->get((new MerchantCriteriaTransfer()));
-
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $viewData['merchants'][$merchantTransfer->getIdMerchant()] = $merchantTransfer;
-        }
-
-        return $viewData;
+        return $this->getFactory()
+            ->createMerchantProductListDataExpander()
+            ->expandData($viewData);
     }
 }

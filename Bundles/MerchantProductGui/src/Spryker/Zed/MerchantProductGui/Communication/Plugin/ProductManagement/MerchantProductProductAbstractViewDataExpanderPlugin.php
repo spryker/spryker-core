@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement;
 
-use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewDataExpanderPluginInterface;
 
@@ -28,12 +27,12 @@ class MerchantProductProductAbstractViewDataExpanderPlugin extends AbstractPlugi
      */
     public function expand(array $viewData): array
     {
-        $viewData['merchant'] = $this->getFactory()
-            ->getMerchantProductFacade()
-            ->findMerchant(
-                (new MerchantProductCriteriaTransfer())->setIdProductAbstract($viewData['currentProduct']['id_product_abstract'])
-            );
+        if (!isset($viewData['currentProduct']['id_product_abstract'])) {
+            return $viewData;
+        }
 
-        return $viewData;
+        return $this->getFactory()
+            ->createMerchantProductViewDataExpander()
+            ->expandDataWithMerchantByIdProductAbstract($viewData, (int)$viewData['currentProduct']['id_product_abstract']);
     }
 }

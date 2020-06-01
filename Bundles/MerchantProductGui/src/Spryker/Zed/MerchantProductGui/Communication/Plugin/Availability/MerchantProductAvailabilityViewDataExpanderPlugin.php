@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\Availability;
 
-use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -28,12 +27,12 @@ class MerchantProductAvailabilityViewDataExpanderPlugin extends AbstractPlugin i
      */
     public function expand(array $viewData): array
     {
-        $viewData['merchant'] = $this->getFactory()
-            ->getMerchantProductFacade()
-            ->findMerchant(
-                (new MerchantProductCriteriaTransfer())->setIdProductAbstract($viewData['idProduct'])
-            );
+        if (!isset($viewData['idProduct'])) {
+            return $viewData;
+        }
 
-        return $viewData;
+        return $this->getFactory()
+            ->createMerchantProductViewDataExpander()
+            ->expandDataWithMerchantByIdProductAbstract($viewData, (int)$viewData['idProduct']);
     }
 }

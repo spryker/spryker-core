@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductBusinessFactory getFactory()
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductBusinessFactory getFactory()
  */
 class MerchantProductFacade extends AbstractFacade implements MerchantProductFacadeInterface
 {
@@ -28,8 +28,6 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
      */
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer
     {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->findMerchant($merchantProductCriteriaTransfer);
+        return $this->getRepository()->findMerchant($merchantProductCriteriaTransfer);
     }
 }

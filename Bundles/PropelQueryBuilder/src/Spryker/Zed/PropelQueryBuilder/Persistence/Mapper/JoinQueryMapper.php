@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\Mapper;
 
-use ArrayObject;
+use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class JoinQueryMapper
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \ArrayObject|\Generated\Shared\Transfer\PropelQueryBuilderJoinTransfer[] $propelQueryBuilderJoinTransfers
+     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function mapJoin(ModelCriteria $query, ArrayObject $propelQueryBuilderJoinTransfers): ModelCriteria
+    public function mapJoin(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer): ModelCriteria
     {
-        foreach ($propelQueryBuilderJoinTransfers as $propelQueryBuilderJoinTransfer) {
+        foreach ($propelQueryBuilderCriteriaTransfer->getJoins() as $propelQueryBuilderJoinTransfer) {
             if ($propelQueryBuilderJoinTransfer->getRelation()) {
                 $query->join($propelQueryBuilderJoinTransfer->getRelation(), $propelQueryBuilderJoinTransfer->getJoinType());
 

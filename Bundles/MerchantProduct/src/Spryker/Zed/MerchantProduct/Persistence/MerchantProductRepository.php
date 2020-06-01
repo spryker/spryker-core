@@ -50,7 +50,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): SpyMerchantProductAbstractQuery {
-        if ($merchantProductCriteriaTransfer->getIdProductAbstract() !== null) {
+        if ($merchantProductCriteriaTransfer->getIdProductAbstract()) {
             $merchantProductAbstractQuery->filterByFkProductAbstract($merchantProductCriteriaTransfer->getIdProductAbstract());
         }
 

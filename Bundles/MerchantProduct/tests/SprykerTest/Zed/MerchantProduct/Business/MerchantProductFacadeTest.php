@@ -32,7 +32,7 @@ class MerchantProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindMerchant(): void
+    public function testFindMerchantReturnsMerchant(): void
     {
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
@@ -48,5 +48,22 @@ class MerchantProductFacadeTest extends Unit
         // Assert
         $this->assertEquals($expectedMerchantTransfer->getIdMerchant(), $merchantTransfer->getIdMerchant());
         $this->assertEquals($expectedMerchantTransfer->getName(), $merchantTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantForNotExistingMerchantProductReturnsNull(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+
+        // Act
+        $merchantTransfer = $this->tester->getFacade()->findMerchant(
+            (new MerchantProductCriteriaTransfer())->setIdProductAbstract(1)
+        );
+
+        // Assert
+        $this->assertNull($merchantTransfer);
     }
 }

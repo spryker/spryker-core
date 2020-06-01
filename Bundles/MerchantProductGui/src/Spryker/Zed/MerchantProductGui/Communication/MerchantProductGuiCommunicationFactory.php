@@ -9,12 +9,46 @@ namespace Spryker\Zed\MerchantProductGui\Communication;
 
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductListDataExpander;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductListDataExpanderInterface;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductQueryCriteriaExpander;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductQueryCriteriaExpanderInterface;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductViewDataExpander;
+use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductViewDataExpanderInterface;
 use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantProductFacadeInterface;
 use Spryker\Zed\MerchantProductGui\MerchantProductGuiDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductQueryCriteriaExpanderInterface
+     */
+    public function createMerchantProductQueryCriteriaExpander(): MerchantProductQueryCriteriaExpanderInterface
+    {
+        return new MerchantProductQueryCriteriaExpander($this->getRequest());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductListDataExpanderInterface
+     */
+    public function createMerchantProductListDataExpander(): MerchantProductListDataExpanderInterface
+    {
+        return new MerchantProductListDataExpander(
+            $this->getRequest(),
+            $this->getMerchantFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductViewDataExpanderInterface
+     */
+    public function createMerchantProductViewDataExpander(): MerchantProductViewDataExpanderInterface
+    {
+        return new MerchantProductViewDataExpander($this->getMerchantProductFacade());
+    }
+
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
@@ -26,7 +60,7 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->getApplication()['request'];
     }

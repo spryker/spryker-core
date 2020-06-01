@@ -66,7 +66,7 @@ class QueryBuilder implements QueryBuilderInterface
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
-        $query = $this->mergeQueryWithJoin($query, $propelQueryBuilderCriteriaTransfer);
+        $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }
@@ -123,16 +123,5 @@ class QueryBuilder implements QueryBuilderInterface
     protected function toCriteria(PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer)
     {
         return $this->criteriaMapper->toCriteria($propelQueryBuilderCriteriaTransfer);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function mergeQueryWithJoin(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer): ModelCriteria
-    {
-        return $this->joinQueryMapper->mapJoin($query, $propelQueryBuilderCriteriaTransfer->getJoins());
     }
 }
