@@ -1,6 +1,6 @@
 Active,Active
 Approved,Approved
-"always in stock","always in stock"
+"Always in stock","Always in stock"
 Created,Created
 "Created from","Created from"
 "Created to","Created to"
@@ -13,9 +13,7 @@ Inactive,Inactive
 Name,Name
 Offers,Offers
 Offline,Offline
-offline,offline
 Online,Online
-online,online
 "Out of stock","Out of stock"
 Pending,Pending
 Reference,Reference

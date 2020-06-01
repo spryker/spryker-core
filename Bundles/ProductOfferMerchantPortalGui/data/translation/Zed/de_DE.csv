@@ -1,6 +1,6 @@
 Active,Aktiv
 Approved,Genehmigt
-"always in stock","immer auf lager"
+"Always in stock","Immer auf lager"
 Created,Erstellt
 "Created from","Erstellt von"
 "Created to","Erstellt bis"
@@ -9,14 +9,12 @@ Denied,Verweigert
 "Has stock","Has stock"
 Image,Bild
 Inactive,Inaktiv
-"Merchant SKU","Händler-SKU"
+"Merchant SKU",Händler-SKU
 Name,Name
 Offers,Angeboten
 Offline,Offline
-offline,offline
 Online,Online
-online,online
-"Out of stock","Ausverkauft"
+"Out of stock",Ausverkauft
 Pending,Ausstehend
 Reference,ID
 Search,Suche

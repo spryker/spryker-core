@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductOfferTableDataProvider extends AbstractTableDataProvider
 {
-    public const COLUMN_DATA_VISIBILITY_ONLINE = 'online';
-    protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'offline';
-    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'always in stock';
+    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+    protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
+    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'Always in stock';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
