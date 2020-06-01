@@ -36,7 +36,7 @@ class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
 
         $contentItemKeys = [];
         foreach ($contentTransferCollection as $contentTransfer) {
-            $contentItemKeys[] = $contentTransfer->getKey();
+            $contentItemKeys[$contentTransfer->getKey()] = $contentTransfer->getKey();
         }
 
         return $contentItemKeys;

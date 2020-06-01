@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CmsContentWidgetContentItemConnector\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ContentTransfer;
 
 /**
  * Auto-generated group annotations
@@ -26,4 +27,44 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
      * @var \SprykerTest\Zed\CmsContentWidgetContentItemConnector\CmsContentWidgetContentItemConnectorBusinessTester
      */
     protected $tester;
+
+    protected const CONTENT_KEY = 'test-key';
+
+    /**
+     * @return void
+     */
+    public function testMapContentItemKeyListReturnsCorrectResponse(): void
+    {
+        // Arrange
+        $this->tester->haveContent([
+            ContentTransfer::KEY => static::CONTENT_KEY,
+        ]);
+
+        // Act
+        $foundArray = $this->tester->getFacade()->mapContentItemKeyList([static::CONTENT_KEY]);
+
+        // Assert
+        $this->assertNotEmpty($foundArray);
+        $this->assertEquals(
+            [static::CONTENT_KEY => static::CONTENT_KEY],
+            $foundArray
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapContentItemKeyListReturnsInCorrectResponse(): void
+    {
+        // Arrange
+        $this->tester->haveContent([
+            ContentTransfer::KEY => 'test-key-2',
+        ]);
+
+        // Act
+        $foundArray = $this->tester->getFacade()->mapContentItemKeyList([static::CONTENT_KEY]);
+
+        // Assert
+        $this->assertEmpty($foundArray);
+    }
 }

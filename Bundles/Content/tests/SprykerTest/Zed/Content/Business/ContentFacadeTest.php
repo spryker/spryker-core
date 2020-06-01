@@ -196,4 +196,23 @@ class ContentFacadeTest extends Test
 
         $this->assertFalse($validationResponse->getIsSuccess());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetContentByKeys(): void
+    {
+        // Arrange
+        $contentTransfer = $this->tester->haveContent();
+
+        // Act
+        $foundContentTransfers = $this->tester->getFacade()->getContentByKeys([$contentTransfer->getKey()]);
+
+        // Assert
+        $this->assertNotEmpty($foundContentTransfers);
+        $this->assertEquals(
+            $contentTransfer->getKey(),
+            array_shift($foundContentTransfers)->getKey()
+        );
+    }
 }
