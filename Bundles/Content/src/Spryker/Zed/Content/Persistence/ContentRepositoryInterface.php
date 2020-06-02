@@ -35,7 +35,7 @@ interface ContentRepositoryInterface
      * Specification:
      * - Gets content by content keys.
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */

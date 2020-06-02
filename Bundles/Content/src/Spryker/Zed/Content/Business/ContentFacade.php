@@ -51,7 +51,7 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */

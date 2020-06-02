@@ -25,5 +25,5 @@ interface ContentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function mapContentEntitiesToTransfers(Collection $contentEntities): array;
+    public function mapContentEntitiesToContentTransfers(Collection $contentEntities): array;
 }

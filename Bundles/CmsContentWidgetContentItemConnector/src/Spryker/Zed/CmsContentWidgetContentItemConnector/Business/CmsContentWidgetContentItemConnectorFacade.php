@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsContentWidgetContentItemConnector\Business\CmsContentWidgetContentItemConnectorBusinessFactory getFactory()
- * @method \Spryker\Zed\CmsContentWidgetContentItemConnector\Persistence\CmsContentWidgetContentItemConnectorRepositoryInterface getRepository()
  */
 class CmsContentWidgetContentItemConnectorFacade extends AbstractFacade implements CmsContentWidgetContentItemConnectorFacadeInterface
 {
@@ -20,9 +19,9 @@ class CmsContentWidgetContentItemConnectorFacade extends AbstractFacade implemen
      *
      * @api
      *
-     * @param string[] $keyList
+     * @param array<string> $keyList
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function mapContentItemKeyList(array $keyList): array
     {

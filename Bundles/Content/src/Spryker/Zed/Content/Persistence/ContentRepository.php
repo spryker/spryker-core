@@ -58,7 +58,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     /**
      * {@inheritDoc}
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
@@ -69,7 +69,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             ->filterByKey_In($contentKeys)
             ->find();
 
-        return $this->getFactory()->createContentMapper()->mapContentEntitiesToTransfers($contentEntities);
+        return $this->getFactory()->createContentMapper()->mapContentEntitiesToContentTransfers($contentEntities);
     }
 
     /**

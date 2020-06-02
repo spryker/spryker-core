@@ -26,7 +26,7 @@ interface ContentReaderInterface
     public function findContentByKey(string $contentKey): ?ContentTransfer;
 
     /**
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */

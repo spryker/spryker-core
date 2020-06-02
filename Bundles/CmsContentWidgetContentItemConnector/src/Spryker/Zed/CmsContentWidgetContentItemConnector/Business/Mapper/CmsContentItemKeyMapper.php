@@ -25,9 +25,9 @@ class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
     }
 
     /**
-     * @param string[] $keyList
+     * @param array<string> $keyList
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function mapContentItemKeyList(array $keyList): array
     {

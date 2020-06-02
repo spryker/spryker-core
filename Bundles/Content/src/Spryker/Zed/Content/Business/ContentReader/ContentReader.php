@@ -46,7 +46,7 @@ class ContentReader implements ContentReaderInterface
     }
 
     /**
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
