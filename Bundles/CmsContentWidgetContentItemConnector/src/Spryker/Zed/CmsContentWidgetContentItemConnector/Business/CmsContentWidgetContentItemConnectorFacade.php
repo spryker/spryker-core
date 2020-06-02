@@ -19,9 +19,13 @@ class CmsContentWidgetContentItemConnectorFacade extends AbstractFacade implemen
      *
      * @api
      *
-     * @param array<string> $keyList
+     * @phpstan-param array<string> $keyList
      *
-     * @return array<string, string>
+     * @phpstan-return array<string, string>
+     *
+     * @param string[] $keyList
+     *
+     * @return string[]
      */
     public function mapContentItemKeyList(array $keyList): array
     {

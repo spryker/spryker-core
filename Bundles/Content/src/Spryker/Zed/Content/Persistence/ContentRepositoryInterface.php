@@ -35,7 +35,11 @@ interface ContentRepositoryInterface
      * Specification:
      * - Gets content by content keys.
      *
-     * @param array<string> $contentKeys
+     * @phpstan-param array<string> $contentKeys
+     *
+     * @phpstan-return array<int, \Generated\Shared\Transfer\ContentTransfer>
+     *
+     * @param string[] $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
      */

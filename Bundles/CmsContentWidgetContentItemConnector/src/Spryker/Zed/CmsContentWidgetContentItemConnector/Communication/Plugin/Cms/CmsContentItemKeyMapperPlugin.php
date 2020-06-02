@@ -21,9 +21,13 @@ class CmsContentItemKeyMapperPlugin extends AbstractPlugin implements CmsContent
      *
      * @api
      *
-     * @param array<string> $parameters
+     * @phpstan-param array<string> $parameters
      *
-     * @return array<string, string>
+     * @phpstan-return array<string, string>
+     *
+     * @param string[] $parameters
+     *
+     * @return string[]
      */
     public function map(array $parameters)
     {
