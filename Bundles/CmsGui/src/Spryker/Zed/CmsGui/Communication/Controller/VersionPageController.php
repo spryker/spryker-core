@@ -84,7 +84,7 @@ class VersionPageController extends AbstractController
     public function historyAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $version = $request->query->get(static::URL_PARAM_VERSION);
+        $version = $request->query->getInt(static::URL_PARAM_VERSION) ?: null;
         $redirect = null;
 
         $cmsVersionFormDataProvider = $this->getFactory()
