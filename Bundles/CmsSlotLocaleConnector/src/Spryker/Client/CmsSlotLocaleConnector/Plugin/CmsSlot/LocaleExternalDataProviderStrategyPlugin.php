@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsSlotLocaleConnector\Plugin\CmsSlot;
 
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
@@ -16,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements ExternalDataProviderStrategyPluginInterface
 {
-    protected const DATA_KEY = 'locale';
+    protected const DATA_KEY = CmsSlotParamsTransfer::LOCALE;
 
     /**
      * {@inheritDoc}

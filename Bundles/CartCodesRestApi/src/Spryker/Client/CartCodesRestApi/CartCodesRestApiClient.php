@@ -43,4 +43,18 @@ class CartCodesRestApiClient extends AbstractClient implements CartCodesRestApiC
     {
         return $this->getFactory()->createCartCodesRestApiZedStub()->removeCartCode($cartCodeRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()->createCartCodesRestApiZedStub()->removeCartCodeFromQuote($cartCodeRequestTransfer);
+    }
 }

@@ -22,6 +22,8 @@ use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilder;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\VoucherRestResponseBuilder;
+use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\VoucherRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -86,6 +88,16 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createVoucherByQuoteResourceRelationshipExpander(): VoucherByQuoteResourceRelationshipExpanderInterface
     {
         return new VoucherByQuoteResourceRelationshipExpander(
+            $this->createVoucherRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\VoucherRestResponseBuilderInterface
+     */
+    public function createVoucherRestResponseBuilder(): VoucherRestResponseBuilderInterface
+    {
+        return new VoucherRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createDiscountMapper()
         );

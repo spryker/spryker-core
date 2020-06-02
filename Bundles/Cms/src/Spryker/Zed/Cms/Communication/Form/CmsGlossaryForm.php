@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -192,7 +191,6 @@ class CmsGlossaryForm extends AbstractType
         $builder->add(self::FIELD_TRANSLATION, TextareaType::class, [
             'label' => 'Content',
             'constraints' => [
-                new Required(),
                 new NotBlank(),
             ],
             'attr' => [
@@ -209,7 +207,6 @@ class CmsGlossaryForm extends AbstractType
     protected function getPlaceholderConstants(): array
     {
         $placeholderConstraints = [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];

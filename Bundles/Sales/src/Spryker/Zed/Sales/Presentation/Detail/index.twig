@@ -2,6 +2,11 @@
 
 {% block action %}
     {{ backActionButton('/sales', 'Back to Orders' | trans) }}
+    {% include '@SalesReturnGui/Sales/create-return-link.twig' ignore missing with {
+        data: {
+            order: order,
+        },
+    } only %}
 {% endblock %}
 
 {% block section_title %}
