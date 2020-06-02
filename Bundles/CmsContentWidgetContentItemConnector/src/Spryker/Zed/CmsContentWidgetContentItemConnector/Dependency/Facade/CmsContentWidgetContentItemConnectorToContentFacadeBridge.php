@@ -25,7 +25,7 @@ class CmsContentWidgetContentItemConnectorToContentFacadeBridge implements CmsCo
     /**
      * @phpstan-param array<string> $contentKeys
      *
-     * @phpstan-return array<int, \Generated\Shared\Transfer\ContentTransfer>*
+     * @phpstan-return array<int, \Generated\Shared\Transfer\ContentTransfer>
      *
      * @param string[] $contentKeys
      *
