@@ -23,7 +23,7 @@ interface DocumentationGeneratorRestApiToFilesystemInterface
 
     /**
      * @phpstan-param string|iterable<array,\Traversable> $dirs
-     * 
+     *
      * @param string|iterable $dirs
      * @param int $mode
      *
