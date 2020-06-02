@@ -58,10 +58,6 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     /**
      * {@inheritDoc}
      *
-     * @phpstan-param array<string> $contentKeys
-     *
-     * @phpstan-return array<int, \Generated\Shared\Transfer\ContentTransfer>
-     *
      * @param string[] $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
@@ -73,7 +69,13 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             ->filterByKey_In($contentKeys)
             ->find();
 
-        return $this->getFactory()->createContentMapper()->mapContentEntitiesToContentTransfers($contentEntities);
+        $contentTransfers = [];
+        $contentMapper = $this->getFactory()->createContentMapper();
+        foreach ($contentEntities as $contentEntity) {
+            $contentTransfers[] = $contentMapper->mapContentEntityToTransfer($contentEntity);
+        }
+
+        return $contentTransfers;
     }
 
     /**

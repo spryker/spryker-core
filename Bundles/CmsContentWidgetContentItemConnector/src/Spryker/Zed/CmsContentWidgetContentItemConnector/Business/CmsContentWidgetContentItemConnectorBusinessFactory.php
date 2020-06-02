@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CmsContentWidgetContentItemConnector\CmsContentWidgetContentItemConnectorConfig getConfig()
- * @method \Spryker\Zed\CmsContentWidgetContentItemConnector\Persistence\CmsContentWidgetContentItemConnectorRepositoryInterface getRepository()
  */
 class CmsContentWidgetContentItemConnectorBusinessFactory extends AbstractBusinessFactory
 {

@@ -51,10 +51,6 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
-     * @phpstan-param array<string> $contentKeys
-     *
-     * @phpstan-return array<int, \Generated\Shared\Transfer\ContentTransfer>
-     *
      * @param string[] $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]
