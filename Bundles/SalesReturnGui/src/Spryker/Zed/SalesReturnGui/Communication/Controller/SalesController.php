@@ -43,7 +43,7 @@ class SalesController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $idSalesOrder = $request->query->getInt(OrderReturnTable::PARAM_ID_ORDER);
+        $idSalesOrder = $request->query->getInt(OrderReturnTable::PARAM_ID_ORDER) ?: null;
 
         $orderReturnTable = $this->getFactory()
             ->createOrderReturnTable((new OrderTransfer())->setIdSalesOrder($idSalesOrder));

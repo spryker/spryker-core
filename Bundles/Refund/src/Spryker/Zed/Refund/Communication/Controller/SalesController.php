@@ -41,7 +41,7 @@ class SalesController extends AbstractController
      */
     protected function getOrderTransfer(Request $request)
     {
-        /** @var \Generated\Shared\Transfer\OrderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $request->request->get('orderTransfer');
 
         return $orderTransfer;

@@ -95,6 +95,7 @@ class VersionPageController extends AbstractController
             ->handleRequest($request);
 
         if ($versionForm->isSubmitted() && $versionForm->isValid()) {
+            /** @var array $cmsVersionData */
             $cmsVersionData = $request->request->get(CmsVersionFormType::CMS_VERSION);
             $version = $this->castId($cmsVersionData['version']);
 
