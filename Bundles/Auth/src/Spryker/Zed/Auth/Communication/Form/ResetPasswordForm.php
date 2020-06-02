@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
@@ -45,7 +44,6 @@ class ResetPasswordForm extends AbstractType
     {
         $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
-                new Required(),
                 new NotBlank(),
             ],
             'invalid_message' => 'The password fields must match.',

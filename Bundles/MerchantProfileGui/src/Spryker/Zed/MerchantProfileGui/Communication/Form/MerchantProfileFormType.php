@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
@@ -392,7 +391,6 @@ class MerchantProfileFormType extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
             new Length(['max' => 255]),
         ];
     }

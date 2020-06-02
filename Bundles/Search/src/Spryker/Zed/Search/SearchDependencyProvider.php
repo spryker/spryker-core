@@ -10,6 +10,7 @@ namespace Spryker\Zed\Search;
 use GuzzleHttp\Client;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeBridge;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
 
 /**
@@ -26,6 +27,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'PLUGINS_SEARCH_SOURCE_INSTALLER';
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +42,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchSourceInstallerPlugins($container);
         $container = $this->addSearchMapInstallerPlugins($container);
         $container = $this->addGuzzleClient($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -54,6 +57,20 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new SearchToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }
