@@ -40,6 +40,8 @@ interface SessionConstants
      * Specification:
      * - Allows to declare if your Yves session cookie should be restricted to a first-party or same-site context.
      * - Available since PHP 7.3.0.
+     *
+     * @api
      */
     public const YVES_SESSION_COOKIE_SAMESITE = 'SESSION:YVES_SESSION_COOKIE_SAMESITE';
 
@@ -109,6 +111,8 @@ interface SessionConstants
      * Specification:
      * - Allows to declare if your Zed session cookie should be restricted to a first-party or same-site context.
      * - Available since PHP 7.3.0.
+     *
+     * @api
      */
     public const ZED_SESSION_COOKIE_SAMESITE = 'SESSION:ZED_SESSION_COOKIE_SAMESITE';
 
