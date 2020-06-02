@@ -63,9 +63,9 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, $container->factory(function () {
             return SpyCompanyBusinessUnitQuery::create();
-        });
+        }));
 
         return $container;
     }

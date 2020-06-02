@@ -79,9 +79,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, $container->factory(function () {
             return SpyProductListQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -93,9 +93,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }

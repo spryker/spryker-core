@@ -93,9 +93,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_FILE, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_FILE, $container->factory(function () {
             return SpyFileQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -107,9 +107,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileInfoQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_FILE_INFO, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_FILE_INFO, $container->factory(function () {
             return SpyFileInfoQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -121,9 +121,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMimeTypeQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_MIME_TYPE, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_MIME_TYPE, $container->factory(function () {
             return SpyMimeTypeQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -88,9 +88,9 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      */
     protected function addProductDiscontinuedQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_DISCONTINUED, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_DISCONTINUED, $container->factory(function () {
             return SpyProductDiscontinuedQuery::create();
-        });
+        }));
 
         return $container;
     }

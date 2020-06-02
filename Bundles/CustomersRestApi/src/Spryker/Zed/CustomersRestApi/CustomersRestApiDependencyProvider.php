@@ -53,9 +53,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerAddressPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CUSTOMER_ADDRESS, function () {
+        $container->set(static::PROPEL_QUERY_CUSTOMER_ADDRESS, $container->factory(function () {
             return SpyCustomerAddressQuery::create();
-        });
+        }));
 
         return $container;
     }

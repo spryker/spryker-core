@@ -56,9 +56,9 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_SALES_ORDER_QUERY, function () {
+        $container->set(static::PROPEL_SALES_ORDER_QUERY, $container->factory(function () {
             return SpySalesOrderQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -70,9 +70,9 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_SALES_ORDER_ITEM_QUERY, function () {
+        $container->set(static::PROPEL_SALES_ORDER_ITEM_QUERY, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -94,9 +94,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPropelMerchantRelationshipQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_MERCHANT_RELATIONSHIP_QUERY, function () {
+        $container->set(static::PROPEL_MERCHANT_RELATIONSHIP_QUERY, $container->factory(function () {
             return SpyMerchantRelationshipQuery::create();
-        });
+        }));
 
         return $container;
     }

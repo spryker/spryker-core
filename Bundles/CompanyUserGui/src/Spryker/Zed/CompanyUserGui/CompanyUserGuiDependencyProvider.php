@@ -125,9 +125,9 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_COMPANY_USER, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function () {
             return SpyCompanyUserQuery::create();
-        });
+        }));
 
         return $container;
     }

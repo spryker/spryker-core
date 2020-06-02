@@ -97,9 +97,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -111,9 +111,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        });
+        }));
 
         return $container;
     }

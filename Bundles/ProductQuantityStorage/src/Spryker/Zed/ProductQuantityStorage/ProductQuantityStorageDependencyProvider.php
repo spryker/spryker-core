@@ -87,9 +87,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_QUANTITY, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_QUANTITY, $container->factory(function () {
             return SpyProductQuantityQuery::create();
-        });
+        }));
 
         return $container;
     }

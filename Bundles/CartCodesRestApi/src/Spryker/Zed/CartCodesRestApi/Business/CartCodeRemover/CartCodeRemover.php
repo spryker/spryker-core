@@ -68,6 +68,35 @@ class CartCodeRemover implements CartCodeRemoverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+            );
+        }
+
+        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        $cartCodeResponseTransfer = $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
+
+        if (!$cartCodeResponseTransfer->getIsSuccessful()) {
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANNOT_BE_REMOVED
+            );
+        }
+
+        return $cartCodeResponseTransfer;
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param string $voucherCode
      *

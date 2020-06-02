@@ -109,9 +109,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addPropelProductRelationProductAbstractQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT, function (): SpyProductRelationProductAbstractQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT, $container->factory(function (): SpyProductRelationProductAbstractQuery {
             return SpyProductRelationProductAbstractQuery::create();
-        });
+        }));
 
         return $container;
     }

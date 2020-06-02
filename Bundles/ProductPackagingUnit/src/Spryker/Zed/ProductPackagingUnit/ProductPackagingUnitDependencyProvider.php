@@ -210,9 +210,9 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        });
+        }));
 
         return $container;
     }

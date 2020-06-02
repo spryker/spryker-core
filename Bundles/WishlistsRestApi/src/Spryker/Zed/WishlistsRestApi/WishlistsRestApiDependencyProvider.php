@@ -54,9 +54,9 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function addWishlistPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_WISHLIST, function () {
+        $container->set(static::PROPEL_QUERY_WISHLIST, $container->factory(function () {
             return SpyWishlistQuery::create();
-        });
+        }));
 
         return $container;
     }

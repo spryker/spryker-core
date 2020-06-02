@@ -108,9 +108,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductLocalizedAttributesQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES, function (): SpyProductLocalizedAttributesQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES, $container->factory(function (): SpyProductLocalizedAttributesQuery {
             return SpyProductLocalizedAttributesQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -122,9 +122,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductImageSetQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, function (): SpyProductImageSetQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, $container->factory(function (): SpyProductImageSetQuery {
             return SpyProductImageSetQuery::create();
-        });
+        }));
 
         return $container;
     }
