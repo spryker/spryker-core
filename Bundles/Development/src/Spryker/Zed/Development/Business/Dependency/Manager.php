@@ -9,9 +9,9 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
-use Generated\Shared\Transfer\ModuleDependencyViewTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
@@ -30,19 +30,29 @@ class Manager implements ManagerInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface
+     */
+    protected $dependencyModuleMapper;
+
+    /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleParser
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface $dependencyModuleMapper
      */
-    public function __construct(ModuleDependencyParserInterface $moduleParser, DevelopmentConfig $config)
-    {
+    public function __construct(
+        ModuleDependencyParserInterface $moduleParser,
+        DevelopmentConfig $config,
+        DependencyModuleMapperInterface $dependencyModuleMapper
+    ) {
         $this->moduleParser = $moduleParser;
         $this->config = $config;
+        $this->dependencyModuleMapper = $dependencyModuleMapper;
     }
 
     /**
      * @param string $moduleName
      *
-     * @return \Generated\Shared\Transfer\ModuleDependencyViewTransfer[]
+     * @return \Generated\Shared\Transfer\DependencyModuleViewTransfer[]
      */
     public function parseIncomingDependencies(string $moduleName): array
     {
@@ -64,43 +74,13 @@ class Manager implements ManagerInterface
                 continue;
             }
 
-            [$totalCount, $optionalCount, $testCount] = $this->collectDependencyCount($dependencyModule);
+            $dependencyModuleViewTransfer = $this->dependencyModuleMapper->mapDependencyModuleTransferToDependencyModuleViewTransfer($dependencyModule);
+            $dependencyModuleViewTransfer->setName($foreignModule);
 
-            $incomingDependencies[] = (new ModuleDependencyViewTransfer())
-                ->setName($foreignModule)
-                ->setTotalDependencyCount($totalCount)
-                ->setTestDependencyCount($testCount)
-                ->setOptionalDependencyCount($optionalCount);
+            $incomingDependencies[] = $dependencyModuleViewTransfer;
         }
 
         return $incomingDependencies;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DependencyModuleTransfer $dependencyModuleTransfer
-     *
-     * @return array
-     */
-    protected function collectDependencyCount(
-        DependencyModuleTransfer $dependencyModuleTransfer
-    ): array {
-        $totalCount = 0;
-        $optionalCount = 0;
-        $testCount = 0;
-
-        foreach ($dependencyModuleTransfer->getDependencies() as $dependencyTransfer) {
-            if ($dependencyTransfer->getIsOptional()) {
-                $optionalCount++;
-            }
-
-            if ($dependencyTransfer->getIsInTest()) {
-                $testCount++;
-            }
-
-            $totalCount++;
-        }
-
-        return [$totalCount, $optionalCount, $testCount];
     }
 
     /**
