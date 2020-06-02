@@ -13,7 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CustomerConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use getAddressKeyGenerationWhiteListedFields() instead.
+     * @api
+     *
+     * @deprecated Use {@link getAddressKeyGenerationWhiteListedFields()} instead.
      *
      * @return string[]
      */
@@ -38,6 +40,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAddressKeyGenerationWhiteListedFields(): array

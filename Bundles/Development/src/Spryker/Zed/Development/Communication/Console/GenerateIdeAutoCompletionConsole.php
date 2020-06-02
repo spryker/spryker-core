@@ -17,7 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:generate-auto-completion';
+    protected const OLD_COMMAND_NAME = 'dev:ide:generate-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:generate';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class GenerateIdeAutoCompletionConsole extends Console
 
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Generate IDE auto completion files.');
+        $this->setAliases([static::OLD_COMMAND_NAME]);
     }
 
     /**
@@ -49,6 +51,7 @@ class GenerateIdeAutoCompletionConsole extends Console
         foreach ($dependingCommands as $commandName) {
             if (!$this->getApplication()->has($commandName)) {
                 $this->showCommandNotFoundMessage($commandName);
+
                 continue;
             }
             $this->runDependingCommand($commandName);
@@ -69,7 +72,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function showCommandNotFoundMessage(string $commandName): void
     {
         $message = "Can not find $commandName in your project." . PHP_EOL;
-        $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
+        $message .= 'You can fix this by adding the missing command to your project ConsoleDependencyProvider.';
         $this->output->writeln("<comment>$message</comment>");
     }
 }

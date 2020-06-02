@@ -10,7 +10,7 @@ namespace Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigura
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
 /**
- * @deprecated Use `SprykerShop\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider` instead.
+ * @deprecated Use {@link SprykerShop\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider} instead.
  */
 class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
@@ -25,7 +25,7 @@ class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetCo
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableTemplates()
     {

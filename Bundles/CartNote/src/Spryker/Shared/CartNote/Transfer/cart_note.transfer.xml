@@ -43,5 +43,8 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
 

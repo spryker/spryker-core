@@ -59,7 +59,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::YVES_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/%s/cache/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_STORE, APPLICATION);
+            $defaultCachePath = sprintf('%s/data/cache/codeBucket%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
 
             return $this->get(RouterConstants::YVES_CACHE_PATH, $defaultCachePath);
         }
@@ -120,6 +120,8 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a list of supported stores for Route manipulation.
      * - Will be used to strip of store information from a route before a route is matched.
+     *
+     * @api
      *
      * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
      *

@@ -27,7 +27,7 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
      */
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -39,7 +39,7 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
             }
             $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
             foreach ($relationshipPlugins as $relationshipPlugin) {
-                $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
+                $resourceRelationships[$relationshipPlugin->getRelationshipResourceType()] = $relationshipPlugin;
             }
         }
 

@@ -14,5 +14,12 @@ interface ProductConcreteOffersStorageWriterInterface
      *
      * @return void
      */
-    public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void;
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductSkuEvents(array $eventTransfers): void;
 }

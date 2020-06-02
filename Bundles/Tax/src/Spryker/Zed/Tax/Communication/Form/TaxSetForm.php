@@ -144,7 +144,7 @@ class TaxSetForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */
@@ -167,7 +167,8 @@ class TaxSetForm extends AbstractType
                 /** @var \Symfony\Component\Form\Form $form */
                 $form = $context->getObject();
                 $idTaxSet = $form->getParent()->getData()->getIdTaxSet();
-                if (empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
+                if (
+                    empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
                     !empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
                 ) {
                     $context->addViolation('Tax Set with name "%name%" already exists.', [

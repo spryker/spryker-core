@@ -15,6 +15,10 @@ class CacheConfig extends AbstractBundleConfig
     public const STORE_PATTERN_MARKER = '{STORE}';
 
     /**
+     * @api
+     *
+     * @deprecated Use {@link getCodeBucketCachePath()} instead.
+     *
      * @return string
      */
     public function getCachePath()
@@ -23,6 +27,30 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCodeBucketCachePath(): string
+    {
+        return sprintf(APPLICATION_ROOT_DIR . '/data/cache/codeBucket%s', APPLICATION_CODE_BUCKET);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultCodeBucketCachePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/data/cache/codeBucket';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getAutoloaderCachePath()
@@ -31,6 +59,8 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorePatternMarker()
@@ -39,6 +69,8 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllowedStores()

@@ -69,7 +69,7 @@ class ImageSetForm extends AbstractSubForm
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */
@@ -191,6 +191,7 @@ class ImageSetForm extends AbstractSubForm
                         foreach ($images as $valueSet) {
                             if (!empty($valueSet['value'])) {
                                 $selectedAttributes[] = $valueSet['value'];
+
                                 break;
                             }
                         }

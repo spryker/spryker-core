@@ -17,10 +17,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  *
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
 class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - This plugin retrieves (its) data item metadata from the quote object and saves it to the database.
      *

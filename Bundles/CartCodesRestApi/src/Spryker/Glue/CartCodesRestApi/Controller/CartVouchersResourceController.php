@@ -24,13 +24,13 @@ class CartVouchersResourceController extends AbstractController
      *              "Adds a code to cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -46,25 +46,24 @@ class CartVouchersResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCartCodeAdder()
-            ->addCartCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
+            ->addDiscountCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/vouchers",
+     *          "path": "/carts/{cartId}/vouchers/{voucherCode}",
      *          "summary": [
      *              "Deletes a code from cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found.",
-     *              "422": "Cart code can't be deleted."
+     *              "422": "Cart code not found in cart."
      *          }
      *     }
      * })
@@ -76,6 +75,6 @@ class CartVouchersResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeDiscountCodeFromCart($restRequest);
     }
 }

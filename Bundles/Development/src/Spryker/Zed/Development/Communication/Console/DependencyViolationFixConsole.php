@@ -63,6 +63,8 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             }
             $this->executeModuleTransfer($moduleTransfer);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**
@@ -99,6 +101,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             if ($composerNameToFix === null) {
                 $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModuleName()));
                 $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+
                 continue;
             }
 
@@ -174,8 +177,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequire(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInRequire(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE) {
             $composerJsonArray['require'][$composerName] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require', $composerName));
@@ -195,8 +201,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequireDev(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInRequireDev(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE_DEV) {
             $composerJsonArray['require-dev'][$composerName] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require-dev', $composerName));
@@ -216,8 +225,11 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      *
      * @return array
      */
-    protected function fixDependencyViolationsInSuggest(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
-    {
+    protected function fixDependencyViolationsInSuggest(
+        ValidationMessageTransfer $validationMessageTransfer,
+        array $composerJsonArray,
+        string $composerName
+    ): array {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_SUGGEST) {
             $composerJsonArray['suggest'][$composerName] = 'ADD SUGGEST DESCRIPTION';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $composerName));

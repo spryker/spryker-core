@@ -12,7 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CustomerAccessStorageConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
@@ -22,6 +24,8 @@ class CustomerAccessStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getSynchronizationPoolName(): ?string

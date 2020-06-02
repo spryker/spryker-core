@@ -18,6 +18,7 @@ Country,Land
 "Customer was not created.","Kunde wurde nicht erstellt."
 "Customer was not updated.","Kunde wurde nicht aktualisiert."
 "Customer was updated successfully.","Kunde wurde erfolgreich aktualisiert."
+"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
 "Date of birth",Geburtsdatum
 Delete,Löschen
 "Delete account","Konto löschen"
@@ -26,6 +27,7 @@ Delete,Löschen
 Email,E-Mail
 "First Name",Vorname
 "First name",Vorname
+"Form was not submitted.","Der Formular wurde nicht eingereicht."
 Gender,Geschlecht
 "Last name",Nachname
 "List Customers","Liste der Kunden"
@@ -40,4 +42,3 @@ View,Ansicht
 "View Customer","Kunden anzeigen"
 "Zed Account Reference",Zed-Konto-Referenz
 ZipCode,Postleitzahl
-"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"

@@ -14,7 +14,7 @@ use Spryker\Shared\Search\IndexMapInterface;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationFactory} instead.
  */
 class FacetAggregationFactory implements FacetAggregationFactoryInterface
 {
@@ -65,7 +65,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
         switch ($facetConfigTransfer->getType()) {
             case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryFacetAggregation($facetConfigTransfer);
-
             default:
                 return $this->createByFacetValueType($facetConfigTransfer);
         }
@@ -87,11 +86,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
             case 'keyword':
             case 'text':
                 return $this->createStringFacetAggregation($facetConfigTransfer);
-
             case 'integer':
             case 'float':
                 return $this->createNumericFacetAggregation($facetConfigTransfer);
-
             default:
                 throw new MissingFacetAggregationException(sprintf(
                     'Missing facet aggregation for type "%s" in field "%s".',

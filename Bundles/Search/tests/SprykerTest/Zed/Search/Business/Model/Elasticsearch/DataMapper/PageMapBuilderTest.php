@@ -62,8 +62,12 @@ class PageMapBuilderTest extends Unit
      *
      * @return void
      */
-    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat(string $field, string $attributeName, $attributeValue, array $expectedResult): void
-    {
+    public function testAddingDataToPageMapTransferIsExtendingItInTheirExpectedFormat(
+        string $field,
+        string $attributeName,
+        $attributeValue,
+        array $expectedResult
+    ): void {
         $pageMapTransfer = new PageMapTransfer();
         $this->pageMapBuilder->add($pageMapTransfer, $field, $attributeName, $attributeValue);
 
@@ -106,7 +110,7 @@ class PageMapBuilderTest extends Unit
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
-        $name = "does not matter";
+        $name = 'does not matter';
         $expectedResult = [0, 1, 2];
 
         // Act
@@ -128,7 +132,7 @@ class PageMapBuilderTest extends Unit
     {
         // Assign
         $pageMapTransfer = new PageMapTransfer();
-        $name = "does not matter";
+        $name = 'does not matter';
         $expectedResult = [0, 1, 2];
 
         // Act

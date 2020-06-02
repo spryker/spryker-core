@@ -44,6 +44,8 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
+     * @deprecated Use {@link saveCacheForCodeBucket()} instead.
+     *
      * @param array $validatorConfig
      * @param string $storeName
      *
@@ -51,11 +53,6 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
      */
     public function save(array $validatorConfig, string $storeName): void
     {
-        $outdatedConfigFiles = $this->getOutdatedConfig($storeName);
-        if (!empty($outdatedConfigFiles)) {
-            $this->filesystem->remove($outdatedConfigFiles);
-        }
-
         $this->filesystem->dumpFile(
             $this->getStoreCacheFilePath($storeName),
             $this->yaml->dump($validatorConfig)
@@ -63,6 +60,28 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
+     * @param array $validatorConfig
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function saveCacheForCodeBucket(array $validatorConfig, string $codeBucket): void
+    {
+        $outdatedConfigFiles = glob($this->getCodeBucketCacheFilePath($codeBucket));
+
+        if (!empty($outdatedConfigFiles)) {
+            $this->filesystem->remove($outdatedConfigFiles);
+        }
+
+        $this->filesystem->dumpFile(
+            $this->getCodeBucketCacheFilePath($codeBucket),
+            $this->yaml->dump($validatorConfig)
+        );
+    }
+
+    /**
+     * @deprecated Use {@link getCodeBucketCacheFilePath()} instead.
+     *
      * @param string $storeName
      *
      * @return string
@@ -73,12 +92,12 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
-     * @param string $storeName
+     * @param string $codeBucket
      *
-     * @return array
+     * @return string
      */
-    protected function getOutdatedConfig(string $storeName): array
+    protected function getCodeBucketCacheFilePath(string $codeBucket): string
     {
-        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName));
+        return sprintf($this->config->getCodeBucketCacheFilePathPattern(), $codeBucket);
     }
 }

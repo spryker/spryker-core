@@ -23,6 +23,8 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
@@ -31,6 +33,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      */
     public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $availabilityProductQuery */
         $availabilityProductQuery = $this->getFactory()
             ->getAvailabilityQueryContainer()
             ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getIdLocale());

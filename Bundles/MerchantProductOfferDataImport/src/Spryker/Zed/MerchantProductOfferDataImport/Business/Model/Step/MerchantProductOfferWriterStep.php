@@ -55,9 +55,9 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
         $productOfferEntity = SpyProductOfferQuery::create()
             ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE])
             ->findOneOrCreate();
-        $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::FK_MERCHANT]);
+        $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT]);
         $productOfferEntity->setConcreteSku($dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU]);
-        $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU]);
+        $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU] ?: null);
         $productOfferEntity->setIsActive($dataSet[MerchantProductOfferDataSetInterface::IS_ACTIVE]);
         $productOfferEntity->setApprovalStatus($dataSet[MerchantProductOfferDataSetInterface::APPROVAL_STATUS]);
         $productOfferEntity->save();
@@ -71,7 +71,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     public function afterExecute(): void
     {
         foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH, $entityEventTransfer);
+            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, $entityEventTransfer);
         }
 
         $this->entityEventTransfers = [];

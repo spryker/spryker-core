@@ -32,9 +32,11 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     /**
      * @var array
      */
-    protected static $categoryNames;
+    protected static $categoryNames = [];
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData
@@ -169,7 +171,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     protected function getName($idCategory, LocaleTransfer $localeTransfer)
     {
         $idLocale = $localeTransfer->getIdLocale();
-        if (static::$categoryNames === null || !isset(static::$categoryNames[$idLocale])) {
+        if (!isset(static::$categoryNames[$idLocale])) {
             $this->loadNames($localeTransfer);
         }
 
@@ -183,10 +185,6 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      */
     protected function loadNames(LocaleTransfer $localeTransfer)
     {
-        if (!static::$categoryNames) {
-            static::$categoryNames = [];
-        }
-
         $categoryAttributes = $this
             ->getQueryContainer()
             ->queryCategoryAttributesByLocale($localeTransfer)
@@ -194,6 +192,8 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->filterByIsSearchable(true)
             ->endUse()
             ->find();
+
+        static::$categoryNames[$localeTransfer->getIdLocale()] = [];
 
         foreach ($categoryAttributes as $categoryAttributeEntity) {
             static::$categoryNames[$localeTransfer->getIdLocale()][$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();

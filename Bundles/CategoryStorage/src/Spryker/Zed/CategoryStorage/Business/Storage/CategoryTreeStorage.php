@@ -36,7 +36,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     protected $store;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -48,8 +48,12 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(CategoryStorageQueryContainerInterface $queryContainer, CategoryStorageToUtilSanitizeServiceInterface $utilSanitize, Store $store, $isSendingToQueue)
-    {
+    public function __construct(
+        CategoryStorageQueryContainerInterface $queryContainer,
+        CategoryStorageToUtilSanitizeServiceInterface $utilSanitize,
+        Store $store,
+        $isSendingToQueue
+    ) {
         $this->queryContainer = $queryContainer;
         $this->utilSanitize = $utilSanitize;
         $this->store = $store;

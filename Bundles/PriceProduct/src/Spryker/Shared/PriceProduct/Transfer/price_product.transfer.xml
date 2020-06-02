@@ -82,6 +82,7 @@
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="quote" type="Quote"/>
         <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
@@ -91,6 +92,7 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
+        <property name="priceData" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 

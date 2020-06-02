@@ -55,7 +55,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
 
     /**
      * @param array $variants
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return array
      */
@@ -65,6 +65,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
             if (isset($variants[$key][static::KEY_ID_PRODUCT_CONCRETE])) {
                 $variants[$key][static::KEY_ID_PRODUCT_CONCRETE] =
                     $productConcreteIds[$data[static::KEY_ID_PRODUCT_CONCRETE]];
+
                 continue;
             }
             $variants[$key] = $this->changeVariantsIdsToSkus($variants[$key], $productConcreteIds);

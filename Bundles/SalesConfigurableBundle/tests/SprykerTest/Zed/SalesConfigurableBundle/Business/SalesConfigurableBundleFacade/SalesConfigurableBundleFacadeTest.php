@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
@@ -525,6 +526,66 @@ class SalesConfigurableBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandItemsWithSalesOrderConfiguredBundlesWithConfiguredBundle(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();
+        $this->translateTemplateNamesForQuote($quoteTransfer);
+        $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->getFacade()->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->expandOrderItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
+
+        // Assert
+        $this->assertInstanceOf(
+            SalesOrderConfiguredBundleItemTransfer::class,
+            $itemTransfers[0]->getSalesOrderConfiguredBundleItem()
+        );
+
+        $this->assertInstanceOf(
+            SalesOrderConfiguredBundleTransfer::class,
+            $itemTransfers[0]->getSalesOrderConfiguredBundle()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandItemsWithSalesOrderConfiguredBundlesWithoutConfiguredBundle(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::UNIT_PRICE => 1,
+                ItemTransfer::QUANTITY => 1,
+            ])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+        $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->getFacade()->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->expandOrderItemsWithSalesOrderConfiguredBundles($saveOrderTransfer->getOrderItems()->getArrayCopy());
+
+        // Assert
+        $this->assertNull($itemTransfers[0]->getSalesOrderConfiguredBundleItem());
+
+        $this->assertNull($itemTransfers[0]->getSalesOrderConfiguredBundle());
+    }
+
+    /**
      * @param int $quantity
      * @param int $configurableBundleQuantity
      * @param int $quantityPerSlot
@@ -637,8 +698,10 @@ class SalesConfigurableBundleFacadeTest extends Unit
     protected function translateTemplateNamesForQuote(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
-                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()) {
+            if (
+                !$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()
+                || !$itemTransfer->getConfiguredBundle()->getTemplate()->getName()
+            ) {
                 continue;
             }
 

@@ -12,7 +12,7 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\QueryFactory} instead.
  */
 class QueryFactory implements QueryFactoryInterface
 {
@@ -66,13 +66,10 @@ class QueryFactory implements QueryFactoryInterface
         switch ($facetConfigTransfer->getType()) {
             case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
-
             case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
-
             case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createTermQuery($facetConfigTransfer, $filterValue);
-
             default:
                 return null;
         }

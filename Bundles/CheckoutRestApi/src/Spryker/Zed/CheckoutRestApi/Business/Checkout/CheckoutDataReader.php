@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 
@@ -49,24 +50,32 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $quoteMapperPlugins;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface
+     */
+    protected $calculationFacade;
+
+    /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         AddressReaderInterface $addressReader,
-        array $quoteMapperPlugins
+        array $quoteMapperPlugins,
+        CheckoutRestApiToCalculationFacadeInterface $calculationFacade
     ) {
         $this->quoteReader = $quoteReader;
         $this->shipmentFacade = $shipmentFacade;
         $this->paymentFacade = $paymentFacade;
         $this->addressReader = $addressReader;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -91,6 +100,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 ->requireName();
 
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
+        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
@@ -99,8 +109,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
-                ->setIsSuccess(true)
-                ->setCheckoutData($checkoutDataTransfer);
+            ->setIsSuccess(true)
+            ->setCheckoutData($checkoutDataTransfer);
     }
 
     /**

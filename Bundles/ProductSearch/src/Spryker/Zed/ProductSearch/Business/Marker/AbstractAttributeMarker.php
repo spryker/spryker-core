@@ -44,8 +44,11 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQuery
      */
-    public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchToEventFacadeInterface $eventFacade, ProductSearchQueryContainerInterface $productSearchQuery)
-    {
+    public function __construct(
+        ProductSearchToTouchInterface $touchFacade,
+        ProductSearchToEventFacadeInterface $eventFacade,
+        ProductSearchQueryContainerInterface $productSearchQuery
+    ) {
         $this->touchFacade = $touchFacade;
         $this->eventFacade = $eventFacade;
         $this->productSearchQueryContainer = $productSearchQuery;
@@ -133,7 +136,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -143,7 +146,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

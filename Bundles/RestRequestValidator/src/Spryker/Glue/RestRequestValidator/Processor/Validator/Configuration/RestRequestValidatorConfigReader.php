@@ -65,11 +65,17 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
      */
     public function findValidationConfiguration(RestRequestInterface $restRequest): ?array
     {
-        if (!$this->filesystem->exists($this->getValidationConfigPath())) {
+        $configurationFile = $this->getValidationCodeBucketConfigPath();
+
+        if (!$this->filesystem->exists($configurationFile)) {
+            $configurationFile = $this->getValidationConfigPath();
+        }
+
+        if (!$this->filesystem->exists($configurationFile)) {
             throw new CacheFileNotFoundException(static::EXCEPTION_MESSAGE_CACHE_FILE_NOT_FOUND);
         }
 
-        $configuration = $this->yaml->parseFile($this->getValidationConfigPath());
+        $configuration = $this->yaml->parseFile($configurationFile);
 
         $resourceType = $restRequest->getResource()->getType();
         $requestMethod = strtolower($restRequest->getMetadata()->getMethod());
@@ -82,10 +88,20 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
     }
 
     /**
+     * @deprecated Use {@link getValidationCodeBucketConfigPath()} instead.
+     *
      * @return string
      */
     protected function getValidationConfigPath(): string
     {
-        return sprintf($this->config->getValidationCacheFilenamePattern(), $this->storeClient->getCurrentStore()->getName());
+        return sprintf($this->config->getValidationCacheFilenamePattern(), APPLICATION_STORE);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getValidationCodeBucketConfigPath(): string
+    {
+        return sprintf($this->config->getValidationCodeBucketCacheFilenamePattern(), APPLICATION_CODE_BUCKET);
     }
 }

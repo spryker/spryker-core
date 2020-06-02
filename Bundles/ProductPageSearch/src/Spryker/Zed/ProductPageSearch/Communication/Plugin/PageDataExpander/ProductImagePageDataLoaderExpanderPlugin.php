@@ -21,6 +21,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData
@@ -32,11 +34,13 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     {
         $images = [];
         $imageSets = $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
         $imageSetsByLocale = $imageSets[$productData['fk_locale']] ?? [];
 
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
         foreach ($imageSetsByLocale as $imageSet) {
-            $images = array_merge($images, $this->generateImages($imageSet->getSpyProductImageSetToProductImages()));
+            /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $imagesCollection */
+            $imagesCollection = $imageSet->getSpyProductImageSetToProductImages();
+            $images = array_merge($images, $this->generateImages($imagesCollection));
         }
 
         $productAbstractPageSearchTransfer->setProductImages($images);

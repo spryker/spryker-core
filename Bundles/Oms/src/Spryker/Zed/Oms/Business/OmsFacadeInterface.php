@@ -9,6 +9,8 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -618,4 +620,43 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates history states for given order items.
+     * - Copies createAt field from latest history state to ItemTransfer::state.
+     * - Sets ItemTransfer::stateHistory.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands order with OMS unique states from order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithOmsStates(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence using criteria from filter.
+     * - Returns available manual events for found order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return string[][]
+     */
+    public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 }

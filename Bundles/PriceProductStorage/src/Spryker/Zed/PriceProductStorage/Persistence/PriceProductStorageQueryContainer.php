@@ -24,9 +24,11 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     public const SKU = 'sku';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -45,9 +47,11 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
@@ -59,6 +63,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -76,6 +82,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -93,6 +101,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -110,6 +120,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -127,9 +139,11 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -148,9 +162,11 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
@@ -162,6 +178,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds
@@ -181,6 +199,8 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds

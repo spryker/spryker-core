@@ -17,5 +17,7 @@ interface QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findSharedQuoteCollectionBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+    public function findSharedQuoteCollectionBySharedQuoteCriteriaFilter(
+        SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
+    ): QuoteCollectionTransfer;
 }

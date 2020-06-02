@@ -22,10 +22,26 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
+use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveChecker;
+use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveCheckerInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdder;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidator;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -90,12 +106,19 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemOperation(
             $this->getEntityManager(),
-            $this->getProductFacade(),
             $this->getRepository(),
             $this->createShoppingListResolver(),
-            $this->getMessengerFacade(),
+            $this->createShoppingListItemOperationValidator(),
             $this->createShoppingListItemPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveCheckerInterface
+     */
+    public function createProductConcreteIsActiveChecker(): ProductConcreteIsActiveCheckerInterface
+    {
+        return new ProductConcreteIsActiveChecker($this->getProductFacade());
     }
 
     /**
@@ -108,7 +131,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getShoppingListItemBeforeDeletePlugins(),
             $this->getShoppingListItemPostSavePlugins(),
             $this->getAddItemPreCheckPlugins(),
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
+            $this->getItemCollectionExpanderPlugins(),
+            $this->getShoppingListItemBulkPostSavePlugins()
         );
     }
 
@@ -139,11 +164,88 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
+     */
+    public function createShoppingListItemOperationValidator(): ShoppingListItemOperationValidatorInterface
+    {
+        return new ShoppingListItemOperationValidator(
+            $this->createShoppingListItemAddOperationValidator(),
+            $this->createShoppingListItemUpdateOperationValidator(),
+            $this->createShoppingListItemDeleteOperationValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidatorInterface
+     */
+    public function createShoppingListItemAddOperationValidator(): ShoppingListItemAddOperationValidatorInterface
+    {
+        return new ShoppingListItemAddOperationValidator(
+            $this->createShoppingListItemValidator(),
+            $this->createShoppingListItemMessageAdder(),
+            $this->createShoppingListItemPluginExecutor(),
+            $this->createShoppingListItemPermissionValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidatorInterface
+     */
+    public function createShoppingListItemUpdateOperationValidator(): ShoppingListItemUpdateOperationValidatorInterface
+    {
+        return new ShoppingListItemUpdateOperationValidator($this->createShoppingListItemValidator());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidatorInterface
+     */
+    public function createShoppingListItemDeleteOperationValidator(): ShoppingListItemDeleteOperationValidatorInterface
+    {
+        return new ShoppingListItemDeleteOperationValidator($this->createShoppingListItemValidator());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemValidatorInterface
+     */
+    public function createShoppingListItemValidator(): ShoppingListItemValidatorInterface
+    {
+        return new ShoppingListItemValidator(
+            $this->getRepository(),
+            $this->createShoppingListItemPermissionValidator(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemPermissionValidatorInterface
+     */
+    public function createShoppingListItemPermissionValidator(): ShoppingListItemPermissionValidatorInterface
+    {
+        return new ShoppingListItemPermissionValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface
+     */
+    public function createShoppingListItemMessageAdder(): ShoppingListItemMessageAdderInterface
+    {
+        return new ShoppingListItemMessageAdder($this->getMessengerFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     public function getItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     */
+    public function getItemCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_COLLECTION_EXPANDER);
     }
 
     /**
@@ -237,6 +339,14 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getShoppingListItemPostSavePlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     */
+    public function getShoppingListItemBulkPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE);
     }
 
     /**

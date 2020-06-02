@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -150,6 +151,19 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
+     *  - Calculate tax rates for current quote level (BC) or item level shipping addresses.
+     *  - Set tax rate percentages for item product options.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateProductOptionTaxRateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
+
+    /**
+     * Specification:
      *  - Toggle option active/inactive, option wont be diplayed in Yves when disabled. Collectors have to run first.
      *
      * @api
@@ -166,6 +180,8 @@ interface ProductOptionFacadeInterface
      *  - Hydrate product options for given order transfer
      *
      * @api
+     *
+     * @deprecated Use {@link expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -246,7 +262,9 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer;
 
     /**
      * Specification:
@@ -266,7 +284,7 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead
      *
      * @param int $idProductOptionValue
      *
@@ -298,4 +316,17 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Hydrates product options for given order items.
+     * - Sets ItemTransfer::sumProductOptionPriceAggregation, ItemTransfer::unitProductOptionPriceAggregation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
 }

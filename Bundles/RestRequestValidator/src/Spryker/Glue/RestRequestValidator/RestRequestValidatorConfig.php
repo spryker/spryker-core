@@ -22,6 +22,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     protected const CONSTRAINTS_NAMESPACE_REST_REQUEST_VALIDATOR = '\\Glue\\RestRequestValidator\\Constraints\\';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAvailableConstraintNamespaces(): array
@@ -30,6 +32,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getHttpMethodsThatRequireValidation(): array
@@ -41,6 +45,10 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated Use getValidationCodeBucketCacheFilenamePattern instead.
+     *
      * @return string
      */
     public function getValidationCacheFilenamePattern(): string
@@ -49,6 +57,18 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getValidationCodeBucketCacheFilenamePattern(): string
+    {
+        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::CODE_BUCKET_VALIDATION_CACHE_FILENAME_PATTERN;
+    }
+
+    /**
+     * @api
+     *
      * @return array
      */
     public function getConstraintCollectionOptions(): array

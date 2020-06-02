@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class CheckTimeoutConsole extends Console
 {
@@ -73,6 +74,8 @@ class CheckTimeoutConsole extends Console
         if ($output->isVerbose()) {
             $output->writeln('Affected: ' . $affected);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

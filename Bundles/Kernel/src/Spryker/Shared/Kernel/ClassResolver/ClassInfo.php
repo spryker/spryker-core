@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use RuntimeException;
+
 class ClassInfo
 {
     public const TEST_NAMESPACE_SUFFIX = 'Test';
@@ -21,14 +23,19 @@ class ClassInfo
     private $callerClassName;
 
     /**
+     * @var string|null
+     */
+    private $cacheKey;
+
+    /**
      * @var string[]
      */
     protected $callerClassParts = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
+     * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver|null
      */
-    protected $bundleNameResolver;
+    protected $moduleNameResolver;
 
     /**
      * @param object|string $callerClass
@@ -55,7 +62,42 @@ class ClassInfo
 
         $this->callerClassParts = $callerClassParts;
 
+        $this->callerClassParts[static::KEY_BUNDLE] = $this->getModuleNameResolver()->resolve($this->callerClassParts[static::KEY_BUNDLE]);
+
         return $this;
+    }
+
+    /**
+     * @param string $resolvableType
+     *
+     * @return string
+     */
+    public function getCacheKey(string $resolvableType): string
+    {
+        if (!$this->cacheKey) {
+            $this->cacheKey = $this->buildCacheKey($resolvableType);
+        }
+
+        return $this->cacheKey;
+    }
+
+    /**
+     * @param string $resolvableType
+     *
+     * @return string
+     */
+    protected function buildCacheKey(string $resolvableType): string
+    {
+        $module = $this->getModule();
+        $layer = $this->getLayer();
+
+        $cacheKey = $module . $resolvableType;
+
+        if ($resolvableType === 'ZedFactory') {
+            $cacheKey = $module . $resolvableType . $layer;
+        }
+
+        return $cacheKey;
     }
 
     /**
@@ -89,7 +131,7 @@ class ClassInfo
      */
     public function getNamespace()
     {
-        return $this->callerClassParts[self::KEY_NAMESPACE];
+        return $this->callerClassParts[static::KEY_NAMESPACE];
     }
 
     /**
@@ -97,30 +139,54 @@ class ClassInfo
      */
     public function getApplication()
     {
-        return $this->callerClassParts[self::KEY_APPLICATION];
+        return $this->callerClassParts[static::KEY_APPLICATION];
+    }
+
+    /**
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function getModule(): string
+    {
+        if (!isset($this->callerClassParts[static::KEY_BUNDLE])) {
+            throw new RuntimeException('Could not extract a module name which is mandatory for the resolver to work!');
+        }
+
+        return $this->callerClassParts[static::KEY_BUNDLE];
     }
 
     /**
      * @return string
      */
+    public function getLayer(): string
+    {
+        return $this->callerClassParts[static::KEY_LAYER] ?? '';
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\Kernel\ClassResolver\ClassInfo::getModule()} instead.
+     *
+     * @return string
+     */
     public function getBundle()
     {
-        $bundleName = $this->callerClassParts[self::KEY_BUNDLE];
-        $bundleName = $this->getBundleNameResolver()->resolve($bundleName);
+        $bundleName = $this->callerClassParts[static::KEY_BUNDLE];
+        $bundleName = $this->getModuleNameResolver()->resolve($bundleName);
 
         return $bundleName;
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolver()
+    protected function getModuleNameResolver()
     {
-        if (!$this->bundleNameResolver) {
-            $this->bundleNameResolver = new BundleNameResolver();
+        if (!$this->moduleNameResolver) {
+            $this->moduleNameResolver = new ModuleNameResolver();
         }
 
-        return $this->bundleNameResolver;
+        return $this->moduleNameResolver;
     }
 
     /**
@@ -131,12 +197,12 @@ class ClassInfo
     protected function adjustTestNamespace(array $callerClassParts)
     {
         // Support obsolete test namespace convention: Unit\PyzTest\Zed\..
-        if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], self::TEST_NAMESPACE_SUFFIX)) {
+        if ($this->isTestNamespace($callerClassParts[static::KEY_APPLICATION], static::TEST_NAMESPACE_SUFFIX)) {
             array_shift($callerClassParts);
         }
 
-        if ($this->isTestNamespace($callerClassParts[self::KEY_NAMESPACE], self::TEST_NAMESPACE_SUFFIX)) {
-            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, self::TEST_NAMESPACE_SUFFIX);
+        if ($this->isTestNamespace($callerClassParts[static::KEY_NAMESPACE], static::TEST_NAMESPACE_SUFFIX)) {
+            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, static::TEST_NAMESPACE_SUFFIX);
         }
 
         return $callerClassParts;
@@ -168,18 +234,10 @@ class ClassInfo
      */
     protected function removeTestNamespaceSuffix(array $callerClassParts, $testNamespaceSuffix)
     {
-        $namespace = $callerClassParts[self::KEY_NAMESPACE];
+        $namespace = $callerClassParts[static::KEY_NAMESPACE];
         $namespaceWithoutTestSuffix = substr($namespace, 0, -strlen($testNamespaceSuffix));
-        $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
+        $callerClassParts[static::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
 
         return $callerClassParts;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLayer()
-    {
-        return $this->callerClassParts[self::KEY_LAYER];
     }
 }

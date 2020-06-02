@@ -72,4 +72,16 @@
         <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
+    <transfer name="PromotionItem">
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+    </transfer>
+
+    <transfer name="RestCartCodeRequestAttributes">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

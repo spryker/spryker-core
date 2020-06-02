@@ -40,7 +40,7 @@ interface ProductSetGuiToProductSetInterface
     public function deleteProductSet(ProductSetTransfer $productSetTransfer);
 
     /**
-     * @param array $productSetTransfers
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
      *
      * @return void
      */

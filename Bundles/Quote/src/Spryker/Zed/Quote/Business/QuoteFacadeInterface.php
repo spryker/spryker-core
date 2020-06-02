@@ -54,7 +54,7 @@ interface QuoteFacadeInterface
      *
      * @api
      *
-     * @deprecated Use findQuoteByCustomerAndStore() instead.
+     * @deprecated Use {@link findQuoteByCustomerAndStore()} instead.
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

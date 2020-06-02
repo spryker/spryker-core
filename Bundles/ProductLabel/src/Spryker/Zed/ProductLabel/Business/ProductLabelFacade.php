@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
+use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -15,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @api
  *
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface getRepository()
  */
 class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInterface
 {
@@ -30,9 +35,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelById($idProductLabel)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findByIdProductLabel($idProductLabel);
+            ->getRepository()
+            ->findProductLabelById($idProductLabel);
     }
 
     /**
@@ -47,8 +51,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
+            ->getRepository()
             ->findProductLabelByName($labelName);
     }
 
@@ -62,9 +65,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findAllLabels()
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAll();
+            ->getRepository()
+            ->getAllProductLabelsSortedByPosition();
     }
 
     /**
@@ -79,9 +81,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getProductLabelsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -96,9 +97,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findLabelIdsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllLabelIdsByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getProductLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -113,9 +113,22 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function findActiveLabelIdsByIdProductAbstract($idProductAbstract)
     {
         return $this
-            ->getFactory()
-            ->createLabelReader()
-            ->findAllActiveLabelIdsByIdProductAbstract($idProductAbstract);
+            ->getRepository()
+            ->getActiveProductLabelIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     */
+    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
+    {
+        return $this->getRepository()->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
     }
 
     /**
@@ -142,8 +155,6 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @throws \Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException
-     *
      * @return void
      */
     public function updateLabel(ProductLabelTransfer $productLabelTransfer)
@@ -152,6 +163,22 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createLabelUpdater()
             ->update($productLabelTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelResponseTransfer
+     */
+    public function removeLabel(ProductLabelTransfer $productLabelTransfer): ProductLabelResponseTransfer
+    {
+        return $this->getFactory()
+            ->createLabelDeleter()
+            ->remove($productLabelTransfer);
     }
 
     /**
@@ -228,13 +255,43 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      * @api
      *
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null)
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null, bool $isTouchEnabled = true)
     {
         $this->getFactory()
             ->createProductAbstractRelationUpdater($logger)
-            ->updateProductLabelRelations();
+            ->updateProductLabelRelations($isTouchEnabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getRepository()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getProductLabelProductAbstractsByFilter($filterTransfer);
     }
 }

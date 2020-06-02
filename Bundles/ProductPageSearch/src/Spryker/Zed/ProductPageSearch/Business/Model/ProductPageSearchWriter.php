@@ -26,7 +26,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -91,8 +91,11 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      *
      * @return void
      */
-    protected function applyChangesToEntity(SpyProductAbstractPageSearch $productPageSearchEntity, ProductPageSearchTransfer $productPageSearchTransfer, array $data): void
-    {
+    protected function applyChangesToEntity(
+        SpyProductAbstractPageSearch $productPageSearchEntity,
+        ProductPageSearchTransfer $productPageSearchTransfer,
+        array $data
+    ): void {
         $productPageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($productPageSearchTransfer->toArray()));
         $productPageSearchEntity->setData($data);
         $productPageSearchEntity->setStore($productPageSearchTransfer->getStore());

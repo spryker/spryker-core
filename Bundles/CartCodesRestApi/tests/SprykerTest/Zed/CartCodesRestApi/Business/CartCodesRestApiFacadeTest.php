@@ -181,6 +181,69 @@ class CartCodesRestApiFacadeTest extends Test
     /**
      * @return void
      */
+    public function testRemoveCartCodeFromQuoteRemovesDiscountCodeWithExistingQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVouchers();
+
+        // Act
+        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertTrue($cartCodeResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCartCodeFromQuoteRemovesGiftCardCodeWithExistingQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertTrue($cartCodeResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($cartCodeResponseTransfer->getQuote()->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCartCodeFromQuoteNotRemovesCodeWithNonExistentQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        // Act
+        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCodeFromQuote(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertEmpty($cartCodeResponseTransfer->getQuote());
+        $this->assertEquals(
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
+            $cartCodeResponseTransfer->getMessages()->getIterator()->current()->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
     protected function setPluginCartCodeCollection(): void
     {
         $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
@@ -212,8 +275,9 @@ class CartCodesRestApiFacadeTest extends Test
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory
      */
-    protected function createMockCartCodesRestApiBusinessFactory(CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade): CartCodesRestApiBusinessFactory
-    {
+    protected function createMockCartCodesRestApiBusinessFactory(
+        CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade
+    ): CartCodesRestApiBusinessFactory {
         $mockCartCodesRestApiBusinessFactory = $this->getMockBuilder(CartCodesRestApiBusinessFactory::class)
             ->setMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
             ->getMock();

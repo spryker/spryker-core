@@ -210,6 +210,7 @@ class CompanyTable extends AbstractTable
                     ]),
                     'Deny'
                 );
+
                 break;
             case SpyCompanyTableMap::COL_STATUS_APPROVED:
                 $buttons[] = $this->generateRemoveButton(
@@ -218,6 +219,7 @@ class CompanyTable extends AbstractTable
                     ]),
                     'Deny'
                 );
+
                 break;
             case SpyCompanyTableMap::COL_STATUS_DENIED:
                 $buttons[] = $this->generateViewButton(
@@ -226,6 +228,7 @@ class CompanyTable extends AbstractTable
                     ]),
                     'Approve'
                 );
+
                 break;
         }
 
@@ -261,5 +264,7 @@ class CompanyTable extends AbstractTable
             case SpyCompanyTableMap::COL_STATUS_DENIED:
                 return $this->generateLabel('Denied', 'label-danger');
         }
+
+        return '';
     }
 }

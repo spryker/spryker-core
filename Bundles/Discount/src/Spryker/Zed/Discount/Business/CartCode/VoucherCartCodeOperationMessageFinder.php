@@ -47,7 +47,8 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
+        if (
+            in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
             || !$this->isVoucherCodeApplied($quoteTransfer, $code)
         ) {
             return null;
@@ -83,7 +84,7 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if (!in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
+        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_NON_APPLICABLE);
             $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);

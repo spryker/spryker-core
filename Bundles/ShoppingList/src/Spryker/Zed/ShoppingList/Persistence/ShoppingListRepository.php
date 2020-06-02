@@ -102,12 +102,38 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    {
+        $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
+            ->leftJoinWithSpyShoppingListItem()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->filterByUuid($shoppingListTransfer->getUuid());
+
+        $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
+
+        if ($shoppingListEntityTransferCollection) {
+            return $this->getFactory()
+                ->createShoppingListMapper()
+                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], $shoppingListTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function findShoppingListPaginatedItems(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function findShoppingListPaginatedItems(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         $shoppingListItemQuery = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList());
@@ -367,8 +393,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListCompanyBusinessUnitCollectionTransfer {
         $shoppingListsCompanyBusinessUnits = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -376,7 +403,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         $shoppingListCompanyBusinessUnitCollection = new ShoppingListCompanyBusinessUnitCollectionTransfer();
 
-        if ($shoppingListsCompanyBusinessUnits !== null) {
+        if ($shoppingListsCompanyBusinessUnits->count()) {
             return $this->getFactory()
                 ->createShoppingListCompanyBusinessUnitMapper()
                 ->mapCompanyBusinessUnitEntitiesToShoppingListCompanyBusinessUnitCollection($shoppingListsCompanyBusinessUnits, $shoppingListCompanyBusinessUnitCollection);
@@ -407,7 +434,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         $shoppingListCompanyUserCollection = new ShoppingListCompanyUserCollectionTransfer();
 
-        if ($shoppingListsCompanyUsers !== null) {
+        if ($shoppingListsCompanyUsers->count()) {
             return $this->getFactory()
                 ->createShoppingListCompanyUserMapper()
                 ->mapCompanyUserEntitiesToShoppingListCompanyUserCollection($shoppingListsCompanyUsers, $shoppingListCompanyUserCollection);

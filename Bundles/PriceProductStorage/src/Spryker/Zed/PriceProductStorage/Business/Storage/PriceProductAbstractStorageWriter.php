@@ -37,7 +37,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $queryContainer;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -234,6 +234,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         foreach ($productAbstractIds as $idProductAbstract) {
             if (!isset($priceGroups[$idProductAbstract])) {
                 $this->getLogger()->warning(sprintf('Product abstract `%s` has no default price', $idProductAbstract));
+
                 continue;
             }
 

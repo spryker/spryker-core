@@ -13,7 +13,8 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStoragePublishListener` and `\Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStoragePublishListener}
+ *   and {@link \Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class ProductConcreteStorageListener extends AbstractPlugin implements EventBulk
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
+        if (
+            $eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
             $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH
         ) {
             $this->getFacade()->unpublishConcreteProducts($productIds);

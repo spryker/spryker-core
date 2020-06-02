@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction as ViewActionButton;
 
 /**
- * @deprecated Use \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction instead.
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction} instead.
  */
 class ViewActionButtonFunction extends ViewActionButton
 {

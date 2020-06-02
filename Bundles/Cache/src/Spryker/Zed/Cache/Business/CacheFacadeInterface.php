@@ -12,9 +12,9 @@ interface CacheFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use emptyCache() instead
+     * @deprecated Use {@link emptyCache()} instead
      *
-     * @return array
+     * @return string[]
      */
     public function deleteAllFiles();
 
@@ -29,11 +29,31 @@ interface CacheFacadeInterface
     public function emptyCache();
 
     /**
+     * Specification:
+     * - Empties configured cache directory for codebucket directory structure.
+     *
      * @api
      *
-     * @deprecated Use emptyAutoLoaderCache() instead
+     * @return string
+     */
+    public function emptyCodeBucketCache(): string;
+
+    /**
+     * Specification:
+     * - Empties default codebucket cache directory.
      *
-     * @return array
+     * @api
+     *
+     * @return string
+     */
+    public function emptyDefaultCodeBucketCache(): string;
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link emptyAutoLoaderCache()} instead
+     *
+     * @return string[]
      */
     public function deleteAllAutoloaderFiles();
 

@@ -8,19 +8,10 @@
 namespace Spryker\Shared\Kernel\ClassResolver\Config;
 
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
-/**
- * @method \Spryker\Shared\Kernel\AbstractSharedConfig getResolvedClassInstance()
- */
 class SharedConfigResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Shared\\%2$s%3$s\\%2$sConfig';
-
-    /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    protected $classInfo;
+    protected const RESOLVABLE_TYPE = 'SharedConfig';
 
     /**
      * @param object|string $callerClass
@@ -31,68 +22,33 @@ class SharedConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+        $resolved = $this->doResolve($callerClass);
+
+        if ($resolved !== null) {
+            return $resolved;
         }
 
-        throw new SharedConfigNotFoundException($this->classInfo);
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
-    }
-
-    /**
-     * @param object|string $callerClass
-     *
-     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
-     */
-    public function setCallerClass($callerClass)
-    {
-        $this->classInfo = new ClassInfo();
-        $this->classInfo->setClass($callerClass);
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    public function getClassInfo()
-    {
-        return $this->classInfo;
+        throw new SharedConfigNotFoundException($this->getClassInfo());
     }
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_STORE => $store,
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
+            static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
-        $className = str_replace(
+        return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
             $this->getClassPattern()
         );
-
-        return $className;
     }
 }

@@ -100,14 +100,14 @@ interface StockFacadeInterface
     public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
 
     /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock() instead.
-     *
      * Specification:
      * - Persists a new stock type entity to database.
      * - Touches the newly created stock type.
      * - Returns the ID of the new stock type entity.
+     *
+     * @api
+     *
+     * @deprecated Use {@link createStock()} instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -252,13 +252,13 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Gets stocks for store.
+     *  - Gets stock types for store.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
@@ -273,7 +273,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping();
 
@@ -288,7 +288,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping();
 

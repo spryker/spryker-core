@@ -17,7 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateGlueIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
+    protected const OLD_COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:glue:generate';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class GenerateGlueIdeAutoCompletionConsole extends Console
 
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Generate IDE auto completion files for Glue.');
+        $this->setAliases([static::OLD_COMMAND_NAME]);
     }
 
     /**
@@ -41,5 +43,7 @@ class GenerateGlueIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateGlueIdeAutoCompletion();
 
         $this->info('Generated Glue IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

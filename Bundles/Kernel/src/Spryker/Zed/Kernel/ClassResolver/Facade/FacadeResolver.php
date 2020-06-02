@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FacadeResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Business\\%2$sFacade';
+    protected const RESOLVABLE_TYPE = 'ZedFacade';
 
     /**
      * @param object|string $callerClass
@@ -22,27 +22,12 @@ class FacadeResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $class */
-            $class = $this->getResolvedClassInstance();
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new FacadeNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
     }
 }

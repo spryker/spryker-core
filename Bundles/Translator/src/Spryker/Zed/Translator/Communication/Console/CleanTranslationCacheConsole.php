@@ -38,5 +38,7 @@ class CleanTranslationCacheConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->cleanTranslationCache();
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -7,6 +7,7 @@
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Mail">
@@ -20,6 +21,7 @@
         <property name="locale" type="Locale"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
@@ -95,6 +97,7 @@
         <property name="idSalesOrderItem" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
     </transfer>
 
     <transfer name="Locale">
@@ -122,6 +125,13 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
     </transfer>
 
 </transfers>

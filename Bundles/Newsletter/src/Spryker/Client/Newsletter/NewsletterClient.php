@@ -17,6 +17,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class NewsletterClient extends AbstractClient implements NewsletterClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -30,6 +32,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -43,6 +47,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -56,6 +62,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -69,6 +77,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest

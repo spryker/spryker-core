@@ -9,7 +9,9 @@ namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToMerchantStorageClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientBridge;
+use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferProviderPluginException;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
@@ -17,6 +19,8 @@ use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\Produc
 class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const PLUGIN_PRODUCT_OFFER_PLUGIN = 'PLUGIN_PRODUCT_OFFER_PLUGIN';
 
@@ -30,8 +34,10 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         $container = parent::provideServiceLayerDependencies($container);
 
         $container = $this->addClientStorage($container);
+        $container = $this->addClientStore($container);
         $container = $this->addServiceSynchronization($container);
         $container = $this->addDefaultProductOfferPlugin($container);
+        $container = $this->addMerchantStorageClient($container);
 
         return $container;
     }
@@ -93,6 +99,38 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new MerchantProductOfferStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addClientStore(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new MerchantProductOfferStorageToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMerchantStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
+            return new MerchantProductOfferStorageToMerchantStorageClientBridge(
+                $container->getLocator()->merchantStorage()->client()
             );
         });
 

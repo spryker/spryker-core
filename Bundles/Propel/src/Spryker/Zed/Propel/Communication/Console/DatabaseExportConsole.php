@@ -49,5 +49,7 @@ class DatabaseExportConsole extends Console
         $this->info(static::COMMAND_DESCRIPTION);
 
         $this->getFacade()->exportDatabase($input->getArgument(static::ARGUMENT_BACKUP_PATH));
+
+        return static::CODE_SUCCESS;
     }
 }

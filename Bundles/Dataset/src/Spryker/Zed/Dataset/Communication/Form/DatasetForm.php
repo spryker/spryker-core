@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -73,7 +72,8 @@ class DatasetForm extends AbstractType
                 $defaultData = $form->getConfig()->getData()->toArray();
                 $submittedData = $form->getData()->toArray();
 
-                if (array_key_exists(static::FIELD_DATASET_NAME, $defaultData) === false ||
+                if (
+                    array_key_exists(static::FIELD_DATASET_NAME, $defaultData) === false ||
                     $defaultData[static::FIELD_DATASET_NAME] !== $submittedData[static::FIELD_DATASET_NAME]
                 ) {
                     return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_DATASET_NAME_CHECK];
@@ -126,7 +126,6 @@ class DatasetForm extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
         ];
     }
 

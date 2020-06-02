@@ -41,5 +41,7 @@ class DatabaseDropConsole extends Console
         $this->info('Drop propel database');
 
         $this->getFacade()->dropDatabase();
+
+        return static::CODE_SUCCESS;
     }
 }

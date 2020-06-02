@@ -44,14 +44,16 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
         if (!method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName')) {
-            return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+            return $this->getProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
         }
 
         return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore()} instead.
+     *
+     * @see \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore()
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
@@ -66,5 +68,24 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
         }
 
         return $productAbstractStorageData;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
+        if (method_exists($this->productStorageClient, 'getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore')) {
+            return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
+        }
+
+        return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 }

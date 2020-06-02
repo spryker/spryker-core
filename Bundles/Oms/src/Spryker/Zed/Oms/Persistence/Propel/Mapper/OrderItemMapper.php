@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
 class OrderItemMapper implements OrderItemMapperInterface
@@ -30,5 +33,53 @@ class OrderItemMapper implements OrderItemMapperInterface
         }
 
         return $orderItemsMatrix;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
+     */
+    public function mapOmsOrderItemStateHistoryEntityCollectionToItemStateHistoryTransfers(
+        ObjectCollection $omsOrderItemStateHistoryEntities
+    ): array {
+        $itemStateTransfers = [];
+
+        foreach ($omsOrderItemStateHistoryEntities as $omsOrderItemStateHistory) {
+            $itemStateTransfers[] = (new ItemStateTransfer())
+                ->fromArray($omsOrderItemStateHistory->toArray(), true)
+                ->setName($omsOrderItemStateHistory->getState()->getName())
+                ->setIdSalesOrderItem($omsOrderItemStateHistory->getFkSalesOrderItem())
+                ->setIdSalesOrder($omsOrderItemStateHistory->getOrderItem()->getFkSalesOrder());
+        }
+
+        return $itemStateTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
+        ObjectCollection $salesOrderItemEntityCollection
+    ): array {
+        $itemTransfers = [];
+
+        foreach ($salesOrderItemEntityCollection as $salesOrderItemEntity) {
+            $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
+
+            $itemTransfer->setProcess(
+                $salesOrderItemEntity->getProcess()->getName()
+            );
+
+            $itemTransfer->setState(
+                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true)
+            );
+
+            $itemTransfers[] = $itemTransfer;
+        }
+
+        return $itemTransfers;
     }
 }

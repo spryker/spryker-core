@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $urlIds
@@ -40,6 +42,8 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $urlIds
@@ -57,6 +61,8 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $resourceType
@@ -76,9 +82,11 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery
      */
@@ -93,9 +101,11 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */

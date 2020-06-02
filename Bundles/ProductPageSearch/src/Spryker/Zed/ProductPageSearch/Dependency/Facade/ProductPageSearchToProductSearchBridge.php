@@ -27,7 +27,7 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge::mapDynamicProductAttributesToSearchData()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge::mapDynamicProductAttributesToSearchData()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -47,8 +47,11 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes)
-    {
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ) {
         return $this->productSearchFacade->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 }

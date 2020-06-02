@@ -25,9 +25,11 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @deprecated Use queryProductSetDataByProductSetIds() instead.
+     * @deprecated Use {@link queryProductSetDataByProductSetIds()} instead.
      *
      * @param array $productSetIds
      *
@@ -62,6 +64,8 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productSetIds
@@ -97,6 +101,8 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productSetIds
@@ -111,6 +117,8 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productImageIds
@@ -129,6 +137,8 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds
@@ -149,6 +159,8 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $productSetIds

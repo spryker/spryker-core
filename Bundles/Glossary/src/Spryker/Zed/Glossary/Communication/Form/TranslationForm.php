@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -110,7 +109,6 @@ class TranslationForm extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
         ];
     }
 
@@ -128,7 +126,8 @@ class TranslationForm extends AbstractType
                 $defaultData = (array)$form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (array_key_exists(self::FIELD_GLOSSARY_KEY, $defaultData) === false ||
+                if (
+                    array_key_exists(self::FIELD_GLOSSARY_KEY, $defaultData) === false ||
                     $defaultData[self::FIELD_GLOSSARY_KEY] !== $submittedData[self::FIELD_GLOSSARY_KEY]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GLOSSARY_KEY_CHECK];
@@ -140,7 +139,7 @@ class TranslationForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -179,7 +178,7 @@ class TranslationForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

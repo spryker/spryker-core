@@ -36,7 +36,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        if (count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+        if (
+            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
             count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
         ) {
             return $this->getFirstProductVariant($productViewTransfer, $locale);
@@ -188,7 +189,10 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      */
     protected function mergeAbstractAndConcreteProducts(ProductViewTransfer $productViewTransfer, array $productConcreteStorageData)
     {
-        $productConcreteStorageData = array_filter($productConcreteStorageData);
+        $productConcreteStorageData = array_filter($productConcreteStorageData, function ($value) {
+            return $value !== null;
+        });
+
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         return $productViewTransfer;

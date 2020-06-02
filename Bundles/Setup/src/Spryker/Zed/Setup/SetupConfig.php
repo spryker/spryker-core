@@ -20,7 +20,9 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 class SetupConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
+     * @api
+     *
+     * @deprecated Use {@link getCronjobsDefinitionFilePath()} instead.
      *
      * @return string
      */
@@ -30,6 +32,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return string
@@ -40,6 +44,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return string
@@ -50,6 +56,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return string
@@ -60,6 +68,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedDirectory()
@@ -68,6 +78,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
      *
      * Please customize this stack on project level.
@@ -102,6 +114,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * Returns the path to the environment configuration of cronjob functionality.
@@ -120,6 +134,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * Returns the path to the cronjobs definition, their config and schedule.
@@ -138,6 +154,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return bool
@@ -148,6 +166,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return bool
@@ -158,6 +178,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Method will be removed without replacement.
      *
      * @return bool

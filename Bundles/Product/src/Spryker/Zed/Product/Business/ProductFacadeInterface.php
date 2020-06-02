@@ -291,7 +291,7 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductFacadeInterface::getRawProductConcreteTransfersByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *
@@ -784,7 +784,10 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer;
 
     /**
      * Specification:
@@ -961,4 +964,17 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract transfer by sku.
+     * - Doesn't populate it with additional data.
+     *
+     * @api
+     *
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

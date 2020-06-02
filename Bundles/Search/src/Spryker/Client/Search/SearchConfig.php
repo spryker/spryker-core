@@ -20,6 +20,8 @@ class SearchConfig extends AbstractBundleConfig
     protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
 
     /**
+     * @api
+     *
      * @deprecated Use source identifiers instead.
      *
      * @return string
@@ -30,7 +32,9 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier()} instead for vendor specific source identification.
      *
      * @return string
      */
@@ -40,6 +44,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getElasticsearchConfig()
@@ -69,6 +75,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFacetNameAggregationSize()
@@ -77,6 +85,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultSourceIdentifier(): string

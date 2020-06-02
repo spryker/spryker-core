@@ -19,6 +19,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitPersistenceFactory getFactory()
@@ -188,6 +189,29 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByQuantityMeasurementUnitName(null, Criteria::ISNOTNULL);
+
+        return $this->getFactory()
+            ->createSalesOrderItemMapper()
+            ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers(): array
@@ -345,6 +369,36 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
         return $productMeasurementSalesUnitQuery->find()
             ->toKeyValue(SpyProductTableMap::COL_SKU, SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
+    }
+
+    /**
+     * @module Product
+     *
+     * @param string[] $productConcreteSkus
+     * @param int $idStore
+     *
+     * @return int[][]
+     */
+    public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
+    {
+        $indexedProductMeasurementSalesUnitIds = [];
+        $productMeasurementSalesUnitIdCollection = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->useProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
+            ->useSpyProductMeasurementSalesUnitStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->select([SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT, SpyProductTableMap::COL_SKU])
+            ->find();
+
+        foreach ($productMeasurementSalesUnitIdCollection as $salesUnitIdData) {
+            $indexedProductMeasurementSalesUnitIds[$salesUnitIdData[SpyProductTableMap::COL_SKU]][]
+                = $salesUnitIdData[SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT];
+        }
+
+        return $indexedProductMeasurementSalesUnitIds;
     }
 
     /**

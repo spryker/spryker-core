@@ -19,8 +19,8 @@ use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
 class GlobalThresholdDataProvider
 {
-    protected const FORMAT_STORE_CURRENCY_ROW_LABEL = "%s - %s [%s]";
-    protected const FORMAT_STORE_CURRENCY_ROW_VALUE = "%s%s%s";
+    protected const FORMAT_STORE_CURRENCY_ROW_LABEL = '%s - %s [%s]';
+    protected const FORMAT_STORE_CURRENCY_ROW_VALUE = '%s%s%s';
 
     /**
      * @var \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface
@@ -97,8 +97,10 @@ class GlobalThresholdDataProvider
 
         $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer);
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
-            if ($this->globalThresholdDataProviderResolver
-                ->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
+            if (
+                $this->globalThresholdDataProviderResolver
+                ->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
+            ) {
                 $data = $this->globalThresholdDataProviderResolver
                     ->resolveGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
                     ->mapSalesOrderThresholdValueTransferToFormData($salesOrderThresholdTransfer, $data);

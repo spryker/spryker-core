@@ -12,10 +12,12 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Spryker\Shared\Kernel\AbstractSharedFactory;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
+use SprykerTest\Shared\Testify\Helper\FactoryHelper;
 
 class BusinessHelper extends Module
 {
@@ -158,8 +160,10 @@ class BusinessHelper extends Module
         }
 
         $moduleFactory = $this->createModuleFactory();
+        $moduleFactory = $this->injectConfig($moduleFactory);
+        $moduleFactory = $this->injectSharedFactory($moduleFactory);
 
-        return $this->injectConfig($moduleFactory);
+        return $moduleFactory;
     }
 
     /**
@@ -217,6 +221,45 @@ class BusinessHelper extends Module
         $configHelper = $this->getModule('\\' . ConfigHelper::class);
 
         return $configHelper;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $businessFactory
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectSharedFactory(AbstractBusinessFactory $businessFactory): AbstractBusinessFactory
+    {
+        if (method_exists($businessFactory, 'setSharedFactory') && $this->hasModule('\\' . FactoryHelper::class)) {
+            $sharedFactory = $this->getSharedFactory();
+            if ($sharedFactory !== null) {
+                $businessFactory->setSharedFactory($sharedFactory);
+            }
+        }
+
+        return $businessFactory;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\AbstractSharedFactory|null
+     */
+    protected function getSharedFactory(): ?AbstractSharedFactory
+    {
+        /** @var \Spryker\Shared\Kernel\AbstractSharedFactory|null $sharedFactory */
+        $sharedFactory = $this->getFactoryHelper()->getSharedFactory();
+
+        return $sharedFactory;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Testify\Helper\FactoryHelper
+     */
+    protected function getFactoryHelper(): FactoryHelper
+    {
+        /** @var \SprykerTest\Shared\Testify\Helper\FactoryHelper $factoryHelper */
+        $factoryHelper = $this->getModule('\\' . FactoryHelper::class);
+
+        return $factoryHelper;
     }
 
     /**

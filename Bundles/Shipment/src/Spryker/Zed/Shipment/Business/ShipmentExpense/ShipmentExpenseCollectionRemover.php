@@ -36,8 +36,10 @@ class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemov
     public function removeExpenseByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject
     {
         foreach ($expenseTransfers as $expenseIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
-                && $this->isExpenseShipmentMatchesWithHash($expenseTransfer, $shipmentHash)) {
+            if (
+                $expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+                && $this->isExpenseShipmentMatchesWithHash($expenseTransfer, $shipmentHash)
+            ) {
                 $expenseTransfers->offsetUnset($expenseIndex);
 
                 break;

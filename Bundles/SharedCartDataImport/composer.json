@@ -17,7 +17,6 @@
     "spryker/company-business-unit": "*",
     "spryker/customer": "*",
     "spryker/permission": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

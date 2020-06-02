@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class HealthCheckConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isHealthCheckEnabled(): bool

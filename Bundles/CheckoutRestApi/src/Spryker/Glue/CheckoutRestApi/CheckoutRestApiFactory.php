@@ -16,6 +16,10 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\AddressCheckoutDataResponseMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\PaymentProviderCheckoutDataResponseMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\ShipmentMethodCheckoutDataResponseMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapper;
@@ -54,7 +58,10 @@ class CheckoutRestApiFactory extends AbstractFactory
      */
     public function createCheckoutDataMapper(): CheckoutDataMapperInterface
     {
-        return new CheckoutDataMapper($this->getConfig());
+        return new CheckoutDataMapper(
+            $this->getCheckoutDataResponseMappers(),
+            $this->getCheckoutDataResponseMapperPlugins()
+        );
     }
 
     /**
@@ -153,5 +160,49 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutResponseMapperPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
+     */
+    public function getCheckoutDataResponseMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface[]
+     */
+    protected function getCheckoutDataResponseMappers(): array
+    {
+        return [
+            $this->createAddressCheckoutDataResponseMapper(),
+            $this->createPaymentProviderCheckoutDataResponseMapper(),
+            $this->createShipmentMethodCheckoutDataResponseMapper(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createAddressCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new AddressCheckoutDataResponseMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createPaymentProviderCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new PaymentProviderCheckoutDataResponseMapper($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface
+     */
+    public function createShipmentMethodCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
+    {
+        return new ShipmentMethodCheckoutDataResponseMapper($this->getConfig());
     }
 }

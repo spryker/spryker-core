@@ -24,4 +24,8 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
+    <transfer name="ReclamationItem">
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
 </transfers>

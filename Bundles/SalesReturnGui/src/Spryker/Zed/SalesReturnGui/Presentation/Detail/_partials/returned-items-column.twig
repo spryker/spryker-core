@@ -1,0 +1,64 @@
+{% embed '@SalesReturnGui/_partials/column.twig' with {
+    title: 'Returned Items'
+} %}
+    {% block content %}
+        <div class="row">
+            <div class="col-md-6">
+                {{ 'Trigger all matching states' | trans }}
+                <span class="js-item-counter-wrapper hidden">{{ 'of ' | trans }}
+                    <span class="js-item-counter"></span>
+                    {{ ' selected items' | trans }}
+                </span>
+            </div>
+            <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
+                {% include '@Oms/RenderForm/_partial/order-items-actions.twig' with {
+                    redirectUrl: url('/sales-return-gui/detail', {'id-return': return.idSalesReturn}),
+                    salesOrderItemIds: salesOrderItemIds,
+                    events: uniqueOrderItemManualEvents,
+                } %}
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table js-return-items-table" data-qa="return-items-table">
+                <thead>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="js-check-all-items"></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Price' | trans }}</th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                        <th>{{ 'Trigger event' | trans }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% set order = {
+                        currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
+                    } %}
+
+                    {% include '@SalesReturnGui/Detail/_partials/return-detail-items.twig' with {
+                        return: return,
+                        order: order,
+                        eventsGroupedByItem: orderItemManualEvents,
+                    } only %}
+
+                    {% include '@SalesReturnGui/Detail/_partials/return-detail-configured-bundles.twig' with {
+                        return: return,
+                        order: order,
+                        eventsGroupedByItem: orderItemManualEvents,
+                    } only %}
+
+                    {% include '@SalesReturnGui/Detail/_partials/return-detail-product-bundles.twig' with {
+                        return: return,
+                        order: order,
+                        eventsGroupedByItem: orderItemManualEvents,
+                    } only %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endembed %}
