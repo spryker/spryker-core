@@ -14,15 +14,17 @@ class DependencyModuleMapper implements DependencyModuleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DependencyModuleTransfer $dependencyModuleTransfer
+     * @param \Generated\Shared\Transfer\DependencyModuleViewTransfer $dependencyModuleViewTransfer
      *
      * @return \Generated\Shared\Transfer\DependencyModuleViewTransfer
      */
     public function mapDependencyModuleTransferToDependencyModuleViewTransfer(
-        DependencyModuleTransfer $dependencyModuleTransfer
+        DependencyModuleTransfer $dependencyModuleTransfer,
+        DependencyModuleViewTransfer $dependencyModuleViewTransfer
     ): DependencyModuleViewTransfer {
         [$totalCount, $optionalCount, $testCount] = $this->collectDependencyCount($dependencyModuleTransfer);
 
-        return (new DependencyModuleViewTransfer())
+        return $dependencyModuleViewTransfer
             ->setTotalDependencyCount($totalCount)
             ->setTestDependencyCount($testCount)
             ->setOptionalDependencyCount($optionalCount);

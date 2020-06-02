@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
+use Generated\Shared\Transfer\DependencyModuleViewTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface;
@@ -56,26 +57,29 @@ class Manager implements ManagerInterface
      */
     public function parseIncomingDependencies(string $moduleName): array
     {
-        $allForeignModules = $this->collectAllForeignModules($moduleName);
+        $allForeignModuleNames = $this->collectAllForeignModules($moduleName);
 
         $incomingDependencies = [];
 
-        foreach ($allForeignModules as $foreignModule) {
+        foreach ($allForeignModuleNames as $foreignModuleName) {
             $organizationTransfer = (new OrganizationTransfer())->setName('Spryker');
             $moduleTransfer = (new ModuleTransfer())
-                ->setName($foreignModule)
+                ->setName($foreignModuleName)
                 ->setOrganization($organizationTransfer);
 
             $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
 
-            $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
+            $dependencyModuleTransfer = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
-            if ($dependencyModule === null) {
+            if ($dependencyModuleTransfer === null) {
                 continue;
             }
 
-            $dependencyModuleViewTransfer = $this->dependencyModuleMapper->mapDependencyModuleTransferToDependencyModuleViewTransfer($dependencyModule);
-            $dependencyModuleViewTransfer->setName($foreignModule);
+            $dependencyModuleViewTransfer = $this->dependencyModuleMapper->mapDependencyModuleTransferToDependencyModuleViewTransfer(
+                $dependencyModuleTransfer,
+                new DependencyModuleViewTransfer()
+            );
+            $dependencyModuleViewTransfer->setName($foreignModuleName);
 
             $incomingDependencies[] = $dependencyModuleViewTransfer;
         }
