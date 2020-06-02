@@ -677,7 +677,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         if ($criteriaRangeFilterTransfer->getTo()) {
             $productOfferQuery->useSpyProductOfferValidityQuery()
-                ->filterByValidTo($criteriaRangeFilterTransfer->getTo() . '+1 day', Criteria::LESS_THAN)
+                ->filterByValidTo($criteriaRangeFilterTransfer->getTo(), Criteria::LESS_THAN)
                 ->endUse();
         }
 
@@ -706,7 +706,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         if ($criteriaRangeFilterTransfer->getTo()) {
             $productOfferQuery->filterByCreatedAt(
-                $criteriaRangeFilterTransfer->getTo() . '+1 day',
+                $criteriaRangeFilterTransfer->getTo(),
                 Criteria::LESS_THAN
             );
         }
@@ -736,7 +736,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         if ($criteriaRangeFilterTransfer->getTo()) {
             $productOfferQuery->filterByUpdatedAt(
-                $criteriaRangeFilterTransfer->getTo() . '+1 day',
+                $criteriaRangeFilterTransfer->getTo(),
                 Criteria::LESS_THAN
             );
         }
