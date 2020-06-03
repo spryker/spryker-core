@@ -25,7 +25,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer
     {
         $merchantProductAbstractQuery = $this->getFactory()
-            ->createMerchantProductAbstractPropelQuery()
+            ->getMerchantProductAbstractPropelQuery()
             ->joinWithMerchant();
 
         $merchantProductEntity = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer)

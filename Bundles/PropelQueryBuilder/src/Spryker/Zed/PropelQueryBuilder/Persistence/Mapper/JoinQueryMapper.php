@@ -23,7 +23,7 @@ class JoinQueryMapper
     {
         foreach ($propelQueryBuilderCriteriaTransfer->getJoins() as $propelQueryBuilderJoinTransfer) {
             if ($propelQueryBuilderJoinTransfer->getRelation()) {
-                $query = $this->mapJoinWithRelationToQuery($propelQueryBuilderJoinTransfer, $query);
+                $query = $this->mapJoin($propelQueryBuilderJoinTransfer, $query);
 
                 continue;
             }
@@ -44,7 +44,7 @@ class JoinQueryMapper
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function mapJoinWithRelationToQuery(PropelQueryBuilderJoinTransfer $propelQueryBuilderJoinTransfer, ModelCriteria $query): ModelCriteria
+    protected function mapJoin(PropelQueryBuilderJoinTransfer $propelQueryBuilderJoinTransfer, ModelCriteria $query): ModelCriteria
     {
         $query->join($propelQueryBuilderJoinTransfer->getRelation(), $propelQueryBuilderJoinTransfer->getJoinType());
 

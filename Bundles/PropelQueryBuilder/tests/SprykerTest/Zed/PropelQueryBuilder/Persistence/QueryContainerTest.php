@@ -52,6 +52,7 @@ class QueryContainerTest extends Unit
         'test_concrete_sku_7',
         'test_concrete_sku_8',
     ];
+
     protected const EXPECTED_COUNT_WITH_JOIN = 4;
 
     /**
