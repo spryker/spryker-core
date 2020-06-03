@@ -27,7 +27,7 @@ class ShipmentConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns array of field names for generation of hash for shipment method.
+     * - Returns an array of field names used to generate a hash for a shipment method.
      *
      * @api
      *

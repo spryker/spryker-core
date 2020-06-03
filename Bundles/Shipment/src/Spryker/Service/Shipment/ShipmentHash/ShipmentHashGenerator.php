@@ -91,7 +91,7 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
             return '';
         }
 
-        return $this->getShipmentMethodKeyData($shipmentMethodTransfer);
+        return $this->getShipmentMethodKeyEncodedData($shipmentMethodTransfer);
     }
 
     /**
@@ -99,9 +99,9 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
      *
      * @return string
      */
-    protected function getShipmentMethodKeyData(ShipmentMethodTransfer $shipmentMethodTransfer): string
+    protected function getShipmentMethodKeyEncodedData(ShipmentMethodTransfer $shipmentMethodTransfer): string
     {
-        $shipmentAdditionalKeyData = [];
+        $shipmentMethodKeyData = [];
         $shipmentMethodData = $shipmentMethodTransfer->toArray(false, true);
 
         foreach ($this->shipmentConfig->getShipmentMethodHashFields() as $fieldName) {
@@ -109,10 +109,10 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
                 continue;
             }
 
-            $shipmentAdditionalKeyData[$fieldName] = $shipmentMethodData[$fieldName];
+            $shipmentMethodKeyData[$fieldName] = $shipmentMethodData[$fieldName];
         }
 
-        return $this->utilEncodingService->encodeJson($shipmentAdditionalKeyData);
+        return $this->utilEncodingService->encodeJson($shipmentMethodKeyData);
     }
 
     /**
