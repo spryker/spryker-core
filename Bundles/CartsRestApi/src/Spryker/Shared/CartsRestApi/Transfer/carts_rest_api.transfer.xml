@@ -57,6 +57,7 @@
         <property name="taxTotal" type="int"/>
         <property name="subtotal" type="int"/>
         <property name="grandTotal" type="int"/>
+        <property name="priceToPay" type="int"/>
     </transfer>
 
     <transfer name="RestCartItemCalculations">
