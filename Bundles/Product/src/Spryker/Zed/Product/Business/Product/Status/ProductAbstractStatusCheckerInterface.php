@@ -19,7 +19,7 @@ interface ProductAbstractStatusCheckerInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array
+     * @return int[]
      */
-    public function filterNotActive(array $productAbstractIds): array;
+    public function filterActiveIds(array $productAbstractIds): array;
 }

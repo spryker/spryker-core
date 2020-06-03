@@ -158,5 +158,12 @@ interface ProductRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function getNotActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+    public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
 }

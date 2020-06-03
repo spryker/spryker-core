@@ -55,10 +55,16 @@ class ProductAbstractStatusChecker implements ProductAbstractStatusCheckerInterf
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return int[]
      */
-    public function filterNotActive(array $productAbstractIds): array
+    public function filterActiveIds(array $productAbstractIds): array
     {
-        return $this->productRepository->getNotActiveProductAbstractsByProductAbstractIds($productAbstractIds);
+        $activeProductAbstractIds = [];
+        $activeProductAbstractTransfers = $this->productRepository->getActiveProductAbstractsByProductAbstractIds($productAbstractIds);
+        foreach ($activeProductAbstractTransfers as $productAbstractTransfer) {
+            $activeProductAbstractIds[] = $productAbstractTransfer->getIdProductAbstract();
+        }
+
+        return array_diff($productAbstractIds, $activeProductAbstractIds);
     }
 }

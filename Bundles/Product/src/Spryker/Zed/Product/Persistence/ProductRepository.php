@@ -594,7 +594,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function getNotActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
         $productAbstractEntities = $this->getFactory()
             ->createProductAbstractQuery()
@@ -603,6 +603,20 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->useSpyProductQuery()
                 ->filterByIsActive(true)
             ->endUse()
+            ->find();
+
+        return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productAbstractEntities = $this->getFactory()->createProductAbstractQuery()
+            ->filterByIdProductAbstract_In($productAbstractIds)
             ->find();
 
         return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);

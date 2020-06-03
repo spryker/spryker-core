@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -86,7 +87,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         $productDiscontinuedEntityCollection = $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->joinWithProduct()
-            //->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
             ->limit($batchSize)
             ->find();
 
