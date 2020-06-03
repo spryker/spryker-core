@@ -80,4 +80,8 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
+    <transfer name="RestCartCodeRequestAttributes">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

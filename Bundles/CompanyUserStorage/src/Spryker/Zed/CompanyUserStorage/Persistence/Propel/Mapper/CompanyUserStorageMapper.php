@@ -59,11 +59,6 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
         SpyCompanyUserStorage $companyUserStorageEntity,
         SynchronizationDataTransfer $synchronizationDataTransfer
     ): SynchronizationDataTransfer {
-        /** @var string $data */
-        $data = $companyUserStorageEntity->getData();
-
-        return $synchronizationDataTransfer
-            ->setData($data)
-            ->setKey($companyUserStorageEntity->getKey());
+        return $synchronizationDataTransfer->fromArray($companyUserStorageEntity->toArray(), true);
     }
 }

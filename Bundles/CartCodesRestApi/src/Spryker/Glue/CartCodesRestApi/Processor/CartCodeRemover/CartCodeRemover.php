@@ -45,7 +45,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function removeCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
+    public function removeDiscountCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_CARTS);
 
@@ -62,11 +62,46 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function removeCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
+    public function removeDiscountCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_GUEST_CARTS);
 
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode(
+            (new CartCodeRequestTransfer())
+                ->setQuote($quoteTransfer)
+                ->setCartCode($restRequest->getResource()->getId())
+        );
+
+        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function removeCartCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_CARTS);
+
+        $cartCodeRequestTransfer = (new CartCodeRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCartCode($restRequest->getResource()->getId());
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCodeFromQuote($cartCodeRequestTransfer);
+
+        return $this->cartCodeResponseBuilder->createCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function removeCartCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $quoteTransfer = $this->createQuoteTransfer($restRequest, CartCodesRestApiConfig::RESOURCE_GUEST_CARTS);
+
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setQuote($quoteTransfer)
                 ->setCartCode($restRequest->getResource()->getId())
