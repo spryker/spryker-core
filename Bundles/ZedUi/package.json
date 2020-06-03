@@ -26,6 +26,7 @@
         "@spryker/header": "^0.1.0-next.8",
         "@spryker/icon": "^0.1.0-next.10",
         "@spryker/layout": "^0.1.0-next.7",
+        "@spryker/locale": "^0.1.0-next.6",
         "@spryker/logo": "^0.1.0-next.6",
         "@spryker/navigation": "^0.1.0-next.9",
         "@spryker/notification": "^0.1.0-next.5",

@@ -8,6 +8,8 @@ import {
     TableColumnImageModule,
     TableColumnDateComponent,
     TableColumnDateModule,
+    TableColumnChipComponent,
+    TableColumnChipModule,
 } from '@spryker/table/columns';
 import { ProductOfferTableComponent } from './product-offer-table.component';
 import {
@@ -16,16 +18,20 @@ import {
     TableFiltersFeatureComponent,
     TableFiltersFeatureModule,
     TableSyncStateFeatureComponent,
-    TableSyncStateFeatureModule
+    TableSyncStateFeatureModule,
 } from '@spryker/table/features';
 import {
+    TableFilterDateRangeComponent,
+    TableFilterDateRangeModule,
     TableFilterSelectComponent,
-    TableFilterSelectModule
+    TableFilterSelectModule,
 } from '@spryker/table/filters';
+import { TableDatasourceHttpService } from '@spryker/table/datasources';
 
 @NgModule({
     imports: [
         CommonModule,
+        TableColumnChipModule,
         TableColumnTextModule,
         TableColumnImageModule,
         TableColumnDateModule,
@@ -33,21 +39,36 @@ import {
         TableFiltersFeatureModule,
         TableFilterSelectModule,
         TableSyncStateFeatureModule,
-        TableModule,
+        TableFilterDateRangeModule,
+        TableModule.forRoot(),
+        TableModule.withFeatures({
+            filters: () => import('@spryker/table/features').then(m => m.TableFiltersFeatureModule),
+            pagination: () => import('@spryker/table/features').then(m => m.TablePaginationFeatureModule),
+            rowActions: () => import('@spryker/table/features').then(m => m.TableRowActionsFeatureModule),
+            search: () => import('@spryker/table/features').then(m => m.TableSearchFeatureModule),
+            syncStateUrl: () => import('@spryker/table/features').then(m => m.TableSyncStateFeatureModule),
+            total: () => import('@spryker/table/features').then(m => m.TableTotalFeatureModule),
+            itemSelection: () => import('@spryker/table/features').then(m => m.TableSelectableFeatureModule),
+        }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,
-            date: TableColumnDateComponent
+            date: TableColumnDateComponent,
+            chip: TableColumnChipComponent,
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
-            select: TableFilterSelectComponent as any,
+            select: TableFilterSelectComponent,
+            date_range: TableFilterDateRangeComponent,
+        } as any),
+        TableModule.withDatasourceTypes({
+            http: TableDatasourceHttpService,
         }),
     ],
     declarations: [
-        ProductOfferTableComponent
+        ProductOfferTableComponent,
     ],
     exports: [
-        ProductOfferTableComponent
+        ProductOfferTableComponent,
     ],
 })
 export class ProductOfferTableModule {
