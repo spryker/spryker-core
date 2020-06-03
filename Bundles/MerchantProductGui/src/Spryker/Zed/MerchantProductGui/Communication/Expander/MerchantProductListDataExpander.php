@@ -38,9 +38,13 @@ class MerchantProductListDataExpander implements MerchantProductListDataExpander
     }
 
     /**
-     * @param array<string, mixed> $viewData
+     * @phpstan-param array<string, mixed> $viewData
      *
-     * @return array<string, mixed>
+     * @phpstan-return array<string, mixed>
+     *
+     * @param array $viewData
+     *
+     * @return array
      */
     public function expandData(array $viewData): array
     {
@@ -48,7 +52,7 @@ class MerchantProductListDataExpander implements MerchantProductListDataExpander
 
         $viewData['merchants'] = [];
         $merchantCollectionTransfer = $this->merchantFacade
-            ->get((new MerchantCriteriaTransfer()));
+            ->get(new MerchantCriteriaTransfer());
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $viewData['merchants'][$merchantTransfer->getIdMerchant()] = $merchantTransfer;

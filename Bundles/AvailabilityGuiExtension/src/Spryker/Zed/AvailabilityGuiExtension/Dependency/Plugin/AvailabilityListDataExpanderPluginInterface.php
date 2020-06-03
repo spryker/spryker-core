@@ -18,9 +18,13 @@ interface AvailabilityListDataExpanderPluginInterface
      *
      * @api
      *
-     * @param array<string, mixed> $viewData
+     * @phpstan-param array<string, mixed> $viewData
      *
-     * @return array<string, mixed>
+     * @phpstan-return array<string, mixed>
+     *
+     * @param array $viewData
+     *
+     * @return array
      */
     public function expand(array $viewData): array;
 }

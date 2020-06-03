@@ -26,10 +26,14 @@ class MerchantProductViewDataExpander implements MerchantProductViewDataExpander
     }
 
     /**
-     * @param array<string, mixed> $viewData
+     * @phpstan-param array<string, mixed> $viewData
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param array $viewData
      * @param int $idProductAbstract
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function expandDataWithMerchantByIdProductAbstract(array $viewData, int $idProductAbstract): array
     {

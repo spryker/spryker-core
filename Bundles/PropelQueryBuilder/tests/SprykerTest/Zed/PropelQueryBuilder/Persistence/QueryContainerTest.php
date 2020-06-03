@@ -41,7 +41,6 @@ class QueryContainerTest extends Unit
     public const PAGE = 2;
 
     public const EXPECTED_COUNT = 8;
-    public const EXPECTED_COUNT_WITH_JOIN = 4;
     public const EXPECTED_OFFSET = 10;
     public const EXPECTED_SKU_COLLECTION = [
         'test_concrete_sku_1',
@@ -53,6 +52,7 @@ class QueryContainerTest extends Unit
         'test_concrete_sku_7',
         'test_concrete_sku_8',
     ];
+    protected const EXPECTED_COUNT_WITH_JOIN = 4;
 
     /**
      * @var string
@@ -266,29 +266,32 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testPropelCreateQueryWithJoin(): void
+    public function testPropelCreateQueryWithJoinReducesTheResultCount(): void
     {
-        $criteriaTransfer = $this->getCriteriaWithJoin();
+        //Arrange
+        $criteriaTransfer = $this->createCriteriaWithJoin();
 
+        //Act
         $query = $this->queryContainer->createQuery($this->queryWithoutJoin, $criteriaTransfer);
-
         $results = $query->find();
+
+        //Assert
         $this->assertCount(static::EXPECTED_COUNT_WITH_JOIN, $results);
     }
 
     /**
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
-    protected function getCriteriaWithJoin(): PropelQueryBuilderCriteriaTransfer
+    protected function createCriteriaWithJoin(): PropelQueryBuilderCriteriaTransfer
     {
         $propelQueryBuilderCriteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
         $propelQueryBuilderCriteriaTransfer->setRuleSet(new PropelQueryBuilderRuleSetTransfer());
 
-        $joinTransfer = (new PropelQueryBuilderJoinTransfer())
+        $propelQueryBuilderJoinTransfer = (new PropelQueryBuilderJoinTransfer())
             ->setRelation('SpyProductAbstract')
             ->setCondition(sprintf('%s %s', SpyProductAbstractTableMap::COL_SKU, $this->joinCondition))
             ->setJoinType(Criteria::INNER_JOIN);
-        $propelQueryBuilderCriteriaTransfer->addJoin($joinTransfer);
+        $propelQueryBuilderCriteriaTransfer->addJoin($propelQueryBuilderJoinTransfer);
 
         return $propelQueryBuilderCriteriaTransfer;
     }
