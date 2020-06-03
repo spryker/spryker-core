@@ -132,13 +132,10 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
     protected function mapMerchantStorageEntitiesToSynchronizationDataTransfers(ObjectCollection $merchantStorageEntities): array
     {
         $synchronizationDataTransfers = [];
-        foreach ($merchantStorageEntities as $merchantStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
-            $synchronizationDataTransfer->setData($merchantStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($merchantStorageEntity->getKey());
-            $synchronizationDataTransfer->setStore($merchantStorageEntity->getStore());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+        foreach ($merchantStorageEntities as $merchantStorageEntity) {
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->fromArray($merchantStorageEntity->toArray(), true);
         }
 
         return $synchronizationDataTransfers ?? [];
