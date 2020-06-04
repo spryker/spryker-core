@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProductOfferTableComponent } from './product-offer-table.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ProductOfferTableComponent', () => {
     let component: ProductOfferTableComponent;
@@ -8,7 +9,8 @@ describe('ProductOfferTableComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ProductOfferTableComponent]
+            declarations: [ProductOfferTableComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
 
