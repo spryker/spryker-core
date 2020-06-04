@@ -74,6 +74,7 @@
 
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]"  singular="orderReference"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
@@ -184,6 +185,7 @@
         <property name="orderReference" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">

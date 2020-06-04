@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder;
 
+use Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -19,7 +20,7 @@ interface CartCodeAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCartCodeToCart(
+    public function addDiscountCodeToCart(
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface;
@@ -30,8 +31,30 @@ interface CartCodeAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCartCodeToGuestCart(
+    public function addDiscountCodeToGuestCart(
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+    ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCartCodeToCart(
+        RestRequestInterface $restRequest,
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+    ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCartCodeToGuestCart(
+        RestRequestInterface $restRequest,
+        RestCartCodeRequestAttributesTransfer $restCartCodeRequestAttributesTransfer
     ): RestResponseInterface;
 }

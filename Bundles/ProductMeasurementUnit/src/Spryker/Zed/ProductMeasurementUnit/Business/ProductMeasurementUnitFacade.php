@@ -195,6 +195,8 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::expandOrderItemsWithQuantitySalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -204,6 +206,22 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrderWithQuantitySalesUnit($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithQuantitySalesUnit(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithQuantitySalesUnit($itemTransfers);
     }
 
     /**

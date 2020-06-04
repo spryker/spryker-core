@@ -297,6 +297,12 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderItemQuery->filterByFkSalesOrderItem($merchantOrderItemCriteriaTransfer->getIdOrderItem());
         }
 
+        if ($merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference() !== null) {
+            $merchantSalesOrderItemQuery->filterByMerchantOrderItemReference(
+                $merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference()
+            );
+        }
+
         return $merchantSalesOrderItemQuery;
     }
 }
