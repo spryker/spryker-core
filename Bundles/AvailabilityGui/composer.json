@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/availability": "^9.2.0",
-    "spryker/availability-gui-extension": "^1.0.0",
+    "spryker/availability-gui-extension": "^0.1.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/gui": "^3.30.0",
     "spryker/kernel": "^3.30.0",

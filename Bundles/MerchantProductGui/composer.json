@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/availability-gui-extension": "^1.0.0",
+    "spryker/availability-gui-extension": "^0.1.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",
     "spryker/merchant-product": "^0.1.1",
