@@ -1,0 +1,30 @@
+{
+  "name": "spryker/cms-pages-rest-api",
+  "description": "CmsPagesRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/cms-storage": "^2.3.0",
+    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

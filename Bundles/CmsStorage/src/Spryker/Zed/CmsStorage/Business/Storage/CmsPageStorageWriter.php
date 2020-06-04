@@ -232,6 +232,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
         $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
+        $localeCmsPageDataTransfer->setUuid($cmsPageEntity->getUuid());
 
         $expandedData = $localeCmsPageDataTransfer->toArray();
         foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {

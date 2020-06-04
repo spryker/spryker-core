@@ -5,29 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsStorage;
+namespace Spryker\Glue\CmsPagesRestApi\Dependency\Client;
 
-interface CmsStorageClientInterface
+interface CmsPagesRestApiToCmsStorageClientInterface
 {
     /**
-     * Specification:
-     * - Maps raw CMS page storage data to transfer object.
-     *
-     * @api
-     *
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
-     */
-    public function mapCmsPageStorageData(array $data);
-
-    /**
-     * Specification:
-     * - Finds cms page Storage records by uuids, locale and store.
-     * - Returns array of CmsPageStorageTransfer indexed by uuid.
-     *
-     * @api
-     *
      * @param string[] $cmsPageUuids
      * @param string $mappingType
      * @param string $localeName
