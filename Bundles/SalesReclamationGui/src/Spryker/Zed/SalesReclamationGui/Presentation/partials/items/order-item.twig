@@ -9,7 +9,9 @@
 {% block order_item %}
 {% if displayImage %}
     <td {% if group %}rowspan="{{ itemCount }}" {% endif %}>
-        <img class="product-image" src="{{ image }}" width="150px"/>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ image }}" alt="{{ orderItem.name }}">
+        </div>
     </td>
 {% endif %}
 <td>

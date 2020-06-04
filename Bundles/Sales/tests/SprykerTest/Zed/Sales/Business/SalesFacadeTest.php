@@ -33,6 +33,7 @@ class SalesFacadeTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
+    protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
 
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
@@ -157,6 +158,51 @@ class SalesFacadeTest extends Unit
         $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
         $this->assertNotEmpty($orderListTransfer->getOrders());
         $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOffsetPaginatedCustomerOrderListByOrderReference(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $orderEntity = $this->tester->haveSalesOrderEntity();
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            OrderListRequestTransfer::ORDER_REFERENCES => [$orderEntity->getOrderReference()],
+        ]);
+
+        //Act
+        $orderListTransfer = $salesFacade->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
+
+        //Assert
+        $this->assertNotNull($orderListTransfer);
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+        $this->assertNotEmpty($orderListTransfer->getOrders());
+        $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOffsetPaginatedCustomerOrderListByNonExistingOrderReference(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $orderEntity = $this->tester->haveSalesOrderEntity();
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            OrderListRequestTransfer::ORDER_REFERENCES => [static::NON_EXISTING_ORDER_REFERENCE],
+        ]);
+
+        //Act
+        $orderListTransfer = $salesFacade->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
+
+        //Assert
+        $this->assertNotNull($orderListTransfer);
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+        $this->assertEmpty($orderListTransfer->getOrders());
     }
 
     /**

@@ -383,4 +383,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with currency ISO code.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }

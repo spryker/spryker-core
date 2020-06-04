@@ -1,0 +1,7 @@
+{
+  "include": {
+    "spryker/barcode": "If you want to use `barcode()` twig function.",
+    "spryker/gui": "If you want to use GUI layout templates.",
+    "spryker/locale": "Defined for forward-compatibility reasons."
+  }
+}

@@ -8,20 +8,16 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Generated\Shared\Transfer\IndexDefinitionFileTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
-use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
     public const FILE_EXTENSION = '.json';
-
-    /**
-     * @var array
-     */
-    protected $sourceDirectories;
 
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface
@@ -29,31 +25,28 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $definitionMerger;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
      */
-    protected $storePrefixes;
+    protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
+     * @var \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface
      */
-    protected $utilEncodingService;
+    protected $definitionFinder;
 
     /**
-     * @param array $sourceDirectories
+     * @param \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface $definitionFinder
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
-     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
-     * @param array $stores
+     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        array $sourceDirectories,
+        IndexDefinitionFinderInterface $definitionFinder,
         IndexDefinitionMergerInterface $definitionMerger,
-        SearchToUtilEncodingInterface $utilEncodingService,
-        array $stores
+        SearchToStoreFacadeInterface $storeFacade
     ) {
-        $this->sourceDirectories = $sourceDirectories;
+        $this->definitionFinder = $definitionFinder;
         $this->definitionMerger = $definitionMerger;
-        $this->storePrefixes = $this->getStorePrefixes($stores);
-        $this->utilEncodingService = $utilEncodingService;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -62,47 +55,52 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     public function loadIndexDefinitions()
     {
         $indexDefinitions = [];
+        $currentStorePrefix = $this->getStorePrefix($this->storeFacade->getCurrentStore());
+        $indexDefinitionFileTransfers = $this->definitionFinder->getSortedIndexDefinitionFileTransfers();
 
-        $jsonFiles = $this->getJsonFiles();
-        foreach ($jsonFiles as $jsonFile) {
-            $definitionData = $this->decodeJson($jsonFile->getContents());
-            $indexDefinitions = $this->getDefinitionByStores($jsonFile, $indexDefinitions, $definitionData);
+        foreach ($indexDefinitionFileTransfers as $indexDefinitionFileTransfer) {
+            if (!$this->isIndexDefinitionFileValidForCurrentStore($indexDefinitionFileTransfer, $currentStorePrefix)) {
+                continue;
+            }
+
+            $fileIndexName = $this->getIndexName($indexDefinitionFileTransfer, $currentStorePrefix);
+            $indexDefinitions = $this->addDefinition($indexDefinitions, $indexDefinitionFileTransfer->getContent(), $fileIndexName);
         }
 
         return $this->createIndexDefinitions($indexDefinitions);
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $indexDefinitionFileTransfer
+     * @param string $currentStorePrefix
+     *
+     * @return bool
      */
-    protected function getJsonFiles()
-    {
-        $finder = new Finder();
-        $finder->in($this->sourceDirectories)->name('*' . self::FILE_EXTENSION);
+    protected function isIndexDefinitionFileValidForCurrentStore(
+        IndexDefinitionFileTransfer $indexDefinitionFileTransfer,
+        string $currentStorePrefix
+    ): bool {
+        $indexDefinitionFileStorePrefix = $indexDefinitionFileTransfer->getStorePrefix();
 
-        return $finder;
+        return !$indexDefinitionFileStorePrefix || $indexDefinitionFileStorePrefix === $currentStorePrefix;
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
      * @param array $indexDefinitions
      * @param array $definitionData
+     * @param string $indexName
      *
      * @return array
      */
-    protected function getDefinitionByStores(SplFileInfo $jsonFile, array $indexDefinitions, array $definitionData)
+    protected function addDefinition(array $indexDefinitions, array $definitionData, string $indexName): array
     {
-        foreach ($this->storePrefixes as $storePrefix) {
-            $indexName = $this->getIndexName($jsonFile, $storePrefix);
-
-            if (isset($indexDefinitions[$indexName])) {
-                $definitionData = $this
-                    ->definitionMerger
-                    ->merge($indexDefinitions[$indexName], $definitionData);
-            }
-
-            $indexDefinitions[$indexName] = $definitionData;
+        if (isset($indexDefinitions[$indexName])) {
+            $definitionData = $this
+                ->definitionMerger
+                ->merge($indexDefinitions[$indexName], $definitionData);
         }
+
+        $indexDefinitions[$indexName] = $definitionData;
 
         return $indexDefinitions;
     }
@@ -112,7 +110,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      *
      * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[]
      */
-    protected function createIndexDefinitions(array $indexDefinitions)
+    protected function createIndexDefinitions(array $indexDefinitions): array
     {
         foreach ($indexDefinitions as $indexName => $indexDefinition) {
             $indexDefinitions[$indexName] = $this->createIndexDefinition($indexName, $indexDefinition);
@@ -127,106 +125,48 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      *
      * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
      */
-    protected function createIndexDefinition($indexName, array $definitionData)
+    protected function createIndexDefinition(string $indexName, array $definitionData): ElasticsearchIndexDefinitionTransfer
     {
-        $settings = isset($definitionData['settings']) ? $definitionData['settings'] : [];
-        $mappings = isset($definitionData['mappings']) ? $definitionData['mappings'] : [];
-
-        $indexDefinitionTransfer = new ElasticsearchIndexDefinitionTransfer();
-        $indexDefinitionTransfer
+        return (new ElasticsearchIndexDefinitionTransfer())
             ->setIndexName($indexName)
-            ->setSettings($settings)
-            ->setMappings($mappings);
-
-        return $indexDefinitionTransfer;
+            ->setSettings($definitionData['settings'] ?? [])
+            ->setMappings($definitionData['mappings'] ?? []);
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
-     * @param string $storePrefix
+     * @param \Generated\Shared\Transfer\IndexDefinitionFileTransfer $indexDefinitionFileTransfer
+     * @param string $currentStorePrefix
      *
      * @return string
      */
-    protected function getIndexName(SplFileInfo $jsonFile, $storePrefix)
+    protected function getIndexName(IndexDefinitionFileTransfer $indexDefinitionFileTransfer, string $currentStorePrefix): string
     {
-        $indexName = substr($jsonFile->getFilename(), 0, -strlen(self::FILE_EXTENSION));
-        $storePrefix = mb_strtolower($storePrefix);
-        $fileStorePrefix = mb_strtolower(substr($indexName, 0, strlen($storePrefix)));
+        $indexName = substr($indexDefinitionFileTransfer->getFileName(), 0, -strlen(self::FILE_EXTENSION));
 
-        if ($this->isPrefixable($storePrefix, $fileStorePrefix)) {
-            $indexName = $storePrefix . $indexName;
+        if (!$indexDefinitionFileTransfer->getStorePrefix()) {
+            $indexName = $currentStorePrefix . $indexName;
         }
 
-        $indexName = $this->addSearchIndexNameSuffix($indexName);
-
-        return $indexName;
-    }
-
-    /**
-     * @param array $stores
-     *
-     * @return array
-     */
-    protected function getStorePrefixes(array $stores)
-    {
-        array_walk($stores, function (&$store) {
-            $store = mb_strtolower($store) . '_';
-        });
-
-        return $stores;
-    }
-
-    /**
-     * @param string $storePrefix
-     * @param string $fileStorePrefix
-     *
-     * @return bool
-     */
-    protected function isPrefixable($storePrefix, $fileStorePrefix)
-    {
-        if ($fileStorePrefix === $storePrefix) {
-            return false;
-        }
-
-        $otherPrefixes = $this->storePrefixes;
-        $index = array_search($storePrefix, $this->storePrefixes);
-        unset($otherPrefixes[$index]);
-
-        if (in_array($fileStorePrefix, $otherPrefixes)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $indexName
-     *
-     * @return string
-     */
-    protected function addSearchIndexNameSuffix($indexName)
-    {
         $indexName .= $this->getIndexNameSuffix();
 
         return $indexName;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return string
      */
-    protected function getIndexNameSuffix()
+    protected function getStorePrefix(StoreTransfer $storeTransfer): string
     {
-        return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
+        return mb_strtolower($storeTransfer->getName()) . '_';
     }
 
     /**
-     * @param string $jsonValue
-     *
-     * @return array
+     * @return string
      */
-    protected function decodeJson($jsonValue)
+    protected function getIndexNameSuffix(): string
     {
-        return $this->utilEncodingService
-            ->decodeJson($jsonValue, true);
+        return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
     }
 }
