@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LayoutFooterModule } from '../auth-footer/layout-footer.module';
+import { LayoutFooterModule } from '../layout-footer/layout-footer.module';
 import { LayoutCenteredComponent } from './layout-centered.component';
 
 @NgModule({
