@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
+use Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceBridge;
 
 /**
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
@@ -28,6 +29,8 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
 
+    public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -39,6 +42,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addMerchantFacade($container);
         $container = $this->addStateMachineFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
 
         return $container;
     }
@@ -55,6 +59,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStateMachineCommandPlugins($container);
         $container = $this->addStateMachineConditionPlugins($container);
         $container = $this->addMerchantSalesOrderFacade($container);
+        $container = $this->addUtilDataReaderService($container);
 
         return $container;
     }
@@ -124,6 +129,20 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
             return new MerchantOmsToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDataReaderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATA_READER, function (Container $container) {
+            return new MerchantOmsToUtilDataReaderServiceBridge($container->getLocator()->utilDataReader()->service());
         });
 
         return $container;

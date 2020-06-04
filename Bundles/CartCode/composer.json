@@ -14,6 +14,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/discount": "*",
+    "spryker/gift-card": "*",
     "spryker/testify": "*"
   },
   "autoload": {

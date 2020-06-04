@@ -1,0 +1,59 @@
+{% do bundleProduct.setReturnPolicyMessages((bundleItems | first).returnPolicyMessages) %}
+
+{% include '@SalesReturnGui/Create/_partials/return-create-item.twig' with {
+    returnItem: returnBundleItem,
+    orderItem: bundleProduct,
+    order: order,
+    isBundleProduct: true,
+} only %}
+
+{% for orderItem in bundleItems %}
+    <tr class="addition-row">
+        <td></td>
+        <td></td>
+        <td>
+            <div class="bundle-item">
+                <div class="image-wrap">
+                    <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+                </div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+                    {{ orderItem.name }}
+                </a>
+            </div>
+        </td>
+        <td>x {{ orderItem.quantity }}</td>
+        <td>
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: orderItem.sumPrice,
+                priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+                order: order,
+            } %}
+
+            <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+        </td>
+        <td></td>
+        <td></td>
+        <td class="state-history">
+            <div>
+                <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+            </div>
+            {% if orderItem.stateHistory | length > 1 %}
+                <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                    {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                        <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                    {% endfor %}
+                </div>
+
+                <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show history' | trans }}</span>
+                    <span class="show-less">{{ 'Hide history' | trans }}</span>
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+
+{% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    orderItem: bundleProduct,
+    order: order,
+} %}

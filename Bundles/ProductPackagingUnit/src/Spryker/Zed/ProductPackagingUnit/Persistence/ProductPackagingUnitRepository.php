@@ -290,6 +290,52 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountSku(null, Criteria::ISNOTNULL)
+            ->filterByAmount(null, Criteria::ISNOTNULL)
+            ->select([SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU])
+            ->find()
+            ->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);
+    }
+
+    /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountMeasurementUnitName(null, Criteria::ISNOTNULL);
+
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitMapper()
+            ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
      * @uses State
      *
      * @param string $sku

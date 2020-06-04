@@ -26,7 +26,7 @@ interface CartCodesRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Removes code from QuoteTransfer.
+     * - Removes discount code from QuoteTransfer.
      * - Calls CartCodeFacade.
      * - Finds QuoteTransfer by UUID.
      * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if Quote is not found.
@@ -40,4 +40,20 @@ interface CartCodesRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
     public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+
+    /**
+     * Specification:
+     * - Removes cart code from QuoteTransfer.
+     * - Calls CartCodeFacade.
+     * - Finds QuoteTransfer by UUID.
+     * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if Quote is not found.
+     * - Return CartCodeResponseTransfer with message and with no QuoteTransfer if cart code can not be removed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

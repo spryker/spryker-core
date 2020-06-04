@@ -20,6 +20,7 @@ class UpdateOrderItemIsReturnableByGlobalReturnableNumberOfDaysPlugin extends Ab
      * {@inheritDoc}
      * - Verifies difference between order item creation date and config const.
      * - If difference more than config const, sets `Item::isReturnable=false`.
+     * - Adds return policy message to `Item::returnPolicyMessages`.
      *
      * @api
      *

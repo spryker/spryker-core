@@ -27,7 +27,8 @@ class GuestCartVouchersResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "404": "Cart with given uuid not found."
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -41,7 +42,9 @@ class GuestCartVouchersResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCartCodeToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()
+            ->createCartCodeAdder()
+            ->addDiscountCodeToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 
     /**
@@ -56,7 +59,7 @@ class GuestCartVouchersResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found.",
-     *              "422": "Cart code can't be deleted."
+     *              "422": "Cart code not found in cart."
      *          }
      *     }
      * })
@@ -68,6 +71,6 @@ class GuestCartVouchersResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromGuestCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeDiscountCodeFromGuestCart($restRequest);
     }
 }
