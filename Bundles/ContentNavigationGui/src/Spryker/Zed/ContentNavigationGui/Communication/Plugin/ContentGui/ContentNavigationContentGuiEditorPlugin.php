@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentNavigationGui\Communication\Plugin;
+namespace Spryker\Zed\ContentNavigationGui\Communication\Plugin\ContentGui;
 
 use Spryker\Shared\ContentNavigationGui\ContentNavigationGuiConfig;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;

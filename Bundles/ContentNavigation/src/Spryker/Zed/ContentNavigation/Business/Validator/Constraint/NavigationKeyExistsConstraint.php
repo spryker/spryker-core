@@ -14,7 +14,7 @@ class NavigationKeyExistsConstraint extends Constraint
 {
     public const OPTION_NAVIGATION_FACADE = 'navigationFacade';
 
-    protected const MESSAGE = 'Provided navigation key `%s` does not exists.';
+    protected const MESSAGE = 'Provided navigation key `%s` does not exist.';
 
     /**
      * @var \Spryker\Zed\ContentNavigation\Dependency\Facade\ContentNavigationToNavigationFacadeInterface
