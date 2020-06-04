@@ -24,7 +24,7 @@ class MonitoringFactory extends AbstractFactory
     {
         return new ControllerListener(
             $this->getMonitoringService(),
-            $this->getSystem(),
+            $this->getUtilNetworkService(),
             $this->getConfig()->getIgnorableTransactionRouteNames()
         );
     }
@@ -40,7 +40,17 @@ class MonitoringFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
      */
-    public function getSystem(): MonitoringToUtilNetworkServiceInterface
+    public function getUtilNetworkService(): MonitoringToUtilNetworkServiceInterface
+    {
+        return $this->getProvidedDependency(MonitoringDependencyProvider::SERVICE_NETWORK);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Yves\Monitoring\MonitoringFactory::getUtilNetworkService} instead.
+     *
+     * @return \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
+     */
+    public function getService(): MonitoringToUtilNetworkServiceInterface
     {
         return $this->getProvidedDependency(MonitoringDependencyProvider::SERVICE_NETWORK);
     }

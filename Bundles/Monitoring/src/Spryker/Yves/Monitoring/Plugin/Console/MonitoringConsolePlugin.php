@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Monitoring\Communication\Plugin;
+namespace Spryker\Yves\Monitoring\Plugin\Console;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin} instead.
- *
- * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
- * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
+ * @method \Spryker\Yves\Monitoring\MonitoringFactory getFactory()
+ * @method \Spryker\Yves\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
