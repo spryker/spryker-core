@@ -186,14 +186,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     protected function getNavigationItemKey(array $navigationItem): string
     {
         if (
-            !isset($navigationItem[MenuFormatter::BUNDLE])
-            || !isset($navigationItem[MenuFormatter::CONTROLLER])
-            || !isset($navigationItem[MenuFormatter::ACTION])
-        ) {
-            $a = 'sfd';
-        }
-
-        if (
             isset($navigationItem[MenuFormatter::BUNDLE])
             && isset($navigationItem[MenuFormatter::CONTROLLER])
             && isset($navigationItem[MenuFormatter::ACTION])
