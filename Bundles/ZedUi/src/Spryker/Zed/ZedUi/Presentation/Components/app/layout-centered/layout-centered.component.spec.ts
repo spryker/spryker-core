@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { LayoutCenteredComponent } from './layout-centered.component';
-import { AuthFooterModule } from '../auth-footer/auth-footer.module';
+import { LayoutFooterModule } from '../auth-footer/layout-footer.module';
 
 describe('LayoutCentralComponent', () => {
     let component: TestComponent;
@@ -19,7 +19,7 @@ describe('LayoutCentralComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [AuthFooterModule],
+            imports: [LayoutFooterModule],
             declarations: [LayoutCenteredComponent, TestComponent]
         }).compileComponents();
     }));
