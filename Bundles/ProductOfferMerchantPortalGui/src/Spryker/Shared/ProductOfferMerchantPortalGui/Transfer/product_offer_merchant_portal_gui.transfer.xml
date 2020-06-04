@@ -19,7 +19,7 @@
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
         <property name="search" type="array" associative="true" singular="searchOption"/>
-        <property name="isPageSizeEnabled" type="bool"/>
+        <property name="isPaginationEnabled" type="bool"/>
         <property name="isFiltersEnabled" type="bool"/>
         <property name="isRowActionsEnabled" type="bool"/>
         <property name="isSearchEnabled" type="bool"/>
