@@ -16,7 +16,7 @@ interface MonitoringFacadeInterface
 {
     /**
      * Specification:
-     * - Handles on console terminate event.
+     * - Handles console terminate event.
      * - Marks monitoring transaction as a console command.
      * - Sets transaction name based on the command name.
      * - Adds custom parameters to the transaction like host, command arguments and options.
