@@ -18,8 +18,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
-
     /**
      * {@inheritDoc}
      *
@@ -45,6 +43,6 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      */
     public function onConsoleTerminate(ConsoleTerminateEvent $event): void
     {
-        $this->getFactory()->createEventHandler()->handleConsoleTerminate($event);
+        $this->getFactory()->createEventHandler()->handleConsoleTerminateEvent($event);
     }
 }

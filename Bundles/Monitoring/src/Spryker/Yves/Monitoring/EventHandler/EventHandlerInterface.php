@@ -16,5 +16,5 @@ interface EventHandlerInterface
      *
      * @return void
      */
-    public function handleConsoleTerminate(ConsoleTerminateEvent $event): void;
+    public function handleConsoleTerminateEvent(ConsoleTerminateEvent $event): void;
 }
