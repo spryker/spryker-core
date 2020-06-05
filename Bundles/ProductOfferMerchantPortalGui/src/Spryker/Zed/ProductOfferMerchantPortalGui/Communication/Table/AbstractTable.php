@@ -49,7 +49,7 @@ abstract class AbstractTable
     public const COLUMN_TYPE_LIST = 'list';
 
     public const FILTER_TYPE_SELECT = 'select';
-    public const FILTER_TYPE_DATE_RANGE = 'date_range';
+    public const FILTER_TYPE_DATE_RANGE = 'date-range';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
