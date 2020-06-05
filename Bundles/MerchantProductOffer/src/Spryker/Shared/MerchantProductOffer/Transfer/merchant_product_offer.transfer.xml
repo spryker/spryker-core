@@ -19,6 +19,5 @@
     </transfer>
 
     <transfer name="ProductOfferCollection">
-        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 </transfers>
