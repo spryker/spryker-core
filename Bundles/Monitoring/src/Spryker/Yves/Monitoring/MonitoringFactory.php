@@ -46,7 +46,7 @@ class MonitoringFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Monitoring\MonitoringFactory::getUtilNetworkService} instead.
+     * @deprecated Use {@link \Spryker\Yves\Monitoring\MonitoringFactory::getUtilNetworkService()} instead.
      *
      * @return \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
      */

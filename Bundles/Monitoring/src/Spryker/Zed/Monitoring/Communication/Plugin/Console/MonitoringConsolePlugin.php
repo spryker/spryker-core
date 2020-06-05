@@ -18,11 +18,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    protected const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
@@ -44,16 +42,6 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     }
 
     /**
-     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
-     *
-     * @return string
-     */
-    protected function getTransactionName(ConsoleTerminateEvent $event): string
-    {
-        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @api
@@ -65,6 +53,16 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
         return [
             ConsoleEvents::TERMINATE => ['onConsoleTerminate'],
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
+     *
+     * @return string
+     */
+    protected function getTransactionName(ConsoleTerminateEvent $event): string
+    {
+        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
     }
 
     /**
