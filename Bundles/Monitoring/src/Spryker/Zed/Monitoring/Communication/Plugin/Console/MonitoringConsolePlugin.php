@@ -13,46 +13,12 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
-     *
-     * @return void
-     */
-    public function onConsoleTerminate(ConsoleTerminateEvent $event): void
-    {
-        $transactionName = $this->getTransactionName($event);
-        $hostName = $this->getFactory()->getUtilNetworkService()->getHostName();
-        $monitoring = $this->getFactory()->getMonitoringService();
-
-        $monitoring->markAsConsoleCommand();
-        $monitoring->setTransactionName($transactionName);
-        $monitoring->addCustomParameter('host', $hostName);
-
-        $this->addArgumentsAsCustomParameter($event);
-        $this->addOptionsAsCustomParameter($event);
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
-     *
-     * @return string
-     */
-    protected function getTransactionName(ConsoleTerminateEvent $event): string
-    {
-        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -68,39 +34,16 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
      */
-    protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event): void
+    public function onConsoleTerminate(ConsoleTerminateEvent $event): void
     {
-        $this->addCustomParameter($event->getInput()->getArguments());
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
-     *
-     * @return void
-     */
-    protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event): void
-    {
-        $this->addCustomParameter($event->getInput()->getOptions());
-    }
-
-    /**
-     * @param array $customParameter
-     *
-     * @return void
-     */
-    protected function addCustomParameter(array $customParameter): void
-    {
-        $monitoring = $this->getFactory()->getMonitoringService();
-
-        foreach ($customParameter as $key => $value) {
-            if (is_array($value)) {
-                $value = implode(',', $value);
-            }
-            $monitoring->addCustomParameter($key, $value);
-        }
+        $this->getFacade()->handleOnConsoleTerminateEvent($event);
     }
 }

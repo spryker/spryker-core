@@ -28,6 +28,19 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = $this->addMonitoringService($container);
+        $container = $this->addUtilNetworkService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
