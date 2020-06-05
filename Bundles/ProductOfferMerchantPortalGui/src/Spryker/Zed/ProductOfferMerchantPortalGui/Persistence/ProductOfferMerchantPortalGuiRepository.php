@@ -209,6 +209,10 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $orderColumn = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
+        if ($orderColumn === SpyProductTableMap::COL_SKU) {
+            $productConcreteQuery = $this->addNaturalSorting($productConcreteQuery, $orderColumn, $orderDirection);
+        }
+
         $productConcreteQuery->orderBy($orderColumn, $orderDirection);
 
         return $productConcreteQuery;
@@ -763,8 +767,39 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $orderColumn = ProductOfferTableDataMapper::PRODUCT_OFFER_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
+        if (
+            in_array($orderColumn, [
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
+            SpyProductOfferTableMap::COL_MERCHANT_SKU,
+            SpyProductOfferTableMap::COL_CONCRETE_SKU,
+            ], true)
+        ) {
+            $productOfferQuery = $this->addNaturalSorting($productOfferQuery, $orderColumn, $orderDirection);
+        }
         $productOfferQuery->orderBy($orderColumn, $orderDirection);
 
         return $productOfferQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param string $orderColumn
+     * @param string $orderDirection
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function addNaturalSorting(
+        ModelCriteria $query,
+        string $orderColumn,
+        string $orderDirection
+    ): ModelCriteria {
+        if ($orderDirection === Criteria::ASC) {
+            $query->addAscendingOrderByColumn("LENGTH($orderColumn)");
+        }
+        if ($orderDirection === Criteria::DESC) {
+            $query->addDescendingOrderByColumn("LENGTH($orderColumn)");
+        }
+
+        return $query;
     }
 }

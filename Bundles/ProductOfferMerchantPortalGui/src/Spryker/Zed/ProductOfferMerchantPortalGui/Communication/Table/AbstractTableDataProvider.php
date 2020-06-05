@@ -118,7 +118,11 @@ abstract class AbstractTableDataProvider implements TableDataProviderInterface
         }
 
         $criteriaTransfer->setOrderBy($guiTableDataRequestTransfer->getOrderBy());
-        $criteriaTransfer->setOrderDirection($guiTableDataRequestTransfer->getOrderDirection());
+        $criteriaTransfer->setOrderDirection(
+            $guiTableDataRequestTransfer->getOrderDirection()
+                ? strtoupper($guiTableDataRequestTransfer->getOrderDirection())
+                : null
+        );
 
         return $criteriaTransfer;
     }
