@@ -44,6 +44,6 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      */
     public function onConsoleTerminate(ConsoleTerminateEvent $event): void
     {
-        $this->getFacade()->handleOnConsoleTerminateEvent($event);
+        $this->getFacade()->handleConsoleTerminateEvent($event);
     }
 }

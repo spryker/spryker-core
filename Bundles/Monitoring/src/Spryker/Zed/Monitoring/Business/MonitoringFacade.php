@@ -26,6 +26,6 @@ class MonitoringFacade extends AbstractFacade implements MonitoringFacadeInterfa
      */
     public function handleConsoleTerminateEvent(ConsoleTerminateEvent $event): void
     {
-        $this->getFactory()->createEvent()->handleConsoleTerminate($event);
+        $this->getFactory()->createEventHandler()->handleConsoleTerminate($event);
     }
 }

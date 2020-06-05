@@ -10,6 +10,8 @@ namespace Spryker\Yves\Monitoring;
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
+use Spryker\Yves\Monitoring\EventHandler\EventHandler;
+use Spryker\Yves\Monitoring\EventHandler\EventHandlerInterface;
 use Spryker\Yves\Monitoring\Plugin\ControllerListener;
 
 /**
@@ -53,5 +55,13 @@ class MonitoringFactory extends AbstractFactory
     public function getService(): MonitoringToUtilNetworkServiceInterface
     {
         return $this->getProvidedDependency(MonitoringDependencyProvider::SERVICE_NETWORK);
+    }
+
+    /**
+     * @return \Spryker\Yves\Monitoring\EventHandler\EventHandlerInterface
+     */
+    public function createEventHandler(): EventHandlerInterface
+    {
+        return new EventHandler($this->getMonitoringService(), $this->getUtilNetworkService());
     }
 }

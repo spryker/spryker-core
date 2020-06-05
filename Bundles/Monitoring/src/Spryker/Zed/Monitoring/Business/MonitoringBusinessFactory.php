@@ -9,8 +9,8 @@ namespace Spryker\Zed\Monitoring\Business;
 
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Monitoring\Business\Event\Event;
-use Spryker\Zed\Monitoring\Business\Event\EventInterface;
+use Spryker\Zed\Monitoring\Business\EventHandler\EventHandler;
+use Spryker\Zed\Monitoring\Business\EventHandler\EventHandlerInterface;
 use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Spryker\Zed\Monitoring\MonitoringDependencyProvider;
 
@@ -20,11 +20,11 @@ use Spryker\Zed\Monitoring\MonitoringDependencyProvider;
 class MonitoringBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Monitoring\Business\Event\EventInterface
+     * @return \Spryker\Zed\Monitoring\Business\EventHandler\EventHandlerInterface
      */
-    public function createEvent(): EventInterface
+    public function createEventHandler(): EventHandlerInterface
     {
-        return new Event($this->getMonitoringService(), $this->getUtilNetworkService());
+        return new EventHandler($this->getMonitoringService(), $this->getUtilNetworkService());
     }
 
     /**

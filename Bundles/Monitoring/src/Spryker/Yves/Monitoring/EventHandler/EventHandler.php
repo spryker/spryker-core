@@ -5,15 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Monitoring\Business\Event;
+namespace Spryker\Yves\Monitoring\EventHandler;
 
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
-use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
+use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 
-class Event implements EventInterface
+class EventHandler implements EventHandlerInterface
 {
     protected const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+
+    protected const PARAMETER_HOST = 'host';
 
     /**
      * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
@@ -21,13 +23,13 @@ class Event implements EventInterface
     protected $monitoringService;
 
     /**
-     * @var \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
+     * @var \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
      */
     protected $utilNetworkService;
 
     /**
      * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
-     * @param \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
+     * @param \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(
         MonitoringServiceInterface $monitoringService,
@@ -46,7 +48,7 @@ class Event implements EventInterface
     {
         $this->monitoringService->markAsConsoleCommand();
         $this->monitoringService->setTransactionName($this->getTransactionName($event));
-        $this->monitoringService->addCustomParameter('host', $this->utilNetworkService->getHostName());
+        $this->monitoringService->addCustomParameter(static::PARAMETER_HOST, $this->utilNetworkService->getHostName());
 
         $this->addArgumentsAsCustomParameter($event);
         $this->addOptionsAsCustomParameter($event);

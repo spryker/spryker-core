@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Monitoring\Business\Event;
+namespace Spryker\Yves\Monitoring\EventHandler;
 
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 
-interface EventInterface
+interface EventHandlerInterface
 {
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
