@@ -110,7 +110,8 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer->toArray());
+        /** @var array $customerTransfer */
+        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];
         $blocks = $this->getFactory()->getCustomerDetailExternalBlocksUrls();
