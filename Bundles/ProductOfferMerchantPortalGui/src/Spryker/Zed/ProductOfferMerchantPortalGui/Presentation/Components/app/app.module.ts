@@ -64,7 +64,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
-            date_range: TableFilterDateRangeComponent,
+            'date-range': TableFilterDateRangeComponent,
         } as any),
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
