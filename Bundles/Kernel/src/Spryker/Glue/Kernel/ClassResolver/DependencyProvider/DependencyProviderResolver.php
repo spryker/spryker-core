@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\%2$sDependencyProvider';
+    protected const RESOLVABLE_TYPE = 'GlueDependencyProvider';
 
     /**
      * @param object|string $callerClass
@@ -22,28 +22,12 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
+        $resolved = $this->doResolve($callerClass);
 
-            /** @var \Spryker\Glue\Kernel\AbstractBundleDependencyProvider $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new DependencyProviderNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
     }
 }

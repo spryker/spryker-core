@@ -21,6 +21,8 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use getValidationSchemaPathPatterns instead.
+     *
      * @return string[]
      */
     public function getValidationSchemaPathPattern(): array
@@ -75,11 +77,23 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link getCodeBucketCacheFilePathPattern()} instead.
+     *
      * @return string
      */
     public function getCacheFilePathPattern(): string
     {
         return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCodeBucketCacheFilePathPattern(): string
+    {
+        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::CODE_BUCKET_VALIDATION_CACHE_FILENAME_PATTERN;
     }
 
     /**

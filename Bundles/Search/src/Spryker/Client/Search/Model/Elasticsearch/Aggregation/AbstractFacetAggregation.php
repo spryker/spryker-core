@@ -15,7 +15,7 @@ use Elastica\Query\Term;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\AbstractFacetAggregation` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\AbstractFacetAggregation} instead.
  */
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {

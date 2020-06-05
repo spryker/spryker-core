@@ -258,7 +258,7 @@ interface ProductStorageClientInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -351,6 +351,25 @@ interface ProductStorageClientInterface
      * @return int[]
      */
     public function getBulkProductAbstractIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete ids from Storage using specified mapping type and locale name.
+     * - Returned product IDs are indexed by the SKUs.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName

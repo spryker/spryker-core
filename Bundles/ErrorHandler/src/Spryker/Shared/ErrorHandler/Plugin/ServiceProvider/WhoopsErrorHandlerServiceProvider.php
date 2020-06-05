@@ -17,8 +17,8 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 /**
- * @deprecated Use `\Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin` instead.
- * @deprecated Use `\Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin} instead.
  */
 class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
 {

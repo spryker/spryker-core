@@ -31,7 +31,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $transferPropertyNameMap = [];
 
@@ -190,7 +190,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param array|\ArrayObject $arrayObject
      * @param bool $ignoreMissingProperty
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
     protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {

@@ -48,4 +48,13 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="RestDiscountsAttributes">
+        <property name="discountPromotionAbstractSku" type="string"/>
+        <property name="discountPromotionQuantity" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+    </transfer>
+
 </transfers>

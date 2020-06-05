@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Search\Communication\Console\GenerateSourceMapConsole` instead.
+ * @deprecated Use {@link \Spryker\Zed\Search\Communication\Console\GenerateSourceMapConsole} instead.
  *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()

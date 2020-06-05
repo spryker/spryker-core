@@ -27,4 +27,25 @@ interface ProductBundleRepositoryInterface
     public function getProductBundleCollectionByCriteriaFilter(
         ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
     ): ProductBundleCollectionTransfer;
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return array
+     */
+    public function getProductConcretesRawDataByProductConcreteSkus(array $productConcreteSkus): array;
 }

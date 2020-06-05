@@ -49,7 +49,7 @@ class StorageCacheStrategyFactory
         $cacheStrategyStack = $this->createCacheStrategyStack();
 
         if (!isset($cacheStrategyStack[$storageCacheStrategy])) {
-            throw new InvalidStrategyException($storageCacheStrategy . " is not a valid storage cache strategy.");
+            throw new InvalidStrategyException($storageCacheStrategy . ' is not a valid storage cache strategy.');
         }
 
         return $cacheStrategyStack[$storageCacheStrategy];

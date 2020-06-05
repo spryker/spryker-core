@@ -102,7 +102,7 @@ class MerchantSalesOrderMapper
         SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity,
         MerchantOrderItemTransfer $merchantOrderItemTransfer
     ): MerchantOrderItemTransfer {
-        return $merchantOrderItemTransfer
+        return $merchantOrderItemTransfer->fromArray($merchantSalesOrderItemEntity->toArray(), true)
             ->setIdMerchantOrderItem($merchantSalesOrderItemEntity->getIdMerchantSalesOrderItem())
             ->setIdOrderItem($merchantSalesOrderItemEntity->getFkSalesOrderItem())
             ->setIdMerchantOrder($merchantSalesOrderItemEntity->getFkMerchantSalesOrder());
@@ -118,9 +118,10 @@ class MerchantSalesOrderMapper
         MerchantOrderItemTransfer $merchantOrderItemTransfer,
         SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity
     ): SpyMerchantSalesOrderItem {
-        $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem());
-        $merchantSalesOrderItemEntity->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem());
-        $merchantSalesOrderItemEntity->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
+        $merchantSalesOrderItemEntity->fromArray($merchantOrderItemTransfer->modifiedToArray());
+        $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
+            ->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem())
+            ->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
 
         return $merchantSalesOrderItemEntity;
     }
@@ -139,6 +140,7 @@ class MerchantSalesOrderMapper
 
         return $totalsTransfer
             ->fromArray($merchantSalesOrderTotalsEntity->toArray(), true)
+            ->setExpenseTotal($merchantSalesOrderTotalsEntity->getOrderExpenseTotal())
             ->setTaxTotal($taxTotalTransfer);
     }
 
@@ -155,8 +157,12 @@ class MerchantSalesOrderMapper
         SpyMerchantSalesOrderTotals $merchantSalesOrderTotalsEntity
     ): SpyMerchantSalesOrderTotals {
         $merchantSalesOrderTotalsEntity->fromArray($totalsTransfer->modifiedToArray());
-        $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
+        $merchantSalesOrderTotalsEntity->setOrderExpenseTotal($totalsTransfer->getExpenseTotal());
         $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($idMerchantOrder);
+
+        if ($totalsTransfer->getTaxTotal()) {
+            $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
+        }
 
         return $merchantSalesOrderTotalsEntity;
     }

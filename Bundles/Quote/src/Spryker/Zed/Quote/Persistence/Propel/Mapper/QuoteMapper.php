@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
-use Spryker\Zed\Quote\QuoteConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
@@ -22,20 +21,11 @@ class QuoteMapper implements QuoteMapperInterface
     protected $encodingService;
 
     /**
-     * @var \Spryker\Zed\Quote\QuoteConfig
-     */
-    protected $quoteConfig;
-
-    /**
      * @param \Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface $encodingService
-     * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
      */
-    public function __construct(
-        QuoteToUtilEncodingServiceInterface $encodingService,
-        QuoteConfig $quoteConfig
-    ) {
+    public function __construct(QuoteToUtilEncodingServiceInterface $encodingService)
+    {
         $this->encodingService = $encodingService;
-        $this->quoteConfig = $quoteConfig;
     }
 
     /**
@@ -46,8 +36,8 @@ class QuoteMapper implements QuoteMapperInterface
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
-        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer), true);
+        $quoteData = array_merge($quoteEntityTransfer->modifiedToArray(), $this->decodeQuoteData($quoteEntityTransfer));
+        $quoteTransfer->fromArray($quoteData, true);
         $storeTransfer = new StoreTransfer();
         $storeTransfer->fromArray($quoteEntityTransfer->getSpyStore()->modifiedToArray(), true);
         $quoteTransfer->setStore($storeTransfer);
@@ -94,24 +84,34 @@ class QuoteMapper implements QuoteMapperInterface
      */
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving)
     {
-        $quoteData = $this->filterDisallowedQuoteData($quoteTransfer, $quoteFieldsAllowedForSaving);
+        $quoteData = $this->filterDisallowedQuoteData(
+            $quoteTransfer->modifiedToArray(true, true),
+            $quoteFieldsAllowedForSaving
+        );
 
         return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $quoteFieldsAllowedForSaving
+     * @param array $quoteData
+     * @param array $quoteFieldsAllowedForSaving
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving): array
+    protected function filterDisallowedQuoteData(array $quoteData, array $quoteFieldsAllowedForSaving): array
     {
         $data = [];
-        $quoteData = $quoteTransfer->modifiedToArray(true, true);
-        foreach ($quoteFieldsAllowedForSaving as $dataKey) {
-            if (isset($quoteData[$dataKey])) {
-                $data[$dataKey] = $quoteData[$dataKey];
+        foreach ($quoteFieldsAllowedForSaving as $fieldKey => $fieldData) {
+            if (is_string($fieldData) && isset($quoteData[$fieldData])) {
+                $data[$fieldData] = $quoteData[$fieldData];
+
+                continue;
+            }
+
+            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
+                foreach ($quoteData[$fieldKey] as $itemData) {
+                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
+                }
             }
         }
 

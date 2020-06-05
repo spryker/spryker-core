@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -26,6 +27,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
+    protected const SKU = 'sku';
+
     /**
      * @param string $productPackagingUnitTypeName
      *
@@ -222,6 +225,47 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Product
+     *
+     * @param string[] $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitsByProductSku(
+        array $productSkus
+    ): array {
+        if (!$productSkus) {
+            return [];
+        }
+
+        $productPackagingUnitEntities = $this->getProductPackagingUnitCriteria()
+            ->joinWithProduct()
+            ->useProductQuery()
+                ->filterBySku_In($productSkus)
+                ->withColumn(SpyProductTableMap::COL_SKU, static::SKU)
+            ->endUse()
+            ->find()
+            ->getArrayCopy();
+
+        if (!$productPackagingUnitEntities) {
+            return [];
+        }
+
+        $productPackagingUnitTransfers = [];
+        foreach ($productPackagingUnitEntities as $productPackagingUnitEntity) {
+            $sku = $productPackagingUnitEntity->getVirtualColumn(static::SKU);
+            $productPackagingUnitTransfers[$sku] = $this->getFactory()
+                ->createProductPackagingUnitMapper()
+                ->mapProductPackagingUnitTransfer(
+                    $productPackagingUnitEntity,
+                    new ProductPackagingUnitTransfer()
+                );
+        }
+
+        return $productPackagingUnitTransfers;
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
@@ -243,6 +287,52 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         }
 
         return $spySalesOrderItemEntityTransfers;
+    }
+
+    /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountSku(null, Criteria::ISNOTNULL)
+            ->filterByAmount(null, Criteria::ISNOTNULL)
+            ->select([SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU])
+            ->find()
+            ->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);
+    }
+
+    /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountMeasurementUnitName(null, Criteria::ISNOTNULL);
+
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitMapper()
+            ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
     }
 
     /**

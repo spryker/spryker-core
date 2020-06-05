@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductRelationStorage\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepository} instead.
+ * @see \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepository
  * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStoragePersistenceFactory getFactory()
  */
 class ProductRelationStorageQueryContainer extends AbstractQueryContainer implements ProductRelationStorageQueryContainerInterface
@@ -19,7 +21,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery
      */
@@ -36,7 +38,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -72,7 +74,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */

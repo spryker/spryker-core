@@ -338,7 +338,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             $salesOrderItemEntity = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
 
             $salesOrderItemEntity->save();
-            $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
+            $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
         }
     }
 

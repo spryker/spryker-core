@@ -14,18 +14,6 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
-     *
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @api
-     *
      * @return string|null
      */
     public function getProductAbstractRelationSynchronizationPoolName(): ?string

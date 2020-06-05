@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Address\OrderAddressWriter class instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Address\OrderAddressWriter} instead.
  */
 class OrderAddressUpdater implements OrderAddressUpdaterInterface
 {

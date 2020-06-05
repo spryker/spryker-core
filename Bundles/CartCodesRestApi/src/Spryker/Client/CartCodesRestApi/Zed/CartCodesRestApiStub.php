@@ -55,4 +55,19 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
 
         return $cartCodeResponseTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCartCodeFromQuoteAction()
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
+        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-cart-code-from-quote', $cartCodeRequestTransfer);
+
+        return $cartCodeResponseTransfer;
+    }
 }

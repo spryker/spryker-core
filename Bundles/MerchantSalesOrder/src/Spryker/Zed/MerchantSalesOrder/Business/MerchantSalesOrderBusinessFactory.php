@@ -14,8 +14,16 @@ use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderItemCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
-use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
+use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
+use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderEntityManagerInterface getEntityManager()
@@ -32,8 +40,17 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
         return new MerchantOrderCreator(
             $this->getEntityManager(),
             $this->createMerchantOrderItemCreator(),
-            $this->createMerchantOrderTotalsCreator()
+            $this->createMerchantOrderTotalsCreator(),
+            $this->getMerchantOrderPostCreatePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface
+     */
+    public function createExpenseExpander(): ExpenseExpanderInterface
+    {
+        return new ExpenseExpander();
     }
 
     /**
@@ -45,18 +62,50 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander($this->getRepository());
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface
      */
     public function createMerchantOrderTotalsCreator(): MerchantOrderTotalsCreatorInterface
     {
-        return new MerchantOrderTotalsCreator($this->getEntityManager());
+        return new MerchantOrderTotalsCreator($this->getEntityManager(), $this->getCalculationFacade());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface
+     */
+    public function createMerchantOrderItemWriter(): MerchantOrderItemWriterInterface
+    {
+        return new MerchantOrderItemWriter($this->getEntityManager(), $this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface
+     */
+    public function getCalculationFacade(): MerchantSalesOrderToCalculationFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
+     */
+    public function getMerchantOrderPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_POST_CREATE);
     }
 }

@@ -309,7 +309,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -322,7 +322,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
     ): array {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($productAbstractIds, $localeName, $storeName);
     }
 
     /**
@@ -419,5 +419,26 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductAbstractStorageReader()
             ->getBulkProductAbstractIdsByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteIdsByMapping($mappingType, $identifiers, $localeName);
     }
 }

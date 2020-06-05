@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -69,7 +71,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveSalesOrder() instead
+     * @deprecated Use {@link saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -201,6 +203,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
+     *  - Executes CustomerOrderAccessCheckPluginInterface plugins, expects OrderTransfer::customer to be provided, not applicable to order creator.
      *  - Aggregates order totals calls -> SalesAggregator.
      *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
@@ -318,7 +321,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `SalesFacadeInterface::getUniqueItemsFromOrder() instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -350,4 +353,47 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves order items from persistence by criteria from OrderItemFilterTransfer.
+     * - Executes OrderItemExpanderPluginInterface stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires OrderListTransfer::pagination to be set.
+     * - Requires OrderListTransfer::format to be set.
+     * - Filters orders by OrderListTransfer::filterFields if provided.
+     * - Filters orders by OrderListTransfer::filter if provided.
+     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with currency ISO code.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }

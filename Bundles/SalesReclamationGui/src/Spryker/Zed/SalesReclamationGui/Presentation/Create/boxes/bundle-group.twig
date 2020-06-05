@@ -1,25 +1,40 @@
-{% set itemCount = items | length  %}
+{% set itemCount = items | length %}
 
 {% for orderItem in items %}
-  <tr>
-    {% if loop.index == 1 %}
-      {% embed '@SalesReclamationGui/Create/boxes/order-item.twig' with {
-          orderItem: orderItem,
-          displayImage: true,
-          displayTotals: true,
-          group: true,
-          rowCount: rowCount,
-          bundleItem: bundleItem,
-          itemCount: itemCount
-      } %}{% endembed %}
-    {% else %}
-      {% embed '@SalesReclamationGui/Create/boxes/order-item.twig' with {
-          orderItem: orderItem,
-          displayImage: false,
-          displayTotals: false,
-          group: false
-      } %}{% endembed %}
-    {% endif %}
-  </tr>
-  {% embed '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
+    <tr class="addition-row">
+        <td></td>
+        <td></td>
+        <td>
+            <div class="bundle-item">
+                <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
+                <div class="image-wrap">
+                    <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+                </div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+                    {{ orderItem.name }}
+                </a>
+            </div>
+        </td>
+        <td>
+            {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+                subtotal: orderItem.sumPrice,
+                priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+                reclamation: reclamation,
+            } %}
+
+            <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+        </td>
+        <td></td>
+        <td class="state-history">
+            <div>
+                <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}"
+                   target="_blank"
+                >{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+            </div>
+        </td>
+    </tr>
+    {% include '@SalesReclamationGui/Create/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        reclamation: reclamation,
+    } %}
 {% endfor %}

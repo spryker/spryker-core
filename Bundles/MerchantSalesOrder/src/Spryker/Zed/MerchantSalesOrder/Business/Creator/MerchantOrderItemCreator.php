@@ -39,7 +39,9 @@ class MerchantOrderItemCreator implements MerchantOrderItemCreatorInterface
     ): MerchantOrderItemTransfer {
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
             ->setIdMerchantOrder($merchantOrderTransfer->getIdMerchantOrder())
-            ->setIdOrderItem($itemTransfer->getIdSalesOrderItem());
+            ->setIdOrderItem($itemTransfer->getIdSalesOrderItem())
+            ->setOrderItem($itemTransfer)
+            ->setMerchantOrderItemReference(md5(sprintf('SOI-%d', $itemTransfer->getIdSalesOrderItem())));
 
         return $this->merchantSalesOrderEntityManager->createMerchantOrderItem($merchantOrderItemTransfer);
     }

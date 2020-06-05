@@ -19,5 +19,16 @@
         <property name="stateMachineName" type="string"/>
     </transfer>
 
+    <transfer name="StateMachineItemState">
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="fkStateMachineProcess" type="string"/>
+        <property name="idStateMachineItemState" type="string"/>
+    </transfer>
+
+    <transfer name="StateMachineProcessCriteria">
+        <property name="idStateMachineProcess" type="int"/>
+    </transfer>
+
 </transfers>
 

@@ -3,6 +3,11 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="Expense">
+        <property name="merchantReference" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
@@ -13,6 +18,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="merchantOrderReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrder">
@@ -20,6 +26,8 @@
         <property name="merchantOrderReference" type="string"/>
         <property name="idOrder" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="totals" type="Totals"/>
     </transfer>
@@ -33,6 +41,13 @@
         <property name="idOrderItem" type="int"/>
         <property name="idMerchantOrder" type="int"/>
         <property name="orderItem" type="Item"/>
+        <property name="merchantOrderItemReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCriteria">
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="idOrderItem" type="int"/>
+        <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
@@ -46,10 +61,20 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="MerchantOrderItemResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="merchantOrderItem" type="MerchantOrderItem"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
         <property name="orderReference" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -79,6 +104,14 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

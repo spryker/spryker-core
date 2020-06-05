@@ -14,7 +14,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig::getCategoryImageSynchronizationPoolName instead.
+     * @deprecated Use {@link \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig::getCategoryImageSynchronizationPoolName()} instead.
      *
      * @return string|null
      */

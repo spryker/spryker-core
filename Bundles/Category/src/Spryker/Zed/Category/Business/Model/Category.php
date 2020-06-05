@@ -18,7 +18,7 @@ use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -67,7 +67,7 @@ class Category
     protected $updatePlugins;
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface
+     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
      */
     protected $eventFacade;
 
@@ -92,7 +92,7 @@ class Category
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface|null $eventFacade
+     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface|null $eventFacade
      */
     public function __construct(
         CategoryInterface $category,
@@ -105,7 +105,7 @@ class Category
         array $updatePlugins,
         CategoryPluginExecutorInterface $categoryPluginExecutor,
         CategoryReaderInterface $categoryReader,
-        ?CategoryToEventInterface $eventFacade = null
+        ?CategoryToEventFacadeInterface $eventFacade = null
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;
@@ -121,7 +121,7 @@ class Category
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
      *
      * @param int $idCategory
      *

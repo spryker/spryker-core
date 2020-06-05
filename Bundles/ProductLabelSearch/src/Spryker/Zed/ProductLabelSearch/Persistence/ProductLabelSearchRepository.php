@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -30,5 +31,21 @@ class ProductLabelSearchRepository extends AbstractRepository implements Product
             ->endUse();
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param int[] $productLabelIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array
+    {
+        return $this->getFactory()
+            ->createSpyProductLabelProductAbstractQuery()
+            ->filterByFkProductLabel_In($productLabelIds)
+            ->select(SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->distinct()
+            ->find()
+            ->getData();
     }
 }

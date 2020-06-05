@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\DataImport\Business;
 
+use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterCollectionCollector;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterCollectionCollectorInterface;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporter;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporterInterface;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelper;
@@ -21,6 +24,7 @@ use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
@@ -47,11 +51,45 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DataImportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getImporterByConfigurationAction(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer)
+    {
+        $dataImporterCollectionCollector = $this->createDataImporterCollectionCollector();
+
+        return $dataImporterCollectionCollector->getDataImporterCollection(
+            $this->createDataImporterCollection(),
+            $dataImportConfigurationActionTransfer,
+            $this->getDataImporterByType($dataImportConfigurationActionTransfer)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\DataImporter\DataImporterCollectionCollectorInterface
+     */
+    public function createDataImporterCollectionCollector(): DataImporterCollectionCollectorInterface
+    {
+        return new DataImporterCollectionCollector($this->getDataImporterPlugins());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|null
+     */
+    public function getDataImporterByType(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer): ?DataImporterInterface
+    {
+        return null;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
     public function getImporter()
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterCollection */
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface $dataImporterCollection */
         $dataImporterCollection = $this->createDataImporterCollection();
 
         return $dataImporterCollection;
@@ -195,7 +233,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface
      */
     public function getCsvDataImporterWriterAwareFromConfig(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
     {

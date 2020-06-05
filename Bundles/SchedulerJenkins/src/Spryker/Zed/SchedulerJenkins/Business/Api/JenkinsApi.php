@@ -13,10 +13,11 @@ use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Executor\RequestExecutorInterface;
+use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceInterface;
 
 class JenkinsApi implements JenkinsApiInterface
 {
-    protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=string(//crumb)';
+    protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/json';
 
     protected const GET_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
     protected const CREATE_JOB_URL = 'createItem?name=%s';
@@ -29,7 +30,7 @@ class JenkinsApi implements JenkinsApiInterface
     protected const REQUEST_POST_METHOD = 'POST';
 
     protected const AUTH_KEY = 'auth';
-    protected const CRUMB_KEY = '.crumb';
+    protected const HEADER_COOKIE = 'Cookie';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface
@@ -42,15 +43,23 @@ class JenkinsApi implements JenkinsApiInterface
     protected $requestExecutor;
 
     /**
+     * @var \Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface $requestBuilder
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Executor\RequestExecutorInterface $requestExecutor
+     * @param \Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         RequestBuilderInterface $requestBuilder,
-        RequestExecutorInterface $requestExecutor
+        RequestExecutorInterface $requestExecutor,
+        SchedulerJenkinsToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->requestExecutor = $requestExecutor;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -179,8 +188,11 @@ class JenkinsApi implements JenkinsApiInterface
     protected function extendRequestWithCsrfToken(RequestInterface $request, ConfigurationProviderInterface $configurationProvider): RequestInterface
     {
         if ($configurationProvider->isJenkinsCsrfProtectionEnabled()) {
-            $csrfProtectionToken = $this->getCsrfToken($configurationProvider);
-            $request = $request->withHeader(static::CRUMB_KEY, $csrfProtectionToken);
+            $crumbIssuer = $this->getCrumbIssuer($configurationProvider);
+            $request = $request->withHeader($crumbIssuer['crumbRequestField'], $crumbIssuer['crumb']);
+            if ($crumbIssuer['cookie']) {
+                $request = $request->withHeader(static::HEADER_COOKIE, $crumbIssuer['cookie']);
+            }
         }
 
         return $request;
@@ -191,9 +203,9 @@ class JenkinsApi implements JenkinsApiInterface
      *
      * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
-     * @return string
+     * @return string[]
      */
-    protected function getCsrfToken(ConfigurationProviderInterface $configurationProvider): string
+    protected function getCrumbIssuer(ConfigurationProviderInterface $configurationProvider): array
     {
         $request = $this->requestBuilder->buildPsrRequest(
             static::REQUEST_GET_METHOD,
@@ -208,6 +220,9 @@ class JenkinsApi implements JenkinsApiInterface
             throw new InvalidJenkinsConfiguration('Cannot generate CSRF token. Please check that CSRF protection is enabled on Jenkins server.');
         }
 
-        return $payload;
+        $crumbIssuer = $this->utilEncodingService->decodeJson($payload, true);
+        $crumbIssuer['cookie'] = $responseTransfer->getCookie();
+
+        return $crumbIssuer;
     }
 }

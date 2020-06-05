@@ -53,15 +53,19 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
+        $quoteTransfer->requireStore();
+        $storeTransfer = $quoteTransfer->getStore();
         $upSellingProductAbstractIds = $this->findUpSellingAbstractProductIds($quoteTransfer);
 
         $relatedProducts = [];
-        foreach ($upSellingProductAbstractIds as $idUpSellingProductAbstract) {
-            $productStorageData = $this->productStorageClient->getProductAbstractStorageData($idUpSellingProductAbstract, $localeName);
+        $productStorageData = $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+            $upSellingProductAbstractIds,
+            $localeName,
+            $storeTransfer->getName()
+        );
 
-            if ($productStorageData !== null) {
-                $relatedProducts[] = $this->createProductView($localeName, $productStorageData);
-            }
+        foreach ($productStorageData as $productStorageDatum) {
+            $relatedProducts[] = $this->createProductView($localeName, $productStorageDatum);
         }
 
         return $relatedProducts;
@@ -74,8 +78,10 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {
+        $quoteTransfer->requireStore();
         $productAbstractIds = $this->findSubjectProductAbstractIds($quoteTransfer);
-        $relationIds = $this->findRelationIds($productAbstractIds);
+        $storeTransfer = $quoteTransfer->getStore();
+        $relationIds = $this->findRelationIds($productAbstractIds, $storeTransfer->getName());
 
         return $this->getSortedProductAbstractIds($relationIds);
     }
@@ -103,15 +109,16 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
+     * @param string $storeName
      *
      * @return array
      */
-    protected function findRelationIds(array $productAbstractIds)
+    protected function findRelationIds(array $productAbstractIds, string $storeName)
     {
         $relationIds = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $relationIds = array_replace($relationIds, $this->getRelationIds($idProductAbstract));
+            $relationIds = array_replace($relationIds, $this->getRelationIds($idProductAbstract, $storeName));
         }
 
         return $relationIds;
@@ -119,12 +126,13 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
 
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return array
      */
-    protected function getRelationIds($idProductAbstract)
+    protected function getRelationIds($idProductAbstract, string $storeName)
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $storeName);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];

@@ -10,8 +10,10 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Sub
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferStoreEvents;
+use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductConcreteOffersStorageMerchantPublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductConcreteOffersStoragePublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductConcreteOffersStorageUnpublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
@@ -31,6 +33,9 @@ class MerchantProductOfferStorageEventSubscriber extends AbstractPlugin implemen
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new ProductConcreteOffersStorageMerchantPublishListener(), 0, null, $this->getConfig()->getMerchantProductOfferEventQueueName());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new ProductConcreteOffersStorageMerchantPublishListener(), 0, null, $this->getConfig()->getMerchantProductOfferEventQueueName());
+
         $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getMerchantProductOfferEventQueueName());
         $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getMerchantProductOfferEventQueueName());
         $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getMerchantProductOfferEventQueueName());

@@ -51,7 +51,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     }
 
     /**
-     * @deprecated Use updateItemQuantity() instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -131,6 +131,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItem((new ItemTransfer())
                 ->setSku($cartItemRequestTransfer->getSku())
+                ->setGroupKey($cartItemRequestTransfer->getGroupKey())
                 ->setQuantity($cartItemRequestTransfer->getQuantity()))
             ->setCustomer($cartItemRequestTransfer->getCustomer());
     }

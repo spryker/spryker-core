@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <product-relation-gui>
+                <label>Product Relations</label>
+                <title>Product Relations</title>
+                <bundle>product-relation-gui</bundle>
+                <controller>list</controller>
+                <action>index</action>
+                <visible>2</visible>
+
+                <pages>
+                    <product-relations-create>
+                        <label>Create Product Relation</label>
+                        <title>Create Product Relation</title>
+                        <bundle>product-relation-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-relations-create>
+
+                    <product-relations-edit>
+                        <label>Edit Product Relation</label>
+                        <title>Edit Product Relation</title>
+                        <bundle>product-relation-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-relations-edit>
+
+                    <product-relations-view>
+                        <label>View Product Relation</label>
+                        <title>View Product Relation</title>
+                        <bundle>product-relation-gui</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-relations-view>
+                </pages>
+            </product-relation-gui>
+        </pages>
+    </product>
+</config>

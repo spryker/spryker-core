@@ -13,6 +13,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
+use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -45,28 +46,36 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
     protected $categoryTree;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface
+     */
+    protected $categoryNodePublisher;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
+     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
      */
     public function __construct(
         ClosureTableWriterInterface $closureTableWriter,
         CategoryQueryContainerInterface $queryContainer,
         TransferGeneratorInterface $transferGenerator,
         CategoryToucherInterface $categoryToucher,
-        CategoryTreeInterface $categoryTree
+        CategoryTreeInterface $categoryTree,
+        CategoryNodePublisherInterface $categoryNodePublisher
     ) {
         $this->closureTableWriter = $closureTableWriter;
         $this->queryContainer = $queryContainer;
         $this->transferGenerator = $transferGenerator;
         $this->categoryToucher = $categoryToucher;
         $this->categoryTree = $categoryTree;
+        $this->categoryNodePublisher = $categoryNodePublisher;
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
      *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -119,6 +128,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->closureTableWriter->create($categoryNodeTransfer);
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -166,6 +176,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -302,6 +313,8 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         } while ($childrenMoved > 0);
 
         $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($categoryNodeEntity->getIdCategoryNode());
+
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
 
         $categoryNodeEntity->delete();

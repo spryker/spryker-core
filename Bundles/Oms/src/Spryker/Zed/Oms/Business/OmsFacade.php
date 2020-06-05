@@ -9,6 +9,8 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -690,5 +692,53 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
         return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateHistory(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createStateHistoryExpander()
+            ->expandOrderItemsWithStateHistory($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithOmsStates(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandOrderWithOmsStates($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return string[][]
+     */
+    public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        return $this->getFactory()
+            ->createStateMachineReader()
+            ->getOrderItemManualEvents($orderItemFilterTransfer);
     }
 }

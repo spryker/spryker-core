@@ -28,6 +28,20 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     *
+     * @return array
+     */
+    public function translateProductMeasurementSalesUnits(array $productMeasurementSalesUnitTransfers): array
+    {
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            $this->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
+        }
+
+        return $productMeasurementSalesUnitTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
