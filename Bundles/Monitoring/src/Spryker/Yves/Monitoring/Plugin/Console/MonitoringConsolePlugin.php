@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Monitoring\Plugin\Console;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Monitoring\MonitoringFactory;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,16 +30,17 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      */
     public function onConsoleTerminate(ConsoleTerminateEvent $event): void
     {
+        $factory = $this->getFactory();
         $transactionName = $this->getTransactionName($event);
-        $hostName = $this->getFactory()->getUtilNetworkService()->getHostName();
-        $monitoring = $this->getFactory()->getMonitoringService();
+        $hostName = $factory->getUtilNetworkService()->getHostName();
+        $monitoring = $factory->getMonitoringService();
 
         $monitoring->markAsConsoleCommand();
         $monitoring->setTransactionName($transactionName);
         $monitoring->addCustomParameter('host', $hostName);
 
-        $this->addArgumentsAsCustomParameter($event);
-        $this->addOptionsAsCustomParameter($event);
+        $this->addArgumentsAsCustomParameter($event, $factory);
+        $this->addOptionsAsCustomParameter($event, $factory);
     }
 
     /**
@@ -67,32 +69,35 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
 
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
+     * @param \Spryker\Yves\Monitoring\MonitoringFactory $factory
      *
      * @return void
      */
-    protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event): void
+    protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event, MonitoringFactory $factory): void
     {
-        $this->addCustomParameter($event->getInput()->getArguments());
+        $this->addCustomParameter($event->getInput()->getArguments(), $factory);
     }
 
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
+     * @param \Spryker\Yves\Monitoring\MonitoringFactory $factory
      *
      * @return void
      */
-    protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event): void
+    protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event, MonitoringFactory $factory): void
     {
-        $this->addCustomParameter($event->getInput()->getOptions());
+        $this->addCustomParameter($event->getInput()->getOptions(), $factory);
     }
 
     /**
      * @param array $customParameter
+     * @param \Spryker\Yves\Monitoring\MonitoringFactory $factory
      *
      * @return void
      */
-    protected function addCustomParameter(array $customParameter): void
+    protected function addCustomParameter(array $customParameter, MonitoringFactory $factory): void
     {
-        $monitoring = $this->getFactory()->getMonitoringService();
+        $monitoring = $factory->getMonitoringService();
 
         foreach ($customParameter as $key => $value) {
             if (is_array($value)) {
