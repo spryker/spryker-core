@@ -25,5 +25,5 @@ interface MonitoringFacadeInterface
      *
      * @return void
      */
-    public function handleOnConsoleTerminateEvent(ConsoleTerminateEvent $event): void;
+    public function handleConsoleTerminateEvent(ConsoleTerminateEvent $event): void;
 }
