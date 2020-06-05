@@ -56,8 +56,6 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @param string[] $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]

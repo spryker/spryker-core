@@ -32,9 +32,6 @@ interface ContentRepositoryInterface
     public function findContentByKey(string $contentKey): ?ContentTransfer;
 
     /**
-     * Specification:
-     * - Gets content by content keys.
-     *
      * @param string[] $contentKeys
      *
      * @return \Generated\Shared\Transfer\ContentTransfer[]

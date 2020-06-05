@@ -27,13 +27,13 @@ class CmsContentItemKeyMapper implements CmsContentItemKeyMapperInterface
     /**
      * @phpstan-return array<string, string>
      *
-     * @param string[] $keyList
+     * @param string[] $contentItemKeys
      *
      * @return string[]
      */
-    public function mapContentItemKeyList(array $keyList): array
+    public function mapContentItemKeys(array $contentItemKeys): array
     {
-        $contentTransferCollection = $this->contentFacade->getContentByKeys($keyList);
+        $contentTransferCollection = $this->contentFacade->getContentByKeys($contentItemKeys);
 
         $contentItemKeys = [];
         foreach ($contentTransferCollection as $contentTransfer) {

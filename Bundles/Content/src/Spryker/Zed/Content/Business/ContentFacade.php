@@ -57,7 +57,7 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      */
     public function getContentByKeys(array $contentKeys): array
     {
-        return $this->getFactory()->createContentReader()->getContentByKeys($contentKeys);
+        return $this->getRepository()->getContentByKeys($contentKeys);
     }
 
     /**

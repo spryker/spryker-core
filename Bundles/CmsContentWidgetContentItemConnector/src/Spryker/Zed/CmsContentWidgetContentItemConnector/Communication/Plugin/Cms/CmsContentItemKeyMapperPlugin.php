@@ -18,17 +18,18 @@ class CmsContentItemKeyMapperPlugin extends AbstractPlugin implements CmsContent
 {
     /**
      * {@inheritDoc}
+     * - Maps given content item keys to corresponding persistent keys.
      *
      * @api
      *
      * @phpstan-return array<string, string>
      *
-     * @param string[] $parameters
+     * @param string[] $contentItemKeys
      *
      * @return string[]
      */
-    public function map(array $parameters)
+    public function map(array $contentItemKeys)
     {
-        return $this->getFacade()->mapContentItemKeyList($parameters);
+        return $this->getFacade()->mapContentItemKeys($contentItemKeys);
     }
 }

@@ -41,7 +41,6 @@ interface ContentFacadeInterface
     /**
      * Specification:
      * - Gets content by content keys.
-     * - Returns ContentTransfer[] if found, otherwise it returns empty array.
      *
      * @api
      *

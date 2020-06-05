@@ -44,14 +44,4 @@ class ContentReader implements ContentReaderInterface
     {
         return $this->contentRepository->findContentByKey($contentKey);
     }
-
-    /**
-     * @param string[] $contentKeys
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
-     */
-    public function getContentByKeys(array $contentKeys): array
-    {
-        return $this->contentRepository->getContentByKeys($contentKeys);
-    }
 }

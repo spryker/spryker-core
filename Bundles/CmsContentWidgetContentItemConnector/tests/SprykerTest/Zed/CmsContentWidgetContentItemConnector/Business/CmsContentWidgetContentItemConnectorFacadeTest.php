@@ -41,7 +41,7 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
         ]);
 
         // Act
-        $foundArray = $this->tester->getFacade()->mapContentItemKeyList([static::CONTENT_KEY]);
+        $foundArray = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
 
         // Assert
         $this->assertNotEmpty($foundArray);
@@ -62,7 +62,7 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
         ]);
 
         // Act
-        $foundArray = $this->tester->getFacade()->mapContentItemKeyList([static::CONTENT_KEY]);
+        $foundArray = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
 
         // Assert
         $this->assertEmpty($foundArray);

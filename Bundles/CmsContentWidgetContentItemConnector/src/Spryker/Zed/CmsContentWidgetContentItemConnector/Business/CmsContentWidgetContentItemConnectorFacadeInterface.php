@@ -11,15 +11,16 @@ interface CmsContentWidgetContentItemConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Check given content item key for existence.
+     * - Check given content item keys for existence.
+     * - Maps given content item keys to corresponding persistent keys.
      *
      * @api
      *
      * @phpstan-return array<string, string>
      *
-     * @param string[] $keyList
+     * @param string[] $contentItemKeys
      *
      * @return string[]
      */
-    public function mapContentItemKeyList(array $keyList): array;
+    public function mapContentItemKeys(array $contentItemKeys): array;
 }
