@@ -42,3 +42,6 @@ View,View
 "View Customer","View Customer"
 "Zed Account Reference","Zed Account Reference"
 ZipCode,ZipCode
+"Registration Date",Registrierungsdatum
+"Billing Address","Billing Address"
+"Shipping Address","Shipping Address"

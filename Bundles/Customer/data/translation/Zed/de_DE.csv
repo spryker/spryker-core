@@ -31,7 +31,7 @@ Email,E-Mail
 Gender,Geschlecht
 "Last name",Nachname
 "List Customers","Liste der Kunden"
-Locale,Locale
+Locale,Gebietsschema
 Phone,Telefon
 "Registered at","Eingetragen bei"
 Salutation,Anrede
@@ -42,3 +42,6 @@ View,Ansicht
 "View Customer","Kunden anzeigen"
 "Zed Account Reference",Zed-Konto-Referenz
 ZipCode,Postleitzahl
+"Registration Date",Registrierungsdatum
+"Billing Address",Rechnungsadresse
+"Shipping Address",Lieferanschrift
