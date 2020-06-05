@@ -14,8 +14,8 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            <p>You are trying to delete user: <b>{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.LastName }}</b></p>
-            <p>It will be deleted from everywhere</p>
+            <p>{{ 'You are trying to delete user' | trans }}: <b>{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.LastName }}</b></p>
+            <p>{{ 'It will be deleted from everywhere' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans}}</a>
                 <a href="{{ url('/company-user-gui/delete-company-user/delete', {'id-company-user': companyUser.idCompanyUser}) }}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans}}</a>

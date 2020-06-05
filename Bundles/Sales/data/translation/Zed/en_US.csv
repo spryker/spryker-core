@@ -6,7 +6,7 @@ Addresses,Addresses
 "Canceled amount","Canceled amount"
 "Cart Notes","Cart Notes"
 Comments,Comments
-"Customer Full Name ","Customer Full Name"
+"Customer Full Name","Customer Full Name"
 "Customer successfully updated.","Customer successfully updated."
 Discount,Discount
 "GRAND TOTAL","Grand Total"
@@ -51,5 +51,16 @@ Totals,Totals
 "View Order","View Order"
 "View Order:","View Order:"
 "Remuneration total","Remuneration total"
+"Trigger all matching states inside this order","Trigger all matching states inside this order"
+"Previous orders count","Previous orders count"
+Name,Name
+E-mail,E-mail
+"Order date","Order date"
+Refunds,Refunds
+"Discounts & Vouchers","Discounts & Vouchers"
+"Order Items","Order Items"
+Reference,Reference
+"Order Overview","Order Overview"
+"Total taxes","Total taxes"
 Refunds,Refunds
 Reclamations,Reclamations

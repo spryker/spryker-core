@@ -3,7 +3,7 @@
 {% embed '@Gui/Partials/widget.twig' %}
 
     {% block widget_title %}
-        <h5>Order
+        <h5>{{ 'Order' | trans }}
         <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}"
            target="_blank"
         >

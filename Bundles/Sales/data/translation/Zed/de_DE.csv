@@ -6,7 +6,7 @@ Addresses,Adressen
 "Canceled amount","Stornierter Betrag"
 "Cart Notes","Einkaufswagen Notizen"
 Comments,Kommentare
-"Customer Full Name ","Vollständiger Name des Kunden"
+"Customer Full Name","Vollständiger Name des Kunden"
 "Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
@@ -44,12 +44,23 @@ State,Status
 Subtotal,Zwischensumme
 Totals,Gesamtsummen
 "Trigger all matching states","Alle passenden Stati antriggern"
-"Trigger event","Trigger Event"
+"Trigger event","Event auslösen"
 "Unique Product Quantity","Unique Product Quantity"
 "Unit Price",Stückpreis
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"
 "View Order:","Bestellung anzeigen:"
 "Remuneration total",Rückerstattungsbetrag
+"Trigger all matching states inside this order","Alle übereinstimmenden Stati innerhalb dieser Bestellung auslösen"
+"Previous orders count","Anzahl der vorherigen Bestellungen des Kunden"
+Name,Name
+E-mail,E-mail
+"Order date",Bestelldatum
+Refunds,Rückerstattung
+"Discounts & Vouchers","Rabatte und Gutscheine"
+"Order Items",Auftragspositionen
+Reference,Referenz
+"Order Overview",Bestellübersicht
+"Total taxes","Gesamtsumme Steuern"
 Refunds,Rückerstattung
 Reclamations,Reklamationen

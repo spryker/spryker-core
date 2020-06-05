@@ -90,7 +90,7 @@ class OrderReturnTable extends AbstractTable
         $config->setUrl(sprintf('table?%s=%s', static::PARAM_ID_ORDER, $this->orderTransfer->getIdSalesOrder()));
 
         $config->setHeader([
-            static::COL_RETURN_REFERENCE => 'Return reference',
+            static::COL_RETURN_REFERENCE => 'Return Reference',
             static::COL_ITEMS => 'Items',
             static::COL_REMUNERATION_TOTAL => 'Remuneration total',
             static::COL_ACTIONS => 'Actions',

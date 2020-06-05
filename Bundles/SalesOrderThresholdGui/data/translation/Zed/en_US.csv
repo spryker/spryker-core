@@ -8,3 +8,6 @@ Save,Save
 "The Global Threshold is saved successfully.","The Global Threshold is saved successfully."
 Threshold,Threshold
 "You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>","You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>"
+"The Global Thresholds is saved successfully.","The Global Thresholds is saved successfully."
+"Store and Currency","Region und Währung"
+"Enter threshold value","Schwellenwert eingeben"

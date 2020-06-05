@@ -8,3 +8,6 @@ Save,Speichern
 "The Global Threshold is saved successfully.","Der globale Grenzwert wurde erfolgreich gespeichert."
 Threshold,Schwellenwert
 "You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>","Sie können die Platzhalter <b>{{threshold}}</b> <b>{{fee}}</b> benutzen"
+"The Global Thresholds is saved successfully.","Die globalen Bestellschwellen werden erfolgreich gespeichert."
+"Store and Currency","Region und Währung"
+"Enter threshold value","Schwellenwert eingeben"

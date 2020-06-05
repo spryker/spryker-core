@@ -8,3 +8,10 @@ Create,Create
 "Repeat Password","Repeat Password"
 Save,Save
 Update,Update
+"Last Login","Last Login"
+"User entity was not created.","User entity was not created."
+"User entity was not updated.","User entity was not updated."
+"User was not activated.","User was not activated."
+"User was not deactivated.","User was not deactivated."
+"User was not deleted.","User was not deleted."
+User,User

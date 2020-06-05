@@ -7,4 +7,11 @@ Create,Erstellen
 "List Users","Liste der Benutzer"
 "Repeat Password","Passwort wiederholen"
 Save,Speichern
-Update,Update
+Update,Aktualisieren
+"Last Login","Letzte Anmeldung"
+"User entity was not created.","Der User wurde nicht erstellt."
+"User entity was not updated.","Der User wurde nicht aktualisiert."
+"User was not activated.","Der User wurde nicht aktiviert."
+"User was not deactivated.","Der User wurde nicht deaktiviert."
+"User was not deleted.","Der User wurde nicht gelöscht."
+User,Benutzer

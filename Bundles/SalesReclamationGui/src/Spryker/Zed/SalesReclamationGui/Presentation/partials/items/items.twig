@@ -7,7 +7,7 @@
 {% endset %}
 
 {% set widget_header_content %}
-    Reclamation state: {{ reclamation.stete }}
+    {{ 'Reclamation state' | trans ~ ': ' ~ reclamation.stete }}
 {% endset %}
 
 {% embed '@Gui/Partials/widget.twig' with {
