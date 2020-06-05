@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOffer\Communication\Plugin\Cart;
+namespace Spryker\Zed\ProductOffer\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantProductOffer\MerchantProductOfferConfig getConfig()
+ * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
  */
 class ProductOfferCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {

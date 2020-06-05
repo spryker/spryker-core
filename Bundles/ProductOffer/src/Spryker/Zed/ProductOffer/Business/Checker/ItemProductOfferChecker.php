@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOffer\Business\Checker;
+namespace Spryker\Zed\ProductOffer\Business\Checker;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
 {
@@ -20,17 +20,17 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
-     * @var \Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface
+     * @var \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface
      */
-    protected $merchantProductOfferRepository;
+    protected $productOfferRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOffer\Persistence\MerchantProductOfferRepositoryInterface $merchantProductOfferRepository
+     * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
      */
     public function __construct(
-        MerchantProductOfferRepositoryInterface $merchantProductOfferRepository
+        ProductOfferRepositoryInterface $productOfferRepository
     ) {
-        $this->merchantProductOfferRepository = $merchantProductOfferRepository;
+        $this->productOfferRepository = $productOfferRepository;
     }
 
     /**
@@ -56,11 +56,11 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             return $cartPreCheckResponseTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true);
 
-        $productOfferTransfers = $this->merchantProductOfferRepository
+        $productOfferTransfers = $this->productOfferRepository
             ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
             ->getProductOffers();
 

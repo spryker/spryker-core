@@ -74,6 +74,25 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollectionTransfer(
+        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+    ): ProductOfferCollectionTransfer {
+        $productOfferQuery = $this->applyFilters(
+            $this->getFactory()->createProductOfferPropelQuery(),
+            $productOfferCriteriaFilterTransfer
+        );
+        $productOfferEntities = $productOfferQuery->find();
+
+        return $this->getFactory()
+            ->createPropelProductOfferMapper()
+            ->mapProductOfferEntityCollectionToProductOfferTransferCollection($productOfferEntities, new ProductOfferCollectionTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOfferEntity
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject

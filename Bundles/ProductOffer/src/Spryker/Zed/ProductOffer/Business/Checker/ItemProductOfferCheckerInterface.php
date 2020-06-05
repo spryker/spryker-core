@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOffer\Business\Checker;
+namespace Spryker\Zed\ProductOffer\Business\Checker;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
