@@ -11,7 +11,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/publisher-extension": "^1.0.0",
-    "spryker/sales-return": "^0.2.0",
+    "spryker/sales-return": "^1.0.0",
     "spryker/search": "^8.0.0",
     "spryker/search-extension": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
