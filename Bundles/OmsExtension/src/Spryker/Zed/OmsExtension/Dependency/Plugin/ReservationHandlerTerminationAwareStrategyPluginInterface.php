@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 /**
  * Provides ability to check if plugins should be executed.
+ *
+ * Use this plugin to update availability of reserved products.
  */
 interface ReservationHandlerTerminationAwareStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if executions of plugins should be terminated.
+     * - Returns true if execution of plugins should be terminated.
      *
      * @api
      *

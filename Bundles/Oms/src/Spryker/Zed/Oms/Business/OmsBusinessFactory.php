@@ -29,6 +29,8 @@ use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Reader\ReservationReader;
+use Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface;
 use Spryker\Zed\Oms\Business\Reader\StateMachineReader;
 use Spryker\Zed\Oms\Business\Reader\StateMachineReaderInterface;
 use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
@@ -247,17 +249,28 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilReservation()
     {
         return new Reservation(
-            $this->createActiveProcessFetcher(),
-            $this->getQueryContainer(),
+            $this->createReservationReader(),
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getOmsReservationReaderStrategyPlugins(),
-            $this->getReservationAggregationStrategyPlugins(),
-            $this->getOmsReservationAggregationPlugins(),
             $this->getOmsReservationWriterStrategyPlugins(),
             $this->getReservationHandlerTerminationAwareStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface
+     */
+    public function createReservationReader(): ReservationReaderInterface
+    {
+        return new ReservationReader(
+            $this->getRepository(),
+            $this->getStoreFacade(),
+            $this->createActiveProcessFetcher(),
+            $this->getOmsReservationReaderStrategyPlugins(),
+            $this->getReservationAggregationStrategyPlugins(),
+            $this->getOmsReservationAggregationPlugins()
         );
     }
 

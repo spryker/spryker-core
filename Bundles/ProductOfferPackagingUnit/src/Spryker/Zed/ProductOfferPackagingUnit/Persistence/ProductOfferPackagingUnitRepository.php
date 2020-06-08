@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
-use ArrayObject;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -25,26 +24,22 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
      * @module Oms
      * @module Sales
      *
-     * @param string $sku
-     * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers
-     * @param string|null $productOfferReference
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getAggregatedReservations(
-        string $sku,
-        ArrayObject $omsStateTransfers,
-        ?string $productOfferReference = null,
-        ?StoreTransfer $storeTransfer = null
-    ): array {
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
+    {
+        $reservationRequestTransfer->requireSku();
+        $reservationRequestTransfer->requireReservedStates();
+
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemPropelQuery()
-            ->filterByProductOfferReference($productOfferReference)
+            ->filterByProductOfferReference($reservationRequestTransfer->getProductOfferReference())
             ->groupByAmountSku()
             ->groupByProductOfferReference()
             ->useStateQuery()
-                ->filterByName_In(array_keys($omsStateTransfers->getArrayCopy()))
+                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
@@ -55,21 +50,22 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
             ->withColumn(
                 sprintf(
-                    'CASE WHEN %s IS NOT NULL THEN SUM(%s) ELSE SUM(%s) END',
+                    "CASE WHEN %s = '%s' THEN SUM(%s) ELSE SUM(%s) END",
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    $reservationRequestTransfer->getSku(),
                     SpySalesOrderItemTableMap::COL_AMOUNT,
                     SpySalesOrderItemTableMap::COL_QUANTITY
                 ),
                 SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
             );
-            $salesOrderItemQuery = $salesOrderItemQuery->condition('sku', 'spy_sales_order_item.sku = ?', $sku)
-                ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $sku)
+            $salesOrderItemQuery = $salesOrderItemQuery->condition('sku', 'spy_sales_order_item.sku = ?', $reservationRequestTransfer->getSku())
+                ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $reservationRequestTransfer->getSku())
                 ->where(['sku', 'amount_sku'], Criteria::LOGICAL_OR);
 
-        if ($storeTransfer !== null) {
+        if ($reservationRequestTransfer->getStore() !== null) {
             $salesOrderItemQuery
                 ->useOrderQuery()
-                    ->filterByStore($storeTransfer->getName())
+                    ->filterByStore($reservationRequestTransfer->getStore()->getName())
                 ->endUse();
         }
 

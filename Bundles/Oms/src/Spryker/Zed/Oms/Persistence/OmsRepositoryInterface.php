@@ -60,4 +60,19 @@ interface OmsRepositoryInterface
      * @return \Generated\Shared\Transfer\OmsProductReservationTransfer|null
      */
     public function findProductReservation(ReservationRequestTransfer $reservationRequestTransfer): ?OmsProductReservationTransfer;
+
+    /**
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function findProductReservationQuantity(string $sku, int $idStore): Decimal;
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer[]
+     */
+    public function findProductReservationStores(string $sku): array;
 }

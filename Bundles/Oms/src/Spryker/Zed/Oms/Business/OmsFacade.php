@@ -314,7 +314,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
 
@@ -331,7 +331,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
 
@@ -348,7 +348,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
     }
 
@@ -613,7 +613,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
+        return $this->getFactory()->createReservationReader()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
 
     /**
@@ -712,7 +712,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
+        return $this->getFactory()->createReservationReader()->getOmsReservedStateCollection();
     }
 
     /**
@@ -774,6 +774,6 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
     {
-        return $this->getFactory()->createUtilReservation()->getOmsReservedProductQuantity($reservationRequestTransfer);
+        return $this->getFactory()->createReservationReader()->getOmsReservedProductQuantity($reservationRequestTransfer);
     }
 }

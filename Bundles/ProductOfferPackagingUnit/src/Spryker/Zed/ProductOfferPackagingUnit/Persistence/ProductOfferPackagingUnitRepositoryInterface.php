@@ -7,23 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
 
-use ArrayObject;
-use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 interface ProductOfferPackagingUnitRepositoryInterface
 {
     /**
-     * @param string $sku
-     * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $omsStateTransfers
-     * @param string|null $productOfferReference
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getAggregatedReservations(
-        string $sku,
-        ArrayObject $omsStateTransfers,
-        ?string $productOfferReference = null,
-        ?StoreTransfer $storeTransfer = null
-    ): array;
+    public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array;
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\OmsProductOfferReservation\Business\Mapper;
 use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 
-class OmsProductOfferReservationBusinessMapper
+class OmsProductOfferReservationMapper
 {
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer

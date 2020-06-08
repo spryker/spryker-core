@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\OmsReservation;
+namespace Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms;
 
 use Generated\Shared\Transfer\OmsProductOfferReservationCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;

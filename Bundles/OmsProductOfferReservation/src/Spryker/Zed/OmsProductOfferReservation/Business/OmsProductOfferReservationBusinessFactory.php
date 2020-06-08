@@ -8,7 +8,7 @@
 namespace Spryker\Zed\OmsProductOfferReservation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationBusinessMapper;
+use Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationMapper;
 use Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationReader;
 use Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationReaderInterface;
 use Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservation\OmsProductOfferReservationWriter;
@@ -37,15 +37,15 @@ class OmsProductOfferReservationBusinessFactory extends AbstractBusinessFactory
         return new OmsProductOfferReservationWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createOmsProductOfferReservationBusinessMapper()
+            $this->createOmsProductOfferReservationMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationBusinessMapper
+     * @return \Spryker\Zed\OmsProductOfferReservation\Business\Mapper\OmsProductOfferReservationMapper
      */
-    public function createOmsProductOfferReservationBusinessMapper(): OmsProductOfferReservationBusinessMapper
+    public function createOmsProductOfferReservationMapper(): OmsProductOfferReservationMapper
     {
-        return new OmsProductOfferReservationBusinessMapper();
+        return new OmsProductOfferReservationMapper();
     }
 }

@@ -11,7 +11,7 @@ interface ProductOfferAvailabilityStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Extracts oms product reservation ids from event transfers.
+     * - Extracts oms product offer reservation ids from event transfers.
      * - Gets availability for product offer oms product reservation ids.
      * - Saves product offer availability to storage.
      *

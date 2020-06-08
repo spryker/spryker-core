@@ -46,18 +46,13 @@ class OmsProductOfferReservationReader implements OmsProductOfferReservationRead
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function getAggregatedReservations(ReservationRequestTransfer $reservationRequestTransfer): array
     {
         $reservationRequestTransfer->requireSku();
         $reservationRequestTransfer->requireReservedStates();
 
-        return $this->omsProductOfferReservationRepository->getAggregatedReservations(
-            $reservationRequestTransfer->getSku(),
-            $reservationRequestTransfer->getReservedStates()->getStates(),
-            $reservationRequestTransfer->getProductOfferReference(),
-            $reservationRequestTransfer->getStore()
-        );
+        return $this->omsProductOfferReservationRepository->getAggregatedReservations($reservationRequestTransfer);
     }
 }

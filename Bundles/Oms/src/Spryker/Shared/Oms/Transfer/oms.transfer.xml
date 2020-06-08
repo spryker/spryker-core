@@ -143,6 +143,7 @@
 
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
 </transfers>

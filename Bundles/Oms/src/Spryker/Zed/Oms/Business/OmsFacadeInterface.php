@@ -614,7 +614,8 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Updates reservation quantity for a given ReservationRequest.
+     *  - Updates reservation quantity for different entities from a given ReservationRequest.
+     *  - Executes plugin stack for updating reservation quantity by provided options in ReservationRequest.
      *
      * @api
      *
@@ -679,6 +680,7 @@ interface OmsFacadeInterface
     /**
      * Specification:
      * - Returns reserved quantity for provided ReservationRequest.
+     * - Executes plugin stack to get reserved quantity for an entity by provided options in ReservationRequest.
      *
      * @api
      *

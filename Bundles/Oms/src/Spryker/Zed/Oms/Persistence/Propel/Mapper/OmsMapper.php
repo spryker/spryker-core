@@ -9,7 +9,9 @@ namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationStore;
 
 class OmsMapper
 {
@@ -40,5 +42,19 @@ class OmsMapper
         OmsProductReservationTransfer $omsProductReservationTransfer
     ): OmsProductReservationTransfer {
         return $omsProductReservationTransfer->fromArray($omsProductReservationEntity->toArray());
+    }
+
+    /**
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStore $omsProductReservationStoreEntity
+     * @param \Generated\Shared\Transfer\ReservationResponseTransfer $reservationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function mapOmsProductReservationStoreEntityToReservationResponseTransfer(
+        SpyOmsProductReservationStore $omsProductReservationStoreEntity,
+        ReservationResponseTransfer $reservationResponseTransfer
+    ) {
+        return $reservationResponseTransfer->setStoreName($omsProductReservationStoreEntity->getStore())
+            ->setReservationQuantity($omsProductReservationStoreEntity->getReservationQuantity());
     }
 }
