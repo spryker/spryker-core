@@ -195,8 +195,8 @@ abstract class AbstractTable
     protected function initialize(Request $request): void
     {
         $this->searchTerm = $request->query->get(static::PARAM_SEARCH_TERM);
-        $this->page = $request->query->get(static::PARAM_PAGE, static::DEFAULT_PAGE);
-        $this->pageSize = $request->query->get(static::PARAM_PAGE_SIZE, static::DEFAULT_PAGE_SIZE);
+        $this->page = $request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE);
+        $this->pageSize = $request->query->getInt(static::PARAM_PAGE_SIZE, static::DEFAULT_PAGE_SIZE);
         $this->setSorting($request);
         $this->setFilters($request);
     }
