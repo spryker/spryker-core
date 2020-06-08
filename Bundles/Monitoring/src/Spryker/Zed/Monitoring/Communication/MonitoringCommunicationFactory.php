@@ -17,6 +17,7 @@ use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInte
 use Spryker\Zed\Monitoring\MonitoringDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringCommunicationFactory extends AbstractCommunicationFactory
