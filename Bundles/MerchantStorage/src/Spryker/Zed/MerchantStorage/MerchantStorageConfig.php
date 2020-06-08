@@ -30,14 +30,4 @@ class MerchantStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @api
-     *
-     * @return string|null
-     */
-    public function getMerchantProfileEventQueueName(): ?string
-    {
-        return null;
-    }
 }
