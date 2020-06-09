@@ -97,7 +97,7 @@
     </transfer>
 
     <transfer name="SelectGuiTableFilterTypeOptions">
-        <property name="multiselect" type="boolean"/>
+        <property name="multiselect" type="bool"/>
         <property name="values" type="OptionSelectGuiTableFilterTypeOptions[]" singular="value"/>
     </transfer>
 
