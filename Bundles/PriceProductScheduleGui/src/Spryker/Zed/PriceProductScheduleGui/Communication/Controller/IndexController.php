@@ -27,8 +27,8 @@ class IndexController extends AbstractController
      */
     public function abstractProductTableAction(Request $request): JsonResponse
     {
-        $idProductAbstract = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
-        $idPriceType = $request->query->get(static::REQUEST_KEY_ID_PRICE_TYPE);
+        $idProductAbstract = $request->query->getInt(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
+        $idPriceType = $request->query->getInt(static::REQUEST_KEY_ID_PRICE_TYPE);
         $priceProductScheduleTable = $this->getFactory()
             ->createPriceProductScheduleAbstractTable($idProductAbstract, $idPriceType);
 
@@ -44,9 +44,9 @@ class IndexController extends AbstractController
      */
     public function concreteProductTableAction(Request $request): JsonResponse
     {
-        $idProductConcrete = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_CONCRETE);
-        $idPriceType = $request->query->get(static::REQUEST_KEY_ID_PRICE_TYPE);
-        $idProductAbstract = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
+        $idProductConcrete = $request->query->getInt(static::REQUEST_KEY_ID_PRODUCT_CONCRETE);
+        $idPriceType = $request->query->getInt(static::REQUEST_KEY_ID_PRICE_TYPE);
+        $idProductAbstract = $request->query->getInt(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
         $priceProductScheduleTable = $this->getFactory()
             ->createPriceProductScheduleConcreteTable(
                 $idProductConcrete,

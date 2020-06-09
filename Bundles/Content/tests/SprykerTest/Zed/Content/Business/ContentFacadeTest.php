@@ -25,9 +25,9 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
  */
 class ContentFacadeTest extends Test
 {
-    private const NAME = 'New name';
-    private const PARAMETERS = '{"sku"}';
-    private const DESCRIPTION = 'Test description';
+    protected const NAME = 'New name';
+    protected const PARAMETERS = '{"sku"}';
+    protected const DESCRIPTION = 'Test description';
     protected const KEY = 'name-1';
 
     /**

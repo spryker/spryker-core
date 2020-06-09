@@ -46,7 +46,7 @@ class RefundTotalCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return mixed
+     * @return int
      */
     protected function calculateItemOptionTotalRefundAmount(ItemTransfer $itemTransfer)
     {
