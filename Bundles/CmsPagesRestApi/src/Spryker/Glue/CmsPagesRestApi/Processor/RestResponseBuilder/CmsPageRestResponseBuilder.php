@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\CmsPageStorageTransfer;
 use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
+use Generated\Shared\Transfer\RestCmsPageTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -30,32 +30,32 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer $cmsPageStorageTransfer
+     * @param string $cmsPageUuid
+     * @param \Generated\Shared\Transfer\RestCmsPageTransfer $restCmsPageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageRestResponse(CmsPageStorageTransfer $cmsPageStorageTransfer): RestResponseInterface
+    public function createCmsPageRestResponse(string $cmsPageUuid, RestCmsPageTransfer $restCmsPageTransfer): RestResponseInterface
     {
-        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageStorageTransfer);
+        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageUuid, $restCmsPageTransfer);
 
         return $this->restResourceBuilder->createRestResponse()->addResource($cmsPageRestResource);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer $cmsPageStorageTransfer
+     * @param string $cmsPageUuid
+     * @param \Generated\Shared\Transfer\RestCmsPageTransfer $restCmsPageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function createCmsPageRestResource(
-        CmsPageStorageTransfer $cmsPageStorageTransfer
+        string $cmsPageUuid,
+        RestCmsPageTransfer $restCmsPageTransfer
     ): RestResourceInterface {
-        $restCmsPageAttributesTransfer = (new RestCmsPagesAttributesTransfer())
-            ->fromArray($cmsPageStorageTransfer->toArray(), true);
-
         return $this->restResourceBuilder->createRestResource(
             CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
-            $cmsPageStorageTransfer->getUuid(),
-            $restCmsPageAttributesTransfer
+            $cmsPageUuid,
+            $restCmsPageTransfer
         );
     }
 
@@ -65,5 +65,21 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
     public function createCmsPageEmptyRestResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restSearchAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCmsPageCollectionRestResponse(RestCmsPagesAttributesTransfer $restSearchAttributesTransfer): RestResponseInterface
+    {
+        $response = $this->restResourceBuilder->createRestResponse($restSearchAttributesTransfer->getPagination()->getNumFound());
+
+        foreach ($restSearchAttributesTransfer->getRestCmsPages() as $restCmsPageTransfer) {
+            $response->addResource($this->createCmsPageRestResource('', $restCmsPageTransfer));
+        }
+
+        return $response;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi;
 
+use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientBridge;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -17,6 +18,7 @@ use Spryker\Glue\Kernel\Container;
 class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
+    public const CLIENT_CMS_SEARCH_PAGE = 'CLIENT_CMS_SEARCH_PAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,6 +30,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
 
         $container = $this->addCmsStorageClient($container);
+        $container = $this->addCmsPageSearchClient($container);
 
         return $container;
     }
@@ -42,6 +45,22 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
             return new CmsPagesRestApiToCmsStorageClientBridge(
                 $container->getLocator()->cmsStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCmsPageSearchClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CMS_SEARCH_PAGE, function (Container $container) {
+            return new CmsPagesRestApiToCmsPageSearchClientBridge(
+                $container->getLocator()->cmsPageSearch()->client()
             );
         });
 

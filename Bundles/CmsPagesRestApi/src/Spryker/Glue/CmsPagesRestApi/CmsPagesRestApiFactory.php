@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\CmsPagesRestApi;
 
+use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReaderInterface;
+use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapper;
+use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilder;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -23,7 +26,9 @@ class CmsPagesRestApiFactory extends AbstractFactory
     {
         return new CmsPageReader(
             $this->createCmsPageRestResponseBuilder(),
-            $this->getCmsStorageClient()
+            $this->getCmsStorageClient(),
+            $this->getCmsPageSearchClient(),
+            $this->createCmsPagesResourceMapper()
         );
     }
 
@@ -36,10 +41,26 @@ class CmsPagesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface
+     */
+    public function createCmsPagesResourceMapper(): CmsPagesResourceMapperInterface
+    {
+        return new CmsPagesResourceMapper();
+    }
+
+    /**
      * @return \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface
      */
     public function getCmsStorageClient(): CmsPagesRestApiToCmsStorageClientInterface
     {
         return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_CMS_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface
+     */
+    public function getCmsPageSearchClient(): CmsPagesRestApiToCmsPageSearchClientInterface
+    {
+        return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_CMS_SEARCH_PAGE);
     }
 }

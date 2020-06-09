@@ -12,4 +12,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class CmsPagesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CMS_PAGES = 'cms-pages';
+
+    public const QUERY_STRING_PARAMETER = 'q';
 }
