@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -509,4 +510,40 @@ interface CustomerFacadeInterface
      * @return array
      */
     public function getAllSalutations(): array;
+
+    /**
+     * Specification:
+     * - Gets count of customers that will be touched
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return int
+     */
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int;
+
+    /**
+     * Specification:
+     * - Retrieves filtered customers using CustomerCriteriaFilterTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Sends password restoration link via email using a freshly generated password restoration key to each customer in the collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void;
 }

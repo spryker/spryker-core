@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -192,5 +193,39 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     public function getAllSalutations(): array
     {
         return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return int
+     */
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
+    {
+        $query = $this->getFactory()->createSpyCustomerQuery();
+        if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExist()) {
+            $query->filterByRestorePasswordKey(null, Criteria::ISNULL);
+        }
+
+        return $query->find()->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): CustomerCollectionTransfer
+    {
+        $query = $this->getFactory()->createSpyCustomerQuery();
+        if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExist()) {
+            $query->filterByRestorePasswordKey(null, Criteria::ISNULL);
+        }
+
+        $customerCollectionTransfer = new CustomerCollectionTransfer();
+
+        $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $query->find()->toArray());
+
+        return $customerCollectionTransfer;
     }
 }

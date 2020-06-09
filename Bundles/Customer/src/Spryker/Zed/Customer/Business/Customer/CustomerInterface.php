@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerInterface
@@ -103,4 +104,11 @@ interface CustomerInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void;
 }

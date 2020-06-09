@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -946,5 +947,17 @@ class Customer implements CustomerInterface
         }
 
         return $customerResponseTransfer->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void
+    {
+        foreach ($customerCollectionTransfer->getCustomers() as $customer) {
+            $this->sendPasswordRestoreMail($customer);
+        }
     }
 }

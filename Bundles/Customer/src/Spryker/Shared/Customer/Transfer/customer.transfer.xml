@@ -181,4 +181,8 @@
 
     <transfer name="Filter">
     </transfer>
+
+    <transfer name="CustomerCriteriaFilter">
+        <property name="restorePasswordKeyExist" type="bool"/>
+    </transfer>
 </transfers>

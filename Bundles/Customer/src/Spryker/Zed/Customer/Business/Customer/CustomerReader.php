@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
@@ -92,5 +93,25 @@ class CustomerReader implements CustomerReaderInterface
         }
 
         return $customerListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return int
+     */
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int
+    {
+        return $this->customerRepository->getCustomersForResetPasswordCount($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer
+    {
+        return $this->customerRepository->findCustomersByCriteriaFilterTransfer($criteriaFilterTransfer);
     }
 }
