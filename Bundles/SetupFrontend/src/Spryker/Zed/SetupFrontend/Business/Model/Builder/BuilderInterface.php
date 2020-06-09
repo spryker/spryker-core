@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\SetupFrontend\Business\Model\Builder;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 
 interface BuilderInterface
 {
     /**
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function build(LoggerInterface $logger);
+    public function build(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 }

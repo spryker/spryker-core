@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 
 interface SetupFrontendFacadeInterface
@@ -52,10 +53,11 @@ interface SetupFrontendFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildYvesFrontend(LoggerInterface $logger);
+    public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:
@@ -102,10 +104,11 @@ interface SetupFrontendFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildZedFrontend(LoggerInterface $logger);
+    public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:

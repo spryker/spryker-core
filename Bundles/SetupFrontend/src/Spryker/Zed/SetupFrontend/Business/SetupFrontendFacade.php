@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -61,12 +62,13 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildYvesFrontend(LoggerInterface $logger)
+    public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
-        return $this->getFactory()->createYvesBuilder()->build($logger);
+        return $this->getFactory()->createYvesBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
     /**
@@ -119,10 +121,11 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildZedFrontend(LoggerInterface $logger)
+    public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
         return $this->getFactory()->createZedBuilder()->build($logger);
     }
