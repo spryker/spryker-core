@@ -78,7 +78,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferCollectionTransfer(
+    public function findProductOfferCollectionTransfer(
         ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
     ): ProductOfferCollectionTransfer {
         $productOfferQuery = $this->applyFilters(

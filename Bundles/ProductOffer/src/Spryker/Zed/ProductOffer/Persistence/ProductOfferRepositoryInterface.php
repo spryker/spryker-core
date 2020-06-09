@@ -32,7 +32,7 @@ interface ProductOfferRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOfferCollectionTransfer(
+    public function findProductOfferCollectionTransfer(
         ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
     ): ProductOfferCollectionTransfer;
 }

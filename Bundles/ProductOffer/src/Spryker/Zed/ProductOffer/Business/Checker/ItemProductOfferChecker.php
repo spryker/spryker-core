@@ -61,7 +61,7 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             ->setIsActive(true);
 
         $productOfferTransfers = $this->productOfferRepository
-            ->getProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
+            ->findProductOfferCollectionTransfer($productOfferCriteriaFilterTransfer)
             ->getProductOffers();
 
         if (!$productOfferTransfers->count()) {
