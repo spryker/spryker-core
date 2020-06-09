@@ -38,7 +38,7 @@ class ProductOptionStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductOptionEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

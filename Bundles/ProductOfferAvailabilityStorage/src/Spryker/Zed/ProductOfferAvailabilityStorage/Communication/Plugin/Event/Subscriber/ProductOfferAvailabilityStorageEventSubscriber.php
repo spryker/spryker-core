@@ -57,7 +57,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addOmsProductReservationCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -69,7 +69,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addOmsProductReservationDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_DELETE, new OmsProductReservationStorageUnpublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_DELETE, new OmsProductReservationStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -81,7 +81,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addOmsProductReservationUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -93,7 +93,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferStockPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -105,7 +105,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferStockCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_CREATE, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_CREATE, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -117,7 +117,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferStockUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferStockEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE, new ProductOfferStockStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -129,7 +129,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -141,7 +141,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -153,7 +153,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getProductOfferAvailabilityEventQueueName());
+        $eventCollection->addListenerQueued(ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }

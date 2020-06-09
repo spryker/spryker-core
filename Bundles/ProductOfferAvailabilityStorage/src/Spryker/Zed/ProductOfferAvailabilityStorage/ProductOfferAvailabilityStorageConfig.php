@@ -36,7 +36,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductOfferAvailabilityEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

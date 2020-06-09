@@ -26,7 +26,7 @@ class ContentStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getContentEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

@@ -59,7 +59,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPagePublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -69,7 +69,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageStorageUnpublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -79,7 +79,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -89,7 +89,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -99,7 +99,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageStorageUnpublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -109,7 +109,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageVersionCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_VERSION_CREATE, new CmsPageVersionStorageListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_VERSION_CREATE, new CmsPageVersionStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -119,7 +119,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlStoragePublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -129,7 +129,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlStoragePublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -139,7 +139,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlStorageUnpublishListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -149,7 +149,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageStoreCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -159,7 +159,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageStoreUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -169,6 +169,6 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageStoreDeleteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getCmsPageEventQueueName());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

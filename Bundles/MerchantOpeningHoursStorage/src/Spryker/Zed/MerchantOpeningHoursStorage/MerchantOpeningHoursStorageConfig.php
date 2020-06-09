@@ -36,7 +36,7 @@ class MerchantOpeningHoursStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getMerchantOpeningHoursEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

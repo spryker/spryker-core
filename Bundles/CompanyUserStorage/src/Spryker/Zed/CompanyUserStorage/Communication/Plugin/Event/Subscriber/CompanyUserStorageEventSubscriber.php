@@ -47,7 +47,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUserPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyUserEvents::COMPANY_USER_PUBLISH, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyUserEvents::COMPANY_USER_PUBLISH, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -57,7 +57,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUserUnpublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyUserEvents::COMPANY_USER_UNPUBLISH, new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyUserEvents::COMPANY_USER_UNPUBLISH, new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -67,7 +67,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUserCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_CREATE, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_CREATE, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -77,7 +77,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUserUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_UPDATE, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_UPDATE, new CompanyUserStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -87,7 +87,7 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUserDeleteListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_DELETE, new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyUserEvents::ENTITY_SPY_COMPANY_USER_DELETE, new CompanyUserStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -97,6 +97,6 @@ class CompanyUserStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCompanyUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CompanyEvents::ENTITY_SPY_COMPANY_UPDATE, new CompanyUserCompanyStoragePublishListener(), 0, null, $this->getConfig()->getCompanyUserEventQueueName());
+        $eventCollection->addListenerQueued(CompanyEvents::ENTITY_SPY_COMPANY_UPDATE, new CompanyUserCompanyStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

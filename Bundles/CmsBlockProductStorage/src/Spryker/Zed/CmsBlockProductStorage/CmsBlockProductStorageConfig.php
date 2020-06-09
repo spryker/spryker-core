@@ -38,7 +38,7 @@ class CmsBlockProductStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getCmsBlockProductEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

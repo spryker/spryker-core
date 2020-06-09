@@ -38,7 +38,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductReviewEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

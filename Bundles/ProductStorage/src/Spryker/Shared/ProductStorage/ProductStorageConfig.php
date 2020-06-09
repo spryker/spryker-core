@@ -20,14 +20,4 @@ class ProductStorageConfig extends AbstractSharedConfig
      * Defines queue name for publish.
      */
     public const PUBLISH_PRODUCT_CONCRETE = 'publish.product_concrete';
-
-    /**
-     * Defines error queue name as used when with asynchronous event handling
-     */
-    public const PUBLISH_PRODUCT_ABSTRACT_ERROR_QUEUE = 'publish.product_abstract.error';
-
-    /**
-     * Defines error queue name as used when with asynchronous event handling
-     */
-    public const PUBLISH_PRODUCT_CONCRETE_ERROR_QUEUE = 'publish.product_concrete.error';
 }

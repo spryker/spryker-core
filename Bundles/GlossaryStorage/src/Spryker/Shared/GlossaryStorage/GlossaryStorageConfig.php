@@ -17,11 +17,6 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     public const PUBLISH_TRANSLATION = 'publish.translation';
 
     /**
-     * Defines error queue name as used when with asynchronous event handling
-     */
-    public const PUBLISH_TRANSLATION_ERROR_QUEUE = 'publish.translation.error';
-
-    /**
      * Defines queue name as used for processing translation messages.
      */
     public const SYNC_STORAGE_TRANSLATION = 'sync.storage.translation';

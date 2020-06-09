@@ -48,14 +48,4 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * Defines queue name for publish.
      */
     public const PUBLISH_PRODUCT_CONCRETE_PAGE = 'publish.page_product_concrete';
-
-    /**
-     * Defines error queue name as used when with asynchronous event handling
-     */
-    public const PUBLISH_PRODUCT_ABSTRACT_PAGE_ERROR_QUEUE = 'publish.page_product_abstract.error';
-
-    /**
-     * Defines error queue name as used when with asynchronous event handling
-     */
-    public const PUBLISH_PRODUCT_CONCRETE_PAGE_ERROR_QUEUE = 'publish.page_product_concrete.error';
 }

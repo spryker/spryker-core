@@ -26,16 +26,6 @@ class MerchantProductOfferSearchConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getMerchantProfileEventQueueName(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @api
-     *
-     * @return string|null
-     */
     public function getMerchantProductOfferEventQueueName(): ?string
     {
         return null;

@@ -26,7 +26,7 @@ class CmsSlotStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getCmsSlotEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

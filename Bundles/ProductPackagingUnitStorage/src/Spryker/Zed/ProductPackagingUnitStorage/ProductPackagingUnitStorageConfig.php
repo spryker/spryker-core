@@ -38,7 +38,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductPackagingUnitEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

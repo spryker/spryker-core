@@ -38,7 +38,7 @@ class FileManagerStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getFileManagerEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

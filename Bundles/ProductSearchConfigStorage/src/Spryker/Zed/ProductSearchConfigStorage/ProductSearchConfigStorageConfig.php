@@ -38,7 +38,7 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductSearchConfigEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

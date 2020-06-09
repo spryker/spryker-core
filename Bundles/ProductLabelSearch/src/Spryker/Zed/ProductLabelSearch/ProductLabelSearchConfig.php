@@ -16,7 +16,7 @@ class ProductLabelSearchConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getProductLabelEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

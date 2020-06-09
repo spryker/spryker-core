@@ -26,7 +26,7 @@ class CompanyUserStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getCompanyUserEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

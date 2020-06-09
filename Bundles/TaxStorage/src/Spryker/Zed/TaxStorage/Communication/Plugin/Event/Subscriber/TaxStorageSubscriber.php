@@ -53,7 +53,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetPublishStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::TAX_SET_PUBLISH, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::TAX_SET_PUBLISH, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -63,7 +63,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetCreateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_CREATE, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_CREATE, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -73,7 +73,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_UPDATE, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_UPDATE, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -83,7 +83,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_DELETE, new TaxSetStorageUnpublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_DELETE, new TaxSetStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -93,7 +93,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxRateUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_UPDATE, new TaxRateStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_UPDATE, new TaxRateStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -103,7 +103,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxRateDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_DELETE, new TaxRateStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_DELETE, new TaxRateStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -113,7 +113,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetTaxUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE, new TaxSetTaxStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE, new TaxSetTaxStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -123,6 +123,6 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetTaxDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_DELETE, new TaxSetTaxStoragePublishListener(), 0, null, $this->getConfig()->getTaxEventQueueName());
+        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_DELETE, new TaxSetTaxStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

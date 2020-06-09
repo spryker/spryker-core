@@ -38,7 +38,7 @@ class NavigationStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getNavigationEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

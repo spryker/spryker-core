@@ -26,7 +26,7 @@ class MerchantProductOfferStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getMerchantProductOfferEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

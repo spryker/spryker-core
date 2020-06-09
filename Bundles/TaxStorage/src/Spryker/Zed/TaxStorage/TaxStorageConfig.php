@@ -38,7 +38,7 @@ class TaxStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getTaxEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

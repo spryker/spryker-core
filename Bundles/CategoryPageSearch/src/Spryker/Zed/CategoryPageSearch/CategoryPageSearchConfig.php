@@ -38,7 +38,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getCategoryPageEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

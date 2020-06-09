@@ -38,7 +38,7 @@ class AvailabilityStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
-    public function getAvailabilityEventQueueName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }
