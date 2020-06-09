@@ -238,4 +238,12 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
     }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
+     */
+    public function getOrderItemsTableExpanderPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_TABLE_EXPANDER);
+    }
 }

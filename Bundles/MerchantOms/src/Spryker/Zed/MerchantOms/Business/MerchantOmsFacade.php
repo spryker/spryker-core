@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -72,5 +73,19 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
         MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
     ): MerchantOmsTriggerResponseTransfer {
         return $this->getFactory()->createMerchantOmsEventTrigger()->triggerEventForMerchantOrderItem($merchantOmsTriggerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idOrderItem
+     *
+     * @return \Spryker\Zed\MerchantOms\Business\StateMachineState\StateMachineItemTransfer
+     */
+    public function getCurrentState(int $idOrderItem): StateMachineItemTransfer
+    {
+        return $this->getRepository()->getCurrentState($idOrderItem);
     }
 }

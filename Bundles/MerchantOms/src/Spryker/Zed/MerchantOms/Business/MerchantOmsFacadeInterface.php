@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Business;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface MerchantOmsFacadeInterface
 {
@@ -73,4 +74,16 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array;
+
+    /**
+     * - Finds merchant order item.
+     * - Returns array of StateMachineItem transfers filled with state name.
+     *
+     * @api
+     *
+     * @param int $idOrderItem
+     *
+     * @return \Spryker\Zed\MerchantOms\Business\StateMachineState\StateMachineItemTransfer
+     */
+    public function getCurrentState(int $idOrderItem): StateMachineItemTransfer;
 }

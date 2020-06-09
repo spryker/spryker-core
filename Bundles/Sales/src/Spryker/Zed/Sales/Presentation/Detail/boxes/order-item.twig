@@ -101,3 +101,6 @@
         } only %}
     {% endif %}
 </td>
+{% for tableExpanderPlugin in tableExpanderPlugins %}
+    <td>{{ tableExpanderPlugin.getColumnCellContent(orderItem) | raw  }}</td>
+{% endfor %}

@@ -66,6 +66,9 @@
                         <th>{{ 'Total' | trans }}</th>
                         <th>{{ 'State' | trans }}</th>
                         <th>{{ 'Trigger event' | trans }}</th>
+                        {% for tableExpanderPlugin in tableExpanderPlugins %}
+                            <th>{{ tableExpanderPlugin.getColumnName | trans }}</th>
+                        {% endfor %}
                     </tr>
                 </thead>
 
@@ -80,7 +83,7 @@
                         {% include '@Sales/Detail/boxes/item-group.twig' with {groups: itemGroups[shipmentOrderItems.hash]} %}
                     {% endif %}
 
-                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}
+                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items, tableExpanderPlugins: tableExpanderPlugins} %}
                 </tbody>
             </table>
         {% endfor %}

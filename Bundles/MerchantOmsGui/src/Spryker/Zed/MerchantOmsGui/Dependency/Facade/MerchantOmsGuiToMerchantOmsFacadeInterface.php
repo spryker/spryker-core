@@ -5,19 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOms\Persistence;
+namespace Spryker\Zed\MerchantOmsGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 
-interface MerchantOmsRepositoryInterface
+interface MerchantOmsGuiToMerchantOmsFacadeInterface
 {
-    /**
-     * @param array $stateIds
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
-     */
-    public function getStateMachineItemsByStateIds(array $stateIds): array;
-
     /**
      * @param int $idOrderItem
      *
