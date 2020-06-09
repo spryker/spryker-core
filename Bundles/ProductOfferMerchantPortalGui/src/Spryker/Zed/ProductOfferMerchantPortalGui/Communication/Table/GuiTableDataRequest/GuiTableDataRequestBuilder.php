@@ -146,8 +146,8 @@ class GuiTableDataRequestBuilder implements GuiTableDataRequestBuilderInterface
     protected function hydratePagination(GuiTableDataRequestTransfer $guiTableDataRequestTransfer, Request $request): GuiTableDataRequestTransfer
     {
         $guiTableDataRequestTransfer
-            ->setPage((int)$request->query->get('page', $this->getConfig()->getTableDefaultPage()))
-            ->setPageSize((int)$request->query->get('pageSize', $this->getConfig()->getTableDefaultPageSize()));
+            ->setPage((int)$request->query->getInt('page', $this->getConfig()->getTableDefaultPage()))
+            ->setPageSize((int)$request->query->getInt('pageSize', $this->getConfig()->getTableDefaultPageSize()));
 
         return $guiTableDataRequestTransfer;
     }
