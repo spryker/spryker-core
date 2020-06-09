@@ -7,10 +7,6 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
-    <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" singular="merchants"/>
-    </transfer>
-
     <transfer name="MerchantProductCriteria">
         <property name="idProductAbstract" type="int"/>
     </transfer>

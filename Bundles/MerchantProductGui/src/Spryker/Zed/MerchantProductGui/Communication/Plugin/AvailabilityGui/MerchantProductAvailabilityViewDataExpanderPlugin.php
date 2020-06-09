@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\Availability;
+namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\AvailabilityGui;
 
-use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListDataExpanderPluginInterface;
+use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\MerchantProductGui\Communication\MerchantProductGuiCommunicationFactory getFactory()
  */
-class MerchantProductAvailabilityListDataExpanderPlugin extends AbstractPlugin implements AvailabilityListDataExpanderPluginInterface
+class MerchantProductAvailabilityViewDataExpanderPlugin extends AbstractPlugin implements AvailabilityViewDataExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands view data for list of product availabilities with merchants data.
+     * - Expands view data for product availability with merchant data.
      *
      * @api
      *
@@ -31,8 +31,12 @@ class MerchantProductAvailabilityListDataExpanderPlugin extends AbstractPlugin i
      */
     public function expand(array $viewData): array
     {
+        if (!isset($viewData['idProduct'])) {
+            return $viewData;
+        }
+
         return $this->getFactory()
-            ->createMerchantProductListDataExpander()
-            ->expandData($viewData);
+            ->createMerchantProductViewDataExpander()
+            ->expandDataWithMerchantByIdProductAbstract($viewData, (int)$viewData['idProduct']);
     }
 }

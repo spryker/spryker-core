@@ -2,16 +2,16 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductGui\Communication\Expander;
+namespace Spryker\Zed\MerchantGui\Communication\Expander;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
-use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class MerchantProductListDataExpander implements MerchantProductListDataExpanderInterface
+class MerchantListDataExpander implements MerchantListDataExpanderInterface
 {
     protected const URL_PARAM_ID_PRODUCT = 'id-merchant';
 
@@ -21,17 +21,17 @@ class MerchantProductListDataExpander implements MerchantProductListDataExpander
     protected $request;
 
     /**
-     * @var \Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantFacadeInterface
+     * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
      */
     protected $merchantFacade;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantFacadeInterface $merchantFacade
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
         Request $request,
-        MerchantProductGuiToMerchantFacadeInterface $merchantFacade
+        MerchantGuiToMerchantFacadeInterface $merchantFacade
     ) {
         $this->request = $request;
         $this->merchantFacade = $merchantFacade;

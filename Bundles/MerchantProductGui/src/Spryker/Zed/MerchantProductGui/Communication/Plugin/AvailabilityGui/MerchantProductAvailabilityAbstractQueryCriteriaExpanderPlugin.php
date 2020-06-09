@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\Availability;
+namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\AvailabilityGui;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface;

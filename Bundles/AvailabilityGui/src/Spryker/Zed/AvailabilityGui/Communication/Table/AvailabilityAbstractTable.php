@@ -12,7 +12,6 @@ use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -149,7 +148,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $result = [];
 
-        $this->queryProductAbstractAvailability = $this->expandPropelQuery($this->queryProductAbstractAvailability);
+        $this->expandPropelQuery();
 
         /** @var \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
@@ -299,15 +298,13 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return void
      */
-    protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
+    protected function expandPropelQuery(): void
     {
         $queryCriteriaTransfer = $this->executeAvailabilityAbstractQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
 
-        return $this->propelQueryBuilderFacade->expandQuery($query, $queryCriteriaTransfer);
+        $this->queryProductAbstractAvailability = $this->propelQueryBuilderFacade->expandQuery($this->queryProductAbstractAvailability, $queryCriteriaTransfer);
     }
 
     /**
