@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductOffer\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductOfferMapper
 {
@@ -62,23 +60,5 @@ class ProductOfferMapper
         StoreTransfer $storeTransfer
     ): StoreTransfer {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productOfferEntities
-     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    public function mapProductOfferEntityCollectionToProductOfferTransferCollection(
-        ObjectCollection $productOfferEntities,
-        ProductOfferCollectionTransfer $productOfferCollectionTransfer
-    ): ProductOfferCollectionTransfer {
-        foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = (new ProductOfferTransfer())->fromArray($productOfferEntity->toArray(), true);
-            $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
-        }
-
-        return $productOfferCollectionTransfer;
     }
 }
