@@ -24,6 +24,7 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $request->request->get('orderTransfer');
 
         return [

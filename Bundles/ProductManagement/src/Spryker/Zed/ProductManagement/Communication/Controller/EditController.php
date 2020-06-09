@@ -48,11 +48,13 @@ class EditController extends AddController
             return new RedirectResponse('/product-management');
         }
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $dataProvider = $this->getFactory()->createProductFormEditDataProvider();
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract, $request->query->get(static::PARAM_PRICE_DIMENSION)),
+                $dataProvider->getData($idProductAbstract, $priceDimension),
                 $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
@@ -151,11 +153,13 @@ class EditController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
+                $dataProvider->getData($idProductAbstract, $idProduct, $priceDimension),
                 $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);

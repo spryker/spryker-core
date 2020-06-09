@@ -255,7 +255,7 @@ class SlotController extends AbstractController
 
         $request->query->set(
             static::URL_PARAM_ID_PRODUCT_LIST,
-            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
+            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
         );
 
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
