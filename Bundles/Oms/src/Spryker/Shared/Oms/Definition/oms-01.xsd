@@ -41,6 +41,7 @@
                         <xsd:enumeration value="exclude from invoice"/>
                         <xsd:enumeration value="ready for invoice"/>
                         <xsd:enumeration value="waiting for export"/>
+                        <xsd:enumeration value="cancellable"/>
                     </xsd:restriction>
                 </xsd:simpleType>
             </xsd:element>
