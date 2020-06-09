@@ -424,11 +424,11 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOffset()
     {
-        return $this->request->query->get('start', 0);
+        return $this->request->query->getInt('start', 0);
     }
 
     /**
@@ -440,6 +440,7 @@ abstract class AbstractTable
     {
         $defaultSorting = [$this->getDefaultSorting($config)];
 
+        /** @var array|null $orderParameter */
         $orderParameter = $this->request->query->get('order');
 
         if (!is_array($orderParameter)) {
@@ -786,7 +787,7 @@ abstract class AbstractTable
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [
-            'draw' => $this->request->query->get('draw', 1),
+            'draw' => $this->request->query->getInt('draw', 1),
             'recordsTotal' => $this->total,
             'recordsFiltered' => $this->filtered,
             'data' => $this->data,
