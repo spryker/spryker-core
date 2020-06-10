@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/cms-page-search": "^2.0.0",
+    "spryker/cms-page-search": "^2.3.0",
     "spryker/cms-storage": "^2.3.0",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
