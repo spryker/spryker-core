@@ -35,15 +35,24 @@ class MerchantNameOrderItemsTableExpanderPlugin extends AbstractPlugin implement
         return 'Merchant';
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
     public function getColumnCellContent(ItemTransfer $itemTransfer): string
     {
-        if (!isset($merchants[$itemTransfer->getMerchantReference()])) {
+        if (!isset($this->merchants[$itemTransfer->getMerchantReference()])) {
             $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne(
                 (new MerchantCriteriaTransfer())->setMerchantReference($itemTransfer->getMerchantReference())
             );
-            $merchants[$itemTransfer->getMerchantReference()] = $merchantTransfer ? $merchantTransfer->getName() : '';
+            $this->merchants[$itemTransfer->getMerchantReference()] = $merchantTransfer ? $merchantTransfer->getName() : '';
         }
 
-        return $merchants[$itemTransfer->getMerchantReference()];
+        return $this->merchants[$itemTransfer->getMerchantReference()];
     }
 }

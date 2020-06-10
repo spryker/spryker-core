@@ -4,7 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-oms": "0.3.1",
+    "spryker/sales-extension": "^1.8.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -17,7 +19,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
