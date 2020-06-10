@@ -119,11 +119,25 @@ abstract class AbstractController
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
-        if (strpos($absoluteUrl, '/') !== 0 && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+        if (!$this->isRedirectUrlValid($absoluteUrl)) {
+            throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not valid");
+        }
+
+        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
         }
 
         return new RedirectResponse($absoluteUrl, $code);
+    }
+
+    /**
+     * @param string $absoluteUrl
+     *
+     * @return bool
+     */
+    protected function isRedirectUrlValid(string $absoluteUrl): bool
+    {
+        return (bool)$absoluteUrl;
     }
 
     /**
