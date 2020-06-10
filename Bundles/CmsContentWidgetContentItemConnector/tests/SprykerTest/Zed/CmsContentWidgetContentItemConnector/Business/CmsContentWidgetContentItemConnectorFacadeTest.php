@@ -54,7 +54,7 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapContentItemKeysReturnsInCorrectResponse(): void
+    public function testMapContentItemKeysForNotExistingKeyReturnsEmptyResult(): void
     {
         // Arrange
         $this->tester->haveContent([
@@ -62,9 +62,9 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
         ]);
 
         // Act
-        $foundArray = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
+        $mappedKeys = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
 
         // Assert
-        $this->assertEmpty($foundArray);
+        $this->assertEmpty($mappedKeys);
     }
 }
