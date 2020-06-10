@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-oms": "0.3.1",
+    "spryker/merchant-oms": "^0.3.1",
     "spryker/sales-extension": "^1.8.0"
   },
   "require-dev": {
