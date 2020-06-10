@@ -659,4 +659,17 @@ interface OmsFacadeInterface
      * @return string[][]
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Checks for cancellable flag for each order item.
+     * - If item state is not applicable for cancel, sets `Order::isCancellable=false`, true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function setOrderIsCancellableByItemState(array $orderTransfers): array;
 }

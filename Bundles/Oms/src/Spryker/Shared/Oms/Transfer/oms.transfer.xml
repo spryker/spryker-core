@@ -27,6 +27,7 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="orderReference" type="string"/>
+        <property name="isCancellable" type="bool"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">

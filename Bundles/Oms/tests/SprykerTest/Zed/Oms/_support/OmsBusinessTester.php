@@ -62,12 +62,25 @@ class OmsBusinessTester extends Actor
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
 
-        return (new OrderTransfer())
+        $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
-            ->setOrderReference($saveOrderTransfer->getOrderReference())
-            ->setStore($quoteTransfer->getStore()->getName())
-            ->setCustomer($quoteTransfer->getCustomer())
-            ->setItems($saveOrderTransfer->getOrderItems());
+            ->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer())
+            ->setCustomer($quoteTransfer->getCustomer());
+
+        return $this->getOrder($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getLocator()
+            ->sales()
+            ->facade()
+            ->getCustomerOrder($orderTransfer);
     }
 
     /**

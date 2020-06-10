@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oms\Business\Checker\FlagChecker;
+use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
@@ -357,7 +359,19 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander(): OrderExpanderInterface
     {
-        return new OrderExpander();
+        return new OrderExpander(
+            $this->createFlagChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface
+     */
+    public function createFlagChecker(): FlagCheckerInterface
+    {
+        return new FlagChecker(
+            $this->createOrderStateMachineBuilder()
+        );
     }
 
     /**
