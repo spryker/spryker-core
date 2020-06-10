@@ -21,7 +21,7 @@ interface MerchantOmsRepositoryInterface
     /**
      * @param int $idOrderItem
      *
-     * @return \Spryker\Zed\MerchantOms\Business\StateMachineState\StateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function getCurrentState(int $idOrderItem): StateMachineItemTransfer;
+    public function findCurrentState(int $idOrderItem): ?StateMachineItemTransfer;
 }

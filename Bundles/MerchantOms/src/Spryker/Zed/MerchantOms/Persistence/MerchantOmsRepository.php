@@ -49,15 +49,20 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
      *
      * @param int $idOrderItem
      *
-     * @return \Spryker\Zed\MerchantOms\Business\StateMachineState\StateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function getCurrentState(int $idOrderItem): StateMachineItemTransfer
+    public function findCurrentState(int $idOrderItem): ?StateMachineItemTransfer
     {
         $merchantSalesOrderItemEntity = $this->getFactory()->getMerchantSalesOrderItemPropelQuery()
             ->joinStateMachineItemState()
             ->findOneByFkSalesOrderItem($idOrderItem);
+        if ($merchantSalesOrderItemEntity === null) {
+            return null;
+        }
 
         return (new StateMachineItemTransfer())
-            ->setStateName($merchantSalesOrderItemEntity->getStateMachineItemState()->getName());
+            ->setStateName(
+                $merchantSalesOrderItemEntity->getStateMachineItemState()->getName()
+            );
     }
 }

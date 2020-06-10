@@ -40,9 +40,10 @@ class MerchantOmsStateOrderItemsTableExpanderPlugin extends AbstractPlugin imple
      */
     public function getColumnCellContent(ItemTransfer $itemTransfer): string
     {
-        return $this->getFactory()
+        $stateMachineItemTransfer = $this->getFactory()
             ->getMerchantOmsFacade()
-            ->getCurrentState($itemTransfer->getIdSalesOrderItem())
-            ->getStateName();
+            ->findCurrentState($itemTransfer->getIdSalesOrderItem());
+
+        return $stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : '';
     }
 }
