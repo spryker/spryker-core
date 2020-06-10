@@ -27,6 +27,7 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $request->request->get(static::CUSTOMER_PARAM);
         $idCustomer = (int)$customerTransfer->getIdCustomer();
 

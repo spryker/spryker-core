@@ -10,9 +10,9 @@
     <xsd:complexType name="processType" mixed="true">
         <xsd:sequence>
             <xsd:element type="subprocessesType" name="subprocesses" minOccurs="0"/>
-            <xsd:element type="statesType" name="states" minOccurs="0" />
+            <xsd:element type="statesType" name="states" minOccurs="0"/>
             <xsd:element type="transitionsType" name="transitions" minOccurs="0"/>
-            <xsd:element type="eventsType" name="events" minOccurs="0" />
+            <xsd:element type="eventsType" name="events" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute type="xsd:string" name="name" use="optional"/>
         <xsd:attribute type="xsd:string" name="main" use="optional"/>
@@ -82,7 +82,7 @@
         <xsd:sequence>
             <xsd:element name="process" maxOccurs="unbounded" minOccurs="0">
                 <xsd:simpleType>
-                    <xsd:restriction base="xsd:string" />
+                    <xsd:restriction base="xsd:string"/>
                 </xsd:simpleType>
             </xsd:element>
         </xsd:sequence>
