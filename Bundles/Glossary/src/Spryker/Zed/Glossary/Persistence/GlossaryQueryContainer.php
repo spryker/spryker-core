@@ -334,7 +334,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $keyLocaleCrossJoin = new ModelJoin();
         $keyLocaleCrossJoin->setJoinType(Criteria::JOIN);
 
-        /*
+        /**
          * @param string $value
          *
          * @return string
