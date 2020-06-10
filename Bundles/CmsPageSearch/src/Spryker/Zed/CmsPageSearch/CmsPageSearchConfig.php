@@ -61,9 +61,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, mixed>
      *
-     * @param string[] $data
+     * @param array $data
      *
-     * @return string[]
+     * @return array
      */
     public function getSearchResultData(array $data): array
     {
@@ -78,9 +78,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, mixed>
      *
-     * @param string[] $data
+     * @param array $data
      *
-     * @return string[]
+     * @return array
      */
     protected function getCoreSearchResultData(array $data): array
     {
