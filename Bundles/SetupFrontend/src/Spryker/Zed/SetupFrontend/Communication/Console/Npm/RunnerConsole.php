@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SetupFrontend\Communication\Console\Npm;
 
-use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -36,9 +35,6 @@ class RunnerConsole extends Console
     public const OPTION_TASK_BUILD_ZED = 'build-zed';
     public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
-    public const OPTION_ENVIRONMENT = 'environment';
-    public const OPTION_ENVIRONMENT_SHORT = 'e';
-
     /**
      * @var string[]
      */
@@ -47,7 +43,6 @@ class RunnerConsole extends Console
         self::OPTION_TASK_BUILD_CORE => 'spy-setup core',
         self::OPTION_TASK_BUILD_ZED => 'spy-setup zed',
         self::OPTION_TASK_BUILD_YVES => 'spy-setup yves',
-        self::OPTION_ENVIRONMENT => 'spy-setup environment',
     ];
 
     /**
@@ -92,13 +87,6 @@ EOM
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the project resources of yves'
         );
-
-        $this->addOption(
-            static::OPTION_ENVIRONMENT,
-            static::OPTION_ENVIRONMENT_SHORT,
-            InputOption::VALUE_OPTIONAL,
-            'Sets the environment to run the command. Currently available environments: production'
-        );
     }
 
     /**
@@ -110,11 +98,6 @@ EOM
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $command = $this->getCommand();
-
-        $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
-        if ($input->hasOption(static::OPTION_ENVIRONMENT)) {
-            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
-        }
 
         return $this->runCommand($command);
     }
@@ -157,7 +140,6 @@ EOM
             static::OPTION_TASK_BUILD_CORE,
             static::OPTION_TASK_BUILD_ZED,
             static::OPTION_TASK_BUILD_YVES,
-            static::OPTION_ENVIRONMENT,
         ];
 
         foreach ($tasks as $task) {

@@ -99,7 +99,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesBuilder()
     {
-        return new Builder($this->getConfig());
+        return new Builder($this->getConfig()->getYvesBuildCommand());
     }
 
     /**
@@ -151,7 +151,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createZedBuilder()
     {
-        return new Builder($this->getConfig());
+        return new Builder($this->getConfig()->getZedBuildCommand());
     }
 
     /**

@@ -9,23 +9,22 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Builder;
 
 use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
-use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 class Builder implements BuilderInterface
 {
     /**
-     * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
+     * @var string
      */
-    protected $setupFrontendConfig;
+    protected $buildCommand;
 
     /**
-     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
+     * @param string $buildCommand
      */
-    public function __construct(SetupFrontendConfig $setupFrontendConfig)
+    public function __construct($buildCommand)
     {
-        $this->setupFrontendConfig = $setupFrontendConfig;
+        $this->buildCommand = $buildCommand;
     }
 
     /**
@@ -36,7 +35,7 @@ class Builder implements BuilderInterface
      */
     public function build(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
-        $command = $this->setupFrontendConfig->getYvesBuildCommand();
+        $command = $this->buildCommand;
         if ($setupFrontendConfigurationTransfer !== null) {
             $command .= sprintf(':%s', $setupFrontendConfigurationTransfer->getEnvironment());
         }

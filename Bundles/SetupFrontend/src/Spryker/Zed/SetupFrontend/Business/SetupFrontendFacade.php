@@ -127,7 +127,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
-        return $this->getFactory()->createZedBuilder()->build($logger);
+        return $this->getFactory()->createZedBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
     /**
