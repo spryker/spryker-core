@@ -20,8 +20,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/product-bundle": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zend": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use the PropelApplicationPlugin.",
