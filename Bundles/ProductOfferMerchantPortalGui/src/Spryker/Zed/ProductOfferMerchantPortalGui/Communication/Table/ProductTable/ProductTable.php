@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable;
 
-use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
+ */
 class ProductTable extends AbstractTable
 {
     public const COL_KEY_NAME = 'name';
@@ -29,58 +30,38 @@ class ProductTable extends AbstractTable
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
 
-    protected const PATTERN_DATE_FORMAT = 'dd.MM.y';
-
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::getTableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::tableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/get-table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/table-data';
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
      */
     protected $productTableDataProvider;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[]
-     */
-    protected $productTableFilterDataProviders;
-
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface
-     */
-    protected $productTableCriteriaBuilder;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface $productTableDataProvider
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[] $productTableFilterDataProviders
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface $productTableDataProvider
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
-        ProductTableDataProviderInterface $productTableDataProvider,
-        array $productTableFilterDataProviders,
-        ProductTableCriteriaBuilderInterface $productTableCriteriaBuilder
+        TableDataProviderInterface $productTableDataProvider
     ) {
-        parent::__construct($utilEncodingService, $translatorFacade);
+        parent::__construct($translatorFacade);
         $this->productTableDataProvider = $productTableDataProvider;
-        $this->productTableFilterDataProviders = $productTableFilterDataProviders;
-        $this->productTableCriteriaBuilder = $productTableCriteriaBuilder;
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\GuiTableDataTransfer
      */
-    protected function provideTableData(): GuiTableDataTransfer
+    protected function provideTableData(Request $request): GuiTableDataTransfer
     {
-        $productTableCriteriaTransfer = $this->buildProductTableCriteriaTransfer();
-
-        return $this->productTableDataProvider->getProductTableData($productTableCriteriaTransfer);
+        return $this->productTableDataProvider->getData($request, $this->buildTableConfiguration());
     }
 
     /**
@@ -106,64 +87,27 @@ class ProductTable extends AbstractTable
      */
     protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_SKU)
-                ->setTitle('SKU')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_IMAGE)
-                ->setTitle('Image')
-                ->setType(static::COLUMN_TYPE_IMAGE)
-                ->setSortable(false)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_NAME)
-                ->setTitle('Name')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STORES)
-                ->setTitle('Stores')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(false)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_STATUS)
-                ->setTitle('Status')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_FROM)
-                ->setTitle('Valid From')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_VALID_TO)
-                ->setTitle('Valid To')
-                ->setType(static::COLUMN_TYPE_DATE)
-                ->addTypeOption('format', static::PATTERN_DATE_FORMAT)
-                ->setSortable(true)
-                ->setHideable(false)
-        )->addColumn(
-            (new GuiTableColumnConfigurationTransfer())
-                ->setId(static::COL_KEY_OFFERS)
-                ->setTitle('Offers')
-                ->setType(static::COLUMN_TYPE_TEXT)
-                ->setSortable(true)
-        );
+        $columns = new ArrayObject([
+            $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
+            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
+            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
+            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
+                'limit' => 3,
+                'typeOptions' => [
+                    'color' => 'grey',
+                ],
+            ]),
+            $this->createColumnChip(static::COL_KEY_STATUS, 'Status', true, false, [
+                'color' => 'grey',
+            ], [
+                'color' => [$this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green'],
+            ]),
+            $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false),
+            $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false),
+            $this->createColumnText(static::COL_KEY_OFFERS, 'Offers', true, false),
+        ]);
+
+        $guiTableConfigurationTransfer->setColumns($columns);
 
         return $guiTableConfigurationTransfer;
     }
@@ -175,9 +119,17 @@ class ProductTable extends AbstractTable
      */
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        foreach ($this->productTableFilterDataProviders as $productTableFilterDataProvider) {
-            $guiTableConfigurationTransfer->addFilter($productTableFilterDataProvider->getFilterData());
-        }
+        $filters = new ArrayObject([
+            $this->createFilterSelect('hasOffers', 'Offers', false, [
+                '1' => 'With Offers',
+                '0' => 'Without Offers',
+            ]),
+            $this->createFilterSelect('isActive', 'Status', false, [
+                '1' => 'Active',
+                '0' => 'Inactive',
+            ]),
+        ]);
+        $guiTableConfigurationTransfer->setFilters($filters);
 
         return $guiTableConfigurationTransfer;
     }
@@ -191,22 +143,6 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductTableCriteriaTransfer
-     */
-    protected function buildProductTableCriteriaTransfer(): ProductTableCriteriaTransfer
-    {
-        return $this->productTableCriteriaBuilder
-            ->setSearchTerm($this->searchTerm)
-            ->setPage($this->page)
-            ->setPageSize($this->pageSize)
-            ->setSorting($this->sorting)
-            ->setFilters($this->filters)
-            ->build();
-    }
-
-    /**
-     * TODO: url needs to be adjusted once the create offer part is ready.
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer

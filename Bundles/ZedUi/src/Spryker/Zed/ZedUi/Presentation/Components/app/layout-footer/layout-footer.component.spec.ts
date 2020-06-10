@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuthFooterComponent } from './auth-footer.component';
+import { TestLocaleModule } from '@spryker/locale/testing';
+import { LayoutFooterComponent } from './layout-footer.component';
 import { By } from '@angular/platform-browser';
 
-describe('AuthFooterComponent', () => {
-    let component: AuthFooterComponent;
-    let fixture: ComponentFixture<AuthFooterComponent>;
+describe('LayoutFooterComponent', () => {
+    let component: LayoutFooterComponent;
+    let fixture: ComponentFixture<LayoutFooterComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AuthFooterComponent]
+            imports: [TestLocaleModule],
+            declarations: [LayoutFooterComponent],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AuthFooterComponent);
+        fixture = TestBed.createComponent(LayoutFooterComponent);
         component = fixture.componentInstance;
     });
 
