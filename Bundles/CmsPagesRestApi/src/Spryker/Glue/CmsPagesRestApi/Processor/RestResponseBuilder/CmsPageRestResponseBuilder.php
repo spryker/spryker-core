@@ -77,7 +77,7 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
         $response = $this->restResourceBuilder->createRestResponse($restSearchAttributesTransfer->getPagination()->getNumFound());
 
         foreach ($restSearchAttributesTransfer->getRestCmsPages() as $restCmsPageTransfer) {
-            $response->addResource($this->createCmsPageRestResource('', $restCmsPageTransfer));
+            $response->addResource($this->createCmsPageRestResource($restCmsPageTransfer->getUuid(), $restCmsPageTransfer));
         }
 
         return $response;

@@ -3,7 +3,6 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="RestCmsPagesAttributes">
         <property name="restCmsPages" type="RestCmsPage[]" singular="RestCmsPage"/>
-        <property name="sort" type="RestCmsPageSort"/>
         <property name="pagination" type="RestCmsPagePagination"/>
     </transfer>
 
@@ -13,13 +12,7 @@
         <property name="validTo" type="string"/>
         <property name="isSearchable" type="bool"/>
         <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="RestCmsPageSort">
-        <property name="sortParamNames" type="array" singular="sortParamNames"/>
-        <property name="sortParamLocalizedNames" type="array" singular="sortParamLocalizedNames"/>
-        <property name="currentSortParam" type="string"/>
-        <property name="currentSortOrder" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="RestCmsPagePagination">

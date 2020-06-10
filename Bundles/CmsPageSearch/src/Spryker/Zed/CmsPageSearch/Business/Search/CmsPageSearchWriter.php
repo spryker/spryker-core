@@ -276,10 +276,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             (new LocaleTransfer())->setLocaleName($localeName)
         );
 
+        $localeCmsPageDataTransfer->fromArray($cmsPageEntity->toArray(), true);
         $localeCmsPageDataTransfer->setStoreName($storeName);
-        $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
-        $localeCmsPageDataTransfer->setIsSearchable($cmsPageEntity->getIsSearchable());
-        $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
         $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
         $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
