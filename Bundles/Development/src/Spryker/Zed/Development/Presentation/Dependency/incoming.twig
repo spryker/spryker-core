@@ -4,13 +4,17 @@
         <h3>{{ "Incoming dependencies of the" | trans }} {{ bundle }} {{ "module" | trans }}</h3>
         <table class="table table-striped spy-grid">
             <tr class="text-left">
-                <th>{{ 'Dependency' | trans }}</th>
-                <th>{{ 'Count' | trans }}</th>
+                <th>{{ 'Module' | trans }}</th>
+                <th>{{ 'Total Count' | trans }}</th>
+                <th>{{ 'Optional Count' | trans }}</th>
+                <th>{{ 'Test Count' | trans }}</th>
             </tr>
-            {% for count, dependency in dependencies %}
+            {% for dependency in dependencies %}
                 <tr>
-                    <td>{{ count }}</td>
-                    <td>{{ dependency }}</td>
+                    <td>{{ dependency.name }}</td>
+                    <td>{{ dependency.totalDependencyCount }}</td>
+                    <td>{{ dependency.optionalDependencyCount }}</td>
+                    <td>{{ dependency.testDependencyCount }}</td>
                 </tr>
             {% endfor %}
         </table>
