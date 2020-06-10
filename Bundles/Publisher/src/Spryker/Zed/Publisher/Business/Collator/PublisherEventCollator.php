@@ -104,14 +104,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
         $defaultPublishQueueName = $this->publisherConfig->getPublishQueueName() ?? EventConstants::EVENT_QUEUE;
         $publishQueueName = $publishQueueName ?? $defaultPublishQueueName;
 
-        if (!isset($eventCollection[$publishQueueName])) {
-            $eventCollection[$publishQueueName] = [];
-        }
-
         foreach ($subscribedEvents as $subscribedEvent) {
-            if (!isset($eventCollection[$publishQueueName][$subscribedEvent])) {
-                $eventCollection[$publishQueueName][$subscribedEvent] = [];
-            }
             $eventCollection[$publishQueueName][$subscribedEvent][] = $publisherClassName;
         }
 
