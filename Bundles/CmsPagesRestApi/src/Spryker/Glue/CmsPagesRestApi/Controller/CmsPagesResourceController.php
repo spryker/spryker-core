@@ -40,9 +40,7 @@ class CmsPagesResourceController extends AbstractController
      *                  "description": "Search query string.",
      *                  "required": true
      *              }
-     *          ],
-     *          "isIdNullable": true403": "Unauthorized request."
-     *          }
+     *          ]
      *     }
      * })
      *
