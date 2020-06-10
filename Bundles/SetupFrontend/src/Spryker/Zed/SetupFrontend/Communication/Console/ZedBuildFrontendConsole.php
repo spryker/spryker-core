@@ -53,9 +53,10 @@ class ZedBuildFrontendConsole extends Console
     {
         $this->info('Build Zed frontend');
 
-        $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
-        if ($input->hasOption(static::OPTION_ENVIRONMENT)) {
-            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
+        $setupFrontendConfigurationTransfer = null;
+        if ($input->getOption(static::OPTION_ENVIRONMENT)) {
+            $setupFrontendConfigurationTransfer = (new SetupFrontendConfigurationTransfer())
+                ->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
         }
 
         if ($this->getFacade()->buildZedFrontend($this->getMessenger(), $setupFrontendConfigurationTransfer)) {
