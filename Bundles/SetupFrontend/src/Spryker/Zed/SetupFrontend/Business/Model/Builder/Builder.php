@@ -40,7 +40,7 @@ class Builder implements BuilderInterface
             $command .= sprintf(':%s', $setupFrontendConfigurationTransfer->getEnvironment());
         }
 
-        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, null);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
 
         $process->run(function ($type, $buffer) use ($logger) {
             $this->handleOutput($buffer, $logger);

@@ -21,9 +21,9 @@ class ZedBuildFrontendConsole extends Console
     public const COMMAND_NAME = 'frontend:zed:build';
     public const DESCRIPTION = 'This command will build Zed\'s frontend.';
 
-    public const OPTION_ENVIRONMENT = 'environment';
-    public const OPTION_ENVIRONMENT_SHORT = 'e';
-    public const OPTION_ENVIRONMENT_DESCRIPTION = 'Sets the environment to run the command. Currently available environments: production';
+    protected const OPTION_ENVIRONMENT = 'environment';
+    protected const OPTION_ENVIRONMENT_SHORT = 'e';
+    protected const OPTION_ENVIRONMENT_DESCRIPTION = 'Sets the environment to run the command. Currently available environments: production';
 
     /**
      * @return void
