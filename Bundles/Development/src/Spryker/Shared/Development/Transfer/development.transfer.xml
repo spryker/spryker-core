@@ -171,4 +171,11 @@
         <property name="existsProjectModule" type="bool"/>
     </transfer>
 
+    <transfer name="DependencyModuleView">
+        <property name="name" type="string"/>
+        <property name="totalDependencyCount" type="int"/>
+        <property name="testDependencyCount" type="int"/>
+        <property name="optionalDependencyCount" type="int"/>
+    </transfer>
+
 </transfers>
