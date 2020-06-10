@@ -48,11 +48,13 @@ class AddVariantController extends AbstractController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $dataProvider = $this->getFactory()->createProductVariantFormAddDataProvider();
         $form = $this
             ->getFactory()
             ->getProductVariantFormAdd(
-                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
+                $dataProvider->getData($priceDimension),
                 $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )
             ->handleRequest($request);

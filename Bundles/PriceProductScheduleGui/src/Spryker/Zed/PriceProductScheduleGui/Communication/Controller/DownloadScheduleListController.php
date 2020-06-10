@@ -25,7 +25,7 @@ class DownloadScheduleListController extends AbstractController
      */
     public function indexAction(Request $request): StreamedResponse
     {
-        $idPriceProductSchedulelist = $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
+        $idPriceProductSchedulelist = $request->query->getInt(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
 
         $response = $this->getFactory()
             ->createPriceProductScheduleCsvExporter()
