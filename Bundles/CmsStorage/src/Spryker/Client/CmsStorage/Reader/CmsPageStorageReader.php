@@ -119,7 +119,6 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
                 continue;
             }
 
-            dd($cmsPagesStorageData);
             $cmsPagesStorageTransfers[$cmsPagesStorageData[static::KEY_UUID]] = (new CmsPageStorageTransfer())
                 ->fromArray($cmsPagesStorageData, true);
         }
