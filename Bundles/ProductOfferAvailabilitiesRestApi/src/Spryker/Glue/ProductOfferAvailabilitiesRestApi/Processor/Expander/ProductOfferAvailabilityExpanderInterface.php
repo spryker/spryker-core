@@ -14,5 +14,5 @@ interface ProductOfferAvailabilityExpanderInterface
      *
      * @return void
      */
-    public function expandProductOffersWithProductOfferAvailabilities(array $resources): void;
+    public function addProductOfferAvailabilitiesRelationships(array $resources): void;
 }

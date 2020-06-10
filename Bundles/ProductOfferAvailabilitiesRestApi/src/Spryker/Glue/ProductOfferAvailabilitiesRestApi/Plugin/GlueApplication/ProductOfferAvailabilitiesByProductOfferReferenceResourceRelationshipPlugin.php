@@ -32,7 +32,7 @@ class ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugi
     {
         $this->getFactory()
             ->createProductOfferAvailabilityExpander()
-            ->expandProductOffersWithProductOfferAvailabilities($resources);
+            ->addProductOfferAvailabilitiesRelationships($resources);
     }
 
     /**

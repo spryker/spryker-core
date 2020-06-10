@@ -30,7 +30,7 @@ class ProductOfferAvailabilityExpander implements ProductOfferAvailabilityExpand
      *
      * @return void
      */
-    public function expandProductOffersWithProductOfferAvailabilities(array $resources): void
+    public function addProductOfferAvailabilitiesRelationships(array $resources): void
     {
         $productOfferReferences = $this->getProductOfferReferences($resources);
 

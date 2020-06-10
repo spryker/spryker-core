@@ -27,4 +27,14 @@ class ProductOfferPricesRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_ID_SKU_IS_NOT_SPECIFIED
      */
     public const RESPONSE_DETAIL_PRODUCT_OFFER_ID_SKU_IS_NOT_SPECIFIED = 'Product offer ID is not specified.';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    public const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 }

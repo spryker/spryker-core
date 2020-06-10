@@ -30,18 +30,17 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      *
      * @return void
      */
-    public function expandProductConcretesWithProductOffers(array $resources): void
+    public function addProductOffersRelationships(array $resources): void
     {
         $productConcreteSkus = $this->getProductConcreteSkus($resources);
 
         $productOffersRestResources = $this->productOfferReader->getProductOfferResources($productConcreteSkus);
 
         foreach ($resources as $resource) {
-            if ($resource->getType() !== MerchantProductOffersRestApiConfig::RESOURCE_CONCRETE_PRODUCTS) {
-                continue;
-            }
-
-            if (!isset($productOffersRestResources[$resource->getId()])) {
+            if (
+                $resource->getType() !== MerchantProductOffersRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+                || !isset($productOffersRestResources[$resource->getId()])
+            ) {
                 continue;
             }
 

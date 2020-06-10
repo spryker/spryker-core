@@ -31,7 +31,7 @@ class ProductOffersByProductConcreteSkuResourceRelationshipPlugin extends Abstra
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()->createProductOfferExpander()
-            ->expandProductConcretesWithProductOffers($resources);
+            ->addProductOffersRelationships($resources);
     }
 
     /**

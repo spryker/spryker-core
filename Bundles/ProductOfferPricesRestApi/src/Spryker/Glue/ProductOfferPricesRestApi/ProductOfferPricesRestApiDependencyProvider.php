@@ -10,7 +10,6 @@ namespace Spryker\Glue\ProductOfferPricesRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientBridge;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientBridge;
@@ -38,7 +37,6 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMerchantProductOfferStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
-        $container = $this->addPriceClient($container);
 
         return $container;
     }
@@ -101,22 +99,6 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductOfferPricesRestApiToPriceProductClientBridge(
                 $container->getLocator()->priceProduct()->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addPriceClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_PRICE, function (Container $container) {
-            return new ProductOfferPricesRestApiToPriceClientBridge(
-                $container->getLocator()->price()->client()
             );
         });
 

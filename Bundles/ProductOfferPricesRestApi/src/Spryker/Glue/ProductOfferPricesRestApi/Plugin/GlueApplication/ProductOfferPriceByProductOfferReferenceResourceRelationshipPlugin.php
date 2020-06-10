@@ -15,7 +15,7 @@ use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiFactory getFactory()
  */
-class ProductOfferPriceByProductOfferResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,7 +30,7 @@ class ProductOfferPriceByProductOfferResourceRelationshipPlugin extends Abstract
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()->createProductOfferPriceExpander()
-            ->expandProductOffersWithProductOfferPrices($resources, $restRequest);
+            ->addProductOfferPriceRelationships($resources, $restRequest);
     }
 
     /**

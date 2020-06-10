@@ -32,7 +32,7 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
      *
      * @return void
      */
-    public function expandProductOffersWithProductOfferPrices(array $resources, RestRequestInterface $restRequest): void
+    public function addProductOfferPriceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $productOfferReferences = $this->getProductOfferReferences($resources);
 

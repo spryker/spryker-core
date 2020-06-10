@@ -9,7 +9,6 @@ namespace Spryker\Glue\ProductOfferPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
@@ -22,6 +21,9 @@ use Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader\ProductOfferPriceRea
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilder;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilderInterface;
 
+/**
+ * @method \Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig getConfig()
+ */
 class ProductOfferPricesRestApiFactory extends AbstractFactory
 {
     /**
@@ -54,7 +56,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
      */
     public function createProductOfferPriceMapper(): ProductOfferPriceMapperInterface
     {
-        return new ProductOfferPriceMapper($this->getPriceClient());
+        return new ProductOfferPriceMapper();
     }
 
     /**
@@ -95,13 +97,5 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function getPriceProductClient(): ProductOfferPricesRestApiToPriceProductClientInterface
     {
         return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientInterface
-     */
-    public function getPriceClient(): ProductOfferPricesRestApiToPriceClientInterface
-    {
-        return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_PRICE);
     }
 }

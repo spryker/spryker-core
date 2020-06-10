@@ -11,33 +11,10 @@ use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestProductOfferPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 
 class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
 {
-    /**
-     * @var string|null
-     */
-    protected static $grossPriceModeIdentifier;
-
-    /**
-     * @var string|null
-     */
-    protected static $netPriceModeIdentifier;
-
-    /**
-     * @var \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientInterface
-     */
-    protected $priceClient;
-
-    /**
-     * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceClientInterface $priceClient
-     */
-    public function __construct(ProductOfferPricesRestApiToPriceClientInterface $priceClient)
-    {
-        $this->priceClient = $priceClient;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
@@ -82,41 +59,17 @@ class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
             ->setPriceTypeName($priceType)
             ->setCurrency($restCurrencyTransfer);
 
-        if ($currentPriceMode === $this->getGrossPriceModeIdentifier()) {
+        if ($currentPriceMode === ProductOfferPricesRestApiConfig::PRICE_MODE_GROSS) {
             $restProductOfferPriceAttributesTransfer->setGrossAmount($amount);
 
             return $restProductOfferPriceAttributesTransfer;
         }
-        if ($currentPriceMode === $this->getNetPriceModeIdentifier()) {
+        if ($currentPriceMode === ProductOfferPricesRestApiConfig::PRICE_MODE_NET) {
             $restProductOfferPriceAttributesTransfer->setNetAmount($amount);
 
             return $restProductOfferPriceAttributesTransfer;
         }
 
         return $restProductOfferPriceAttributesTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getGrossPriceModeIdentifier(): string
-    {
-        if (static::$grossPriceModeIdentifier === null) {
-            static::$grossPriceModeIdentifier = $this->priceClient->getGrossPriceModeIdentifier();
-        }
-
-        return static::$grossPriceModeIdentifier;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getNetPriceModeIdentifier(): string
-    {
-        if (static::$netPriceModeIdentifier === null) {
-            static::$netPriceModeIdentifier = $this->priceClient->getNetPriceModeIdentifier();
-        }
-
-        return static::$netPriceModeIdentifier;
     }
 }

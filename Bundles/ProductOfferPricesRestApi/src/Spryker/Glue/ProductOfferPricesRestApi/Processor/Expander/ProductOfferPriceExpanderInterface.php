@@ -17,5 +17,5 @@ interface ProductOfferPriceExpanderInterface
      *
      * @return void
      */
-    public function expandProductOffersWithProductOfferPrices(array $resources, RestRequestInterface $restRequest): void;
+    public function addProductOfferPriceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }

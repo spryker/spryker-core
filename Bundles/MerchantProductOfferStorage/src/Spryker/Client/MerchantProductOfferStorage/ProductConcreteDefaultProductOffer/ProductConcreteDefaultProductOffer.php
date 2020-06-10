@@ -8,7 +8,6 @@
 namespace Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
 
@@ -41,25 +40,9 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
      */
     public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
     {
-        $productOfferStorageTransfers = $this->productOfferStorageReader->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer)->getProductOffersStorage()->getArrayCopy();
+        $productOfferReferences = $this->getProductOfferReferences($productOfferStorageCriteriaTransfer);
 
-        if (!$productOfferStorageTransfers) {
-            return null;
-        }
-        $productOfferReferences = array_map(
-            function (ProductOfferStorageTransfer $productOfferStorageTransfer) {
-                return $productOfferStorageTransfer->getProductOfferReference();
-            },
-            $productOfferStorageTransfers
-        );
-        if (
-            $productOfferStorageCriteriaTransfer->getProductOfferReference()
-            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences)
-        ) {
-            return $productOfferStorageCriteriaTransfer->getProductOfferReference();
-        }
-
-        return $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productOfferReferences);
+        return $productOfferReferences[$productOfferStorageCriteriaTransfer->getSku()] ?? null;
     }
 
     /**
@@ -88,7 +71,8 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
                 continue;
             }
 
-            $defaultProductOffers[$productConcreteSku] = $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productConcreteProductOffersReferences);
+            $defaultProductOffers[$productConcreteSku] = $this->defaultProductOfferPlugin
+                ->provideDefaultProductOfferReference($productConcreteProductOffersReferences);
         }
 
         return $defaultProductOffers;
