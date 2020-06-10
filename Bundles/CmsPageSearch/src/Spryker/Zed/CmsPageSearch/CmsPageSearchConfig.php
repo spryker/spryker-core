@@ -57,9 +57,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @phpstan-param array<string, string> $data
+     * @phpstan-param array<string, mixed> $data
      *
-     * @phpstan-return array<string, string>
+     * @phpstan-return array<string, mixed>
      *
      * @param string[] $data
      *
@@ -74,9 +74,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @phpstan-param array<string, string> $data
+     * @phpstan-param array<string, mixed> $data
      *
-     * @phpstan-return array<string, string>
+     * @phpstan-return array<string, mixed>
      *
      * @param string[] $data
      *
@@ -93,9 +93,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @phpstan-param array<string, string> $data
+     * @phpstan-param array<string, mixed> $data
      *
-     * @phpstan-return array<string, string>
+     * @phpstan-return array<string, mixed>
      *
      * @param string[] $data
      *
