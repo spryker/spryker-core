@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Business\DataMapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
@@ -20,6 +21,8 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
     protected const FACET_VALUE = 'facet-value';
     protected const ALL_PARENTS = 'all-parents';
     protected const DIRECT_PARENTS = 'direct-parents';
+
+    protected const KEY_ADD_TO_CART_SKU = 'add_to_cart_sku';
 
     /**
      * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface
@@ -108,6 +111,12 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
             ->addSuggestionTerms($pageMapTransfer, $data['name'])
             ->addCompletionTerms($pageMapTransfer, $data['name'])
             ->addStringSort($pageMapTransfer, 'name', $data['name']);
+
+        $addToCartSku = $data[static::KEY_ADD_TO_CART_SKU] ?? null;
+
+        if ($addToCartSku) {
+            $this->pageMapBuilder->addSearchResultData($pageMapTransfer, ProductPageSearchTransfer::ADD_TO_CART_SKU, $addToCartSku);
+        }
 
         $this->expandProductPageMap($pageMapTransfer, $data, $localeTransfer);
 

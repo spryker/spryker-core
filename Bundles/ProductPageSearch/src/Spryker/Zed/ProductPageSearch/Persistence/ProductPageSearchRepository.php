@@ -55,6 +55,57 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->groupByFkProductAbstract()
+            ->having(sprintf('COUNT(%s) = ?', SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT), 1)
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+         $concreteProductsData = $this->getFactory()
+            ->getProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->select([
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductTableMap::COL_SKU,
+            ])
+            ->find()
+            ->toArray();
+
+        $addToCartSkus = [];
+
+        foreach ($concreteProductsData as $concreteProductData) {
+            $addToCartSkus[$concreteProductData[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $concreteProductData[SpyProductTableMap::COL_SKU];
+        }
+
+        return $addToCartSkus;
+    }
+
+    /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection $productConcretePageSearchEntities
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]

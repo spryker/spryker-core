@@ -50,4 +50,18 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractAddToCartSkus(array $productAbstractIds): array;
 }

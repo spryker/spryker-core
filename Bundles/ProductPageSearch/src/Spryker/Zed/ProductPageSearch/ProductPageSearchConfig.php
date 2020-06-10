@@ -57,4 +57,17 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     {
         return static::PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE;
     }
+
+    /**
+     * Specification:
+     * - Controls if the "add_to_cart_sku" property is populated for product abstract search entity.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isProductAbstractAddToCartEnabled(): bool
+    {
+        return false;
+    }
 }

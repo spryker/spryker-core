@@ -27,6 +27,7 @@
         <property name="categoryNames" type="array" singular="categoryNames"/>
         <property name="sortedCategories" type="array" singular="sortedCategories"/>
         <property name="productImages" type="array" singular="productImages"/>
+        <property name="addToCartSku" type="string"/>
     </transfer>
 
     <transfer name="ProductPageLoad">
