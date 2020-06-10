@@ -200,7 +200,7 @@ class ContentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetContentByKeys(): void
+    public function testGetContentByKeysReturnCorrectResult(): void
     {
         // Arrange
         $contentTransfer = $this->tester->haveContent();
@@ -214,5 +214,20 @@ class ContentFacadeTest extends Test
             $contentTransfer->getKey(),
             array_shift($foundContentTransfers)->getKey()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetContentByKeysReturnEmptyArray(): void
+    {
+        // Arrange
+        $contentTransfer = $this->tester->haveContent();
+
+        // Act
+        $foundContentTransfers = $this->tester->getFacade()->getContentByKeys([static::KEY]);
+
+        // Assert
+        $this->assertEmpty($foundContentTransfers);
     }
 }

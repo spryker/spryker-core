@@ -26,6 +26,7 @@ class CmsContentWidgetContentItemConnectorDependencyProvider extends AbstractBun
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addContentFacade($container);
 
         return $container;

@@ -33,7 +33,7 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapContentItemKeyListReturnsCorrectResponse(): void
+    public function testMapContentItemKeysReturnsCorrectResponse(): void
     {
         // Arrange
         $this->tester->haveContent([
@@ -41,20 +41,20 @@ class CmsContentWidgetContentItemConnectorFacadeTest extends Unit
         ]);
 
         // Act
-        $foundArray = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
+        $mappedKeys = $this->tester->getFacade()->mapContentItemKeys([static::CONTENT_KEY]);
 
         // Assert
-        $this->assertNotEmpty($foundArray);
+        $this->assertNotEmpty($mappedKeys);
         $this->assertEquals(
             [static::CONTENT_KEY => static::CONTENT_KEY],
-            $foundArray
+            $mappedKeys
         );
     }
 
     /**
      * @return void
      */
-    public function testMapContentItemKeyListReturnsInCorrectResponse(): void
+    public function testMapContentItemKeysReturnsInCorrectResponse(): void
     {
         // Arrange
         $this->tester->haveContent([

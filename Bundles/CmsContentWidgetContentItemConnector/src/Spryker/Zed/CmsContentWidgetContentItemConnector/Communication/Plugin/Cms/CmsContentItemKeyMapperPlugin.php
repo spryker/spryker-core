@@ -18,7 +18,7 @@ class CmsContentItemKeyMapperPlugin extends AbstractPlugin implements CmsContent
 {
     /**
      * {@inheritDoc}
-     * - Maps given content item keys to corresponding persistent keys.
+     * - Maps given content item keys to corresponding persistent item keys.
      *
      * @api
      *
