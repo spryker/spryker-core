@@ -52,8 +52,8 @@ class ZedBuildFrontendConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Build Zed frontend');
-
         $setupFrontendConfigurationTransfer = null;
+
         if ($input->getOption(static::OPTION_ENVIRONMENT)) {
             $setupFrontendConfigurationTransfer = (new SetupFrontendConfigurationTransfer())
                 ->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
