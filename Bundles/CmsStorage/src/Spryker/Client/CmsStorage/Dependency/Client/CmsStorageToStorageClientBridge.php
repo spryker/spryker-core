@@ -23,16 +23,6 @@ class CmsStorageToStorageClientBridge implements CmsStorageToStorageClientInterf
     }
 
     /**
-     * @param string $key
-     *
-     * @return array
-     */
-    public function get($key)
-    {
-        return $this->storageClient->get($key);
-    }
-
-    /**
      * @param string[] $keys
      *
      * @return array

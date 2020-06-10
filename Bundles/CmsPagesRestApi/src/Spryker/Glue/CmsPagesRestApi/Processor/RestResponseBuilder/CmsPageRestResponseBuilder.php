@@ -43,23 +43,6 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
     }
 
     /**
-     * @param string $cmsPageUuid
-     * @param \Generated\Shared\Transfer\RestCmsPageTransfer $restCmsPageTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createCmsPageRestResource(
-        string $cmsPageUuid,
-        RestCmsPageTransfer $restCmsPageTransfer
-    ): RestResourceInterface {
-        return $this->restResourceBuilder->createRestResource(
-            CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
-            $cmsPageUuid,
-            $restCmsPageTransfer
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCmsPageEmptyRestResponse(): RestResponseInterface
@@ -81,5 +64,22 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @param string $cmsPageUuid
+     * @param \Generated\Shared\Transfer\RestCmsPageTransfer $restCmsPageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createCmsPageRestResource(
+        string $cmsPageUuid,
+        RestCmsPageTransfer $restCmsPageTransfer
+    ): RestResourceInterface {
+        return $this->restResourceBuilder->createRestResource(
+            CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
+            $cmsPageUuid,
+            $restCmsPageTransfer
+        );
     }
 }

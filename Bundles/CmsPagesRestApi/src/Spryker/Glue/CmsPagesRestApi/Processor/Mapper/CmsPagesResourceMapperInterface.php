@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 interface CmsPagesResourceMapperInterface
 {
     /**
+     * @phpstan-param array<string, mixed> $searchResult
+     *
      * @param array $searchResult
      * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
      *

@@ -15,6 +15,8 @@ class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
     protected const CMS_PAGES = 'cms_pages';
 
     /**
+     * @phpstan-param array<string, mixed> $searchResult
+     *
      * @param array $searchResult
      * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
      *
@@ -33,6 +35,8 @@ class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $searchResult
+     *
      * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
      * @param array $searchResult
      *

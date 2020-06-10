@@ -90,6 +90,8 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
+     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
+     *
      * @param string[] $cmsPageIds
      * @param string $localeName
      * @param string $storeName
@@ -117,6 +119,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
                 continue;
             }
 
+            dd($cmsPagesStorageData);
             $cmsPagesStorageTransfers[$cmsPagesStorageData[static::KEY_UUID]] = (new CmsPageStorageTransfer())
                 ->fromArray($cmsPagesStorageData, true);
         }
@@ -132,7 +135,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
      *
      * @return string[]
      */
-    protected function generateKeys(array $cmsPageUuids, string $localeName, string $storeName, ?string $mappingType = null)
+    protected function generateKeys(array $cmsPageUuids, string $localeName, string $storeName, ?string $mappingType = null): array
     {
         $cmsPageStorageKeys = [];
         foreach ($cmsPageUuids as $cmsPageUuid) {

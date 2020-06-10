@@ -79,7 +79,9 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getCmsPageByResourceId(RestRequestInterface $restRequest): RestResponseInterface
     {
@@ -102,6 +104,8 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
@@ -125,6 +129,6 @@ class CmsPageReader implements CmsPageReaderInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        return $restRequest->getHttpRequest()->query->get($parameterName);
     }
 }

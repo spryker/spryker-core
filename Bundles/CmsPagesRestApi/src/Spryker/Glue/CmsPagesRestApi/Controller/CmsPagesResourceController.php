@@ -18,9 +18,17 @@ class CmsPagesResourceController extends AbstractController
 {
     /**
      * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a cms page by uuid."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }]
+     *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Cms pages."
+     *              "Retrieves lit of cms pages."
      *          ],
      *          "parameters": [
      *              {
@@ -33,7 +41,8 @@ class CmsPagesResourceController extends AbstractController
      *                  "required": true
      *              }
      *          ],
-     *          "isIdNullable": true
+     *          "isIdNullable": true403": "Unauthorized request."
+     *          }
      *     }
      * })
      *

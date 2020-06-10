@@ -43,7 +43,7 @@
         <property name="idCmsPage" type="int"/>
         <property name="name" type="string"/>
         <property name="templatePath" type="string"/>
-        <property name="placeholders" type="array" singular="placeholders"/>
+        <property name="placeholders" type="array" singular="placeholder"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>

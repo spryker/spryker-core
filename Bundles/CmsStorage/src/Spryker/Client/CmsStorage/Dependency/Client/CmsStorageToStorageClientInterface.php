@@ -10,13 +10,6 @@ namespace Spryker\Client\CmsStorage\Dependency\Client;
 interface CmsStorageToStorageClientInterface
 {
     /**
-     * @param string $key
-     *
-     * @return array
-     */
-    public function get($key);
-
-    /**
      * @param string[] $keys
      *
      * @return array

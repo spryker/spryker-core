@@ -227,12 +227,10 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
                 (new LocaleTransfer())->setLocaleName($localeName)
             );
 
-        $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
-        $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
+        $localeCmsPageDataTransfer->fromArray($cmsPageEntity->toArray());
         $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
         $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
-        $localeCmsPageDataTransfer->setUuid($cmsPageEntity->getUuid());
 
         $expandedData = $localeCmsPageDataTransfer->toArray();
         foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
