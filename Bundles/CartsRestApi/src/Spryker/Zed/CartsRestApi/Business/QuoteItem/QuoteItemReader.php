@@ -83,12 +83,17 @@ class QuoteItemReader implements QuoteItemReaderInterface
             return false;
         }
 
+        $itemFound = false;
         foreach ($itemTransfers as $itemTransfer) {
             if ($cartItemRequestTransfer->getGroupKey()) {
-                return $itemTransfer->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
+                $itemFound = $itemTransfer->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
             }
 
-            if ($itemTransfer->getSku() === $cartItemRequestTransfer->getSku()) {
+            if (!$itemFound && $itemTransfer->getSku() === $cartItemRequestTransfer->getSku()) {
+                $itemFound = true;
+            }
+
+            if ($itemFound) {
                 return true;
             }
         }
