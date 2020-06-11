@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,8 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MerchantProfileForm extends AbstractType
 {
-    public const OPTION_CURRENT_ID = 'current_id';
-
     protected const FIELD_BUSINESS_INFO_MERCHANT_PROFILE = 'businessInfoMerchantProfile';
     protected const FIELD_ONLINE_PROFILE_MERCHANT_PROFILE = 'onlineProfileMerchantProfile';
 
@@ -55,7 +54,8 @@ class MerchantProfileForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addBusinessInfoMerchantProfileSubform($builder)
-            ->addOnlineProfileMerchantProfileSubform($builder);
+            ->addOnlineProfileMerchantProfileSubform($builder)
+            ->addSaveButton($builder);
     }
 
     /**
@@ -69,6 +69,7 @@ class MerchantProfileForm extends AbstractType
             static::FIELD_BUSINESS_INFO_MERCHANT_PROFILE,
             BusinessInfoMerchantProfileForm::class,
             [
+                'label' => false,
                 'data' => $builder->getForm()->getData(),
                 'data_class' => MerchantTransfer::class,
             ]
@@ -88,10 +89,25 @@ class MerchantProfileForm extends AbstractType
             static::FIELD_ONLINE_PROFILE_MERCHANT_PROFILE,
             OnlineProfileMerchantProfileForm::class,
             [
+                'label' => false,
                 'data' => $builder->getForm()->getData()->getMerchantProfile(),
                 'data_class' => MerchantProfileTransfer::class,
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSaveButton(FormBuilderInterface $builder)
+    {
+        $builder->add('save', SubmitType::class, [
+            'label' => 'Save',
+        ]);
 
         return $this;
     }
