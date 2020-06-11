@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 
@@ -20,13 +23,6 @@ interface NavigationGuiToNavigationInterface
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
     public function createNavigation(NavigationTransfer $navigationTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationTransfer|null
-     */
-    public function findNavigation(NavigationTransfer $navigationTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
@@ -57,6 +53,13 @@ interface NavigationGuiToNavigationInterface
     public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\DuplicateNavigationTransfer $duplicateNavigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
+     */
+    public function duplicateNavigation(DuplicateNavigationTransfer $duplicateNavigationTransfer): NavigationResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
@@ -84,4 +87,11 @@ interface NavigationGuiToNavigationInterface
      * @return void
      */
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
 }
