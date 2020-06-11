@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentStorage\ContentStorage;
+namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
-
-interface ContentStorageReaderInterface
+interface ContentBannersRestApiToContentStorageClientInterface
 {
     /**
-     * @param string $contentKey
-     * @param string $localeName
+     * Specification:
+     * - Retrieves content by keys through a storage client dependency.
+     * - Returns the context needed to generate a content type.
      *
-     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
-     */
-    public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer;
-
-    /**
+     * @api
+     *
      * @param string[] $contentKeys
      * @param string $localeName
      *

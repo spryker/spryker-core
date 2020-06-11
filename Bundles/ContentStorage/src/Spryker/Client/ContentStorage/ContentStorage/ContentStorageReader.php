@@ -60,6 +60,56 @@ class ContentStorageReader implements ContentStorageReaderInterface
     }
 
     /**
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer[]
+     */
+    public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array
+    {
+        $contentsStorageData = $this->storageClient->getMulti(
+            $this->generateKeys($contentKeys, $localeName)
+        );
+        if (!$contentsStorageData) {
+            return [];
+        }
+
+//        dd($contentsStorageData);
+        $contentsStorageTransfers = [];
+//        foreach ($contentsStorageData as $contentsStorageDatum) {
+//            if (!$contentsStorageDatum) {
+//                continue;
+//            }
+//
+//            $cmsPagesStorageData = $this->utilEncodingService->decodeJson($contentsStorageDatum, true);
+//            if (!is_array($cmsPagesStorageData)) {
+//                continue;
+//            }
+//
+//            $contentsStorageTransfers[$contentsStorageData[static::KEY_UUID]] = (new CmsPageStorageTransfer())
+//                ->fromArray($cmsPagesStorageData, true);
+//        }
+
+        return $contentsStorageTransfers;
+    }
+
+    /**
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function generateKeys(array $contentKeys, string $localeName): array
+    {
+        $contentStorageKeys = [];
+        foreach ($contentKeys as $contentKey) {
+            $contentStorageKeys[] = $this->generateKey($contentKey, $localeName);
+        }
+
+        return $contentStorageKeys;
+    }
+
+    /**
      * @param string $keyName
      * @param string $localeName
      *
