@@ -70,7 +70,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     {
         if ($setupFrontendConfigurationTransfer === null) {
             $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
-            $message = 'For forward compatibility use "SetupFrontendConfigurationTransfer" to configure build process accordingly.';
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
 
             trigger_error($message, E_USER_DEPRECATED);
         }
@@ -136,7 +136,7 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     {
         if ($setupFrontendConfigurationTransfer === null) {
             $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
-            $message = 'For forward compatibility use "SetupFrontendConfigurationTransfer" to configure build process accordingly.';
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
 
             trigger_error($message, E_USER_DEPRECATED);
         }

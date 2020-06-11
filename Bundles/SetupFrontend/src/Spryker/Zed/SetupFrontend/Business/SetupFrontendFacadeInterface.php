@@ -49,6 +49,7 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Yves frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
@@ -100,6 +101,7 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Zed frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
