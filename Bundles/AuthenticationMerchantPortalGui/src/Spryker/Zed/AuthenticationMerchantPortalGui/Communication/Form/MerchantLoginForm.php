@@ -23,6 +23,7 @@ class MerchantLoginForm extends AbstractType
 {
     public const FIELD_USERNAME = 'username';
     public const FIELD_PASSWORD = 'password';
+    public const BUTTON_LOGIN = 'login';
 
     protected const LABEL_USERNAME = 'Email';
     protected const LABEL_PASSWORD = 'Password';
@@ -98,7 +99,7 @@ class MerchantLoginForm extends AbstractType
      */
     protected function addLoginButton(FormBuilderInterface $builder)
     {
-        $builder->add('login', SubmitType::class, [
+        $builder->add(static::BUTTON_LOGIN, SubmitType::class, [
             'label' => static::LABEL_LOGIN,
         ]);
 

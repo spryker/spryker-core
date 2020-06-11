@@ -22,6 +22,7 @@ class MerchantProfileForm extends AbstractType
 {
     protected const FIELD_BUSINESS_INFO_MERCHANT_PROFILE = 'businessInfoMerchantProfile';
     protected const FIELD_ONLINE_PROFILE_MERCHANT_PROFILE = 'onlineProfileMerchantProfile';
+    protected const BUTTON_SAVE = 'save';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -105,7 +106,7 @@ class MerchantProfileForm extends AbstractType
      */
     protected function addSaveButton(FormBuilderInterface $builder)
     {
-        $builder->add('save', SubmitType::class, [
+        $builder->add(static::BUTTON_SAVE, SubmitType::class, [
             'label' => 'Save',
         ]);
 
