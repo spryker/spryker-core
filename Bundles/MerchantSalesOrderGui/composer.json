@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-sales-order-gui",
+  "type": "library",
   "description": "MerchantSalesOrderGui module",
   "license": "proprietary",
   "require": {

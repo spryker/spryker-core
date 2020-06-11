@@ -1,5 +1,6 @@
 {
   "name": "spryker/merchant-oms-gui",
+  "type": "library",
   "description": "MerchantOmsGui module",
   "license": "proprietary",
   "require": {
