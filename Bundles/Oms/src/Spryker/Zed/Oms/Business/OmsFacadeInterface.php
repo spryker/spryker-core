@@ -615,7 +615,12 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Updates reservation quantity for different entities from a given ReservationRequest.
-     *  - Executes plugin stack for updating reservation quantity by provided options in ReservationRequest.
+     *  - Calculates total current reservation for given ReservationRequestTransfer by executing the OmsReservationAggregationPluginInterface plugin stack and adding their sum amount.
+     *  - Uses original reservation aggregation if no plugin returns an aggregation of reservations.
+     *  - Uses `OmsReservationWriterStrategyPluginInterface` stack to save reservation entity.
+     *  - Checks if reservation for ReservationRequest already exists, if so it updates it with new values, otherwise creates a new reservation entity.
+     *  - Does the same writing procedure for stores with shared persistence based on configuration.
+     *  - Runs a stack of ReservationPostSaveTerminationAwareStrategyPluginInterface plugins after saving reservation which terminates the execution of remaining plugins if one plugin returns isTerminated to be true.
      *
      * @api
      *
@@ -680,7 +685,8 @@ interface OmsFacadeInterface
     /**
      * Specification:
      * - Returns reserved quantity for provided ReservationRequest.
-     * - Executes plugin stack to get reserved quantity for an entity by provided options in ReservationRequest.
+     * - Runs a stack of `OmsReservationReaderStrategyPluginInterface` plugins to get reservation quantity.
+     * - Gets original reservation quantity if no one plugin is applicable.
      *
      * @api
      *

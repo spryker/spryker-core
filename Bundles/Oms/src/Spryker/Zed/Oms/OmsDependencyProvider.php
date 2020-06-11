@@ -76,7 +76,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsOrderMailExpanderPlugins($container);
         $container = $this->addOmsManualEventGrouperPlugins($container);
         $container = $this->addOmsReservationWriterStrategyPlugins($container);
-        $container = $this->addReservationHandlerTerminationAwareStrategyPlugins($container);
+        $container = $this->addReservationPostSaveTerminationAwareStrategyPlugins($container);
 
         return $container;
     }
@@ -144,7 +144,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\OmsDependencyProvider::getReservationHandlerTerminationAwareStrategyPlugins()` instead.
+     * @deprecated Use `\Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()` instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -474,19 +474,19 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addReservationHandlerTerminationAwareStrategyPlugins(Container $container): Container
+    protected function addReservationPostSaveTerminationAwareStrategyPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY, function () {
-            return $this->getReservationHandlerTerminationAwareStrategyPlugins();
+            return $this->getReservationPostSaveTerminationAwareStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[]
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
      */
-    protected function getReservationHandlerTerminationAwareStrategyPlugins(): array
+    protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
     {
         return [];
     }

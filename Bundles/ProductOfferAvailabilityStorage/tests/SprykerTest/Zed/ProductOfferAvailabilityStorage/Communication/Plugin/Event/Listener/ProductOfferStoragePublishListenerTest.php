@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\OmsReservation\ProductOfferOmsReservationReaderStrategyPlugin;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
 use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
 

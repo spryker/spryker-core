@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ReservationRequestTransfer;
  *
  * Use this plugin to update availability of reserved products.
  */
-interface ReservationHandlerTerminationAwareStrategyPluginInterface
+interface ReservationPostSaveTerminationAwareStrategyPluginInterface
 {
     /**
      * Specification:
@@ -42,7 +42,7 @@ interface ReservationHandlerTerminationAwareStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Handles all necessary events related to reservation updates, such as updating Stock, Availability and etc.
+     *  - Handles all necessary events related to reservation updates.
      *
      * @api
      *

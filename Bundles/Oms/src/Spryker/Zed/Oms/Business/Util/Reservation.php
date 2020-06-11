@@ -48,7 +48,7 @@ class Reservation implements ReservationInterface
     protected $omsReservationWriterStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[]
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
      */
     protected $reservationHandlerTerminationAwareStrategyPlugins;
 
@@ -59,7 +59,7 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      * @param \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface $omsEntityManager
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[] $omsReservationWriterStrategyPlugins
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface[] $reservationHandlerTerminationAwareStrategyPlugins
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[] $reservationHandlerTerminationAwareStrategyPlugins
      */
     public function __construct(
         ReservationReaderInterface $reservationReader,

@@ -2,24 +2,25 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms;
+namespace Spryker\Zed\Availability\Communication\Plugin\Oms;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\OmsProductOfferReservation\OmsProductOfferReservationConfig getConfig()
- * @method \Spryker\Zed\OmsProductOfferReservation\Business\OmsProductOfferReservationFacadeInterface getFacade()
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
+ * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  */
-class ProductOfferReservationHandlerTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationHandlerTerminationAwareStrategyPluginInterface
+class AvailabilityReservationPostSaveTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationPostSaveTerminationAwareStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Execute should be terminated because the product offers are used own database table and availability will be updated automatically by events.
      *
      * @api
      *
@@ -29,12 +30,12 @@ class ProductOfferReservationHandlerTerminationAwareStrategyPlugin extends Abstr
      */
     public function isTerminated(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        return $reservationRequestTransfer->getProductOfferReference() !== null;
+        return false;
     }
 
     /**
      * {@inheritDoc}
-     * - Checks if the request is applicable for product offers.
+     * - Checks if request is applicable for concrete products.
      *
      * @api
      *
@@ -44,11 +45,12 @@ class ProductOfferReservationHandlerTerminationAwareStrategyPlugin extends Abstr
      */
     public function isApplicable(ReservationRequestTransfer $reservationRequestTransfer): bool
     {
-        return $reservationRequestTransfer->getProductOfferReference() !== null;
+        return $reservationRequestTransfer->getSku() !== null;
     }
 
     /**
      * {@inheritDoc}
+     * - Updates availability for the concrete product.
      *
      * @api
      *
@@ -58,5 +60,6 @@ class ProductOfferReservationHandlerTerminationAwareStrategyPlugin extends Abstr
      */
     public function handle(ReservationRequestTransfer $reservationRequestTransfer): void
     {
+        $this->getFacade()->updateAvailability($reservationRequestTransfer->getSku());
     }
 }

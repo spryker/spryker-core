@@ -5,21 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Reservation;
+namespace Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
- * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  */
-class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationHandlerTerminationAwareStrategyPluginInterface
+class ReservationVersionPostSaveTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationPostSaveTerminationAwareStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Execution should not be terminated for concrete products.
      *
      * @api
      *
@@ -34,7 +36,7 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
 
     /**
      * {@inheritDoc}
-     * - Checks if the request is applicable for concrete products.
+     * - Checks if request is applicable for the concrete products.
      *
      * @api
      *
@@ -49,8 +51,7 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
 
     /**
      * {@inheritDoc}
-     * - Updates the lead product's reservation for the provided product packaging unit SKU.
-     * - Skips updating if the product packaging unit has self as lead product.
+     * - Saves reservation version.
      *
      * @api
      *
@@ -60,6 +61,6 @@ class LeadProductReservationHandlerTerminationAwareStrategyPlugin extends Abstra
      */
     public function handle(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFacade()->updateLeadProductReservation($reservationRequestTransfer->getSku());
+        $this->getFacade()->saveReservationVersion($reservationRequestTransfer->getSku());
     }
 }

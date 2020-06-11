@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Availability\Communication\Plugin\Oms;
+namespace Spryker\Zed\ProductBundle\Communication\Plugin\Oms;
 
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationHandlerTerminationAwareStrategyPluginInterface;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
- * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
- * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
-class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationHandlerTerminationAwareStrategyPluginInterface
+class ProductBundleReservationPostSaveTerminationAwareStrategyPlugin extends AbstractPlugin implements ReservationPostSaveTerminationAwareStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -35,7 +35,7 @@ class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Checks if request is applicable for concrete products.
+     * - Checks if ReservationRequest.sku is not null;
      *
      * @api
      *
@@ -50,7 +50,7 @@ class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Updates availability for the concrete product.
+     * - Updates availability for product bundle by provided ReservationRequest.sku.
      *
      * @api
      *
@@ -60,6 +60,6 @@ class AvailabilityReservationHandlerTerminationAwareStrategyPlugin extends Abstr
      */
     public function handle(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFacade()->updateAvailability($reservationRequestTransfer->getSku());
+        $this->getFacade()->updateAffectedBundlesAvailability($reservationRequestTransfer->getSku());
     }
 }
