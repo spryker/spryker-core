@@ -56,12 +56,12 @@ class QuoteItemReader implements QuoteItemReaderInterface
             return $quoteResponseTransfer;
         }
 
-        $ifRequestedItemIsInQuote = $this->checkRequestedItemIsInQuote(
+        $isRequestedItemInQuote = $this->checkRequestedItemIsInQuote(
             $cartItemRequestTransfer,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
         );
 
-        if (!$ifRequestedItemIsInQuote) {
+        if (!$isRequestedItemInQuote) {
             $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
