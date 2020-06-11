@@ -29,4 +29,23 @@ class CmsStorageClient extends AbstractClient implements CmsStorageClientInterfa
             ->createCmsPageStorageMapper()
             ->mapCmsPageStorageData($data);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $cmsPageUuids
+     * @param string $mappingType
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     */
+    public function getCmsPageStorageByUuids(array $cmsPageUuids, string $mappingType, string $localeName, string $storeName): array
+    {
+        return $this->getFactory()
+            ->createCmsPageStorageReader()
+            ->getCmsPagesByUuids($cmsPageUuids, $mappingType, $localeName, $storeName);
+    }
 }
