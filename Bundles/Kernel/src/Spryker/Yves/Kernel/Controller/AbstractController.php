@@ -119,7 +119,7 @@ abstract class AbstractController
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
-        if (!$this->isRedirectUrlValid($absoluteUrl)) {
+        if (!$this->isValidRedirectUrl($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not valid");
         }
 
@@ -135,7 +135,7 @@ abstract class AbstractController
      *
      * @return bool
      */
-    protected function isRedirectUrlValid(string $absoluteUrl): bool
+    protected function isValidRedirectUrl(string $absoluteUrl): bool
     {
         return (bool)$absoluteUrl;
     }
