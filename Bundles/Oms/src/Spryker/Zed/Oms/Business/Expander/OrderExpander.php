@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Oms\OmsConfig;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
+use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
@@ -19,11 +21,20 @@ class OrderExpander implements OrderExpanderInterface
     protected $flagChecker;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface $flagChecker
+     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
      */
-    public function __construct(FlagCheckerInterface $flagChecker)
-    {
+    protected $omsRepository;
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface $flagChecker
+     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
+     */
+    public function __construct(
+        FlagCheckerInterface $flagChecker,
+        OmsRepositoryInterface $omsRepository
+    ) {
         $this->flagChecker = $flagChecker;
+        $this->omsRepository = $omsRepository;
     }
 
     /**
@@ -45,13 +56,55 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array
     {
-        foreach ($orderTransfers as $orderTransfer) {
-            $isOrderCancellable = $this->flagChecker->hasOrderItemsFlag($orderTransfer, OmsConfig::STATE_TYPE_FLAG_CANCELLABLE);
+        $mappedOrderTransfers = $this->mapOrdersByIdSalesOrder($orderTransfers);
+        $mappedItemTransfers = $this->mapOrderItemsByIdSalesOrder($mappedOrderTransfers);
 
-            $orderTransfer->setIsCancellable($isOrderCancellable);
+        foreach ($mappedItemTransfers as $idSalesOrder => $itemTransfers) {
+            $orderTransfer = $mappedOrderTransfers[$idSalesOrder] ?? null;
+            $isOrderCancellable = $this->flagChecker->hasOrderItemsFlag($itemTransfers, OmsConfig::STATE_TYPE_FLAG_CANCELLABLE);
+
+            if ($orderTransfer) {
+                $orderTransfer->setIsCancellable($isOrderCancellable);
+            }
         }
 
         return $orderTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\OrderTransfer>
+     */
+    protected function mapOrdersByIdSalesOrder(array $orderTransfers): array
+    {
+        $mappedOrderTransfers = [];
+
+        foreach ($orderTransfers as $orderTransfer) {
+            $mappedOrderTransfers[$orderTransfer->getIdSalesOrder()] = $orderTransfer;
+        }
+
+        return $mappedOrderTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     */
+    protected function mapOrderItemsByIdSalesOrder(array $orderTransfers): array
+    {
+        $mappedItemTransfers = [];
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
+            ->setSalesOrderIds(array_keys($orderTransfers));
+
+        $itemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $mappedItemTransfers[$itemTransfer->getFkSalesOrder()][] = $itemTransfer;
+        }
+
+        return $mappedItemTransfers;
     }
 
     /**

@@ -92,8 +92,6 @@ class SetOrderIsCancellableByItemStateTest extends Unit
             static::SHIPPED_STATE_NAME
         );
 
-        $orderTransfer = $this->tester->getOrder($orderTransfer);
-
         // Act
         $orderTransfers = $this->tester
             ->getFacade()
@@ -114,8 +112,6 @@ class SetOrderIsCancellableByItemStateTest extends Unit
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
         }
-
-        $orderTransfer = $this->tester->getOrder($orderTransfer);
 
         // Act
         $orderTransfers = $this->tester

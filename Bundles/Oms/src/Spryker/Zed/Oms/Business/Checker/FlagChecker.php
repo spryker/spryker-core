@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Business\Checker;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 
 class FlagChecker implements FlagCheckerInterface
@@ -26,38 +25,38 @@ class FlagChecker implements FlagCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $flag
      *
      * @return bool
      */
-    public function hasOrderItemsFlag(OrderTransfer $orderTransfer, string $flag): bool
+    public function hasOrderItemsFlag(array $itemTransfers, string $flag): bool
     {
-        $processName = $this->extractProcessName($orderTransfer);
+        $processName = array_shift($itemTransfers)->getProcess();
 
         if (!$processName) {
             return false;
         }
 
         $filteredItemTransfers = $this->filterOrderItemsByStateWithFlag(
-            $orderTransfer,
+            $itemTransfers,
             $this->getStatesByFlag($processName, $flag)
         );
 
-        return $orderTransfer->getItems()->count() === count($filteredItemTransfers);
+        return count($itemTransfers) === count($filteredItemTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param array<string, \Spryker\Zed\Oms\Business\Process\StateInterface> $states
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function filterOrderItemsByStateWithFlag(OrderTransfer $orderTransfer, array $states): array
+    protected function filterOrderItemsByStateWithFlag(array $itemTransfers, array $states): array
     {
         $filteredItemTransfers = [];
 
-        foreach ($orderTransfer->getItems() as $item) {
+        foreach ($itemTransfers as $item) {
             if (!$item->getState() || !$item->getState()->getName()) {
                 continue;
             }
@@ -70,19 +69,6 @@ class FlagChecker implements FlagCheckerInterface
         }
 
         return $filteredItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return string|null
-     */
-    protected function extractProcessName(OrderTransfer $orderTransfer): ?string
-    {
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        return $itemTransfer->getProcess();
     }
 
     /**

@@ -360,7 +360,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander(
-            $this->createFlagChecker()
+            $this->createFlagChecker(),
+            $this->getRepository()
         );
     }
 

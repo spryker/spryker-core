@@ -133,6 +133,7 @@
 
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
     </transfer>
 
 </transfers>

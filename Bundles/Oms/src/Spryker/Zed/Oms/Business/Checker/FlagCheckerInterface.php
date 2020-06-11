@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\Oms\Business\Checker;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 interface FlagCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $flag
      *
      * @return bool
      */
-    public function hasOrderItemsFlag(OrderTransfer $orderTransfer, string $flag): bool;
+    public function hasOrderItemsFlag(array $itemTransfers, string $flag): bool;
 }
