@@ -573,10 +573,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductAbstractAddToCartEligibleConcreteProducts(array $productConcreteTransfers): array
+    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array
     {
         return $this->getFactory()
             ->createProductPackagingUnitReader()
-            ->getProductAbstractAddToCartEligibleConcreteProducts($productConcreteTransfers);
+            ->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
     }
 }

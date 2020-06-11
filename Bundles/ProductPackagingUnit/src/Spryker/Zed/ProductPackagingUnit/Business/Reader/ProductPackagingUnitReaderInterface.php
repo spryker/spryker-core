@@ -14,5 +14,5 @@ interface ProductPackagingUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductAbstractAddToCartEligibleConcreteProducts(array $productConcreteTransfers): array;
+    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array;
 }

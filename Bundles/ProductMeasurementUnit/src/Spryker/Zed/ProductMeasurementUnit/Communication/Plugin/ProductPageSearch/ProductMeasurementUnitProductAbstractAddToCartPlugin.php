@@ -31,6 +31,6 @@ class ProductMeasurementUnitProductAbstractAddToCartPlugin extends AbstractPlugi
      */
     public function getEligibleConcreteProducts(array $productConcreteTransfers): array
     {
-        return $this->getFacade()->getProductAbstractAddToCartEligibleConcreteProducts($productConcreteTransfers);
+        return $this->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
     }
 }

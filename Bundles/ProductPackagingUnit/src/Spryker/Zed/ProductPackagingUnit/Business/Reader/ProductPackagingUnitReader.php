@@ -29,7 +29,7 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductAbstractAddToCartEligibleConcreteProducts(array $productConcreteTransfers): array
+    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array
     {
         $productConcreteIds = $this->extractProductConcreteIdsFromProductConcreteTransfers($productConcreteTransfers);
         $productPackagingUnitCounts = $this->productPackagingUnitRepository->getProductPackagingUnitCountByProductConcreteIds($productConcreteIds);
