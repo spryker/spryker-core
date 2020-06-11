@@ -53,9 +53,9 @@ class YvesBuildFrontendConsole extends Console
     {
         $this->info('Build Yves frontend');
 
-        $setupFrontendConfigurationTransfer = null;
+        $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
         if ($input->getOption(static::OPTION_ENVIRONMENT)) {
-            $setupFrontendConfigurationTransfer = (new SetupFrontendConfigurationTransfer())
+            $setupFrontendConfigurationTransfer = $setupFrontendConfigurationTransfer
                 ->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
         }
 
