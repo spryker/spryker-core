@@ -21,6 +21,8 @@ class SalesConfig extends AbstractBundleConfig
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
+    protected const EVENT_CANCEL = 'cancel';
+
     /**
      * Separator for the sequence number
      *
@@ -125,6 +127,16 @@ class SalesConfig extends AbstractBundleConfig
     public function isHydrateOrderHistoryToItems(): bool
     {
         return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCancelEvent(): string
+    {
+        return static::EVENT_CANCEL;
     }
 
     /**

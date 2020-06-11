@@ -37,6 +37,12 @@
 
             <transition>
                 <source>new</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>new</source>
                 <target>invalid</target>
                 <event>authorization-failed</event>
             </transition>
@@ -45,6 +51,12 @@
                 <source>payment pending</source>
                 <target>cancelled</target>
                 <event>pay</event>
+            </transition>
+
+            <transition>
+                <source>payment pending</source>
+                <target>cancelled</target>
+                <event>cancel</event>
             </transition>
 
             <transition happy="true">
@@ -82,6 +94,7 @@
             <event name="stock-update" manual="true"/>
             <event name="close" manual="true" timeout="1 hour"/>
             <event name="return" manual="true"/>
+            <event name="cancel" manual="true"/>
         </events>
     </process>
 
