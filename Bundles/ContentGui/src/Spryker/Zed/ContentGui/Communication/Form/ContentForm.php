@@ -94,12 +94,10 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'label' => static::LABEL_DESCRIPTION,
-            'constraints' => array_merge(
-                $this->getFieldDefaultConstraints(),
-                [
-                    new Length(['max' => 1024]),
-                ]
-            ),
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 1024]),
+            ],
         ]);
 
         return $this;

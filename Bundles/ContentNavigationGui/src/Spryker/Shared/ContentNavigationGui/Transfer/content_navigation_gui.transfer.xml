@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ContentNavigationType">
+        <property name="navigationKey" type="string"/>
+    </transfer>
+
+    <transfer name="ContentNavigationTerm">
+        <property name="navigationKey" type="string"/>
+    </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="parameter" type="string"/>
+    </transfer>
+
+    <transfer name="Navigation">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="LocalizedContent">
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ContentWidgetTemplate">
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>
