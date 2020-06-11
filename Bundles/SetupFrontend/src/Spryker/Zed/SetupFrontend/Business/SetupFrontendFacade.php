@@ -68,6 +68,13 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility use "SetupFrontendConfigurationTransfer" to configure build process accordingly.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()->createYvesBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
@@ -127,6 +134,13 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility use "SetupFrontendConfigurationTransfer" to configure build process accordingly.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()->createZedBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
@@ -169,6 +183,6 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function buildMerchantPortalFrontend(LoggerInterface $logger): bool
     {
-        return $this->getFactory()->createMerchantPortalBuilder()->build($logger);
+        return $this->getFactory()->createMerchantPortalBuilder()->build($logger, new SetupFrontendConfigurationTransfer());
     }
 }

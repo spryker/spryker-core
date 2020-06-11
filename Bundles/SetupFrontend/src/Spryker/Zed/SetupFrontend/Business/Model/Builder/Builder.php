@@ -29,14 +29,14 @@ class Builder implements BuilderInterface
 
     /**
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function build(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
+    public function build(LoggerInterface $logger, SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer)
     {
         $command = $this->buildCommand;
-        if ($setupFrontendConfigurationTransfer !== null) {
+        if ($setupFrontendConfigurationTransfer->getEnvironment()) {
             $command .= sprintf(':%s', $setupFrontendConfigurationTransfer->getEnvironment());
         }
 
