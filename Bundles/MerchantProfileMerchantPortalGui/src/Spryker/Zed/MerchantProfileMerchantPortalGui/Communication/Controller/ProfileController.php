@@ -40,8 +40,6 @@ class ProfileController extends AbstractController
             $this->updateMerchant($merchantProfileForm);
         }
 
-        dump($merchantProfileForm->getData()->getMerchantProfile());
-
         return $this->viewResponse([
             'form' => $merchantProfileForm->createView(),
         ]);
