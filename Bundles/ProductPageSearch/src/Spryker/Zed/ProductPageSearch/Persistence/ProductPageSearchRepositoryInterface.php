@@ -64,4 +64,11 @@ interface ProductPageSearchRepositoryInterface
      * @return array<int, string>
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array;
 }

@@ -17,11 +17,20 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     protected $productPageSearchRepository;
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $productPageSearchRepository
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
      */
-    public function __construct(ProductPageSearchRepositoryInterface $productPageSearchRepository)
-    {
+    protected $productAbstractAddToCartPlugins;
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $productPageSearchRepository
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[] $productAbstractAddToCartPlugins
+     */
+    public function __construct(
+        ProductPageSearchRepositoryInterface $productPageSearchRepository,
+        array $productAbstractAddToCartPlugins
+    ) {
         $this->productPageSearchRepository = $productPageSearchRepository;
+        $this->productAbstractAddToCartPlugins = $productAbstractAddToCartPlugins;
     }
 
     /**
@@ -37,6 +46,43 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
             return [];
         }
 
-        return $this->productPageSearchRepository->getProductAbstractAddToCartSkus($productAbstractIds);
+        if (!$this->productAbstractAddToCartPlugins) {
+            return $this->productPageSearchRepository->getProductAbstractAddToCartSkus($productAbstractIds);
+        }
+
+        $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);
+        $productConcreteTransfers = $this->executeProductAbstractAddToCartPlugins($productConcreteTransfers);
+
+        return $this->mapProductConcreteTransfersToProductAbstractAttToCartSkus($productConcreteTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function executeProductAbstractAddToCartPlugins(array $productConcreteTransfers): array
+    {
+        foreach ($this->productAbstractAddToCartPlugins as $productAbstractAddToCartPlugin) {
+            $productConcreteTransfers = $productAbstractAddToCartPlugin->getEligibleConcreteProducts($productConcreteTransfers);
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return array<int, string>
+     */
+    protected function mapProductConcreteTransfersToProductAbstractAttToCartSkus(array $productConcreteTransfers): array
+    {
+        $productAbstractAddToCartSkus = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productAbstractAddToCartSkus[$productConcreteTransfer->getFkProductAbstract()] = $productConcreteTransfer->getSku();
+        }
+
+        return $productAbstractAddToCartSkus;
     }
 }

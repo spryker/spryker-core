@@ -103,4 +103,18 @@ interface ProductMeasurementUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return array<int, int>
+     */
+    public function getProductMeasurementSalesUnitCountByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array<int, int>
+     */
+    public function getProductMeasurementBaseUnitCountByProductAbstractIds(array $productAbstractIds): array;
 }

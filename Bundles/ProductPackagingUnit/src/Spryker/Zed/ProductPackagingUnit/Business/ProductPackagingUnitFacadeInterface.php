@@ -465,4 +465,17 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters out products which have packaging unit available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductAbstractAddToCartEligibleConcreteProducts(array $productConcreteTransfers): array;
 }

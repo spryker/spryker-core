@@ -152,7 +152,10 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createAddToCartSkuReader(): AddToCartSkuReaderInterface
     {
-        return new AddToCartSkuReader($this->getRepository());
+        return new AddToCartSkuReader(
+            $this->getRepository(),
+            $this->getProductAbstractAddToCartPlugins()
+        );
     }
 
     /**
@@ -303,5 +306,13 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
+     */
+    public function getProductAbstractAddToCartPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_ADD_TO_CART);
     }
 }

@@ -563,4 +563,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
             ->createCartItemProductPackagingUnitChecker()
             ->checkCartItemProductPackagingUnit($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductAbstractAddToCartEligibleConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitReader()
+            ->getProductAbstractAddToCartEligibleConcreteProducts($productConcreteTransfers);
+    }
 }

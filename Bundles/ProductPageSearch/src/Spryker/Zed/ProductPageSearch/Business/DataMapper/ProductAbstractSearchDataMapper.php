@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Business\DataMapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
@@ -115,7 +114,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
         $addToCartSku = $data[static::KEY_ADD_TO_CART_SKU] ?? null;
 
         if ($addToCartSku) {
-            $this->pageMapBuilder->addSearchResultData($pageMapTransfer, ProductPageSearchTransfer::ADD_TO_CART_SKU, $addToCartSku);
+            $this->pageMapBuilder->addSearchResultData($pageMapTransfer, static::KEY_ADD_TO_CART_SKU, $addToCartSku);
         }
 
         $this->expandProductPageMap($pageMapTransfer, $data, $localeTransfer);

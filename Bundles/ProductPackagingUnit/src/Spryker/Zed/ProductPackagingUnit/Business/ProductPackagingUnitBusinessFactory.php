@@ -56,6 +56,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackaging
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackagingUnitReservationHandlerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
@@ -129,6 +131,14 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReaderInterface
+     */
+    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
+    {
+        return new ProductPackagingUnitReader($this->getRepository());
     }
 
     /**

@@ -79,6 +79,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
     public const PLUGINS_CONCRETE_PRODUCT_MAP_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_ADD_TO_CART = 'PLUGINS_PRODUCT_ABSTRACT_ADD_TO_CART';
 
     /**
      * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
@@ -188,6 +189,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteMapExpanderPlugins($container);
         $container = $this->addProductAbstractMapExpanderPlugins($container);
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addProductAbstractAddToCartPlugins($container);
 
         return $container;
     }
@@ -433,6 +435,28 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[]
      */
     protected function getProductAbstractMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractAddToCartPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_ADD_TO_CART, function () {
+            return $this->getProductAbstractAddToCartPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
+     */
+    protected function getProductAbstractAddToCartPlugins(): array
     {
         return [];
     }
