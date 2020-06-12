@@ -114,7 +114,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderOverview(
             $this->getQueryContainer(),
             $this->createCustomerOrderOverviewHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
