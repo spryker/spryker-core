@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Oms\Business\OmsFacade;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 
 /**
  * Auto-generated group annotations
@@ -84,6 +86,8 @@ class SetOrderIsCancellableByItemStateTest extends Unit
      */
     public function testSetOrderIsCancellableByItemStateWhenOneItemInStateWithoutCancellableFlag(): void
     {
+        $this->skipIfMySql();
+
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
 
@@ -139,5 +143,15 @@ class SetOrderIsCancellableByItemStateTest extends Unit
         // Assert
         $this->assertTrue($orderTransfers[0]->getIsCancellable());
         $this->assertFalse($orderTransfers[1]->getIsCancellable());
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfMySql(): void
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+            $this->markTestSkipped('Not MYSQL related test');
+        }
     }
 }
