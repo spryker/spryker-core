@@ -8,9 +8,12 @@
 namespace Spryker\Yves\Kernel\Controller;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
+use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -104,24 +107,25 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin}
+     *
+     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
+     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
+     *
      * @param string $absoluteUrl
      * @param int $code
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
-        return new RedirectResponse($absoluteUrl, $code);
-    }
+        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+            throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
+        }
 
-    /**
-     * @param string $absoluteUrl
-     *
-     * @return bool
-     */
-    protected function isValidRedirectUrl(string $absoluteUrl): bool
-    {
-        return (bool)$absoluteUrl;
+        return new RedirectResponse($absoluteUrl, $code);
     }
 
     /**
@@ -290,5 +294,44 @@ abstract class AbstractController
     protected function getTwig()
     {
         return $this->getApplication()->get(static::SERVICE_TWIG);
+    }
+
+    /**
+     * @param string $absoluteUrl
+     *
+     * @return bool
+     */
+    protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
+    {
+        $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
+        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
+
+        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
+            return true;
+        }
+
+        foreach ($whitelistedDomains as $whitelistedDomain) {
+            if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function extractDomainFromUrl(string $url): string
+    {
+        /** @var string|false $urlDomain */
+        $urlDomain = parse_url($url, PHP_URL_HOST);
+        if ($urlDomain === false) {
+            return '';
+        }
+
+        return $urlDomain;
     }
 }
