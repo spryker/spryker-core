@@ -52,14 +52,14 @@ interface CustomerRepositoryInterface
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
+    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+    public function getCustomerCollectionByCriteria(
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): CustomerCollectionTransfer;
 }

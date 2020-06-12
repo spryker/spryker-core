@@ -513,7 +513,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves count of customers that will be touched.
+     * - Retrieves count of customers by the given criteria.
      *
      * @api
      *
@@ -521,7 +521,7 @@ interface CustomerFacadeInterface
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
+    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
 
     /**
      * Specification:
@@ -533,7 +533,7 @@ interface CustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+    public function getCustomerCollectionByCriteria(
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): CustomerCollectionTransfer;
 

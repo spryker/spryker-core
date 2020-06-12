@@ -198,9 +198,39 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     /**
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
+     * @return int
+     */
+    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
+    {
+        $query = $this->getCustomerCollectionByCriteriaQuery($customerCriteriaFilterTransfer);
+
+        return $query->find()->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
+        $customerCollectionTransfer = new CustomerCollectionTransfer();
+
+        $this->hydrateCustomerListWithCustomers(
+            $customerCollectionTransfer,
+            $this->getCustomerCollectionByCriteriaQuery($customerCriteriaFilterTransfer)->find()->toArray()
+        );
+
+        return $customerCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function getCustomerCollectionTransferByCriteriaFilterTransferQuery(
+    protected function getCustomerCollectionByCriteriaQuery(
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): SpyCustomerQuery {
         $query = $this->getFactory()->createSpyCustomerQuery();
@@ -212,35 +242,5 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         }
 
         return $query;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
-     * @return int
-     */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
-    {
-        $query = $this->getCustomerCollectionTransferByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer);
-
-        return $query->find()->count();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
-     */
-    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
-        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-    ): CustomerCollectionTransfer {
-        $customerCollectionTransfer = new CustomerCollectionTransfer();
-
-        $this->hydrateCustomerListWithCustomers(
-            $customerCollectionTransfer,
-            $this->getCustomerCollectionTransferByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer)->find()->toArray()
-        );
-
-        return $customerCollectionTransfer;
     }
 }

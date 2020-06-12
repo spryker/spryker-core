@@ -594,9 +594,9 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
+    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
     {
-        return $this->getRepository()->getCustomersForResetPasswordCount($customerCriteriaFilterTransfer);
+        return $this->getRepository()->getCustomerCountByCriteria($customerCriteriaFilterTransfer);
     }
 
     /**
@@ -608,10 +608,10 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+    public function getCustomerCollectionByCriteria(
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): CustomerCollectionTransfer {
-        return $this->getRepository()->getCustomerCollectionTransferByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
+        return $this->getRepository()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
     }
 
     /**

@@ -94,25 +94,4 @@ class CustomerReader implements CustomerReaderInterface
 
         return $customerListTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
-     * @return int
-     */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
-    {
-        return $this->customerRepository->getCustomersForResetPasswordCount($customerCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
-     */
-    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
-        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-    ): CustomerCollectionTransfer {
-        return $this->customerRepository->getCustomerCollectionTransferByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
-    }
 }
