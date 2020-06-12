@@ -44,7 +44,6 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     protected function getDescriptionConstraints(): array
     {
         return [
-            new NotWhitespace(),
             new Length(['max' => 1024]),
         ];
     }
