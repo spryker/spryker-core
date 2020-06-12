@@ -32,6 +32,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    protected const FIELD_ADDRESS_COLLECTION = 'addressCollection';
     protected const FIELD_IS_ACTIVE = 'is_active';
     protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_LATITUDE = 'latitude';
@@ -64,7 +65,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ->addIsActiveField($builder)
             ->addUrlCollectionField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
-            ->addFaxNumber($builder)
+            ->addFaxNumberField($builder)
             ->addLatitudeField($builder)
             ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
@@ -125,6 +126,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                 new Email(),
                 new Length(['max' => 255]),
             ],
+            'property_path' => 'merchantProfile.publicEmail',
         ]);
 
         return $this;
@@ -141,6 +143,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'label' => static::LABEL_PUBLIC_PHONE,
             'constraints' => $this->getTextFieldConstraints(),
             'required' => false,
+            'property_path' => 'merchantProfile.publicPhone',
         ]);
 
         return $this;
@@ -160,6 +163,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_LOGO_URL,
             ],
+            'property_path' => 'merchantProfile.logoUrl',
         ]);
 
         return $this;
@@ -177,6 +181,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'entry_type' => MerchantProfileLocalizedGlossaryAttributesFormType::class,
             'allow_add' => true,
             'allow_delete' => true,
+            'property_path' => 'merchantProfile.merchantProfileLocalizedGlossaryAttributes',
         ]);
 
         return $this;
@@ -189,7 +194,9 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      */
     protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
-        $builder->add('addressCollection', MerchantProfileAddressFormType::class);
+        $builder->add(static::FIELD_ADDRESS_COLLECTION, MerchantProfileAddressFormType::class, [
+            'property_path' => 'merchantProfile.addressCollection',
+        ]);
 
         return $this;
     }
@@ -249,6 +256,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
                 ]),
             ],
+            'property_path' => 'merchantProfile.longitude',
         ]);
 
         return $this;
@@ -272,6 +280,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
                 ]),
             ],
+            'property_path' => 'merchantProfile.latitude',
         ]);
 
         return $this;
@@ -282,7 +291,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFaxNumber(FormBuilderInterface $builder)
+    protected function addFaxNumberField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FAX_NUMBER, TextType::class, [
             'label' => static::LABEL_FAX_NUMBER,
@@ -292,6 +301,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'max' => 255,
                 ]),
             ],
+            'property_path' => 'merchantProfile.faxNumber',
         ]);
 
         return $this;

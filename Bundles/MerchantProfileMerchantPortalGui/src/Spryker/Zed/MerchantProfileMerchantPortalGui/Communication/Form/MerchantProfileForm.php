@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -91,8 +90,8 @@ class MerchantProfileForm extends AbstractType
             OnlineProfileMerchantProfileForm::class,
             [
                 'label' => false,
-                'data' => $builder->getForm()->getData()->getMerchantProfile(),
-                'data_class' => MerchantProfileTransfer::class,
+                'data' => $builder->getForm()->getData(),
+                'data_class' => MerchantTransfer::class,
             ]
         );
 
