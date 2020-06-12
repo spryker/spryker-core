@@ -23,6 +23,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class CustomerPasswordReset extends Console
 {
     protected const COMMAND_NAME = 'customer:password:reset';
+    protected const COMMAND_DESCRIPTION = 'Sends the forgot password email using a freshly generated password restoration key to all customers inside the database.';
     protected const OPTION_FORCE = 'force';
     protected const OPTION_FORCE_SHORT = 'f';
     protected const OPTION_NO_TOKEN = 'no-token';
@@ -34,7 +35,7 @@ class CustomerPasswordReset extends Console
     {
         $this
             ->setName(static::COMMAND_NAME)
-            ->setDescription('Sends the forgot password email using a freshly generated password restoration key to all customers inside the database.')
+            ->setDescription(static::COMMAND_DESCRIPTION)
             ->addOption(static::OPTION_FORCE, static::OPTION_FORCE_SHORT, InputOption::VALUE_NONE, 'Forced execution.')
             ->addOption(static::OPTION_NO_TOKEN, null, InputOption::VALUE_NONE, 'Option to send the email to all customers that do not have a token to reset the password.');
     }
@@ -47,20 +48,17 @@ class CustomerPasswordReset extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $customerCriteriaFilterTransfer = $this->prepareCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));
+        $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));
 
         if (!$input->getOption(static::OPTION_FORCE)) {
-            $helper = $this->getQuestionHelper();
-
             $customersCount = $this->getFacade()->getCustomerCountByCriteria($customerCriteriaFilterTransfer);
 
-            if (!$helper->ask($input, $output, $this->createConfirmationQuestion($customersCount))) {
+            if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customersCount))) {
                 return static::CODE_SUCCESS;
             }
         }
 
-        $customerCollection = $this->getFacade()
-            ->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
+        $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
 
         $this->getFacade()->sendPasswordRestoreMailForCustomerCollection($customerCollection);
 
@@ -85,9 +83,8 @@ class CustomerPasswordReset extends Console
      *
      * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
      */
-    protected function prepareCustomerCriteriaFilterTransfer(bool $noToken): CustomerCriteriaFilterTransfer
+    protected function createCustomerCriteriaFilterTransfer(bool $noToken): CustomerCriteriaFilterTransfer
     {
-        return (new CustomerCriteriaFilterTransfer())
-            ->setRestorePasswordKeyExists(!$noToken);
+        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(!$noToken);
     }
 }

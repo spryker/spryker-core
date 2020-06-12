@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
-use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
