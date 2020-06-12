@@ -1000,7 +1000,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
      */
-    public function createCustomerSetPasswordCriteriaFilterTransfer()
+    protected function createCustomerSetPasswordCriteriaFilterTransfer()
     {
         return (new CustomerCriteriaFilterTransfer())
             ->setPasswordExists(false)
@@ -1010,7 +1010,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
      */
-    public function createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption()
+    protected function createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption()
     {
         return (new CustomerCriteriaFilterTransfer())
             ->setPasswordExists(false)
@@ -1020,7 +1020,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
      */
-    public function createCustomerResetPasswordCriteriaFilterTransfer()
+    protected function createCustomerResetPasswordCriteriaFilterTransfer()
     {
         return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(true);
     }
@@ -1028,7 +1028,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
      */
-    public function createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption()
+    protected function createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption()
     {
         return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(false);
     }
