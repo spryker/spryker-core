@@ -52,7 +52,6 @@ class MerchantPortalBuildFrontendConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->info('Build Merchant Portal frontend');
-
         $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
         if ($input->getOption(static::OPTION_ENVIRONMENT)) {
             $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
