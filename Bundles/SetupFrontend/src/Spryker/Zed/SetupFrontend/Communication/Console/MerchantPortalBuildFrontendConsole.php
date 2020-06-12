@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,6 +21,10 @@ class MerchantPortalBuildFrontendConsole extends Console
     public const COMMAND_NAME = 'frontend:mp:build';
     public const DESCRIPTION = 'This command will build Merchant Portal frontend.';
 
+    protected const OPTION_ENVIRONMENT = 'environment';
+    protected const OPTION_ENVIRONMENT_SHORT = 'e';
+    protected const OPTION_ENVIRONMENT_DESCRIPTION = 'Sets the environment to run the command. Currently available environments: production';
+
     /**
      * @return void
      */
@@ -26,6 +32,13 @@ class MerchantPortalBuildFrontendConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+
+        $this->addOption(
+            static::OPTION_ENVIRONMENT,
+            static::OPTION_ENVIRONMENT_SHORT,
+            InputOption::VALUE_REQUIRED,
+            static::OPTION_ENVIRONMENT_DESCRIPTION
+        );
 
         parent::configure();
     }
@@ -40,7 +53,12 @@ class MerchantPortalBuildFrontendConsole extends Console
     {
         $this->info('Build Merchant Portal frontend');
 
-        if ($this->getFacade()->buildMerchantPortalFrontend($this->getMessenger())) {
+        $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+        if ($input->getOption(static::OPTION_ENVIRONMENT)) {
+            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));
+        }
+
+        if ($this->getFacade()->buildMerchantPortalFrontend($this->getMessenger(), $setupFrontendConfigurationTransfer)) {
             return static::CODE_SUCCESS;
         }
 

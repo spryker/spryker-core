@@ -178,11 +178,19 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildMerchantPortalFrontend(LoggerInterface $logger): bool
+    public function buildMerchantPortalFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool
     {
-        return $this->getFactory()->createMerchantPortalBuilder()->build($logger, new SetupFrontendConfigurationTransfer());
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
+        return $this->getFactory()->createMerchantPortalBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 }

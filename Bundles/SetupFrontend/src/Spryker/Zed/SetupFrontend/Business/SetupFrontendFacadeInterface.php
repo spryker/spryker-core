@@ -139,12 +139,14 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Merchant Portal frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildMerchantPortalFrontend(LoggerInterface $logger): bool;
+    public function buildMerchantPortalFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool;
 }
