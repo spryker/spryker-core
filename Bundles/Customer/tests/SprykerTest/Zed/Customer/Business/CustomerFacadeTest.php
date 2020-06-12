@@ -938,10 +938,18 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider getCustomerCountByCriteriaDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param int $expectedCount
+     *
      * @return void
      */
-    public function testFindCustomersByCriteriaFilterTransfer(): void
-    {
+    public function testGetCustomerCountByCriteria(
+        CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
+        int $expectedCount
+    ): void {
+        // Arrange
         (new SpyCustomer())
             ->setEmail('customer1@shop.com')
             ->setPassword(static::VALUE_VALID_PASSWORD)
@@ -970,26 +978,59 @@ class CustomerFacadeTest extends Unit
             ->setCustomerReference('DE--114')
             ->save();
 
-        $customerSetPasswordCriteriaFilterTransfer = (new CustomerCriteriaFilterTransfer())
-            ->setPasswordExists(false)
-            ->setRestorePasswordKeyExists(true);
-
-        $customerSetPasswordCriteriaFilterTransferWithTokenNotExistOption = (new CustomerCriteriaFilterTransfer())
-            ->setPasswordExists(false)
-            ->setRestorePasswordKeyExists(false);
-
-        $customerResetPasswordCriteriaFilterTransfer = (new CustomerCriteriaFilterTransfer())
-            ->setRestorePasswordKeyExists(true);
-
-        $customerResetPasswordCriteriaFilterTransferWithTokenNotExistOption = (new CustomerCriteriaFilterTransfer())
-            ->setRestorePasswordKeyExists(false);
-
         $facade = $this->tester->getFacade();
 
-        $this->assertEquals(2, $facade->getCustomerCountByCriteria($customerSetPasswordCriteriaFilterTransfer));
-        $this->assertEquals(1, $facade->getCustomerCountByCriteria($customerSetPasswordCriteriaFilterTransferWithTokenNotExistOption));
-        $this->assertEquals(30, $facade->getCustomerCountByCriteria($customerResetPasswordCriteriaFilterTransfer));
-        $this->assertEquals(28, $facade->getCustomerCountByCriteria($customerResetPasswordCriteriaFilterTransferWithTokenNotExistOption));
+        // Assert
+        $this->assertSame($expectedCount, $facade->getCustomerCountByCriteria($criteriaFilterTransfer));
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerCountByCriteriaDataProvider()
+    {
+        return [
+            [$this->createCustomerSetPasswordCriteriaFilterTransfer(), 2],
+            [$this->createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption(), 1],
+            [$this->createCustomerResetPasswordCriteriaFilterTransfer(), 30],
+            [$this->createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption(), 28],
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
+     */
+    public function createCustomerSetPasswordCriteriaFilterTransfer()
+    {
+        return (new CustomerCriteriaFilterTransfer())
+            ->setPasswordExists(false)
+            ->setRestorePasswordKeyExists(true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
+     */
+    public function createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption()
+    {
+        return (new CustomerCriteriaFilterTransfer())
+            ->setPasswordExists(false)
+            ->setRestorePasswordKeyExists(false);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
+     */
+    public function createCustomerResetPasswordCriteriaFilterTransfer()
+    {
+        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
+     */
+    public function createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption()
+    {
+        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(false);
     }
 
     /**
