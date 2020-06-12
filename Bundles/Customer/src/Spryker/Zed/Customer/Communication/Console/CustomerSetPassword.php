@@ -22,7 +22,10 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class CustomerSetPassword extends Console
 {
-    protected const COMMAND_NAME = 'customer:password:set';
+    public const COMMAND_NAME = 'customer:password:set';
+    public const OPTION_FORCE = 'force';
+    public const OPTION_FORCE_SHORT = 'f';
+    public const OPTION_NO_TOKEN = 'no-token';
 
     /**
      * @return void
@@ -32,8 +35,8 @@ class CustomerSetPassword extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setDescription('Sending the forgot password email to all customers that have an empty password inside the database')
-            ->addOption('--force', '-f', InputOption::VALUE_NONE, 'Forced execution')
-            ->addOption('--no-token', null, InputOption::VALUE_NONE, 'Option to send the email to all customers that do not have a token to reset the password');
+            ->addOption(self::OPTION_FORCE, self::OPTION_FORCE_SHORT, InputOption::VALUE_NONE, 'Forced execution')
+            ->addOption(self::OPTION_NO_TOKEN, null, InputOption::VALUE_NONE, 'Option to send the email to all customers that do not have a token to reset the password');
     }
 
     /**
@@ -44,10 +47,9 @@ class CustomerSetPassword extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $customerCriteriaFilterTransfer =
-            $this->prepareCustomerCriteriaFilterTransfer($input->getOption('no-token'));
+        $customerCriteriaFilterTransfer = $this->prepareCustomerCriteriaFilterTransfer($input->getOption(self::OPTION_NO_TOKEN));
 
-        if (!$input->getOption('force')) {
+        if (!$input->getOption(self::OPTION_FORCE)) {
             $helper = $this->getHelper('question');
 
             $customersCount = $this->getFacade()->getCustomersForResetPasswordCount($customerCriteriaFilterTransfer);
@@ -77,11 +79,8 @@ class CustomerSetPassword extends Console
      */
     private function prepareCustomerCriteriaFilterTransfer(bool $noToken): CustomerCriteriaFilterTransfer
     {
-        $customerCriteriaFilterTransfer = new CustomerCriteriaFilterTransfer();
-        $customerCriteriaFilterTransfer
+        return (new CustomerCriteriaFilterTransfer())
             ->setRestorePasswordKeyExists($noToken ? false : true)
             ->setPasswordExists(false);
-
-        return $customerCriteriaFilterTransfer;
     }
 }
