@@ -23,7 +23,7 @@ class UrlValidator implements UrlValidatorInterface
      *
      * @return void
      */
-    public function isWhitelistedRedirectUrl(Response $response): void
+    public function isRedirectDomainWhitelisted(Response $response): void
     {
         if (!$response->isRedirection()) {
             return;
@@ -31,7 +31,7 @@ class UrlValidator implements UrlValidatorInterface
 
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
 
-        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isWhitelistedUrl($redirectUrl)) {
+        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isDomainWhitelisted($redirectUrl)) {
             throw new ForbiddenExternalRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $redirectUrl));
         }
     }
@@ -44,7 +44,7 @@ class UrlValidator implements UrlValidatorInterface
      *
      * @return bool
      */
-    protected function isWhitelistedUrl(string $url): bool
+    protected function isDomainWhitelisted(string $url): bool
     {
         $whitelistedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
         $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);

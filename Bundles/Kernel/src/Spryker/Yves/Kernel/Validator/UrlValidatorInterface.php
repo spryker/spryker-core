@@ -16,5 +16,5 @@ interface UrlValidatorInterface
      *
      * @return void
      */
-    public function isWhitelistedRedirectUrl(Response $response): void;
+    public function isRedirectDomainWhitelisted(Response $response): void;
 }
