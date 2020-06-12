@@ -55,7 +55,7 @@ class CustomerPasswordReset extends Console
             $customersCount = $this->getFacade()->getCustomerCountByCriteria($customerCriteriaFilterTransfer);
 
             if (!$helper->ask($input, $output, $this->createConfirmationQuestion($customersCount))) {
-                return 0;
+                return static::CODE_SUCCESS;
             }
         }
 
@@ -68,7 +68,7 @@ class CustomerPasswordReset extends Console
     }
 
     /**
-     * @param $customersCount
+     * @param int $customersCount
      *
      * @return \Symfony\Component\Console\Question\ConfirmationQuestion
      */

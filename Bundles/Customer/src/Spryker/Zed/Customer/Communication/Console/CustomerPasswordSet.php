@@ -68,7 +68,7 @@ class CustomerPasswordSet extends Console
     }
 
     /**
-     * @param $customersCount
+     * @param int $customersCount
      *
      * @return \Symfony\Component\Console\Question\ConfirmationQuestion
      */
@@ -79,7 +79,6 @@ class CustomerPasswordSet extends Console
             false
         );
     }
-
 
     /**
      * @param bool $noToken
