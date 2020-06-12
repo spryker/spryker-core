@@ -942,6 +942,7 @@ class CustomerFacadeTest extends Unit
      */
     public function testSendPasswordRestoreMailForCustomerCollectionShouldSetRestorePasswordKey(): void
     {
+        // Arrange
         (new SpyCustomer())
             ->setEmail('customer2@shop.com')
             ->setPassword(static::VALUE_VALID_PASSWORD)
@@ -951,12 +952,13 @@ class CustomerFacadeTest extends Unit
 
         $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
 
+        //Act
         $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
             (new CustomerCollectionTransfer())->addCustomer($customer->getCustomerTransfer())
         );
 
         $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
-
+        // Assert
         $this->assertNotNull($customer->getCustomerTransfer()->getRestorePasswordKey());
     }
 
@@ -974,6 +976,7 @@ class CustomerFacadeTest extends Unit
         CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
         int $expectedCount
     ): void {
+        // Arrange
         foreach ($usersData as $item) {
             (new SpyCustomer())
                 ->setEmail($item['email'])
@@ -1004,6 +1007,7 @@ class CustomerFacadeTest extends Unit
         CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
         int $expectedCount
     ): void {
+        // Arrange
         foreach ($usersData as $item) {
             (new SpyCustomer())
                 ->setEmail($item['email'])
