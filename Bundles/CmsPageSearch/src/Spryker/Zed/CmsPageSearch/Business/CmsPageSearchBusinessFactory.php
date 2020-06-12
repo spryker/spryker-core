@@ -39,7 +39,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageSearchDataMapper(): CmsPageSearchDataMapperInterface
     {
-        return new CmsPageSearchDataMapper($this->getConfig());
+        return new CmsPageSearchDataMapper();
     }
 
     /**

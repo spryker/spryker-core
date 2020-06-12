@@ -19,7 +19,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
 {
-    protected const MAPPING_TYPE_UUID = 'uuid';
+    protected const CMS_PAGES = 'cms_pages';
+    protected const ID_CMS_PAGE = 'id_cms_page';
     protected const PARAMETER_NAME_PAGE = 'page';
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
@@ -72,6 +73,12 @@ class CmsPageReader implements CmsPageReaderInterface
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);
 
+        $searchResult[static::CMS_PAGES] = $this->cmsPageStorageClient->getCmsPageStorageByIds(
+            $this->getCmsPageIds($searchResult),
+            $restRequest->getMetadata()->getLocale(),
+            APPLICATION_STORE
+        );
+
         $restSearchAttributesTransfer = $this->cmsPagesResourceMapper
             ->mapSearchResultToRestAttributesTransfer($searchResult, new RestCmsPagesAttributesTransfer());
 
@@ -89,7 +96,6 @@ class CmsPageReader implements CmsPageReaderInterface
 
         $cmsPageStorageTransfers = $this->cmsPageStorageClient->getCmsPageStorageByUuids(
             [$cmsPageUuid],
-            static::MAPPING_TYPE_UUID,
             $restRequest->getMetadata()->getLocale(),
             APPLICATION_STORE
         );
@@ -130,5 +136,22 @@ class CmsPageReader implements CmsPageReaderInterface
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
         return $restRequest->getHttpRequest()->query->get($parameterName, '');
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $searchResult
+     *
+     * @param array $searchResult
+     *
+     * @return int[]
+     */
+    protected function getCmsPageIds(array $searchResult): array
+    {
+        $cmsPageIds = [];
+        foreach ($searchResult[static::CMS_PAGES] as $cmsPage) {
+            $cmsPageIds[] = $cmsPage[static::ID_CMS_PAGE];
+        }
+
+        return $cmsPageIds;
     }
 }

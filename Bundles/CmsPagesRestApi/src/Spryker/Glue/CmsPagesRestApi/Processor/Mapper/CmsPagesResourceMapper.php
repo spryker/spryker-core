@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\RestCmsPageTransfer;
 
 class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
 {
+    /**
+     * @uses \Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader::CMS_PAGES
+     */
     protected const CMS_PAGES = 'cms_pages';
 
     /**
@@ -50,9 +53,9 @@ class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
             return $restCmsPagesAttributesTransfer;
         }
 
-        foreach ($searchResult[static::CMS_PAGES] as $cmsPage) {
+        foreach ($searchResult[static::CMS_PAGES] as $cmsPageStorageTransfer) {
             $restCmsPagesAttributesTransfer->addRestCmsPage(
-                (new RestCmsPageTransfer())->fromArray($cmsPage, true)
+                (new RestCmsPageTransfer())->fromArray($cmsPageStorageTransfer->toArray(), true)
             );
         }
 
