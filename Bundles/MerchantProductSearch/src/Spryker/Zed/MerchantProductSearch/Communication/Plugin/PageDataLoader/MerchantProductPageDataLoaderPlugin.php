@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
@@ -30,13 +31,51 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        return $productPageLoadTransfer;
+        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
-//        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
-//
-//        $productAbstractMerchantData = $this->getFacade()
-//            ->getProductAbstractMerchantDataByProductAbstractIds($productAbstractIds);
-//
-//        return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);
+        $productAbstractMerchantData = $this->getRepository()
+            ->getMerchantDataByProductAbstractIds($productAbstractIds);
+
+        return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantData
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    protected function setMerchantDataToPayloadTransfers(
+        ProductPageLoadTransfer $productPageLoadTransfer,
+        array $productAbstractMerchantData
+    ): ProductPageLoadTransfer {
+        $updatedPayLoadTransfers = [];
+
+        foreach ($productPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
+            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);
+        }
+
+        return $productPageLoadTransfer->setPayloadTransfers($updatedPayLoadTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantData
+     *
+     * @return \Generated\Shared\Transfer\ProductPayloadTransfer
+     */
+    protected function setMerchantDataToPayloadTransfer(
+        ProductPayloadTransfer $payloadTransfer,
+        array $productAbstractMerchantData
+    ): ProductPayloadTransfer {
+        foreach ($productAbstractMerchantData as $productAbstractMerchantTransfer) {
+            if ($payloadTransfer->getIdProductAbstract() !== $productAbstractMerchantTransfer->getIdProductAbstract()) {
+                continue;
+            }
+
+            $payloadTransfer->setMerchantNames($productAbstractMerchantTransfer->getMerchantNames());
+        }
+
+        return $payloadTransfer;
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductSearch\Business\Writer;
 
-use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToProductPageSearchFacadeInterface;
 use Spryker\Zed\MerchantProductSearch\Persistence\MerchantProductSearchRepositoryInterface;
@@ -65,7 +64,7 @@ class MerchantProductSearchWriter implements MerchantProductSearchWriterInterfac
      */
     public function writeCollectionByIdMerchantProductEvents(array $eventTransfers): void
     {
-        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT);
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
         $productAbstractIds = $this->merchantProductSearchRepository->getProductAbstractIdsByMerchantIds($merchantIds);
 

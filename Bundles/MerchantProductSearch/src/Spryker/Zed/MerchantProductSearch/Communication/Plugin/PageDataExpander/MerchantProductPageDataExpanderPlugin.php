@@ -24,6 +24,8 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
      *
      * @api
      *
+     * @phpstan-param array<string, \Generated\Shared\Transfer\ProductPayloadTransfer> $productData
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
@@ -31,6 +33,10 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $productAbstractPageSearchTransfer->setMerchantNames($productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames());
+        $merchantNames = array_merge(
+            $productAbstractPageSearchTransfer->getMerchantNames(),
+            $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames()
+        );
+        $productAbstractPageSearchTransfer->setMerchantNames(array_unique($merchantNames));
     }
 }

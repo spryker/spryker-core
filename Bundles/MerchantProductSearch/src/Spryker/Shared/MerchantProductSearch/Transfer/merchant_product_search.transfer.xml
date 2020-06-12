@@ -5,12 +5,10 @@
 
     <transfer name="ProductPageSearch">
         <property name="merchantNames" type="array" singular="merchantName"/>
-        <property name="merchantReferences" type="array" singular="merchantReference"/>
     </transfer>
 
     <transfer name="ProductPayload">
         <property name="merchantNames" type="array" singular="merchantName"/>
-        <property name="merchantReferences" type="array" singular="merchantReference"/>
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
@@ -23,7 +21,6 @@
     </transfer>
 
     <transfer name="PageMap">
-        <property name="merchantReferences" type="array" singular="merchantReference"/>
         <property name="store" type="string"/>
     </transfer>
 
@@ -41,7 +38,6 @@
 
     <transfer name="ProductAbstractMerchant">
         <property name="merchantNames" type="array" singular="merchantName"/>
-        <property name="merchantReferences" type="array" singular="merchantReference"/>
         <property name="idProductAbstract" type="int"/>
     </transfer>
 

@@ -15,4 +15,14 @@ interface MerchantProductSearchRepositoryInterface
      * @return int[]
      */
     public function getProductAbstractIdsByMerchantIds(array $merchantIds): array;
+
+    /**
+     * @module Store
+     * @module Merchant
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     */
+    public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array;
 }
