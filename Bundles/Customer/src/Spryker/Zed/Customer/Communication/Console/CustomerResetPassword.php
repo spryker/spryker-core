@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use function _HumbugBox3c32a251b752\Amp\Promise\rethrow;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
