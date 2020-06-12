@@ -403,6 +403,7 @@ interface SalesFacadeInterface
      * Specification:
      * - Requires orderReference to be set.
      * - Requires customerReference to be set.
+     * - Requires ItemTransfer::idSalesOrderItem to be set.
      * - Retrieves OrderTransfer filtered by orderReference and customerReference.
      * - Checks OrderTransfer::isCancellable.
      * - Triggers cancel event for provided order items.

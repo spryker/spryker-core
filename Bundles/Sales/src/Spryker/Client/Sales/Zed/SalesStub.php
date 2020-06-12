@@ -142,6 +142,8 @@ class SalesStub implements SalesStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::cancelOrderAction()
+     *
      * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer

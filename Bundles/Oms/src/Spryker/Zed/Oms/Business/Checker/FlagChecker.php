@@ -56,16 +56,16 @@ class FlagChecker implements FlagCheckerInterface
     {
         $filteredItemTransfers = [];
 
-        foreach ($itemTransfers as $item) {
-            if (!$item->getState() || !$item->getState()->getName()) {
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getState() || !$itemTransfer->getState()->getName()) {
                 continue;
             }
 
-            if (!array_key_exists($item->getState()->getName(), $states)) {
+            if (!array_key_exists($itemTransfer->getState()->getName(), $states)) {
                 continue;
             }
 
-            $filteredItemTransfers[] = $item;
+            $filteredItemTransfers[] = $itemTransfer;
         }
 
         return $filteredItemTransfers;

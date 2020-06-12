@@ -113,7 +113,7 @@ class CancelOrderTest extends Test
 
         // Assert
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
             $orderCancelResponseTransfer->getMessages()[0]->getValue()
         );
@@ -138,7 +138,7 @@ class CancelOrderTest extends Test
 
         // Assert
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
             $orderCancelResponseTransfer->getMessages()[0]->getValue()
         );
@@ -218,7 +218,7 @@ class CancelOrderTest extends Test
 
         // Assert
         $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED,
             $orderCancelResponseTransfer->getMessages()[0]->getValue()
         );
