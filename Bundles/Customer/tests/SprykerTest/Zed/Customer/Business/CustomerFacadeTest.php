@@ -978,10 +978,8 @@ class CustomerFacadeTest extends Unit
             ->setCustomerReference('DE--114')
             ->save();
 
-        $facade = $this->tester->getFacade();
-
         // Assert
-        $this->assertSame($expectedCount, $facade->getCustomerCountByCriteria($criteriaFilterTransfer));
+        $this->assertSame($expectedCount, $this->tester->getFacade()->getCustomerCountByCriteria($criteriaFilterTransfer));
     }
 
     /**
