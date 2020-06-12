@@ -200,7 +200,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcretesByCriteriaFilter(): void
+    public function testGetProductConcretesByCriteria(): void
     {
         // Arrange
         $productConcreteIds = $this->tester->getProductConcreteIds();
@@ -216,8 +216,8 @@ class ProductFacadeTest extends Unit
         $productCriteriaTransferWithNotExistingStore->setIdStore(9999);
 
         // Act
-        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransferWithExistingStore);
-        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransferWithNotExistingStore);
+        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithExistingStore);
+        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithNotExistingStore);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfersWithStore);

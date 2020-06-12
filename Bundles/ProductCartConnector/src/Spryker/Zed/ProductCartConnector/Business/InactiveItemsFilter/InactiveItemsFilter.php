@@ -64,7 +64,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
                 $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
             );
 
-        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteriaFilter($productCriteriaTransfer);
+        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
         $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {

@@ -1137,8 +1137,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcretesByCriteriaFilter(ProductCriteriaTransfer $productCriteriaTransfer): array
+    public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
-        return $this->getRepository()->getProductConcretesByCriteriaFilter($productCriteriaTransfer);
+        return $this->getRepository()->getProductConcretesByCriteria($productCriteriaTransfer);
     }
 }
