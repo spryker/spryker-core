@@ -103,12 +103,12 @@ class UniqueUrlValidator extends AbstractConstraintValidator
             return true;
         }
 
-        $merchantProfileId = $existingUrlTransfer->getFkResourceMerchant();
+        $idMerchant = $existingUrlTransfer->getFkResourceMerchant();
 
-        if (!$merchantProfileId) {
+        if (!$idMerchant) {
             return true;
         }
 
-        return (int)$merchantProfileId !== (int)$urlTransfer->getFkResourceMerchant();
+        return (int)$idMerchant !== (int)$urlTransfer->getFkResourceMerchant();
     }
 }
