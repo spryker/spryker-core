@@ -23,7 +23,7 @@ interface OrderItemsTableExpanderPluginInterface
 
     /**
      * Specification:
-     * - Returns row value.
+     * - Returns row column value.
      *
      * @api
      *

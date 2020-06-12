@@ -149,7 +149,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCurrentState(): void
+    public function testFindCurrentStateReturnsData(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -178,5 +178,38 @@ class MerchantOmsFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
         $this->assertSame($stateEntity->getName(), $stateMachineItemTransfer->getStateName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCurrentStateReturnsNull(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
+
+        $processEntity = $this->tester->haveStateMachineProcess();
+
+        $stateEntity = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $processEntity->getIdStateMachineProcess(),
+        ]);
+
+        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+        ]);
+
+        // Act
+        $stateMachineItemTransfer = $this->tester->getFacade()->findCurrentState(999);
+
+        // Assert
+        $this->assertNull($stateMachineItemTransfer);
     }
 }

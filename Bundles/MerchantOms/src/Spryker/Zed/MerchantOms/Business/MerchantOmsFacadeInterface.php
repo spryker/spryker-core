@@ -78,7 +78,7 @@ interface MerchantOmsFacadeInterface
     /**
      * Specification:
      * - Finds merchant order item.
-     * - Returns array of StateMachineItem transfers filled with state name.
+     * - Returns StateMachineItem transfer filled with state name.
      *
      * @api
      *

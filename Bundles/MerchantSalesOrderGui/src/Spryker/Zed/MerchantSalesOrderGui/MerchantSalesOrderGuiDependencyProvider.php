@@ -23,9 +23,10 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addMerchantFacade($container);
 
         return $container;

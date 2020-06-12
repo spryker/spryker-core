@@ -60,9 +60,11 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
             return null;
         }
 
-        return (new StateMachineItemTransfer())
-            ->setStateName(
-                $merchantSalesOrderItemEntity->getStateMachineItemState()->getName()
+        return $this->getFactory()
+            ->createStateMachineItemMapper()
+            ->mapStateMachineItemEntityToStateMachineItemTransfer(
+                $merchantSalesOrderItemEntity->getStateMachineItemState(),
+                (new StateMachineItemTransfer())
             );
     }
 }
