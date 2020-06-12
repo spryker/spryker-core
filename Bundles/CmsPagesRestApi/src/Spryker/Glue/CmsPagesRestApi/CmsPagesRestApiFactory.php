@@ -9,6 +9,7 @@ namespace Spryker\Glue\CmsPagesRestApi;
 
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
+use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReaderInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapper;
@@ -27,7 +28,8 @@ class CmsPagesRestApiFactory extends AbstractFactory
         return new CmsPageReader(
             $this->createCmsPageRestResponseBuilder(),
             $this->getCmsStorageClient(),
-            $this->getCmsPageSearchClient()
+            $this->getCmsPageSearchClient(),
+            $this->getStoreClient()
         );
     }
 
@@ -64,5 +66,13 @@ class CmsPagesRestApiFactory extends AbstractFactory
     public function getCmsPageSearchClient(): CmsPagesRestApiToCmsPageSearchClientInterface
     {
         return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_CMS_PAGE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): CmsPagesRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_STORE);
     }
 }
