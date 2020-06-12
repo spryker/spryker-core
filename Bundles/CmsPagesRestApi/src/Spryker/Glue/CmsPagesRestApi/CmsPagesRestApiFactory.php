@@ -11,8 +11,8 @@ use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearc
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader;
 use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReaderInterface;
-use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapper;
-use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface;
+use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapper;
+use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapperInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilder;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -27,8 +27,7 @@ class CmsPagesRestApiFactory extends AbstractFactory
         return new CmsPageReader(
             $this->createCmsPageRestResponseBuilder(),
             $this->getCmsStorageClient(),
-            $this->getCmsPageSearchClient(),
-            $this->createCmsPagesResourceMapper()
+            $this->getCmsPageSearchClient()
         );
     }
 
@@ -37,15 +36,18 @@ class CmsPagesRestApiFactory extends AbstractFactory
      */
     public function createCmsPageRestResponseBuilder(): CmsPageRestResponseBuilderInterface
     {
-        return new CmsPageRestResponseBuilder($this->getResourceBuilder());
+        return new CmsPageRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createCmsPageMapper()
+        );
     }
 
     /**
-     * @return \Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface
+     * @return \Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapperInterface
      */
-    public function createCmsPagesResourceMapper(): CmsPagesResourceMapperInterface
+    public function createCmsPageMapper(): CmsPageMapperInterface
     {
-        return new CmsPagesResourceMapper();
+        return new CmsPageMapper();
     }
 
     /**
@@ -61,6 +63,6 @@ class CmsPagesRestApiFactory extends AbstractFactory
      */
     public function getCmsPageSearchClient(): CmsPagesRestApiToCmsPageSearchClientInterface
     {
-        return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_CMS_SEARCH_PAGE);
+        return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_CMS_PAGE_SEARCH);
     }
 }

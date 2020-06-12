@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\Container;
 class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
-    public const CLIENT_CMS_SEARCH_PAGE = 'CLIENT_CMS_SEARCH_PAGE';
+    public const CLIENT_CMS_PAGE_SEARCH = 'CLIENT_CMS_PAGE_SEARCH';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -58,7 +58,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsPageSearchClient(Container $container): Container
     {
-        $container->set(static::CLIENT_CMS_SEARCH_PAGE, function (Container $container) {
+        $container->set(static::CLIENT_CMS_PAGE_SEARCH, function (Container $container) {
             return new CmsPagesRestApiToCmsPageSearchClientBridge(
                 $container->getLocator()->cmsPageSearch()->client()
             );

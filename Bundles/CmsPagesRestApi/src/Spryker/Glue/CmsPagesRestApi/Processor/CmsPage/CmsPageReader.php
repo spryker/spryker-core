@@ -7,12 +7,10 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\CmsPage;
 
-use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
-use Generated\Shared\Transfer\RestCmsPageTransfer;
+use Generated\Shared\Transfer\RestCmsPageAttributesTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
-use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -32,7 +30,7 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @var \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface
      */
-    protected $cmsPageStorageClient;
+    protected $cmsStorageClient;
 
     /**
      * @var \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface
@@ -40,26 +38,18 @@ class CmsPageReader implements CmsPageReaderInterface
     protected $cmsPageSearchClient;
 
     /**
-     * @var \Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface
-     */
-    protected $cmsPagesResourceMapper;
-
-    /**
      * @param \Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface $cmsPageRestResponseBuilder
-     * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface $cmsPageStorageClient
+     * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface $cmsStorageClient
      * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface $cmsPageSearchClient
-     * @param \Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPagesResourceMapperInterface $cmsPagesResourceMapper
      */
     public function __construct(
         CmsPageRestResponseBuilderInterface $cmsPageRestResponseBuilder,
-        CmsPagesRestApiToCmsStorageClientInterface $cmsPageStorageClient,
-        CmsPagesRestApiToCmsPageSearchClientInterface $cmsPageSearchClient,
-        CmsPagesResourceMapperInterface $cmsPagesResourceMapper
+        CmsPagesRestApiToCmsStorageClientInterface $cmsStorageClient,
+        CmsPagesRestApiToCmsPageSearchClientInterface $cmsPageSearchClient
     ) {
         $this->cmsPageRestResponseBuilder = $cmsPageRestResponseBuilder;
-        $this->cmsPageStorageClient = $cmsPageStorageClient;
+        $this->cmsStorageClient = $cmsStorageClient;
         $this->cmsPageSearchClient = $cmsPageSearchClient;
-        $this->cmsPagesResourceMapper = $cmsPagesResourceMapper;
     }
 
     /**
@@ -69,20 +59,18 @@ class CmsPageReader implements CmsPageReaderInterface
      */
     public function searchCmsPages(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $searchString = $this->getRequestParameter($restRequest, CmsPagesRestApiConfig::QUERY_STRING_PARAMETER);
+        $searchString = $restRequest->getHttpRequest()->query->get(CmsPagesRestApiConfig::QUERY_STRING_PARAMETER, '');
+
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);
 
-        $searchResult[static::CMS_PAGES] = $this->cmsPageStorageClient->getCmsPageStorageByIds(
+        $searchResult[static::CMS_PAGES] = $this->cmsStorageClient->getCmsPageStorageByIds(
             $this->getCmsPageIds($searchResult),
             $restRequest->getMetadata()->getLocale(),
             APPLICATION_STORE
         );
 
-        $restSearchAttributesTransfer = $this->cmsPagesResourceMapper
-            ->mapSearchResultToRestAttributesTransfer($searchResult, new RestCmsPagesAttributesTransfer());
-
-        return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($restSearchAttributesTransfer);
+        return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($searchResult);
     }
 
     /**
@@ -90,11 +78,11 @@ class CmsPageReader implements CmsPageReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCmsPageByResourceId(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCmsPageById(RestRequestInterface $restRequest): RestResponseInterface
     {
         $cmsPageUuid = $restRequest->getResource()->getId();
 
-        $cmsPageStorageTransfers = $this->cmsPageStorageClient->getCmsPageStorageByUuids(
+        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             [$cmsPageUuid],
             $restRequest->getMetadata()->getLocale(),
             APPLICATION_STORE
@@ -104,9 +92,9 @@ class CmsPageReader implements CmsPageReaderInterface
             return $this->cmsPageRestResponseBuilder->createCmsPageEmptyRestResponse();
         }
 
-        $restCmsPageTransfer = (new RestCmsPageTransfer())->fromArray($cmsPageStorageTransfers[$cmsPageUuid]->toArray(), true);
+        $restCmsPageAttributesTransfer = (new RestCmsPageAttributesTransfer())->fromArray($cmsPageStorageTransfers[$cmsPageUuid]->toArray(), true);
 
-        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($cmsPageUuid, $restCmsPageTransfer);
+        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($cmsPageUuid, $restCmsPageAttributesTransfer);
     }
 
     /**
@@ -125,17 +113,6 @@ class CmsPageReader implements CmsPageReaderInterface
         }
 
         return $params;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $parameterName
-     *
-     * @return string
-     */
-    protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
-    {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
     }
 
     /**

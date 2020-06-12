@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
-use Generated\Shared\Transfer\RestCmsPageTransfer;
+use Generated\Shared\Transfer\RestCmsPageAttributesTransfer;
+use Generated\Shared\Transfer\RestCmsPagesTransfer;
 
-class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
+class CmsPageMapper implements CmsPageMapperInterface
 {
     /**
      * @uses \Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader::CMS_PAGES
@@ -21,14 +21,14 @@ class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
      * @phpstan-param array<string, mixed> $searchResult
      *
      * @param array $searchResult
-     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCmsPagesTransfer $restCmsPagesAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCmsPagesTransfer
      */
-    public function mapSearchResultToRestAttributesTransfer(
+    public function mapSearchResultToRestCmsPagesTransfer(
         array $searchResult,
-        RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
-    ): RestCmsPagesAttributesTransfer {
+        RestCmsPagesTransfer $restCmsPagesAttributesTransfer
+    ): RestCmsPagesTransfer {
         $restCmsPagesAttributesTransfer = $restCmsPagesAttributesTransfer->fromArray($searchResult, true);
 
         return $this->mapDataToRestCmsPageTransfer(
@@ -40,22 +40,22 @@ class CmsPagesResourceMapper implements CmsPagesResourceMapperInterface
     /**
      * @phpstan-param array<string, mixed> $searchResult
      *
-     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCmsPagesTransfer $restCmsPagesAttributesTransfer
      * @param array $searchResult
      *
-     * @return \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCmsPagesTransfer
      */
     protected function mapDataToRestCmsPageTransfer(
-        RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer,
+        RestCmsPagesTransfer $restCmsPagesAttributesTransfer,
         array $searchResult
-    ): RestCmsPagesAttributesTransfer {
+    ): RestCmsPagesTransfer {
         if (!isset($searchResult[static::CMS_PAGES]) || !is_array($searchResult[static::CMS_PAGES])) {
             return $restCmsPagesAttributesTransfer;
         }
 
         foreach ($searchResult[static::CMS_PAGES] as $cmsPageStorageTransfer) {
-            $restCmsPagesAttributesTransfer->addRestCmsPage(
-                (new RestCmsPageTransfer())->fromArray($cmsPageStorageTransfer->toArray(), true)
+            $restCmsPagesAttributesTransfer->addRestCmsPageAttributes(
+                (new RestCmsPageAttributesTransfer())->fromArray($cmsPageStorageTransfer->toArray(), true)
             );
         }
 
