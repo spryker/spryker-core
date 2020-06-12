@@ -30,6 +30,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="isCancellable" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
@@ -393,6 +394,10 @@
         <property name="order" type="Order"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>
