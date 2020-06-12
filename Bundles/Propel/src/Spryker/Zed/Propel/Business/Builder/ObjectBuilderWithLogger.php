@@ -14,7 +14,7 @@ namespace Spryker\Zed\Propel\Business\Builder;
 use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilderWithLogger as PropelOrmObjectBuilder;
 
 /**
- * @deprecated Use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilderWithLogger class instead.
+ * @deprecated Use {@link \Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilderWithLogger} instead.
  */
 class ObjectBuilderWithLogger extends PropelOrmObjectBuilder
 {

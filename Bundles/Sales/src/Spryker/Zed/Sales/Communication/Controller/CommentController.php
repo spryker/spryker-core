@@ -28,7 +28,7 @@ class CommentController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
         $form = $this->getFactory()->getCommentForm(
@@ -52,7 +52,7 @@ class CommentController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 
@@ -72,26 +72,20 @@ class CommentController extends AbstractController
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentTransfer = new CommentTransfer();
-            $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
-            $commentTransfer->setFkSalesOrder($idSalesOrder);
+        $commentTransfer = new CommentTransfer();
+        $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
+        $commentTransfer->setFkSalesOrder($idSalesOrder);
 
-            $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
+        $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
 
-            $commentTransfer->setUsername(
-                $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
-            );
+        $commentTransfer->setUsername(
+            $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
+        );
 
-            $this->getFacade()->saveComment($commentTransfer);
+        $this->getFacade()->saveComment($commentTransfer);
 
-            $this->addSuccessMessage('Comment successfully added');
+        $this->addSuccessMessage('Comment successfully added');
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
-        }
-
-        foreach ($form->getErrors(true) as $error) {
-            $this->addErrorMessage($error->getMessage());
-        }
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 }

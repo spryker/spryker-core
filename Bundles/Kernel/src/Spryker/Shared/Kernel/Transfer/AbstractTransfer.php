@@ -31,7 +31,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $transferPropertyNameMap = [];
 

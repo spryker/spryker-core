@@ -24,6 +24,7 @@
 
     <transfer name="PageMap">
         <property name="merchantReferences" type="array" singular="merchantReference"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="FacetConfig">

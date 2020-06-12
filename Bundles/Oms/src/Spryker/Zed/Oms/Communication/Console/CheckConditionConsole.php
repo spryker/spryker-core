@@ -42,5 +42,7 @@ class CheckConditionConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->checkConditions();
+
+        return static::CODE_SUCCESS;
     }
 }

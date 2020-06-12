@@ -1,4 +1,4 @@
-{% if productLabelTransfer is defined and productLabelTransfer.getIsDynamic() %}
+{% if productLabelTransfer is defined and productLabelTransfer.isDynamic %}
     <div class="alert alert-info">{{ 'Products for this label are assigned dynamically, you can\'t manage relations manually.' | trans }}</div>
 {% endif %}
 
@@ -25,12 +25,14 @@
 {{ form_row(
     relatedProductForm.idsProductAbstractToAssignCsv,
     {
-        'id': 'js-abstract-products-to-assign-ids-csv-field'
+        'id': 'js-abstract-products-to-assign-ids-csv-field',
+        'value': '',
     }
 ) }}
 {{ form_row(
     relatedProductForm.idsProductAbstractToDeAssignCsv,
     {
-        'id': 'js-abstract-products-to-de-assign-ids-csv-field'
+        'id': 'js-abstract-products-to-de-assign-ids-csv-field',
+        'value': '',
     }
 ) }}

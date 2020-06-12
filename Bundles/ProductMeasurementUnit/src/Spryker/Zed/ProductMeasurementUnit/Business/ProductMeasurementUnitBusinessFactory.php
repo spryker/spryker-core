@@ -126,6 +126,8 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface
      */
     public function createOrderExpander(): OrderExpanderInterface
@@ -141,7 +143,10 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->createProductMeasurementUnitTranslationExpander()
+        );
     }
 
     /**

@@ -16,6 +16,7 @@ use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchroniza
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
@@ -69,6 +70,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected static $productsConcreteDataCache = [];
 
     /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
@@ -93,7 +99,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()` instead.
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName
@@ -373,9 +379,19 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             ->setReference($reference)
             ->setLocale($localeName);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**
@@ -458,7 +474,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      * @param string $localeName
      *
      * @return array

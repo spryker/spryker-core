@@ -180,7 +180,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveSalesOrder() instead
+     * @deprecated Use {@link saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -365,7 +365,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `SalesFacade::getUniqueItemsFromOrder() instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -424,5 +424,37 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderItemReader()
             ->getOrderItems($orderItemFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        return $this->getFactory()
+            ->createOrderSearchReader()
+            ->searchOrders($orderListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createItemCurrencyExpander()
+            ->expandOrderItemsWithCurrencyIsoCode($itemTransfers);
     }
 }

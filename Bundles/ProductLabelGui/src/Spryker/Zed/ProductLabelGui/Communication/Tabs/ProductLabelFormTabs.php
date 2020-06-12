@@ -21,7 +21,7 @@ class ProductLabelFormTabs extends AbstractTabs
     protected function build(TabsViewTransfer $tabsViewTransfer)
     {
         $this
-            ->addGeneralInformationTab($tabsViewTransfer)
+            ->addSettingsTab($tabsViewTransfer)
             ->addProductAssignmentTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
@@ -35,13 +35,13 @@ class ProductLabelFormTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer)
+    protected function addSettingsTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('general')
-            ->setTitle('General Information')
-            ->setTemplate('@ProductLabelGui/Create/_tabs/general-information.twig');
+            ->setName('settings')
+            ->setTitle('Settings')
+            ->setTemplate('@ProductLabelGui/Create/_tabs/settings.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

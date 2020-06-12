@@ -46,7 +46,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $utilNetworkService;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $ignorableTransactions;
 
@@ -55,7 +55,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
-     * @param array $ignorableTransactions
+     * @param string[] $ignorableTransactions
      */
     public function __construct(
         MonitoringServiceInterface $monitoringService,

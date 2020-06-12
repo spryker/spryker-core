@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantSalesOrder\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
@@ -30,6 +31,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     protected const TEST_STATE_MACHINE = 'Test01';
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
+    protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -276,6 +278,69 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandOrderWithMerchantOrderDataReturnsExpandedItemWithExistingMerchantOrder(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
+            $saveOrderTransfer->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer,
+            $itemTransfer,
+            $merchantOrderReference
+        );
+
+        $orderTransfer = (new OrderTransfer())->setItems($saveOrderTransfer->getOrderItems());
+
+        //Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchantOrderData($orderTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->offsetGet(0);
+
+        //Assert
+        $this->assertNotNull($itemTransfer);
+        $this->assertSame($itemTransfer->getMerchantOrderReference(), $merchantOrderTransfer->getMerchantOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithMerchantOrderDataReturnsNotExpandedItemWithNotExistingMerchantOrder(): void
+    {
+        //Arrange
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer(
+            $this->tester->haveMerchant(),
+            static::TEST_STATE_MACHINE
+        );
+
+        $orderTransfer = (new OrderTransfer())->setItems($saveOrderTransfer->getOrderItems());
+
+        //Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchantOrderData($orderTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->offsetGet(0);
+
+        //Assert
+        $this->assertNotNull($itemTransfer);
+        $this->assertNull($itemTransfer->getMerchantOrderReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testFindMerchantOrderItemReturnsNullWithIncorrectCriteria(): void
     {
         //Arrange
@@ -379,6 +444,25 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($merchantOrderItemTransferResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithMerchantReferencess(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemTransfer())->setMerchantReference(static::TEST_MERCHANT_REFERENCE);
+        $orderTransfer = (new OrderTransfer())->addItem($itemTransfer);
+
+        // Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->expandOrderWithMerchantReferences($orderTransfer);
+
+        // Assert
+        $this->assertCount(1, $orderTransfer->getMerchantReferences());
+        $this->assertSame($itemTransfer->getMerchantReference(), $orderTransfer->getMerchantReferences()[0]);
     }
 
     /**

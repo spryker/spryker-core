@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
@@ -43,6 +48,26 @@ class CreateMerchantTest extends Unit
         $this->assertEquals($this->tester->createMerchantConfig()->getDefaultMerchantStatus(), $merchantResponseTransfer->getMerchant()->getStatus());
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantWithStore(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
+        $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
+
+        // Act
+        $merchantTransfer = $this->tester->getFacade()->findOne((new MerchantCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()));
+
+        // Assert
+        $this->assertIsIterable($merchantTransfer->getStoreRelation()->getStores());
+        $this->assertCount(1, $merchantTransfer->getStoreRelation()->getIdStores());
     }
 
     /**

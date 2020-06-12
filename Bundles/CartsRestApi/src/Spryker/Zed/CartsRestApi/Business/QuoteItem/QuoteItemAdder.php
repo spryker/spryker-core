@@ -70,7 +70,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     }
 
     /**
-     * @deprecated Use addToCart() instead.
+     * @deprecated Use {@link addToCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

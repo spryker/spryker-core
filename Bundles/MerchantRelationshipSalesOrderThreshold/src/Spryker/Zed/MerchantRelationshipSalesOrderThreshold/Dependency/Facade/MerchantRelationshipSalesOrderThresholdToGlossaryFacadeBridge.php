@@ -39,7 +39,7 @@ class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements M
 
     /**
      * @param string $keyName
-     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */

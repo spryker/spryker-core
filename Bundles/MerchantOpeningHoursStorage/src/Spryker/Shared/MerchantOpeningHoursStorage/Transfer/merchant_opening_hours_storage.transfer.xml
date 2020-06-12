@@ -46,7 +46,7 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
         <property name="filter" type="Filter"/>
     </transfer>
 

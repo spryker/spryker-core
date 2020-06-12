@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class OrderExpander implements OrderExpanderInterface
 {
     /**

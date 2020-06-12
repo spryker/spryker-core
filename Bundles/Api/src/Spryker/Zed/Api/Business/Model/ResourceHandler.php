@@ -39,7 +39,7 @@ class ResourceHandler implements ResourceHandlerInterface
     /**
      * @param string $resource
      * @param string $method
-     * @param string|null $id
+     * @param int|null $id
      * @param array $params
      *
      * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
@@ -74,7 +74,7 @@ class ResourceHandler implements ResourceHandlerInterface
 
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
-     * @param string|null $resourceId
+     * @param int|null $resourceId
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer

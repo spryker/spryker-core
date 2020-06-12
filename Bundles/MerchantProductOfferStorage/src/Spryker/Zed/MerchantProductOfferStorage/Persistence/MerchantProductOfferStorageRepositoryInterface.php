@@ -13,6 +13,13 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 interface MerchantProductOfferStorageRepositoryInterface
 {
     /**
+     * @param int[] $merchantIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByMerchantIds(array $merchantIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer

@@ -100,14 +100,14 @@ interface StockFacadeInterface
     public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
 
     /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock() instead.
-     *
      * Specification:
      * - Persists a new stock type entity to database.
      * - Touches the newly created stock type.
      * - Returns the ID of the new stock type entity.
+     *
+     * @api
+     *
+     * @deprecated Use {@link createStock()} instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *

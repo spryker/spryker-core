@@ -43,7 +43,9 @@
                                 {{ form_row(item) }}
                             </td>
                             <td>
-                                <img class="product-image" src="{{ itemData.metadata.image }}" width="100"/>
+                                <div class="image-wrap">
+                                    <img class="product-image" src="{{ itemData.metadata.image }}" alt="{{ itemData.name }}">
+                                </div>
                             </td>
                             <td>
                                 <div>
@@ -57,7 +59,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ itemData.quantity }}
+                                x {{ itemData.quantity }}
                             </td>
                             <td class="state-history">
                                 <div>

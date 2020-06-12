@@ -15,7 +15,7 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SortedCategoryQueryExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SortedCategoryQueryExpanderPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

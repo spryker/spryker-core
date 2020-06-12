@@ -3,6 +3,7 @@
 {% block body %}
     {% if navigation is defined %}
         {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+        <spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></spy-locale-switcher>
 
         <mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
             <mp-header name="header"></mp-header>

@@ -42,4 +42,32 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getSalesOrderItemsByOrderIds(array $salesOrderIds): array;
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     */
+    public function getMappedSalesOrderTotalsBySalesOrderIds(array $salesOrderIds): array;
+
+    /**
+     * @param int[] $salesOrderIds
+     *
+     * @return string[]
+     */
+    public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array;
 }

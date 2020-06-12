@@ -26,7 +26,7 @@ interface CartCodesRestApiClientInterface
 
     /**
      * Specification:
-     * - Makes Zed Request to find Quote and removes code from QuoteTransfer.
+     * - Makes Zed Request to find Quote and removes discount code from QuoteTransfer.
      *
      * @api
      *
@@ -35,4 +35,16 @@ interface CartCodesRestApiClientInterface
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
     public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed Request to find Quote and removes code from QuoteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

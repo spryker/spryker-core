@@ -7,10 +7,19 @@
 
 namespace SprykerTest\Zed\ProductOffer\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOffer\Business\ProductOfferBusinessFactory;
+use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
+use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -118,5 +127,124 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
         $this->assertFalse($productOfferResponseTransfer->getProductOffer()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterInactiveProductOfferItems(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+        $quoteTransfer->setItems(new ArrayObject([
+            (new ItemTransfer())->setProductOfferReference('test1')->setSku('sku1'),
+            (new ItemTransfer())->setProductOfferReference('test2')->setSku('sku2'),
+        ]));
+
+        $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
+        $productOfferCollectionTransfer->setProductOffers(
+            new ArrayObject([
+                (new ProductOfferTransfer())->setProductOfferReference('test1'),
+            ])
+        );
+
+        $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
+            ->onlyMethods(['find', 'findOne'])
+            ->getMock();
+        $productOfferRepositoryMock
+            ->method('find')
+            ->willReturn($productOfferCollectionTransfer);
+
+        $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
+            ->onlyMethods(['getRepository', 'resolveDependencyProvider'])
+            ->getMock();
+        $productOfferBusinessFactoryMock
+            ->method('getRepository')
+            ->willReturn($productOfferRepositoryMock);
+        $productOfferBusinessFactoryMock
+            ->method('resolveDependencyProvider')
+            ->willReturn(
+                new ProductOfferDependencyProvider()
+            );
+
+        /** @var \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $productOfferFacade */
+        $productOfferFacade = $this->tester->getFacade();
+        $productOfferFacade->setFactory($productOfferBusinessFactoryMock);
+
+        // Act
+        $filteredQuoteTransfers = $productOfferFacade->filterInactiveProductOfferItems($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $filteredQuoteTransfers->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductOfferWithValidProductOfferReturnsSuccess(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($productOfferTransfer->getConcreteSku())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer()));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkItemProductOffer($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductOfferWithInValidProductOfferReturnsError(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferTransfer2 = $this->tester->haveProductOffer();
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($productOfferTransfer->getConcreteSku())
+            ->setProductOfferReference($productOfferTransfer2->getProductOfferReference());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer()));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkItemProductOffer($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductOfferWithoutProductOfferReturnsSuccess(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($productConcreteTransfer->getSku())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer()));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkItemProductOffer($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
     }
 }

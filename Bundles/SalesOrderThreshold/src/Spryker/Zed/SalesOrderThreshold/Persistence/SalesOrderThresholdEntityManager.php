@@ -75,7 +75,9 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        if ($salesOrderThresholdEntity->getMessageGlossaryKey() === null) {
+        /** @var string|null $messageGlossaryKey */
+        $messageGlossaryKey = $salesOrderThresholdEntity->getMessageGlossaryKey();
+        if ($messageGlossaryKey === null) {
             $salesOrderThresholdEntity->setMessageGlossaryKey(
                 $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
             );

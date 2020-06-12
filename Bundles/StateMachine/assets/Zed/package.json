@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "spryker-zed-statemachine",
+  "version": "1.0.0",
+  "dependencies": {
+    "drift-zoom": "~1.4.0"
+  }
+}
