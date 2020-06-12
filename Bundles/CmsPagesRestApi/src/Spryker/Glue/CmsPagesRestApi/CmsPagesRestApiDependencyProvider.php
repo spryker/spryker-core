@@ -9,6 +9,7 @@ namespace Spryker\Glue\CmsPagesRestApi;
 
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientBridge;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientBridge;
+use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -18,7 +19,8 @@ use Spryker\Glue\Kernel\Container;
 class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
-    public const CLIENT_CMS_SEARCH_PAGE = 'CLIENT_CMS_SEARCH_PAGE';
+    public const CLIENT_CMS_PAGE_SEARCH = 'CLIENT_CMS_PAGE_SEARCH';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -31,6 +33,7 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCmsStorageClient($container);
         $container = $this->addCmsPageSearchClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -58,9 +61,25 @@ class CmsPagesRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsPageSearchClient(Container $container): Container
     {
-        $container->set(static::CLIENT_CMS_SEARCH_PAGE, function (Container $container) {
+        $container->set(static::CLIENT_CMS_PAGE_SEARCH, function (Container $container) {
             return new CmsPagesRestApiToCmsPageSearchClientBridge(
                 $container->getLocator()->cmsPageSearch()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new CmsPagesRestApiToStoreClientBridge(
+                $container->getLocator()->store()->client()
             );
         });
 

@@ -24,5 +24,5 @@ interface CmsPageReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCmsPageByResourceId(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getCmsPageById(RestRequestInterface $restRequest): RestResponseInterface;
 }

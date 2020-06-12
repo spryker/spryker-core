@@ -28,7 +28,7 @@ class CmsPagesResourceController extends AbstractController
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves lit of cms pages."
+     *              "Retrieves list of cms pages."
      *          ],
      *          "parameters": [
      *              {
@@ -38,7 +38,6 @@ class CmsPagesResourceController extends AbstractController
      *                  "name": "q",
      *                  "in": "query",
      *                  "description": "Search query string.",
-     *                  "required": true
      *              }
      *          ]
      *     }
@@ -56,6 +55,6 @@ class CmsPagesResourceController extends AbstractController
                 ->searchCmsPages($restRequest);
         }
 
-        return $this->getFactory()->createCmsPageReader()->getCmsPageByResourceId($restRequest);
+        return $this->getFactory()->createCmsPageReader()->getCmsPageById($restRequest);
     }
 }

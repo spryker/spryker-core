@@ -11,7 +11,6 @@ use DateTime;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\CmsPageSearch\CmsPageSearchConfig;
 
 class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
 {
@@ -34,19 +33,6 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     protected const DATE_FORMAT = 'Y-m-d';
 
     /**
-     * @var \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig
-     */
-    protected $cmsPageSearchConfig;
-
-    /**
-     * @param \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig $cmsPageSearchConfig
-     */
-    public function __construct(CmsPageSearchConfig $cmsPageSearchConfig)
-    {
-        $this->cmsPageSearchConfig = $cmsPageSearchConfig;
-    }
-
-    /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -62,7 +48,7 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
             PageIndexMap::STORE => $storeName,
             PageIndexMap::LOCALE => $localeTransfer->getLocaleName(),
             PageIndexMap::TYPE => static::TYPE_CMS_PAGE,
-            PageIndexMap::SEARCH_RESULT_DATA => $this->cmsPageSearchConfig->getSearchResultData($data),
+            PageIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($data),
             PageIndexMap::ACTIVE_FROM => $this->getActiveFrom($data),
             PageIndexMap::ACTIVE_TO => $this->getActiveTo($data),
             PageIndexMap::FULL_TEXT_BOOSTED => [
@@ -83,6 +69,21 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
             PageIndexMap::STRING_SORT => [
                 static::KEY_NAME => $data[static::KEY_NAME],
             ],
+        ];
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getSearchResultData(array $data): array
+    {
+        return [
+            static::KEY_ID_CMS_PAGE => $data[static::KEY_ID_CMS_PAGE],
+            static::KEY_NAME => $data[static::KEY_NAME],
+            static::KEY_TYPE => static::TYPE_CMS_PAGE,
+            static::KEY_URL => $data[static::KEY_URL],
         ];
     }
 

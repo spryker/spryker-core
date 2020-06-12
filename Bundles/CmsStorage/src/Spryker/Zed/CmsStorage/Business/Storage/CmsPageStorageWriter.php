@@ -227,7 +227,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
                 (new LocaleTransfer())->setLocaleName($localeName)
             );
 
-        $localeCmsPageDataTransfer->fromArray($cmsPageEntity->toArray());
+        $localeCmsPageDataTransfer->fromArray($cmsPageEntity->toArray(), true);
         $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
         $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
