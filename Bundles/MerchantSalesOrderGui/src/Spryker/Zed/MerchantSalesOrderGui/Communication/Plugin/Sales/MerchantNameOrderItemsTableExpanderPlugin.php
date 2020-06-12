@@ -25,6 +25,7 @@ class MerchantNameOrderItemsTableExpanderPlugin extends AbstractPlugin implement
 
     /**
      * {@inheritDoc}
+     * - Returns Merchant column name.
      *
      * @api
      *
@@ -37,6 +38,7 @@ class MerchantNameOrderItemsTableExpanderPlugin extends AbstractPlugin implement
 
     /**
      * {@inheritDoc}
+     * - Returns Merchant name for current item.
      *
      * @api
      *

@@ -177,6 +177,6 @@ class MerchantOmsFacadeTest extends Unit
 
         // Assert
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
-        $this->assertSame($stateMachineItemTransfer->getStateName(), $stateEntity->getName());
+        $this->assertSame($stateEntity->getName(), $stateMachineItemTransfer->getStateName());
     }
 }

@@ -242,7 +242,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
      */
-    public function getOrderItemsTableExpanderPlugins()
+    public function getOrderItemsTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_TABLE_EXPANDER);
     }

@@ -76,6 +76,7 @@ interface MerchantOmsFacadeInterface
     public function getStateMachineItemsByStateIds(array $stateIds): array;
 
     /**
+     * Specification:
      * - Finds merchant order item.
      * - Returns array of StateMachineItem transfers filled with state name.
      *

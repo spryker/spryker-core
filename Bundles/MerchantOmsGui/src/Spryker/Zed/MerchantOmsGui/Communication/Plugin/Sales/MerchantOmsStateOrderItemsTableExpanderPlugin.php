@@ -19,6 +19,7 @@ class MerchantOmsStateOrderItemsTableExpanderPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
+     * - Returns Merchant State column name.
      *
      * @api
      *
@@ -31,6 +32,7 @@ class MerchantOmsStateOrderItemsTableExpanderPlugin extends AbstractPlugin imple
 
     /**
      * {@inheritDoc}
+     * - Returns OMS state name for current item.
      *
      * @api
      *
