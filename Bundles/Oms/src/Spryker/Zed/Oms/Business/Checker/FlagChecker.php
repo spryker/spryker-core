@@ -48,7 +48,7 @@ class FlagChecker implements FlagCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param array<string, \Spryker\Zed\Oms\Business\Process\StateInterface> $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -75,7 +75,7 @@ class FlagChecker implements FlagCheckerInterface
      * @param string $processName
      * @param string $flag
      *
-     * @return array<string, \Spryker\Zed\Oms\Business\Process\StateInterface>
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     protected function getStatesByFlag(string $processName, string $flag): array
     {

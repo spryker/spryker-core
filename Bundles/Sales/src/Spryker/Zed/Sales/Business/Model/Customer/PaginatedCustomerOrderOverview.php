@@ -34,7 +34,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected $customerOrderOverviewHydrator;
 
     /**
-     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
     protected $searchOrderExpanderPlugins;
 

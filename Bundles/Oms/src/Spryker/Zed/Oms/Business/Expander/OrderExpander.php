@@ -74,7 +74,7 @@ class OrderExpander implements OrderExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return array<int, \Generated\Shared\Transfer\OrderTransfer>
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
     protected function mapOrdersByIdSalesOrder(array $orderTransfers): array
     {
