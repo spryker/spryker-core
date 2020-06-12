@@ -940,7 +940,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSendPasswordRestoreMailForCustomerCollection(): void
+    public function testSendPasswordRestoreMailForCustomerCollectionShouldSetRestorePasswordKey(): void
     {
         (new SpyCustomer())
             ->setEmail('customer2@shop.com')
@@ -959,47 +959,59 @@ class CustomerFacadeTest extends Unit
 
         $this->assertNotNull($customer->getCustomerTransfer()->getRestorePasswordKey());
     }
-    
+
     /**
      * @dataProvider getCustomerCountByCriteriaDataProvider
      *
+     * @param array $usersData
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
      * @param int $expectedCount
      *
      * @return void
      */
-    public function testGetCustomerCountByCriteria(
+    public function testGetCustomerCollectionByCriteriaShouldReturnCollectionOfCustomers(
+        array $usersData,
         CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
         int $expectedCount
     ): void {
-        // Arrange
-        (new SpyCustomer())
-            ->setEmail('customer1@shop.com')
-            ->setPassword(static::VALUE_VALID_PASSWORD)
-            ->setRestorePasswordKey('fee0292350a14da40ac6f8f9d6cd26ad')
-            ->setCustomerReference('DE--111')
-            ->save();
+        foreach ($usersData as $item) {
+            (new SpyCustomer())
+                ->setEmail($item['email'])
+                ->setPassword($item['password'])
+                ->setRestorePasswordKey($item['passwordRestoreKey'])
+                ->setCustomerReference($item['customerReference'])
+                ->save();
+        }
 
-        (new SpyCustomer())
-            ->setEmail('customer2@shop.com')
-            ->setPassword(static::VALUE_VALID_PASSWORD)
-            ->setRestorePasswordKey(null)
-            ->setCustomerReference('DE--112')
-            ->save();
+        // Assert
+        $this->assertSame(
+            $expectedCount,
+            $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
+        );
+    }
 
-        (new SpyCustomer())
-            ->setEmail('customer3@shop.com')
-            ->setPassword(null)
-            ->setRestorePasswordKey(null)
-            ->setCustomerReference('DE--113')
-            ->save();
-
-        (new SpyCustomer())
-            ->setEmail('customer4@shop.com')
-            ->setPassword(null)
-            ->setRestorePasswordKey('fee0292350a14da40ac6f8f9d6cd26ad')
-            ->setCustomerReference('DE--114')
-            ->save();
+    /**
+     * @dataProvider getCustomerCountByCriteriaDataProvider
+     *
+     * @param array $usersData
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    public function testGetCustomerCountByCriteriaShouldReturnCountOfCustomers(
+        array $usersData,
+        CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
+        int $expectedCount
+    ): void {
+        foreach ($usersData as $item) {
+            (new SpyCustomer())
+                ->setEmail($item['email'])
+                ->setPassword($item['password'])
+                ->setRestorePasswordKey($item['passwordRestoreKey'])
+                ->setCustomerReference($item['customerReference'])
+                ->save();
+        }
 
         // Assert
         $this->assertSame($expectedCount, $this->tester->getFacade()->getCustomerCountByCriteria($criteriaFilterTransfer));
@@ -1011,47 +1023,47 @@ class CustomerFacadeTest extends Unit
     public function getCustomerCountByCriteriaDataProvider()
     {
         return [
-            [$this->createCustomerSetPasswordCriteriaFilterTransfer(), 2],
-            [$this->createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption(), 1],
-            [$this->createCustomerResetPasswordCriteriaFilterTransfer(), 30],
-            [$this->createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption(), 28],
+            'get customers with empty password - expects 2' => [
+                $this->getUsersData(),
+                (new CustomerCriteriaFilterTransfer())->setPasswordExists(false)
+                    ->setRestorePasswordKeyExists(true),
+                2,
+            ],
+            'get customers with empty password and empty password restore key - expects 1' => [
+                $this->getUsersData(),
+                (new CustomerCriteriaFilterTransfer())
+                    ->setPasswordExists(false)
+                    ->setRestorePasswordKeyExists(false),
+                1,
+            ],
         ];
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
+     * @return array
      */
-    protected function createCustomerSetPasswordCriteriaFilterTransfer()
+    protected function getUsersData()
     {
-        return (new CustomerCriteriaFilterTransfer())
-            ->setPasswordExists(false)
-            ->setRestorePasswordKeyExists(true);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
-     */
-    protected function createCustomerSetPasswordCriteriaFilterTransferWithTokenNotExistOption()
-    {
-        return (new CustomerCriteriaFilterTransfer())
-            ->setPasswordExists(false)
-            ->setRestorePasswordKeyExists(false);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
-     */
-    protected function createCustomerResetPasswordCriteriaFilterTransfer()
-    {
-        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(true);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer
-     */
-    protected function createCustomerResetPasswordCriteriaFilterTransferWithTokenNotExistOption()
-    {
-        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(false);
+        return [
+            [
+                'email' => 'customer1@shop.com',
+                'password' => null,
+                'passwordRestoreKey' => null,
+                'customerReference' => 'DE--111',
+            ],
+            [
+                'email' => 'customer2@shop.com',
+                'password' => null,
+                'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
+                'customerReference' => 'DE--112',
+            ],
+            [
+                'email' => 'customer3@shop.com',
+                'password' => static::VALUE_VALID_PASSWORD,
+                'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
+                'customerReference' => 'DE--113',
+            ],
+        ];
     }
 
     /**

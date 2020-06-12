@@ -202,7 +202,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
     {
-        return $this->getCustomerCollectionByCriteriaQuery($customerCriteriaFilterTransfer)->find()->count();
+        return $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->count();
     }
 
     /**
@@ -217,7 +217,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
         $this->hydrateCustomerListWithCustomers(
             $customerCollectionTransfer,
-            $this->getCustomerCollectionByCriteriaQuery($customerCriteriaFilterTransfer)->find()->toArray()
+            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray()
         );
 
         return $customerCollectionTransfer;
@@ -228,7 +228,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function getCustomerCollectionByCriteriaQuery(
+    protected function queryCustomersByCriteria(
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): SpyCustomerQuery {
         $query = $this->getFactory()->createSpyCustomerQuery();
