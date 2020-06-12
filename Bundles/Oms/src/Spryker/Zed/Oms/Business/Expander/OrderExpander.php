@@ -61,11 +61,13 @@ class OrderExpander implements OrderExpanderInterface
 
         foreach ($mappedItemTransfers as $idSalesOrder => $itemTransfers) {
             $orderTransfer = $mappedOrderTransfers[$idSalesOrder] ?? null;
-            $isOrderCancellable = $this->flagChecker->hasOrderItemsFlag($itemTransfers, OmsConfig::STATE_TYPE_FLAG_CANCELLABLE);
 
-            if ($orderTransfer) {
-                $orderTransfer->setIsCancellable($isOrderCancellable);
+            if (!$orderTransfer) {
+                continue;
             }
+
+            $isOrderCancellable = $this->flagChecker->hasOrderItemsFlag($itemTransfers, OmsConfig::STATE_TYPE_FLAG_CANCELLABLE);
+            $orderTransfer->setIsCancellable($isOrderCancellable);
         }
 
         return $orderTransfers;
@@ -95,8 +97,7 @@ class OrderExpander implements OrderExpanderInterface
     protected function mapOrderItemsByIdSalesOrder(array $orderTransfers): array
     {
         $mappedItemTransfers = [];
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->setSalesOrderIds(array_keys($orderTransfers));
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds(array_keys($orderTransfers));
 
         $itemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
 

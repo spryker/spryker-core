@@ -370,9 +370,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createFlagChecker(): FlagCheckerInterface
     {
-        return new FlagChecker(
-            $this->createOrderStateMachineBuilder()
-        );
+        return new FlagChecker($this->createOrderStateMachineBuilder());
     }
 
     /**
