@@ -11,10 +11,13 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
@@ -932,6 +935,84 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
         $this->assertEquals($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCustomersByCriteriaFilterTransfer(): void
+    {
+        (new SpyCustomer())
+            ->setEmail('customer1@shop.com')
+            ->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setRestorePasswordKey('fee0292350a14da40ac6f8f9d6cd26ad')
+            ->setCustomerReference('DE--111')
+            ->save();
+
+        (new SpyCustomer())
+            ->setEmail('customer2@shop.com')
+            ->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setRestorePasswordKey(null)
+            ->setCustomerReference('DE--112')
+            ->save();
+
+        (new SpyCustomer())
+            ->setEmail('customer3@shop.com')
+            ->setPassword(null)
+            ->setRestorePasswordKey(null)
+            ->setCustomerReference('DE--113')
+            ->save();
+
+        (new SpyCustomer())
+            ->setEmail('customer4@shop.com')
+            ->setPassword(null)
+            ->setRestorePasswordKey('fee0292350a14da40ac6f8f9d6cd26ad')
+            ->setCustomerReference('DE--114')
+            ->save();
+
+        $customerSetPasswordCriteriaFilterTransfer = (new CustomerCriteriaFilterTransfer())
+            ->setPasswordExists(false)
+            ->setRestorePasswordKeyExists(true);
+
+        $customerSetPasswordCriteriaFilterTransferWithTokenNotExistOption = (new CustomerCriteriaFilterTransfer())
+            ->setPasswordExists(false)
+            ->setRestorePasswordKeyExists(false);
+
+        $customerResetPasswordCriteriaFilterTransfer = (new CustomerCriteriaFilterTransfer())
+            ->setRestorePasswordKeyExists(true);
+
+        $customerResetPasswordCriteriaFilterTransferWithTokenNotExistOption = (new CustomerCriteriaFilterTransfer())
+            ->setRestorePasswordKeyExists(false);
+
+        $facade = $this->tester->getFacade();
+
+        $this->assertEquals(2, $facade->getCustomerCountByCriteria($customerSetPasswordCriteriaFilterTransfer));
+        $this->assertEquals(1, $facade->getCustomerCountByCriteria($customerSetPasswordCriteriaFilterTransferWithTokenNotExistOption));
+        $this->assertEquals(30, $facade->getCustomerCountByCriteria($customerResetPasswordCriteriaFilterTransfer));
+        $this->assertEquals(28, $facade->getCustomerCountByCriteria($customerResetPasswordCriteriaFilterTransferWithTokenNotExistOption));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendPasswordRestoreMailForCustomerCollection(): void
+    {
+        (new SpyCustomer())
+            ->setEmail('customer2@shop.com')
+            ->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setRestorePasswordKey(null)
+            ->setCustomerReference('DE--112')
+            ->save();
+
+        $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+
+        $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
+            (new CustomerCollectionTransfer())->addCustomer($customer->getCustomerTransfer())
+        );
+
+        $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+
+        $this->assertNotNull($customer->getCustomerTransfer()->getRestorePasswordKey());
     }
 
     /**
