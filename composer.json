@@ -26,6 +26,11 @@
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  },
   "replace": {
     "spryker/acl": "*",
     "spryker/acl-extension": "*",
