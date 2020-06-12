@@ -200,13 +200,14 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function getCustomersByCriteriaFilterTransferQuery(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): SpyCustomerQuery
-    {
+    protected function getCustomerCollectionTransferByCriteriaFilterTransferQuery(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): SpyCustomerQuery {
         $query = $this->getFactory()->createSpyCustomerQuery();
-        if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExist()) {
+        if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExists()) {
             $query->filterByRestorePasswordKey(null, Criteria::ISNULL);
         }
-        if (!$customerCriteriaFilterTransfer->getPasswordExist() && $customerCriteriaFilterTransfer->getPasswordExist() !== null) {
+        if (!$customerCriteriaFilterTransfer->getPasswordExists() && $customerCriteriaFilterTransfer->getPasswordExists() !== null) {
             $query->filterByPassword(null, Criteria::ISNULL);
         }
 
@@ -220,7 +221,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
     {
-        $query = $this->getCustomersByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer);
+        $query = $this->getCustomerCollectionTransferByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer);
 
         return $query->find()->count();
     }
@@ -230,12 +231,15 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): CustomerCollectionTransfer
-    {
-        $query = $this->getCustomersByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer);
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
         $customerCollectionTransfer = new CustomerCollectionTransfer();
 
-        $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $query->find()->toArray());
+        $this->hydrateCustomerListWithCustomers(
+            $customerCollectionTransfer,
+            $this->getCustomerCollectionTransferByCriteriaFilterTransferQuery($customerCriteriaFilterTransfer)->find()->toArray()
+        );
 
         return $customerCollectionTransfer;
     }

@@ -183,7 +183,7 @@
     </transfer>
 
     <transfer name="CustomerCriteriaFilter">
-        <property name="restorePasswordKeyExist" type="bool"/>
-        <property name="passwordExist" type="bool"/>
+        <property name="restorePasswordKeyExists" type="bool"/>
+        <property name="passwordExists" type="bool"/>
     </transfer>
 </transfers>

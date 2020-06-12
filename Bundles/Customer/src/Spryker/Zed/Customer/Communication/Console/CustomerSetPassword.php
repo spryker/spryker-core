@@ -63,7 +63,7 @@ class CustomerSetPassword extends Console
         }
 
         $customerCollection = $this->getFacade()
-            ->findCustomersByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
+            ->getCustomerCollectionTransferByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
 
         $this->getFacade()->sendPasswordRestoreMailForCustomerCollection($customerCollection);
 
@@ -79,8 +79,8 @@ class CustomerSetPassword extends Console
     {
         $customerCriteriaFilterTransfer = new CustomerCriteriaFilterTransfer();
         $customerCriteriaFilterTransfer
-            ->setRestorePasswordKeyExist($noToken ? false : true)
-            ->setPasswordExist(false);
+            ->setRestorePasswordKeyExists($noToken ? false : true)
+            ->setPasswordExists(false);
 
         return $customerCriteriaFilterTransfer;
     }

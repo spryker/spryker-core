@@ -59,5 +59,7 @@ interface CustomerRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): CustomerCollectionTransfer;
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer;
 }

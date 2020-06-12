@@ -28,16 +28,18 @@ interface CustomerReaderInterface
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int;
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer;
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer;
 }

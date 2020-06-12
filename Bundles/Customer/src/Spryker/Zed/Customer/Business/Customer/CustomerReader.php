@@ -96,22 +96,23 @@ class CustomerReader implements CustomerReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
     {
-        return $this->customerRepository->getCustomersForResetPasswordCount($criteriaFilterTransfer);
+        return $this->customerRepository->getCustomersForResetPasswordCount($customerCriteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer
-    {
-        return $this->customerRepository->findCustomersByCriteriaFilterTransfer($criteriaFilterTransfer);
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
+        return $this->customerRepository->getCustomerCollectionTransferByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
     }
 }

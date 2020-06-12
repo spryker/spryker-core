@@ -590,13 +590,13 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
     {
-        return $this->getRepository()->getCustomersForResetPasswordCount($criteriaFilterTransfer);
+        return $this->getRepository()->getCustomersForResetPasswordCount($customerCriteriaFilterTransfer);
     }
 
     /**
@@ -604,13 +604,14 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer
-    {
-        return $this->getRepository()->findCustomersByCriteriaFilterTransfer($criteriaFilterTransfer);
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
+        return $this->getRepository()->getCustomerCollectionTransferByCriteriaFilterTransfer($customerCriteriaFilterTransfer);
     }
 
     /**
@@ -624,7 +625,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void
     {
-        $this->getFactory()->createCustomer()
-            ->sendPasswordRestoreMailForCustomerCollection($customerCollectionTransfer);
+        $this->getFactory()
+            ->createCustomer()->sendPasswordRestoreMailForCustomerCollection($customerCollectionTransfer);
     }
 }

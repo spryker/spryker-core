@@ -513,27 +513,29 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Gets count of customers that will be touched
+     * - Retrieves count of customers that will be touched.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return int
      */
-    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): int;
+    public function getCustomersForResetPasswordCount(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
 
     /**
      * Specification:
-     * - Retrieves filtered customers using CustomerCriteriaFilterTransfer
+     * - Retrieves filtered customers using CustomerCriteriaFilterTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function findCustomersByCriteriaFilterTransfer(CustomerCriteriaFilterTransfer $criteriaFilterTransfer): CustomerCollectionTransfer;
+    public function getCustomerCollectionTransferByCriteriaFilterTransfer(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer;
 
     /**
      * Specification:
