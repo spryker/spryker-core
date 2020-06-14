@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Navigation\Business;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -50,6 +53,8 @@ interface NavigationFacadeInterface
      * - Returns navigation transfer if found, NULL otherwise.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Navigation\Business\NavigationFacadeInterface::findNavigationByCriteria()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
@@ -177,4 +182,45 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
+
+    /**
+     * Specification
+     * - Finds navigation entity in database filtered by data provided in criteria transfer.
+     * - Returns navigation transfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
+
+    /**
+     * Specification
+     * - Finds all navigation entities in database.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array;
+
+    /**
+     * Specification:
+     * - Duplicates navigation with all navigation nodes.
+     * - Persists new navigation entity to database.
+     * - Touches navigation entity as active.
+     * - Touches each nested navigation node.
+     * - Returns response with duplicated Navigation.
+     * - Returns response with error message in case of error.
+     * - Required properties: DuplicateNavigationTransfer.idBaseNavigation, DuplicateNavigationTransfer.key, DuplicateNavigationTransfer.name
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DuplicateNavigationTransfer $duplicateNavigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
+     */
+    public function duplicateNavigation(DuplicateNavigationTransfer $duplicateNavigationTransfer): NavigationResponseTransfer;
 }
