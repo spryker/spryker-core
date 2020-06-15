@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Propel\Communication\Plugin\Application;
 
 use Exception;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Propel\Runtime\Connection\ConnectionManagerMasterSlave;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Spryker\Service\Container\ContainerInterface;
@@ -36,9 +36,10 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $manager = new ConnectionManagerSingle();
-        $manager->setConfiguration($this->getPropelConfig());
+        $manager = new ConnectionManagerMasterSlave();
         $manager->setName(static::DATA_SOURCE_NAME);
+        $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
+        $manager->setReadConfiguration($this->getPropelReadConfiguration());
 
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
@@ -84,14 +85,32 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     /**
      * @return array
      */
-    private function getPropelConfig(): array
+    private function getPropelWriteConfiguration(): array
     {
-        $propelConfig = $this->getConfig()->getPropelConfig()['database']['connections']['default'];
+        $propelConfig = $this->getDefaultPropelConfiguration();
         $propelConfig['user'] = $this->getConfig()->getUsername();
         $propelConfig['password'] = $this->getConfig()->getPassword();
         $propelConfig['dsn'] = $this->getConfig()->getPropelConfig()['database']['connections']['default']['dsn'];
 
         return $propelConfig;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPropelReadConfiguration(): array
+    {
+        $propelConfig = $this->getDefaultPropelConfiguration();
+
+        return $propelConfig['slaves'];
+    }
+
+    /**
+     * @return array
+     */
+    private function getDefaultPropelConfiguration(): array
+    {
+        return $this->getConfig()->getPropelConfig()['database']['connections']['default'];
     }
 
     /**

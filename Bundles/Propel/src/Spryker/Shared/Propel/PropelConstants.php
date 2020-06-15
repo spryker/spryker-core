@@ -135,4 +135,12 @@ interface PropelConstants
      * @api
      */
     public const LOG_FILE_PATH = 'PROPEL:LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Defines slaves database connections.
+     *
+     * @api
+     */
+    public const ZED_DB_SLAVES = 'PROPEL:ZED_DB_SLAVES';
 }
