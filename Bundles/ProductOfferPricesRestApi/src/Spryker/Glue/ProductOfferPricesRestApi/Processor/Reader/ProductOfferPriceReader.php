@@ -142,9 +142,11 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
      *
-     * @return array<string, string>
+     * @return string[]
      */
     protected function getProductConcreteSkus(array $productOfferStorageTransfers): array
     {
