@@ -88,7 +88,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOffersBySku(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer {
         $productOfferStorageCollectionTransfer = new ProductOfferStorageCollectionTransfer();

@@ -26,12 +26,12 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOffersBySku(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer {
         return $this->getFactory()
             ->createProductOfferStorageReader()
-            ->getProductOffersBySku($productOfferStorageCriteriaTransfer);
+            ->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
     }
 
     /**

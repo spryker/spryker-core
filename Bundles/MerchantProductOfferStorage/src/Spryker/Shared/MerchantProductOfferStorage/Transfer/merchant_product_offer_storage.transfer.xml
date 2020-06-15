@@ -60,7 +60,6 @@
         <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
-        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="ProductStorageCriteria">
