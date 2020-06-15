@@ -143,7 +143,7 @@ interface PropelConstants
      * Example:
      *
      * $config[PropelConstants::ZED_DB_REPLICAS][] = [
-     *     'host' => 'slave-1',
+     *     'host' => 'replica-1',
      *     'port' => '5432'
      * ];
      *
