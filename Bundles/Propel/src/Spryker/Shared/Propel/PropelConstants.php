@@ -142,5 +142,5 @@ interface PropelConstants
      *
      * @api
      */
-    public const ZED_DB_SLAVES = 'PROPEL:ZED_DB_SLAVES';
+    public const ZED_DB_REPLICAS = 'PROPEL:ZED_DB_REPLICAS';
 }
