@@ -9,6 +9,10 @@ namespace Spryker\Glue\MerchantProductOffersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapper;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpander;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReader;
@@ -45,6 +49,22 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
         return new ProductOfferRestResponseBuilder(
             $this->getResourceBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface
+     */
+    public function createCartItemExpander(): CartItemExpanderInterface
+    {
+        return new CartItemExpander($this->getMerchantProductOfferStorageClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface
+     */
+    public function createCartItemsAttributesMapper(): CartItemsAttributesMapperInterface
+    {
+        return new CartItemsAttributesMapper();
     }
 
     /**

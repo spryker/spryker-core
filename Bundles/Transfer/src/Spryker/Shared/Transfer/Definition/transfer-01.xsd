@@ -15,7 +15,7 @@
                                 <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
                                     <xsd:complexType mixed="true">
                                         <xsd:attribute type="xsd:string" name="name" use="required"/>
-                                        <xsd:attribute type="xsd:string" name="type" use="required" />
+                                        <xsd:attribute type="xsd:string" name="type" use="required"/>
                                         <xsd:attribute type="xsd:string" name="singular" use="optional"/>
                                         <xsd:attribute type="xsd:string" name="description" use="optional"/>
                                         <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>

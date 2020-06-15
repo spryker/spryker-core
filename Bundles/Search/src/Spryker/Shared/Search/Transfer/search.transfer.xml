@@ -146,4 +146,15 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="IndexDefinitionFile">
+        <property name="fileName" type="string"/>
+        <property name="storePrefix" type="string"/>
+        <property name="content" type="array" singular="content"/>
+        <property name="realPath" type="string"/>
+    </transfer>
+
 </transfers>
