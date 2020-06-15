@@ -21,13 +21,15 @@ class CmsPageReader implements CmsPageReaderInterface
     protected const SEARCH_RESULT_PAGINATION = 'pagination';
 
     protected const ID_CMS_PAGE = 'id_cms_page';
-
-    protected const PARAMETER_NAME_PAGE = 'page';
+    /**
+     * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_PARAMETER_NAME_PAGE
+     */
+    protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
 
     /**
-     * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
      */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
+    protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 
     /**
      * @var \Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface
@@ -128,8 +130,8 @@ class CmsPageReader implements CmsPageReaderInterface
     {
         $params = $restRequest->getHttpRequest()->query->all();
         if ($restRequest->getPage()) {
-            $params[static::PARAMETER_NAME_ITEMS_PER_PAGE] = $restRequest->getPage()->getLimit();
-            $params[static::PARAMETER_NAME_PAGE] = ($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1;
+            $params[static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME] = $restRequest->getPage()->getLimit();
+            $params[static::PAGINATION_PARAMETER_NAME_PAGE] = ($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1;
         }
 
         return $params;
