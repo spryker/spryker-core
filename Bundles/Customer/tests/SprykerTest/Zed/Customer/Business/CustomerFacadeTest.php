@@ -978,12 +978,7 @@ class CustomerFacadeTest extends Unit
     ): void {
         // Arrange
         foreach ($usersData as $item) {
-            (new SpyCustomer())
-                ->setEmail($item['email'])
-                ->setPassword($item['password'])
-                ->setRestorePasswordKey($item['passwordRestoreKey'])
-                ->setCustomerReference($item['customerReference'])
-                ->save();
+            $this->createCustomerUsingCustomerDataProviderUserData($item);
         }
 
         // Assert
