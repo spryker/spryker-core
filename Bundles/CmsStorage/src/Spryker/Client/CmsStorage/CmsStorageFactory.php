@@ -10,7 +10,6 @@ namespace Spryker\Client\CmsStorage;
 use Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStorageClientInterface;
 use Spryker\Client\CmsStorage\Dependency\Service\CmsStorageToUtilEncodingServiceInterface;
 use Spryker\Client\CmsStorage\Mapper\CmsPageStorageMapper;
-use Spryker\Client\CmsStorage\Mapper\CmsPageStorageMapperInterface;
 use Spryker\Client\CmsStorage\Reader\CmsPageStorageReader;
 use Spryker\Client\CmsStorage\Reader\CmsPageStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -21,7 +20,7 @@ class CmsStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CmsStorage\Mapper\CmsPageStorageMapperInterface
      */
-    public function createCmsPageStorageMapper(): CmsPageStorageMapperInterface
+    public function createCmsPageStorageMapper()
     {
         return new CmsPageStorageMapper();
     }

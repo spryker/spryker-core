@@ -24,7 +24,10 @@ class CmsPagesResourceController extends AbstractController
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
-     *          }]
+     *          }],
+     *          "responses": {
+     *              "404": "Cms page not found."
+     *          }
      *     },
      *     "getCollection": {
      *          "summary": [
@@ -39,7 +42,10 @@ class CmsPagesResourceController extends AbstractController
      *                  "in": "query",
      *                  "description": "Search query string.",
      *              }
-     *          ]
+     *          ],
+     *          "responses": {
+     *              "404": "Cms page not found."
+     *          }
      *     }
      * })
      *

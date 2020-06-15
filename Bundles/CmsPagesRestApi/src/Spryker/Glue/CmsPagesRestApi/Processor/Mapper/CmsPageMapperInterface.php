@@ -7,20 +7,14 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestCmsPagesTransfer;
-
 interface CmsPageMapperInterface
 {
     /**
-     * @phpstan-param array<string, mixed> $searchResult
+     * @phpstan-return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
      *
-     * @param array $searchResult
-     * @param \Generated\Shared\Transfer\RestCmsPagesTransfer $restCmsPagesAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCmsPagesTransfer
+     * @return \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer[]
      */
-    public function mapSearchResultToRestCmsPagesTransfer(
-        array $searchResult,
-        RestCmsPagesTransfer $restCmsPagesAttributesTransfer
-    ): RestCmsPagesTransfer;
+    public function mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers(array $cmsPageStorageTransfers): array;
 }

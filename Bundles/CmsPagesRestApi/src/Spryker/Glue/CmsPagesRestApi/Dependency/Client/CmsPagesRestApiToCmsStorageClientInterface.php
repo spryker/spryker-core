@@ -10,8 +10,6 @@ namespace Spryker\Glue\CmsPagesRestApi\Dependency\Client;
 interface CmsPagesRestApiToCmsStorageClientInterface
 {
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param string[] $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
@@ -21,8 +19,6 @@ interface CmsPagesRestApiToCmsStorageClientInterface
     public function getCmsPageStorageByUuids(array $cmsPageUuids, string $localeName, string $storeName): array;
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param int[] $cmsPageIds
      * @param string $localeName
      * @param string $storeName

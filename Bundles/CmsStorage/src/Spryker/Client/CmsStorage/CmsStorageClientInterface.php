@@ -23,12 +23,9 @@ interface CmsStorageClientInterface
 
     /**
      * Specification:
-     * - Finds cms page Storage records by uuids, locale and store.
-     * - Returns array of CmsPageStorageTransfer indexed by uuid.
+     * - Finds Cms page storage records by UUIDs, locale and store.
      *
      * @api
-     *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
      *
      * @param string[] $cmsPageUuids
      * @param string $localeName
@@ -40,12 +37,9 @@ interface CmsStorageClientInterface
 
     /**
      * Specification:
-     * - Finds cms page Storage records by Ids, locale and store.
-     * - Returns array of CmsPageStorageTransfer indexed by uuid.
+     * - Finds Cms page storage records by Ids, locale and store.
      *
      * @api
-     *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
      *
      * @param int[] $cmsPageIds
      * @param string $localeName

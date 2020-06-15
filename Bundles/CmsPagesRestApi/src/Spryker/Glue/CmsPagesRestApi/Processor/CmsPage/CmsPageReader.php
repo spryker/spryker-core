@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\CmsPage;
 
-use Generated\Shared\Transfer\RestCmsPageAttributesTransfer;
+use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
@@ -19,6 +19,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CmsPageReader implements CmsPageReaderInterface
 {
     protected const CMS_PAGES = 'cms_pages';
+    protected const PAGINATION = 'pagination';
     protected const ID_CMS_PAGE = 'id_cms_page';
     protected const PARAMETER_NAME_PAGE = 'page';
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
@@ -73,13 +74,19 @@ class CmsPageReader implements CmsPageReaderInterface
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);
 
-        $searchResult[static::CMS_PAGES] = $this->cmsStorageClient->getCmsPageStorageByIds(
-            $this->getCmsPageIds($searchResult),
+        if (!$searchResult[static::CMS_PAGES]) {
+            return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
+        }
+
+        $totalPagesFound = $searchResult[static::PAGINATION]->getNumFound();
+
+        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
+            $this->getCmsPageIds($searchResult[static::CMS_PAGES]),
             $restRequest->getMetadata()->getLocale(),
             $this->storageClient->getCurrentStore()->getName()
         );
 
-        return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($searchResult);
+        return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($cmsPageStorageTransfers, $totalPagesFound);
     }
 
     /**
@@ -97,13 +104,14 @@ class CmsPageReader implements CmsPageReaderInterface
             $this->storageClient->getCurrentStore()->getName()
         );
 
-        if (!isset($cmsPageStorageTransfers[$cmsPageUuid])) {
-            return $this->cmsPageRestResponseBuilder->createCmsPageEmptyRestResponse();
+        $desiredCmsPageStorageTransfer = reset($cmsPageStorageTransfers);
+        if (!$desiredCmsPageStorageTransfer->getUuid() || $desiredCmsPageStorageTransfer->getUuid() != $cmsPageUuid) {
+            return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
         }
 
-        $restCmsPageAttributesTransfer = (new RestCmsPageAttributesTransfer())->fromArray($cmsPageStorageTransfers[$cmsPageUuid]->toArray(), true);
+        $restCmsPagesAttributesTransfer = (new RestCmsPagesAttributesTransfer())->fromArray($desiredCmsPageStorageTransfer->toArray(), true);
 
-        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($cmsPageUuid, $restCmsPageAttributesTransfer);
+        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($restCmsPagesAttributesTransfer->getUuid(), $restCmsPagesAttributesTransfer);
     }
 
     /**
@@ -125,16 +133,14 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $searchResult
-     *
-     * @param array $searchResult
+     * @param array[] $cmsPages
      *
      * @return int[]
      */
-    protected function getCmsPageIds(array $searchResult): array
+    protected function getCmsPageIds(array $cmsPages): array
     {
         $cmsPageIds = [];
-        foreach ($searchResult[static::CMS_PAGES] as $cmsPage) {
+        foreach ($cmsPages as $cmsPage) {
             $cmsPageIds[] = $cmsPage[static::ID_CMS_PAGE];
         }
 

@@ -7,8 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestCmsPageAttributesTransfer;
-use Generated\Shared\Transfer\RestCmsPagesTransfer;
+use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapperInterface;
@@ -43,23 +42,15 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
 
     /**
      * @param string $cmsPageUuid
-     * @param \Generated\Shared\Transfer\RestCmsPageAttributesTransfer $restCmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageRestResponse(string $cmsPageUuid, RestCmsPageAttributesTransfer $restCmsPageAttributesTransfer): RestResponseInterface
+    public function createCmsPageRestResponse(string $cmsPageUuid, RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer): RestResponseInterface
     {
-        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageUuid, $restCmsPageAttributesTransfer);
+        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageUuid, $restCmsPagesAttributesTransfer);
 
         return $this->restResourceBuilder->createRestResponse()->addResource($cmsPageRestResource);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCmsPageEmptyRestResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
     }
 
     /**
@@ -76,19 +67,20 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $searchResult
+     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
+     * @param int $totalPagesFound
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageCollectionRestResponse(array $searchResult): RestResponseInterface
+    public function createCmsPageCollectionRestResponse(array $cmsPageStorageTransfers, int $totalPagesFound): RestResponseInterface
     {
-        $restCmsPagesAttributesTransfer = $this->cmsPageMapper
-            ->mapSearchResultToRestCmsPagesTransfer($searchResult, new RestCmsPagesTransfer());
+        $restCmsPagesAttributesTransfers = $this->cmsPageMapper
+            ->mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers($cmsPageStorageTransfers);
 
-        $response = $this->restResourceBuilder->createRestResponse($restCmsPagesAttributesTransfer->getPagination()->getNumFound());
+        $response = $this->restResourceBuilder->createRestResponse($totalPagesFound);
 
-        foreach ($restCmsPagesAttributesTransfer->getRestCmsPagesAttributes() as $restCmsPageAttributesTransfer) {
-            $response->addResource($this->createCmsPageRestResource($restCmsPageAttributesTransfer->getUuid(), $restCmsPageAttributesTransfer));
+        foreach ($restCmsPagesAttributesTransfers as $cmsPageUuid => $restCmsPagesAttributesTransfer) {
+            $response->addResource($this->createCmsPageRestResource($cmsPageUuid, $restCmsPagesAttributesTransfer));
         }
 
         return $response;
@@ -96,18 +88,18 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
 
     /**
      * @param string $cmsPageUuid
-     * @param \Generated\Shared\Transfer\RestCmsPageAttributesTransfer $restCmsPageAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function createCmsPageRestResource(
         string $cmsPageUuid,
-        RestCmsPageAttributesTransfer $restCmsPageAttributesTransfer
+        RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
     ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
             $cmsPageUuid,
-            $restCmsPageAttributesTransfer
+            $restCmsPagesAttributesTransfer
         );
     }
 }

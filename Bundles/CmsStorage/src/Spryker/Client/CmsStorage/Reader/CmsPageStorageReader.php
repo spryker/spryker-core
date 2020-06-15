@@ -50,8 +50,6 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param string[] $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
@@ -74,11 +72,11 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
                 continue;
             }
 
-            $cmsPagesStorageMappingData = $this->utilEncodingService->decodeJson($mappingDatum, true);
-            if (!is_array($cmsPagesStorageMappingData)) {
+            $decodedCmsPageStorageMappingData = $this->utilEncodingService->decodeJson($mappingDatum, true);
+            if (!is_array($decodedCmsPageStorageMappingData)) {
                 continue;
             }
-            $cmsPageIds[] = $cmsPagesStorageMappingData[static::KEY_ID];
+            $cmsPageIds[] = $decodedCmsPageStorageMappingData[static::KEY_ID];
         }
 
         if (!$cmsPageIds) {
@@ -89,8 +87,6 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param int[] $cmsPageIds
      * @param string $localeName
      * @param string $storeName
@@ -108,22 +104,18 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
         }
 
         $cmsPagesStorageTransfers = [];
-        foreach ($cmsPagesStorageData as $cmsPagesStorageDatum) {
-            if (!$cmsPagesStorageDatum) {
+        foreach ($cmsPagesStorageData as $cmsPageStorageDatum) {
+            if (!$cmsPageStorageDatum) {
                 continue;
             }
 
-            $cmsPagesStorageData = $this->utilEncodingService->decodeJson($cmsPagesStorageDatum, true);
-            if (!is_array($cmsPagesStorageData)) {
+            $decodedCmsPageStorageData = $this->utilEncodingService->decodeJson($cmsPageStorageDatum, true);
+            if (!is_array($decodedCmsPageStorageData)) {
                 continue;
             }
 
-            if (!$cmsPagesStorageData[static::KEY_UUID]) {
-                continue;
-            }
-
-            $cmsPagesStorageTransfers[$cmsPagesStorageData[static::KEY_UUID]] = (new CmsPageStorageTransfer())
-                ->fromArray($cmsPagesStorageData, true);
+            $cmsPagesStorageTransfers[] = (new CmsPageStorageTransfer())
+                ->fromArray($decodedCmsPageStorageData, true);
         }
 
         return $cmsPagesStorageTransfers;
@@ -140,7 +132,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     {
         $cmsPageStorageKeys = [];
         foreach ($cmsPageUuids as $cmsPageUuid) {
-            $cmsPageReference = static::KEY_UUID . ':' . $cmsPageUuid;
+            $cmsPageReference = sprintf('%s : %s', static::KEY_UUID, $cmsPageUuid);
             $cmsPageStorageKeys[] = $this->generateKey($cmsPageReference, $localeName, $storeName);
         }
 

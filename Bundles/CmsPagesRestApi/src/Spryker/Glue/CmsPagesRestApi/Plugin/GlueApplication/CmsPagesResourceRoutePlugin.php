@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestCmsPageAttributesTransfer;
+use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -66,6 +66,6 @@ class CmsPagesResourceRoutePlugin extends AbstractPlugin implements ResourceRout
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCmsPageAttributesTransfer::class;
+        return RestCmsPagesAttributesTransfer::class;
     }
 }
