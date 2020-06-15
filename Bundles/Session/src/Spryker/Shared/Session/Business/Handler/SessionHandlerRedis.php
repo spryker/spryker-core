@@ -12,7 +12,7 @@ use SessionHandlerInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 /**
- * @deprecated Use `Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis` instead.
+ * @deprecated Use {@link \Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis} instead.
  */
 class SessionHandlerRedis implements SessionHandlerInterface
 {

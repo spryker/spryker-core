@@ -40,6 +40,7 @@ class BundleFormDataProvider
     {
         $excludedBundles = [];
         if ($this->request->request->has(BundlesFormType::FORM_TYPE_NAME)) {
+            /** @var array $formData */
             $formData = $this->request->request->get(BundlesFormType::FORM_TYPE_NAME);
             if (isset($formData[BundlesFormType::EXCLUDED_BUNDLES])) {
                 $excludedBundles = $formData[BundlesFormType::EXCLUDED_BUNDLES];

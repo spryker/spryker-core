@@ -55,6 +55,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductPageDataLoaderPlugins(),
             $this->createProductPageMapper(),
             $this->createProductPageWriter(),
+            $this->getConfig(),
             $this->getStoreFacade()
         );
     }
@@ -71,6 +72,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->createProductConcreteSearchDataMapper(),
             $this->getStoreFacade(),
+            $this->getConfig(),
             $this->getProductConcretePageDataExpanderPlugins()
         );
     }

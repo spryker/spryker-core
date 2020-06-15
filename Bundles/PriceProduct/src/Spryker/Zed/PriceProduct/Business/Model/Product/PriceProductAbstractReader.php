@@ -280,7 +280,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */

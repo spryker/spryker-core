@@ -17,7 +17,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator} instead.
  */
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {

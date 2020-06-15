@@ -8,16 +8,19 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilder;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\HasOffersProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\IsActiveProductTableFilterDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilder;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTable;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
@@ -25,6 +28,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDepen
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
 class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -34,62 +38,71 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductTable(): ProductTable
     {
         return new ProductTable(
-            $this->getUtilEncodingService(),
             $this->getTranslatorFacade(),
-            $this->createProductTableDataProvider(),
-            $this->createProductTableFilterDataProviders(),
-            $this->createProductTableCriteriaBuilder()
+            $this->createProductTableDataProvider()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\CriteriaBuilder\ProductTableCriteriaBuilderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
      */
-    public function createProductTableCriteriaBuilder(): ProductTableCriteriaBuilderInterface
-    {
-        return new ProductTableCriteriaBuilder(
-            $this->getMerchantUserFacade(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\DataProvider\ProductTableDataProviderInterface
-     */
-    public function createProductTableDataProvider(): ProductTableDataProviderInterface
+    public function createProductTableDataProvider(): TableDataProviderInterface
     {
         return new ProductTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
-            $this->getUtilDateTimeService()
+            $this->getUtilDateTimeService(),
+            $this->createProductNameBuilder(),
+            $this->getMerchantUserFacade(),
+            $this->createGuiTableDataRequestBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable
      */
-    public function createIsActiveProductTableFilterDataProvider(): ProductTableFilterDataProviderInterface
+    public function createProductOfferTable(): AbstractTable
     {
-        return new IsActiveProductTableFilterDataProvider();
+        return new ProductOfferTable(
+            $this->getTranslatorFacade(),
+            $this->createProductOfferTableDataProvider(),
+            $this->getStoreFacade()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface
      */
-    public function createHasOffersProductTableFilterDataProvider(): ProductTableFilterDataProviderInterface
+    public function createProductOfferTableDataProvider(): TableDataProviderInterface
     {
-        return new HasOffersProductTableFilterDataProvider();
+        return new ProductOfferTableDataProvider(
+            $this->getRepository(),
+            $this->getTranslatorFacade(),
+            $this->getUtilDateTimeService(),
+            $this->createProductNameBuilder(),
+            $this->getMerchantUserFacade(),
+            $this->createGuiTableDataRequestBuilder()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\Filter\ProductTableFilterDataProviderInterface[]
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface
      */
-    public function createProductTableFilterDataProviders(): array
+    public function createProductNameBuilder(): ProductNameBuilderInterface
     {
-        return [
-            $this->createIsActiveProductTableFilterDataProvider(),
-            $this->createHasOffersProductTableFilterDataProvider(),
-        ];
+        return new ProductNameBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface
+     */
+    public function createGuiTableDataRequestBuilder(): GuiTableDataRequestBuilderInterface
+    {
+        return new GuiTableDataRequestBuilder(
+            $this->getUtilEncodingService(),
+            $this->getLocaleFacade(),
+            $this->getFilterValueNormalizerPlugins()
+        );
     }
 
     /**
@@ -130,5 +143,21 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getTranslatorFacade(): ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductOfferMerchantPortalGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[]
+     */
+    public function getFilterValueNormalizerPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PLUGINS_FILTER_VALUE_NORMALIZER);
     }
 }

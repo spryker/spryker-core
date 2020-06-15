@@ -14,7 +14,7 @@ use Elastica\Aggregation\Terms;
 use Elastica\Aggregation\TopHits;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilder` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilder} instead.
  */
 class AggregationBuilder implements AggregationBuilderInterface
 {

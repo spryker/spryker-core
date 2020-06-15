@@ -71,7 +71,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveSalesOrder() instead
+     * @deprecated Use {@link saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -321,7 +321,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `SalesFacadeInterface::getUniqueItemsFromOrder() instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -383,4 +383,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with currency ISO code.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }

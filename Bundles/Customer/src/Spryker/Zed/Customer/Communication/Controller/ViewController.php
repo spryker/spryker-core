@@ -89,7 +89,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @deprecated Use addressTableAction() instead.
+     * @deprecated Use {@link addressTableAction()} instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -110,6 +110,7 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
+        /** @var array $customerTransfer */
         $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];

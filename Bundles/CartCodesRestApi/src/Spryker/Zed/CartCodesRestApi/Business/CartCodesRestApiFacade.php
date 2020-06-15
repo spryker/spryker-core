@@ -47,4 +47,20 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
             ->createCartCodeRemover()
             ->removeCartCode($cartCodeRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuote(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartCodeRemover()
+            ->removeCartCodeFromQuote($cartCodeRequestTransfer);
+    }
 }

@@ -11,7 +11,7 @@ use Elastica\ResultSet;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpanderPlugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\CompletionResultFormatterPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\CompletionResultFormatterPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

@@ -36,7 +36,7 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */
@@ -53,7 +53,7 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery
      */
@@ -70,7 +70,7 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -90,7 +90,7 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */

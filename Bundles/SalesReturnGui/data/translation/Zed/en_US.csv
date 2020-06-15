@@ -1,0 +1,57 @@
+Return,Return
+"Return Reference","Return reference"
+Items,Items
+Actions,Actions
+View,View
+"Return ID","Return ID"
+"Order Reference","Order Reference"
+"Returned Items","Returned Items"
+"Return Date","Return Date"
+"Print Slip","Print Slip"
+"List of Returns","List of Returns"
+Returns,Returns
+"Return Ref","Return Ref"
+Barcode,Barcode
+"Product SKU","Product SKU"
+"Product Name","Product Name"
+"Default Price","Default Price"
+Qty,Qty
+"Total Price","Total Price"
+"Return Reason","Return Reason"
+Reason,Reason
+"Order Ref","Order Ref"
+"Return with id ""%id%"" was not found.","Return with id ""%id%"" was not found."
+"Items to Return","Items to Return"
+"Remuneration Total","Remuneration Total"
+"Remuneration total","Remuneration total"
+"Custom reason","Custom reason"
+"Select reason","Select reason"
+"Return has not been created.","Return has not been created."
+"Order with id ""%id%"" was not found.","Order with id ""%id%"" was not found."
+"Return was successfully created.","Return was successfully created."
+"Create Return","Create Return"
+"Back to Order","Back to Order"
+"General information","General information"
+"Order reference","Order reference"
+"Select Items to Return","Select Items to Return"
+Product,Product
+Quantity,Quantity
+Price,Price
+"Item total","Item total"
+"Return Policy","Return Policy"
+State,State
+"Create return","Create return"
+"Requested return with ID ""%id%"" was not found.","Requested return with ID ""%id%"" was not found."
+"Customer reference","Customer reference"
+Customer,Customer
+Name,Name
+Email,Email
+"Retured Items","Retured Items"
+"Trigger all matching states","Trigger all matching states"
+Total,Total
+"Back to Returns","Back to Returns"
+"Print Return Slip","Print Return Slip"
+"Overview of Return","Overview of Return"
+"selected items","selected items"
+of,of
+"Item selected for return is not eligible for return anymore.","Item selected for return is not eligible for return anymore."

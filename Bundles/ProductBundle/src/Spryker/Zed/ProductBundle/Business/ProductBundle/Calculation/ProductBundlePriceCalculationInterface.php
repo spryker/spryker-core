@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
@@ -40,4 +41,12 @@ interface ProductBundlePriceCalculationInterface
      * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
     public function calculateForCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    public function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer): void;
 }

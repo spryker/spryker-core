@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SalesOrderItem">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="orderItemReference" type="string"/>
+    </transfer>
+
+    <transfer name="FilePathResolverResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="filePath" type="string"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="HeaderValidatorResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+    </transfer>
+</transfers>

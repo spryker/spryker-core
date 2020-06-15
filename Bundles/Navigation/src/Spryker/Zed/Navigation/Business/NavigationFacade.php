@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Navigation\Business;
 
+use Generated\Shared\Transfer\DuplicateNavigationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationResponseTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -16,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Navigation\Business\NavigationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationRepositoryInterface getRepository()
  */
 class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
 {
@@ -55,6 +59,8 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Navigation\Business\NavigationFacade::findNavigationByCriteria()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
@@ -210,5 +216,47 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
         $this->getFactory()
             ->createNavigationNodeUrlCleaner()
             ->detachUrlFromNavigationNodes($urlTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationCriteriaTransfer $navigationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer|null
+     */
+    public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer
+    {
+        return $this->getRepository()->findNavigationByCriteria($navigationCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NavigationTransfer[]
+     */
+    public function getAllNavigations(): array
+    {
+        return $this->getRepository()->getAllNavigations();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DuplicateNavigationTransfer $duplicateNavigationTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationResponseTransfer
+     */
+    public function duplicateNavigation(DuplicateNavigationTransfer $duplicateNavigationTransfer): NavigationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createNavigationDuplicator()
+            ->duplicateNavigation($duplicateNavigationTransfer);
     }
 }

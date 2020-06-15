@@ -8,8 +8,11 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyModuleTransfer;
+use Generated\Shared\Transfer\DependencyModuleViewTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
@@ -28,42 +31,57 @@ class Manager implements ManagerInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface
+     */
+    protected $dependencyModuleMapper;
+
+    /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleParser
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface $dependencyModuleMapper
      */
-    public function __construct(ModuleDependencyParserInterface $moduleParser, DevelopmentConfig $config)
-    {
+    public function __construct(
+        ModuleDependencyParserInterface $moduleParser,
+        DevelopmentConfig $config,
+        DependencyModuleMapperInterface $dependencyModuleMapper
+    ) {
         $this->moduleParser = $moduleParser;
         $this->config = $config;
+        $this->dependencyModuleMapper = $dependencyModuleMapper;
     }
 
     /**
      * @param string $moduleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DependencyModuleViewTransfer[]
      */
-    public function parseIncomingDependencies($moduleName)
+    public function parseIncomingDependencies(string $moduleName): array
     {
-        $allForeignModules = $this->collectAllForeignModules($moduleName);
+        $allForeignModuleNames = $this->collectAllForeignModules($moduleName);
 
         $incomingDependencies = [];
-        foreach ($allForeignModules as $foreignModule) {
-            $organizationTransfer = new OrganizationTransfer();
-            $organizationTransfer->setName('Spryker');
-            $moduleTransfer = new ModuleTransfer();
-            $moduleTransfer
-                ->setName($moduleName)
+
+        foreach ($allForeignModuleNames as $foreignModuleName) {
+            $organizationTransfer = (new OrganizationTransfer())->setName('Spryker');
+            $moduleTransfer = (new ModuleTransfer())
+                ->setName($foreignModuleName)
                 ->setOrganization($organizationTransfer);
 
             $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
-            $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
-            if ($dependencyModule) {
-                if (array_key_exists($foreignModule, $incomingDependencies) === false) {
-                    $incomingDependencies[$foreignModule] = 0;
-                }
-                $incomingDependencies[$foreignModule] += count($dependencyModule->getDependencies());
+            $dependencyModuleTransfer = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
+
+            if ($dependencyModuleTransfer === null) {
+                continue;
             }
+
+            $dependencyModuleViewTransfer = $this->dependencyModuleMapper->mapDependencyModuleTransferToDependencyModuleViewTransfer(
+                $dependencyModuleTransfer,
+                new DependencyModuleViewTransfer()
+            );
+            $dependencyModuleViewTransfer->setName($foreignModuleName);
+
+            $incomingDependencies[] = $dependencyModuleViewTransfer;
         }
 
         return $incomingDependencies;
@@ -73,21 +91,21 @@ class Manager implements ManagerInterface
      * @param string $moduleName
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
-     * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
+     * @return \Generated\Shared\Transfer\DependencyModuleTransfer|null
      */
-    protected function findDependencyTo($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
-    {
+    protected function findDependencyTo(
+        string $moduleName,
+        DependencyCollectionTransfer $moduleDependencyCollectionTransfer
+    ): ?DependencyModuleTransfer {
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $dependencyModule) {
-            if ($dependencyModule->getModule() === $moduleName) {
-                foreach ($dependencyModule->getDependencies() as $dependencyTransfer) {
-                    if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
-                        return $dependencyModule;
-                    }
-                }
+            if ($dependencyModule->getModule() !== $moduleName) {
+                continue;
             }
+
+            return $dependencyModule;
         }
 
-        return false;
+        return null;
     }
 
     /**

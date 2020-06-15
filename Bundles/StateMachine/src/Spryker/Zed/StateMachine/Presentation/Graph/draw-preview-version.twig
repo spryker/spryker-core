@@ -2,10 +2,8 @@
 
 {% block content %}
     <h5>{{ processName }}</h5>
-    <div id="preview">
-        <img id="preview-image" src="{{ url('/oms/index/draw?process=' ~ processName ~ '&format=svg&font=11') }}" />
-    </div>
-    <div style="clear:both;"></div>
+    <img class="preview-image" src="{{ url('/state-machine/graph/draw', {process: processName, 'state-machine': stateMachineName}) }}" alt="{{ processName }}">
+    <div class="zoom-container"></div>
 {% endblock %}
 
 {% block head_css %}
