@@ -1,10 +1,22 @@
+"Are you sure about deleting this navigation?","Are you sure about deleting this navigation?"
 "Are you sure you remove the selected node and all its children?","Are you sure you want to remove the selected node and all its children?"
 "Back to Navigation Elements","Back to Navigation Elements"
 "Create child node","Create child node"
 "Create Navigation Element","Create Navigation Element"
+"Delete Navigation","Delete Navigation"
 "Delete selected node","Delete selected node"
+Duplicate,Duplicate
+"Duplicate Navigation Element","Duplicate Navigation Element"
 "Edit node","Edit node"
+Key,Key
+Name,Name
+"Navigation element details","Navigation element details"
+"Navigation element %d was deleted successfully.","Navigation element %d was deleted successfully."
+"Navigation element %d was not found.","Navigation element %d was not found."
+"Navigation removal confirmation","Navigation removal confirmation"
 "Navigation tree","Navigation tree"
+"No, I want to keep this navigation","No, I want to keep this navigation"
 Save,Save
 "Save order","Save Order"
 Search,Search
+"Yes, delete this navigation","Yes, delete this navigation"

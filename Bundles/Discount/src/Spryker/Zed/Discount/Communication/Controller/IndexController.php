@@ -179,7 +179,7 @@ class IndexController extends AbstractController
 
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        $subRequest->request->set(static::URL_PARAM_ID_DISCOUNT, $idDiscount);
+        $subRequest->request->set(static::URL_PARAM_ID_DISCOUNT, (string)$idDiscount);
 
         $renderedBlocks = [];
         foreach ($discountViewBlockPlugins as $discountViewBlockPlugin) {
@@ -302,7 +302,7 @@ class IndexController extends AbstractController
      */
     protected function getGeneratedCodesTable(Request $request, $idPool, $idDiscount)
     {
-        $batch = $request->query->get(self::URL_PARAM_BATCH_PARAMETER);
+        $batch = $request->query->getInt(self::URL_PARAM_BATCH_PARAMETER);
         $tableParameters = TableParameters::getTableParameters($request);
 
         return $this->getFactory()->createDiscountVoucherCodesTable(

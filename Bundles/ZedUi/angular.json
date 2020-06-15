@@ -27,7 +27,8 @@
             ],
             "styles": ["src/Spryker/Zed/ZedUi/Presentation/Components/styles.less"],
             "singleBundle": true,
-            "scripts": []
+            "scripts": [],
+            "deployUrl": "/assets/js/zed-ui/"
           },
           "configurations": {
             "production": {
