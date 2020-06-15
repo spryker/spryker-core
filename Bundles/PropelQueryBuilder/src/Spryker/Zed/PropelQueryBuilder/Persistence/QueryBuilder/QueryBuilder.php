@@ -10,7 +10,6 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\ColumnQueryMapperInterface;
-use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper;
 use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface;
 
 class QueryBuilder implements QueryBuilderInterface
@@ -31,26 +30,18 @@ class QueryBuilder implements QueryBuilderInterface
     protected $paginationMapper;
 
     /**
-     * @var \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper
-     */
-    protected $joinQueryMapper;
-
-    /**
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapperInterface $criteriaMapper
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\ColumnQueryMapperInterface $columnMapper
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInterface $paginationMapper
-     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\JoinQueryMapper $joinQueryMapper
      */
     public function __construct(
         CriteriaMapperInterface $criteriaMapper,
         ColumnQueryMapperInterface $columnMapper,
-        PaginationQueryMapperInterface $paginationMapper,
-        JoinQueryMapper $joinQueryMapper
+        PaginationQueryMapperInterface $paginationMapper
     ) {
         $this->criteriaMapper = $criteriaMapper;
         $this->columnMapper = $columnMapper;
         $this->paginationMapper = $paginationMapper;
-        $this->joinQueryMapper = $joinQueryMapper;
     }
 
     /**
@@ -66,7 +57,6 @@ class QueryBuilder implements QueryBuilderInterface
         $query = $this->mergeQueryWithCriteria($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
-        $query = $this->joinQueryMapper->mapJoins($query, $propelQueryBuilderCriteriaTransfer);
 
         return $query;
     }

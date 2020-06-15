@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui;
 
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToLocaleBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeBridge;
-use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerBridge;
@@ -26,7 +25,6 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STOCK = 'stock facade';
     public const FACADE_STORE = 'store facade';
     public const FACADE_OMS = 'oms facade';
-    public const FACADE_PROPEL_QUERY_BUILDER = 'FACADE_PROPEL_QUERY_BUILDER';
 
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
@@ -50,7 +48,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addFacadeLocale($container);
         $container = $this->addFacadeStock($container);
@@ -58,9 +56,20 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerProductBundle($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addPropelQueryBuilderFacade($container);
         $container = $this->addAvailabilityListDataExpanderPlugins($container);
         $container = $this->addAvailabilityViewDataExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addAvailabilityAbstractQueryCriteriaExpanderPlugins($container);
 
         return $container;
@@ -146,20 +155,6 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPropelQueryBuilderFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PROPEL_QUERY_BUILDER, function (Container $container) {
-            return new AvailabilityGuiToPropelQueryBuilderFacadeBridge($container->getLocator()->propelQueryBuilder()->facade());
-        });
 
         return $container;
     }

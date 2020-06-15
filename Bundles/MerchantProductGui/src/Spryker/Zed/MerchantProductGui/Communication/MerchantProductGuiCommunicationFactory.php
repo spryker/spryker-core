@@ -17,6 +17,9 @@ use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchan
 use Spryker\Zed\MerchantProductGui\MerchantProductGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\MerchantProductGui\Persistence\MerchantProductGuiRepositoryInterface getRepository()
+ */
 class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -24,7 +27,10 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
      */
     public function createMerchantProductQueryCriteriaExpander(): MerchantProductQueryCriteriaExpanderInterface
     {
-        return new MerchantProductQueryCriteriaExpander($this->getRequest());
+        return new MerchantProductQueryCriteriaExpander(
+            $this->getRepository(),
+            $this->getRequest()
+        );
     }
 
     /**

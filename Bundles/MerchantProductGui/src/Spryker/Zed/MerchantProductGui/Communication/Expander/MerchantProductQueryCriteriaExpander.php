@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\MerchantProductGui\Communication\Expander;
 
+use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Generated\Shared\Transfer\QueryJoinTransfer;
-use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\MerchantProductGui\Persistence\MerchantProductGuiRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class MerchantProductQueryCriteriaExpander implements MerchantProductQueryCriteriaExpanderInterface
@@ -18,15 +17,24 @@ class MerchantProductQueryCriteriaExpander implements MerchantProductQueryCriter
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
 
     /**
+     * @var \Spryker\Zed\MerchantProductGui\Persistence\MerchantProductGuiRepositoryInterface
+     */
+    protected $merchantProductGuiRepository;
+
+    /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
+     * @param \Spryker\Zed\MerchantProductGui\Persistence\MerchantProductGuiRepositoryInterface $merchantProductGuiRepository
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function __construct(Request $request)
-    {
+    public function __construct(
+        MerchantProductGuiRepositoryInterface $merchantProductGuiRepository,
+        Request $request
+    ) {
+        $this->merchantProductGuiRepository = $merchantProductGuiRepository;
         $this->request = $request;
     }
 
@@ -43,14 +51,9 @@ class MerchantProductQueryCriteriaExpander implements MerchantProductQueryCriter
             return $queryCriteriaTransfer;
         }
 
-        $queryCriteriaTransfer
-            ->addJoin(
-                (new QueryJoinTransfer())
-                    ->setJoinType(Criteria::INNER_JOIN)
-                    ->setRelation('SpyMerchantProductAbstract')
-                    ->setCondition(SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT . sprintf(' = %d', $idMerchant))
-            );
-
-        return $queryCriteriaTransfer;
+        return $this->merchantProductGuiRepository->expandQueryCriteriaTransferWithMerchantProductRelation(
+            $queryCriteriaTransfer,
+            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)
+        );
     }
 }

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {

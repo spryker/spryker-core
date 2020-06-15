@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {

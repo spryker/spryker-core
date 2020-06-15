@@ -9,13 +9,13 @@
 
     <transfer name="MerchantProductCriteria">
         <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
     </transfer>
 
     <transfer name="QueryCriteria">
-        <property name="withColumns" type="array" singular="withColumn"/>
         <property name="joins" type="QueryJoin[]" singular="join"/>
     </transfer>
 

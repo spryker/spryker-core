@@ -22,7 +22,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBr
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeBridge;
@@ -54,7 +53,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_PROPEL_QUERY_BUILDER = 'FACADE_PROPEL_QUERY_BUILDER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -230,7 +228,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         $container = $this->addStockFacade($container);
-        $container = $this->addPropelQueryBuilderFacade($container);
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
@@ -246,6 +243,19 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteEditViewExpanderPlugins($container);
         $container = $this->addProductAbstractListDataExpanderPlugins($container);
         $container = $this->addProductAbstractViewDataExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addProductAbstractQueryCriteriaExpanderPlugins($container);
 
         return $container;
@@ -374,20 +384,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_STOCK, function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPropelQueryBuilderFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PROPEL_QUERY_BUILDER, function (Container $container) {
-            return new ProductManagementToPropelQueryBuilderFacadeBridge($container->getLocator()->propelQueryBuilder()->facade());
         });
 
         return $container;

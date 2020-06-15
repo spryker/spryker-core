@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelQueryBuilder\Persistence;
+namespace Spryker\Zed\AvailabilityGui\Persistence\Expander;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-interface PropelQueryBuilderRepositoryInterface
+interface ProductAbstractAvailabilityQueryExpanderInterface
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function expandQuery(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria;
+    public function expandQuery(ModelCriteria $query): ModelCriteria;
 }

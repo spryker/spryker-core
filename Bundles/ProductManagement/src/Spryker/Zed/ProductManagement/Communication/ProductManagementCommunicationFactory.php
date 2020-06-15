@@ -40,7 +40,6 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -48,6 +47,7 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()()
  */
 class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -385,8 +385,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->createProductTypeHelper(),
-            $this->getPropelQueryBuilderFacade(),
-            $this->getProductAbstractQueryCriteriaExpanderPlugins()
+            $this->getRepository()
         );
     }
 
@@ -657,14 +656,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeInterface
-     */
-    public function getPropelQueryBuilderFacade(): ProductManagementToPropelQueryBuilderFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PROPEL_QUERY_BUILDER);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEditViewExpanderPluginExecutorInterface
      */
     public function createAbstractProductEditViewExpanderPluginExecutor(): AbstractProductEditViewExpanderPluginExecutorInterface
@@ -714,13 +705,5 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAbstractViewDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[]
-     */
-    public function getProductAbstractQueryCriteriaExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER);
     }
 }

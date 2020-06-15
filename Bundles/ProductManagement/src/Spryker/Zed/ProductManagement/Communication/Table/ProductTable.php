@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -19,7 +18,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface;
 
 class ProductTable extends AbstractProductTable
 {
@@ -50,34 +49,26 @@ class ProductTable extends AbstractProductTable
     protected $productTypeHelper;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeInterface
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface
      */
-    protected $propelQueryBuilderFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[]
-     */
-    protected $productAbstractQueryCriteriaExpanderPlugins;
+    protected $productManagementRepository;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPropelQueryBuilderFacadeInterface $propelQueryBuilderFacade
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[] $productAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
         ProductTypeHelperInterface $productTypeHelper,
-        ProductManagementToPropelQueryBuilderFacadeInterface $propelQueryBuilderFacade,
-        array $productAbstractQueryCriteriaExpanderPlugins
+        ProductManagementRepositoryInterface $productManagementRepository
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->productTypeHelper = $productTypeHelper;
-        $this->propelQueryBuilderFacade = $propelQueryBuilderFacade;
-        $this->productAbstractQueryCriteriaExpanderPlugins = $productAbstractQueryCriteriaExpanderPlugins;
+        $this->productManagementRepository = $productManagementRepository;
     }
 
     /**
@@ -307,22 +298,6 @@ class ProductTable extends AbstractProductTable
      */
     protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
     {
-        $queryCriteriaTransfer = $this->executeProductAbstractQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
-
-        return $this->propelQueryBuilderFacade->expandQuery($query, $queryCriteriaTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
-     */
-    protected function executeProductAbstractQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
-    {
-        foreach ($this->productAbstractQueryCriteriaExpanderPlugins as $productAbstractQueryCriteriaExpanderPlugin) {
-            $queryCriteriaTransfer = $productAbstractQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
-        }
-
-        return $queryCriteriaTransfer;
+        return $this->productManagementRepository->expandQuery($query);
     }
 }

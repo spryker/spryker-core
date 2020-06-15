@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -17,8 +16,8 @@ use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface;
-use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -57,37 +56,29 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $idLocale;
 
     /**
-     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeInterface
+     * @var \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface
      */
-    protected $propelQueryBuilderFacade;
-
-    /**
-     * @var \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface[]
-     */
-    protected $availabilityAbstractQueryCriteriaExpanderPlugins;
+    protected $availabilityGuiRepository;
 
     /**
      * @param \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface $availabilityHelper
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param int $idStore
      * @param int $idLocale
-     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToPropelQueryBuilderFacadeInterface $propelQueryBuilderFacade
-     * @param \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface[] $availabilityAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface $availabilityGuiRepository
      */
     public function __construct(
         AvailabilityHelperInterface $availabilityHelper,
         AvailabilityToStoreFacadeInterface $storeFacade,
         int $idStore,
         int $idLocale,
-        AvailabilityGuiToPropelQueryBuilderFacadeInterface $propelQueryBuilderFacade,
-        array $availabilityAbstractQueryCriteriaExpanderPlugins
+        AvailabilityGuiRepositoryInterface $availabilityGuiRepository
     ) {
         $this->availabilityHelper = $availabilityHelper;
         $this->storeFacade = $storeFacade;
         $this->idStore = $idStore;
         $this->idLocale = $idLocale;
-        $this->propelQueryBuilderFacade = $propelQueryBuilderFacade;
-        $this->availabilityAbstractQueryCriteriaExpanderPlugins = $availabilityAbstractQueryCriteriaExpanderPlugins;
+        $this->availabilityGuiRepository = $availabilityGuiRepository;
 
         $this->queryProductAbstractAvailability = $this->availabilityHelper
             ->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated($idLocale, $idStore);
@@ -302,22 +293,6 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function expandPropelQuery(): void
     {
-        $queryCriteriaTransfer = $this->executeAvailabilityAbstractQueryCriteriaExpanderPlugins(new QueryCriteriaTransfer());
-
-        $this->queryProductAbstractAvailability = $this->propelQueryBuilderFacade->expandQuery($this->queryProductAbstractAvailability, $queryCriteriaTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
-     */
-    protected function executeAvailabilityAbstractQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
-    {
-        foreach ($this->availabilityAbstractQueryCriteriaExpanderPlugins as $availabilityAbstractQueryCriteriaExpanderPlugin) {
-            $queryCriteriaTransfer = $availabilityAbstractQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
-        }
-
-        return $queryCriteriaTransfer;
+        $this->queryProductAbstractAvailability = $this->availabilityGuiRepository->expandQuery($this->queryProductAbstractAvailability);
     }
 }
