@@ -83,7 +83,7 @@ class CodeStyleSniffer
      */
     protected function resolvePath($module, $namespace = null, $path = null)
     {
-        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
+        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) : null;
 
         if ($namespace) {
             if ($module === 'all') {
