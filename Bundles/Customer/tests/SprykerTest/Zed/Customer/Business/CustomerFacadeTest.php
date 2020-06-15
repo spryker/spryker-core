@@ -963,7 +963,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider getCustomerCountByCriteriaDataProvider
+     * @dataProvider getCustomerDataProvider
      *
      * @param array $usersData
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
