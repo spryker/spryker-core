@@ -34,7 +34,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     {
         $productConcreteSkus = $this->getProductConcreteSkus($resources);
 
-        $productOffersRestResources = $this->productOfferReader->getProductOfferResources($productConcreteSkus);
+        $productOffersRestResources = $this->productOfferReader->getProductOfferResourcesByProductConcreteSkus($productConcreteSkus);
 
         foreach ($resources as $resource) {
             if (

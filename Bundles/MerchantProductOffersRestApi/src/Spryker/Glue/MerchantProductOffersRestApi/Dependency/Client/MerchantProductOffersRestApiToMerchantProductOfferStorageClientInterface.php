@@ -18,7 +18,7 @@ interface MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterfa
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(
+    public function getProductOffersBySku(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer;
 
@@ -28,13 +28,6 @@ interface MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterfa
      * @return string|null
      */
     public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
-     *
-     * @return array<string, string>
-     */
-    public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array;
 
     /**
      * @param string $productOfferReference

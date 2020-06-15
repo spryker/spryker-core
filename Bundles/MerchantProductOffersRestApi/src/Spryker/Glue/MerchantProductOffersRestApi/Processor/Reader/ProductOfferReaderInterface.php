@@ -31,5 +31,5 @@ interface ProductOfferReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getProductOfferResources(array $productConcreteSkus): array;
+    public function getProductOfferResourcesByProductConcreteSkus(array $productConcreteSkus): array;
 }

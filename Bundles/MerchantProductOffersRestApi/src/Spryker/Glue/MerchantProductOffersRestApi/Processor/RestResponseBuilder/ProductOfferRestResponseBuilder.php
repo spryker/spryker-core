@@ -73,21 +73,17 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
-     * @param array<string, string> $defaultMerchantProductOfferReferences
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function createProductOfferRestResources(
-        ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer,
-        array $defaultMerchantProductOfferReferences
+        ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): array {
         $productOffersRestResources = [];
 
         foreach ($productOfferStorageCollectionTransfer->getProductOffersStorage() as $productOfferStorageTransfer) {
-            $defaultMerchantProductOfferReference = $defaultMerchantProductOfferReferences[$productOfferStorageTransfer->getProductConcreteSku()] ?? null;
-
             $productOffersRestResources[$productOfferStorageTransfer->getProductConcreteSku()][] =
-                $this->createProductOfferRestResource($productOfferStorageTransfer, $defaultMerchantProductOfferReference);
+                $this->createProductOfferRestResource($productOfferStorageTransfer);
         }
 
         return $productOffersRestResources;
@@ -140,11 +136,14 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
      */
     protected function createProductOfferRestResource(
         ProductOfferStorageTransfer $productOfferStorageTransfer,
-        ?string $defaultMerchantProductOfferReference
+        ?string $defaultMerchantProductOfferReference = null
     ): RestResourceInterface {
         $restProductOffersAttributesTransfer = (new RestProductOffersAttributesTransfer())
-            ->fromArray($productOfferStorageTransfer->toArray(), true)
-            ->setIsDefault($defaultMerchantProductOfferReference === $productOfferStorageTransfer->getProductOfferReference());
+            ->fromArray($productOfferStorageTransfer->toArray(), true);
+
+        if ($defaultMerchantProductOfferReference) {
+            $restProductOffersAttributesTransfer->setIsDefault($defaultMerchantProductOfferReference === $productOfferStorageTransfer->getProductOfferReference());
+        }
 
         return $this->restResourceBuilder->createRestResource(
             MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,

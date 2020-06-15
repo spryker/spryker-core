@@ -52,7 +52,8 @@ class ProductOfferReader implements ProductOfferReaderInterface
             return $this->productOfferRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
-        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient->findProductOfferStorageByReference($merchantProductOfferReference);
+        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient
+            ->findProductOfferStorageByReference($merchantProductOfferReference);
 
         if (!$productOfferStorageTransfer) {
             return $this->productOfferRestResponseBuilder->createProductOfferNotFoundErrorResponse();
@@ -80,7 +81,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
             return $this->productOfferRestResponseBuilder->createProductConcreteSkuNotSpecifiedErrorResponse();
         }
 
-        $productConcreteProductOfferResources = $this->getProductOfferResources([$productConcreteSku]);
+        $productConcreteProductOfferResources = $this->getProductOfferResourcesByProductConcreteSkus([$productConcreteSku]);
 
         if (!isset($productConcreteProductOfferResources[$productConcreteSku])) {
             return $this->productOfferRestResponseBuilder->createProductOfferEmptyRestResponse();
@@ -94,21 +95,15 @@ class ProductOfferReader implements ProductOfferReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getProductOfferResources(array $productConcreteSkus): array
+    public function getProductOfferResourcesByProductConcreteSkus(array $productConcreteSkus): array
     {
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->setProductConcreteSkus($productConcreteSkus);
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient
-            ->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
+            ->getProductOffersBySku($productOfferStorageCriteriaTransfer);
 
-        $defaultMerchantProductOfferReferences = $this->merchantProductOfferStorageClient
-            ->getProductConcreteDefaultProductOffers($productOfferStorageCriteriaTransfer);
-
-        return $this->productOfferRestResponseBuilder->createProductOfferRestResources(
-            $productOfferStorageCollectionTransfer,
-            $defaultMerchantProductOfferReferences
-        );
+        return $this->productOfferRestResponseBuilder->createProductOfferRestResources($productOfferStorageCollectionTransfer);
     }
 
     /**
@@ -119,7 +114,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
     protected function getDefaultProductOfferReference(ProductOfferStorageTransfer $productOfferStorageTransfer): ?string
     {
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
-            ->setSku($productOfferStorageTransfer->getProductConcreteSku());
+            ->addProductConcreteSku($productOfferStorageTransfer->getProductConcreteSku());
 
         return $this->merchantProductOfferStorageClient->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer);
     }

@@ -17,6 +17,8 @@ use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapper
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
 use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOffer;
 use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface;
+use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferReader;
+use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferReaderInterface;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGenerator;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReader;
@@ -35,7 +37,8 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
             $this->createMerchantProductOfferMapper(),
             $this->getMerchantStorageClient(),
             $this->getUtilEncodingService(),
-            $this->createProductOfferStorageKeyGenerator()
+            $this->createProductOfferStorageKeyGenerator(),
+            $this->createProductConcreteDefaultProductOffer()
         );
     }
 
@@ -44,9 +47,17 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
      */
     public function createProductConcreteDefaultProductOffer(): ProductConcreteDefaultProductOfferInterface
     {
-        return new ProductConcreteDefaultProductOffer(
+        return new ProductConcreteDefaultProductOffer($this->getDefaultProductOfferPlugin());
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferReaderInterface
+     */
+    public function createProductConcreteDefaultProductOfferReader(): ProductConcreteDefaultProductOfferReaderInterface
+    {
+        return new ProductConcreteDefaultProductOfferReader(
             $this->createProductOfferStorageReader(),
-            $this->getDefaultProductOfferPlugin()
+            $this->createProductConcreteDefaultProductOffer()
         );
     }
 
