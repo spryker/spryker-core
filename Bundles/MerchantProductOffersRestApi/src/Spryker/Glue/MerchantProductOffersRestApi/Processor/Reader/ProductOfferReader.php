@@ -101,7 +101,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
             ->setProductConcreteSkus($productConcreteSkus);
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient
-            ->getProductOffersBySku($productOfferStorageCriteriaTransfer);
+            ->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
 
         return $this->productOfferRestResponseBuilder->createProductOfferRestResources($productOfferStorageCollectionTransfer);
     }

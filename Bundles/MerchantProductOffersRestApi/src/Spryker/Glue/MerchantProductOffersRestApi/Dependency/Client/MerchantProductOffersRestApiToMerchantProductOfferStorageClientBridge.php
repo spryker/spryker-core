@@ -31,10 +31,10 @@ class MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge impl
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOffersBySku(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer {
-        return $this->merchantProductOfferStorageClient->getProductOffersBySku($productOfferStorageCriteriaTransfer);
+        return $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
     }
 
     /**
