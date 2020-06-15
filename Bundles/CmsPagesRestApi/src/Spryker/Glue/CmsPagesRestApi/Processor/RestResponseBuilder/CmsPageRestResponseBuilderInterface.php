@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\CmsPageStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface CmsPageRestResponseBuilderInterface
@@ -16,7 +17,7 @@ interface CmsPageRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageRestResponse($cmsPageStorageTransfer): RestResponseInterface;
+    public function createCmsPageRestResponse(CmsPageStorageTransfer $cmsPageStorageTransfer): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

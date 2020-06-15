@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\CmsPageStorageTransfer;
 use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
@@ -45,7 +46,7 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageRestResponse($cmsPageStorageTransfer): RestResponseInterface
+    public function createCmsPageRestResponse(CmsPageStorageTransfer $cmsPageStorageTransfer): RestResponseInterface
     {
         $restCmsPagesAttributesTransfer = (new RestCmsPagesAttributesTransfer())
             ->fromArray($cmsPageStorageTransfer->toArray(), true);
