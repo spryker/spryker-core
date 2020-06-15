@@ -228,13 +228,14 @@ trait ActiveRecordBatchProcessorTrait
         $adapter = $this->getAdapter();
         $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
 
+        $tableMapClassName = $entityClassName::TABLE_MAP;
+
         $sql = '';
         $keyIndex = 0;
         $values = [];
 
         foreach ($entities as $entity) {
             $entity = $this->updateDateTimes($entity);
-            $tableMapClassName = $entityClassName::TABLE_MAP;
             $valuesForInsert = [];
 
             $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
@@ -245,11 +246,8 @@ trait ActiveRecordBatchProcessorTrait
                 }
 
                 if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
-                    $valuesForInsert[$columnMap->getName()] = [
-                        'columnMap' => $columnMap,
-                        'value' => sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo()),
-                        'type' => $columnMap->getPdoType(),
-                    ];
+                    $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+                    $valuesForInsert[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData, $value);
 
                     continue;
                 }
@@ -258,11 +256,7 @@ trait ActiveRecordBatchProcessorTrait
                 $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
 
                 if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForInsert[$columnMap->getName()] = [
-                        'columnMap' => $columnMap,
-                        'value' => $entityData[$columnMap->getName()],
-                        'type' => $columnMap->getPdoType(),
-                    ];
+                    $valuesForInsert[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
                 }
             }
 
@@ -284,6 +278,17 @@ trait ActiveRecordBatchProcessorTrait
             );
         }
 
+        return $this->prepareStatement($sql, $values);
+    }
+
+    /**
+     * @param string $sql
+     * @param array $values
+     *
+     * @return \PDOStatement
+     */
+    protected function prepareStatement(string $sql, array $values): PDOStatement
+    {
         $connection = Propel::getConnection();
         $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
         $statement = $connection->prepare($sql);
@@ -300,6 +305,22 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
+     * @param \Propel\Runtime\Map\ColumnMap $columnMap
+     * @param array $entityData
+     * @param string|null $defaultValue
+     *
+     * @return array
+     */
+    protected function prepareValuesForSave(ColumnMap $columnMap, array $entityData, ?string $defaultValue = null): array
+    {
+        return [
+            'columnMap' => $columnMap,
+            'value' => $defaultValue ?: $entityData[$columnMap->getName()],
+            'type' => $columnMap->getPdoType(),
+        ];
+    }
+
+    /**
      * @param string $entityClassName
      * @param array $entities
      *
@@ -309,6 +330,7 @@ trait ActiveRecordBatchProcessorTrait
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
         $columnMapCollection = $tableMapClass->getColumns();
+        $tableMapClassName = $entityClassName::TABLE_MAP;
 
         $sql = '';
         $keyIndex = 0;
@@ -317,8 +339,6 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entities as $entity) {
             $entity = $this->updateDateTimes($entity);
 
-            $tableMapClassName = $entityClassName::TABLE_MAP;
-
             $valuesForUpdate = [];
             $idColumnValuesAndTypes = [];
 
@@ -326,10 +346,7 @@ trait ActiveRecordBatchProcessorTrait
 
             foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
                 if ($columnMap->isPrimaryKey()) {
-                    $idColumnValuesAndTypes[$columnMap->getName()] = [
-                        'value' => $entityData[$columnMap->getName()],
-                        'type' => $columnMap->getPdoType(),
-                    ];
+                    $idColumnValuesAndTypes[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
 
                     continue;
                 }
@@ -338,10 +355,7 @@ trait ActiveRecordBatchProcessorTrait
                 $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
 
                 if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForUpdate[$columnMap->getName()] = [
-                        'value' => $entityData[$columnMap->getName()],
-                        'type' => $columnMap->getPdoType(),
-                    ];
+                    $valuesForUpdate[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
                 }
             }
 
@@ -365,15 +379,7 @@ trait ActiveRecordBatchProcessorTrait
             );
         }
 
-        $connection = Propel::getConnection();
-        $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
-        $statement = $connection->prepare($sql);
-
-        foreach ($values as $index => $value) {
-            $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
-        }
-
-        return $statement;
+        return $this->prepareStatement($sql, $values);
     }
 
     /**
