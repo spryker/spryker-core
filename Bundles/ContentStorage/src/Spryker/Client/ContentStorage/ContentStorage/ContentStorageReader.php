@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
+use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
 class ContentStorageReader implements ContentStorageReaderInterface
@@ -26,15 +27,23 @@ class ContentStorageReader implements ContentStorageReaderInterface
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
      */
     public function __construct(
         ContentStorageToStorageClientInterface $storageClient,
-        ContentStorageToSynchronizationServiceInterface $synchronizationService
+        ContentStorageToSynchronizationServiceInterface $synchronizationService,
+        ContentStorageToUtilEncodingInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -70,25 +79,28 @@ class ContentStorageReader implements ContentStorageReaderInterface
         $contentsStorageData = $this->storageClient->getMulti(
             $this->generateKeys($contentKeys, $localeName)
         );
+
         if (!$contentsStorageData) {
             return [];
         }
 
-//        dd($contentsStorageData);
         $contentsStorageTransfers = [];
-//        foreach ($contentsStorageData as $contentsStorageDatum) {
-//            if (!$contentsStorageDatum) {
-//                continue;
-//            }
-//
-//            $cmsPagesStorageData = $this->utilEncodingService->decodeJson($contentsStorageDatum, true);
-//            if (!is_array($cmsPagesStorageData)) {
-//                continue;
-//            }
-//
-//            $contentsStorageTransfers[$contentsStorageData[static::KEY_UUID]] = (new CmsPageStorageTransfer())
-//                ->fromArray($cmsPagesStorageData, true);
-//        }
+        foreach ($contentsStorageData as $contentStorageKey => $contentStorageDatum) {
+            if (!$contentStorageDatum) {
+                continue;
+            }
+
+            $contentsStorageData = $this->utilEncodingService->decodeJson($contentStorageDatum, true);
+            if (!is_array($contentsStorageData)) {
+                continue;
+            }
+            $contentKey = $this->getContentKey($contentStorageKey);
+            $contentsStorageTransfers[$contentKey] = (new ContentTypeContextTransfer())
+                ->setIdContent($contentsStorageData[ContentStorageConfig::ID_CONTENT])
+                ->setKey($contentKey)
+                ->setTerm($contentsStorageData[ContentStorageConfig::TERM_KEY])
+                ->setParameters($contentsStorageData[ContentStorageConfig::CONTENT_KEY]);
+        }
 
         return $contentsStorageTransfers;
     }
@@ -124,5 +136,17 @@ class ContentStorageReader implements ContentStorageReaderInterface
         return $this->synchronizationService
             ->getStorageKeyBuilder(ContentStorageConfig::CONTENT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param string $contentStorageKey
+     *
+     * @return string
+     */
+    protected function getContentKey(string $contentStorageKey): string
+    {
+        $storageKeyArray = explode(':', $contentStorageKey);
+
+        return end($storageKeyArray);
     }
 }

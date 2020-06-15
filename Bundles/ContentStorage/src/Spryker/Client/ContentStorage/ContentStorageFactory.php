@@ -22,7 +22,8 @@ class ContentStorageFactory extends AbstractFactory
     {
         return new ContentStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncoding()
         );
     }
 
@@ -40,5 +41,13 @@ class ContentStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ContentStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

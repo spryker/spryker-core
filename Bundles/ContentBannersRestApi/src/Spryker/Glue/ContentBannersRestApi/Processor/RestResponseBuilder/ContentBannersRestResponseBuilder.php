@@ -104,6 +104,26 @@ class ContentBannersRestResponseBuilder implements ContentBannersRestResponseBui
     }
 
     /**
+     * @param array $mappedContentTypeContextTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createContentBannersRestResources(array $mappedContentTypeContextTransfers): array
+    {
+        $contentBannersRestResources = [];
+//        foreach ($mappedContentTypeContextTransfers as $cmsPageUuid => $contentTypeContextTransfers) {
+//            foreach ($contentTypeContextTransfers as $contentBannerKey => $contentTypeContextTransfer) {
+//                $contentBannersRestResources[$cmsPageUuid] = $this->createContentBannersRestResource(
+//                    $contentTypeContextTransfer,
+//                    $contentBannerKey
+//                );
+//            }
+//        }
+
+        return $contentBannersRestResources;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentBannerTypeTransfer $contentBannerTypeTransfer
      * @param string $contentBannerKey
      *

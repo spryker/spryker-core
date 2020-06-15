@@ -100,43 +100,37 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageReferences,
-            static::MAPPING_TYPE_UUID,
             $restRequest->getMetadata()->getLocale(),
             APPLICATION_STORE
         );
 
         $groupedContentBannerKeys = [];
-        foreach ($cmsPageStorageTransfers as $uuid => $cmsPageStorageTransfer) {
+        $contentBannerKeys = [];
+        foreach ($cmsPageStorageTransfers as $cmsPageUuid => $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
             if (
                 isset($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
                 && !empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
             ) {
-                $groupedContentBannerKeys[$uuid] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
+                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME]);
+                $groupedContentBannerKeys[$cmsPageUuid] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
             }
         }
 
-        $filteredContentBannerKeys = array_filter(array_values($groupedContentBannerKeys));
-
+        //TODO use \Spryker\Client\ContentBanner\ContentBannerClient instead of ContentStorageClient
         $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
-            $filteredContentBannerKeys,
+            $contentBannerKeys,
             $restRequest->getMetadata()->getLocale()
         );
 
-        //        foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKey) {
-        //        }
+        $mappedContentTypeContextTransfers = [];
+        foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
+            foreach ($contentBannerKeys as $contentBannerKey) {
+                $mappedContentTypeContextTransfers[$cmsPageUuid][] = $contentTypeContextTransfers[$contentBannerKey];
+            }
+        }
 
-        //        $merchantOpeningHoursStorageTransfers = $this->getTranslatedMerchantOpeningHoursStorageTransfers(
-        //            $merchantIdsIndexedByReference,
-        //            $restRequest->getMetadata()->getLocale()
-        //        );
-        //
-        //        return $this->merchantOpeningHoursRestResponseBuilder
-        //            ->createMerchantOpeningHoursRestResources($merchantOpeningHoursStorageTransfers);
-
-        //        return $this->contentBannersRestResponseBuilder
-        //            ->createContentBannersRestResources($merchantOpeningHoursStorageTransfers);
-
-        return [];
+        return $this->contentBannersRestResponseBuilder
+            ->createContentBannersRestResources($mappedContentTypeContextTransfers);
     }
 }

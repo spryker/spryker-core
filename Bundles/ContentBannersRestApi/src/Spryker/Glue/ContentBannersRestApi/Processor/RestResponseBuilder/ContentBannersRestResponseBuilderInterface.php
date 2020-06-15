@@ -37,4 +37,11 @@ interface ContentBannersRestResponseBuilderInterface
         ContentBannerTypeTransfer $contentBannerTypeTransfer,
         string $contentBannerKey
     ): RestResponseInterface;
+
+    /**
+     * @param array $mappedContentTypeContextTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createContentBannersRestResources(array $mappedContentTypeContextTransfers): array;
 }
