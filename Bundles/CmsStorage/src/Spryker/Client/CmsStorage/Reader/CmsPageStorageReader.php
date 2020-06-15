@@ -132,7 +132,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     {
         $cmsPageStorageKeys = [];
         foreach ($cmsPageUuids as $cmsPageUuid) {
-            $cmsPageReference = sprintf('%s : %s', static::KEY_UUID, $cmsPageUuid);
+            $cmsPageReference = sprintf('%s:%s', static::KEY_UUID, $cmsPageUuid);
             $cmsPageStorageKeys[] = $this->generateKey($cmsPageReference, $localeName, $storeName);
         }
 

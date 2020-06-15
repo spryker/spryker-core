@@ -107,7 +107,7 @@ class CmsPageReader implements CmsPageReaderInterface
         );
 
         $desiredCmsPageStorageTransfer = reset($cmsPageStorageTransfers);
-        if (!$desiredCmsPageStorageTransfer->getUuid() || $desiredCmsPageStorageTransfer->getUuid() != $cmsPageUuid) {
+        if (!$desiredCmsPageStorageTransfer->getUuid() || $desiredCmsPageStorageTransfer->getUuid() !== $cmsPageUuid) {
             return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
         }
 

@@ -10,17 +10,19 @@
         <property name="uuid" type="string"/>
     </transfer>
 
-    <transfer name="RestCmsPagePagination">
-        <property name="numFound" type="int"/>
-        <property name="currentPage" type="int"/>
-        <property name="maxPage" type="int"/>
-        <property name="currentItemsPerPage" type="int"/>
-    </transfer>
-
     <transfer name="LocaleCmsPageData">
         <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CmsPageStorage">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
     </transfer>
 </transfers>
