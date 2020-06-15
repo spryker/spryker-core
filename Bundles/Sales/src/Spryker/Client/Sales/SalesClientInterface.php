@@ -136,8 +136,8 @@ interface SalesClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Requires orderReference to be set.
-     * - Requires customerReference to be set.
+     * - Requires OrderCancelRequestTransfer::orderReference to be set.
+     * - Requires CustomerTransfer:customerReference to be set.
      * - Requires ItemTransfer::idSalesOrderItem to be set.
      * - Retrieves OrderTransfer filtered by orderReference and customerReference.
      * - Checks OrderTransfer::isCancellable.

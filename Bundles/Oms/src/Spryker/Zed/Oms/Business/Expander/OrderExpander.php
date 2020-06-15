@@ -57,7 +57,7 @@ class OrderExpander implements OrderExpanderInterface
     public function setOrderIsCancellableByItemState(array $orderTransfers): array
     {
         $mappedOrderTransfers = $this->mapOrdersByIdSalesOrder($orderTransfers);
-        $mappedItemTransfers = $this->mapOrderItemsByIdSalesOrder($mappedOrderTransfers);
+        $mappedItemTransfers = $this->getMappedOrderItemsBySalesOrderIds(array_keys($mappedOrderTransfers));
 
         foreach ($mappedItemTransfers as $idSalesOrder => $itemTransfers) {
             $orderTransfer = $mappedOrderTransfers[$idSalesOrder] ?? null;
@@ -90,14 +90,14 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param int[] $salesOrderIds
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[][]
      */
-    protected function mapOrderItemsByIdSalesOrder(array $orderTransfers): array
+    protected function getMappedOrderItemsBySalesOrderIds(array $salesOrderIds): array
     {
         $mappedItemTransfers = [];
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds(array_keys($orderTransfers));
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds($salesOrderIds);
 
         $itemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
 
