@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\CmsPage;
 
-use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
@@ -24,6 +23,10 @@ class CmsPageReader implements CmsPageReaderInterface
     protected const ID_CMS_PAGE = 'id_cms_page';
 
     protected const PARAMETER_NAME_PAGE = 'page';
+
+    /**
+     * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     */
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
@@ -44,24 +47,24 @@ class CmsPageReader implements CmsPageReaderInterface
     /**
      * @var \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface
      */
-    protected $storageClient;
+    protected $storeClient;
 
     /**
      * @param \Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface $cmsPageRestResponseBuilder
      * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface $cmsStorageClient
      * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface $cmsPageSearchClient
-     * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface $storageClient
+     * @param \Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         CmsPageRestResponseBuilderInterface $cmsPageRestResponseBuilder,
         CmsPagesRestApiToCmsStorageClientInterface $cmsStorageClient,
         CmsPagesRestApiToCmsPageSearchClientInterface $cmsPageSearchClient,
-        CmsPagesRestApiToStoreClientInterface $storageClient
+        CmsPagesRestApiToStoreClientInterface $storeClient
     ) {
         $this->cmsPageRestResponseBuilder = $cmsPageRestResponseBuilder;
         $this->cmsStorageClient = $cmsStorageClient;
         $this->cmsPageSearchClient = $cmsPageSearchClient;
-        $this->storageClient = $storageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -77,7 +80,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);
 
         if (!$searchResult[static::SEARCH_RESULT_CMS_PAGES]) {
-            return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
+            return $this->cmsPageRestResponseBuilder->createEmptyResponse();
         }
 
         $totalPagesFound = $searchResult[static::SEARCH_RESULT_PAGINATION]->getNumFound();
@@ -85,7 +88,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
             $this->getCmsPageIds($searchResult[static::SEARCH_RESULT_CMS_PAGES]),
             $restRequest->getMetadata()->getLocale(),
-            $this->storageClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName()
         );
 
         return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($cmsPageStorageTransfers, $totalPagesFound);
@@ -103,7 +106,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             [$cmsPageUuid],
             $restRequest->getMetadata()->getLocale(),
-            $this->storageClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName()
         );
 
         $desiredCmsPageStorageTransfer = reset($cmsPageStorageTransfers);
@@ -111,9 +114,7 @@ class CmsPageReader implements CmsPageReaderInterface
             return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
         }
 
-        $restCmsPagesAttributesTransfer = (new RestCmsPagesAttributesTransfer())->fromArray($desiredCmsPageStorageTransfer->toArray(), true);
-
-        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($restCmsPagesAttributesTransfer->getUuid(), $restCmsPagesAttributesTransfer);
+        return $this->cmsPageRestResponseBuilder->createCmsPageRestResponse($desiredCmsPageStorageTransfer);
     }
 
     /**

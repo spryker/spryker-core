@@ -23,7 +23,7 @@ interface CmsStorageClientInterface
 
     /**
      * Specification:
-     * - Finds Cms page storage records by UUIDs, locale and store.
+     * - Finds CMS page storage records by UUIDs, locale and store.
      *
      * @api
      *
@@ -37,7 +37,7 @@ interface CmsStorageClientInterface
 
     /**
      * Specification:
-     * - Finds Cms page storage records by Ids, locale and store.
+     * - Finds CMS page storage records by Ids, locale and store.
      *
      * @api
      *

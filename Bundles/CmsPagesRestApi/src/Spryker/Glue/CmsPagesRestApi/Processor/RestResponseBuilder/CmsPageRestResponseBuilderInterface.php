@@ -7,18 +7,16 @@
 
 namespace Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestCmsPagesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface CmsPageRestResponseBuilderInterface
 {
     /**
-     * @param string $cmsPageUuid
-     * @param \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer
+     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer $cmsPageStorageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCmsPageRestResponse(string $cmsPageUuid, RestCmsPagesAttributesTransfer $restCmsPagesAttributesTransfer): RestResponseInterface;
+    public function createCmsPageRestResponse($cmsPageStorageTransfer): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -32,4 +30,9 @@ interface CmsPageRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCmsPageCollectionRestResponse(array $cmsPageStorageTransfers, int $totalPagesFound): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyResponse(): RestResponseInterface;
 }

@@ -40,12 +40,9 @@ class CmsPagesResourceController extends AbstractController
      *              {
      *                  "name": "q",
      *                  "in": "query",
-     *                  "description": "Search query string.",
+     *                  "description": "Search query string."
      *              }
-     *          ],
-     *          "responses": {
-     *              "404": "Cms page not found."
-     *          }
+     *          ]
      *     }
      * })
      *
