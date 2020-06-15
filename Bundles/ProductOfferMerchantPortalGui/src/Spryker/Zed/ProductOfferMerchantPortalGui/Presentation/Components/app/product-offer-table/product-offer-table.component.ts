@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { TableConfig, TableFeatureLocation } from '@spryker/table';
+import { TableConfig } from '@spryker/table';
 import { ToJson } from '@spryker/utils';
 
 @Component({
@@ -11,5 +11,4 @@ import { ToJson } from '@spryker/utils';
 })
 export class ProductOfferTableComponent {
     @Input() config: TableConfig;
-    tableLocation = TableFeatureLocation;
 }

@@ -86,7 +86,14 @@ class RouterConfig extends AbstractBundleConfig
         }
 
         foreach ($this->get(KernelConstants::CORE_NAMESPACES) as $coreNamespace) {
-            $controllerDirectories[] = sprintf('%s/spryker/*/src/%s/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR, $coreNamespace);
+            $composerPackageNamespace = strtolower(preg_replace('/([a-z0-9])([A-Z])/', '$1-$2', $coreNamespace));
+
+            $controllerDirectories[] = sprintf(
+                '%s/%s/*/src/%s/Zed/*/Communication/Controller/',
+                APPLICATION_VENDOR_DIR,
+                $composerPackageNamespace,
+                $coreNamespace
+            );
         }
 
         return array_filter($controllerDirectories, 'glob');

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStoragePersistenceFactory getFactory()
@@ -62,10 +63,12 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getFilteredConfigurableBundleTemplateStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array
-    {
+    public function getFilteredConfigurableBundleTemplateStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $configurableBundleTemplateIds
+    ): array {
         $configurableBundleTemplateStoragePropelQuery = $this->getFactory()
             ->getConfigurableBundleTemplateStoragePropelQuery();
 
@@ -74,6 +77,7 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
         }
 
         return $this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
             ->find();
     }
 

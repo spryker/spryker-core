@@ -7,4 +7,8 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CmsSlotParams">
+        <property name="store" type="string"/>
+    </transfer>
+
 </transfers>

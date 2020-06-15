@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
@@ -48,7 +47,6 @@ class LoginForm extends AbstractType
         $builder
             ->add(self::FIELD_USERNAME, EmailType::class, [
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                 ],
                 'attr' => [
@@ -69,7 +67,6 @@ class LoginForm extends AbstractType
         $builder
             ->add(self::FIELD_PASSWORD, PasswordType::class, [
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                 ],
                 'attr' => [

@@ -32,6 +32,7 @@ $(document).ready(function () {
                 case "select-one":
                 case "select-multi":
                     elements[i].selectedIndex = -1;
+                    $('#select2-' + elements[i].id + '-container')[0].innerText = elements[i][0].innerText;
                     break;
 
                 default:

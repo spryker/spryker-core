@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -44,6 +45,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
+
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -97,9 +100,13 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
         });
+
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -276,6 +283,20 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new OmsToSalesBridge($container->getLocator()->sales()->facade());
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
+            return SpySalesOrderItemQuery::create();
+        }));
 
         return $container;
     }

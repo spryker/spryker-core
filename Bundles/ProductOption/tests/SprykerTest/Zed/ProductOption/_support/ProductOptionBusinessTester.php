@@ -26,7 +26,6 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Propel\Runtime\Propel;
 use Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
@@ -131,14 +130,6 @@ class ProductOptionBusinessTester extends Actor
             ->save();
 
         return $taxSetEntity;
-    }
-
-    /**
-     * @return void
-     */
-    public function enablePropelInstancePooling(): void
-    {
-        Propel::enableInstancePooling();
     }
 
     /**

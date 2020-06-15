@@ -1,0 +1,72 @@
+{% set items = (items ?? order.items) | filter(item => item.salesOrderConfiguredBundle) %}
+{% set mappedItems = [] %}
+{% set configuredBundles = [] %}
+{% set configuredBundleItemLength = [] %}
+
+{% for item in items %}
+    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+    {% if mappedItems['_' ~ bundleId] is defined %}
+        {% set bundleItems = mappedItems['_' ~ bundleId] | merge([item]) %}
+        {% set mappedItems = mappedItems | merge({('_' ~ bundleId): bundleItems}) %}
+    {% else %}
+        {% set configuredBundles = configuredBundles | merge([item.salesOrderConfiguredBundle]) %}
+        {% set mappedItems = mappedItems | merge({('_' ~ bundleId): [item]}) %}
+    {% endif %}
+{% endfor %}
+
+{% for item in order.items if item.salesOrderConfiguredBundle %}
+    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+    {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId):
+        configuredBundleItemLength['_' ~ bundleId] is defined ?
+        (configuredBundleItemLength['_' ~ bundleId] + 1) : 1
+    }) %}
+{% endfor %}
+
+{% for bundle in configuredBundles %}
+    <tr>
+        <td colspan="5">
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
+            ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
+        </td>
+        <td>
+            {% set bundleSumSubtotalAggregation = 0 %}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for item in mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
+                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + item.sumSubtotalAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + item.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
+        <td colspan="2"></td>
+    </tr>
+
+    {% for item in mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
+        <tr>
+            {% include '@Sales/Detail/boxes/configured-bundle-product.twig' with {
+                orderItem: item,
+                displayImage: true,
+                image: item.metadata.image,
+            } %}
+        </tr>
+    {% endfor %}
+
+    {% if bundle.note is defined and bundle.note is not empty %}
+        <tr>
+            <td colspan="8" class="text-left">
+                {{ 'Note' | trans }}<br>
+                {{ bundle.note | escape | nl2br }}
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td colspan="1"></td>
+        <td colspan="7">
+            {{ 'Items' | trans }}: {{ mappedItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }} / {{ configuredBundleItemLength['_' ~ bundle.idSalesOrderConfiguredBundle] }}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8"></td>
+    </tr>
+{% endfor %}
