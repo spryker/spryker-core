@@ -108,11 +108,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
                 continue;
             }
 
-            $translation = str_replace(
-                array_keys($parameters[$keyName]),
-                array_values($parameters[$keyName]),
-                $translation
-            );
+            $translation = $this->trans($translation, $parameters[$keyName], null, $localeName);
         }
 
         return $translations;
