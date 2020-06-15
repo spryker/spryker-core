@@ -23,8 +23,6 @@ class CmsPagesRestApiToCmsStorageClientBridge implements CmsPagesRestApiToCmsSto
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param string[] $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
@@ -37,8 +35,6 @@ class CmsPagesRestApiToCmsStorageClientBridge implements CmsPagesRestApiToCmsSto
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param int[] $cmsPageIds
      * @param string $localeName
      * @param string $storeName

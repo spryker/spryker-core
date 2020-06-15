@@ -35,8 +35,6 @@ class CmsStorageClient extends AbstractClient implements CmsStorageClientInterfa
      *
      * @api
      *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
-     *
      * @param string[] $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
@@ -54,8 +52,6 @@ class CmsStorageClient extends AbstractClient implements CmsStorageClientInterfa
      * {@inheritDoc}
      *
      * @api
-     *
-     * @phpstan-return array<string, \Generated\Shared\Transfer\CmsPageStorageTransfer>
      *
      * @param int[] $cmsPageIds
      * @param string $localeName
