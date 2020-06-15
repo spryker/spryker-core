@@ -55,22 +55,6 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @phpstan-return array<string, string>
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
-     *
-     * @return string[]
-     */
-    public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array
-    {
-        return $this->getFactory()->createProductConcreteDefaultProductOffer()->getProductOfferReferences($productOfferStorageCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $productOfferReference
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null

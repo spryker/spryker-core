@@ -50,25 +50,6 @@ interface MerchantProductOfferStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves product offers by product concrete SKUs.
-     * - Optionally filters the collection by merchant reference.
-     * - Returns empty array if product offer references do not exist.
-     * - Returns `ProductOfferStorageCriteriaTransfer.productOfferReference` of it is found in the retrieved collection.
-     * - Resolves default product offer reference by plugin.
-     * - Returns the default product offer references indexed by product concrete SKU.
-     *
-     * @api
-     *
-     * @phpstan-return array<string, string>
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
-     *
-     * @return string[]
-     */
-    public function getProductConcreteDefaultProductOffers(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): array;
-
-    /**
-     * Specification:
      * - Finds a product offer within Storage by reference.
      * - Returns null if product offer was not found.
      *
