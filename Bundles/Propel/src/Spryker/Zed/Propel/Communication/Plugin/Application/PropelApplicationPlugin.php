@@ -96,13 +96,13 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    private function getPropelReadConfiguration(): array
+    private function getPropelReadConfiguration(): ?array
     {
         $propelConfig = $this->getDefaultPropelConfiguration();
 
-        return $propelConfig['slaves'];
+        return $propelConfig['slaves'] ?: null;
     }
 
     /**
