@@ -60,7 +60,7 @@ trait ActiveRecordBatchProcessorTrait
             return;
         }
 
-        if ($entity->isNew()) {
+        if ($entity->isNew() && !$entity->getPrimaryKey()) {
             if (!isset($this->entitiesToInsert[$className])) {
                 $this->entitiesToInsert[$className] = [];
             }
