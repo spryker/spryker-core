@@ -18,9 +18,11 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
 {
-    protected const CMS_PAGES = 'cms_pages';
-    protected const PAGINATION = 'pagination';
+    protected const SEARCH_RESULT_CMS_PAGES = 'cms_pages';
+    protected const SEARCH_RESULT_PAGINATION = 'pagination';
+
     protected const ID_CMS_PAGE = 'id_cms_page';
+
     protected const PARAMETER_NAME_PAGE = 'page';
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
@@ -74,14 +76,14 @@ class CmsPageReader implements CmsPageReaderInterface
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);
 
-        if (!$searchResult[static::CMS_PAGES]) {
+        if (!$searchResult[static::SEARCH_RESULT_CMS_PAGES]) {
             return $this->cmsPageRestResponseBuilder->createCmsPageNotFoundErrorRestResponse();
         }
 
-        $totalPagesFound = $searchResult[static::PAGINATION]->getNumFound();
+        $totalPagesFound = $searchResult[static::SEARCH_RESULT_PAGINATION]->getNumFound();
 
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
-            $this->getCmsPageIds($searchResult[static::CMS_PAGES]),
+            $this->getCmsPageIds($searchResult[static::SEARCH_RESULT_CMS_PAGES]),
             $restRequest->getMetadata()->getLocale(),
             $this->storageClient->getCurrentStore()->getName()
         );

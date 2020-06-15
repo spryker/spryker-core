@@ -22,7 +22,8 @@ class CmsPageMapper implements CmsPageMapperInterface
     {
         $restCmsPagesAttributesTransfers = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
-            $restCmsPagesAttributesTransfers[$cmsPageStorageTransfer->getUuid()] = (new RestCmsPagesAttributesTransfer())->fromArray($cmsPageStorageTransfer->toArray(), true);
+            $restCmsPagesAttributesTransfers[$cmsPageStorageTransfer->getUuid()] = (new RestCmsPagesAttributesTransfer())
+                ->fromArray($cmsPageStorageTransfer->toArray(), true);
         }
 
         return $restCmsPagesAttributesTransfers;
