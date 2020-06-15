@@ -994,7 +994,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider getCustomerCountByCriteriaDataProvider
+     * @dataProvider getCustomerDataProvider
      *
      * @param array $usersData
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
@@ -1009,12 +1009,7 @@ class CustomerFacadeTest extends Unit
     ): void {
         // Arrange
         foreach ($usersData as $item) {
-            (new SpyCustomer())
-                ->setEmail($item['email'])
-                ->setPassword($item['password'])
-                ->setRestorePasswordKey($item['passwordRestoreKey'])
-                ->setCustomerReference($item['customerReference'])
-                ->save();
+            $this->createCustomerUsingCustomerDataProviderUserData($item);
         }
 
         // Assert
@@ -1024,7 +1019,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return array
      */
-    public function getCustomerCountByCriteriaDataProvider()
+    public function getCustomerDataProvider(): array
     {
         return [
             'get customers with empty password - expects 2' => [
@@ -1044,9 +1039,24 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @param array $data
+     *
+     * @return int
+     */
+    protected function createCustomerUsingCustomerDataProviderUserData(array $data): int
+    {
+        return (new SpyCustomer())
+            ->setEmail($data['email'])
+            ->setPassword($data['password'])
+            ->setRestorePasswordKey($data['passwordRestoreKey'])
+            ->setCustomerReference($data['customerReference'])
+            ->save();
+    }
+
+    /**
      * @return array
      */
-    protected function getUsersData()
+    protected function getUsersData(): array
     {
         return [
             [
