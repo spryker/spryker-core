@@ -9,12 +9,12 @@ namespace Spryker\Yves\Kernel\Validator;
 
 use Symfony\Component\HttpFoundation\Response;
 
-interface UrlValidatorInterface
+interface RedirectUrlValidatorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Response $response
      *
      * @return void
      */
-    public function isWhitelistedRedirectDomain(Response $response): void;
+    public function validateRedirectUrl(Response $response): void;
 }

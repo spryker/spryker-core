@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Symfony\Component\HttpFoundation\Response;
 
-class UrlValidator implements UrlValidatorInterface
+class RedirectUrlValidator implements RedirectUrlValidatorInterface
 {
     protected const HTTP_HEADER_LOCATION = 'Location';
 
@@ -23,7 +23,7 @@ class UrlValidator implements UrlValidatorInterface
      *
      * @return void
      */
-    public function isWhitelistedRedirectDomain(Response $response): void
+    public function validateRedirectUrl(Response $response): void
     {
         if (!$response->isRedirection()) {
             return;

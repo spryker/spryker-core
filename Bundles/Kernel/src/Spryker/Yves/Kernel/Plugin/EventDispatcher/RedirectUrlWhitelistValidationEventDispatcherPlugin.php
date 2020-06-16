@@ -34,7 +34,7 @@ class RedirectUrlWhitelistValidationEventDispatcherPlugin extends AbstractPlugin
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
-            $this->getFactory()->createUrlValidator()->isWhitelistedRedirectDomain($event->getResponse());
+            $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event->getResponse());
         });
 
         return $eventDispatcher;
