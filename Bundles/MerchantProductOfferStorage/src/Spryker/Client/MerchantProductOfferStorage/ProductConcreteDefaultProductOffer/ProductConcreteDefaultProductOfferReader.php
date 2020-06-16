@@ -45,7 +45,7 @@ class ProductConcreteDefaultProductOfferReader implements ProductConcreteDefault
             return null;
         }
 
-        $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOffersBySku($productOfferStorageCriteriaTransfer);
+        $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
 
         if (!$productOfferStorageCollectionTransfer->getProductOffersStorage()) {
             return null;
