@@ -67,9 +67,9 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function (Container $container): SpyProductQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (): SpyProductQuery {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -72,9 +72,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPackagingUnitPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT, $container->factory(function () {
             return SpyProductPackagingUnitQuery::create();
-        });
+        }));
 
         return $container;
     }

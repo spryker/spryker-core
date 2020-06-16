@@ -83,9 +83,9 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyRolePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_COMPANY_ROLE, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_ROLE, $container->factory(function () {
             return SpyCompanyRoleQuery::create();
-        });
+        }));
 
         return $container;
     }

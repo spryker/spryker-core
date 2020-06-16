@@ -94,13 +94,13 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT, $container->factory(function () {
             return SpyProductMeasurementSalesUnitQuery::create();
-        });
+        }));
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT, $container->factory(function () {
             return SpyProductMeasurementUnitQuery::create();
-        });
+        }));
 
         return $container;
     }

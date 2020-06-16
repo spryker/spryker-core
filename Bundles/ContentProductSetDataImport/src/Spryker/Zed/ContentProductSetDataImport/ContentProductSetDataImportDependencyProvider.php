@@ -75,9 +75,9 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_SET, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_SET, $container->factory(function () {
             return SpyProductSetQuery::create();
-        });
+        }));
 
         return $container;
     }

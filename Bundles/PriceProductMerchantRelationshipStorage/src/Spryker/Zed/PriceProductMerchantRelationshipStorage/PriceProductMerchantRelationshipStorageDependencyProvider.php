@@ -68,9 +68,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addPropelPriceProductMerchantRelationshipQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP, function () {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP, $container->factory(function () {
             return SpyPriceProductMerchantRelationshipQuery::create();
-        });
+        }));
 
         return $container;
     }
