@@ -81,7 +81,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      *
      * @return array[]
      */
-    public function getContentProductAbstractListsResources(array $cmsPageReferences, RestRequestInterface $restRequest): RestRequestInterface
+    public function getContentProductAbstractListsResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
     {
 //        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
 //            $cmsPageReferences,
