@@ -138,12 +138,12 @@ interface PropelConstants
 
     /**
      * Specification:
-     * - Defines slave-database connections to improve the performance of web applications by dispatching the database-load to multiple database-servers.
+     * - Defines database connections to improve the performance of web applications by dispatching the database-load to multiple database-servers.
      *
      * Example:
      *
      * $config[PropelConstants::ZED_DB_REPLICAS][] = [
-     *     'host' => 'slave-1',
+     *     'host' => 'replica-1',
      *     'port' => '5432'
      * ];
      *
