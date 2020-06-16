@@ -79,10 +79,6 @@ class MethodPriceReader implements MethodPriceReaderInterface
             return $this->findShipmentMethodPriceValue($shipmentMethodTransfer, $quoteTransfer);
         }
 
-        if ($shipmentGroupTransfer === null) {
-            return null;
-        }
-
         return $this->getPricePluginValue($shipmentMethodTransfer, $shipmentGroupTransfer, $quoteTransfer);
     }
 
@@ -98,25 +94,30 @@ class MethodPriceReader implements MethodPriceReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int|null
      */
     protected function getPricePluginValue(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer,
         QuoteTransfer $quoteTransfer
     ): ?int {
         $pricePlugin = $this->getPricePlugin($shipmentMethodTransfer);
-        if ($pricePlugin instanceof ShipmentMethodPricePluginInterface) {
-            return $pricePlugin->getPrice($shipmentGroupTransfer, $quoteTransfer);
+
+        if (!($pricePlugin instanceof ShipmentMethodPricePluginInterface)) {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
+            return $pricePlugin->getPrice($quoteTransfer);
         }
 
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        return $pricePlugin->getPrice($quoteTransfer);
+        if ($shipmentGroupTransfer === null) {
+            return null;
+        }
+
+        return $pricePlugin->getPrice($shipmentGroupTransfer, $quoteTransfer);
     }
 
     /**
