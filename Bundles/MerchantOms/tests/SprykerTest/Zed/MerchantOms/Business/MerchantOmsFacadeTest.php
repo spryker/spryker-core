@@ -149,7 +149,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCurrentStateReturnsData(): void
+    public function testFindCurrentStateReturnsStateForExistingOrderItem(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -183,7 +183,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCurrentStateReturnsNull(): void
+    public function testFindCurrentStateReturnsNullForNotExistingOrderItem(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
