@@ -31,7 +31,7 @@ class CancelOrderTest extends Test
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
     protected const DEFAULT_OMS_PROCESS_NAME_WITHOUT_CANCELLABLE_FLAGS = 'Test01';
 
-    protected const FAKE_ORDER_REFERENCE = 'FAKE_ORDER_REFERENCE';
+    protected const FAKE_ID_SALES_ORDER = 6666;
     protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
 
     protected const CANCELLED_STATE_NAME = 'cancelled';
@@ -78,7 +78,7 @@ class CancelOrderTest extends Test
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
             ->setCustomer($orderTransfer->getCustomer());
 
         // Act
@@ -97,13 +97,43 @@ class CancelOrderTest extends Test
     /**
      * @return void
      */
+    public function testCancelOrderWithCancellableOrderItemsForAnotherCustomer(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()]
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
+            ->setCustomer($this->tester->haveCustomer());
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
+            $orderCancelResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCancelOrderWithFakeOrderReference(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference(static::FAKE_ORDER_REFERENCE)
+            ->setIdSalesOrder(static::FAKE_ID_SALES_ORDER)
             ->setCustomer($orderTransfer->getCustomer());
 
         // Act
@@ -128,7 +158,7 @@ class CancelOrderTest extends Test
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
             ->setCustomer((new CustomerTransfer())->setCustomerReference(static::FAKE_CUSTOMER_REFERENCE));
 
         // Act
@@ -165,50 +195,13 @@ class CancelOrderTest extends Test
     /**
      * @return void
      */
-    public function testCancelOrderWithoutRequiredCustomerField(): void
-    {
-        // Arrange
-        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference(static::FAKE_CUSTOMER_REFERENCE);
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester
-            ->getFacade()
-            ->cancelOrder($orderCancelRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCancelOrderWithoutRequiredCustomerReferenceField(): void
-    {
-        // Arrange
-        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference(static::FAKE_CUSTOMER_REFERENCE)
-            ->setCustomer(new CustomerTransfer());
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester
-            ->getFacade()
-            ->cancelOrder($orderCancelRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testCancelOrderWithNonCancellableOrderItems(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITHOUT_CANCELLABLE_FLAGS);
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
-            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
             ->setCustomer($orderTransfer->getCustomer());
 
         // Act

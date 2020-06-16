@@ -519,8 +519,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderWriter(): OrderWriterInterface
     {
         return new OrderWriter(
-            $this->createOrderRepositoryReader(),
-            $this->createOmsEventTriggerer()
+            $this->createOmsEventTriggerer(),
+            $this->createOrderReaderWithMultiShippingAddress()
         );
     }
 
