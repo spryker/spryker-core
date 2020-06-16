@@ -296,7 +296,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @param int[] $productConcreteIds
      *
-     * @return array<int, int>
+     * @return int[]
      */
     public function getProductMeasurementSalesUnitCountByProductConcreteIds(array $productConcreteIds): array
     {
