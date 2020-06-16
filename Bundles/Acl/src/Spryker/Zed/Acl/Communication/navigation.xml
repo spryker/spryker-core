@@ -3,7 +3,6 @@
     <acl>
         <label>Users Control</label>
         <title>Users Control</title>
-        <icon>fa-users</icon>
         <pages>
             <roles>
                 <label>Roles</label>
@@ -11,7 +10,6 @@
                 <bundle>acl</bundle>
                 <controller>role</controller>
                 <action>index</action>
-                <icon>fa-user-secret</icon>
                 <pages>
                     <role-create>
                         <label>Create new Role</label>
@@ -37,7 +35,6 @@
                 <bundle>acl</bundle>
                 <controller>group</controller>
                 <action>index</action>
-                <icon>fa-users</icon>
                 <pages>
                     <group-create>
                         <label>Create new Group</label>

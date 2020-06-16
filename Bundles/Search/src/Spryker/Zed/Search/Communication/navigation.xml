@@ -8,7 +8,6 @@
                 <bundle>search</bundle>
                 <controller>maintenance</controller>
                 <action>index</action>
-                <icon>fa-search</icon>
                 <pages>
                     <search-list>
                         <label>List</label>

@@ -22,7 +22,6 @@
                 <bundle>maintenance</bundle>
                 <controller>php-info</controller>
                 <action>index</action>
-                <icon>fa-heartbeat</icon>
             </phpinfo>
         </pages>
     </maintenance>

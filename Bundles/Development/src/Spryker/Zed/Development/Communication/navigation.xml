@@ -8,7 +8,6 @@
         <bundle>development</bundle>
         <controller>dependency</controller>
         <action>index</action>
-        <icon>fa-archive</icon>
         <pages>
           <adjecency-matrix>
             <label>Adjacency Matrix</label>
@@ -26,7 +25,6 @@
         <bundle>development</bundle>
         <controller>dependency</controller>
         <action>stability</action>
-        <icon>fa-globe</icon>
         <pages>
           <outgoing-dependency-graph>
             <label>Outgoing Dependency Graph</label>
@@ -44,7 +42,6 @@
         <bundle>development</bundle>
         <controller>architecture</controller>
         <action>index</action>
-        <icon>fa-code</icon>
         <pages>
           <check-bundle>
             <label>Violations</label>
@@ -52,7 +49,6 @@
             <bundle>development</bundle>
             <controller>architecture</controller>
             <action>check-bundle</action>
-            <icon>fa-code</icon>
             <visible>0</visible>
           </check-bundle>
           <rules>
@@ -71,7 +67,6 @@
         <bundle>development</bundle>
         <controller>dependency-provider-plugin-usage</controller>
         <action>index</action>
-        <icon>fa-globe</icon>
       </integration>
       <module-overview>
         <label>Module overview</label>
@@ -79,7 +74,6 @@
         <bundle>development</bundle>
         <controller>module-overview</controller>
         <action>index</action>
-        <icon>fa-globe</icon>
       </module-overview>
     </pages>
   </maintenance>

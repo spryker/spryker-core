@@ -8,7 +8,6 @@
                 <bundle>storage</bundle>
                 <controller>maintenance</controller>
                 <action>index</action>
-                <icon>fa-hdd-o</icon>
                 <pages>
                     <storage-list>
                         <label>List</label>
@@ -16,7 +15,6 @@
                         <bundle>storage</bundle>
                         <controller>maintenance</controller>
                         <action>list</action>
-                        <icon>fa-hdd-o</icon>
                         <visible>0</visible>
                     </storage-list>
                     <search-key>
@@ -25,7 +23,6 @@
                         <bundle>storage</bundle>
                         <controller>maintenance</controller>
                         <action>key</action>
-                        <icon>fa-hdd-o</icon>
                         <visible>0</visible>
                     </search-key>
                 </pages>
