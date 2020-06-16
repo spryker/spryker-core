@@ -6,6 +6,18 @@
 
 {% block content %}
     <mp-dashboard></mp-dashboard>
+
+    {% for dashboardCardPlugin in dashboardCardPlugins %}
+        <div>
+            <div>{{ dashboardCardPlugin.title | raw }}</div>
+            <div>{{ dashboardCardPlugin.content | raw }}</div>
+            <div>
+                {% for actionButton in dashboardCardPlugin.actionButtons %}
+                    <a href="{{ actionButton.url }}">{{ actionButton.title | trans }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block footerJs %}

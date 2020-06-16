@@ -29,4 +29,11 @@ interface ProductOfferMerchantPortalGuiRepositoryInterface
     public function getProductOfferTableData(
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): ProductOfferCollectionTransfer;
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return int[]
+     */
+    public function getOffersDashboardCardData(int $idMerchant): array;
 }

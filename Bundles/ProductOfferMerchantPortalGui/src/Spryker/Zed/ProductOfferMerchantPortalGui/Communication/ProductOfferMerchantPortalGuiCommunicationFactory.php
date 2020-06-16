@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
@@ -20,6 +22,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\P
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceInterface;
@@ -106,6 +109,20 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProviderInterface
+     */
+    public function createOffersDashboardCardDataProvider(): OffersDashboardCardDataProviderInterface
+    {
+        return new OffersDashboardCardDataProvider(
+            $this->getRepository(),
+            $this->getMerchantUserFacade(),
+            $this->getRouterFacade(),
+            $this->getConfig(),
+            $this->getTwigEnvironment()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductOfferMerchantPortalGuiToLocaleFacadeInterface
@@ -151,6 +168,22 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getStoreFacade(): ProductOfferMerchantPortalGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface
+     */
+    public function getRouterFacade(): ProductOfferMerchantPortalGuiToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_ROUTER);
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_TWIG);
     }
 
     /**

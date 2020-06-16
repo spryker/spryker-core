@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
@@ -45,6 +46,14 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDat
  */
 class ProductOfferMerchantPortalGuiRepository extends AbstractRepository implements ProductOfferMerchantPortalGuiRepositoryInterface
 {
+    protected const OFFERS_COUNT_TOTAL = 'offersCountTotal';
+    protected const OFFERS_COUNT_ACTIVE = 'offersCountActive';
+    protected const OFFERS_COUNT_WITH_STOCK = 'offersCountWithStock';
+    protected const OFFERS_COUNT_LOW_ON_STOCK = 'offersCountLowOnStock';
+    protected const OFFERS_COUNT_VALID = 'offersCountValid';
+    protected const OFFERS_COUNT_EXPIRING = 'offersCountExpiring';
+    protected const OFFERS_COUNT_ON_MARKETPLACE = 'offersCountOnMarketplace';
+
     /**
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
@@ -801,5 +810,65 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         }
 
         return $query;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return int[]
+     */
+    public function getOffersDashboardCardData(int $idMerchant): array
+    {
+        $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
+        $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
+        $dashboardLowStockThreshold = $productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
+        $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
+        $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
+
+        return $this->getFactory()->getProductOfferPropelQuery()
+            ->leftJoinSpyProductOfferValidity()
+            ->leftJoinProductOfferStock()
+            ->filterByFkMerchant($idMerchant)
+            ->addAsColumn(static::OFFERS_COUNT_TOTAL, 'COUNT(*)')
+            ->addAsColumn(static::OFFERS_COUNT_ACTIVE, sprintf('COUNT(CASE WHEN %s IS TRUE THEN 1 END)', SpyProductOfferTableMap::COL_IS_ACTIVE))
+            ->addAsColumn(static::OFFERS_COUNT_WITH_STOCK, sprintf('COUNT(CASE WHEN %s > 0 THEN 1 END)', SpyProductOfferStockTableMap::COL_QUANTITY))
+            ->addAsColumn(static::OFFERS_COUNT_LOW_ON_STOCK, sprintf(
+                'COUNT(CASE WHEN %s < %s THEN 1 END)',
+                SpyProductOfferStockTableMap::COL_QUANTITY,
+                $dashboardLowStockThreshold
+            ))
+            ->addAsColumn(static::OFFERS_COUNT_VALID, sprintf(
+                "COUNT(CASE WHEN '%s' BETWEEN %s AND %s OR %s IS NULL THEN 1 END)",
+                $currentDateTime,
+                SpyProductOfferValidityTableMap::COL_VALID_FROM,
+                SpyProductOfferValidityTableMap::COL_VALID_TO,
+                SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY
+            ))
+            ->addAsColumn(static::OFFERS_COUNT_EXPIRING, sprintf(
+                "COUNT(CASE WHEN '%s' < %s AND '%s' > %s THEN 1 END)",
+                $currentDateTime,
+                SpyProductOfferValidityTableMap::COL_VALID_TO,
+                $expiringOffersDateTime,
+                SpyProductOfferValidityTableMap::COL_VALID_TO
+            ))
+            ->addAsColumn(static::OFFERS_COUNT_ON_MARKETPLACE, sprintf(
+                "COUNT(CASE WHEN %s IS TRUE AND %s > 0 AND ('%s' BETWEEN %s AND %s OR %s IS NULL) THEN 1 END)",
+                SpyProductOfferTableMap::COL_IS_ACTIVE,
+                SpyProductOfferStockTableMap::COL_QUANTITY,
+                $currentDateTime,
+                SpyProductOfferValidityTableMap::COL_VALID_FROM,
+                SpyProductOfferValidityTableMap::COL_VALID_TO,
+                SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY
+            ))
+            ->select([
+                static::OFFERS_COUNT_TOTAL,
+                static::OFFERS_COUNT_ACTIVE,
+                static::OFFERS_COUNT_WITH_STOCK,
+                static::OFFERS_COUNT_LOW_ON_STOCK,
+                static::OFFERS_COUNT_VALID,
+                static::OFFERS_COUNT_EXPIRING,
+                static::OFFERS_COUNT_ON_MARKETPLACE,
+            ])
+            ->findOne();
     }
 }

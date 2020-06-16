@@ -1,0 +1,35 @@
+<div>
+    <div>
+        {{ 'Stock' | trans }}
+    </div>
+    <div>
+        {{ offersCountWithStock }} {{ 'With Stock' | trans }}
+        {{ offersCountLowOnStock }} {{ 'Low on Stock' | trans }}
+    </div>
+</div>
+<div>
+    <div>
+        {{ 'Validity' | trans }}
+    </div>
+    <div>
+        {{ offersCountValid }} {{ 'Valid' | trans }}
+        {{ offersCountExpiring }} {{ 'Expiring in %expiringOffersLimit% days' | trans({ '%expiringOffersLimit%': expiringOffersLimit }) }}
+    </div>
+</div>
+<div>
+    <div>
+        {{ 'Visibility' | trans }}
+    </div>
+    <div>
+        {{ offersCountActive }} {{ 'Online' | trans }}
+        {{ offersCountInactive }} {{ 'Offline' | trans }}
+    </div>
+</div>
+<div>
+    <div>
+        {{ 'On Marketplace' | trans }}
+    </div>
+    <div>
+        {{ offersCountOnMarketplace }} {{ 'Valid, online & with Stock' | trans }}
+    </div>
+</div>
