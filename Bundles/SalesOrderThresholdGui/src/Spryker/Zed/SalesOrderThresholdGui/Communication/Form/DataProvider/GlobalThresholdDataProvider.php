@@ -71,6 +71,7 @@ class GlobalThresholdDataProvider
             'allow_extra_fields' => true,
             GlobalThresholdType::OPTION_CURRENCY_CODE => $currencyTransfer->getCode(),
             GlobalThresholdType::OPTION_STORE_CURRENCY_ARRAY => $this->getStoreCurrencyList(),
+            GlobalThresholdType::OPTION_HARD_MAXIMUM_TYPES_ARRAY => $this->getHardMaxTypesList(),
             GlobalThresholdType::OPTION_HARD_TYPES_ARRAY => $this->getHardTypesList(),
             GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
         ];
@@ -89,6 +90,9 @@ class GlobalThresholdDataProvider
         $data = [
             GlobalThresholdType::FIELD_HARD => [
                 GlobalHardThresholdType::FIELD_STRATEGY => current($this->getHardTypesList()),
+            ],
+            GlobalThresholdType::FIELD_HARD_MAXIMUM => [
+                GlobalHardThresholdType::FIELD_STRATEGY => current($this->getHardMaxTypesList()),
             ],
             GlobalThresholdType::FIELD_SOFT => [
                 GlobalSoftThresholdType::FIELD_STRATEGY => current($this->getSoftTypesList()),
@@ -161,6 +165,21 @@ class GlobalThresholdDataProvider
         $hardTypesList = [];
         foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdGroup() === SalesOrderThresholdGuiConfig::GROUP_HARD) {
+                $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
+            }
+        }
+
+        return $hardTypesList;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getHardMaxTypesList(): array
+    {
+        $hardTypesList = [];
+        foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
+            if ($formExpanderPlugin->getThresholdKey() === SalesOrderThresholdGuiConfig::GROUP_HARD_MAX) {
                 $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
             }
         }

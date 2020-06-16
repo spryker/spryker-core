@@ -8,10 +8,14 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\MerchantRelationshipHardMaximumThresholdDataProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\MerchantRelationshipHardThresholdDataProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\MerchantRelationshipSoftThresholdDataProvider;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipHardMaximumThresholdFormMapper;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipHardThresholdFormMapper;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipSoftThresholdFormMapper;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalHardMaximumThresholdDataProvider;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalHardThresholdFormMapper;
 
 class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleConfig
 {
@@ -31,22 +35,32 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     public const GROUP_SOFT = 'Soft';
 
     /**
-     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD_MAX
+     */
+    public const GROUP_HARD_MAX = 'Hard-Max';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_HARD
      */
     public const HARD_TYPE_STRATEGY = 'hard-minimum-threshold';
 
     /**
-     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM
+     */
+    public const THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM = 'hard-maximum-threshold';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_SOFT
      */
     public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-minimum-threshold';
 
     /**
-     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE
      */
     public const SOFT_TYPE_STRATEGY_FIXED = 'soft-minimum-threshold-fixed-fee';
 
     /**
-     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::STRATEGY_KEY
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE
      */
     public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-minimum-threshold-flexible-fee';
 
@@ -59,6 +73,7 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
 
     protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [
         self::GROUP_HARD => MerchantRelationshipHardThresholdFormMapper::class,
+        self::GROUP_HARD_MAX => MerchantRelationshipHardMaximumThresholdFormMapper::class,
         self::GROUP_SOFT => MerchantRelationshipSoftThresholdFormMapper::class,
     ];
 
@@ -69,6 +84,7 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
 
     protected const STRATEGY_GROUP_TO_DATA_PROVIDER_MAP = [
         self::GROUP_HARD => MerchantRelationshipHardThresholdDataProvider::class,
+        self::GROUP_HARD_MAX => MerchantRelationshipHardMaximumThresholdDataProvider::class,
         self::GROUP_SOFT => MerchantRelationshipSoftThresholdDataProvider::class,
     ];
 
