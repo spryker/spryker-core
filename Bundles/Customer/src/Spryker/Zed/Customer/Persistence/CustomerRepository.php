@@ -198,16 +198,6 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     /**
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
-     * @return int
-     */
-    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
-    {
-        return $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->count();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function getCustomerCollectionByCriteria(

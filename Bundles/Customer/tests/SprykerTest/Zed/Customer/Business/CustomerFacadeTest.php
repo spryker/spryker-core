@@ -950,16 +950,16 @@ class CustomerFacadeTest extends Unit
             ->setCustomerReference('DE--112')
             ->save();
 
-        $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
 
         //Act
         $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
-            (new CustomerCollectionTransfer())->addCustomer($customer->getCustomerTransfer())
+            (new CustomerCollectionTransfer())->addCustomer($customerResponseTransfer->getCustomerTransfer())
         );
 
-        $customer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
         // Assert
-        $this->assertNotNull($customer->getCustomerTransfer()->getRestorePasswordKey());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRestorePasswordKey());
     }
 
     /**
@@ -986,29 +986,6 @@ class CustomerFacadeTest extends Unit
             $expectedCount,
             $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
         );
-    }
-
-    /**
-     * @dataProvider getCustomerDataProvider
-     *
-     * @param array $usersData
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
-     * @param int $expectedCount
-     *
-     * @return void
-     */
-    public function testGetCustomerCountByCriteriaShouldReturnCountOfCustomers(
-        array $usersData,
-        CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
-        int $expectedCount
-    ): void {
-        // Arrange
-        foreach ($usersData as $item) {
-            $this->createCustomerUsingCustomerDataProviderUserData($item);
-        }
-
-        // Assert
-        $this->assertSame($expectedCount, $this->tester->getFacade()->getCustomerCountByCriteria($criteriaFilterTransfer));
     }
 
     /**

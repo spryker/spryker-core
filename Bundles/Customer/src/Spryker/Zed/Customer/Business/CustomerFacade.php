@@ -592,20 +592,6 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
-     * @return int
-     */
-    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int
-    {
-        return $this->getRepository()->getCustomerCountByCriteria($customerCriteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function getCustomerCollectionByCriteria(

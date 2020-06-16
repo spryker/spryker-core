@@ -513,18 +513,6 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves count of customers by the given criteria.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
-     * @return int
-     */
-    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
-
-    /**
-     * Specification:
      * - Retrieves filtered customers using CustomerCriteriaFilterTransfer.
      *
      * @api
@@ -539,7 +527,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Sends password restoration link via email using a freshly generated password restoration key to each customer in the collection.
+     * - Sends a password restore link via email using a freshly generated password restore key to each customer in the collection.
      *
      * @api
      *

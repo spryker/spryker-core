@@ -50,13 +50,6 @@ interface CustomerRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
      *
-     * @return int
-     */
-    public function getCustomerCountByCriteria(CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer): int;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function getCustomerCollectionByCriteria(

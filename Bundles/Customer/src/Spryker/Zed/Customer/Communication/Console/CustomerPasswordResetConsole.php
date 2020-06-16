@@ -20,10 +20,10 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
-class CustomerPasswordSet extends Console
+class CustomerPasswordResetConsole extends Console
 {
-    protected const COMMAND_NAME = 'customer:password:set';
-    protected const COMMAND_DESCRIPTION = 'Sends the forgot password email to all customers that have an empty password inside the database.';
+    protected const COMMAND_NAME = 'customer:password:reset';
+    protected const COMMAND_DESCRIPTION = 'Sends the forgot password email using a freshly generated password restoration key to all customers filtered by criteria using command options.';
     protected const OPTION_FORCE = 'force';
     protected const OPTION_FORCE_SHORT = 'f';
     protected const OPTION_NO_TOKEN = 'no-token';
@@ -49,16 +49,13 @@ class CustomerPasswordSet extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));
+        $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
 
         if (!$input->getOption(static::OPTION_FORCE)) {
-            $customersCount = $this->getFacade()->getCustomerCountByCriteria($customerCriteriaFilterTransfer);
-
-            if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customersCount))) {
+            if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customerCollection->getCustomers()->count()))) {
                 return static::CODE_SUCCESS;
             }
         }
-
-        $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
 
         $this->getFacade()->sendPasswordRestoreMailForCustomerCollection($customerCollection);
 
@@ -85,8 +82,6 @@ class CustomerPasswordSet extends Console
      */
     protected function createCustomerCriteriaFilterTransfer(bool $noToken): CustomerCriteriaFilterTransfer
     {
-        return (new CustomerCriteriaFilterTransfer())
-            ->setRestorePasswordKeyExists(!$noToken)
-            ->setPasswordExists(false);
+        return (new CustomerCriteriaFilterTransfer())->setRestorePasswordKeyExists(!$noToken);
     }
 }
