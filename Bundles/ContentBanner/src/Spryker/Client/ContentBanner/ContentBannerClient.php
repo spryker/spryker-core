@@ -31,4 +31,19 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
     {
         return $this->getFactory()->createContentBannerTypeMapper()->executeBannerTypeByKey($contentKey, $localeName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array
+    {
+        return $this->getFactory()->createContentBannerTypeMapper()->executeBannerTypeByKeys($contentKeys, $localeName);
+    }
 }

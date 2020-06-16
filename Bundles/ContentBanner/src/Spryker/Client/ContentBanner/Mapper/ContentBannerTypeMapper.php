@@ -59,4 +59,32 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
 
         return $bannerTermToBannerTypeExecutor->execute($contentTypeContextTransfer);
     }
+
+    /**
+     * @param string[] $contentBannerKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentBannerKeys, string $localeName): array
+    {
+        $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
+            $contentBannerKeys,
+            $localeName
+        );
+
+        if (!$contentTypeContextTransfers) {
+            return [];
+        }
+
+        $contentBannerTypeTransfers = [];
+        foreach ($contentTypeContextTransfers as $contentTypeContextTransfer) {
+            $term = $contentTypeContextTransfer->getTerm();
+            $bannerTermToBannerTypeExecutor = $this->contentBannerTermExecutors[$term];
+
+            $contentBannerTypeTransfers[$contentTypeContextTransfer->getKey()] = $bannerTermToBannerTypeExecutor->execute($contentTypeContextTransfer);
+        }
+
+        return $contentBannerTypeTransfers;
+    }
 }

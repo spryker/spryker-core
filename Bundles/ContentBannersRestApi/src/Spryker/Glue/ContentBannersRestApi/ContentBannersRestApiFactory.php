@@ -9,7 +9,6 @@ namespace Spryker\Glue\ContentBannersRestApi;
 
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapper;
 use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpander;
@@ -30,8 +29,7 @@ class ContentBannersRestApiFactory extends AbstractFactory
         return new ContentBannerReader(
             $this->getContentBannerClient(),
             $this->createContentBannersRestResponseBuilder(),
-            $this->getCmsStorageClient(),
-            $this->getContentStorageClient()
+            $this->getCmsStorageClient()
         );
     }
 
@@ -78,13 +76,5 @@ class ContentBannersRestApiFactory extends AbstractFactory
     public function getCmsStorageClient(): ContentBannersRestApiToCmsStorageClientInterface
     {
         return $this->getProvidedDependency(ContentBannersRestApiDependencyProvider::CLIENT_CMS_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface
-     */
-    public function getContentStorageClient(): ContentBannersRestApiToContentStorageClientInterface
-    {
-        return $this->getProvidedDependency(ContentBannersRestApiDependencyProvider::CLIENT_CONTENT_STORAGE);
     }
 }

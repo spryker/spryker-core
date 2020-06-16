@@ -20,4 +20,12 @@ interface ContentBannerTypeMapperInterface
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
+
+    /**
+     * @param string[] $contentBannerKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentBannerKeys, string $localeName): array;
 }

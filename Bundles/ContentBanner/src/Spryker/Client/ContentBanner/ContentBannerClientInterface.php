@@ -26,4 +26,18 @@ interface ContentBannerClientInterface
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
+
+    /**
+     * Specification:
+     * - Fetches Banner by IDs.
+     * - Executes the term for the banner, resulting in the banner.
+     *
+     * @api
+     *
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array;
 }

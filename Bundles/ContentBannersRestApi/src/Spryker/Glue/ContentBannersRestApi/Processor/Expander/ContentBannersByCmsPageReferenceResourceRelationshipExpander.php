@@ -44,7 +44,9 @@ class ContentBannersByCmsPageReferenceResourceRelationshipExpander implements Co
                 continue;
             }
 
-            $resource->addRelationship($contentBannersResources[$cmsPageReference]);
+            foreach ($contentBannersResources[$cmsPageReference] as $contentBannersResource) {
+                $resource->addRelationship($contentBannersResource);
+            }
         }
     }
 

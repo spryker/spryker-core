@@ -18,4 +18,12 @@ interface ContentBannersRestApiToContentBannerClientInterface
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
+
+    /**
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array;
 }
