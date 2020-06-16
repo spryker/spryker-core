@@ -87,7 +87,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     private function getPropelWriteConfiguration(): array
     {
-        $propelConfig = $this->getDefaultPropelConfiguration();
+        $propelConfig = $this->getConfig()->getPropelConfig();
         $propelConfig['user'] = $this->getConfig()->getUsername();
         $propelConfig['password'] = $this->getConfig()->getPassword();
         $propelConfig['dsn'] = $this->getConfig()->getPropelConfig()['database']['connections']['default']['dsn'];
@@ -100,17 +100,9 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     private function getPropelReadConfiguration(): ?array
     {
-        $propelConfig = $this->getDefaultPropelConfiguration();
+        $propelConfig = $this->getConfig()->getPropelConfig();
 
-        return $propelConfig['slaves'] ?: null;
-    }
-
-    /**
-     * @return array
-     */
-    private function getDefaultPropelConfiguration(): array
-    {
-        return $this->getConfig()->getPropelConfig()['database']['connections']['default'];
+        return $propelConfig['database']['connections']['default']['slaves'] ?: null;
     }
 
     /**

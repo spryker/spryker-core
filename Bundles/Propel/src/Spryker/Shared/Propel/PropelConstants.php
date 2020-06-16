@@ -147,6 +147,12 @@ interface PropelConstants
      *     'port' => '5432'
      * ];
      *
+     * - If slave-database connections are not set the Propel uses singular master database that is responsible for all ready and write queries.
+     *
+     * Example:
+     *
+     * $config[PropelConstants::ZED_DB_REPLICAS] = [];
+     *
      * @api
      */
     public const ZED_DB_REPLICAS = 'PROPEL:ZED_DB_REPLICAS';
