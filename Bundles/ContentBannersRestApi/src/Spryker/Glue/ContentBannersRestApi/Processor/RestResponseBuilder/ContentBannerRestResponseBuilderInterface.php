@@ -10,7 +10,7 @@ namespace Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface ContentBannersRestResponseBuilderInterface
+interface ContentBannerRestResponseBuilderInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

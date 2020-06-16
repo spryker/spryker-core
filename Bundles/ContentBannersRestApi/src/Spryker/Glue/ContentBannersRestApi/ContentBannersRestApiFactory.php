@@ -15,8 +15,8 @@ use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPag
 use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReader;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReaderInterface;
-use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilder;
-use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilderInterface;
+use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilder;
+use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class ContentBannersRestApiFactory extends AbstractFactory
@@ -28,7 +28,7 @@ class ContentBannersRestApiFactory extends AbstractFactory
     {
         return new ContentBannerReader(
             $this->getContentBannerClient(),
-            $this->createContentBannersRestResponseBuilder(),
+            $this->createContentBannerRestResponseBuilder(),
             $this->getCmsStorageClient()
         );
     }
@@ -42,11 +42,11 @@ class ContentBannersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilderInterface
+     * @return \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface
      */
-    public function createContentBannersRestResponseBuilder(): ContentBannersRestResponseBuilderInterface
+    public function createContentBannerRestResponseBuilder(): ContentBannerRestResponseBuilderInterface
     {
-        return new ContentBannersRestResponseBuilder(
+        return new ContentBannerRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createContentBannerMapper()
         );

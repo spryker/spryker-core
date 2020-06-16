@@ -11,7 +11,7 @@ use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilderInterface;
+use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -29,9 +29,9 @@ class ContentBannerReader implements ContentBannerReaderInterface
     protected $contentBannerClient;
 
     /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilderInterface
+     * @var \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface
      */
-    protected $contentBannersRestResponseBuilder;
+    protected $contentBannerRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface
@@ -40,16 +40,16 @@ class ContentBannerReader implements ContentBannerReaderInterface
 
     /**
      * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
-     * @param \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannersRestResponseBuilderInterface $contentBannersRestResponseBuilder
+     * @param \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface $contentBannerRestResponseBuilder
      * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface $cmsStorageClient
      */
     public function __construct(
         ContentBannersRestApiToContentBannerClientInterface $contentBannerClient,
-        ContentBannersRestResponseBuilderInterface $contentBannersRestResponseBuilder,
+        ContentBannerRestResponseBuilderInterface $contentBannerRestResponseBuilder,
         ContentBannersRestApiToCmsStorageClientInterface $cmsStorageClient
     ) {
         $this->contentBannerClient = $contentBannerClient;
-        $this->contentBannersRestResponseBuilder = $contentBannersRestResponseBuilder;
+        $this->contentBannerRestResponseBuilder = $contentBannerRestResponseBuilder;
         $this->cmsStorageClient = $cmsStorageClient;
     }
 
@@ -62,7 +62,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $contentBannerKey = $restRequest->getResource()->getId();
         if (!$contentBannerKey) {
-            return $this->contentBannersRestResponseBuilder->addContentBannerIdNotSpecifiedError();
+            return $this->contentBannerRestResponseBuilder->addContentBannerIdNotSpecifiedError();
         }
 
         try {
@@ -71,14 +71,14 @@ class ContentBannerReader implements ContentBannerReaderInterface
                 $restRequest->getMetadata()->getLocale()
             );
         } catch (MissingBannerTermException $bannerTermException) {
-            return $this->contentBannersRestResponseBuilder->addContentTypeInvalidError();
+            return $this->contentBannerRestResponseBuilder->addContentTypeInvalidError();
         }
 
         if (!$contentBannerTypeTransfer) {
-            return $this->contentBannersRestResponseBuilder->addContentBannerNotFoundError();
+            return $this->contentBannerRestResponseBuilder->addContentBannerNotFoundError();
         }
 
-        return $this->contentBannersRestResponseBuilder->createContentBannersRestResponse($contentBannerTypeTransfer, $contentBannerKey);
+        return $this->contentBannerRestResponseBuilder->createContentBannersRestResponse($contentBannerTypeTransfer, $contentBannerKey);
     }
 
     /**
@@ -122,7 +122,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
             }
         }
 
-        return $this->contentBannersRestResponseBuilder
+        return $this->contentBannerRestResponseBuilder
             ->createContentBannersRestResources($mappedContentBannerTypeTransfers);
     }
 }

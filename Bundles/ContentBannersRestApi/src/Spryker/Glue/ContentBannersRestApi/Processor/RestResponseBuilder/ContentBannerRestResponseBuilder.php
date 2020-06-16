@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ContentBannersRestResponseBuilder implements ContentBannersRestResponseBuilderInterface
+class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
