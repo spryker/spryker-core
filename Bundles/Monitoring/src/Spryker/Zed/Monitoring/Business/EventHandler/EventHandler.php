@@ -46,6 +46,12 @@ class EventHandler implements EventHandlerInterface
      */
     public function handleConsoleTerminateEvent(ConsoleTerminateEvent $event): void
     {
+        if ($event->getCommand()->getName() === 'help') {
+            $this->monitoringService->markIgnoreTransaction();
+
+            return;
+        }
+
         $this->monitoringService->markAsConsoleCommand();
         $this->monitoringService->setTransactionName($this->getTransactionName($event));
         $this->monitoringService->addCustomParameter(static::PARAMETER_HOST, $this->utilNetworkService->getHostName());
