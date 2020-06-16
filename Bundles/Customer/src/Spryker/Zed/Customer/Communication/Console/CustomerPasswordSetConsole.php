@@ -23,7 +23,6 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class CustomerPasswordSetConsole extends Console
 {
     protected const COMMAND_NAME = 'customer:password:set';
-    protected const COMMAND_DESCRIPTION = 'Sends the forgot password email to all customers that have an empty password inside the database.';
     protected const OPTION_FORCE = 'force';
     protected const OPTION_FORCE_SHORT = 'f';
     protected const OPTION_NO_TOKEN = 'no-token';
@@ -35,7 +34,7 @@ class CustomerPasswordSetConsole extends Console
     {
         $this
             ->setName(static::COMMAND_NAME)
-            ->setDescription(static::COMMAND_DESCRIPTION)
+            ->setDescription('Sends the forgot password email to all customers that have an empty password inside the database.')
             ->addOption(static::OPTION_FORCE, static::OPTION_FORCE_SHORT, InputOption::VALUE_NONE, 'Forced execution.')
             ->addOption(static::OPTION_NO_TOKEN, null, InputOption::VALUE_NONE, 'Option to send the email to all customers that do not have a token to reset the password.');
     }
