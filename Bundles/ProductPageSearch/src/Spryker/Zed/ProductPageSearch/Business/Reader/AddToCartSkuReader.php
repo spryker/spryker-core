@@ -36,7 +36,7 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array<int, string>
+     * @return string[]
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
     {
@@ -73,7 +73,7 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return array<int, string>
+     * @return string[]
      */
     protected function mapProductConcreteTransfersToProductAbstractAttToCartSkus(array $productConcreteTransfers): array
     {

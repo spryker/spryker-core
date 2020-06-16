@@ -12,7 +12,7 @@ interface AddToCartSkuReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array<int, string>
+     * @return string[]
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array;
 }

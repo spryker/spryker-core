@@ -395,7 +395,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @param int[] $productConcreteIds
      *
-     * @return array<int, int>
+     * @return int[]
      */
     public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array
     {

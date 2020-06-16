@@ -39,7 +39,7 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param array<int, int> $productPackagingUnitCounts
+     * @param int[] $productPackagingUnitCounts
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */

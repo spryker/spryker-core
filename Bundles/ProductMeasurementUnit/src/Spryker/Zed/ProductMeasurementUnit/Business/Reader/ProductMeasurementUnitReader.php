@@ -50,8 +50,8 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param array<int, int> $productMeasurementSalesUnitCounts
-     * @param array<int, int> $productMeasurementBaseUnitCounts
+     * @param int[] $productMeasurementSalesUnitCounts
+     * @param int[] $productMeasurementBaseUnitCounts
      *
      * @return array
      */

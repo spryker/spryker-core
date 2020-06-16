@@ -216,7 +216,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      * @param bool $isRefresh
-     * @param array<int, string> $productAbstractAddToCartSkus
+     * @param string[] $productAbstractAddToCartSkus
      *
      * @return void
      */

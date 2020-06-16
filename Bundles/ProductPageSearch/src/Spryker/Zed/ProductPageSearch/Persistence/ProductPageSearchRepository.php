@@ -80,7 +80,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array<int, string>
+     * @return string[]
      */
     public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
     {

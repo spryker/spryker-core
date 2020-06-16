@@ -114,7 +114,7 @@ interface ProductMeasurementUnitRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array<int, int>
+     * @return int[]
      */
     public function getProductMeasurementBaseUnitCountByProductAbstractIds(array $productAbstractIds): array;
 }
