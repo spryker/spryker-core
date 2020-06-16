@@ -22,7 +22,7 @@ class IsCancellableOrderExpanderPlugin extends AbstractPlugin implements OrderEx
     /**
      * {@inheritDoc}
      * - Checks for cancellable flag for each order item.
-     * - If item state is not applicable for cancel, sets `Order::isCancellable=false`, true otherwise.
+     * - If all items are applicable for cancel, sets `Order::isCancellable=true`, false otherwise.
      *
      * @api
      *

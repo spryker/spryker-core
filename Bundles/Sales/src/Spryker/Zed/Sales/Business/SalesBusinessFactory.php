@@ -529,10 +529,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOmsEventTriggerer(): OmsEventTriggererInterface
     {
-        return new OmsEventTriggerer(
-            $this->getOmsFacade(),
-            $this->getConfig()
-        );
+        return new OmsEventTriggerer($this->getOmsFacade());
     }
 
     /**

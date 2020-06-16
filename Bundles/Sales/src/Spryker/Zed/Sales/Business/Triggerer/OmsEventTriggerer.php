@@ -9,30 +9,25 @@ namespace Spryker\Zed\Sales\Business\Triggerer;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\SalesConfig;
 
 class OmsEventTriggerer implements OmsEventTriggererInterface
 {
+    /**
+     * @uses \Spryker\Zed\Oms\OmsConfig::EVENT_CANCEL
+     */
+    protected const EVENT_CANCEL = 'cancel';
+
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\SalesConfig
-     */
-    protected $salesConfig;
-
-    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
      */
-    public function __construct(
-        SalesToOmsInterface $omsFacade,
-        SalesConfig $salesConfig
-    ) {
+    public function __construct(SalesToOmsInterface $omsFacade)
+    {
         $this->omsFacade = $omsFacade;
-        $this->salesConfig = $salesConfig;
     }
 
     /**
@@ -44,7 +39,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($orderTransfer);
 
-        $this->omsFacade->triggerEventForOrderItems($this->salesConfig->getCancelEvent(), $salesOrderItemIds);
+        $this->omsFacade->triggerEventForOrderItems(static::EVENT_CANCEL, $salesOrderItemIds);
     }
 
     /**

@@ -56,11 +56,11 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array
     {
-        $indexOrderTransfers = $this->indexOrdersByIdSalesOrder($orderTransfers);
-        $indexItemTransfers = $this->getIndexOrderItemsBySalesOrderIds(array_keys($indexOrderTransfers));
+        $mappedOrderTransfers = $this->mapOrdersByIdSalesOrder($orderTransfers);
+        $mappedItemTransfers = $this->getMappedOrderItemsBySalesOrderIds(array_keys($mappedOrderTransfers));
 
-        foreach ($indexItemTransfers as $idSalesOrder => $itemTransfers) {
-            $orderTransfer = $indexOrderTransfers[$idSalesOrder] ?? null;
+        foreach ($mappedItemTransfers as $idSalesOrder => $itemTransfers) {
+            $orderTransfer = $mappedOrderTransfers[$idSalesOrder] ?? null;
 
             if (!$orderTransfer) {
                 continue;
@@ -78,15 +78,15 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function indexOrdersByIdSalesOrder(array $orderTransfers): array
+    protected function mapOrdersByIdSalesOrder(array $orderTransfers): array
     {
-        $indexOrderTransfers = [];
+        $mappedOrderTransfers = [];
 
         foreach ($orderTransfers as $orderTransfer) {
-            $indexOrderTransfers[$orderTransfer->getIdSalesOrder()] = $orderTransfer;
+            $mappedOrderTransfers[$orderTransfer->getIdSalesOrder()] = $orderTransfer;
         }
 
-        return $indexOrderTransfers;
+        return $mappedOrderTransfers;
     }
 
     /**
@@ -94,18 +94,18 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[][]
      */
-    protected function getIndexOrderItemsBySalesOrderIds(array $salesOrderIds): array
+    protected function getMappedOrderItemsBySalesOrderIds(array $salesOrderIds): array
     {
-        $indexItemTransfers = [];
+        $mappedItemTransfers = [];
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds($salesOrderIds);
 
         $itemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
 
         foreach ($itemTransfers as $itemTransfer) {
-            $indexItemTransfers[$itemTransfer->getFkSalesOrder()][] = $itemTransfer;
+            $mappedItemTransfers[$itemTransfer->getFkSalesOrder()][] = $itemTransfer;
         }
 
-        return $indexItemTransfers;
+        return $mappedItemTransfers;
     }
 
     /**
