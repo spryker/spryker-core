@@ -143,7 +143,9 @@ class PropelPersistenceTester extends Actor
         }
 
         if ($columnMap->getType() === 'VARCHAR') {
-            return substr($this->faker->md5, 0, $columnMap->getSize());
+            $maxSize = $columnMap->getSize() ?: 255;
+
+            return substr($this->faker->md5, 0, $maxSize);
         }
 
         if ($columnMap->getType() === 'LONGVARCHAR') {

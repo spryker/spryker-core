@@ -25,12 +25,12 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
      */
-    protected $entitiesToInsert = [];
+    protected static $entitiesToInsert = [];
 
     /**
      * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
      */
-    protected $entitiesToUpdate = [];
+    protected static $entitiesToUpdate = [];
 
     /**
      * @var \Propel\Runtime\Map\TableMap[]
@@ -60,21 +60,21 @@ trait ActiveRecordBatchProcessorTrait
             return;
         }
 
-        if ($entity->isNew() && !$entity->getPrimaryKey()) {
-            if (!isset($this->entitiesToInsert[$className])) {
-                $this->entitiesToInsert[$className] = [];
+        if ($entity->isNew()) {
+            if (!isset(static::$entitiesToInsert[$className])) {
+                static::$entitiesToInsert[$className] = [];
             }
 
-            $this->entitiesToInsert[$className][] = $entity;
+            static::$entitiesToInsert[$className][] = $entity;
 
             return;
         }
 
-        if (!isset($this->entitiesToUpdate[$className])) {
-            $this->entitiesToUpdate[$className] = [];
+        if (!isset(static::$entitiesToUpdate[$className])) {
+            static::$entitiesToUpdate[$className] = [];
         }
 
-        $this->entitiesToUpdate[$className][] = $entity;
+        static::$entitiesToUpdate[$className][] = $entity;
     }
 
     /**
@@ -82,25 +82,32 @@ trait ActiveRecordBatchProcessorTrait
      */
     public function commit(): bool
     {
-        foreach ($this->entitiesToInsert as $entityClassName => $entities) {
-            $entities = $this->preSave($entities);
-            $entities = $this->preInsert($entities);
-            $statement = $this->buildInsertStatement($entityClassName, $entities);
-            $this->executeStatement($statement, $entityClassName, 'insert');
-            $this->postInsert($entities);
-            $this->postSave($entities);
-        }
-
-        foreach ($this->entitiesToUpdate as $entityClassName => $entities) {
-            $entities = $this->preSave($entities);
-            $entities = $this->preUpdate($entities);
-            $statement = $this->buildUpdateStatement($entityClassName, $entities);
-            $this->executeStatement($statement, $entityClassName, 'update');
-            $this->postUpdate($entities);
-            $this->postSave($entities);
-        }
+        $this->commitEntities(static::$entitiesToInsert, 'insert');
+        $this->commitEntities(static::$entitiesToUpdate, 'update');
 
         return true;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entitiesToSave
+     * @param string $type
+     *
+     * @return void
+     */
+    protected function commitEntities(array $entitiesToSave, string $type = 'insert'): void
+    {
+        $preMethodName = sprintf('pre%s', ucfirst($type));
+        $postMethodName = sprintf('post%s', ucfirst($type));
+        $buildMethodName = sprintf('build%sStatement', ucfirst($type));
+
+        foreach ($entitiesToSave as $entityClassName => $entities) {
+            $entities = $this->preSave($entities);
+            $entities = $this->{$preMethodName}($entities);
+            $statement = $this->{$buildMethodName}($entityClassName, $entities);
+            $this->executeStatement($statement, $entityClassName, $type);
+            $this->{$postMethodName}($entities);
+            $this->postSave($entities);
+        }
     }
 
     /**
@@ -196,11 +203,22 @@ trait ActiveRecordBatchProcessorTrait
             $this->getConnection()->beginTransaction();
             $statement->execute();
             $this->getConnection()->commit();
+
+            $this->clear();
         } catch (Throwable $throwable) {
             $this->getConnection()->rollBack();
 
             throw new Exception(sprintf('Failed to execute %s statement for %s. Error: %s', $type, $entityClassName, $throwable->getMessage()), 0, $throwable);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function clear(): void
+    {
+        static::$entitiesToInsert = [];
+        static::$entitiesToUpdate = [];
     }
 
     /**
@@ -284,18 +302,21 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @param string $sql
      * @param array $values
+     * @param bool $isInsert
      *
      * @return \PDOStatement
      */
-    protected function prepareStatement(string $sql, array $values): PDOStatement
+    protected function prepareStatement(string $sql, array $values, bool $isInsert = true): PDOStatement
     {
-        $connection = Propel::getConnection();
+        $connection = $this->getConnection();
         $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
         $statement = $connection->prepare($sql);
 
-        $values = array_filter($values, function (array $columnDetails) {
-            return !$columnDetails['columnMap']->isPrimaryKey();
-        });
+        if ($isInsert) {
+            $values = array_filter($values, function (array $columnDetails) {
+                return !$columnDetails['columnMap']->isPrimaryKey();
+            });
+        }
 
         foreach (array_values($values) as $index => $value) {
             $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
@@ -313,9 +334,14 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function prepareValuesForSave(ColumnMap $columnMap, array $entityData, ?string $defaultValue = null): array
     {
+        $value = $defaultValue ?: $entityData[$columnMap->getName()];
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
         return [
             'columnMap' => $columnMap,
-            'value' => $defaultValue ?: $entityData[$columnMap->getName()],
+            'value' => $value,
             'type' => $columnMap->getPdoType(),
         ];
     }
@@ -379,7 +405,7 @@ trait ActiveRecordBatchProcessorTrait
             );
         }
 
-        return $this->prepareStatement($sql, $values);
+        return $this->prepareStatement($sql, $values, false);
     }
 
     /**

@@ -48,14 +48,12 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
 
         $classNames = [];
 
-//        return [['\Orm\Zed\Wishlist\Persistence\SpyWishlistItem']];
-
         foreach ($finder as $splFileInfo) {
             if ($this->exclude($splFileInfo)) {
                 continue;
             }
 
-            $className = '\\' . str_replace([APPLICATION_SOURCE_DIR, '.php', '/'], ['', '', '\\'], $splFileInfo->getPathname());
+            $className = str_replace([APPLICATION_SOURCE_DIR, '.php', '/'], ['', '', '\\'], $splFileInfo->getPathname());
             $classNames[] = [$className];
         }
 
@@ -125,7 +123,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     /**
      * @dataProvider dataProvider()
      *
-     * @group update
+     * @group updateSmth
      *
      * @param string $entityClassName
      *
@@ -195,8 +193,12 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
 
             $value = $this->tester->getValue($columnMap);
             $setterMethod = sprintf('set%s', $columnMap->getPhpName());
+            $getterMethod = sprintf('get%s', $columnMap->getPhpName());
 
-            $entity->$setterMethod($value);
+            $previousValue = $entity->{$getterMethod}();
+
+            $entity->{$setterMethod}($value);
+            $entity->{$setterMethod}($previousValue);
 
             return $entity;
         }
