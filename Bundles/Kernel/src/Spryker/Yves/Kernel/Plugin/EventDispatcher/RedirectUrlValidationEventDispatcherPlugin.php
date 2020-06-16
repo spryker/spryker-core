@@ -17,11 +17,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Yves\Kernel\KernelFactory getFactory()
  */
-class RedirectUrlWhitelistValidationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks if redirect URL is whitelisted.
+     * - Checks if redirect URL is in allowed list.
      * - Executed only for redirect responses.
      *
      * @api

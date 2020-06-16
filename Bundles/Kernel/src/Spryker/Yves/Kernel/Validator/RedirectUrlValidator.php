@@ -31,8 +31,8 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
 
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
 
-        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isWhitelistedDomain($redirectUrl)) {
-            throw new ForbiddenExternalRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $redirectUrl));
+        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isAllowedDomain($redirectUrl)) {
+            throw new ForbiddenExternalRedirectException(sprintf('URL %s is not a part of a allowed domain', $redirectUrl));
         }
     }
 
@@ -44,19 +44,19 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
      *
      * @return bool
      */
-    protected function isWhitelistedDomain(string $url): bool
+    protected function isAllowedDomain(string $url): bool
     {
-        $whitelistedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
+        $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
         $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
-        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
+        if (empty($allowedDomains) && !$isStrictDomainRedirect) {
             return true;
         }
 
         $domain = parse_url($url, PHP_URL_HOST);
 
-        foreach ($whitelistedDomains as $whitelistedDomain) {
-            if ($domain === $whitelistedDomain) {
+        foreach ($allowedDomains as $allowedDomain) {
+            if ($domain === $allowedDomain) {
                 return true;
             }
         }
