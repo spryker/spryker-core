@@ -33,6 +33,7 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
@@ -951,13 +952,23 @@ class Customer implements CustomerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return void
      */
-    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void
-    {
-        foreach ($customerCollectionTransfer->getCustomers() as $customer) {
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void {
+        $customersCount = $customerCollectionTransfer->getCustomers()->count();
+        foreach ($customerCollectionTransfer->getCustomers() as $index => $customer) {
             $this->sendPasswordRestoreMail($customer);
+
+            if (!$output) {
+                continue;
+            }
+
+            $output->writeln(sprintf('%d out of %d emails sent', ++$index, $customersCount));
         }
     }
 }

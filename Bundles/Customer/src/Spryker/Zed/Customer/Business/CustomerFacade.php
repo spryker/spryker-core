@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
@@ -606,12 +607,15 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return void
      */
-    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void
-    {
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void {
         $this->getFactory()
-            ->createCustomer()->sendPasswordRestoreMailForCustomerCollection($customerCollectionTransfer);
+            ->createCustomer()->sendPasswordRestoreMailForCustomerCollection($customerCollectionTransfer, $output);
     }
 }

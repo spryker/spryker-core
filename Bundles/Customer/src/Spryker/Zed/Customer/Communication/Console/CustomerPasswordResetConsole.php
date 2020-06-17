@@ -56,7 +56,7 @@ class CustomerPasswordResetConsole extends Console
             }
         }
 
-        $this->getFacade()->sendPasswordRestoreMailForCustomerCollection($customerCollection);
+        $this->getFacade()->sendPasswordRestoreMailForCustomerCollection($customerCollection, $output);
 
         return static::CODE_SUCCESS;
     }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface CustomerInterface
 {
@@ -107,8 +108,12 @@ interface CustomerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return void
      */
-    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void;
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void;
 }
