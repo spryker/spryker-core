@@ -58,11 +58,11 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserInvitationToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -74,11 +74,11 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyUserInvitationToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -90,11 +90,11 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new CompanyUserInvitationToMailFacadeBridge(
                 $container->getLocator()->mail()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -106,11 +106,11 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new CompanyUserInvitationToUtilTextBridge(
                 $container->getLocator()->utilText()->service()
             );
-        };
+        });
 
         return $container;
     }

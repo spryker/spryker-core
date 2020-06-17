@@ -45,9 +45,9 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemReaderPlugin(Container $container)
     {
-        $container[static::PLUGIN_READER] = function (Container $container) {
+        $container->set(static::PLUGIN_READER, function (Container $container) {
             return new FileSystemReaderPlugin();
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemWriterPlugin(Container $container)
     {
-        $container[static::PLUGIN_WRITER] = function (Container $container) {
+        $container->set(static::PLUGIN_WRITER, function (Container $container) {
             return new FileSystemWriterPlugin();
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemStreamPlugin(Container $container)
     {
-        $container[static::PLUGIN_STREAM] = function (Container $container) {
+        $container->set(static::PLUGIN_STREAM, function (Container $container) {
             return new FileSystemStreamPlugin();
-        };
+        });
 
         return $container;
     }

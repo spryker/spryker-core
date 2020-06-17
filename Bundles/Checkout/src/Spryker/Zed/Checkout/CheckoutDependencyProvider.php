@@ -29,21 +29,21 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
+        $container->set(static::CHECKOUT_PRE_CONDITIONS, function (Container $container) {
             return $this->getCheckoutPreConditions($container);
-        };
+        });
 
-        $container[self::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
+        $container->set(static::CHECKOUT_ORDER_SAVERS, function (Container $container) {
             return $this->getCheckoutOrderSavers($container);
-        };
+        });
 
-        $container[self::CHECKOUT_POST_HOOKS] = function (Container $container) {
+        $container->set(static::CHECKOUT_POST_HOOKS, function (Container $container) {
             return $this->getCheckoutPostHooks($container);
-        };
+        });
 
-        $container[static::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
+        $container->set(static::CHECKOUT_PRE_SAVE_HOOKS, function (Container $container) {
             return $this->getCheckoutPreSaveHooks($container);
-        };
+        });
 
         $container = $this->addOmsFacade($container);
 
@@ -57,9 +57,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[static::FACADE_OMS] = function () use ($container) {
+        $container->set(static::FACADE_OMS, function () use ($container) {
             return new CheckoutToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }

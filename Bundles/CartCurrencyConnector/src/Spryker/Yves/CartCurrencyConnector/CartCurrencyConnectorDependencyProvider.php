@@ -37,9 +37,9 @@ class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartClient(Container $container)
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new CartCurrencyConnectorToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CartCurrencyConnectorToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }

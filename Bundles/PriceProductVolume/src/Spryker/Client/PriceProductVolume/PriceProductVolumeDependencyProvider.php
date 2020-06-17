@@ -45,11 +45,11 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -61,11 +61,11 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -77,11 +77,11 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeToPriceProductStorageClientBridge(
                 $container->getLocator()->priceProductStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -93,11 +93,11 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new PriceProductVolumeToLocaleClientBridge(
                 $container->getLocator()->locale()->client()
             );
-        };
+        });
 
         return $container;
     }

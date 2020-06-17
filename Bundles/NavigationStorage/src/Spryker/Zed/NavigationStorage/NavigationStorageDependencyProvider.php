@@ -35,9 +35,9 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new NavigationStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -49,17 +49,17 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new NavigationStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
-        $container[static::FACADE_NAVIGATION] = function (Container $container) {
+        $container->set(static::FACADE_NAVIGATION, function (Container $container) {
             return new NavigationStorageToNavigationBridge($container->getLocator()->navigation()->facade());
-        };
+        });
 
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -71,13 +71,13 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_NAVIGATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_NAVIGATION, function (Container $container) {
             return new NavigationStorageToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new NavigationStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
 
         return $container;
     }
