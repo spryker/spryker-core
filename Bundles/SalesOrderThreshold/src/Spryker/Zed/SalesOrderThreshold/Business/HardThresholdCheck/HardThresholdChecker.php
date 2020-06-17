@@ -77,7 +77,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
             $salesOrderThresholdValueTransfers,
             [
                 SalesOrderThresholdConfig::GROUP_HARD,
-                SalesOrderThresholdConfig::GROUP_HARD_MAX
+                SalesOrderThresholdConfig::GROUP_HARD_MAX,
             ]
         );
 

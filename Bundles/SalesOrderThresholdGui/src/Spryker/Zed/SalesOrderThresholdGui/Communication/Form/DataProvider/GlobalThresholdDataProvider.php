@@ -179,7 +179,7 @@ class GlobalThresholdDataProvider
     {
         $hardTypesList = [];
         foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
-            if ($formExpanderPlugin->getThresholdKey() === SalesOrderThresholdGuiConfig::GROUP_HARD_MAX) {
+            if ($formExpanderPlugin->getThresholdGroup() === SalesOrderThresholdGuiConfig::GROUP_HARD_MAX) {
                 $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
             }
         }

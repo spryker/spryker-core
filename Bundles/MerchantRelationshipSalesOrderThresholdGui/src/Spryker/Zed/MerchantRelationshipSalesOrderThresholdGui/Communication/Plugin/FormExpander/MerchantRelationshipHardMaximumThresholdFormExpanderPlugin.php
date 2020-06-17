@@ -41,7 +41,7 @@ class MerchantRelationshipHardMaximumThresholdFormExpanderPlugin extends Abstrac
      */
     public function getThresholdKey(): string
     {
-        return MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX;
+        return MerchantRelationshipSalesOrderThresholdGuiConfig::THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM;
     }
 
     /**
@@ -53,7 +53,7 @@ class MerchantRelationshipHardMaximumThresholdFormExpanderPlugin extends Abstrac
      */
     public function getThresholdGroup(): string
     {
-        return MerchantRelationshipSalesOrderThresholdGuiConfig::THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM;
+        return MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX;
     }
 
     /**

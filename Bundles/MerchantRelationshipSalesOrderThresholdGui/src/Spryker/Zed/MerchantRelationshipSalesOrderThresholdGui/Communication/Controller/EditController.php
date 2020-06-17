@@ -124,6 +124,14 @@ class EditController extends AbstractController
         );
 
         $this->handleThresholdData(
+            $data[MerchantRelationshipThresholdType::FIELD_HARD_MAXIMUM],
+            MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX,
+            $idMerchantRelationship,
+            $storeTransfer,
+            $currencyTransfer
+        );
+
+        $this->handleThresholdData(
             $data[MerchantRelationshipThresholdType::FIELD_SOFT],
             MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT,
             $idMerchantRelationship,

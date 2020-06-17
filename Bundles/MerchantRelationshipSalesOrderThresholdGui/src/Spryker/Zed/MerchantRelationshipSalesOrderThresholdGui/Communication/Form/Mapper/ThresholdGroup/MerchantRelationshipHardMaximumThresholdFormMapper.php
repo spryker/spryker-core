@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup;
 
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardMaximumThresholdType;
 
 class MerchantRelationshipHardMaximumThresholdFormMapper extends AbstractMerchantRelationshipThresholdFormMapper implements MerchantRelationshipThresholdFormMapperInterface
 {
@@ -22,17 +22,17 @@ class MerchantRelationshipHardMaximumThresholdFormMapper extends AbstractMerchan
         array $data,
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer {
-        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[MerchantRelationshipHardThresholdType::FIELD_ID_THRESHOLD] ?? null);
+        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[MerchantRelationshipHardMaximumThresholdType::FIELD_ID_THRESHOLD] ?? null);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
             $merchantRelationshipSalesOrderThresholdTransfer
         );
 
         $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()
-            ->setThreshold($data[MerchantRelationshipHardThresholdType::FIELD_THRESHOLD]);
+            ->setThreshold($data[MerchantRelationshipHardMaximumThresholdType::FIELD_THRESHOLD]);
 
         foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
-            if ($formExpanderPlugin->getThresholdKey() !== $data[MerchantRelationshipHardThresholdType::FIELD_STRATEGY]) {
+            if ($formExpanderPlugin->getThresholdKey() !== $data[MerchantRelationshipHardMaximumThresholdType::FIELD_STRATEGY]) {
                 continue;
             }
 
