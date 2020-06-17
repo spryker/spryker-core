@@ -93,7 +93,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MailToStoreFacadeInterface
+    public function getStoreFacade(): MailToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MailDependencyProvider::FACADE_STORE);
     }
@@ -101,7 +101,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): MailToLocaleFacadeInterface
+    public function getLocaleFacade(): MailToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MailDependencyProvider::FACADE_LOCALE);
     }

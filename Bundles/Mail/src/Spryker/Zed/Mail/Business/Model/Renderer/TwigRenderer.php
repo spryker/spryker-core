@@ -16,6 +16,8 @@ use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
 
 class TwigRenderer implements RendererInterface
 {
+    protected const TWIG_CONTEXT_KEY_MAIL = 'mail';
+
     /**
      * @var \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
      */
@@ -96,7 +98,7 @@ class TwigRenderer implements RendererInterface
         foreach ($mailTransfer->requireTemplates()->getTemplates() as $templateTransfer) {
             if (!$templateTransfer->getIsHtml()) {
                 $twigContext = $this->getTwigContext();
-                $twigContext['mail'] = $mailTransfer;
+                $twigContext[static::TWIG_CONTEXT_KEY_MAIL] = $mailTransfer;
 
                 $renderedContent = $this->renderer->render($templateTransfer->getName(), $twigContext);
                 $templateTransfer->setContent($renderedContent);
@@ -114,7 +116,7 @@ class TwigRenderer implements RendererInterface
         foreach ($mailTransfer->requireTemplates()->getTemplates() as $templateTransfer) {
             if ($templateTransfer->getIsHtml()) {
                 $twigContext = $this->getTwigContext();
-                $twigContext['mail'] = $mailTransfer;
+                $twigContext[static::TWIG_CONTEXT_KEY_MAIL] = $mailTransfer;
 
                 $renderedContent = $this->renderer->render($templateTransfer->getName(), $twigContext);
                 $templateTransfer->setContent($renderedContent);

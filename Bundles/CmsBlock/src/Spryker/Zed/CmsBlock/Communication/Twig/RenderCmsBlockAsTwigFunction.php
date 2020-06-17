@@ -33,34 +33,6 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
     }
 
     /**
-     * @return string
-     */
-    protected function getFunctionName()
-    {
-        return static::FUNCTION_NAME;
-    }
-
-    /**
-     * @return array|callable
-     */
-    protected function getFunction()
-    {
-        return [$this, 'getCmsBlockTwig'];
-    }
-
-    /**
-     * @return mixed[]
-     */
-    protected function getOptions()
-    {
-        $options = parent::getOptions();
-        $options['needs_environment'] = true;
-        $options['needs_context'] = true;
-
-        return $options;
-    }
-
-    /**
      * @param \Twig\Environment $environment
      * @param mixed[] $context
      * @param string $cmsBlockName
@@ -132,5 +104,33 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
         }
 
         return $placeholdersContent;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFunctionName()
+    {
+        return static::FUNCTION_NAME;
+    }
+
+    /**
+     * @return array|callable
+     */
+    protected function getFunction()
+    {
+        return [$this, 'getCmsBlockTwig'];
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected function getOptions()
+    {
+        $options = parent::getOptions();
+        $options['needs_environment'] = true;
+        $options['needs_context'] = true;
+
+        return $options;
     }
 }
