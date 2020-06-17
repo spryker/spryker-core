@@ -66,7 +66,7 @@ class PropelApplicationPluginTest extends Unit
      */
     public function testPropelConnectionManager(): void
     {
-        $createTableQuery = 'CREATE TABLE IF NOT EXISTS "spy_test_propel" ("id_test_propel" INTEGER NOT NULL, "message" VARCHAR(255), PRIMARY KEY ("id_test_propel"));';
+        $createTableQuery = 'CREATE TABLE IF NOT EXISTS "spy_test_propel" ("id_test_propel" INT NOT NULL, PRIMARY KEY ("id_test_propel"));';
         $createTableQueryResult = $this->writeConnection->prepare($createTableQuery)->execute();
         $this->assertTrue($createTableQueryResult);
 
