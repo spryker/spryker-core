@@ -968,7 +968,12 @@ class Customer implements CustomerInterface
                 continue;
             }
 
-            $output->write(sprintf("%d out of %d emails sent \r", ++$index, $customersCount));
+            $output->write(sprintf(
+                "%d out of %d emails sent \r%s",
+                ++$index,
+                $customersCount,
+                $index === $customersCount ? PHP_EOL : ''
+            ));
         }
     }
 }
