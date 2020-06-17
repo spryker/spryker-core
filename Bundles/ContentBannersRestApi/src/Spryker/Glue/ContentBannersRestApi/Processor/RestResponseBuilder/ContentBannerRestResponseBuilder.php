@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
-use Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -25,20 +24,11 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface
-     */
-    protected $contentBannerMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface $contentBannerMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ContentBannerMapperInterface $contentBannerMapper
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->contentBannerMapper = $contentBannerMapper;
     }
 
     /**
@@ -137,13 +127,13 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
         ContentBannerTypeTransfer $contentBannerTypeTransfer,
         string $contentBannerKey
     ): RestResourceInterface {
+        $restContentBannerAttributesTransfer = (new RestContentBannerAttributesTransfer())
+            ->fromArray($contentBannerTypeTransfer->modifiedToArray(), true);
+
         return $this->restResourceBuilder->createRestResource(
             ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS,
             $contentBannerKey,
-            $this->contentBannerMapper->mapBannerTypeTransferToRestContentBannerAttributes(
-                $contentBannerTypeTransfer,
-                new RestContentBannerAttributesTransfer()
-            )
+            $restContentBannerAttributesTransfer
         );
     }
 }

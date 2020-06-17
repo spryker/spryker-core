@@ -11,8 +11,6 @@ use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiTo
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpander;
 use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface;
-use Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapper;
-use Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReader;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReaderInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilder;
@@ -34,22 +32,11 @@ class ContentBannersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface
-     */
-    public function createContentBannerMapper(): ContentBannerMapperInterface
-    {
-        return new ContentBannerMapper();
-    }
-
-    /**
      * @return \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface
      */
     public function createContentBannerRestResponseBuilder(): ContentBannerRestResponseBuilderInterface
     {
-        return new ContentBannerRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createContentBannerMapper()
-        );
+        return new ContentBannerRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**
