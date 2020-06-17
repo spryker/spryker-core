@@ -36,7 +36,7 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
         $currentDomain = $event->getRequest()->headers->get(static::HTTP_HEADER_HOST);
 
         if ($domain !== $currentDomain && !$this->isAllowedDomain($domain)) {
-            throw new ForbiddenExternalRedirectException(sprintf('URL %s is not a part of a allowed domain', $redirectUrl));
+            throw new ForbiddenExternalRedirectException(sprintf('URL %s is not an allowed domain', $redirectUrl));
         }
     }
 
