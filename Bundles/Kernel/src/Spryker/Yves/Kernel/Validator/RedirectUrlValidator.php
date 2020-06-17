@@ -10,6 +10,7 @@ namespace Spryker\Yves\Kernel\Validator;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class RedirectUrlValidator implements RedirectUrlValidatorInterface
@@ -32,9 +33,8 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
 
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
         $domain = (string)parse_url($redirectUrl, PHP_URL_HOST);
-        $currentDomain = $event->getRequest()->getHost();
 
-        if ($domain !== $currentDomain && !$this->isAllowedDomain($domain)) {
+        if (!$this->isAllowedDomain($domain, $event->getRequest())) {
             throw new ForbiddenExternalRedirectException(sprintf('URL %s is not an allowed domain', $redirectUrl));
         }
     }
@@ -44,12 +44,13 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
      *
      * @param string $domain
+     * @param \Symfony\Component\HttpFoundation\Request $currentRequest
      *
      * @return bool
      */
-    protected function isAllowedDomain(string $domain): bool
+    protected function isAllowedDomain(string $domain, Request $currentRequest): bool
     {
-        if (!$domain) {
+        if (!$domain || $domain === $currentRequest->getHost()) {
             return true;
         }
 
