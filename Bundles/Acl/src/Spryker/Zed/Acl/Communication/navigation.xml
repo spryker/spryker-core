@@ -3,6 +3,7 @@
     <acl>
         <label>Users Control</label>
         <title>Users Control</title>
+        <icon>fa-users</icon>
         <pages>
             <roles>
                 <label>Roles</label>
