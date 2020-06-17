@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 class RedirectUrlValidator implements RedirectUrlValidatorInterface
 {
     protected const HTTP_HEADER_LOCATION = 'Location';
-    protected const HTTP_HEADER_HOST = 'host';
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
@@ -33,7 +32,7 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
 
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
         $domain = (string)parse_url($redirectUrl, PHP_URL_HOST);
-        $currentDomain = $event->getRequest()->headers->get(static::HTTP_HEADER_HOST);
+        $currentDomain = $event->getRequest()->getHost();
 
         if ($domain !== $currentDomain && !$this->isAllowedDomain($domain)) {
             throw new ForbiddenExternalRedirectException(sprintf('URL %s is not an allowed domain', $redirectUrl));
