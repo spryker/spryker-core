@@ -29,7 +29,7 @@ class ContentStorageListener extends AbstractPlugin implements EventBulkHandlerI
      *
      * @return void
      */
-    public function handleBulk(array $transfers, string $eventName): void
+    public function handleBulk(array $transfers, $eventName): void
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');

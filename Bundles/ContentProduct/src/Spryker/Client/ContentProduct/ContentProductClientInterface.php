@@ -25,4 +25,19 @@ interface ContentProductClientInterface
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
     public function executeProductAbstractListTypeByKey(string $contentKey, string $localeName): ?ContentProductAbstractListTypeTransfer;
+
+    /**
+     * Specification:
+     * - Finds content items in the key-value storage by content keys and locale name.
+     * - Gets stored term for found content item.
+     * - Executes stored term with found content items to get a content product abstract list type.
+     *
+     * @api
+     *
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     */
+    public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array;
 }

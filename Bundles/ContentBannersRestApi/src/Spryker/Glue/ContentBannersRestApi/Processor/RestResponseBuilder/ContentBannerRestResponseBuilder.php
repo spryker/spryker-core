@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
-use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
+use Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -25,13 +25,13 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface
+     * @var \Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface
      */
     protected $contentBannerMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface $contentBannerMapper
+     * @param \Spryker\Glue\ContentBannersRestApi\Processor\Mapper\ContentBannerMapperInterface $contentBannerMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,

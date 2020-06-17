@@ -11,10 +11,19 @@
         <property name="idProductAbstracts" type="int[]" singular="idProductAbstracts"/>
     </transfer>
 
+    <transfer name="RestContentProductAbstractListAttributes">
+        <property name="abstractProducts" type="AbstractProductsRestAttributes[]" singular="abstractProduct"/>
+    </transfer>
+
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="CmsPageStorage">
+        <property name="contentWidgetParameterMap" type="array" singular="contentWidgetParameterMap"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

@@ -31,4 +31,21 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
             ->createContentProductAbstractListTypeMapper()
             ->executeProductAbstractListTypeByKey($contentKey, $localeName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     */
+    public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createContentProductAbstractListTypeMapper()
+            ->executeProductAbstractListTypeByKeys($contentKeys, $localeName);
+    }
 }

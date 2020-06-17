@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientBridge;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientBridge;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
@@ -19,6 +20,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
 {
     public const CLIENT_CONTENT_PRODUCT = 'CLIENT_CONTENT_PRODUCT';
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
+    public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,6 +31,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
     {
         $container = $this->addContentProductClient($container);
         $container = $this->addProductsRestApiResource($container);
+        $container = $this->addCmsStorageClient($container);
 
         return $container;
     }
@@ -61,6 +64,22 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
                 $container->getLocator()->productsRestApi()->resource()
             );
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCmsStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
+            return new ContentProductAbstractListsRestApiToCmsStorageClientBridge(
+                $container->getLocator()->cmsStorage()->client()
+            );
+        });
 
         return $container;
     }

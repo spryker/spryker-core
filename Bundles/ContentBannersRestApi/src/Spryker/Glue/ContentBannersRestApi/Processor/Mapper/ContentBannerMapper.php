@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentBannersRestApi\Mapper;
+namespace Spryker\Glue\ContentBannersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;

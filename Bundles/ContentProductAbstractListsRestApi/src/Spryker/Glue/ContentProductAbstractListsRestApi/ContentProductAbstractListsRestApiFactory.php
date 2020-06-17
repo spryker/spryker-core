@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander\ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander;
@@ -26,7 +27,8 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     {
         return new ContentProductAbstractListReader(
             $this->getContentProductClient(),
-            $this->createContentProductAbstractListRestResponseBuilder()
+            $this->createContentProductAbstractListRestResponseBuilder(),
+            $this->getCmsStorageClient()
         );
     }
 
@@ -47,6 +49,14 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     public function getContentProductClient(): ContentProductAbstractListsRestApiToContentProductClientInterface
     {
         return $this->getProvidedDependency(ContentProductAbstractListsRestApiDependencyProvider::CLIENT_CONTENT_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface
+     */
+    public function getCmsStorageClient(): ContentProductAbstractListsRestApiToCmsStorageClientInterface
+    {
+        return $this->getProvidedDependency(ContentProductAbstractListsRestApiDependencyProvider::CLIENT_CMS_STORAGE);
     }
 
     /**

@@ -44,8 +44,8 @@ class ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander 
                 continue;
             }
 
-            foreach ($contentProductAbstractListsResources[$cmsPageReference] as $contentProductAbstractListsResource) {
-                $resource->addRelationship($contentProductAbstractListsResource);
+            foreach ($contentProductAbstractListsResources[$cmsPageReference] as $contentProductAbstractListsResources) {
+                $resource->addRelationship($contentProductAbstractListsResources);
             }
         }
     }

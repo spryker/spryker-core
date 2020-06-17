@@ -20,6 +20,8 @@ interface ContentProductAbstractListReaderInterface
     public function getContentProductAbstractListById(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
+     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     *
      * @param string[] $cmsPageReferences
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

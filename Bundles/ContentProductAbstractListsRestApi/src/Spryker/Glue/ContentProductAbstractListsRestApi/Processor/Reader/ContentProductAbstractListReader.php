@@ -8,10 +8,12 @@
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
 
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\ContentProduct\ContentProductConfig;
 use Throwable;
 
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
@@ -32,15 +34,23 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $contentProductAbstractListRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface
+     */
+    protected $cmsStorageClient;
+
+    /**
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
+     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient
      */
     public function __construct(
         ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
-        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
+        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder,
+        ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient
     ) {
         $this->contentProductClient = $contentProductClient;
         $this->contentProductAbstractListRestResponseBuilder = $contentProductAbstractListRestResponseBuilder;
+        $this->cmsStorageClient = $cmsStorageClient;
     }
 
     /**
@@ -76,6 +86,8 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     }
 
     /**
+     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     *
      * @param string[] $cmsPageReferences
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -83,37 +95,36 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      */
     public function getContentProductAbstractListsResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
     {
-//        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
-//            $cmsPageReferences,
-//            $restRequest->getMetadata()->getLocale(),
-//            APPLICATION_STORE
-//        );
-//
-//        $groupedContentBannerKeys = [];
-//        $contentBannerKeys = [];
-//        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
-//            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-//            if (
-//                isset($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
-//                && !empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
-//            ) {
-//                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME]);
-//                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
-//            }
-//        }
-//
-//        $contentBannerTypeTransfers = $this->contentBannerClient->executeBannerTypeByKeys(
-//            $contentBannerKeys,
-//            $restRequest->getMetadata()->getLocale()
-//        );
-//
-//        $mappedContentBannerTypeTransfers = [];
-//        foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
-//            foreach ($contentBannerKeys as $contentBannerKey => $contentBannerValue) {
-//                $mappedContentBannerTypeTransfers[$cmsPageUuid][$contentBannerKey] = $contentBannerTypeTransfers[$contentBannerValue];
-//            }
-//        }
+        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
+            $cmsPageReferences,
+            $restRequest->getMetadata()->getLocale(),
+            APPLICATION_STORE
+        );
+
+        $groupedContentProductAbstractListKeys = [];
+        $contentProductAbstractListKeys = [];
+        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
+            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
+            if (
+                isset($contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME])
+                && !empty($contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME])
+            ) {
+                $contentProductAbstractListKeys = array_merge($contentProductAbstractListKeys, $contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME]);
+                $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME];
+            }
+        }
+
+        $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
+            $contentProductAbstractListKeys,
+            $restRequest->getMetadata()->getLocale()
+        );
+
         $mappedProductAbstractListTypeTransfers = [];
+        foreach ($groupedContentProductAbstractListKeys as $cmsPageUuid => $contentProductAbstractListKeys) {
+            foreach ($contentProductAbstractListKeys as $contentProductAbstractListKey => $contentProductAbstractListValue) {
+                $mappedProductAbstractListTypeTransfers[$cmsPageUuid][$contentProductAbstractListKey] = $contentProductAbstractListTypeTransfers[$contentProductAbstractListValue];
+            }
+        }
 
         return $this->contentProductAbstractListRestResponseBuilder
             ->createContentProductAbstractListsRestResources($mappedProductAbstractListTypeTransfers, $restRequest);
