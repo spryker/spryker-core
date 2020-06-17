@@ -66,23 +66,23 @@ class PropelApplicationPluginTest extends Unit
      */
     public function testPropelConnectionManager(): void
     {
-        $createTableQuery = 'CREATE TABLE IF NOT EXISTS "spy_test_propel" ("id_test_propel" INT NOT NULL, PRIMARY KEY ("id_test_propel"));';
+        $createTableQuery = 'CREATE TABLE IF NOT EXISTS spy_test_propel (id_test_propel INT NOT NULL, PRIMARY KEY (id_test_propel));';
         $createTableQueryResult = $this->writeConnection->prepare($createTableQuery)->execute();
         $this->assertTrue($createTableQueryResult);
 
-        $insertQuery = sprintf('INSERT INTO "spy_test_propel" ("id_test_propel") VALUES (%s);', mt_rand());
+        $insertQuery = sprintf('INSERT INTO spy_test_propel (id_test_propel) VALUES (%s);', mt_rand());
         $createQueryResult = $this->writeConnection->prepare($insertQuery)->execute();
         $this->assertTrue($createQueryResult);
 
-        $selectQuery = 'SELECT * FROM "spy_test_propel";';
+        $selectQuery = 'SELECT * FROM spy_test_propel;';
         $selectQueryResult = $this->readConnection->prepare($selectQuery)->execute();
         $this->assertTrue($selectQueryResult);
 
-        $deleteQuery = 'DELETE FROM "spy_test_propel" where "id_test_propel" IS NOT NULL;';
+        $deleteQuery = 'DELETE FROM spy_test_propel where id_test_propel IS NOT NULL;';
         $deleteQueryResult = $this->writeConnection->prepare($deleteQuery)->execute();
         $this->assertTrue($deleteQueryResult);
 
-        $dropTableQuery = 'DROP TABLE IF EXISTS "spy_test_propel";';
+        $dropTableQuery = 'DROP TABLE IF EXISTS spy_test_propel;';
         $result = $this->writeConnection->prepare($dropTableQuery)->execute();
         $this->assertTrue($result);
     }
