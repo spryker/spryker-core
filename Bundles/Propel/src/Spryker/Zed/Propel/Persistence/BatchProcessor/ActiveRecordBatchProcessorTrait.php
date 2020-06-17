@@ -498,7 +498,7 @@ trait ActiveRecordBatchProcessorTrait
         if ($this->highPrecisionDateTime === null) {
             $this->highPrecisionDateTime = PropelDateTime::createHighPrecision();
         }
-        
+
         return $this->highPrecisionDateTime;
     }
 
