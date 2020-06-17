@@ -14,16 +14,10 @@ use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentPro
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\ContentProduct\ContentProductConfig;
 use Throwable;
 
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
 {
-    /**
-     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
-     */
-    protected const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
-
     /**
      * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface
      */
@@ -115,11 +109,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
             if (
-                isset($contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME])
-                && !empty($contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME])
+                isset($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])
+                && !empty($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])
             ) {
-                $contentProductAbstractListKeys = array_merge($contentProductAbstractListKeys, $contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME]);
-                $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentProductConfig::TWIG_FUNCTION_NAME];
+                $contentProductAbstractListKeys = array_merge($contentProductAbstractListKeys, $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME]);
+                $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME];
             }
         }
 
@@ -127,6 +121,10 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             $contentProductAbstractListKeys,
             $restRequest->getMetadata()->getLocale()
         );
+
+        if (!$contentProductAbstractListTypeTransfers) {
+            return [];
+        }
 
         $mappedProductAbstractListTypeTransfers = [];
         foreach ($groupedContentProductAbstractListKeys as $cmsPageUuid => $contentProductAbstractListKeys) {

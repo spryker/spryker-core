@@ -86,6 +86,10 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
         $contentProductAbstractListTypeTransfers = [];
         foreach ($contentTypeContextTransfers as $contentTypeContextTransfer) {
             $term = $contentTypeContextTransfer->getTerm();
+            if (!isset($this->contentProductTermExecutors[$term])) {
+                return [];
+            }
+
             $productAbstractListTermToBannerTypeExecutor = $this->contentProductTermExecutors[$term];
 
             $contentProductAbstractListTypeTransfers[$contentTypeContextTransfer->getKey()] = $productAbstractListTermToBannerTypeExecutor->execute($contentTypeContextTransfer);

@@ -36,7 +36,7 @@ class ContentProductAbstractListByCmsPageResourceRelationshipPlugin extends Abst
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

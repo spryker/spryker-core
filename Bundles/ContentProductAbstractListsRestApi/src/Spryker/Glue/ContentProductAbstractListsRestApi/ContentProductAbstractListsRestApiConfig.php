@@ -11,6 +11,11 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     */
+    public const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
+
     public const ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET = 'get';
 
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS = 'content-product-abstract-lists';

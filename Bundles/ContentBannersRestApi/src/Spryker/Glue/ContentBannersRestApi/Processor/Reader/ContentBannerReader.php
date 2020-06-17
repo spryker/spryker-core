@@ -18,12 +18,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ContentBannerReader implements ContentBannerReaderInterface
 {
-    protected const MAPPING_TYPE_UUID = 'uuid';
-    /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TYPE_BANNER
-     */
-    protected const CONTENT_TYPE_BANNER = 'Banner';
-
     /**
      * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface
      */
@@ -123,6 +117,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
             $contentBannerKeys,
             $restRequest->getMetadata()->getLocale()
         );
+
+        if (!$contentBannerTypeTransfers) {
+            return [];
+        }
 
         $mappedContentBannerTypeTransfers = [];
         foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {

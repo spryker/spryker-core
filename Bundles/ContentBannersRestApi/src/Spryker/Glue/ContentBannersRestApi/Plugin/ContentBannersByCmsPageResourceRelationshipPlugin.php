@@ -36,7 +36,7 @@ class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin i
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

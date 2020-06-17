@@ -84,6 +84,10 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
         $contentBannerTypeTransfers = [];
         foreach ($contentTypeContextTransfers as $contentTypeContextTransfer) {
             $term = $contentTypeContextTransfer->getTerm();
+            if (!isset($this->contentBannerTermExecutors[$term])) {
+                return [];
+            }
+
             $bannerTermToBannerTypeExecutor = $this->contentBannerTermExecutors[$term];
 
             $contentBannerTypeTransfers[$contentTypeContextTransfer->getKey()] = $bannerTermToBannerTypeExecutor->execute($contentTypeContextTransfer);
