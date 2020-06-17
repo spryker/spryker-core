@@ -16,14 +16,14 @@ class ProductAbstractQueryExpander implements ProductAbstractQueryExpanderInterf
     /**
      * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
-    protected $productAbstractQueryCriteriaExpanderPlugins;
+    protected $productTableQueryCriteriaExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[] $productAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[] $productTableQueryCriteriaExpanderPlugins
      */
-    public function __construct(array $productAbstractQueryCriteriaExpanderPlugins)
+    public function __construct(array $productTableQueryCriteriaExpanderPlugins)
     {
-        $this->productAbstractQueryCriteriaExpanderPlugins = $productAbstractQueryCriteriaExpanderPlugins;
+        $this->productTableQueryCriteriaExpanderPlugins = $productTableQueryCriteriaExpanderPlugins;
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductAbstractQueryExpander implements ProductAbstractQueryExpanderInterf
     {
         $queryCriteriaTransfer = new QueryCriteriaTransfer();
 
-        foreach ($this->productAbstractQueryCriteriaExpanderPlugins as $productAbstractQueryCriteriaExpanderPlugin) {
-            $queryCriteriaTransfer = $productAbstractQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
+        foreach ($this->productTableQueryCriteriaExpanderPlugins as $productTableQueryCriteriaExpanderPlugin) {
+            $queryCriteriaTransfer = $productTableQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
         }
 
         return $queryCriteriaTransfer;

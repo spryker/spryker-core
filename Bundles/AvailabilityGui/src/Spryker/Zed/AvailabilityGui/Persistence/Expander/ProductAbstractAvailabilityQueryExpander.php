@@ -16,14 +16,14 @@ class ProductAbstractAvailabilityQueryExpander implements ProductAbstractAvailab
     /**
      * @var \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
      */
-    protected $availabilityAbstractQueryCriteriaExpanderPlugins;
+    protected $availabilityAbstractTableQueryCriteriaExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[] $availabilityAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[] $availabilityAbstractTableQueryCriteriaExpanderPlugins
      */
-    public function __construct(array $availabilityAbstractQueryCriteriaExpanderPlugins)
+    public function __construct(array $availabilityAbstractTableQueryCriteriaExpanderPlugins)
     {
-        $this->availabilityAbstractQueryCriteriaExpanderPlugins = $availabilityAbstractQueryCriteriaExpanderPlugins;
+        $this->availabilityAbstractTableQueryCriteriaExpanderPlugins = $availabilityAbstractTableQueryCriteriaExpanderPlugins;
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductAbstractAvailabilityQueryExpander implements ProductAbstractAvailab
     {
         $queryCriteriaTransfer = new QueryCriteriaTransfer();
 
-        foreach ($this->availabilityAbstractQueryCriteriaExpanderPlugins as $availabilityAbstractQueryCriteriaExpanderPlugin) {
-            $queryCriteriaTransfer = $availabilityAbstractQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
+        foreach ($this->availabilityAbstractTableQueryCriteriaExpanderPlugins as $availabilityAbstractTableQueryCriteriaExpanderPlugin) {
+            $queryCriteriaTransfer = $availabilityAbstractTableQueryCriteriaExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
         }
 
         return $queryCriteriaTransfer;

@@ -39,7 +39,7 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return $this->executeAvailabilityListDataExpanderPlugins([
+        return $this->executeAvailabilityListActionViewDataExpanderPlugins([
             'indexTable' => $availabilityAbstractTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
@@ -77,7 +77,7 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return $this->executeAvailabilityViewDataExpanderPlugins([
+        return $this->executeAvailabilityViewActionViewDataExpanderPlugins([
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
             'stores' => $stores,
@@ -290,10 +290,10 @@ class IndexController extends AbstractController
      *
      * @return array
      */
-    protected function executeAvailabilityListDataExpanderPlugins(array $viewData): array
+    protected function executeAvailabilityListActionViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getAvailabilityListActionViewDataExpanderPlugins() as $availabilityListDataExpanderPlugin) {
-            $viewData = $availabilityListDataExpanderPlugin->expand($viewData);
+        foreach ($this->getFactory()->getAvailabilityListActionViewDataExpanderPlugins() as $availabilityListActionViewDataExpanderPlugin) {
+            $viewData = $availabilityListActionViewDataExpanderPlugin->expand($viewData);
         }
 
         return $viewData;
@@ -304,10 +304,10 @@ class IndexController extends AbstractController
      *
      * @return array
      */
-    protected function executeAvailabilityViewDataExpanderPlugins(array $viewData): array
+    protected function executeAvailabilityViewActionViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getAvailabilityViewActionViewDataExpanderPlugins() as $availabilityViewDataExpanderPlugin) {
-            $viewData = $availabilityViewDataExpanderPlugin->expand($viewData);
+        foreach ($this->getFactory()->getAvailabilityViewActionViewDataExpanderPlugins() as $availabilityViewActionViewDataExpanderPlugin) {
+            $viewData = $availabilityViewActionViewDataExpanderPlugin->expand($viewData);
         }
 
         return $viewData;

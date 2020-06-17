@@ -28,7 +28,7 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createProductTable();
 
-        $viewData = $this->executeProductAbstractListDataExpanderPlugins([
+        $viewData = $this->executeProductAbstractListActionViewDataExpanderPlugins([
             'productTable' => $productTable->render(),
         ]);
 
@@ -54,10 +54,10 @@ class IndexController extends AbstractController
      *
      * @return array
      */
-    protected function executeProductAbstractListDataExpanderPlugins(array $viewData): array
+    protected function executeProductAbstractListActionViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getProductAbstractListActionViewDataExpanderPlugins() as $productAbstractListDataExpanderPlugin) {
-            $viewData = $productAbstractListDataExpanderPlugin->expand($viewData);
+        foreach ($this->getFactory()->getProductAbstractListActionViewDataExpanderPlugins() as $productAbstractListActionViewDataExpanderPlugin) {
+            $viewData = $productAbstractListActionViewDataExpanderPlugin->expand($viewData);
         }
 
         return $viewData;

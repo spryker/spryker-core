@@ -89,7 +89,7 @@ class ViewController extends AddController
             ->getProductCategoryFacade()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
 
-        $viewData = $this->executeProductAbstractViewDataExpanderPlugins([
+        $viewData = $this->executeProductAbstractViewActionViewDataExpanderPlugins([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'concreteProductCollection' => $concreteProductCollection,
@@ -334,10 +334,10 @@ class ViewController extends AddController
      *
      * @return array
      */
-    protected function executeProductAbstractViewDataExpanderPlugins(array $viewData): array
+    protected function executeProductAbstractViewActionViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getProductAbstractViewActionViewDataExpanderPlugins() as $productAbstractViewDataExpanderPlugin) {
-            $viewData = $productAbstractViewDataExpanderPlugin->expand($viewData);
+        foreach ($this->getFactory()->getProductAbstractViewActionViewDataExpanderPlugins() as $productAbstractViewActionViewDataExpanderPlugin) {
+            $viewData = $productAbstractViewActionViewDataExpanderPlugin->expand($viewData);
         }
 
         return $viewData;
