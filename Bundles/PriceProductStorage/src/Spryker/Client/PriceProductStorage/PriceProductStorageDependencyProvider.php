@@ -57,9 +57,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new PriceProductStorageToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductStorageToPriceProductClientBridge($container->getLocator()->priceProduct()->client());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new PriceProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductService(Container $container): Container
     {
-        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new PriceProductStorageToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     public function addPriceDimensionPlugins($container): Container
     {
-        $container[static::PLUGIN_STORAGE_PRICE_DIMENSION] = function () {
+        $container->set(static::PLUGIN_STORAGE_PRICE_DIMENSION, function () {
             return $this->getPriceDimensionStorageReaderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -149,9 +149,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductPricesExtractorPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function () {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR, function () {
             return $this->getPriceProductPricesExtractorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -171,9 +171,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductFilterExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER] = function () {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER, function () {
             return $this->getPriceProductFilterExpanderPlugins();
-        };
+        });
 
         return $container;
     }

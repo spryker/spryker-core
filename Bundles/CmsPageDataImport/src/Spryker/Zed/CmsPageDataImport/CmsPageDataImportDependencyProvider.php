@@ -39,9 +39,9 @@ class CmsPageDataImportDependencyProvider extends DataImportDependencyProvider
      */
     protected function addCmsFacade(Container $container): Container
     {
-        $container[static::FACADE_CMS] = function (Container $container) {
+        $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsPageDataImportToCmsFacadeBridge($container->getLocator()->cms()->facade());
-        };
+        });
 
         return $container;
     }

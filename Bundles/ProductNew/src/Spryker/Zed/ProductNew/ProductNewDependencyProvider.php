@@ -40,9 +40,9 @@ class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductLabelQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_LABEL, function (Container $container) {
             return new ProductNewToProductLabelBridge($container->getLocator()->productLabel()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductNewToProductBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }

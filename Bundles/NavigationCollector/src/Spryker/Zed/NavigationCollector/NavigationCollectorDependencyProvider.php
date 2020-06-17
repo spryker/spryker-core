@@ -46,9 +46,9 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function provideCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new NavigationCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
     }
 
     /**
@@ -58,9 +58,9 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function provideNavigationFacade(Container $container)
     {
-        $container[self::FACADE_NAVIGATION] = function (Container $container) {
+        $container->set(static::FACADE_NAVIGATION, function (Container $container) {
             return new NavigationCollectorToNavigationBridge($container->getLocator()->navigation()->facade());
-        };
+        });
     }
 
     /**
@@ -70,9 +70,9 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function provideDataReaderService(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
     }
 
     /**
@@ -82,8 +82,8 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function provideTouchQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
     }
 }

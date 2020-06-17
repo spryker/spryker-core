@@ -45,11 +45,11 @@ class SalesOrderThresholdDataImportDependencyProvider extends DataImportDependen
      */
     protected function addSalesOrderThresholdFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES_ORDER_THRESHOLD] = function (Container $container) {
+        $container->set(static::FACADE_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new SalesOrderThresholdDataImportToSalesOrderThresholdFacadeBridge(
                 $container->getLocator()->salesOrderThreshold()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -61,11 +61,11 @@ class SalesOrderThresholdDataImportDependencyProvider extends DataImportDependen
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new SalesOrderThresholdDataImportToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -77,11 +77,11 @@ class SalesOrderThresholdDataImportDependencyProvider extends DataImportDependen
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new SalesOrderThresholdDataImportToCurrencyFacadeBridge(
                 $container->getLocator()->currency()->facade()
             );
-        };
+        });
 
         return $container;
     }

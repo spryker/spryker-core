@@ -37,29 +37,29 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::PLUGIN_GRAPH] = function () {
+        $container->set(static::PLUGIN_GRAPH, function () {
             return $this->getGraphPlugin();
-        };
+        });
 
-        $container[static::FINDER] = function () {
+        $container->set(static::FINDER, function () {
             return $this->createFinder();
-        };
+        });
 
-        $container[static::FILESYSTEM] = function () {
+        $container->set(static::FILESYSTEM, function () {
             return $this->createFilesystem();
-        };
+        });
 
-        $container[static::CONFIG_LOADER] = function () {
+        $container->set(static::CONFIG_LOADER, function () {
             return $this->createConfigLoader();
-        };
+        });
 
-        $container[static::TWIG_ENVIRONMENT] = function () {
+        $container->set(static::TWIG_ENVIRONMENT, function () {
             return $this->createTwigEnvironment();
-        };
+        });
 
-        $container[static::TWIG_LOADER_FILESYSTEM] = function () {
+        $container->set(static::TWIG_LOADER_FILESYSTEM, function () {
             return $this->createTwigLoaderFilesystem();
-        };
+        });
 
         $container = $this->addModuleFinderFacade($container);
 
