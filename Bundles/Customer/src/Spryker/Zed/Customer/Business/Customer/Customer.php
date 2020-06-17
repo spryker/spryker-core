@@ -968,7 +968,7 @@ class Customer implements CustomerInterface
                 continue;
             }
 
-            $output->writeln(sprintf('%d out of %d emails sent', ++$index, $customersCount));
+            $output->write(sprintf("%d out of %d emails sent \r", ++$index, $customersCount));
         }
     }
 }
