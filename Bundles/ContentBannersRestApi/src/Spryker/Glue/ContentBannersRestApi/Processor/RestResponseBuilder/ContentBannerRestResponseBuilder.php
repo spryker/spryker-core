@@ -128,7 +128,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
         string $contentBannerKey
     ): RestResourceInterface {
         $restContentBannerAttributesTransfer = (new RestContentBannerAttributesTransfer())
-            ->fromArray($contentBannerTypeTransfer->modifiedToArray(), true);
+            ->fromArray($contentBannerTypeTransfer->toArray(), true);
 
         return $this->restResourceBuilder->createRestResource(
             ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS,
