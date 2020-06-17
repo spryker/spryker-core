@@ -1,3 +1,6 @@
-{{ 'availability_notification_subscription.mail.unsubscribed.body'|trans({'%name%': mail.availabilityNotificationSubscriptionMailData.productName}) }}
-
-{% embed '@AvailabilityNotification/mail/footer.text.twig' %}{% endembed %}
+{{ renderCmsBlockAsTwig(
+    'availability-availability-notification-unsubscribed--text',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

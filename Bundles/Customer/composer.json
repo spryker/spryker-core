@@ -33,6 +33,7 @@
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/cms-block": "If you want to use the ability to edit emails from the backoffice, minimum required version: 3.1.0.",
     "spryker/sales": "If you want customer information in sales."
   },
   "autoload": {

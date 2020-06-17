@@ -1,3 +1,6 @@
-<div style="text-align: center;">
-    {{ 'mail.newsletter.unsubscribed.text' | trans }}
-</div>
+{{ renderCmsBlockAsTwig(
+    'newsletter-unsubscribed--html',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

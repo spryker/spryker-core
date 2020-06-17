@@ -1,4 +1,6 @@
-{{ 'mail.giftCard.delivery.text' | trans }}
-{% for giftCard in mail.giftCards %}
-    {{ giftCard.code }} ({{ giftCard.value / 100 | number_format(2) }} {{ giftCard.currencyIsoCode }})
-{% endfor %}
+{{ renderCmsBlockAsTwig(
+    'gift-card-delivery--text',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

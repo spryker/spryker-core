@@ -1,4 +1,6 @@
-<div>
-    <div style="text-align: center;">{{ 'mail.company.status.text' | trans }}{{ ('mail.company.status.' ~ mail.company.status) | trans }}</div>
-
-</div>
+{{ renderCmsBlockAsTwig(
+    'company-status--html',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

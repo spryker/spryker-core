@@ -1,4 +1,6 @@
-{{ 'mail.company.user.invitation.body.text' | trans({
-    '%name%' : mail.getCompanyUserInvitation.getFirstName,
-    '%invitationLink%' : mail.getInvitationLink,
-}) | raw }}
+{{ renderCmsBlockAsTwig(
+    'company-user-invitation--text',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CmsBlock\Communication;
 
+use Spryker\Shared\Twig\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
+use Spryker\Zed\CmsBlock\Communication\Twig\RenderCmsBlockAsTwigFunction;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -17,4 +20,19 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsBlockCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\CmsBlock\Communication\Twig\RenderCmsBlockAsTwigFunction
+     */
+    public function createRenderCmsBlockAsTwigFunction(): RenderCmsBlockAsTwigFunction
+    {
+        return new RenderCmsBlockAsTwigFunction($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
+     */
+    public function createTwigFilesystemLoader(): FilesystemLoaderInterface
+    {
+        return new FilesystemLoader($this->getConfig()->getCmsBlockTemplatePaths(), 'CmsBlock');
+    }
 }

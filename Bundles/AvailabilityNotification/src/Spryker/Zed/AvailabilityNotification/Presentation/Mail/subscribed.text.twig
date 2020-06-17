@@ -1,11 +1,6 @@
-{{ 'availability_notification_subscription.mail.subscribed.head'|trans|raw }}
-
-{{ mail.availabilityNotificationSubscriptionMailData.productName }}
-
-{{ mail.availabilityNotificationSubscriptionMailData.productAttributes.price ?? '' }}
-
-{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes if name %}
-    {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
-{% endfor %}
-
-{% embed '@AvailabilityNotification/mail/footer.text.twig' %}{% endembed %}
+{{ renderCmsBlockAsTwig(
+    'availability-notification-subscription--text',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}

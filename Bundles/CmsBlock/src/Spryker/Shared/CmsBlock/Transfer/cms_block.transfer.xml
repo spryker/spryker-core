@@ -14,6 +14,7 @@
         <property name="templateName" type="string"/>
         <property name="glossary" type="CmsBlockGlossary"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="cmsBlockTemplate" type="CmsBlockTemplate"/>
     </transfer>
 
     <transfer name="StoreRelation">

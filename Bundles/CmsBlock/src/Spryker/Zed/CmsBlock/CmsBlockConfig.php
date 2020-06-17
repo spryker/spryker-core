@@ -113,4 +113,21 @@ class CmsBlockConfig extends AbstractBundleConfig
     {
         return static::THEME_NAME_DEFAULT;
     }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCmsBlockTemplatePaths()
+    {
+        return [
+            sprintf(
+                '%s/%s/Shared/CmsBlock/Theme/%s',
+                APPLICATION_SOURCE_DIR,
+                $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
+                static::THEME_NAME_DEFAULT
+            ),
+        ];
+    }
 }

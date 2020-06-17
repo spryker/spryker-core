@@ -1,3 +1,6 @@
-<div>
-    <div style="text-align: center;">{{ 'mail.customer.registration.text' | trans }}</div>
-</div>
+{{ renderCmsBlockAsTwig(
+    'customer-registration--html',
+    store.name,
+    locale.localeName,
+    {mail: mail}
+) }}
