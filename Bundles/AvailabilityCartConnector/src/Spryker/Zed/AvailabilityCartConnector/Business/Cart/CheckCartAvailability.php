@@ -24,8 +24,6 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
-    protected const MESSAGE_TYPE_ERROR = 'error';
-
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
      */
@@ -120,7 +118,6 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
-        $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
         $messageTransfer->setParameters([
             static::STOCK_TRANSLATION_PARAMETER => $availability->trim()->toString(),
             static::SKU_TRANSLATION_PARAMETER => $sku,
