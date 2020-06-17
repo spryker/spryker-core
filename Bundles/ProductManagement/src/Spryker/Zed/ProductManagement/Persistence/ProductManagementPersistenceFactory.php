@@ -63,15 +63,15 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQueryExpander(): ProductAbstractQueryExpanderInterface
     {
         return new ProductAbstractQueryExpander(
-            $this->getProductAbstractQueryCriteriaExpanderPlugins()
+            $this->getProductTableQueryCriteriaExpanderPluginInterfaces()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
-    public function getProductAbstractQueryCriteriaExpanderPlugins(): array
+    public function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER);
     }
 }

@@ -29,9 +29,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
 
-    public const PLUGINS_AVAILABILITY_LIST_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_LIST_DATA_EXPANDER';
-    public const PLUGINS_AVAILABILITY_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_VIEW_DATA_EXPANDER';
-    public const PLUGINS_AVAILABILITY_ABSTRACT_QUERY_CRITERIA_EXPANDER = 'PLUGINS_AVAILABILITY_ABSTRACT_QUERY_CRITERIA_EXPANDER';
+    public const PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,8 +56,8 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerProductBundle($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addAvailabilityListDataExpanderPlugins($container);
-        $container = $this->addAvailabilityViewDataExpanderPlugins($container);
+        $container = $this->addAvailabilityListActionViewDataExpanderPlugins($container);
+        $container = $this->addAvailabilityViewActionViewDataExpanderPlugins($container);
 
         return $container;
     }
@@ -70,7 +70,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addAvailabilityAbstractQueryCriteriaExpanderPlugins($container);
+        $container = $this->addAvailabilityAbstractTableQueryCriteriaExpanderPlugins($container);
 
         return $container;
     }
@@ -164,10 +164,10 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityListDataExpanderPlugins(Container $container): Container
+    protected function addAvailabilityListActionViewDataExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_AVAILABILITY_LIST_DATA_EXPANDER, function () {
-            return $this->getAvailabilityListDataExpanderPlugins();
+        $container->set(static::PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getAvailabilityListActionViewDataExpanderPlugins();
         });
 
         return $container;
@@ -176,7 +176,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListActionViewDataExpanderPluginInterface[]
      */
-    protected function getAvailabilityListDataExpanderPlugins(): array
+    protected function getAvailabilityListActionViewDataExpanderPlugins(): array
     {
         return [];
     }
@@ -186,10 +186,10 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityViewDataExpanderPlugins(Container $container): Container
+    protected function addAvailabilityViewActionViewDataExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_AVAILABILITY_VIEW_DATA_EXPANDER, function () {
-            return $this->getAvailabilityViewDataExpanderPlugins();
+        $container->set(static::PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getAvailabilityViewActionViewDataExpanderPlugins();
         });
 
         return $container;
@@ -198,7 +198,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface[]
      */
-    protected function getAvailabilityViewDataExpanderPlugins(): array
+    protected function getAvailabilityViewActionViewDataExpanderPlugins(): array
     {
         return [];
     }
@@ -208,10 +208,10 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityAbstractQueryCriteriaExpanderPlugins(Container $container): Container
+    protected function addAvailabilityAbstractTableQueryCriteriaExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_AVAILABILITY_ABSTRACT_QUERY_CRITERIA_EXPANDER, function () {
-            return $this->getAvailabilityAbstractQueryCriteriaExpanderPlugins();
+        $container->set(static::PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER, function () {
+            return $this->getAvailabilityAbstractTableQueryCriteriaExpanderPlugins();
         });
 
         return $container;
@@ -220,7 +220,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
      */
-    protected function getAvailabilityAbstractQueryCriteriaExpanderPlugins(): array
+    protected function getAvailabilityAbstractTableQueryCriteriaExpanderPlugins(): array
     {
         return [];
     }

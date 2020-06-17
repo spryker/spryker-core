@@ -694,16 +694,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
      */
-    public function getProductAbstractListDataExpanderPlugins(): array
+    public function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER);
     }
 
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
      */
-    public function getProductAbstractViewDataExpanderPlugins(): array
+    public function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER);
     }
 }

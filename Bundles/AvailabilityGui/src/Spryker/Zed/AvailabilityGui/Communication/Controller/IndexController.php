@@ -292,7 +292,7 @@ class IndexController extends AbstractController
      */
     protected function executeAvailabilityListDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getAvailabilityListDataExpanderPlugins() as $availabilityListDataExpanderPlugin) {
+        foreach ($this->getFactory()->getAvailabilityListActionViewDataExpanderPlugins() as $availabilityListDataExpanderPlugin) {
             $viewData = $availabilityListDataExpanderPlugin->expand($viewData);
         }
 
@@ -306,7 +306,7 @@ class IndexController extends AbstractController
      */
     protected function executeAvailabilityViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getAvailabilityViewDataExpanderPlugins() as $availabilityViewDataExpanderPlugin) {
+        foreach ($this->getFactory()->getAvailabilityViewActionViewDataExpanderPlugins() as $availabilityViewDataExpanderPlugin) {
             $viewData = $availabilityViewDataExpanderPlugin->expand($viewData);
         }
 

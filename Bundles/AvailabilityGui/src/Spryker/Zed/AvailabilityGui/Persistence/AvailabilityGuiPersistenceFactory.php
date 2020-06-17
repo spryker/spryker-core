@@ -24,15 +24,15 @@ class AvailabilityGuiPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractAvailabilityQueryExpander(): ProductAbstractAvailabilityQueryExpanderInterface
     {
         return new ProductAbstractAvailabilityQueryExpander(
-            $this->getAvailabilityAbstractQueryCriteriaExpanderPlugins()
+            $this->getAvailabilityAbstractTableQueryCriteriaExpanderPlugins()
         );
     }
 
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
      */
-    public function getAvailabilityAbstractQueryCriteriaExpanderPlugins(): array
+    public function getAvailabilityAbstractTableQueryCriteriaExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_ABSTRACT_QUERY_CRITERIA_EXPANDER);
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER);
     }
 }

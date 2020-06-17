@@ -76,9 +76,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER';
     public const PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER';
     public const PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER';
-    public const PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER';
-    public const PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER';
-    public const PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -241,8 +241,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductAbstractFormEditTabsExpanderPlugins($container);
         $container = $this->addProductAbstractEditViewExpanderPlugins($container);
         $container = $this->addProductConcreteEditViewExpanderPlugins($container);
-        $container = $this->addProductAbstractListDataExpanderPlugins($container);
-        $container = $this->addProductAbstractViewDataExpanderPlugins($container);
+        $container = $this->addProductAbstractListActionViewDataExpanderPlugins($container);
+        $container = $this->addProductAbstractViewActionViewDataExpanderPlugins($container);
 
         return $container;
     }
@@ -256,7 +256,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addProductAbstractQueryCriteriaExpanderPlugins($container);
+        $container = $this->addProductTableQueryCriteriaExpanderPluginInterfaces($container);
 
         return $container;
     }
@@ -592,10 +592,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAbstractListDataExpanderPlugins(Container $container): Container
+    protected function addProductAbstractListActionViewDataExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_LIST_DATA_EXPANDER, function () {
-            return $this->getProductAbstractListDataExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getProductAbstractListActionViewDataExpanderPlugins();
         });
 
         return $container;
@@ -604,7 +604,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
      */
-    protected function getProductAbstractListDataExpanderPlugins(): array
+    protected function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
         return [];
     }
@@ -614,10 +614,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAbstractViewDataExpanderPlugins(Container $container): Container
+    protected function addProductAbstractViewActionViewDataExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_VIEW_DATA_EXPANDER, function () {
-            return $this->getProductAbstractViewDataExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getProductAbstractViewActionViewDataExpanderPlugins();
         });
 
         return $container;
@@ -626,7 +626,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
      */
-    protected function getProductAbstractViewDataExpanderPlugins(): array
+    protected function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
         return [];
     }
@@ -636,10 +636,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAbstractQueryCriteriaExpanderPlugins(Container $container): Container
+    protected function addProductTableQueryCriteriaExpanderPluginInterfaces(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_QUERY_CRITERIA_EXPANDER, function () {
-            return $this->getProductAbstractQueryCriteriaExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER, function () {
+            return $this->getProductTableQueryCriteriaExpanderPluginInterfaces();
         });
 
         return $container;
@@ -648,7 +648,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
-    protected function getProductAbstractQueryCriteriaExpanderPlugins(): array
+    protected function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
         return [];
     }

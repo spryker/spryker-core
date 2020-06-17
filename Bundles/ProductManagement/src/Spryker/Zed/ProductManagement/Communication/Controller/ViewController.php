@@ -336,7 +336,7 @@ class ViewController extends AddController
      */
     protected function executeProductAbstractViewDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getProductAbstractViewDataExpanderPlugins() as $productAbstractViewDataExpanderPlugin) {
+        foreach ($this->getFactory()->getProductAbstractViewActionViewDataExpanderPlugins() as $productAbstractViewDataExpanderPlugin) {
             $viewData = $productAbstractViewDataExpanderPlugin->expand($viewData);
         }
 

@@ -179,16 +179,16 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListActionViewDataExpanderPluginInterface[]
      */
-    public function getAvailabilityListDataExpanderPlugins(): array
+    public function getAvailabilityListActionViewDataExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_LIST_DATA_EXPANDER);
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER);
     }
 
     /**
      * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface[]
      */
-    public function getAvailabilityViewDataExpanderPlugins(): array
+    public function getAvailabilityViewActionViewDataExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_VIEW_DATA_EXPANDER);
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER);
     }
 }

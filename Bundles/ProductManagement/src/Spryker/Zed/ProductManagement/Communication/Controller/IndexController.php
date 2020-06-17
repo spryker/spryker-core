@@ -56,7 +56,7 @@ class IndexController extends AbstractController
      */
     protected function executeProductAbstractListDataExpanderPlugins(array $viewData): array
     {
-        foreach ($this->getFactory()->getProductAbstractListDataExpanderPlugins() as $productAbstractListDataExpanderPlugin) {
+        foreach ($this->getFactory()->getProductAbstractListActionViewDataExpanderPlugins() as $productAbstractListDataExpanderPlugin) {
             $viewData = $productAbstractListDataExpanderPlugin->expand($viewData);
         }
 
