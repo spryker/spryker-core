@@ -61,15 +61,19 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     }
 
     /**
-     * @param string[] $contentBannerKeys
+     * @phpstan-param array<string, string> $contentKeys
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
+     *
+     * @param string[] $contentKeys
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
      */
-    public function executeBannerTypeByKeys(array $contentBannerKeys, string $localeName): array
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array
     {
         $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
-            $contentBannerKeys,
+            $contentKeys,
             $localeName
         );
 

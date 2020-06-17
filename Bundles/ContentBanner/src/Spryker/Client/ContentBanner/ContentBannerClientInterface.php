@@ -29,12 +29,17 @@ interface ContentBannerClientInterface
 
     /**
      * Specification:
-     * - Fetches Banner by IDs.
-     * - Executes the term for the banner, resulting in the banner.
+     * - Finds content items in the key-value storage by content keys and locale name.
+     * - Gets stored term for found content items.
+     * - Executes stored term with found content items to get a collection of content banner type.
      *
      * @api
      *
-     * @param array $contentKeys
+     * @phpstan-param array<string, string> $contentKeys
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
+     *
+     * @param string[] $contentKeys
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
