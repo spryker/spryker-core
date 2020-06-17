@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 /**
- * Allows to expand view data for list of abstract products.
+ * Allows to expand view data for abstract product at ProductManagement/ViewController::indexAction().
  */
-interface ProductAbstractListDataExpanderPluginInterface
+interface ProductAbstractViewActionViewDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands view data for list of abstract products with new data.
+     * - Expands view data for abstract product with new data.
      *
      * @api
      *

@@ -692,7 +692,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
      */
     public function getProductAbstractListDataExpanderPlugins(): array
     {
@@ -700,7 +700,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
      */
     public function getProductAbstractViewDataExpanderPlugins(): array
     {

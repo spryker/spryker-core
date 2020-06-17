@@ -602,7 +602,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
      */
     protected function getProductAbstractListDataExpanderPlugins(): array
     {
@@ -624,7 +624,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
      */
     protected function getProductAbstractViewDataExpanderPlugins(): array
     {
@@ -646,7 +646,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
     protected function getProductAbstractQueryCriteriaExpanderPlugins(): array
     {

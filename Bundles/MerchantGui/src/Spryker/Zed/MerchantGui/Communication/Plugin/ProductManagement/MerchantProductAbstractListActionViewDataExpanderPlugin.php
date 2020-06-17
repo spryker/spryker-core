@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantGui\Communication\Plugin\AvailabilityGui;
+namespace Spryker\Zed\MerchantGui\Communication\Plugin\ProductManagement;
 
-use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
-class MerchantAvailabilityListDataExpanderPlugin extends AbstractPlugin implements AvailabilityListDataExpanderPluginInterface
+class MerchantProductAbstractListActionViewDataExpanderPlugin extends AbstractPlugin implements ProductAbstractListActionViewDataExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands view data for list of product availabilities with merchants data.
+     * - Expands view data for list of abstract products with merchants data.
      *
      * @api
      *

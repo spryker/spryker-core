@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
+namespace Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin;
 
 /**
- * Allows to expand view data for abstract product.
+ * Allows to expand view data for product availability at AvailabilityGui/IndexController::viewAction().
  */
-interface ProductAbstractViewDataExpanderPluginInterface
+interface AvailabilityViewActionViewDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands view data for abstract product with new data.
+     * - Expands view data for product availability with new data.
      *
      * @api
      *

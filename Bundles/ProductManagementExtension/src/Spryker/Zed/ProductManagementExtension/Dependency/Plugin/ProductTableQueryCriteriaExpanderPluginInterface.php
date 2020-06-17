@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin;
+namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 /**
- * Allows to expand query criteria for products availabilities.
+ * Allows to expand query criteria for expanding default query running in ProductTable.
  */
-interface AvailabilityAbstractQueryCriteriaExpanderPluginInterface
+interface ProductTableQueryCriteriaExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands QueryCriteriaTransfer with additional criteria for expanding default query running in AvailabilityAbstractTable.
+     * - Expands QueryCriteriaTransfer with additional criteria for expanding default query running in ProductTable.
      *
      * @api
      *

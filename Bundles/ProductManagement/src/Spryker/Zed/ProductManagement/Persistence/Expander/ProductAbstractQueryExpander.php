@@ -14,12 +14,12 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class ProductAbstractQueryExpander implements ProductAbstractQueryExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
     protected $productAbstractQueryCriteriaExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface[] $productAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[] $productAbstractQueryCriteriaExpanderPlugins
      */
     public function __construct(array $productAbstractQueryCriteriaExpanderPlugins)
     {

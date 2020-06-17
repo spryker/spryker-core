@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement;
+namespace Spryker\Zed\MerchantProductGui\Communication\Plugin\AvailabilityGui;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractQueryCriteriaExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductGui\Communication\MerchantProductGuiCommunicationFactory getFactory()
  */
-class MerchantProductProductAbstractQueryCriteriaExpanderPlugin extends AbstractPlugin implements ProductAbstractQueryCriteriaExpanderPluginInterface
+class MerchantProductAvailabilityAbstractTableQueryCriteriaExpanderPlugin extends AbstractPlugin implements AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface
 {
     /**
      * {@inheritDoc}

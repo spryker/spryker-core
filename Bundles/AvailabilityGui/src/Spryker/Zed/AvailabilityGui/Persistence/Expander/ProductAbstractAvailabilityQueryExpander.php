@@ -14,12 +14,12 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class ProductAbstractAvailabilityQueryExpander implements ProductAbstractAvailabilityQueryExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface[]
+     * @var \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
      */
     protected $availabilityAbstractQueryCriteriaExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractQueryCriteriaExpanderPluginInterface[] $availabilityAbstractQueryCriteriaExpanderPlugins
+     * @param \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[] $availabilityAbstractQueryCriteriaExpanderPlugins
      */
     public function __construct(array $availabilityAbstractQueryCriteriaExpanderPlugins)
     {
