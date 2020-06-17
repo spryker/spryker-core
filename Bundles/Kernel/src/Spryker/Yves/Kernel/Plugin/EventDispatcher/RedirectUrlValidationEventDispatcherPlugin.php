@@ -34,7 +34,7 @@ class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implemen
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
-            $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event->getResponse());
+            $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event);
         });
 
         return $eventDispatcher;
