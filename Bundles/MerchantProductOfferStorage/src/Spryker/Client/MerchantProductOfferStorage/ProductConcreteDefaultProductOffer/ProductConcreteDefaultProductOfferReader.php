@@ -47,7 +47,7 @@ class ProductConcreteDefaultProductOfferReader implements ProductConcreteDefault
 
         $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
 
-        if (!$productOfferStorageCollectionTransfer->getProductOffersStorage()) {
+        if (!$productOfferStorageCollectionTransfer->getProductOffersStorage()->count()) {
             return null;
         }
 
