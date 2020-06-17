@@ -46,9 +46,9 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container)
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CmsStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }

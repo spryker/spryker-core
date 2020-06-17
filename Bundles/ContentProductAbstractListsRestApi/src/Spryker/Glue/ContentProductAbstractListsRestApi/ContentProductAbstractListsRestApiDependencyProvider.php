@@ -43,11 +43,11 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
      */
     protected function addContentProductClient(Container $container): Container
     {
-        $container[static::CLIENT_CONTENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_CONTENT_PRODUCT, function (Container $container) {
             return new ContentProductAbstractListsRestApiToContentProductClientBridge(
                 $container->getLocator()->contentProduct()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -59,11 +59,11 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
      */
     protected function addProductsRestApiResource(Container $container): Container
     {
-        $container[static::RESOURCE_PRODUCTS_REST_API] = function (Container $container) {
+        $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new ContentProductAbstractListsRestApiToProductsRestApiResourceBridge(
                 $container->getLocator()->productsRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }

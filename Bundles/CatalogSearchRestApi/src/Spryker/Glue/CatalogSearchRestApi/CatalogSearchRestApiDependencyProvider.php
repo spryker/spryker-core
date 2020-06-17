@@ -48,9 +48,9 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCatalogClient(Container $container): Container
     {
-        $container[static::CLIENT_CATALOG] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new CatalogSearchRestApiToCatalogClientBridge($container->getLocator()->catalog()->client());
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new CatalogSearchRestApiToPriceClientBridge($container->getLocator()->price()->client());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new CatalogSearchRestApiToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CatalogSearchRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }

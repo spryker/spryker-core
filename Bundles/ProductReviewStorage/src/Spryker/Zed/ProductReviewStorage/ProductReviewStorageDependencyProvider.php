@@ -27,9 +27,9 @@ class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductReviewStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -41,9 +41,9 @@ class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewStorageToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());
-        };
+        });
 
         return $container;
     }
