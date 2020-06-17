@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface CustomerFacadeInterface
 {
@@ -528,12 +529,17 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Sends a password restore link via email using a freshly generated password restore key to each customer in the collection.
+     * - Displays execution progress if the output is provided.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return void
      */
-    public function sendPasswordRestoreMailForCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): void;
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void;
 }
