@@ -52,6 +52,8 @@ class EventHandler implements EventHandlerInterface
 
         $this->addArgumentsAsCustomParameter($event);
         $this->addOptionsAsCustomParameter($event);
+
+        $event->setExitCode(0);
     }
 
     /**
