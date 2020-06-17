@@ -30,8 +30,9 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
         }
 
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
+        $domain = (string)parse_url($redirectUrl, PHP_URL_HOST);
 
-        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isAllowedDomain($redirectUrl)) {
+        if (!$this->isAllowedDomain($domain)) {
             throw new ForbiddenExternalRedirectException(sprintf('URL %s is not a part of a allowed domain', $redirectUrl));
         }
     }
@@ -40,27 +41,22 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
      *
-     * @param string $url
+     * @param string $domain
      *
      * @return bool
      */
-    protected function isAllowedDomain(string $url): bool
+    protected function isAllowedDomain(string $domain): bool
     {
-        $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
-        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
-
-        if (empty($allowedDomains) && !$isStrictDomainRedirect) {
+        if (!$domain) {
             return true;
         }
 
-        $domain = parse_url($url, PHP_URL_HOST);
+        $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
 
-        foreach ($allowedDomains as $allowedDomain) {
-            if ($domain === $allowedDomain) {
-                return true;
-            }
+        if (empty($allowedDomains)) {
+            return !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
         }
 
-        return false;
+        return in_array($domain, $allowedDomains, true);
     }
 }
