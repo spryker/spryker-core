@@ -66,11 +66,11 @@ class PropelApplicationPluginTest extends Unit
      */
     public function testPropelConnectionManager(): void
     {
-        $createTableQuery = 'CREATE TABLE IF NOT EXISTS "spy_test_propel" ("id_test_propel" INTEGER NOT NULL, "message" VARCHAR(255) NOT NULL, PRIMARY KEY ("id_test_propel"));';
+        $createTableQuery = 'CREATE TABLE IF NOT EXISTS "spy_test_propel" ("id_test_propel" INTEGER NOT NULL, "message" VARCHAR(255), PRIMARY KEY ("id_test_propel"));';
         $createTableQueryResult = $this->writeConnection->prepare($createTableQuery)->execute();
         $this->assertTrue($createTableQueryResult);
 
-        $insertQuery = "INSERT INTO spy_test_propel (id_test_propel, message) VALUES (nextval('spy_test_propel_pk_seq'), 'test');";
+        $insertQuery = sprintf('INSERT INTO "spy_test_propel" ("id_test_propel") VALUES (%s);', mt_rand());
         $createQueryResult = $this->writeConnection->prepare($insertQuery)->execute();
         $this->assertTrue($createQueryResult);
 
