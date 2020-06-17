@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Persistence\BatchProcessor;
 
+use DateTime;
 use Exception;
 use PDO;
 use PDOStatement;
@@ -18,19 +19,24 @@ use Propel\Runtime\Map\ColumnMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
+use Spryker\Zed\Propel\Exception\StatementNotPrepared;
 use Throwable;
 
 trait ActiveRecordBatchProcessorTrait
 {
     /**
+     * @phpstan-var array<string, array<int, \Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
+     *
      * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
      */
-    protected static $entitiesToInsert = [];
+    protected $entitiesToInsert = [];
 
     /**
+     * @phpstan-var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
+     *
      * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
      */
-    protected static $entitiesToUpdate = [];
+    protected $entitiesToUpdate = [];
 
     /**
      * @var \Propel\Runtime\Map\TableMap[]
@@ -48,6 +54,11 @@ trait ActiveRecordBatchProcessorTrait
     protected $adapter;
 
     /**
+     * @var \DateTime
+     */
+    protected $highPrecisionDateTime;
+
+    /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return void
@@ -61,20 +72,20 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         if ($entity->isNew()) {
-            if (!isset(static::$entitiesToInsert[$className])) {
-                static::$entitiesToInsert[$className] = [];
+            if (!isset($this->entitiesToInsert[$className])) {
+                $this->entitiesToInsert[$className] = [];
             }
 
-            static::$entitiesToInsert[$className][] = $entity;
+            $this->entitiesToInsert[$className][] = $entity;
 
             return;
         }
 
-        if (!isset(static::$entitiesToUpdate[$className])) {
-            static::$entitiesToUpdate[$className] = [];
+        if (!isset($this->entitiesToUpdate[$className])) {
+            $this->entitiesToUpdate[$className] = [];
         }
 
-        static::$entitiesToUpdate[$className][] = $entity;
+        $this->entitiesToUpdate[$className][] = $entity;
     }
 
     /**
@@ -82,13 +93,15 @@ trait ActiveRecordBatchProcessorTrait
      */
     public function commit(): bool
     {
-        $this->commitEntities(static::$entitiesToInsert, 'insert');
-        $this->commitEntities(static::$entitiesToUpdate, 'update');
+        $this->commitEntities($this->entitiesToInsert, 'insert');
+        $this->commitEntities($this->entitiesToUpdate, 'update');
 
         return true;
     }
 
     /**
+     * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
+     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entitiesToSave
      * @param string $type
      *
@@ -96,16 +109,16 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function commitEntities(array $entitiesToSave, string $type = 'insert'): void
     {
-        $preMethodName = sprintf('pre%s', ucfirst($type));
-        $postMethodName = sprintf('post%s', ucfirst($type));
-        $buildMethodName = sprintf('build%sStatement', ucfirst($type));
+        $isInsert = $type === 'insert';
 
         foreach ($entitiesToSave as $entityClassName => $entities) {
             $entities = $this->preSave($entities);
-            $entities = $this->{$preMethodName}($entities);
-            $statement = $this->{$buildMethodName}($entityClassName, $entities);
+            $entities = $isInsert ? $this->preInsert($entities) : $this->preUpdate($entities);
+            $statement = $isInsert
+                ? $this->buildInsertStatement($entityClassName, $entities)
+                : $this->buildUpdateStatement($entityClassName, $entities);
             $this->executeStatement($statement, $entityClassName, $type);
-            $this->{$postMethodName}($entities);
+            $isInsert ? $this->postInsert($entities) : $this->postUpdate($entities);
             $this->postSave($entities);
         }
     }
@@ -125,7 +138,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param array $entities
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
      *
      * @return void
      */
@@ -151,7 +164,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param array $entities
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
      *
      * @return void
      */
@@ -217,8 +230,8 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function clear(): void
     {
-        static::$entitiesToInsert = [];
-        static::$entitiesToUpdate = [];
+        $this->entitiesToInsert = [];
+        $this->entitiesToUpdate = [];
     }
 
     /**
@@ -304,6 +317,8 @@ trait ActiveRecordBatchProcessorTrait
      * @param array $values
      * @param bool $isInsert
      *
+     * @throws \Spryker\Zed\Propel\Exception\StatementNotPrepared
+     *
      * @return \PDOStatement
      */
     protected function prepareStatement(string $sql, array $values, bool $isInsert = true): PDOStatement
@@ -311,6 +326,9 @@ trait ActiveRecordBatchProcessorTrait
         $connection = $this->getConnection();
         $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
         $statement = $connection->prepare($sql);
+        if (!$statement) {
+            throw new StatementNotPrepared(sprintf('Wasn\'t able to create a statement with provided query: `%s`', $sql));
+        }
 
         if ($isInsert) {
             $values = array_filter($values, function (array $columnDetails) {
@@ -457,7 +475,7 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function updateDateTimes(ActiveRecordInterface $entity): ActiveRecordInterface
     {
-        $highPrecisionDateTime = PropelDateTime::createHighPrecision();
+        $highPrecisionDateTime = $this->getHighPrecisionDateTime();
 
         if ($entity->isNew()) {
             if (method_exists($entity, 'setCreatedAt')) {
@@ -473,6 +491,18 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
+     * @return \DateTime
+     */
+    protected function getHighPrecisionDateTime(): DateTime
+    {
+        if ($this->highPrecisionDateTime === null) {
+            $this->highPrecisionDateTime = PropelDateTime::createHighPrecision();
+        }
+        
+        return $this->highPrecisionDateTime;
+    }
+
+    /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      * @param \Propel\Runtime\Map\TableMap $tableMap
      * @param string|int|float|bool|array $value
@@ -484,9 +514,10 @@ trait ActiveRecordBatchProcessorTrait
     protected function getValue(ColumnMap $columnMap, TableMap $tableMap, $value)
     {
         if ($columnMap->getType() === 'ENUM' && $value !== null) {
+            /** @psalm-suppress UndefinedMethod */
             $valueSet = $tableMap::getValueSet($columnMap->getFullyQualifiedName());
             if (!in_array($value, $valueSet)) {
-                throw new PropelException(sprintf('Value "%s" is not accepted in this enumerated column', $value));
+                throw new PropelException(sprintf('Value "%s" is not accepted in this enumerated column', (string)$value));
             }
             $value = array_search($value, $valueSet);
         }
