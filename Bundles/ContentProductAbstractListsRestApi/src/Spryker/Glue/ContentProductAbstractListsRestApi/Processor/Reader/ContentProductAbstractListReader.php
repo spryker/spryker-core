@@ -10,6 +10,7 @@ namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -39,18 +40,26 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $cmsStorageClient;
 
     /**
+     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient
+     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
         ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder,
-        ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient
+        ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient,
+        ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
     ) {
         $this->contentProductClient = $contentProductClient;
         $this->contentProductAbstractListRestResponseBuilder = $contentProductAbstractListRestResponseBuilder;
         $this->cmsStorageClient = $cmsStorageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -98,7 +107,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageReferences,
             $restRequest->getMetadata()->getLocale(),
-            APPLICATION_STORE
+            $this->storeClient->getCurrentStore()->getName()
         );
 
         $groupedContentProductAbstractListKeys = [];
