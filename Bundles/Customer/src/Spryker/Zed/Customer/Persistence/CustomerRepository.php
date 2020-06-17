@@ -223,8 +223,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     ): SpyCustomerQuery {
         $query = $this->getFactory()->createSpyCustomerQuery();
         if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExists()) {
-            $query->filterByRestorePasswordKey(null, Criteria::ISNULL)
-                ->addOr($query->getNewCriterion(SpyCustomerTableMap::COL_PASSWORD, '', Criteria::EQUAL));
+            $query->filterByRestorePasswordKey(null, Criteria::ISNULL);
         }
         if (!$customerCriteriaFilterTransfer->getPasswordExists() && $customerCriteriaFilterTransfer->getPasswordExists() !== null) {
             $query->filterByPassword(null, Criteria::ISNULL)
