@@ -32,6 +32,10 @@ interface ContentStorageClientInterface
      *
      * @api
      *
+     * @phpstan-param array<string, string> $contentKeys
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
+     *
      * @param string[] $contentKeys
      * @param string $localeName
      *

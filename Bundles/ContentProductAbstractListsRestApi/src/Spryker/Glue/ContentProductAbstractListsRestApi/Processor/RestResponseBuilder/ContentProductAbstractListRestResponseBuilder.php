@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestContentProductAbstractListAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -160,10 +161,32 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
             );
         }
 
-        return $this->restResourceBuilder->createRestResource(
+        $restResource = $this->restResourceBuilder->createRestResource(
             ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
             $contentProductAbstractListKey,
             $restContentProductAbstractListAttributesTransfer
+        );
+
+        $restResource->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->getContentProductAbstractListsResourceSelfLink($contentProductAbstractListKey)
+        );
+
+        return $restResource;
+    }
+
+    /**
+     * @param string $contentProductAbstractListKey
+     *
+     * @return string
+     */
+    protected function getContentProductAbstractListsResourceSelfLink(string $contentProductAbstractListKey): string
+    {
+        return sprintf(
+            '%s/%s/%s',
+            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
+            $contentProductAbstractListKey,
+            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS
         );
     }
 }
