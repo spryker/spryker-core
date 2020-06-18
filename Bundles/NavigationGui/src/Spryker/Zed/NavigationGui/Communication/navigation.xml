@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <navigation>
-        <label>Navigation</label>
-        <title>Navigation</title>
-        <bundle>navigation-gui</bundle>
-        <controller>index</controller>
-        <action>index</action>
-        <icon>fa-list</icon>
+    <cms-gui>
         <pages>
-            <create>
-                <label>Create Navigation Element</label>
-                <title>Create Navigation Element</title>
+            <navigation>
+                <label>Navigation</label>
+                <title>Navigation</title>
                 <bundle>navigation-gui</bundle>
-                <controller>create</controller>
+                <controller>index</controller>
                 <action>index</action>
-                <visible>0</visible>
-            </create>
-            <edit>
-                <label>Edit Navigation Element</label>
-                <title>Edit Navigation Element</title>
-                <bundle>navigation-gui</bundle>
-                <controller>update</controller>
-                <action>index</action>
-                <visible>0</visible>
-            </edit>
+                <pages>
+                    <create>
+                        <label>Create Navigation Element</label>
+                        <title>Create Navigation Element</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create>
+                    <edit>
+                        <label>Edit Navigation Element</label>
+                        <title>Edit Navigation Element</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>update</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit>
+                    <duplicate>
+                        <label>Duplicate Navigation Element</label>
+                        <title>Duplicate Navigation Element</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>duplicate</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </duplicate>
+                    <delete>
+                        <label>Delete Navigation</label>
+                        <title>Delete Navigation</title>
+                        <bundle>navigation-gui</bundle>
+                        <controller>delete</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </delete>
+                </pages>
+            </navigation>
         </pages>
-    </navigation>
+    </cms-gui>
 </config>

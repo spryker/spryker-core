@@ -61,9 +61,9 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new UserLocaleToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container): Container
     {
-        $container[static::FACADE_USER] = function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new UserLocaleToUserFacadeBridge($container->getLocator()->user()->facade());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class UserLocaleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return new UserLocaleToStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }

@@ -49,9 +49,9 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      */
     protected function addDefaultProductOfferPlugin(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_OFFER_PLUGIN] = function () {
+        $container->set(static::PLUGIN_PRODUCT_OFFER_PLUGIN, function () {
             return $this->createProductOfferPlugin();
-        };
+        });
 
         return $container;
     }

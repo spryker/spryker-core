@@ -43,9 +43,9 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
      */
     protected function addCategoryQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new CategoryNavigationConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -55,9 +55,9 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
      */
     protected function addNavigationQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_NAVIGATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_NAVIGATION, function (Container $container) {
             return new CategoryNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -67,8 +67,8 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
      */
     protected function addNavigationFacade(Container $container)
     {
-        $container[self::FACADE_NAVIGATION] = function (Container $container) {
+        $container->set(static::FACADE_NAVIGATION, function (Container $container) {
             return new CategoryNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());
-        };
+        });
     }
 }

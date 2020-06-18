@@ -39,9 +39,9 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMonitoringService(Container $container): Container
     {
-        $container[static::MONITORING_SERVICE] = function (Container $container) {
+        $container->set(static::MONITORING_SERVICE, function (Container $container) {
             return $container->getLocator()->monitoring()->service();
-        };
+        });
 
         return $container;
     }
@@ -53,13 +53,13 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilNetworkService(Container $container): Container
     {
-        $container[static::SERVICE_NETWORK] = function (Container $container) {
+        $container->set(static::SERVICE_NETWORK, function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(
                 $container->getLocator()->utilNetwork()->service()
             );
 
             return $monitoringToUtilNetworkServiceBridge;
-        };
+        });
 
         return $container;
     }

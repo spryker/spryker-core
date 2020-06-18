@@ -37,9 +37,9 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new CartVariantToProductClientBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideAvailabilityStorageClient(Container $container)
     {
-        $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new CartVariantToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
-        };
+        });
 
         return $container;
     }

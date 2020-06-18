@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <product-offer-merchant-portal-gui>
+        <label>Offers</label>
+        <title>Offers</title>
+        <icon>offers</icon>
+        <bundle>product-offer-merchant-portal-gui</bundle>
+        <controller>offers</controller>
+        <action>index</action>
+    </product-offer-merchant-portal-gui>
+</config>
