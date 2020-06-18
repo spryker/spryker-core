@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block footerJs %}
+    <script src="{{ assetsPath('js/mp/spy/product-offer-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/product-offer-merchant-portal-gui-es5.js') }}" nomodule defer></script>
     {{ parent() }}
-    <script src="{{ assetsPath('js/mp-product-offer/main-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp-product-offer/main-es5.js') }}" nomodule defer></script>
 {% endblock %}

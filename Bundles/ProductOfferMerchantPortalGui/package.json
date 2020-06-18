@@ -1,15 +1,6 @@
 {
     "name": "mp-product-offer",
     "version": "0.0.0",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build --prod && npm run postbuild",
-        "postbuild": "run-s copy:*",
-        "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/mp-product-offer",
-        "test": "ng test",
-        "lint": "ng lint"
-    },
     "private": true,
     "dependencies": {
         "@angular/animations": "^9.0.1",
@@ -17,7 +8,6 @@
         "@angular/common": "^9.0.1",
         "@angular/compiler": "^9.0.1",
         "@angular/core": "^9.0.1",
-        "@angular/elements": "^9.0.6",
         "@angular/forms": "^9.0.1",
         "@angular/platform-browser": "^9.0.1",
         "@angular/platform-browser-dynamic": "^9.0.1",
@@ -35,33 +25,9 @@
         "@spryker/styles": "^0.1.0-next.60",
         "@spryker/table": "^0.1.0-next.49",
         "@spryker/utils": "^0.1.0-next.16",
-        "@spryker/web-components": "^0.2.0-next.2",
+        "@spryker/web-components": "^0.2.0-next.3",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "^0.10.2"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "^0.900.2",
-        "@angular/cli": "^9.0.2",
-        "@angular/compiler-cli": "^9.0.1",
-        "@angular/language-service": "^9.0.1",
-        "@types/jasmine": "^3.5.0",
-        "@types/jasminewd2": "^2.0.3",
-        "@types/node": "^12.11.1",
-        "codelyzer": "^5.1.2",
-        "copyfiles": "^2.2.0",
-        "jasmine-core": "^3.5.0",
-        "jasmine-spec-reporter": "^4.2.1",
-        "karma": "^4.3.0",
-        "karma-chrome-launcher": "^3.1.0",
-        "karma-coverage-istanbul-reporter": "^2.1.0",
-        "karma-jasmine": "^2.0.1",
-        "karma-jasmine-html-reporter": "^1.4.2",
-        "ngx-build-plus": "^9.0.6",
-        "npm-run-all": "^4.1.5",
-        "protractor": "^5.4.3",
-        "ts-node": "^8.3.0",
-        "tslint": "^5.18.0",
-        "typescript": "~3.8.3"
     }
 }

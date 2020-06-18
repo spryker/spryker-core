@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile.component';
 
 @NgModule({
-	imports: [CommonModule],
-	declarations: [ProfileComponent],
-	exports: [ProfileComponent],
+    imports: [CommonModule],
+    declarations: [ProfileComponent],
+    exports: [ProfileComponent],
 })
 export class ProfileModule {}

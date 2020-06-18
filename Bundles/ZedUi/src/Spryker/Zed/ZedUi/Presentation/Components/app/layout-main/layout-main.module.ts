@@ -18,7 +18,7 @@ import { IconDashboardModule, IconProfileModule, IconOffersModule } from '../../
         LogoModule,
         NavigationModule,
         IconDashboardModule,
-	    IconProfileModule,
+        IconProfileModule,
         IconOffersModule,
     ],
     declarations: [LayoutMainComponent],
