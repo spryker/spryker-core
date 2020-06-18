@@ -4,11 +4,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/event-behavior": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant-product": "*",
+    "spryker/merchant-product-offer-storage": "*",
+    "spryker/propel-orm": "*",
+    "spryker/synchronization-behavior": "*",
+    "spryker/synchronization-extension": "*"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/event": "*"
   },
   "autoload": {
     "psr-4": {
@@ -25,5 +30,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/event": "ADD SUGGEST DESCRIPTION"
   }
 }
