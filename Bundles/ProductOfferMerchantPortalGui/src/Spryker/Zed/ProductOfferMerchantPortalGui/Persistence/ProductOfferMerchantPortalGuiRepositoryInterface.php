@@ -35,5 +35,5 @@ interface ProductOfferMerchantPortalGuiRepositoryInterface
      *
      * @return int[]
      */
-    public function getOffersDashboardCardData(int $idMerchant): array;
+    public function getOffersDashboardCardCountData(int $idMerchant): array;
 }

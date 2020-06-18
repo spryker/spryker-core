@@ -44,7 +44,7 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
     /**
      * @var int[]|null
      */
-    protected static $offersDashboardCardData;
+    protected static $offersDashboardCardCountData;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
@@ -74,7 +74,7 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
     {
         return $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',
-            $this->getOffersDashboardCardData()
+            $this->getOffersDashboardCardCountData()
         );
     }
 
@@ -83,7 +83,7 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
      */
     public function getContent(): string
     {
-        $offersDashboardCardData = $this->getOffersDashboardCardData();
+        $offersDashboardCardData = $this->getOffersDashboardCardCountData();
         $offersDashboardCardData['expiringOffersLimit'] = $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
         $offersDashboardCardData['lowStockThreshold'] = $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
         $offersDashboardCardData['offersCountInactive'] = $offersDashboardCardData['offersCountTotal'] - $offersDashboardCardData['offersCountActive'];
@@ -112,16 +112,16 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
     /**
      * @return int[]
      */
-    protected function getOffersDashboardCardData(): array
+    protected function getOffersDashboardCardCountData(): array
     {
-        if (static::$offersDashboardCardData) {
-            return static::$offersDashboardCardData;
+        if (static::$offersDashboardCardCountData) {
+            return static::$offersDashboardCardCountData;
         }
 
-        static::$offersDashboardCardData = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardData(
+        static::$offersDashboardCardCountData = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCountData(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
         );
 
-        return static::$offersDashboardCardData;
+        return static::$offersDashboardCardCountData;
     }
 }

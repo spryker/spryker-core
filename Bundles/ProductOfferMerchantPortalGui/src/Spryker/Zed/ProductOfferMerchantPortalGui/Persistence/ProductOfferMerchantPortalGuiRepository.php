@@ -813,11 +813,15 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
+     * @module ProductOffer
+     * @module ProductOfferStock
+     * @module ProductOfferValidity
+     *
      * @param int $idMerchant
      *
      * @return int[]
      */
-    public function getOffersDashboardCardData(int $idMerchant): array
+    public function getOffersDashboardCardCountData(int $idMerchant): array
     {
         $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
         $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();

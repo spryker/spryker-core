@@ -18,7 +18,7 @@ class OffersDashboardCardPlugin extends AbstractPlugin implements DashboardCardP
 {
     /**
      * {@inheritDoc}
-     * - Provides the Product offers card title.
+     * - Provides the Product offers card title HTML.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class OffersDashboardCardPlugin extends AbstractPlugin implements DashboardCardP
 
     /**
      * {@inheritDoc}
-     * - Provides the Product offers card content.
+     * - Provides the Product offers card content HTML.
      *
      * @api
      *
