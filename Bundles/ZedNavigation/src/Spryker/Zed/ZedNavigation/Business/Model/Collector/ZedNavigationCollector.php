@@ -26,12 +26,12 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface
      */
-    private $mergeNavigationStrategyResolver;
+    protected $mergeNavigationStrategyResolver;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
      */
-    private $zedNavigationConfig;
+    protected $zedNavigationConfig;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface $navigationSchemaFinder
@@ -92,7 +92,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
      *
      * @return array
      */
-    public function getSecondLevelNavigationData(array $navigationDefinitionData): array
+    protected function getSecondLevelNavigationData(array $navigationDefinitionData): array
     {
         $navigationData = [];
         foreach ($navigationDefinitionData as $navigation) {
