@@ -99,7 +99,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             if (!isset($navigation[MenuFormatter::PAGES])) {
                 continue;
             }
-            $navigationData = array_merge($navigationData, $navigation[MenuFormatter::PAGES]);
+            $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
         }
 
         return $navigationData;
