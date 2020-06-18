@@ -22,7 +22,11 @@ class MerchantRelationshipHardMaximumThresholdFormMapper extends AbstractMerchan
         array $data,
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer {
-        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[MerchantRelationshipHardMaximumThresholdType::FIELD_ID_THRESHOLD] ?? null);
+        $merchantRelationshipSalesOrderThresholdTransfer
+            ->setIdMerchantRelationshipSalesOrderThreshold(
+                $data[MerchantRelationshipHardMaximumThresholdType::FIELD_ID_THRESHOLD] ?? null
+            );
+
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
             $merchantRelationshipSalesOrderThresholdTransfer
