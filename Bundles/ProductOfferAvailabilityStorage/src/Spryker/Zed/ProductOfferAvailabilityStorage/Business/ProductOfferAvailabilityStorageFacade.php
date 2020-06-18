@@ -25,11 +25,11 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @return void
      */
-    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void
+    public function writeCollectionByOmsProductOfferReservationIdEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductOfferAvailabilityStorageWriter()
-            ->writeCollectionByOmsProductReservationIdEvents($eventTransfers);
+            ->writeCollectionByOmsProductOfferReservationIdEvents($eventTransfers);
     }
 
     /**

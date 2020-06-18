@@ -45,9 +45,9 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new CompanyToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPreSavePlugins(Container $container): Container
     {
-        $container[static::COMPANY_PRE_SAVE_PLUGINS] = function () {
+        $container->set(static::COMPANY_PRE_SAVE_PLUGINS, function () {
             return $this->getCompanyPreSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPostSavePlugins(Container $container): Container
     {
-        $container[static::COMPANY_POST_SAVE_PLUGINS] = function () {
+        $container->set(static::COMPANY_POST_SAVE_PLUGINS, function () {
             return $this->getCompanyPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyPostCreatePlugins(Container $container): Container
     {
-        $container[static::COMPANY_POST_CREATE_PLUGINS] = function () {
+        $container->set(static::COMPANY_POST_CREATE_PLUGINS, function () {
             return $this->getCompanyPostCreatePlugins();
-        };
+        });
 
         return $container;
     }

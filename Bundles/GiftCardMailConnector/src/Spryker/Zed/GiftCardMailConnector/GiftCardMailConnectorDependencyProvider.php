@@ -46,9 +46,9 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addMailFacade(Container $container)
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new GiftCardMailConnectorToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCustomerFacade(Container $container)
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new GiftCardMailConnectorToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addGiftCardFacade(Container $container)
     {
-        $container[static::FACADE_GIFT_CARD] = function (Container $container) {
+        $container->set(static::FACADE_GIFT_CARD, function (Container $container) {
             return new GiftCardMailConnectorToGiftCardFacadeBridge($container->getLocator()->giftCard()->facade());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addSalesFacade(Container $container)
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new GiftCardMailConnectorToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }

@@ -46,9 +46,9 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileQueryContainer(Container $container): void
     {
-        $container->set(static::PROPEL_QUERY_FILE, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_FILE, $container->factory(function () {
             return SpyFileQuery::create();
-        });
+        }));
     }
 
     /**

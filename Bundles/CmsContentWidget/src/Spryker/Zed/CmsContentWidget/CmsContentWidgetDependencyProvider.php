@@ -28,13 +28,13 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS, function (Container $container) {
             return $this->getCmsContentWidgetParameterMapperPlugins($container);
-        };
+        });
 
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CmsContentWidgetToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -46,9 +46,9 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsContentWidgetToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
