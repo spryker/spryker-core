@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Propel\Persistence\BatchProcessor;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Spryker\Zed\ProductBundle\Persistence\Exception\BundleConnectionViolationException;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -93,6 +93,8 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
      *
      * @param string $entityClassName
      *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     *
      * @return void
      */
     public function testCommitShouldInsertEntitiesInBatch(string $entityClassName)
@@ -108,7 +110,14 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
 
             $this->assertTrue($batchProcessor->commit());
         } catch (Throwable $throwable) {
-            codecept_debug($throwable->getMessage());
+            $message = $throwable->getMessage();
+            if (strpos($message, 'SQLSTATE[23505]: Unique violation') !== false || strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false) {
+                codecept_debug($throwable->getMessage());
+
+                return;
+            }
+
+            throw new ExpectationFailedException($throwable->getMessage(), null, $throwable);
         }
     }
 
@@ -126,6 +135,8 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
      * @group updateSmth
      *
      * @param string $entityClassName
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      *
      * @return void
      */
@@ -174,7 +185,15 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
 
         try {
             $this->assertTrue($batchProcessor->commit());
-        } catch (BundleConnectionViolationException $e) {
+        } catch (Throwable $throwable) {
+            $message = $throwable->getMessage();
+            if (strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false) {
+                codecept_debug($throwable->getMessage());
+
+                return;
+            }
+
+            throw new ExpectationFailedException($throwable->getMessage(), null, $throwable);
         }
     }
 

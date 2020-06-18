@@ -14,14 +14,19 @@ use PDOStatement;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Adapter\AdapterInterface;
 use Propel\Runtime\Adapter\Pdo\PgsqlAdapter;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\ColumnMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Util\PropelDateTime;
-use Spryker\Zed\Propel\Exception\StatementNotPrepared;
+use Spryker\Zed\Propel\Exception\StatementNotPreparedException;
 use Throwable;
 
+/**
+ * This trait is not capable to do insert/update of related entities.
+ * P&S is not triggered while using this trait.
+ */
 trait ActiveRecordBatchProcessorTrait
 {
     /**
@@ -46,7 +51,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface
      */
-    protected $connection;
+    protected $writeConnections;
 
     /**
      * @var \Propel\Runtime\Adapter\AdapterInterface
@@ -93,8 +98,8 @@ trait ActiveRecordBatchProcessorTrait
      */
     public function commit(): bool
     {
-        $this->commitEntities($this->entitiesToInsert, 'insert');
-        $this->commitEntities($this->entitiesToUpdate, 'update');
+        $this->insertEntities($this->entitiesToInsert);
+        $this->updateEntities($this->entitiesToUpdate);
 
         return true;
     }
@@ -102,36 +107,55 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entitiesToSave
-     * @param string $type
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][] $entitiesToInsert
      *
      * @return void
      */
-    protected function commitEntities(array $entitiesToSave, string $type = 'insert'): void
+    protected function insertEntities(array $entitiesToInsert): void
     {
-        $isInsert = $type === 'insert';
+        foreach ($entitiesToInsert as $entityClassName => $entities) {
+            $connection = $this->getWriteConnection($entityClassName);
 
-        foreach ($entitiesToSave as $entityClassName => $entities) {
-            $entities = $this->preSave($entities);
-            $entities = $isInsert ? $this->preInsert($entities) : $this->preUpdate($entities);
-            $statement = $isInsert
-                ? $this->buildInsertStatement($entityClassName, $entities)
-                : $this->buildUpdateStatement($entityClassName, $entities);
-            $this->executeStatement($statement, $entityClassName, $type);
-            $isInsert ? $this->postInsert($entities) : $this->postUpdate($entities);
-            $this->postSave($entities);
+            $entities = $this->preSave($entities, $connection);
+            $entities = $this->preInsert($entities, $connection);
+            $statement = $this->buildInsertStatement($entityClassName, $entities);
+            $this->executeStatement($statement, $entityClassName, 'insert');
+            $this->postInsert($entities, $connection);
+            $this->postSave($entities, $connection);
+        }
+    }
+
+    /**
+     * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
+     *
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][] $entitiesToUpdate
+     *
+     * @return void
+     */
+    protected function updateEntities(array $entitiesToUpdate): void
+    {
+        foreach ($entitiesToUpdate as $entityClassName => $entities) {
+            $connection = $this->getWriteConnection($entityClassName);
+
+            $entities = $this->preSave($entities, $connection);
+            $entities = $this->preUpdate($entities, $connection);
+            $statement = $this->buildUpdateStatement($entityClassName, $entities);
+            $this->executeStatement($statement, $entityClassName, 'update');
+            $this->postUpdate($entities, $connection);
+            $this->postSave($entities, $connection);
         }
     }
 
     /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
-    protected function preSave(array $entities): array
+    protected function preSave(array $entities, ConnectionInterface $connection): array
     {
-        array_filter($entities, function (ActiveRecordInterface $entity) {
-            return $entity->preSave();
+        array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
+            return $entity->preSave($connection);
         });
 
         return $entities;
@@ -139,25 +163,27 @@ trait ActiveRecordBatchProcessorTrait
 
     /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
      */
-    protected function postSave(array $entities): void
+    protected function postSave(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
-            $entity->postSave();
+            $entity->postSave($connection);
         }
     }
 
     /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
-    protected function preInsert(array $entities): array
+    protected function preInsert(array $entities, ConnectionInterface $connection): array
     {
-        array_filter($entities, function (ActiveRecordInterface $entity) {
-            return $entity->preInsert();
+        array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
+            return $entity->preInsert($connection);
         });
 
         return $entities;
@@ -165,39 +191,42 @@ trait ActiveRecordBatchProcessorTrait
 
     /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
      */
-    protected function postInsert(array $entities): void
+    protected function postInsert(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
-            $entity->postInsert();
+            $entity->postInsert($connection);
         }
     }
 
     /**
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
-    protected function preUpdate(array $entities): array
+    protected function preUpdate(array $entities, ConnectionInterface $connection): array
     {
-        array_filter($entities, function (ActiveRecordInterface $entity) {
-            return $entity->preUpdate();
+        array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
+            return $entity->preUpdate($connection);
         });
 
         return $entities;
     }
 
     /**
-     * @param array $entities
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
      */
-    protected function postUpdate(array $entities): void
+    protected function postUpdate(array $entities, ConnectionInterface $connection): void
     {
         foreach ($entities as $entity) {
-            $entity->postUpdate();
+            $entity->postUpdate($connection);
         }
     }
 
@@ -213,16 +242,33 @@ trait ActiveRecordBatchProcessorTrait
     protected function executeStatement(PDOStatement $statement, string $entityClassName, string $type): void
     {
         try {
-            $this->getConnection()->beginTransaction();
+            $connection = $this->getWriteConnection($entityClassName);
+
+            $connection->beginTransaction();
             $statement->execute();
-            $this->getConnection()->commit();
+            $connection->commit();
 
             $this->clear();
         } catch (Throwable $throwable) {
-            $this->getConnection()->rollBack();
+            $connection->rollBack();
 
             throw new Exception(sprintf('Failed to execute %s statement for %s. Error: %s', $type, $entityClassName, $throwable->getMessage()), 0, $throwable);
         }
+    }
+
+    /**
+     * @param string $entityClassName
+     *
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected function getWriteConnection(string $entityClassName): ConnectionInterface
+    {
+        if (!isset($this->writeConnections[$entityClassName])) {
+            $tableMapClass = $this->getTableMapClass($entityClassName);
+            $this->writeConnections[$entityClassName] = Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
+        }
+
+        return $this->writeConnections[$entityClassName];
     }
 
     /**
@@ -232,18 +278,6 @@ trait ActiveRecordBatchProcessorTrait
     {
         $this->entitiesToInsert = [];
         $this->entitiesToUpdate = [];
-    }
-
-    /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected function getConnection()
-    {
-        if ($this->connection === null) {
-            $this->connection = Propel::getConnection();
-        }
-
-        return $this->connection;
     }
 
     /**
@@ -272,13 +306,14 @@ trait ActiveRecordBatchProcessorTrait
             $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
 
             foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+                $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
                 if ($columnMap->isPrimaryKey() && !$requiresPrimaryKeyValue) {
                     continue;
                 }
 
                 if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
                     $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
-                    $valuesForInsert[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData, $value);
+                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
 
                     continue;
                 }
@@ -287,7 +322,7 @@ trait ActiveRecordBatchProcessorTrait
                 $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
 
                 if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForInsert[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
+                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
                 }
             }
 
@@ -309,32 +344,43 @@ trait ActiveRecordBatchProcessorTrait
             );
         }
 
-        return $this->prepareStatement($sql, $values);
+        $statement = $this->prepareStatement($sql, $this->getWriteConnection($entityClassName));
+        $statement = $this->bindInsertValues($statement, $values);
+
+        return $statement;
     }
 
     /**
      * @param string $sql
-     * @param array $values
-     * @param bool $isInsert
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
-     * @throws \Spryker\Zed\Propel\Exception\StatementNotPrepared
+     * @throws \Spryker\Zed\Propel\Exception\StatementNotPreparedException
      *
      * @return \PDOStatement
      */
-    protected function prepareStatement(string $sql, array $values, bool $isInsert = true): PDOStatement
+    protected function prepareStatement(string $sql, ConnectionInterface $connection): PDOStatement
     {
-        $connection = $this->getConnection();
         $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
         $statement = $connection->prepare($sql);
+
         if (!$statement) {
-            throw new StatementNotPrepared(sprintf('Wasn\'t able to create a statement with provided query: `%s`', $sql));
+            throw new StatementNotPreparedException(sprintf('Wasn\'t able to create a statement with provided query: `%s`', $sql));
         }
 
-        if ($isInsert) {
-            $values = array_filter($values, function (array $columnDetails) {
-                return !$columnDetails['columnMap']->isPrimaryKey();
-            });
-        }
+        return $statement;
+    }
+
+    /**
+     * @param \PDOStatement $statement
+     * @param array $values
+     *
+     * @return \PDOStatement
+     */
+    protected function bindInsertValues(PDOStatement $statement, array $values): PDOStatement
+    {
+        $values = array_filter($values, function (array $columnDetails) {
+            return !$columnDetails['columnMap']->isPrimaryKey();
+        });
 
         foreach (array_values($values) as $index => $value) {
             $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
@@ -423,7 +469,25 @@ trait ActiveRecordBatchProcessorTrait
             );
         }
 
-        return $this->prepareStatement($sql, $values, false);
+        $statement = $this->prepareStatement($sql, $this->getWriteConnection($entityClassName));
+        $statement = $this->bindUpdateValues($statement, $values);
+
+        return $statement;
+    }
+
+    /**
+     * @param \PDOStatement $statement
+     * @param array $values
+     *
+     * @return \PDOStatement
+     */
+    protected function bindUpdateValues(PDOStatement $statement, array $values): PDOStatement
+    {
+        foreach (array_values($values) as $index => $value) {
+            $statement->bindValue(sprintf(':p%d', $index), $value['value'], $value['type']);
+        }
+
+        return $statement;
     }
 
     /**

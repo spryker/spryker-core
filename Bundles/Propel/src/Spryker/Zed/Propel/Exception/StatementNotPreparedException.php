@@ -9,6 +9,6 @@ namespace Spryker\Zed\Propel\Exception;
 
 use Exception;
 
-class StatementNotPrepared extends Exception
+class StatementNotPreparedException extends Exception
 {
 }
