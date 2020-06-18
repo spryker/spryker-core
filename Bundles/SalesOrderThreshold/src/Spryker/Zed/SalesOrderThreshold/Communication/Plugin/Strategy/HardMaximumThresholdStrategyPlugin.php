@@ -47,7 +47,11 @@ class HardMaximumThresholdStrategyPlugin extends AbstractSalesOrderThresholdStra
      */
     public function isValid(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): bool
     {
-        return !(($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee()));
+        if ($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

@@ -165,7 +165,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
-     * @param array $thresholdGroups
+     * @param string[] $thresholdGroups
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
