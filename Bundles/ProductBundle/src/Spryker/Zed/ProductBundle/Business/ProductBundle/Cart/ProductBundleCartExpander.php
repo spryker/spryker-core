@@ -324,7 +324,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             ->setAbstractSku($productConcreteTransfer->getAbstractSku())
             ->setName($localizedProductName)
             ->setQuantity(1)
-            ->setRelatedBundleItemIdentifier($bundleItemIdentifier);
+            ->setRelatedBundleItemIdentifier($bundleItemIdentifier)
+            ->setConcreteAttributes($productConcreteTransfer->getAttributes());
 
         $this->setPrice($itemTransfer, $unitPrice, $quoteTransfer->getPriceMode());
 

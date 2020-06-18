@@ -36,9 +36,9 @@ class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEmailValidator(Container $container)
     {
-        $container[static::EMAIL_VALIDATOR] = function (Container $container) {
+        $container->set(static::EMAIL_VALIDATOR, function (Container $container) {
             return $this->createEmailValidator($container);
-        };
+        });
 
         return $container;
     }

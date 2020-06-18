@@ -57,9 +57,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPaginationConfigBuilderPlugin(Container $container)
     {
-        $container[static::PAGINATION_CONFIG_BUILDER_PLUGIN] = function (Container $container) {
+        $container->set(static::PAGINATION_CONFIG_BUILDER_PLUGIN, function (Container $container) {
             return new PaginationConfigBuilder();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ProductReviewToZedRequestBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductReviewToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new ProductReviewToSearchBridge($container->getLocator()->search()->client());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductReviewsQueryExpanderPlugins(Container $container)
     {
-        $container[static::PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS] = function () {
+        $container->set(static::PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS, function () {
             return $this->getProductReviewsQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductReviewsSearchResultFormatterPlugins(Container $container)
     {
-        $container[static::PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+        $container->set(static::PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS, function () {
             return $this->getProductReviewsSearchResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
