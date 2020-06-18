@@ -21,6 +21,11 @@ use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFin
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
+use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolver;
+use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
+use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationBreadcrumbsMergeStrategy;
+use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationFullMergeStrategy;
+use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
 
 /**
@@ -107,7 +112,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ZedNavigationCollector(
             $this->createNavigationSchemaFinder(),
-            $this->getConfig()->getRootNavigationSchema()
+            $this->createMergeNavigationStrategyResolver(),
+            $this->getConfig()
         );
     }
 
@@ -139,6 +145,36 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->isNavigationCacheEnabled(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface
+     */
+    public function createMergeNavigationStrategyResolver(): MergeNavigationStrategyResolverInterface
+    {
+        return new MergeNavigationStrategyResolver(
+            [
+                $this->createNavigationFullMergeStrategy(),
+                $this->createNavigationBreadcrumbsMergeStrategy(),
+            ],
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
+     */
+    public function createNavigationFullMergeStrategy(): NavigationMergeStrategyInterface
+    {
+        return new NavigationFullMergeStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
+     */
+    public function createNavigationBreadcrumbsMergeStrategy(): NavigationMergeStrategyInterface
+    {
+        return new NavigationBreadcrumbsMergeStrategy();
     }
 
     /**

@@ -14,6 +14,9 @@ class ZedNavigationConfig extends AbstractBundleConfig
 {
     public const MAX_LEVEL_COUNT = 5;
 
+    public const FULL_MERGE_STRATEGY = 'fullMergeStrategy';
+    public const BREADCRUMB_MERGE_STRATEGY = 'breadcrumbMergeStrategy';
+
     /**
      * @api
      *
@@ -97,5 +100,15 @@ class ZedNavigationConfig extends AbstractBundleConfig
     public function getBundlesDirectory()
     {
         return APPLICATION_VENDOR_DIR . '/*';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMergeStrategy(): string
+    {
+        return static::FULL_MERGE_STRATEGY;
     }
 }
