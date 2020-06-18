@@ -39,4 +39,21 @@
     <transfer name="CmsVersionData">
     </transfer>
 
+    <transfer name="CmsPageStorage">
+        <property name="idCmsPage" type="int"/>
+        <property name="name" type="string"/>
+        <property name="templatePath" type="string"/>
+        <property name="placeholders" type="array" singular="placeholder"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="url" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="isSearchable" type="bool"/>
+        <property name="uuid" type="string"/>
+        <property name="contentWidgetParameterMap" type="array" singular="contentWidgetParameterMap"/>
+    </transfer>
+
 </transfers>
