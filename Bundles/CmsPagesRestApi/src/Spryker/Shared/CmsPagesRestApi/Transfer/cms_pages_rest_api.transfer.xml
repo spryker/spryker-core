@@ -27,4 +27,15 @@
         <property name="status" type="int"/>
         <property name="detail" type="string"/>
     </transfer>
+
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityId" type="string"/>
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourcePage" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="localeUrls" type="UrlStorage[]" singular="urlStorage"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
 </transfers>
