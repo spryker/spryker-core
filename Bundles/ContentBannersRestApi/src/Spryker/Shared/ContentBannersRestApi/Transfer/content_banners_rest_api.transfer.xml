@@ -27,5 +27,10 @@
 
     <transfer name="CmsPageStorage">
         <property name="contentWidgetParameterMap" type="array" singular="contentWidgetParameterMap"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 </transfers>
