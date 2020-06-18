@@ -35,7 +35,7 @@ class CmsPageRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlu
     /**
      * {@inheritDoc}
      * - Looks up the CMS page in the key-value storage by id given in `UrlStorageTransfer`.
-     * - Returns the `RestUrlResolverAttributesTransfer` with type "cms-pages" and CMS page reference as UUID.
+     * - Returns the `RestUrlResolverAttributesTransfer` with type "cms-pages" and CMS page UUID as entity ID.
      *
      * @api
      *
