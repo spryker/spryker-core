@@ -50,9 +50,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addFilesystemAdapter(Container $container): Container
     {
-        $container[static::ADAPTER_FILESYSTEM] = function () {
+        $container->set(static::ADAPTER_FILESYSTEM, function () {
             return new RestRequestValidatorToFilesystemAdapter();
-        };
+        });
 
         return $container;
     }
@@ -64,9 +64,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addYamlAdapter(Container $container): Container
     {
-        $container[static::ADAPTER_YAML] = function () {
+        $container->set(static::ADAPTER_YAML, function () {
             return new RestRequestValidatorToYamlAdapter();
-        };
+        });
 
         return $container;
     }
@@ -78,9 +78,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new RestRequestValidatorToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addValidationAdapter(Container $container): Container
     {
-        $container[static::ADAPTER_VALIDATION] = function () {
+        $container->set(static::ADAPTER_VALIDATION, function () {
             return new RestRequestValidatorToValidationAdapter();
-        };
+        });
 
         return $container;
     }
@@ -106,9 +106,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addConstraintCollectionAdapter(Container $container): Container
     {
-        $container[static::ADAPTER_CONSTRAINT_COLLECTION] = function () {
+        $container->set(static::ADAPTER_CONSTRAINT_COLLECTION, function () {
             return new RestRequestValidatorToConstraintCollectionAdapter();
-        };
+        });
 
         return $container;
     }

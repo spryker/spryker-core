@@ -48,9 +48,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addFinderAdapterDependency(Container $container): Container
     {
-        $container[static::ADAPTER_FINDER] = function () {
+        $container->set(static::ADAPTER_FINDER, function () {
             return new RestRequestValidatorToFinderAdapter();
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addFilesystemAdapterDependency(Container $container): Container
     {
-        $container[static::ADAPTER_FILESYSTEM] = function () {
+        $container->set(static::ADAPTER_FILESYSTEM, function () {
             return new RestRequestValidatorToFilesystemAdapter();
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addYamlAdapterDependency(Container $container): Container
     {
-        $container[static::ADAPTER_YAML] = function () {
+        $container->set(static::ADAPTER_YAML, function () {
             return new RestRequestValidatorToYamlAdapter();
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return new RestRequestValidatorToStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }
