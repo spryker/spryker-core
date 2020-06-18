@@ -50,11 +50,11 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductPackagingUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_PACKAGING_UNIT, function (Container $container) {
             return new ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge(
                 $container->getLocator()->productPackagingUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -66,11 +66,11 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductPackagingUnitGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductPackagingUnitTypePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT_TYPE] = function (Container $container) {
-            return new SpyProductPackagingUnitTypeQuery();
-        };
+        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT_TYPE, $container->factory(function () {
+            return SpyProductPackagingUnitTypeQuery::create();
+        }));
 
         return $container;
     }
@@ -96,9 +96,9 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SLAES_ORDER_ITEM] = function (Container $container) {
-            return new SpySalesOrderItemQuery();
-        };
+        $container->set(static::PROPEL_QUERY_SLAES_ORDER_ITEM, $container->factory(function () {
+            return SpySalesOrderItemQuery::create();
+        }));
 
         return $container;
     }

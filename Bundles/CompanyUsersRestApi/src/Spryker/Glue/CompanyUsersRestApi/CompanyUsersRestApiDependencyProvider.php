@@ -41,9 +41,9 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
             return new CompanyUsersRestApiToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
+        });
 
         return $container;
     }
@@ -55,11 +55,11 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyUserStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER_STORAGE, function (Container $container) {
             return new CompanyUsersRestApiToCompanyUserStorageClientBridge(
                 $container->getLocator()->companyUserStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

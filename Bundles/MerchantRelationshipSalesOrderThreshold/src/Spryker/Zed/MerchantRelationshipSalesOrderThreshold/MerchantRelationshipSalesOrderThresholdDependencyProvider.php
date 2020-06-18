@@ -45,11 +45,11 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
      */
     protected function addSalesOrderThresholdFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES_ORDER_THRESHOLD] = function (Container $container) {
+        $container->set(static::FACADE_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeBridge(
                 $container->getLocator()->salesOrderThreshold()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

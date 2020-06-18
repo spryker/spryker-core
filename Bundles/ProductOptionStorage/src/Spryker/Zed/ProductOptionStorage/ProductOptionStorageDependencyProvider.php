@@ -71,9 +71,9 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addEventBehaviorFacade(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductOptionStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductOptionStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductOptionFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OPTION, function (Container $container) {
             return new ProductOptionStorageToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductOptionQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_OPTION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_OPTION, function (Container $container) {
             return new ProductOptionStorageToProductOptionQueryContainerBridge($container->getLocator()->productOption()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductOptionStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }

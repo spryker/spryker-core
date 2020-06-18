@@ -25,13 +25,13 @@ class ProfileController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $merchantId = $this->getFactory()
+        $idMerchant = $this->getFactory()
             ->getMerchantUserFacade()
             ->getCurrentMerchantUser()
             ->getIdMerchant();
 
         $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
-        $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($merchantId);
+        $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($idMerchant);
 
         $merchantProfileForm = $this->getFactory()->createMerchantProfileForm($merchantTransfer);
         $merchantProfileForm->handleRequest($request);

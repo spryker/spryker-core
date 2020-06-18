@@ -63,9 +63,9 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, $container->factory(function () {
             return SpyCompanyBusinessUnitQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -77,11 +77,11 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -93,11 +93,11 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -109,9 +109,9 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitFormExpanderPlugins(Container $container): Container
     {
-        $container[static::COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getCompanyBusinessUnitFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitEditFormExpanderPlugins(Container $container): Container
     {
-        $container[static::COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getCompanyBusinessUnitEditFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }

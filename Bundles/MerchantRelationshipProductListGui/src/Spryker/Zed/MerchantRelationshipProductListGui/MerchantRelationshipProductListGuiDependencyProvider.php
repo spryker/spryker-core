@@ -41,9 +41,9 @@ class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundl
      */
     protected function addMerchantRelationshipFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function ($container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function ($container) {
             return new MerchantRelationshipProductListGuiToMerchantRelationshipFacadeBridge($container->getLocator()->merchantRelationship()->facade());
-        };
+        });
 
         return $container;
     }

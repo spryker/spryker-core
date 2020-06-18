@@ -56,9 +56,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductDiscontinuedStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductDiscontinuedFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedStorageToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscontinuedStorageToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

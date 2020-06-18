@@ -41,9 +41,9 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new PersistentCartShareToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addResourceShareFacade(Container $container): Container
     {
-        $container[static::FACADE_RESOURCE_SHARE] = function (Container $container) {
+        $container->set(static::FACADE_RESOURCE_SHARE, function (Container $container) {
             return new PersistentCartShareToResourceShareFacadeBridge($container->getLocator()->resourceShare()->facade());
-        };
+        });
 
         return $container;
     }
