@@ -25,6 +25,8 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollection;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
@@ -139,7 +141,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderStateMachineTimeout()
     {
         return new Timeout(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createTimeoutProcessorCollection()
         );
     }
 
@@ -204,7 +207,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->createTimeoutProcessorCollection()
         );
     }
 
@@ -416,6 +420,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface
+     */
+    public function createTimeoutProcessorCollection(): TimeoutProcessorCollectionInterface
+    {
+        return new TimeoutProcessorCollection($this->getTimeoutProcessorPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
      */
     public function getOmsOrderMailExpanderPlugins(): array
@@ -437,5 +449,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getReservationAggregationStrategyPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_AGGREGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     */
+    public function getTimeoutProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_TIMEOUT_PROCESSOR);
     }
 }

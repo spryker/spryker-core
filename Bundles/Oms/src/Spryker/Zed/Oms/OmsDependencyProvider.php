@@ -37,6 +37,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+    public const PLUGINS_TIMEOUT_PROCESSOR = 'PLUGINS_TIMEOUT_PROCESSOR';
 
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_SALES = 'FACADE_SALES';
@@ -69,6 +70,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
         $container = $this->addOmsManualEventGrouperPlugins($container);
+        $container = $this->addTimeoutProcessorPlugins($container);
 
         return $container;
     }
@@ -389,5 +391,27 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTimeoutProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_TIMEOUT_PROCESSOR, function (): array {
+            return $this->getTimeoutProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     */
+    protected function getTimeoutProcessorPlugins(): array
+    {
+        return [];
     }
 }

@@ -10,10 +10,12 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use DateTime;
 use ErrorException;
+use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -36,11 +38,20 @@ class Timeout implements TimeoutInterface
     protected $stateIdToModelBuffer = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer)
-    {
+    protected $timeoutProcessorCollection;
+
+    /**
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+     */
+    public function __construct(
+        OmsQueryContainerInterface $queryContainer,
+        TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->timeoutProcessorCollection = $timeoutProcessorCollection;
     }
 
     /**
@@ -88,7 +99,7 @@ class Timeout implements TimeoutInterface
                 }
 
                 $handledEvents[] = $event->getName();
-                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
+                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event, $orderItem);
 
                 (new SpyOmsEventTimeout())
                     ->setTimeout($timeoutDate)
@@ -121,21 +132,30 @@ class Timeout implements TimeoutInterface
     /**
      * @param \DateTime $currentTime
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null $spySalesOrderItem
      *
      * @return \DateTime
      */
-    protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event)
+    protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event, ?SpySalesOrderItem $spySalesOrderItem = null)
     {
+        if (isset($this->eventToTimeoutBuffer[$event->getName()])) {
+            return $this->eventToTimeoutBuffer[$event->getName()];
+        }
+
         $currentTime = clone $currentTime;
 
-        if (!isset($this->eventToTimeoutBuffer[$event->getName()])) {
-            $timeout = $event->getTimeout();
-            $interval = DateInterval::createFromDateString($timeout);
+        if ($spySalesOrderItem && $event->hasTimeoutProcessor()) {
+            $this->eventToTimeoutBuffer[$event->getName()] = $this->calculateTimeoutFromTimeoutProcessor($currentTime, $event, $spySalesOrderItem);
 
-            $this->validateTimeout($interval, $timeout);
-
-            $this->eventToTimeoutBuffer[$event->getName()] = $currentTime->add($interval);
+            return $this->eventToTimeoutBuffer[$event->getName()];
         }
+
+        $timeout = $event->getTimeout();
+        $interval = DateInterval::createFromDateString($timeout);
+
+        $this->validateTimeout($interval, $timeout);
+
+        $this->eventToTimeoutBuffer[$event->getName()] = $currentTime->add($interval);
 
         return $this->eventToTimeoutBuffer[$event->getName()];
     }
@@ -207,5 +227,25 @@ class Timeout implements TimeoutInterface
         }
 
         return $vSum;
+    }
+
+    /**
+     * @param \DateTime $currentTime
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItem
+     *
+     * @return \DateTime
+     */
+    protected function calculateTimeoutFromTimeoutProcessor(
+        DateTime $currentTime,
+        EventInterface $event,
+        SpySalesOrderItem $spySalesOrderItem
+    ): DateTime {
+        $timeoutProcessorTimeoutRequestTransfer = (new TimeoutProcessorTimeoutRequestTransfer());
+
+        $timeoutProcessor = $this->timeoutProcessorCollection->get($event->getTimeoutProcessor());
+        $timeoutProcessorTimeoutResponseTransfer = $timeoutProcessor->calculateTimeout($timeoutProcessorTimeoutRequestTransfer);
+
+        return (new DateTime)->setTimestamp($timeoutProcessorTimeoutResponseTransfer->getTimeoutTimestamp());
     }
 }
