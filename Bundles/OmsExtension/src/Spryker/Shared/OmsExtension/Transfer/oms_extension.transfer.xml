@@ -19,4 +19,10 @@
     <transfer name="OmsState">
     </transfer>
 
+    <transfer name="ReservationRequest">
+    </transfer>
+
+    <transfer name="ReservationResponse">
+    </transfer>
+
 </transfers>
